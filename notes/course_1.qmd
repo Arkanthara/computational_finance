@@ -1,0 +1,9 @@
+Price is only the result of peoples exchanges
+
+bookkeeping: comptabilite
+
+return: a Product and not a Sum !!!
+
+return of a portfolio is a sum and not a product
+
+currency hedging: it cost something, but it allows to not depend on course of multiple moneys...
