@@ -1,0 +1,256 @@
+# Rendements et valeur temporelle de l'argent
+
+## Plan du chapitre
+
+- Introduction
+- Rendements simples
+- Rendements de portefeuille
+- Annualisation
+- Valeur temporelle de l'argent
+- Rendements continus
+- Exemples de comptabilité (*Bookkeeping*)
+- Points clés
+
+---
+
+## Introduction
+
+Un **rendement** (*return* ou *yield*) mesure un profit ou une perte issus d'un investissement. Les rendements sont exprimés en pourcentage (%).
+
+**Questions fondamentales :**
+
+- Comment calculer un rendement entre 2 observations ?
+- Comment calculer une série de rendements sur une période ?
+- Que signifient les rendements continus ?
+
+**Définitions utilisées dans ce chapitre :**
+
+- $P(t)$ est une série temporelle de prix
+- $t$ désigne des pas de temps équidistants : journalier, hebdomadaire, mensuel, …
+- Exemple : $P(t) = \{100,\ 100.4,\ 102,\ 101.3,\ 102.8,\ \ldots\}$
+
+---
+
+## Rendements simples
+
+### Rendement simple sur une période
+
+Le rendement simple sur une seule période, entre $t-1$ et $t$, est défini par :
+
+$$R_1(t) = \frac{P(t) - P(t-1)}{P(t-1)} = \frac{P(t)}{P(t-1)} - 1$$
+
+ce qui donne la relation :
+
+$$1 + R_1(t) = \frac{P(t)}{P(t-1)}$$
+
+**Exemple numérique :**
+
+1. $P(t-1) = 50$, $P(t) = 60$ → $R_1(t) = \frac{60}{50} - 1 = +20\%$
+2. $P(t-1) = 60$, $P(t) = 50$ → $R_1(t) = \frac{50}{60} - 1 = -16.7\%$
+
+> ⚠️ Ce schéma présente une **asymétrie** : une hausse de 20% suivie d'une baisse de 20% ne revient pas au prix initial.
+
+### Rendement simple sur plusieurs périodes
+
+Le rendement sur deux périodes, entre $t-2$ et $t$, est :
+
+$$R_2(t) = \frac{P(t) - P(t-2)}{P(t-2)} = \frac{P(t)}{P(t-2)} - 1$$
+
+En décomposant :
+
+$$1 + R_2(t) = \frac{P(t)}{P(t-1)} \cdot \frac{P(t-1)}{P(t-2)} = (1 + R_1(t))(1 + R_1(t-1))$$
+
+On généralise à $n$ périodes :
+
+$$1 + R_n(t) = \prod_{i=0}^{n-1} (1 + R_1(t-i))$$
+
+> ⚠️ On **ne somme pas** les rendements simples — on les **compose** (produit).
+
+### Exemple complet
+
+| Temps | Prix | $R_1$ |
+|-------|------|-------|
+| 1 | 10 | — |
+| 2 | 12 | 20% |
+| 3 | 14 | 16.7% |
+| 4 | 16 | 14.3% |
+
+Rendement total sur 4 périodes : $R_4(4) = \frac{16-10}{10} = 60\%$
+
+- **Somme** des $R_1$ : $20\% + 16.7\% + 14.3\% = 50.9\%$ ✗
+- **Produit** : $(1+20\%)(1+16.7\%)(1+14.3\%) - 1 = 60\%$ ✓
+
+> Dans la suite du cours, on utilise $R(t)$ sans distinguer le nombre de périodes.
+
+---
+
+## Rendements de portefeuille
+
+Un **portefeuille** est un ensemble de $n$ actifs. On définit :
+
+- $R_i$ : rendement de l'actif $i$
+- $\alpha_i$ : allocation de l'actif $i$ dans le portefeuille, avec $\sum_{i=1}^{n} \alpha_i = 1$
+
+Le **rendement du portefeuille** est défini comme :
+
+$$R_p = \sum_{i=1}^{n} \alpha_i R_i$$
+
+**Vérification de la cohérence :**
+
+$$\sum_{i=1}^{n} \alpha_i(1 + R_i) = \underbrace{\sum_{i=1}^{n} \alpha_i}_{=1} + \sum_{i=1}^{n} \alpha_i R_i = 1 + R_p \quad \checkmark$$
+
+---
+
+## Annualisation
+
+L'annualisation permet de **comparer des rendements sur des horizons temporels différents**.
+
+En notant $R_a$ le rendement annuel, $R_m$ le rendement mensuel et $R_d$ le rendement journalier :
+
+$$1 + R_a = (1 + R_m)^{12} \quad \Rightarrow \quad R_a = (1 + R_m)^{12} - 1$$
+
+$$R_a = (1 + R_d)^{256} - 1$$
+
+où l'on suppose **256 jours ouvrables par an** (d'autres conventions existent : 250, 300, …).
+
+> ⚠️ L'annualisation **ne se fait pas par simple somme** des rendements mensuels — on applique la même règle de composition que pour les rendements multi-périodes.
+
+---
+
+## Valeur temporelle de l'argent
+
+### Capitalisation discrète
+
+Un CHF aujourd'hui a une valeur différente demain — elle dépend du **rendement** $R$ et de la **fréquence de versement**.
+
+En notant $PV$ la valeur présente (*Present Value*) et $FV$ la valeur future (*Future Value*) :
+
+$$FV_n^{(1)} = PV \cdot (1 + R)^n$$
+
+Si le paiement est effectué $m$ fois dans la période $n$ :
+
+$$FV_n^{(m)} = PV \cdot \left(1 + \frac{R}{m}\right)^{m \cdot n}$$
+
+### Passage à la capitalisation continue
+
+Lorsque $m \to \infty$ (paiement continu) :
+
+$$FV_n^{(\infty)} = \lim_{m \to \infty} PV \cdot \left(1 + \frac{R}{m}\right)^{m \cdot n} = PV \cdot e^{Rn}$$
+
+### Tableau comparatif — $PV = 1000$, $R = 10\%$, $n = 1$ an
+
+| Fréquence | Formule | Valeur |
+|-----------|---------|--------|
+| Annuelle | $1000 \cdot (1 + 0.1)^1$ | **1100.0** |
+| Trimestrielle | $1000 \cdot (1 + 0.1/4)^4$ | **1103.8** |
+| Hebdomadaire | $1000 \cdot (1 + 0.1/52)^{52}$ | **1105.1** |
+| Journalière | $1000 \cdot (1 + 0.1/365)^{365}$ | **1105.2** |
+| **Continue** | $1000 \cdot e^{0.1}$ | **1105.2** |
+
+### Relation entre rendement continu $r$ et rendement simple $R$
+
+En égalisant les deux formules :
+
+$$PV \cdot (1+R)^n = FV_n = PV \cdot e^{rn}$$
+
+$$\Rightarrow \quad \ln(1+R) = r \quad \Rightarrow \quad r < R$$
+
+**Exemple :** $R = 10\%$ → $r = \ln(1.1) = 9.53\%$ et $1000 \cdot e^{0.0953} = 1100$ ✓
+
+> La capitalisation continue est **pratique** (utilisation des exponentielles), mais **peu réaliste** — elle est cependant très utilisée dans les cadres théoriques.
+
+---
+
+## Rendements continus
+
+### Définition sur une période
+
+Le rendement continu sur une période est :
+
+$$r(t) = \ln(1 + R(t)) = \ln\!\left(\frac{P_t}{P_{t-1}}\right) = \ln P_t - \ln P_{t-1}$$
+
+**Avantages des rendements continus :**
+
+- C'est une **différence de logarithmes** → plus simple en calcul
+- Ils sont **symétriques** (contrairement aux rendements simples)
+- Plus faciles à manipuler analytiquement
+
+### Extension à plusieurs périodes
+
+Le rendement continu sur 2 périodes :
+
+$$r_2(t) = \ln\!\left(\frac{P_t}{P_{t-2}}\right) = \ln\!\left(\frac{P_t}{P_{t-1}} \cdot \frac{P_{t-1}}{P_{t-2}}\right) = r_1(t) + r_1(t-1)$$
+
+Généralisation à $n$ périodes :
+
+$$r_n(t) = \sum_{i=0}^{n-1} r_1(t-i)$$
+
+> ✅ Les rendements continus **s'additionnent** sur plusieurs périodes — contrairement aux rendements simples qui se composent par produit.
+
+### Rendement continu d'un portefeuille
+
+Avec $n$ actifs, allocations $\alpha_i$ telles que $\sum_{i=1}^{n} \alpha_i = 1$ :
+
+$$r_p = \ln\!\left(1 + R_p\right) = \ln\!\left(1 + \sum_{i=1}^{n} \alpha_i R_i\right) \neq \sum_{i=1}^{n} \alpha_i r_i$$
+
+> ⚠️ Le rendement continu d'un portefeuille **n'est pas** la somme pondérée des rendements continus individuels.
+
+---
+
+## Exemples de comptabilité (*Bookkeeping*)
+
+Ces exemples illustrent comment calculer et décomposer la performance d'un portefeuille selon le type d'actif et la devise de référence.
+
+### Cas 1 — Investisseur CHF, actif en CHF
+
+**Situation :** un investisseur CHF achète 15 actions UBS (cotées en CHF).
+
+- Achat au temps $t=1$, vente au temps $t=3$
+- Prix UBS : 55 CHF → 62 CHF
+- **P&L** (*Profit and Loss*) : CHF 105
+- **Rendement NAV** : $\frac{1105}{1000} - 1 = 10.5\%$
+- Décomposition : $\frac{825}{1000} \times 12.7\% + \frac{175}{1000} \times 0\% = 10.5\%$
+
+> La performance est **entièrement expliquée** par l'évolution du cours UBS.
+
+### Cas 2 — Investisseur CHF, actif en USD, sans *carry* ni variation FX
+
+**Situation :** un investisseur CHF achète 10 actions Apple (AAPL, cotées en USD). Le taux USD/CHF reste constant.
+
+$$\text{NAV} = \text{position\_AAPL} \times \text{prix\_AAPL} \times \text{USDCHF} + \text{Cash}$$
+
+L'investisseur est exposé à **deux risques** :
+
+- **Risque actions** (*equity risk*) : évolution d'AAPL en USD
+- **Risque de change** (*FX risk, Foreign Exchange*) : évolution USD/CHF
+
+> Le P&L est entièrement expliqué par AAPL\_USD puisque le FX ne bouge pas ici.
+
+### Cas 3 — Investisseur CHF, actif en USD, FX variable, sans *carry*
+
+**Situation :** même que le cas 2, mais le taux USD/CHF évolue.
+
+- À $t=4$, AAPL\_USD est revenu à son niveau de $t=2$, mais la NAV est différente
+- Car USD/CHF a **baissé** entre $t=2$ et $t=4$
+- **P&L** : CHF $-0.8$, expliqué par AAPL\_USD (positif) et USD/CHF (négatif)
+
+> Il est possible de **couvrir le risque FX** (*hedging*), mais cela a un coût.
+
+### Cas 4 — Investisseur CHF, actif en USD, avec *hedge* FX
+
+**Situation :** même que le cas 3, mais une position de couverture (*hedge*) est ouverte et ajustée.
+
+- Le *hedge* génère des rendements propres
+- **P&L** : CHF 7.6
+- Décomposé en : performance AAPL\_USD + performance USD/CHF + **coût de couverture** (CHF $-2.4$)
+
+> Avec couverture, la NAV est **moins volatile** : un seul risque subsiste (actions).
+
+---
+
+## Points clés
+
+- Les **rendements simples** se composent par **multiplication** sur plusieurs périodes → on ne les additionne pas
+- Les **rendements continus** se composent par **addition** → plus simples à manipuler analytiquement
+- La **comptabilité de portefeuille** (*bookkeeping*) dépend fortement de la **devise de référence** de l'investisseur
+- Investir dans un actif en devise étrangère expose à un **risque FX** qui peut être **couvert** (*hedged*), moyennant un coût
