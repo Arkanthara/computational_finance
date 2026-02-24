@@ -42,5 +42,5 @@ format:
   # docx:
   #   toc: true
 
-# filters:
-#   - diagram
+filters:
+  - diagram

@@ -1,0 +1,149 @@
+# 📋 Résumé — Séries temporelles & modèles autorégressifs
+
+---
+
+## Série temporelle — L'essentiel
+
+- Suite de valeurs $X(t_i) \in \mathbb{R}$ indexées dans le temps
+- Le **lag** $\tau$ = temps entre deux observations
+- Statistiques de base : moyenne $\mathbb{E}[X]$, variance $\text{Var}[X]$, écart-type (= volatilité)
+
+---
+
+## Objectifs de modélisation
+
+- Identifier la **structure** de la série
+- Expliquer l'**influence du passé** sur le futur
+- **Modéliser** l'état courant
+- **Prédire** des observations futures
+
+> ⚠️ Un bon modèle explicatif peut être mauvais en prédiction — et inversement
+
+---
+
+## Types de modèles
+
+- **Régression** : linéaire, Ridge, Lasso, polynomiale…
+- **Autorégressifs** : AR(p), MA(q), ARMA(p,q)
+
+> L'ordre des données est crucial (contrairement à la théorie de l'information)
+
+---
+
+## Stationnarité
+
+### Pourquoi c'est nécessaire
+
+- Cohérence des relations dans le temps
+- Estimation fiable des paramètres
+- Éviter les relations **spurieuses** (fausses)
+
+### Problèmes qui rendent une série non-stationnaire
+
+- **Tendance** (*trend*) → moyenne qui dérive
+- **Saisonnalité** (*seasonality*) → patterns périodiques
+- **Hétéroscédasticité** (*heteroskedasticity*) → volatilité non constante
+
+### Deux niveaux de stationnarité
+
+- **Stricte** : toute la distribution est invariante par translation temporelle
+
+$$F(X_{t_1+\tau}, \ldots, X_{t_n+\tau}) = F(X_{t_1}, \ldots, X_{t_n}) \quad \forall \tau, n$$
+
+- **Faible** (suffisante en pratique) :
+
+a) Moyenne constante : $\mathbb{E}[X_t] = \mu = \text{cte}$
+
+b) Autocovariance ne dépend que du lag : $\text{Cov}(X_t, X_{t+\tau}) = \gamma(\tau)$
+
+### Comment rendre une série stationnaire
+
+- Calculer les **différences** successives
+- Calculer les **rendements** ← *méthode la plus utilisée en pratique*
+- Supprimer tendances / saisonnalités
+- Prendre le **logarithme** pour stabiliser la volatilité
+
+> ✅ Les prix sont rarement stationnaires — les **rendements** le sont presque toujours
+
+---
+
+## Autocorrélation
+
+### Rappel — Corrélation classique
+
+$$\text{Cor}(X, Y) = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\,\text{Var}(Y)}}$$
+
+### ACF — *Autocorrelation Function*
+
+Corrélation de la série avec elle-même à un lag $\tau$ :
+
+$$\text{ACF}(\tau) = \rho_\tau = \frac{\mathbb{E}[(X_t - \mu)(X_{t+\tau} - \mu)]}{\sigma^2}$$
+
+### Ce que l'ACF révèle
+
+- **Patterns cachés** (ex : sinusoïdes)
+- **Tendance** : ACF décroît lentement et positivement
+- **Contre-tendance** : ACF alterne positif / négatif
+- Les valeurs **hors intervalle de confiance** = autocorrélations significatives
+
+---
+
+## Modèles autorégressifs — Formules clés
+
+| Modèle | Formule |
+|---|---|
+| **AR(p)** | $X_t = c + \displaystyle\sum_{i=1}^{p} \varphi_i X_{t-i} + \varepsilon_t$ |
+| **MA(q)** | $X_t = \mu + \varepsilon_t + \displaystyle\sum_{i=1}^{q} \theta_i \varepsilon_{t-i}$ |
+| **ARMA(p,q)** | $X_t = c + \varepsilon_t + \displaystyle\sum_{i=1}^{p} \varphi_i X_{t-i} + \displaystyle\sum_{i=1}^{q} \theta_i \varepsilon_{t-i}$ |
+
+---
+
+## AR(1) — Résultats analytiques
+
+Modèle : $X_t = c + \varphi_1 X_{t-1} + \varepsilon_t$ avec $\varepsilon_t \sim \mathcal{N}(0, \sigma_\varepsilon^2)$
+
+### Trois résultats fondamentaux
+
+- **Moyenne** (après normalisation $c = 0$) :
+
+$$\mu = \frac{c}{1 - \varphi_1} \xrightarrow{c=0} \mu = 0$$
+
+- **Variance** :
+
+$$\text{Var}(X_t) = \frac{\sigma_\varepsilon^2}{1 - \varphi_1^2} \quad \Rightarrow \quad \varphi_1^2 < 1$$
+
+- **Paramètre = coefficient d'autocorrélation lag 1** :
+
+$$\boxed{\varphi_1 = \frac{\text{Cov}(X_t, X_{t+1})}{\text{Var}(X_t)} = \rho_1}$$
+
+### Interprétation de $\varphi_1$
+
+- $\varphi_1 > 0$ → série **tendancielle** (inertie)
+- $\varphi_1 < 0$ → série **contre-tendancielle** (mean-reverting)
+- $\varphi_1 = 1$ → **marche aléatoire** (*random walk*)
+
+---
+
+## Sélection de l'ordre du modèle (AR(p) avec p > 1)
+
+Les paramètres n'ont plus de forme fermée → estimation par **maximum de vraisemblance**
+
+Critères de comparaison (pénalisent la complexité) :
+
+$$\text{AIC} = 2p - 2\ln(L)$$
+
+$$\text{BIC} = \ln(n)\,p - 2\ln(L)$$
+
+- $p$ = ordre du modèle, $n$ = nb d'observations, $L$ = vraisemblance
+- **Plus le critère est bas, meilleur est le modèle**
+
+---
+
+## Points clés à retenir
+
+- ✅ Toujours **vérifier la stationnarité** avant de modéliser (visuellement ou test ADF)
+- ✅ Travailler sur les **rendements**, pas les prix
+- ✅ L'**ACF** est l'outil central pour comprendre la structure d'une série
+- ✅ Le modèle **AR(1)** est entièrement caractérisé par $\rho_1$, estimable directement
+- ✅ Pour des ordres $p > 1$ → utiliser AIC/BIC pour choisir le meilleur modèle
+- ✅ Un modèle explicatif ≠ un modèle prédictif
