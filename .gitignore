@@ -5,4 +5,5 @@
 *.quarto
 *.pdf
 *_extensions
+*.lock
 

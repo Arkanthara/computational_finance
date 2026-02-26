@@ -2,9 +2,17 @@
 #import "template.typ": make-report, report-footnote
 #import "metadata.typ": my-report
 #import "@preview/theofig:0.1.0": definition
+#import "@preview/pyrunner:0.3.0" as py
 
 // Main content
 #show: make-report.with(my-report)
+#show raw.where(block: true): set block(fill: luma(240), inset: 1em, radius: 0.5em, width: 100%)
+#show raw.where(block: false): box.with(
+  fill: rgb("#e573e927"),
+  inset: (x: 3pt, y: 0pt),
+  outset: (y: 3pt),
+  radius: 2pt,
+)
 
 = Computing returns
 
@@ -43,7 +51,77 @@ $ R_a = R_12(12) = frac(P(12) - P(0), P(0)) = 12% $
 
 2. Compute the annual return $R_a$ from the monthly returns (you should find 12% again). Compare it to the sum of the monthly returns.
 
+  $ 1 + R_a = product_(i = 1)^12 (1 + R_i) <=> R_a = [product_(i = 1)^12 (1 + R_i)] - 1 = 12% $
+
+  ```python
+  R = [1/(100 + i) for i in range(12)]
+  R_a = 1
+  for R_i in R:
+    R_a *= (1 + R_i)
+  R_a -= 1
+  print(f"R_a = {R_a:.2f}")
+  ```
+  #raw(
+    py.block(
+      ```
+      R = [1/(100 + i) for i in range(12)]
+      R_a = 1
+      for R_i in R:
+        R_a *= (1 + R_i)
+      R_a -= 1
+      f"R_a = {R_a:.2f}"
+      ```,
+    ),
+    lang: "python",
+  )
+
+
+
 3. Compute the average monthly return $R_m$ and compare it to the average of the monthly returns.
+
+  - Average monthly return:
+    $R_m = (1 + R_a/12)^12 - 1 = 2%$
+
+    ```python
+    R_m = (1 + 12/100 * 1/12)**2
+    R_m -= 1
+    print(f"R_m = {R_m:.2f}")
+    ```
+    #raw(
+      py.block(
+        ```
+        R_m = (1 + 12/100 * 1/12)**2
+        R_m -= 1
+        f"R_m = {R_m:.2f}"
+        ```,
+      ),
+      lang: "python",
+    )
+  - Average of the monthly returns:
+    $1/12 sum_(i = 1)^12 R_i = 1/12 (1/100 + 1/101 + dots + 1/112) = 1%$
+
+    ```python
+    R = [1/(100 + i) for i in range(12)]
+    average = 0
+    for R_i in R:
+      average += R_i
+    average /= 12
+    print(f"Average of monthly returns: {average:.2f}")
+    ```
+    #raw(
+      py.block(
+        ```
+        R = [1/(100 + i) for i in range(12)]
+        average = 0
+        for R_i in R:
+          average += R_i
+        average /= 12
+        f"Average of monthly returns: {average:.2f}"
+        ```,
+      ),
+      lang: "python",
+    )
+
 
 = Continuously compounded return
 
