@@ -190,15 +190,51 @@ Consider now that at the end of month $t$, the prices are $P_"msft"(t) = \$90$ a
 Consider a constant annual return $R = 4.5%$, semi-annually compounded (i.e. two payments a year).
 
 1. With an initial amount of \$10 000, what will be the value in:
-  + 1 year?
-  + 5 years?
-  + 10 years?
+  - 1 year?
+  - 5 years?
+  - 10 years?
+
+  We note $n = 1$ year, $F V_n$ the Future Value at year $n$ and $P V = 10000$ the Present Value.
+
+  For a semi-annual compounded, we have:
+
+  $ F V_n = P V dot (1 + R/2)^(2 dot n) $
+
+  So we have:
+  - $F V_1 = P V dot (1 + R/2)^(2)= 10000 dot (1 + 0.045/2)^(2) = 10455.06\$$
+  - $F V_5 = P V dot (1 + R/2)^(2 dot 5)= 10000 dot (1 + 0.045/2)^(10) = 12492.03\$$
+  - $F V_10 = P V dot (1 + R/2)^(2 dot 10)= 10000 dot (1 + 0.045/2)^(20) = 15605.09\$$
+
 
 2. What is the initial amount to have a final amount of \$10 000 in:
-  + 1 year?
-  + 3 years?
-  + 10 years?
+  - 1 year?
+  - 3 years?
+  - 10 years?
+
+  We know the final amount $F V_n = 10000\$$
+
+  We want to find $P V$.
+
+  For a semi-annual compounded, we have:
+
+  $ F V_n = P V dot (1 + R/2)^(2 dot n) <=> P V = F V_n dot (1 + R/2)^(-2 dot n) $
+
+  So to have a final amount of $10000$ after $n$ years, the initial amount must be:
+
+  - For $n = 1$: $P V = F V_1 dot (1 + R/2)^(-2) = 10000 dot (1 + 0.045/2)^(-2) = 9564.74\$$
+  - For $n = 3$: $P V = F V_3 dot (1 + R/2)^(-2 dot 3) = 10000 dot (1 + 0.045/2)^(-6) = 8750.24\$$
+  - For $n = 10$: $P V = F V_10 dot (1 + R/2)^(-2 dot 10) = 10000 dot (1 + 0.045/2)^(-20) = 6408.16\$$
+
 
 3. *Optional:* Let $R$ be the one-period return, $n$ the number of periods, and $m$ the number of payments per period. How would you prove that:
 
-$ lim_(m -> +infinity) lr((1 + frac(R, m)))^(m n) = e^(R n) $
+  $ lim_(m -> +infinity) lr((1 + frac(R, m)))^(m n) = e^(R n) $
+
+  // According to Taylor expansion, we have:
+
+  // #align(left, 
+  // $
+  //   e^(R n) &= sum_k^infinity (R n)^k/k!
+                 
+  // $
+  // )
