@@ -122,20 +122,39 @@ $ R_a = R_12(12) = frac(P(12) - P(0), P(0)) = 12% $
       lang: "python",
     )
 
+  So it means that the average of the monthly returns is different from the average monthly return.
+
 
 = Continuously compounded return
 
 Consider a constant annual interest rate of $R = 2.11%$ with a continuous compounding.
 
 1. With an initial amount of \$10 000, what will be the value in:
-  + 1 year?
-  + 5 years?
-  + 10 years?
+  - 1 year?
+  - 5 years?
+  - 10 years?
+
+  We note $n = 1$ year, $F V_n$ the Future Value at year $n$ and $P V = 10000$ the Present Value.
+
+  The continuous compounding formula is $F V_n = P V dot e^(R n)$
+
+  So we have:
+  - $F V_1 = P V dot e^(R) = 10000 dot e^(0.0211) = 10213.24 \$$
+  - $F V_5 = P V dot e^(R dot 5) = 10000 dot e^(0.0211 dot 5) = 11112.66 \$$
+  - $F V_10 = P V dot e^(R dot 10) = 10000 dot e^(0.0211 dot 10) = 12349.12 \$$
 
 2. What is the initial amount to have a final amount of \$10 000 in:
-  + 1 year?
-  + 3 years?
-  + 10 years?
+  - 1 year?
+  - 3 years?
+  - 10 years?
+
+  Now, we know the final amount $F V_n = 10000\$$.
+  So the initial amount $P V$ is:
+  $ F V_n = P V dot e^(R n) <=> P V = F V_n e^(-R n) $
+  So to have a final amount of $10000$ after $n$ years, the initial amount must be:
+  - For $n = 1$: $P V = F V_1 e^(-R) = 10000 e^(-0.0211) = 9791.21\$$
+  - For $n = 3$: $P V = F V_3 e^(-R dot 3) = 10000 e^(-0.0211 dot 3) = 9386.62\$$
+  - For $n = 10$: $P V = F V_10 e^(-R dot 10) = 10000 e^(-0.0211 dot 10) = 8097.74\$$
 
 = Portfolio of Microsoft and Starbucks stock
 
@@ -143,13 +162,28 @@ You purchase 10 shares of each Microsoft and Starbucks stock at the end of month
 
 1. Compute $V(t-1)$, the initial value of the portfolio.
 
+  The initial value $V(t - 1)$ of the portfolio is:
+  $ V(t - 1) = 10 dot P_"msft"(t-1) + 10 dot P_"sbux"(t-1) = 10 dot 85 + 10 dot 30 = 850 + 300 = 1150\$ $
+
 2. Compute the portfolio shares $alpha_"msft"$ and $alpha_"sbux"$.
+  
+  - The portfolio share $alpha_"msft"$ has a value of: $alpha_"msft" = 10 / (10 + 10) = 1/2$
+
+  - The portfolio share $alpha_"sbux"$ has a value of: $alpha_"sbux" = 10 / (10 + 10) = 1/2$
 
 Consider now that at the end of month $t$, the prices are $P_"msft"(t) = \$90$ and $P_"sbux"(t) = \$28$.
 
 3. Compute $R_"msft"(t)$ and $R_"sbux"(t)$, the one-period return of Microsoft and Starbucks stocks.
 
+  - $R_"msft"(t) = (P_"msft"(t) - P_"msft"(t-1))/P_"msft"(t-1) = (90 - 85)/85 approx 5.9%$
+  - $R_"sbux"(t) = (P_"sbux"(t) - P_"sbux"(t-1))/P_"sbux"(t-1) = (28 - 30)/30 approx -6.7%$
+
 4. Compute the one-period return of the portfolio $R(t)$ and its value $V(t)$ at the end of month $t$.
+
+  - The one-period return of the portfolio $R(t)$ is:
+  $ R(t) = sum_(i in {"msft", "sbux"}) alpha_i R_i = alpha_"msft" R_"msft" + alpha_"sbux" R_"sbux" = 1/2 dot 5.9% - 1/2 dot 6.7% = -0.4% $
+  - The value $V(t)$ of the portfolio is:
+  $ V(t) = V(t - 1) (1 + R(t)) = 1150 (1 - 0.004) = 1145.4\$ $
 
 = Present / Future value
 
