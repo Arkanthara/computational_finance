@@ -53,7 +53,7 @@ L'**Efficient Market Hypothesis** est une théorie proposée par **E. Fama** dan
 
 - Toute **nouvelle information publique et privée** est immédiatement intégrée dans le prix
 
-```{.mermaid}
+```{mermaid}
 graph TD
   A[Forme faible\nPrix passés reflétés] --> B[Forme semi-forte\n+ Info publique reflétée]
   B --> C[Forme forte\n+ Info privée reflétée]
@@ -201,7 +201,7 @@ Les **faits stylisés** (*stylised facts*) sont des caractéristiques empiriques
 - Décrit la manière de passer d'une échelle à une autre
 - On parle du **comportement des moyennes**
 
-### Queues épaisses (*Fat Tails*)
+### Queues épaisses (*Fat Tails*) (Important pour examen !)
 
 *(Cont, 2001 ; Sewell, 2011)*
 
@@ -209,7 +209,7 @@ Les **faits stylisés** (*stylised facts*) sont des caractéristiques empiriques
 - Les **événements extrêmes** sont **bien plus fréquents** que ce que prédit la loi normale
 - Cela a des implications majeures pour la **gestion des risques**
 
-```{.mermaid}
+```{mermaid}
 graph LR
   A[Distribution normale\nQueues fines] -->|En réalité| B[Distribution empirique\nQueues épaisses\nFat Tails]
 ```
