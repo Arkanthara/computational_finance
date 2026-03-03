@@ -1,0 +1,163 @@
+# 📋 Résumé — Marchés et comportements
+
+---
+
+## *Efficient Market Hypothesis* (EMH)
+
+### L'idée centrale
+
+- Théorie de **E. Fama** (années 1960, Nobel 2013)
+- Les marchés sont « efficients » → prix toujours **à leur juste valeur**
+- **Impossible** de battre le marché systématiquement
+
+### Les 3 formes
+
+| Forme | Ce qui est reflété dans le prix |
+|-------|-------------------------------|
+| **Faible** | Données historiques des prix passés |
+| **Semi-forte** | + Toute info publique nouvelle |
+| **Forte** | + Toute info privée nouvelle |
+
+### Critiques principales
+
+- Marchés *equity* parfois **surévalués durablement** vs fondamentaux
+- **Bulles spéculatives** (Bitcoin, Flash Crash)
+- *Herding behaviour* — comportement grégaire
+- Trading algorithmique → dynamiques non rationnelles
+- Soros, Buffet : chance ou inefficience ?
+
+> ⚠️ **Pas de consensus clair** sur l'efficience des marchés
+
+---
+
+## Où échange-t-on ?
+
+### Marchés réglementés
+
+- Exemples : **NYSE, LSE, CME, SIX**
+- Lieu précis, strictement régulé
+- Processus de *clearing*
+- Trading électronique en croissance
+
+### Marchés OTC (*Over The Counter*)
+
+- Exemple : **Oanda**
+- Moins formel, moins transparent, plus risqué
+- *Market makers* qui proposent des *quotes*
+
+### Acteurs clés
+
+| Acteur | Rôle | Inventaire |
+|--------|------|-----------|
+| **Market maker** (ex. Oanda) | Prend un risque, propose des prix | ✅ Oui |
+| **Broker** (ex. Dukascopy) | Intermédiaire, pas de risque | ❌ Non |
+
+---
+
+## Les classes d'actifs
+
+- **Actions (*Equity*)** → dividendes périodiques
+- **Obligations (*Bonds*)** → prêt à banques/entreprises, prix fonction de la maturité et des coupons
+- **Matières premières (*Commodities*)** → blé, pétrole, … échangés via *futures*
+- **Devises (*Currencies*)** → cotées par paires, différentiel de taux d'intérêt
+
+> Les **devises** sont la *backbone* des marchés financiers
+
+---
+
+## Volumes de marché
+
+- Devises = **plus grand marché** : $\sim 5 \times 10^{12}$ \$/jour
+- EUR/USD = **25%** du volume total
+- 50% sont des *swaps*
+
+Flux EUR/USD estimé :
+
+$$\frac{5 \times 10^{12} \times 0.25 \times 0.5}{86400 \times 2} \approx 3.6 \text{ M\$/seconde}$$
+
+---
+
+## Principaux instruments
+
+| Instrument | Définition clé |
+|------------|---------------|
+| **Spot** | L'actif lui-même (action, devise) |
+| **Forward** | Engagement d'achat/vente à prix et date fixés |
+| **Futures** | *Forward* standardisé + *clearing* en bourse |
+| **Option** | *Droit* (pas obligation) d'achat/vente → exerçable ou non |
+| **Index** | Panier d'actifs (S&P 500, panier devises…) |
+
+> **Futures** : souvent revendus avant maturité (*roll over*) pour éviter la livraison physique
+
+---
+
+## *Stylised Facts* — Ce qui distingue les marchés d'un *random walk*
+
+### *Volatility Clustering* *(Cont, 2005)*
+
+- Grandes variations → suivies de **grandes variations**
+- Petites variations → suivies de **petites variations**
+- = **Hétéroscédasticité** → le **H** de GARCH
+
+### Autocorrélation négative à court terme *(Cont, 2001)*
+
+- Observée à **haute fréquence**, aux faibles lags $\tau$
+- La série tend à **revenir vers sa moyenne** (*mean-revert*) très rapidement
+
+### *Scaling Laws*
+
+- Similarités à **différentes échelles** de temps
+- $\mathbb{E}[|r|] \sim t$
+- Décrit comment passer d'une échelle à une autre
+
+### *Fat Tails* *(Cont 2001, Sewell 2011)*
+
+- Distribution des rendements → **queues bien plus épaisses** que la loi normale
+- Les événements extrêmes sont **beaucoup plus fréquents** que prévu
+- Impact majeur sur la **gestion des risques**
+
+### Autres faits stylisés
+
+- **Saisonnalité** : journalière, hebdomadaire, mensuelle, annuelle
+- **Asymétrie** dans certains marchés (ex. *equity*)
+- *Spread* fin ↔ volume élevé (**corrélation négative**)
+- Volume élevé ↔ forte volatilité (**corrélation positive**)
+
+---
+
+## Saisonnalité
+
+### *Equity* *(Frijns, 2006)*
+
+- Pics de volatilité/volume à **l'ouverture** et à **la clôture**
+
+### FX *(Masry, 2011)*
+
+- Marché ouvert **24h/24**, mais activité concentrée sur 3 sessions :
+
+  - 🌏 **Session asiatique** (Tokyo)
+  - 🌍 **Session européenne** (Londres) ← volume le plus élevé
+  - 🌎 **Session américaine** (New York)
+
+- **Chevauchements** de sessions = **pics de volume**
+
+---
+
+## Événements de marché
+
+| Type | Définition | Exemples |
+|------|-----------|---------|
+| **Endogène** | Vient du marché lui-même | Manque de liquidité |
+| **Exogène planifié** | News externes prévues | Non Farm Payroll (1er vendredi du mois, 8h30 EST), publication PIB |
+| **Exogène non planifié** | Chocs imprévisibles | BNS fixe plancher EUR/CHF (sept. 2011), attaque terroriste |
+
+---
+
+## Points clés à retenir
+
+- ✅ L'**EMH** est fondamentale mais **largement critiquée** — pas de consensus
+- ✅ Marchés réglementés vs **OTC** : différences de transparence et de risque
+- ✅ Les **devises** = marché le plus grand au monde (~3.6 M\$/s sur EUR/USD)
+- ✅ Les marchés réels ≠ *random walk* → présence de **faits stylisés**
+- ✅ Les *fat tails* impliquent que les **événements extrêmes** sont sous-estimés par la loi normale
+- ✅ Les **événements de marché** (endogènes/exogènes) impactent directement la dynamique des prix

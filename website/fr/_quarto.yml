@@ -25,9 +25,28 @@ website:
     
     contents:
       - section: "Cours"
-        contents: "ch*.qmd"
-      - section: "Exercices"
-        contents: "ex*.qmd"
+        contents: 
+          - section: "Introduction"
+            contents:
+              - text: "Details"
+                href: ch0c.qmd
+              - ch0.qmd
+              - text: "Synthese"
+                href: ch0r.qmd
+          - section: "Séries temporelles et modèles autorégressifs"
+            contents:
+              - text: "Details"
+                href: ch1c.qmd
+              - ch1.qmd
+              - text: "Synthese"
+                href: ch1r.qmd
+          - section: "Marchés et comportements"
+            contents:
+              - text: "Details"
+                href: ch2c.qmd
+              - ch2.qmd
+              - text: "Synthese"
+                href: ch2r.qmd
 
 
 format:

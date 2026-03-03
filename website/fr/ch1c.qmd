@@ -1,7 +1,3 @@
-Parfait, j'ai le contenu ! Je restructure maintenant les pages 24–55.
-
----
-
 # Séries temporelles et modèles autorégressifs
 
 ## Plan du chapitre
