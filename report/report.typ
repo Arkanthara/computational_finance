@@ -1,7 +1,6 @@
 // Main report file
 #import "template.typ": make-report, report-footnote
 #import "metadata.typ": my-report
-#import "@preview/theofig:0.1.0": definition
 #import "@preview/pyrunner:0.3.0" as py
 
 // Main content
@@ -14,227 +13,318 @@
   radius: 2pt,
 )
 
-= Computing returns
 
-The following series describes the value of a portfolio at the end of each month:
+```python
+R = [1/(100 + i) for i in range(12)]
+R_a = 1
+for R_i in R:
+  R_a *= (1 + R_i)
+R_a -= 1
+print(f"R_a = {R_a:.2f}")
+```
+#raw(
+  py.block(
+    ```
+    R = [1/(100 + i) for i in range(12)]
+    R_a = 1
+    for R_i in R:
+      R_a *= (1 + R_i)
+    R_a -= 1
+    f"R_a = {R_a:.2f}"
+    ```,
+  ),
+  lang: "python",
+)
 
-#align(center)[
-  #table(
-    columns: 14,
-    stroke: 0.5pt,
-    align: center,
-    [*Month*], [Jan], [Feb], [Mar], [Apr], [May], [Jun], [Jul], [Aug], [Sep], [Oct], [Nov], [Dec], [$t$],
-    [0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [$P(t)$],
-    [100], [101], [102], [103], [104], [105], [106], [107], [108], [109], [110], [111], [112],
-  )
-]
+= General instructions
 
-The initial value of the portfolio being 100, the annual return is:
+Each student is expected to upload on Moodle a zip file named as `firstname_lastname`, containing the following:
 
-$ R_a = R_12(12) = frac(P(12) - P(0), P(0)) = 12% $
+- A report in pdf format to answer exercise questions.
+- The code used to generate the results of the report.
+- If preferred, submit a unique Jupyter notebook with both code and report explanations.
 
-1. Compute monthly returns $\{R(t) mid t = 1, dots, 12\}$.
+= Deeper instructions
 
-  The monthly returns are the following:
-  - $R_1 = (P(1) - P(0))/P(0) = (101 - 100)/100 = 1/100$
-  - $R_2 = (P(2) - P(1))/P(1) = (102 - 101)/101 = 1/101$
-  - $R_3 = (P(3) - P(2))/P(2) = (103 - 102)/102 = 1/102$
-  - $R_4 = (P(4) - P(3))/P(3) = (104 - 103)/103 = 1/103$
-  - $R_5 = (P(5) - P(4))/P(4) = (105 - 104)/104 = 1/105$
-  - $R_6 = (P(6) - P(5))/P(5) = (106 - 105)/105 = 1/106$
-  - $R_7 = (P(7) - P(6))/P(6) = (107 - 106)/106 = 1/107$
-  - $R_8 = (P(8) - P(7))/P(7) = (108 - 107)/107 = 1/108$
-  - $R_9 = (P(9) - P(8))/P(8) = (109 - 108)/108 = 1/109$
-  - $R_10 = (P(10) - P(9))/P(9) = (110 - 109)/109 = 1/110$
-  - $R_11 = (P(11) - P(10))/P(10) = (111 - 110)/110 = 1/111$
-  - $R_12 = (P(12) - P(11))/P(11) = (112 - 111)/111 = 1/112$
+*Report:*
+- Answers to the TP questions. Figures and numerical results are necessary but strictly not sufficient: provide your analysis/comments as well.
+- Example: if your results surprise you, explain why and explain what the expected result was.
+- Pay attention to the presentation: axis labels, legend, etc.
 
-2. Compute the annual return $R_a$ from the monthly returns (you should find 12% again). Compare it to the sum of the monthly returns.
+*Code:*
+- Implementation questions + code used to produce the results and figures in the report.
+- Programming language of your choice.
+- Do not use ChatGPT, or any other LLM/AI-assisted tools while writing down your code. Try by yourself, otherwise it will be counted as failed.
+- I strongly recommend Python/Julia: I won't be able to assist you in the same way if you use a different language.
 
-  $ 1 + R_a = product_(i = 1)^12 (1 + R_i) <=> R_a = [product_(i = 1)^12 (1 + R_i)] - 1 = 12% $
+= Deadline
+
+Any questions to: Lorenzo Bini.
+
+Upload on Moodle due by: *March 9, 2026 at 11:59 pm*
+
+#pagebreak()
+
+= Correlation of two random variables
+
+- Let $A$ and $B$ be two independent random variables such that $A tilde cal(N)(mu_A, sigma_A)$ and $B tilde cal(N)(mu_B, sigma_B)$, with $mu_A = mu_B = 0$, $sigma_A = 1$ and $sigma_B = 2$.
+- Let $X$ and $Y$ be two random variables such that $X = A + 4B$ and $Y = 2A + B$.
+
+*1. Derive analytically the following quantities:*
+
+#set enum(numbering: "(a)")
+#let Var = math.op("Var")
+#let Cov = math.op("Cov")
+#let Cor = math.op("Cor")
+
++ $mu_X$, $mu_Y$, $sigma_X$ and $sigma_Y$, the expectations and standard deviations of $X$ and $Y$.
+
+  - #align(
+      left,
+      $
+        mu_X & = EE[X] \
+             & = EE[A + 4B] \
+             & = EE[A] + 4EE[B] \
+             & = mu_A + 4 mu_B \
+             & = 0
+      $,
+    )
+  - #align(
+      left,
+      $
+        mu_Y & = EE[Y] \
+             & = EE[2A + B] \
+             & = 2EE[A] + EE[B] \
+             & = 2mu_A + mu_B \
+             & = 0
+      $,
+    )
+  - #align(
+      left,
+      $
+        sigma_X^2 & = Var[X] \
+                  & = Var[A + 4B] \
+                  & = Var[A] + 4^2 Var[B] \
+                  & = sigma_A^2 + 4^2 sigma_B^2 \
+                  & = 1 + 16 dot 2^2 \
+                  & = 65 \
+      $,
+    )
+    So $sigma_X = sqrt(65)$
+  - #align(
+      left,
+      $
+        sigma_Y^2 & = Var[Y] \
+                  & = Var[2A + B] \
+                  & = 2^2 Var[A] + Var[B] \
+                  & = 4 sigma_A^2 + sigma_B^2 \
+                  & = 4 + 4 \
+                  & = 8 \
+      $,
+    )
+    So $sigma_Y = sqrt(8) = 2sqrt(2)$
+
++ The covariance between $X$ and $Y$, defined as:
+  $ Cov(X, Y) = bb(E)[(X - mu_X)(Y - mu_Y)] $
+
+  - #align(
+      left,
+      $
+        Cov(X, Y) & = EE[(X - mu_X)(Y - mu_Y)] \
+        & = EE[X Y] \
+        & = EE[(A + 4B)(2A + B)] \
+        & = EE[2A^2 + A B + 8A B + 4B^2] \
+        & = 2EE[A^2] + 9 EE[A B] + 4EE[B^2] \
+        & = 2EE[A^2] + 4EE[B^2] text("      Independance") ==> EE[A B] <=> EE[A]EE[B] \
+        & = 2(Var(A) + EE[A]^2) + 4(Var(B) + EE[B])^#report-footnote($Var(U) = EE[U^2] - EE[U]^2 <==> E[U^2] = Var(U) + EE[U]^2$) \
+        & = 2(sigma_A^2 + mu_A^2) + 4(sigma_B^2 + mu_B) \
+        & = 2sigma_A^2 + 4sigma_B^2 \
+        & = 18 \
+      $,
+    )
+
++ The correlation coefficient between $X$ and $Y$, defined as:
+  $ Cor(X, Y) = frac(Cov(X, Y), sigma_X sigma_Y) $
+  - #align(
+      left,
+      $
+        Cor(X, Y) & = Cov(X, Y)/(sigma_X sigma_Y) \
+                  & = 18/(sqrt(65) dot 2sqrt(2)) \
+                  & approx 0.789
+      $,
+    )
+
+#set enum(numbering: "1.")
+
+*2. Using the language of your choice:*
+
+#set enum(numbering: "(a)")
+
++ Simulate $n = 10000$ realizations of $A$ and $B$ and draw the graph of the corresponding realizations of $X$ vs realizations of $Y$.
 
   ```python
-  R = [1/(100 + i) for i in range(12)]
-  R_a = 1
-  for R_i in R:
-    R_a *= (1 + R_i)
-  R_a -= 1
-  print(f"R_a = {R_a:.2f}")
+  import numpy as np
+  import matplotlib.pyplot as plt
+
+  # Generate realizations
+  A = np.random.normal(loc=0, std=1)
+  B = np.random.normal(loc=0, std=2)
+
+  # Plot results
+  plt.figure()
+  plt.plot(A + 4 * B, 2 * A + B)
+  plt.title("Realizations of A vs B")
+  plt.show()
   ```
-  #raw(
-    py.block(
-      ```
-      R = [1/(100 + i) for i in range(12)]
-      R_a = 1
-      for R_i in R:
-        R_a *= (1 + R_i)
-      R_a -= 1
-      f"R_a = {R_a:.2f}"
-      ```,
-    ),
-    lang: "python",
+  #py.block(
+    ```
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    # Generate realizations
+    A = np.random.normal(loc=0, std=1)
+    B = np.random.normal(loc=0, std=2)
+
+    # Plot results
+    plt.figure()
+    plt.plot(A + 4 * B, 2 * A + B)
+    plt.title("Realizations of A vs B")
+    plt.show()
+    ```,
   )
 
 
++ How does this relate to the value of $"Cor"(X, Y)$? Is the slope equal to the correlation coefficient? Comment on this last point.
 
-3. Compute the average monthly return $R_m$ and compare it to the average of the monthly returns.
++ Compute the empirical correlation coefficient from the $n$ realizations and compare it to the value of $"Cor"(X, Y)$ obtained from the above analytical derivation (1c).
 
-  - Average monthly return:
-    $R_m = (1 + R_a/12)^12 - 1 = 2%$
+#set enum(numbering: "1.")
 
-    ```python
-    R_m = (1 + 12/100 * 1/12)**2
-    R_m -= 1
-    print(f"R_m = {R_m:.2f}")
-    ```
-    #raw(
-      py.block(
-        ```
-        R_m = (1 + 12/100 * 1/12)**2
-        R_m -= 1
-        f"R_m = {R_m:.2f}"
-        ```,
-      ),
-      lang: "python",
-    )
-  - Average of the monthly returns:
-    $1/12 sum_(i = 1)^12 R_i = 1/12 (1/100 + 1/101 + dots + 1/112) = 1%$
+*Hint:* In Python, one can generate series of $X$ and $Y$ with:
 
-    ```python
-    R = [1/(100 + i) for i in range(12)]
-    average = 0
-    for R_i in R:
-      average += R_i
-    average /= 12
-    print(f"Average of monthly returns: {average:.2f}")
-    ```
-    #raw(
-      py.block(
-        ```
-        R = [1/(100 + i) for i in range(12)]
-        average = 0
-        for R_i in R:
-          average += R_i
-        average /= 12
-        f"Average of monthly returns: {average:.2f}"
-        ```,
-      ),
-      lang: "python",
-    )
+```python
+import numpy as np
+np.random.seed(0)
+n = 10000
+mu_a, sig_a = 0, 1
+mu_b, sig_b = 0, 2
+a = np.random.normal(mu_a, sig_a, n)
+b = np.random.normal(mu_b, sig_b, n)
+x = a + 4 * b
+y = 2 * a + b
+```
 
-  So it means that the average of the monthly returns is different from the average monthly return.
+#pagebreak()
 
+= Hidden sine
 
-= Continuously compounded return
+Consider the following time series:
 
-Consider a constant annual interest rate of $R = 2.11%$ with a continuous compounding.
+$ forall t in {1, dots, n}, quad X_t = sin lr((frac(2 pi t, T))) + epsilon_t $
 
-1. With an initial amount of \$10 000, what will be the value in:
-  - 1 year?
-  - 5 years?
-  - 10 years?
+with $epsilon_t tilde cal(N)(0, 1)$, $T = 10$ and $n = 1000$.
 
-  We note $n = 1$ year, $F V_n$ the Future Value at year $n$ and $P V = 10000$ the Present Value.
+#set enum(numbering: "1.")
 
-  The continuous compounding formula is $F V_n = P V dot e^(R n)$
++ Plot a realization of the time series above.
 
-  So we have:
-  - $F V_1 = P V dot e^(R) = 10000 dot e^(0.0211) = 10213.24 \$$
-  - $F V_5 = P V dot e^(R dot 5) = 10000 dot e^(0.0211 dot 5) = 11112.66 \$$
-  - $F V_10 = P V dot e^(R dot 10) = 10000 dot e^(0.0211 dot 10) = 12349.12 \$$
++ Compute and plot the corresponding ACF graph for lags $0$ to $50$.
 
-2. What is the initial amount to have a final amount of \$10 000 in:
-  - 1 year?
-  - 3 years?
-  - 10 years?
++ Try with other values of $T$ and comment on the impact of $T$ on the ACF graph.
 
-  Now, we know the final amount $F V_n = 10000\$$.
-  So the initial amount $P V$ is:
-  $ F V_n = P V dot e^(R n) <=> P V = F V_n e^(-R n) $
-  So to have a final amount of $10000$ after $n$ years, the initial amount must be:
-  - For $n = 1$: $P V = F V_1 e^(-R) = 10000 e^(-0.0211) = 9791.21\$$
-  - For $n = 3$: $P V = F V_3 e^(-R dot 3) = 10000 e^(-0.0211 dot 3) = 9386.62\$$
-  - For $n = 10$: $P V = F V_10 e^(-R dot 10) = 10000 e^(-0.0211 dot 10) = 8097.74\$$
+= AR model on an empirical time series
 
-= Portfolio of Microsoft and Starbucks stock
+The file `eur_usd.txt` (download it from Moodle) contains the daily EUR/USD price evolution with the following data structure:
 
-You purchase 10 shares of each Microsoft and Starbucks stock at the end of month $t - 1$ at prices $P_"msft"(t-1) = \$85$ and $P_"sbux"(t-1) = \$30$.
+```
+timestamp price
+```
 
-1. Compute $V(t-1)$, the initial value of the portfolio.
+where `timestamp` denotes the time (in seconds) measured starting from 01 Jan 1970 00:00:00.000.
 
-  The initial value $V(t - 1)$ of the portfolio is:
-  $ V(t - 1) = 10 dot P_"msft"(t-1) + 10 dot P_"sbux"(t-1) = 10 dot 85 + 10 dot 30 = 850 + 300 = 1150\$ $
+You can use the following snippet of Python code to load the data:
 
-2. Compute the portfolio shares $alpha_"msft"$ and $alpha_"sbux"$.
-  
-  - The portfolio share $alpha_"msft"$ has a value of: $alpha_"msft" = 10 / (10 + 10) = 1/2$
+```python
+from datetime import datetime
+import numpy as np
+data = np.loadtxt('eur_usd.txt')
+price_ts = data[:, 1]
+# Tip: You can convert the timestamp to a better format:
+days = [datetime.fromtimestamp(x).strftime('%b %d') for x in data[:, 0]]
+```
 
-  - The portfolio share $alpha_"sbux"$ has a value of: $alpha_"sbux" = 10 / (10 + 10) = 1/2$
+*1. Preprocessing of the time series.*
 
-Consider now that at the end of month $t$, the prices are $P_"msft"(t) = \$90$ and $P_"sbux"(t) = \$28$.
+#set enum(numbering: "(a)")
 
-3. Compute $R_"msft"(t)$ and $R_"sbux"(t)$, the one-period return of Microsoft and Starbucks stocks.
++ Plot the time series. Does it look stationary?
 
-  - $R_"msft"(t) = (P_"msft"(t) - P_"msft"(t-1))/P_"msft"(t-1) = (90 - 85)/85 approx 5.9%$
-  - $R_"sbux"(t) = (P_"sbux"(t) - P_"sbux"(t-1))/P_"sbux"(t-1) = (28 - 30)/30 approx -6.7%$
++ Compute the corresponding daily returns and plot this new time series. Does it look stationary? From now on subtract the mean of this series to center it around zero.
 
-4. Compute the one-period return of the portfolio $R(t)$ and its value $V(t)$ at the end of month $t$.
+#set enum(numbering: "1.")
 
-  - The one-period return of the portfolio $R(t)$ is:
-  $ R(t) = sum_(i in {"msft", "sbux"}) alpha_i R_i = alpha_"msft" R_"msft" + alpha_"sbux" R_"sbux" = 1/2 dot 5.9% - 1/2 dot 6.7% = -0.4% $
-  - The value $V(t)$ of the portfolio is:
-  $ V(t) = V(t - 1) (1 + R(t)) = 1150 (1 - 0.004) = 1145.4\$ $
+*2. Analysis of the time series of daily returns.*
 
-= Present / Future value
+#set enum(numbering: "(a)")
 
-Consider a constant annual return $R = 4.5%$, semi-annually compounded (i.e. two payments a year).
++ Compute and plot the ACF for lags $0$ to $10$.
 
-1. With an initial amount of \$10 000, what will be the value in:
-  - 1 year?
-  - 5 years?
-  - 10 years?
++ Using the analytical expressions seen during the course, compute the parameter $phi_1$ of the AR(1) model for this time series.
 
-  We note $n = 1$ year, $F V_n$ the Future Value at year $n$ and $P V = 10000$ the Present Value.
++ Use your model to do predictions from the initial value. Plot the predictions along the time series of daily returns on the same graph. What do you think of these predictions?
 
-  For a semi-annual compounded, we have:
+#set enum(numbering: "1.")
 
-  $ F V_n = P V dot (1 + R/2)^(2 dot n) $
+*3. AR(p) model with a library.*
 
-  So we have:
-  - $F V_1 = P V dot (1 + R/2)^(2)= 10000 dot (1 + 0.045/2)^(2) = 10455.06\$$
-  - $F V_5 = P V dot (1 + R/2)^(2 dot 5)= 10000 dot (1 + 0.045/2)^(10) = 12492.03\$$
-  - $F V_10 = P V dot (1 + R/2)^(2 dot 10)= 10000 dot (1 + 0.045/2)^(20) = 15605.09\$$
+#set enum(numbering: "(a)")
 
++ In Python, you can use the `statsmodels` library to fit an AR($p$) model on a time series.
 
-2. What is the initial amount to have a final amount of \$10 000 in:
-  - 1 year?
-  - 3 years?
-  - 10 years?
+  ```python
+  from statsmodels.tsa.ar_model import AutoReg
+  predictions = AutoReg(your_time_series, lags=p).fit().predict()
+  ```
 
-  We know the final amount $F V_n = 10000\$$
+  Plot the AR(1) predictions computed with this library and compare it to the predictions of your model obtained in 2c (hint: it should be really similar).
 
-  We want to find $P V$.
++ Using this library, plot the predictions for higher-order AR models. Does the quality of the predictions improve?
 
-  For a semi-annual compounded, we have:
+#set enum(numbering: "1.")
 
-  $ F V_n = P V dot (1 + R/2)^(2 dot n) <=> P V = F V_n dot (1 + R/2)^(-2 dot n) $
+#pagebreak()
 
-  So to have a final amount of $10000$ after $n$ years, the initial amount must be:
+= FX risk management: EWMA volatility and 1-day VaR
 
-  - For $n = 1$: $P V = F V_1 dot (1 + R/2)^(-2) = 10000 dot (1 + 0.045/2)^(-2) = 9564.74\$$
-  - For $n = 3$: $P V = F V_3 dot (1 + R/2)^(-2 dot 3) = 10000 dot (1 + 0.045/2)^(-6) = 8750.24\$$
-  - For $n = 10$: $P V = F V_10 dot (1 + R/2)^(-2 dot 10) = 10000 dot (1 + 0.045/2)^(-20) = 6408.16\$$
+A bit of introduction before delving into the exercise:
 
+- *FX risk:* If you hold a position in a foreign currency (e.g., you are long EUR/USD), you are exposed to FX risk, which is the risk that exchange rate movements will lead to losses.
 
-3. *Optional:* Let $R$ be the one-period return, $n$ the number of periods, and $m$ the number of payments per period. How would you prove that:
+- *EWMA volatility:* The Exponentially Weighted Moving Average (EWMA) model estimates volatility by giving more weight to recent returns. The formula $sigma_t^2 = lambda sigma_(t-1)^2 + (1 - lambda) r_(t-1)^2$ updates the variance estimate at time $t$ based on the previous variance and the most recent return.
 
-  $ lim_(m -> +infinity) lr((1 + frac(R, m)))^(m n) = e^(R n) $
+- *VaR:* Value-at-Risk (VaR) is a risk measure that quantifies the potential loss in value of a portfolio over a defined period for a given confidence level. For example, a 1-day 99% VaR of $X$ means there is a 1% chance that the loss will exceed $X$ in 1 day.
 
-  // According to Taylor expansion, we have:
+- *Rolling 1-day forecast:* This means that each day, you compute a new 1-day-ahead forecast for VaR using all available data up to that day. As new data comes in, your estimates will update, reflecting the latest market conditions.
 
-  // #align(left, 
-  // $
-  //   e^(R n) &= sum_k^infinity (R n)^k/k!
-                 
-  // $
-  // )
+You will now have to build a simple EWMA model and translate it into a 1-day VaR forecast, then evaluate how often losses breach the VaR threshold. Assuming you hold an EUR/USD exposure, use the daily EUR/USD prices in `eur_usd.txt` to:
+
+#set enum(numbering: "1.")
+
++ Compute the daily log-returns $r_t = ln(P_t \/ P_(t-1))$ and plot the series.
+
++ Estimate the conditional volatility with an EWMA model:
+  $ sigma_t^2 = lambda sigma_(t-1)^2 + (1 - lambda) r_(t-1)^2 $
+  using $lambda = 0.94$. Initialize $sigma_0^2$ with the sample variance of the return series. Plot $sigma_t$.
+
++ Assume a position value of $V_0 = 10'000'000$ USD. Compute the 1-day VaR at 99% and 95%:
+  $ "VaR"_t^alpha = z_alpha sigma_t V_0, quad z_(0.99) = 2.326, quad z_(0.95) = 1.645 $
+  where $z_alpha$ is the standard normal quantile satisfying $P(Z <= z_alpha) = alpha$ for $Z tilde cal(N)(0, 1)$. Plot the daily loss $L_t = -V_0 r_t$ together with $"VaR"_t^(99%)$ and $"VaR"_t^(95%)$.
+
++ *(Optional)* Backtest the VaR: since $sigma_t$ uses $r_(t-1)$, interpret $"VaR"_t$ as a 1-day-ahead forecast for day $t$. Compute the fraction of days such that $L_t > "VaR"_t^(99%)$ and $L_t > "VaR"_t^(95%)$. Compare to the expected exceedance rates (1% and 5%) and report the expected number of exceedances ($n_alpha$) for the sample size. Comment on the impact of a short sample.
+
+  #block(
+    fill: luma(235),
+    inset: 8pt,
+    radius: 4pt,
+    [*Note on the interpretation:* VaR backtests are noisy on short samples. If you have only a few dozen observations, it is entirely plausible to observe zero 99% exceedances even when the model is correct. This exercise is about the workflow and interpretation, not about passing a formal backtest.],
+  )
