@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    // Typst language server + live PDF preview (the pinned-preview command
+    // is used in settings.json to open report.generated.typ automatically).
+    "myriad-dreamin.tinymist"
+  ]
+}

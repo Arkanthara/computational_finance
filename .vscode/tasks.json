@@ -1,0 +1,46 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      // Runs the Python preprocessor in watch mode.
+      // The -d flag keeps the intermediate report.generated.typ on disk so
+      // the Tinymist extension can track and preview it continuously.
+      "label": "typst-pyexec: watch",
+      "type": "shell",
+      "command": "uv run typst_pyexec.py -w -d report.typ",
+      "options": { "cwd": "${workspaceFolder}/report" },
+      "isBackground": true,
+      // Mark the task as "active" once the first preprocessing line appears,
+      // and never consider it finished (it keeps running until killed).
+      "problemMatcher": {
+        "owner": "typst-pyexec",
+        "pattern": { "regexp": "^\\[typst-pyexec\\]", "message": 1 },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern":  "^\\[typst-pyexec\\]",
+          "endsPattern":    "^\\[typst-pyexec\\] Watching"
+        }
+      },
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "showReuseMessage": false
+      }
+    },
+    {
+      // One-shot compile: produces report.pdf without leaving anything running.
+      "label": "typst-pyexec: compile",
+      "type": "shell",
+      "command": "uv run typst_pyexec.py -c report.typ",
+      "options": { "cwd": "${workspaceFolder}/report" },
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    }
+  ]
+}

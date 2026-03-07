@@ -1,7 +1,7 @@
 // Main report file
 #import "template.typ": make-report, report-footnote
 #import "metadata.typ": my-report
-#import "@preview/pyrunner:0.3.0" as py
+// #import ".typst_pyimage/pyimage.typ": pyinit, pycontent, pyimage
 
 // Main content
 #show: make-report.with(my-report)
@@ -22,19 +22,19 @@ for R_i in R:
 R_a -= 1
 print(f"R_a = {R_a:.2f}")
 ```
-#raw(
-  py.block(
-    ```
-    R = [1/(100 + i) for i in range(12)]
-    R_a = 1
-    for R_i in R:
-      R_a *= (1 + R_i)
-    R_a -= 1
-    f"R_a = {R_a:.2f}"
-    ```,
-  ),
-  lang: "python",
-)
+// #raw(
+//   py.block(
+//     ```
+//     R = [1/(100 + i) for i in range(12)]
+//     R_a = 1
+//     for R_i in R:
+//       R_a *= (1 + R_i)
+//     R_a -= 1
+//     f"R_a = {R_a:.2f}"
+//     ```,
+//   ),
+//   lang: "python",
+// )
 
 = General instructions
 
@@ -166,32 +166,30 @@ Upload on Moodle due by: *March 9, 2026 at 11:59 pm*
   import numpy as np
   import matplotlib.pyplot as plt
 
-  # Generate realizations
-  A = np.random.normal(loc=0, std=1)
-  B = np.random.normal(loc=0, std=2)
+  # Generate n realizations
+
+  np.random.seed(0)
+  n = 10000
+  mu_a, sig_a = 0, 1
+  mu_b, sig_b = 0, 2
+  a = np.random.normal(mu_a, sig_a, n)
+  b = np.random.normal(mu_b, sig_b, n)
+  x = a + 4 * b
+  y = 2 * a + b
+
+  z = np.linspace(np.min(x), np.max(x), 200)
 
   # Plot results
   plt.figure()
-  plt.plot(A + 4 * B, 2 * A + B)
-  plt.title("Realizations of A vs B")
+  plt.plot(x, y, 'o', label='Realizations')
+  plt.plot(z, (1 - 18 / (np.sqrt(65) * 2 * np.sqrt(2))) * z, 'r--', label='Correlation line')
+  plt.xlabel("Realizations of X")
+  plt.ylabel("Realizations of Y")
+  plt.title("Realizations of X vs Y" )
+  plt.legend()
   plt.show()
   ```
-  #py.block(
-    ```
-    import numpy as np
-    import matplotlib.pyplot as plt
 
-    # Generate realizations
-    A = np.random.normal(loc=0, std=1)
-    B = np.random.normal(loc=0, std=2)
-
-    # Plot results
-    plt.figure()
-    plt.plot(A + 4 * B, 2 * A + B)
-    plt.title("Realizations of A vs B")
-    plt.show()
-    ```,
-  )
 
 
 + How does this relate to the value of $"Cor"(X, Y)$? Is the slope equal to the correlation coefficient? Comment on this last point.
@@ -199,20 +197,6 @@ Upload on Moodle due by: *March 9, 2026 at 11:59 pm*
 + Compute the empirical correlation coefficient from the $n$ realizations and compare it to the value of $"Cor"(X, Y)$ obtained from the above analytical derivation (1c).
 
 #set enum(numbering: "1.")
-
-*Hint:* In Python, one can generate series of $X$ and $Y$ with:
-
-```python
-import numpy as np
-np.random.seed(0)
-n = 10000
-mu_a, sig_a = 0, 1
-mu_b, sig_b = 0, 2
-a = np.random.normal(mu_a, sig_a, n)
-b = np.random.normal(mu_b, sig_b, n)
-x = a + 4 * b
-y = 2 * a + b
-```
 
 #pagebreak()
 
@@ -227,6 +211,19 @@ with $epsilon_t tilde cal(N)(0, 1)$, $T = 10$ and $n = 1000$.
 #set enum(numbering: "1.")
 
 + Plot a realization of the time series above.
+
+  ```python
+  T = 10
+  X_t = lambda t: np.sin(2 * np.pi * t / T) + np.random.normal(0, 1)
+  X = X_t(np.arange(1, 1001))
+  
+  plt.figure()
+  plt.plot(X)
+  plt.xlabel("Time")
+  plt.ylabel("X_t")
+  plt.title("Realization of the time series")
+  plt.show()
+  ```
 
 + Compute and plot the corresponding ACF graph for lags $0$ to $50$.
 
