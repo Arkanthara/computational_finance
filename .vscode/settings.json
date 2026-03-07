@@ -3,8 +3,7 @@
   // always reflects executed Python output, not the raw source.
   "tinymist.preview.pinPreviewFile": "report/.typst_pyexec/report.generated.typ",
 
-  // Refresh the preview as soon as the file changes on disk (the watch task
-  // rewrites .typst_pyexec/report.generated.typ every time you save report.typ).
+  // Refresh the preview only when the generated file is saved to disk.
   "tinymist.preview.refresh": "onSave",
 
   // Keep Typst diagnostics scoped to the report folder so stray .typ files

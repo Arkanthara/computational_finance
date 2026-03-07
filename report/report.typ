@@ -213,10 +213,9 @@ with $epsilon_t tilde cal(N)(0, 1)$, $T = 10$ and $n = 1000$.
 + Plot a realization of the time series above.
 
   ```python
-  T = 10
-  X_t = lambda t: np.sin(2 * np.pi * t / T) + np.random.normal(0, 1)
-  X = X_t(np.arange(1, 1001))
-  
+  X_t = lambda t, T: np.sin(2 * np.pi * t / T) + np.random.normal(0, 1)
+  X = X_t(np.arange(1, 1001), 10)
+
   plt.figure()
   plt.plot(X)
   plt.xlabel("Time")
@@ -227,7 +226,31 @@ with $epsilon_t tilde cal(N)(0, 1)$, $T = 10$ and $n = 1000$.
 
 + Compute and plot the corresponding ACF graph for lags $0$ to $50$.
 
+  The Autocorrelation Function is defined as the correlation between the variable and itself with a shift of $tau$:
+
+  $ Cor(X_t, X_(t + tau)) = Cov(X_t, X_(t + tau))/(sigma_t sigma_(t + tau)) $
+
+  So the ACF graph for lags $0$ to $50$ gives:
+
+  ```python
+  from statsmodels.graphics.tsaplots import plot_acf
+  plot_acf(X, lags=np.arange(51))
+  plt.show()
+  ```
+  
+
+
 + Try with other values of $T$ and comment on the impact of $T$ on the ACF graph.
+
+  ```python
+  plot_acf(X_t(np.arange(1, 1001), 20), lags=np.arange(51))
+  plt.show()
+  ```
+
+  ```python
+  plot_acf(X_t(np.arange(1, 1001), 5), lags=np.arange(51))
+  plt.show()
+  ```
 
 = AR model on an empirical time series
 
@@ -255,6 +278,17 @@ days = [datetime.fromtimestamp(x).strftime('%b %d') for x in data[:, 0]]
 #set enum(numbering: "(a)")
 
 + Plot the time series. Does it look stationary?
+
+  ```python
+  plt.figure()
+  plt.title("Time series")
+  plt.plot(days, price_ts)
+  plt.xlabel("Days")
+  plt.ylabel("Price")
+  plt.legend()
+  plt.gcf().autofmt_xdate()
+  plt.show()
+  ```
 
 + Compute the corresponding daily returns and plot this new time series. Does it look stationary? From now on subtract the mean of this series to center it around zero.
 

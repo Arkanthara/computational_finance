@@ -6,4 +6,6 @@
 *.pdf
 *_extensions
 *.lock
+*.typst_pyexec
+*__pycache__
 
