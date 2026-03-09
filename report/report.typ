@@ -14,57 +14,6 @@
 )
 
 
-```python
-R = [1/(100 + i) for i in range(12)]
-R_a = 1
-for R_i in R:
-  R_a *= (1 + R_i)
-R_a -= 1
-print(f"R_a = {R_a:.2f}")
-```
-// #raw(
-//   py.block(
-//     ```
-//     R = [1/(100 + i) for i in range(12)]
-//     R_a = 1
-//     for R_i in R:
-//       R_a *= (1 + R_i)
-//     R_a -= 1
-//     f"R_a = {R_a:.2f}"
-//     ```,
-//   ),
-//   lang: "python",
-// )
-
-= General instructions
-
-Each student is expected to upload on Moodle a zip file named as `firstname_lastname`, containing the following:
-
-- A report in pdf format to answer exercise questions.
-- The code used to generate the results of the report.
-- If preferred, submit a unique Jupyter notebook with both code and report explanations.
-
-= Deeper instructions
-
-*Report:*
-- Answers to the TP questions. Figures and numerical results are necessary but strictly not sufficient: provide your analysis/comments as well.
-- Example: if your results surprise you, explain why and explain what the expected result was.
-- Pay attention to the presentation: axis labels, legend, etc.
-
-*Code:*
-- Implementation questions + code used to produce the results and figures in the report.
-- Programming language of your choice.
-- Do not use ChatGPT, or any other LLM/AI-assisted tools while writing down your code. Try by yourself, otherwise it will be counted as failed.
-- I strongly recommend Python/Julia: I won't be able to assist you in the same way if you use a different language.
-
-= Deadline
-
-Any questions to: Lorenzo Bini.
-
-Upload on Moodle due by: *March 9, 2026 at 11:59 pm*
-
-#pagebreak()
-
 = Correlation of two random variables
 
 - Let $A$ and $B$ be two independent random variables such that $A tilde cal(N)(mu_A, sigma_A)$ and $B tilde cal(N)(mu_B, sigma_B)$, with $mu_A = mu_B = 0$, $sigma_A = 1$ and $sigma_B = 2$.
@@ -182,7 +131,6 @@ Upload on Moodle due by: *March 9, 2026 at 11:59 pm*
   # Plot results
   plt.figure()
   plt.plot(x, y, 'o', label='Realizations')
-  plt.plot(z, (1 - 18 / (np.sqrt(65) * 2 * np.sqrt(2))) * z, 'r--', label='Correlation line')
   plt.xlabel("Realizations of X")
   plt.ylabel("Realizations of Y")
   plt.title("Realizations of X vs Y" )
@@ -194,7 +142,19 @@ Upload on Moodle due by: *March 9, 2026 at 11:59 pm*
 
 + How does this relate to the value of $"Cor"(X, Y)$? Is the slope equal to the correlation coefficient? Comment on this last point.
 
+  The slope can be obtained by computing $Cov(X, Y) / Var(X)$ whereas the correlation coefficient can be obtained by computing $Cov(X, Y) / (sigma_X sigma_Y)$.
+
+  So as $sigma_X^2 = 65 != sigma_X sigma_Y = sqrt(65) 2sqrt(2)$, the slope is not equal to the correlation coefficient.
+
 + Compute the empirical correlation coefficient from the $n$ realizations and compare it to the value of $"Cor"(X, Y)$ obtained from the above analytical derivation (1c).
+
+  ```python
+  print(f"Empirical correlation coefficient Cor(X, Y): {np.corrcoef(x, y)[0, 1]}")
+  ```
+
+  and $"Cor"(X, Y) approx 0.789$ from analytical derivation (1c).
+
+  So correlation coefficient are approximately the same between empirical correlation coefficient and analytical coefficient.
 
 #set enum(numbering: "1.")
 
@@ -213,7 +173,7 @@ with $epsilon_t tilde cal(N)(0, 1)$, $T = 10$ and $n = 1000$.
 + Plot a realization of the time series above.
 
   ```python
-  X_t = lambda t, T: np.sin(2 * np.pi * t / T) + np.random.normal(0, 1)
+  X_t = lambda t, T: np.sin(2 * np.pi * t / T) + np.random.normal(0, 1, size=len(t))
   X = X_t(np.arange(1, 1001), 10)
 
   plt.figure()
@@ -237,7 +197,7 @@ with $epsilon_t tilde cal(N)(0, 1)$, $T = 10$ and $n = 1000$.
   plot_acf(X, lags=np.arange(51))
   plt.show()
   ```
-  
+
 
 
 + Try with other values of $T$ and comment on the impact of $T$ on the ACF graph.
@@ -251,6 +211,10 @@ with $epsilon_t tilde cal(N)(0, 1)$, $T = 10$ and $n = 1000$.
   plot_acf(X_t(np.arange(1, 1001), 5), lags=np.arange(51))
   plt.show()
   ```
+
+  We have tried to plot ACF graph for $T' = 2T$ and for $T' = T/2$.
+  We can observe that for the plot obtained with $T' = 2T$, the period is two times bigger than the original, and with $T' = T/2$, the period is two times smaller than the original.
+  So it means that $T$ control the period of the ACF.
 
 = AR model on an empirical time series
 
@@ -285,12 +249,36 @@ days = [datetime.fromtimestamp(x).strftime('%b %d') for x in data[:, 0]]
   plt.plot(days, price_ts)
   plt.xlabel("Days")
   plt.ylabel("Price")
-  plt.legend()
+  plt.xticks((plt.xticks()[0])[::5])
   plt.gcf().autofmt_xdate()
   plt.show()
   ```
 
+  The time series don't look stationary. Indeed, the time series seems to increase over time.
+
 + Compute the corresponding daily returns and plot this new time series. Does it look stationary? From now on subtract the mean of this series to center it around zero.
+
+  ```python
+  def daily_returns(X: np.ndarray) -> np.ndarray:
+    returns = (np.roll(X, 1) - X)/X
+    returns[0] = 0.
+    return returns
+
+  # Center the time series
+  X = price_ts - np.mean(price_ts)
+  returns = daily_returns(X)
+
+  plt.figure()
+  plt.title("Daily returns")
+  plt.plot(days, returns)
+  plt.xlabel("Days")
+  plt.ylabel("Returns")
+  plt.xticks((plt.xticks()[0])[::5])
+  plt.gcf().autofmt_xdate()
+  plt.show()
+  ```
+
+  The corresponding daily returns look stationary. Indeed, the mean seems to be constant and the values varies around the mean with some fixed variance.
 
 #set enum(numbering: "1.")
 
@@ -300,9 +288,54 @@ days = [datetime.fromtimestamp(x).strftime('%b %d') for x in data[:, 0]]
 
 + Compute and plot the ACF for lags $0$ to $10$.
 
+  ```python
+  plot_acf(returns, lags=np.arange(11))
+  ```
+
 + Using the analytical expressions seen during the course, compute the parameter $phi_1$ of the AR(1) model for this time series.
 
+  We have:
+
+  $ phi_1 = Cov(X_t, X_(t + 1))/Var(X_t) = rho_1 $
+
+  with $rho_1$ the autocorrelation coefficient at lag 1.
+
+  So we have:
+
+  ```python
+  from statsmodels.tsa.stattools import acf
+
+  phi_1 = acf(X)[1]
+  print(f"phi_1 = {phi_1}")
+  ```
+
+
 + Use your model to do predictions from the initial value. Plot the predictions along the time series of daily returns on the same graph. What do you think of these predictions?
+
+  ```python
+  def AR(phi: float, x_t: float, size: int, std_noise: float) -> np.ndarray:
+    x = [x_t]
+    for i in range(size - 1):
+      x.append(x[-1] * phi + np.random.normal(0, std_noise))
+    return np.array(x)
+
+  plt.figure()
+  plt.title("Daily returns")
+  plt.plot(days, returns, label="Original daily returns")
+  plt.plot(days, AR(phi_1, returns[0], len(returns), 0.1), label="Prediction")
+  plt.xlabel("Days")
+  plt.ylabel("Returns")
+  plt.xticks((plt.xticks()[0])[::5])
+  plt.gcf().autofmt_xdate()
+  plt.legend()
+  plt.show()
+  ```
+
+  These predictions are very bad.
+  Indeed, it seems to be some random walk that predict nothing about what will happen.
+  It's because there is not enough information used to perform prediction: taking only one value to predict the next value don't allow to make a good prediction.
+
+  To increase the accuracy of the prediction, more values must be taken into account.
 
 #set enum(numbering: "1.")
 
@@ -313,17 +346,57 @@ days = [datetime.fromtimestamp(x).strftime('%b %d') for x in data[:, 0]]
 + In Python, you can use the `statsmodels` library to fit an AR($p$) model on a time series.
 
   ```python
+  %| execute: false
   from statsmodels.tsa.ar_model import AutoReg
   predictions = AutoReg(your_time_series, lags=p).fit().predict()
   ```
 
   Plot the AR(1) predictions computed with this library and compare it to the predictions of your model obtained in 2c (hint: it should be really similar).
 
+  ```python
+  from statsmodels.tsa.ar_model import AutoReg
+
+  predictions = AutoReg(returns, lags=1).fit().predict()
+
+  plt.figure()
+  plt.title("Daily returns")
+  plt.plot(days, returns, label="Original daily returns")
+  plt.plot(days, AR(phi_1, returns[1], len(returns), 0.1), label="Prediction handcrafted")
+  plt.plot(days, predictions, label="Prediction using AutoReg")
+  plt.xlabel("Days")
+  plt.ylabel("Returns")
+  plt.xticks((plt.xticks()[0])[::5])
+  plt.gcf().autofmt_xdate()
+  plt.legend()
+  plt.show()
+
+  ```
+
+  The AR(1) predictions computed with the library looks similar to the prediction obtained by my model.
+
 + Using this library, plot the predictions for higher-order AR models. Does the quality of the predictions improve?
 
-#set enum(numbering: "1.")
+  ```python
+  for i in [10, 20, 25]:
+    plt.figure()
+    plt.title("Daily returns")
+    plt.plot(days, returns, label="Original daily returns")
+    plt.plot(days, AutoReg(returns, lags=i).fit().predict(), label=f"AR({i})")
+    plt.xlabel("Days")
+    plt.ylabel("Returns")
+    plt.xticks((plt.xticks()[0])[::5])
+    plt.gcf().autofmt_xdate()
+    plt.legend()
+    plt.show()
+  ```
 
-#pagebreak()
+  With higher-order AR models, the quality of the predictions improve.
+  Indeed, the predictions curve are closer to the original curves.
+  For instance, the prediction predict correctly the big pick that appears on the daily returns.
+  And for AR(25), the prediction of the pick is close to the real value of the pick whereas for AR(10), the pick is predicted, but the magnitude of the pick is too small.
+
+
+#set enum(numbering: "1.")
 
 = FX risk management: EWMA volatility and 1-day VaR
 
@@ -343,13 +416,67 @@ You will now have to build a simple EWMA model and translate it into a 1-day VaR
 
 + Compute the daily log-returns $r_t = ln(P_t \/ P_(t-1))$ and plot the series.
 
+  ```python
+  def daily_log_returns(X: np.ndarray) -> np.ndarray:
+    log_returns = np.log(np.roll(X, 1)/X)
+    log_returns[0] = 0.
+    return log_returns
+
+  log_returns = daily_log_returns(price_ts)
+
+  plt.figure()
+  plt.title("Daily log-returns")
+  plt.plot(days, returns, label="daily log-returns")
+  plt.xlabel("Days")
+  plt.ylabel("Returns")
+  plt.xticks((plt.xticks()[0])[::5])
+  plt.gcf().autofmt_xdate()
+  plt.show()
+
+  ```
+
 + Estimate the conditional volatility with an EWMA model:
   $ sigma_t^2 = lambda sigma_(t-1)^2 + (1 - lambda) r_(t-1)^2 $
   using $lambda = 0.94$. Initialize $sigma_0^2$ with the sample variance of the return series. Plot $sigma_t$.
 
+  ```python
+  def ewma(r: np.ndarray, l: float = 0.94):
+    sigma = [np.var(r)]
+    for i in range(1, len(r)):
+      sigma.append(l * sigma[i-1] + (1 - l) * r[i - 1]**2)
+    return np.array(sigma)
+
+  plt.figure()
+  plt.title("EWMA Model")
+  plt.plot(days, np.sqrt(ewma(log_returns)))
+  plt.xlabel("Days")
+  plt.ylabel("Conditional volatility")
+  plt.xticks((plt.xticks()[0])[::5])
+  plt.gcf().autofmt_xdate()
+  plt.show()
+  ```
+
 + Assume a position value of $V_0 = 10'000'000$ USD. Compute the 1-day VaR at 99% and 95%:
   $ "VaR"_t^alpha = z_alpha sigma_t V_0, quad z_(0.99) = 2.326, quad z_(0.95) = 1.645 $
   where $z_alpha$ is the standard normal quantile satisfying $P(Z <= z_alpha) = alpha$ for $Z tilde cal(N)(0, 1)$. Plot the daily loss $L_t = -V_0 r_t$ together with $"VaR"_t^(99%)$ and $"VaR"_t^(95%)$.
+
+  ```python
+  V_0 = 1e7
+  z_99 = 2.326
+  z_95 = 1.645
+  plt.figure()
+  plt.title("1-day VaR")
+  plt.plot(days, z_95 * V_0 * np.sqrt(ewma(log_returns)), label="1-day VaR at 95%")
+  plt.plot(days, z_99 * V_0 * np.sqrt(ewma(log_returns)), label="1-day VaR at 99%")
+  plt.plot(days, -V_0 * log_returns, label="daily loss")
+  plt.xlabel("Days")
+  plt.ylabel("1-day VaR")
+  plt.xticks((plt.xticks()[0])[::5])
+  plt.gcf().autofmt_xdate()
+  plt.legend()
+  plt.show()
+
+  ```
 
 + *(Optional)* Backtest the VaR: since $sigma_t$ uses $r_(t-1)$, interpret $"VaR"_t$ as a 1-day-ahead forecast for day $t$. Compute the fraction of days such that $L_t > "VaR"_t^(99%)$ and $L_t > "VaR"_t^(95%)$. Compare to the expected exceedance rates (1% and 5%) and report the expected number of exceedances ($n_alpha$) for the sample size. Comment on the impact of a short sample.
 
