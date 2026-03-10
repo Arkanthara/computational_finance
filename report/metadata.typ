@@ -7,7 +7,7 @@
   logo: "./img/unige.svg",
   logosize: 6cm,
   university: "University of Geneva",
-  title: "Exercise #1",
+  title: "Exercise #2",
 
   // Structured authors
   authors: (

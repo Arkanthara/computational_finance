@@ -462,20 +462,22 @@ You will now have to build a simple EWMA model and translate it into a 1-day VaR
 
   ```python
   V_0 = 1e7
-  z_99 = 2.326
   z_95 = 1.645
+  z_99 = 2.326
+  L_t = -V_0 * log_returns
+  VaR_95 = z_95 * V_0 * np.sqrt(ewma(log_returns))
+  VaR_99 = z_99 * V_0 * np.sqrt(ewma(log_returns))
   plt.figure()
   plt.title("1-day VaR")
-  plt.plot(days, z_95 * V_0 * np.sqrt(ewma(log_returns)), label="1-day VaR at 95%")
-  plt.plot(days, z_99 * V_0 * np.sqrt(ewma(log_returns)), label="1-day VaR at 99%")
-  plt.plot(days, -V_0 * log_returns, label="daily loss")
+  plt.plot(days, VaR_95, label="1-day VaR at 95%")
+  plt.plot(days, VaR_99, label="1-day VaR at 99%")
+  plt.plot(days, L_t, label="daily loss")
   plt.xlabel("Days")
   plt.ylabel("1-day VaR")
   plt.xticks((plt.xticks()[0])[::5])
   plt.gcf().autofmt_xdate()
   plt.legend()
   plt.show()
-
   ```
 
 + *(Optional)* Backtest the VaR: since $sigma_t$ uses $r_(t-1)$, interpret $"VaR"_t$ as a 1-day-ahead forecast for day $t$. Compute the fraction of days such that $L_t > "VaR"_t^(99%)$ and $L_t > "VaR"_t^(95%)$. Compare to the expected exceedance rates (1% and 5%) and report the expected number of exceedances ($n_alpha$) for the sample size. Comment on the impact of a short sample.
@@ -486,3 +488,16 @@ You will now have to build a simple EWMA model and translate it into a 1-day VaR
     radius: 4pt,
     [*Note on the interpretation:* VaR backtests are noisy on short samples. If you have only a few dozen observations, it is entirely plausible to observe zero 99% exceedances even when the model is correct. This exercise is about the workflow and interpretation, not about passing a formal backtest.],
   )
+
+  ```python
+  L_95 = np.sum(L_t > VaR_95)
+  L_99 = np.sum(L_t > VaR_99)
+  print(f"L_95: {L_95} over {len(days)} days")
+  print(f"L_99: {L_99} over {len(days)} days")
+  print(f"Expected number of exceedances for VaR_95: {0.05 * len(days)} days")
+  print(f"Expected number of exceedances for VaR_99: {0.01 * len(days)} days")
+  ```
+
+  So this means that the models built respect the exceedance rates imposed: the models seems to be correct for this period.
+
+  So in one day, there are respectively 95% and 99% of chances that the maximal loss of the portfolio don't exceed the value given by respectively $"VaR"_95$ and $"VaR"_99$.
