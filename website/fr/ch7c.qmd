@@ -1,0 +1,64 @@
+---
+title: "Synthèse Ch7 - Construction de portefeuille"
+---
+
+## À retenir en 60 secondes
+
+- **Portefeuille** : collection d'actifs, objectif = robustesse par diversification
+- **MPT (Markowitz 1952)** : cadre rendement-risque, Nobel 1990
+- **Rendement portefeuille** : $E[R_p] = w^T \mu = \sum w_i E[R_i]$
+- **Risque portefeuille** : $\sigma_p^2 = w^T C w$, dépend des **covariances**
+- **$\rho = +1$** : $\sigma_p = w_1\sigma_1 + w_2\sigma_2$ (pas de diversification)
+- **$\rho = -1$** : $\sigma_p = |w_1\sigma_1 - w_2\sigma_2|$ (risque annulable)
+- **Frontière efficiente** : Monte-Carlo, Lagrange ($a, b, c, d$), optimisation numérique
+- **CML** : droite actif sans risque → portefeuille tangent → théorème de séparation
+- **Actif sans risque** : $E[R_{P_1}] = w_{rf} r + (1-w_{rf}) E[R_{P_0}]$, $\sigma_{P_1} = (1-w_{rf})\sigma_{P_0}$
+
+## Formules flash
+
+$$
+E[R_p] = w^T \mu \qquad \sigma_p^2 = w^T C w
+$$
+
+$$
+\text{Cov}(R_i, R_j) = \rho_{ij} \sigma_i \sigma_j
+$$
+
+$$
+a = \mathbf{1}^T C^{-1} \mathbf{1}, \quad b = \mathbf{1}^T C^{-1} \mu, \quad c = \mu^T C^{-1} \mu, \quad d = ac - b^2
+$$
+
+$$
+w^* = C^{-1}(\lambda_1 \cdot \mathbf{1} + \lambda_2 \cdot \mu)
+$$
+
+$$
+\min_w \; w^T C w - q \cdot w^T \mu \quad \text{s.c.} \; \mathbf{1}^T w = 1
+$$
+
+$$
+E[R_{P_1}] = w_{rf} \cdot r + (1-w_{rf}) \cdot E[R_{P_0}] \qquad \sigma_{P_1} = (1-w_{rf}) \cdot \sigma_{P_0}
+$$
+
+## Pièges classiques
+
+- **Surestimer la stabilité** de $\mu$ et $C$ : les estimations historiques sont instables
+- **$\rho = +1$ ≠ diversification** : si les actifs sont parfaitement corrélés, le portefeuille n'apporte rien
+- **Lagrange sans contraintes d'inégalité** : la forme fermée ne gère pas $w_i \geq 0$
+- **Confondre CML et frontière efficiente** : la CML est une droite, la frontière est une courbe
+- **Théorème de séparation** : le portefeuille risqué optimal est le **même** pour tous les investisseurs
+- **Monte-Carlo** : simple mais coûteux (5M tirages), ne trouve que l'enveloppe approximative
+
+## Schéma mental
+
+```{mermaid}
+flowchart TD
+    A[Actifs individuels<br/>μ_i, σ_i] --> C[Matrice de covariance C]
+    C --> FE[Frontière efficiente]
+    FE --> MC[Monte-Carlo]
+    FE --> LA[Lagrange a,b,c,d]
+    FE --> NU[Optimisation numérique]
+    RF[Actif sans risque r] --> CML[Capital Market Line]
+    FE --> CML
+    CML --> TP[Portefeuille tangent<br/>Sharpe maximal]
+```

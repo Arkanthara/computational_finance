@@ -1,250 +1,201 @@
-# Marchés et comportements
-
-## Plan
-
-- Évolution des marchés
-- Hypothèse d'efficience des marchés (*Efficient Market Hypothesis*)
-- Où échange-t-on ?
-- Quels sont les actifs ?
-- Principaux instruments utilisés
-- Faits stylisés (*stylised facts*)
-- Événements de marché
-- Points clés à retenir
-
+---
+title: "Chapitre 2 - Séries temporelles et modèles autorégressifs"
 ---
 
-## Évolution des marchés
+## Objectifs
 
-- Les marchés semblaient plus calmes dans les années 70.
-- Depuis, la volatilité et la complexité ont augmenté.
+- Comprendre les séries temporelles univariées et leur analyse
+- Maîtriser les concepts de stationnarité (stricte et faible)
+- Savoir calculer et interpréter l'autocorrélation (ACF)
+- Comprendre les modèles AR(p), MA(q) et ARMA(p,q)
+- Dériver les propriétés analytiques d'un AR(1)
 
----
+## Séries temporelles — Introduction
 
-## Hypothèse d'efficience des marchés (EMH)
+On considère des séries temporelles univariées de la forme :
 
-### Présentation
+$$
+X(t_i) \in \mathbb{R}, \quad t_i \text{ occurrences}
+$$
 
-- Théorie proposée par E. Fama dans les années 1960 (prix Nobel 2013).
-- Idée centrale : les marchés sont-ils "justes" ? Sont-ils efficients ?
+**Exemple** : $X(t_i) = \{\ldots, 1.3012, 1.3014, 1.3022, \ldots\}$
 
-**Postulats :**
+**Définition** : le *lag* (retard) $\tau$ est le temps entre observations.
 
-- En moyenne, les comportements sont rationnels.
-- Il est impossible de battre le marché de façon constante.
-- Le prix reflète toujours la valeur réelle.
-- Il est impossible d'acheter des actifs sous-évalués ou surévalués.
+Les statistiques de base incluent :
 
-### Trois formes d'efficience
+- Moyenne : $\mathbb{E}[X]$
+- Variance, écart-type (aussi appelé **volatilité**) : $\text{Var}(X)$, $\sqrt{\text{Var}(X)}$
 
-**Faible :**
+## Objectifs de la modélisation
 
-- Les prix actuels intègrent toutes les données passées.
-- L'analyse technique est inefficace.
-- Le futur n'est déterminé que par des informations externes (exogènes).
-- Le prix est toujours aléatoire (marche aléatoire).
-- Pas nécessairement à l'équilibre.
+Plusieurs objectifs possibles :
 
-**Semi-forte :**
+1. **Identifier** les éléments importants de la structure de la série
+2. **Expliquer** comment le passé influence le futur
+3. **Modéliser** l'état actuel, synthétiser ce qu'on observe
+4. **Prédire** les observations futures
 
-- Toute nouvelle information publique est immédiatement reflétée dans le prix.
+::: {.callout-note}
+Un modèle peut être mauvais en prédiction mais excellent pour expliquer.
+:::
 
-**Forte :**
+## Types de modèles
 
-- Toute information publique et privée est immédiatement reflétée dans le prix.
+- **Régression** : linéaire, Ridge, Lasso, polynomiale, ...
+- **Autorégressifs** : AR(p), MA(q), ARMA(p,q), ...
 
-### Critiques et limites
+L'ordre de l'information est important (contrairement à la théorie de l'information où les occurrences peuvent être réarrangées).
 
-- Cette théorie est largement critiquée, même dans sa forme faible.
-- De nombreuses observations suggèrent que les marchés ne sont pas toujours rationnels :
+## Stationnarité — Pourquoi ?
 
-**Exemples :**
+Les données doivent être contrôlées pour :
 
-- Bulle spéculative du Bitcoin
-- *Flash crash* de 2010
-- Actions surévaluées par rapport aux fondamentaux
-- Comportements grégaires (*herding*)
-- Trading algorithmique pouvant amplifier les mouvements
+- **Tendance** (drift)
+- **Saisonnalité**
+- **Hétéroscédasticité** (volatilité non constante)
 
-> *"Pourquoi donner un Nobel à trois économistes aux théories opposées ?"*  
-> — Le Monde, 14.10.2013  
-> Les travaux de Fama (efficience) et Shiller (inefficience, bulles) sont antagonistes.
+**Pourquoi c'est nécessaire** :
 
----
+- Cohérence des relations entre variables
+- Estimation fiable des paramètres
+- Analyse simplifiée
+- Éviter des résultats fallacieux (corrélations qui n'existent pas)
 
-## Où échange-t-on ?
+## Stationnarité stricte et faible
 
-### Marchés régulés (*Regulated exchanges*)
+**Stationnarité stricte** : $F(X_{t_1+\tau}, \ldots, X_{t_n+\tau}) = F(X_{t_1}, \ldots, X_{t_n}) \quad \forall \tau, n$
 
-- Exemples : NYSE, LSE, CME, SIX.
-- Lieu physique ou électronique.
-- Règlementation stricte.
-- Processus de compensation (*clearing*).
-- Accès via des courtiers (ex. InteractiveBrokers).
+C'est difficile à obtenir. On préfère la **stationnarité faible** :
 
-### Marchés de gré à gré (*Over The Counter*, OTC)
+a) **Moyenne constante** : $E[X_{t_1+\tau}, \ldots, X_{t_n+\tau}] = \mu = \text{cte} \quad \forall \tau, n$
+b) **Autocovariance constante** : $\text{Cov}(X_t, X_{t+\tau}) = \gamma(\tau) \quad \forall \tau$
 
-- Exemple : Oanda.
-- Moins formels, plus risqués.
-- *Market makers* qui proposent des prix (*quotes*).
-- Pas de transparence.
-- Pas nécessairement de lieu physique.
+Un processus est faiblement stationnaire si sa moyenne est constante et son autocovariance ne dépend que du lag.
 
-**Rôles :**
+**Tests** : Augmented Dickey-Fuller (ADF), mais un test visuel est souvent utilisé.
 
-- Un *market maker* (ex. Oanda) est rémunéré pour le risque qu'il prend. Il a un inventaire.
-- Un courtier (*broker*, ex. Dukascopy) ne prend généralement pas de risque. Pas d'inventaire.
+## Comment obtenir la stationnarité
 
----
+- Calculer les **différences** entre valeurs
+- Calculer les **rendements** de la série
+- Supprimer les **tendances** ou **saisonnalités** identifiées
+- Prendre le **logarithme** pour atténuer les changements de volatilité
 
-## Quels sont les actifs ?
+::: {.callout-tip}
+En pratique, analyser les **rendements** de la série est la méthode standard.
+:::
 
-**Actions (*Equity*) :**
+## Autocorrélation (ACF)
 
-- Des dividendes sont payés périodiquement.
+L'étude de l'autocorrélation est centrale dans les modèles autorégressifs.
 
-**Obligations (*Bonds*) :**
+**Rappel** — corrélation entre deux variables aléatoires :
 
-- Prêts aux banques centrales (obligations d'État) ou aux entreprises.
-- Le prix dépend de la maturité et du calendrier de paiement des coupons.
+$$
+\text{Cor}(X, Y) = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X) \cdot \text{Var}(Y)}} = \frac{E[(X - E[X])(Y - E[Y])]}{\sqrt{E[(X-E[X])^2] \cdot E[(Y-E[Y])^2]}}
+$$
 
-**Matières premières (*Commodities*) :**
+**Autocorrélation** — une variable avec elle-même :
 
-- Blé, maïs, pétrole, etc.
-- Peuvent être transigées via des contrats à terme (*futures*).
+$$
+\text{Cor}(X_t, X_{t+\tau}) = \frac{E[(x_t - \mu_0)(x_{t+\tau} - \mu_\tau)]}{\sigma_0 \sigma_\tau}
+$$
 
-**Devises (*Currencies*) :**
+Si stationnaire ($\mu_0 = \mu_\tau = \mu$, $\sigma_0 = \sigma_\tau = \sigma$) :
 
-- Elles s'échangent par paires.
-- Il existe un différentiel de taux d'intérêt.
-- Les devises sont le pilier des marchés financiers.
+$$
+\text{Cor}(X_t, X_{t+\tau}) = \rho_\tau = \frac{E[(x_t - \mu)(x_{t+\tau} - \mu)]}{\sigma^2}
+$$
 
----
+On parle de **fonction d'autocorrélation**, $\text{ACF}(\tau)$.
 
-## Considérations sur les volumes
+L'ACF permet :
 
-### Volumes d'actions (2013)
+- D'identifier des **structures cachées** dans les données
+- D'analyser les **tendances** ($\rho > 0$ aux petits lags) et les **contre-tendances** ($\rho < 0$)
 
-- NYSE : environ 18 000 milliards USD (volume annuel)
-- NASDAQ : environ 11 000 milliards USD
-- Japan Exchange Group : environ 5 000 milliards USD
-- London Stock Exchange : environ 3 500 milliards USD
+## Modèles autorégressifs
 
-### Volumes quotidiens sur le NASDAQ (exemple 2014)
+L'ACF indique comment les événements au temps $t$ sont influencés par le passé. Cela conduit aux modèles :
 
-- Nombre d'actions échangées par jour : 2 à 2,5 milliards
-- Volume en dollars : 70 à 85 milliards USD
-- Nombre de transactions : 9 à 11 millions
+$$
+\text{AR}(p): \quad X_t = c + \sum_{i=1}^{p} \varphi_i X_{t-i} + \varepsilon_t
+$$
 
-### Marché des changes (Forex)
+$$
+\text{MA}(q): \quad X_t = \mu + \varepsilon_t + \theta_1 \varepsilon_{t-1} + \cdots + \theta_q \varepsilon_{t-q}
+$$
 
-- Le plus grand marché en volume.
-- Données BIS (Banque des Règlements Internationaux) 2013 :
-  - Environ 5 billions (5 × 10¹²) de dollars par jour.
-  - 25 % du volume concerne la paire EUR/USD.
-  - 50 % sont des *swaps*.
+$$
+\text{ARMA}(p,q): \quad X_t = c + \varepsilon_t + \sum_{i=1}^{p} \varphi_i X_{t-i} + \sum_{i=1}^{q} \theta_i \varepsilon_{t-i}
+$$
 
-Estimation : en moyenne, 3,6 millions de dollars échangés chaque seconde.
+## AR(1) — Analyse détaillée
 
-- Autres paires importantes : USD/JPY (18 %), GBP/USD (9 %).
+Avec $p = 1$ : $X_t = c + \varphi_1 X_{t-1} + \varepsilon_t$ où $\varepsilon_t \sim N(0, \sigma_\varepsilon^2)$
 
----
+### Moyenne
 
-## Principaux instruments utilisés
+$$
+E[X_t] = E[c + \varphi_1 X_{t-1} + \varepsilon_t] = c + \varphi_1 E[X_{t-1}]
+$$
 
-**Spot :** L'instrument lui-même : une action, un montant de dollars, mais pas une tonne de blé.
+Si stationnaire : $E[X_t] = E[X_{t-1}] = \mu$, donc :
 
-**Forward :** Contrat où deux parties s'accordent pour vendre/acheter un actif à un prix donné à une date future.
+$$
+\mu = c + \varphi_1 \mu \quad \Rightarrow \quad \mu = \frac{c}{1 - \varphi_1}
+$$
 
-**Futures :** Version standardisée d'un *forward*, échangée sur une bourse avec un processus de compensation.
+En normalisant ($c = 0$) : $\mu = 0$.
 
-**Option :** Droit (mais pas obligation) d'acheter ou de vendre un actif à un prix et une date déterminés.
+### Variance
 
-**Indice (*Index*) :** Panier d'actifs (ex. S&P 500, panier de devises).
+$$
+\text{Var}(X_t) = \varphi_1^2 \text{Var}(X_{t-1}) + \sigma_\varepsilon^2
+$$
 
-- Les *futures* sont souvent vendus/achetés juste avant l'échéance pour passer au contrat suivant (*roll over*). On ne veut généralement pas recevoir la tonne de blé.
-- Les options et *futures* sont parfois utilisés pour couvrir (*hedge*) des positions.
+Par stationnarité ($\text{Var}(X_t) = \text{Var}(X_{t-1})$) :
 
----
+$$
+\text{Var}(X_t) = \frac{\sigma_\varepsilon^2}{1 - \varphi_1^2}
+$$
 
-## Faits stylisés (*Stylised facts*)
+::: {.callout-important}
+Cela implique $\varphi_1^2 < 1$ car la variance est par définition $> 0$.
+:::
 
-Les marchés ne se comportent pas comme une simple marche aléatoire. On observe des propriétés statistiques récurrentes :
+### Autocorrélation
 
-### 1. *Volatility clustering* (Cont 2005)
+$$
+\gamma_1 = \text{Cov}(X_t, X_{t+1}) = E[X_t \cdot X_{t+1}] = \varphi_1 \text{Var}(X_t)
+$$
 
-- Les grandes variations sont suivies de grandes variations.
-- Les petites variations sont suivies de petites variations.
-- On parle d'hétéroscédasticité (le "H" de GARCH).
+$$
+\varphi_1 = \frac{\text{Cov}(X_t, X_{t+1})}{\text{Var}(X_t)} := \rho_1
+$$
 
-*Exemple : rendements quotidiens de l'action BMW – les fortes variations se regroupent.*
+**Le paramètre de l'AR(1) est le coefficient d'autocorrélation au lag 1.**
 
-### 2. Autocorrélation négative à court terme
+### Interprétation
 
-- Souvent observée à haute fréquence.
-- Indique un effet de retournement (*mean reversion*) à très court terme.
+- $\varphi_1 > 0$ → comportement de **tendance** (*trending*)
+- $\varphi_1 < 0$ → comportement de **contre-tendance** (*mean-reverting*)
+- $\varphi_1 \approx 1$ → marche aléatoire
 
-### 3. Lois d'échelle (*Scaling laws*)
+## Au-delà de l'AR(1)
 
-- On observe des similarités à différentes échelles de temps.
-- Par exemple : $E[|r|] \sim \Delta t^{\alpha}$ où $\alpha$ est un exposant caractéristique.
-- Cela permet de passer d'une échelle à une autre.
-
-### 4. Distributions à queues épaisses (*Fat tails*)
-
-- Les rendements extrêmes sont plus fréquents que dans une distribution gaussienne.
-- La distribution présente un pic plus étroit et des queues plus épaisses.
-
-*Exemple : données du marché de Shanghai, ajustement par une loi de Lévy symétrique ($\alpha = 1,44$) meilleur qu'une gaussienne.*
-
-### 5. Saisonnalités (*Seasonality*)
-
-- Cycles journaliers, hebdomadaires, mensuels, annuels.
-- Asymétrie dans certains marchés (ex. actions).
-- Corrélation négative entre le *spread* (écart entre ask et bid) et le volume : plus le *spread* est fin, plus le volume est grand.
-- Corrélation positive entre volume et volatilité.
-
-**Intraday sur actions :** volume plus élevé en début et fin de journée.
-
-**Intraday sur le Forex :** pics d'activité lors de l'ouverture des marchés européens et américains.
-
----
-
-## Événements de marché (*Market events*)
-
-Les événements peuvent être endogènes ou exogènes.
-
-**Endogène :** provient de l'intérieur du marché (ex. manque de liquidité).
-**Exogène :** provient de l'extérieur (ex. annonce économique).
-
-### Nouvelles programmées (*Scheduled news*)
-
-- *Non Farm Payroll* (emploi non agricole US) : chaque premier vendredi du mois à 8h30 EST (14h30 en Suisse).
-- Publications du PIB par pays.
-- Indicateurs économiques : ventes de logements, indice de consommation, etc.
-
-### Nouvelles non programmées (*Non-scheduled news*)
-
-- Septembre 2011 : la Banque Nationale Suisse fixe un cours plancher pour l'EUR/CHF.
-- Attentat du World Trade Center à Manhattan.
-
-### Quantification des événements
-
-- Des études (ex. T. Bisig, 2012) tentent de quantifier l'impact des événements sur les marchés.
-
----
+- Les ordres supérieurs n'ont plus de forme analytique fermée pour les paramètres
+- Les paramètres doivent être **estimés numériquement** (maximum de vraisemblance)
+- Critères de sélection de modèle :
+  - $\text{AIC} = 2p - 2\ln(L)$
+  - $\text{BIC} = \ln(n) \cdot p - 2\ln(L)$
 
 ## Points clés à retenir
 
-- L'efficience des marchés est un concept fondamental mais controversé.
-- On échange sur des marchés régulés ou de gré à gré (*OTC*), avec différents types d'actifs et d'instruments.
-- Les séries temporelles financières présentent des propriétés bien différentes d'une marche aléatoire :
-  - *Volatility clustering*
-  - Autocorrélation négative à court terme
-  - Lois d'échelle
-  - Distributions à queues épaisses
-  - Saisonnalités
-- Les événements de marché (programmés ou non) influencent fortement les prix.
-
----
-
-*Ce chapitre pose les bases pour comprendre la dynamique des marchés financiers, avant d'aborder des sujets plus techniques comme la modélisation des séries temporelles ou la construction de portefeuilles.*
+- Les séries temporelles décrivent l'évolution dans le temps d'une variable
+- La modélisation se fait via des modèles autorégressifs qui définissent la série comme fonction d'elle-même
+- La **fonction d'autocorrélation** (ACF) décrit les relations de la série avec elle-même
+- Une analyse correcte nécessite la **stationnarité** des données
+- Un modèle AR(1) n'a qu'un seul paramètre : le coefficient d'autocorrélation au lag 1
+- Les coefficients des ordres supérieurs doivent être estimés numériquement

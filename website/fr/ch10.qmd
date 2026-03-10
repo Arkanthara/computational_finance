@@ -1,0 +1,248 @@
+---
+title: "Chapitre 10 - Options : les grecques"
+---
+
+## Introduction
+
+Les **grecques** sont des métriques financières mesurant la **sensibilité** du prix d'une option à différents facteurs. Elles aident à comprendre les risques et à prendre des décisions de couverture.
+
+### Grecques principales
+
+| Grecque | Symbole | Mesure |
+|---------|---------|--------|
+| **Delta** | $\Delta$ | Sensibilité au prix du sous-jacent |
+| **Gamma** | $\Gamma$ | Taux de variation de Delta |
+| **Theta** | $\Theta$ | Sensibilité au passage du temps |
+| **Vega** | $\nu$ | Sensibilité à la volatilité implicite |
+| **Rho** | $\rho$ | Sensibilité au taux d'intérêt |
+
+---
+
+## Gestion du risque d'une option
+
+Quatre approches possibles :
+
+1. **Ne rien faire** (*naked option*)
+2. **Couverture complète dès le départ** (*covered option*)
+3. **Stratégie stop-loss**
+4. **Utiliser les grecques** (delta hedge, gamma hedge)
+
+### Cas pratique
+
+Vente d'un call européen pour 300'000 USD sur 100'000 actions. $S_0 = 49$, $K = 50$, $r = 5\%$, $\sigma = 20\%$, $T = 20/52$ ans.
+
+Black-Scholes donne $c = 240'000$ USD → profit de 60'000 USD mais **risque résiduel**.
+
+### Option nue vs couverte
+
+**Nue** : profit = $300'000 - \max(S_T - K, 0) \times 100'000$
+
+- Si $S_T \leq K$ : profit = 300'000 ✓
+- Si $S_T \gg K$ : **pertes potentiellement illimitées** ✗
+
+**Couverte** (achat d'actions à $t=0$) : profit = $300'000 + (K + \min(S_T-K, 0) - S_0) \times 100'000$
+
+- Si $S_T \leq K$ : perte sur les actions ✗
+
+**Ni l'une ni l'autre n'est satisfaisante** → stratégie dynamique avec les grecques.
+
+### Stratégie stop-loss
+
+- Acheter les actions quand $S_t > K$ (couvert)
+- Vendre les actions quand $S_t < K$ (nu)
+- Coût initial = $\max(S_0 - K, 0)$
+- Problèmes : actualisation des cash-flows, que faire quand $S_t = K$ ?
+
+---
+
+## Delta ($\Delta$)
+
+### Définition
+
+Le delta est le taux de variation du prix de l'option par rapport au prix du sous-jacent :
+
+$$\Delta = \frac{\partial c}{\partial S}$$
+
+### Formules Black-Scholes (sans dividende)
+
+$$\Delta_c = N(d_1) \qquad \Delta_p = N(d_1) - 1$$
+
+::: {.callout-tip}
+## Interprétation
+- $\Delta_c \in [0, 1]$ : le call prend de la valeur quand $S$ monte
+- $\Delta_p \in [-1, 0]$ : le put prend de la valeur quand $S$ baisse
+- Point d'inflexion à $S = K$ (ATM)
+- Plus l'option est ITM, plus $|\Delta| \to 1$
+:::
+
+### Propriétés
+
+- $c$ augmente avec $S$ (à $K$ fixé)
+- Inflexion à $K$ : devient plus linéaire en ITM
+- $\Delta$ est une approximation de **premier ordre** de la variation de $c$
+
+---
+
+## Delta hedging
+
+### Principe
+
+Un changement $\delta S$ fait varier $c$ d'environ $\delta S \cdot \Delta$. En achetant $\Delta$ unités du sous-jacent, on **neutralise** la sensibilité au prix.
+
+### Exemple : vente d'un call
+
+$S = 100$, $c = 10$ (sur 2000 actions), $\Delta = 0.6$
+
+- Acheter $0.6 \times 2000 = 1200$ actions
+- Si $S_{t+} = 101$ → $c'_{t+} = 10.6$
+- Profit = $1200 \times 1 + 2000 \times (10 - 10.6) = 0$ ✓
+
+### Tableau de couverture
+
+| | Achat option | Vente option |
+|------|------|------|
+| **Call** | $-\Delta_c$ actions | $+\Delta_c$ actions |
+| **Put** | $-\Delta_p$ actions | $+\Delta_p$ actions |
+
+### Exemple : vente d'un put
+
+$S = 100$, $p = 10$ (sur 2000 actions), $\Delta_p = -0.4$
+
+- **Vendre** $0.4 \times 2000 = 800$ actions
+- Si $S_{t+} = 101$ → $p'_{t+} = 9.6$
+- Profit = $-800 \times 1 + 2000 \times (10 - 9.6) = 0$ ✓
+
+::: {.callout-warning}
+$\Delta$ évolue dans le temps → l'option doit être **constamment rebalancée**.
+:::
+
+---
+
+## Theta ($\Theta$)
+
+### Définition
+
+Le theta mesure la sensibilité au passage du temps (*time decay*) :
+
+$$\Theta = \frac{\partial c}{\partial t}$$
+
+Il n'y a **pas d'incertitude** sur le temps → **impossible à couvrir**.
+
+### Formules Black-Scholes (sans dividende)
+
+$$\Theta_c = -\frac{S_0 N'(d_1) \sigma}{2\sqrt{T}} - r K e^{-rT} N(d_2)$$
+
+$$\Theta_p = -\frac{S_0 N'(d_1) \sigma}{2\sqrt{T}} + r K e^{-rT} N(-d_2)$$
+
+avec $N'(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}$ (densité de la loi normale).
+
+### Comportement
+
+- $\Theta$ est généralement **négatif** (l'option perd de la valeur avec le temps)
+- **OTM** : $\Theta \to 0$ quand $T \to 0$ (l'option ne vaut plus rien)
+- **ITM** : $\Theta$ se stabilise
+- **ATM** : $\Theta$ **diverge** quand $T \to 0$ (décroissance accélérée)
+
+---
+
+## Gamma ($\Gamma$)
+
+### Définition
+
+Le gamma mesure le taux de variation de $\Delta$ par rapport au prix du sous-jacent :
+
+$$\Gamma = \frac{\partial \Delta}{\partial S} = \frac{\partial^2 c}{\partial S^2}$$
+
+### Formule Black-Scholes (sans dividende)
+
+$$\Gamma = \frac{N'(d_1)}{S_0 \sigma \sqrt{T}}$$
+
+Par construction, $\Gamma > 0$ **toujours** (pour calls et puts).
+
+### Comportement
+
+- La courbure **augmente** quand l'option est ATM et proche de la maturité
+- La courbure **tend vers 0** à maturité pour les options ITM ou OTM
+- La courbure est plus élevée quand OTM
+
+### Approximation complète
+
+Pour de petits $\delta t$ et $\delta S$ :
+
+$$\boxed{\delta c \approx \Theta \, \delta t + \Delta \, \delta S + \frac{1}{2} \Gamma \, \delta S^2}$$
+
+Le terme $\frac{1}{2}\Gamma \delta S^2$ explique l'écart entre la couverture delta et la réalité.
+
+---
+
+## Couverture de portefeuille
+
+Pour un portefeuille $\Pi$ de $n$ options avec poids $w_i$, les grecques sont les **sommes pondérées** :
+
+$$\frac{\partial \Pi}{\partial S} = \sum_{i=1}^{n} w_i \Delta_i, \qquad \frac{\partial \Pi}{\partial t} = \sum_{i=1}^{n} w_i \Theta_i, \qquad \frac{\partial^2 \Pi}{\partial S^2} = \sum_{i=1}^{n} w_i \Gamma_i$$
+
+Les grecques se **compensent** (*netting*) dans un portefeuille.
+
+---
+
+## Portefeuille gamma-neutre
+
+### Problème
+
+Un instrument **linéaire** (action) a $\Gamma = 0$ → il ne peut pas modifier le gamma du portefeuille. Il faut utiliser des **options**.
+
+### Méthode
+
+Si le portefeuille a un gamma $\Gamma$ et qu'une option tradée a un gamma $\Gamma_T$ :
+
+$$w_T = -\frac{\Gamma}{\Gamma_T}$$
+
+options à ajouter pour rendre le portefeuille $\Gamma$-neutre.
+
+### Exemple
+
+Portefeuille $\Delta$-neutre avec $\Gamma = -3000$. Option tradée : $\Delta_o = 0.62$, $\Gamma_o = 1.5$.
+
+1. Position : long $3000/1.5 = 2000$ options → $\Gamma = 0$ ✓
+2. Mais $\Delta_\Pi$ passe de 0 à $2000 \times 0.62 = 1240$
+3. Vendre 1240 unités du sous-jacent → $\Delta = 0$ ✓
+
+::: {.callout-important}
+## En pratique
+- Les gestionnaires font du **delta-hedge quotidien**
+- Les autres grecques sont **monitorées** et on n'agit que quand elles deviennent trop grandes
+:::
+
+---
+
+## Lectures complémentaires
+
+### Modèles alternatifs à Black-Scholes
+
+- **Modèle de Heston** : volatilité stochastique (adresse le smile)
+- **Jump-Diffusion (Merton)** : sauts soudains dans les prix
+- **Arbres binomiaux/trinomiaux** : options américaines (exercice anticipé)
+
+### Machine Learning et IA
+
+- **Réseaux de neurones** : relations complexes et dynamiques de marché
+- **Deep Learning (LSTM)** : prévision de séries temporelles
+- **Reinforcement Learning** : optimisation de stratégies de trading et couverture
+
+### Méthodes avancées de calcul des grecques
+
+- Différences finies (forward/central)
+- Méthodes Monte Carlo (Likelihood Ratio, méthode adjointe)
+- Différentiation algorithmique (AD) : dérivées exactes et efficientes
+
+---
+
+## Points clés
+
+- Les options ont **de nombreux risques** mesurables par les grecques
+- $\Delta$ : sensibilité au prix → couverture delta
+- $\Gamma$ : courbure → correction de second ordre
+- $\Theta$ : passage du temps → impossible à couvrir
+- $\delta c \approx \Theta \delta t + \Delta \delta S + \frac{1}{2}\Gamma \delta S^2$
+- On peut construire des portefeuilles $\Delta$-neutre et $\Gamma$-neutre
+- Black-Scholes ne couvre pas toutes les situations → modèles complémentaires nécessaires

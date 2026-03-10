@@ -1,0 +1,48 @@
+---
+title: "Synthèse Ch11 - Obligations : bases"
+---
+
+## À retenir en 60 secondes
+
+- Obligation = prêt avec coupons fixes + remboursement du principal à maturité
+- **Prix** : $B(t) = \sum_{i=1}^{n} c_i e^{-y(t_i - t)} + P e^{-y(T-t)}$
+- Relation **inverse** prix/yield (avec courbure)
+- **Bootstrap** : construire la courbe zéro-coupon à partir de Treasury bonds
+- Spread de crédit = yield corporate − yield souverain
+
+## Formules flash
+
+| Concept | Formule |
+|---------|---------|
+| Prix obligation | $B = \sum c_i e^{-y(t_i-t)} + Pe^{-y(T-t)}$ |
+| Bootstrap (sans coupon) | $r = n\ln(1 + \text{taux}/n)$ |
+| Bootstrap (avec coupons) | Résoudre $\sum c_i e^{-r_i t_i} + (c_n+P)e^{-r_n t_n} = B$ pour $r_n$ |
+
+## Types et ratings
+
+| Moins risqué | Plus risqué |
+|:---:|:---:|
+| AAA (souverain) | BB, B, C, D (spéculatif) |
+| Yield bas | Yield élevé |
+
+## 5 risques à connaître
+
+1. **Taux** : $\uparrow y \Rightarrow \downarrow B$
+2. **Crédit** : défaut de l'émetteur
+3. **Inflation** : érosion du pouvoir d'achat réel
+4. **Liquidité** : difficulté de vendre au juste prix
+5. **Réinvestissement** : coupons réinvestis à taux plus bas
+
+## Pièges classiques
+
+- Confondre **rendement courant** ($c/B$) et **yield-to-maturity** (résout l'équation complète)
+- Deux obligations de même maturité peuvent avoir des yields différents (coupons, rating)
+- En 2022, corrélation actions/obligations devenue **positive** (hausse rapide des taux)
+
+```{mermaid}
+flowchart TD
+    E[Émetteur] -->|Coupons + Principal| I[Investisseur]
+    I -->|Prix B| E
+    M[Marché] -->|Yield y| B["Prix B(t)"]
+    R[Rating AAA→D] -->|Spread crédit| B
+```

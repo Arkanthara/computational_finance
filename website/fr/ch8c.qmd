@@ -1,0 +1,54 @@
+---
+title: "Synthèse Ch8 - Modèles à base d'agents"
+---
+
+## À retenir en 60 secondes
+
+- **ABM** : approche bottom-up — règles simples au micro → comportement complexe au macro
+- **Top-down** (équations) vs **Bottom-up** (agents) : deux paradigmes complémentaires
+- **Cont-Bouchaud** : clusters + herding → fat tails ; $a = 0.5$ → gaussien, $a \ll 0.5$ → queues épaisses
+- **Lux-Marchesi** : fondamentalistes ↔ chartistes (optimistes/pessimistes), changement de catégorie → fat tails, critique EMH
+- **Minority Game** : $N$ agents, $M$ bits d'historique, $S$ stratégies, la **minorité gagne**
+- **Paramètre de contrôle** : $\alpha = 2^M / N$, transition de phase à $\alpha_c \approx 0.3374$
+- **Prix** : $P(t) = P(t-1) \cdot \exp(A(t)/\gamma)$ où $A(t) = \sum a_i(t)$
+
+## Formules flash
+
+$$
+P(s_j | t) = \frac{\exp(\lambda \cdot U_{s_j})}{\sum_k \exp(\lambda \cdot U_{s_k})}
+$$
+
+$$
+A(t) = \sum_{i=1}^{N} a_i(t) \qquad U_{i,s}(t+1) = U_{i,s}(t) - \frac{a_{i,s}^{\mu(t)} \cdot A(t)}{\beta}
+$$
+
+$$
+\alpha = \frac{2^M}{N} \qquad H = \frac{1}{P}\sum_{\mu} \langle A|\mu \rangle^2
+$$
+
+$$
+r(t) = \frac{A(t)}{\gamma} \qquad P(t) = P(t-1) \cdot \exp\left(\frac{A(t)}{\gamma}\right)
+$$
+
+## Pièges classiques
+
+- **Cont-Bouchaud** : c'est le **herding** qui crée les fat tails, pas la complexité du modèle
+- **Lux-Marchesi** : les agents **changent de type** — ce n'est pas figé, la dynamique de switching est essentielle
+- **Minority Game $\alpha$** : $\alpha$ petit = trop d'agents pour peu d'info → herding ; $\alpha$ grand = agents diversifiés
+- **$\sigma^2/N$ peut être < 1** : le Minority Game peut battre la marche aléatoire
+- **ABM ≠ prédiction** : les ABM expliquent les mécanismes, ils ne prédisent pas les prix
+- **Transition de phase** : $\alpha_c \approx 0.3374$ sépare phase symétrique (herding) et asymétrique (diversifiée)
+
+## Schéma mental
+
+```{mermaid}
+flowchart TD
+    ABM[Modèles à base d'agents] --> CB[Cont-Bouchaud<br/>Herding / Clusters]
+    ABM --> LM[Lux-Marchesi<br/>Fondamentalistes ↔ Chartistes]
+    ABM --> MG[Minority Game<br/>La minorité gagne]
+    CB --> FT1[Fat tails]
+    LM --> FT2[Fat tails + Bulles]
+    MG --> TP[Transition de phase<br/>α_c ≈ 0.34]
+    TP --> SYM["α < α_c : Herding<br/>σ²/N élevé"]
+    TP --> ASYM["α > α_c : Diversifié<br/>σ²/N faible"]
+```

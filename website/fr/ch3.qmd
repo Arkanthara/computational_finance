@@ -1,0 +1,162 @@
+---
+title: "Chapitre 3 - Marchés et comportements"
+---
+
+## Objectifs
+
+- Comprendre l'évolution des marchés et l'hypothèse d'efficience (EMH)
+- Savoir où et comment on échange (marchés régulés, OTC)
+- Connaître les principales classes d'actifs et instruments financiers
+- Identifier les faits stylisés des marchés financiers
+- Comprendre la saisonnalité et les événements de marché
+
+## Évolution des marchés
+
+Les marchés semblaient plus calmes dans les années 70. Aujourd'hui, la complexité a augmenté avec le trading électronique, la globalisation et l'augmentation des volumes.
+
+## Hypothèse d'efficience des marchés (EMH)
+
+Théorie proposée par **E. Fama** en 1960 (Prix Nobel 2013) :
+
+- En moyenne, comportements rationnels
+- Impossible de battre le marché
+- Le prix est toujours à la bonne valeur
+- Impossible d'acquérir des actifs sous- ou sur-évalués
+
+### Les 3 formes de l'EMH
+
+**Forme faible** :
+
+- Les prix actuels reflètent toutes les données des prix passés
+- L'analyse technique est inefficace
+- Le futur n'est déterminé que par l'information exogène
+- Le prix est toujours aléatoire
+- Pas de nouvelle information → pas de tendance
+
+**Forme semi-forte** :
+
+- Toute nouvelle information **publique** est immédiatement reflétée dans le prix
+
+**Forme forte** :
+
+- Toute nouvelle information **publique et privée** est immédiatement reflétée dans le prix
+
+### Critiques de l'EMH
+
+- Les actions peuvent être longtemps surévaluées par rapport aux fondamentaux
+- Soros et Buffet : juste chanceux ?
+- Comportement de troupeau (*herding*)
+- Trading algorithmique
+- Bulles spéculatives (Bitcoin, Flash Crash)
+
+## Où échange-t-on ?
+
+### Marchés régulés
+
+- **Exemples** : NYSE, LSE, CME, SIX
+- Lieu physique/électronique
+- Strictement régulé, processus de *clearing*
+- Le trading électronique se développe
+
+### Marchés OTC (Over The Counter)
+
+- **Exemples** : Oanda
+- Moins formel, plus risqué
+- Market makers qui proposent des cotations
+- Pas de transparence
+- Pas nécessairement un lieu physique
+
+**Market maker** (ex: Oanda) : rémunéré pour le risque qu'il prend — il a un inventaire.
+
+**Broker** (ex: Dukascopy) : ne prend généralement pas de risque — pas d'inventaire.
+
+## Classes d'actifs
+
+| Classe | Caractéristiques |
+|--------|-----------------|
+| **Actions** (*Equity*) | Dividendes versés périodiquement |
+| **Obligations** (*Bonds*) | Prêt aux banques centrales (treasuries) ou entreprises ; prix fonction de la maturité et du calendrier de coupons |
+| **Matières premières** | Blé, maïs, pétrole... transactés via futures |
+| **Devises** | Viennent en paires ; différentiel de taux d'intérêt |
+
+::: {.callout-note}
+Les **devises** sont le pilier des marchés financiers.
+:::
+
+### Volumes
+
+- Devises : ~5 trillions de dollars **par jour** (données BIS)
+- 25% du volume en EUR/USD
+- 50% sont des swaps
+- En moyenne : ~3.6 millions de dollars **par seconde** sur EUR/USD
+
+## Principaux instruments
+
+- **Spot** : l'instrument lui-même (une action, un montant en dollars)
+- **Forward** : contrat d'achat/vente à un prix donné à une date donnée
+- **Futures** : version standardisée d'un forward, avec clearing sur exchange
+- **Option** : droit d'acheter/vendre un actif à un moment et prix donnés
+- **Index** : panier d'actifs (SP500, panier de devises, ...)
+- Et de nombreux autres produits dérivés
+
+Les futures sont souvent utilisés et revendus avant maturité pour passer au suivant (*roll over*).
+
+## Faits stylisés
+
+Les marchés financiers diffèrent d'une marche aléatoire :
+
+### Clustering de volatilité
+
+- Les grands changements sont suivis de grands changements
+- Les petits changements sont suivis de petits changements
+- On parle d'**hétéroscédasticité** (le H dans GARCH)
+
+### Autocorrélation négative
+
+- Observée aux lags courts, surtout en haute fréquence
+
+### Lois d'échelle (Scaling laws)
+
+$$
+\langle |\Delta x| \rangle \sim \Delta t^\alpha
+$$
+
+Des similarités sont observées à différentes échelles — elles décrivent comment passer d'une échelle à une autre.
+
+### Distributions à queues épaisses (Fat tails)
+
+Les distributions de rendements présentent des queues bien plus épaisses que ce qu'une distribution gaussienne prédirait.
+
+### Autres faits stylisés
+
+- **Saisonnalité** : quotidienne, hebdomadaire, mensuelle et annuelle
+- **Asymétrie** dans certains marchés (ex: actions)
+- **Corrélation négative** entre spread et volume : plus le spread est fin, plus le volume est important
+- **Corrélation positive** entre volume et volatilité
+
+## Événements de marché
+
+Les événements sont **endogènes** ou **exogènes** :
+
+- **Endogènes** : manque de liquidité
+- **Exogènes** : nouvelles programmées ou non
+
+### Nouvelles programmées
+
+- *Non Farm Payroll* : chaque premier vendredi du mois à 14h30 CET — emplois US
+- Publications du PIB par pays
+- Indicateurs économiques : ventes immobilières, indice de consommation
+
+### Nouvelles non programmées
+
+- Septembre 2011 : la BNS fixe un plancher pour EUR/CHF
+- Attaques terroristes
+
+## Points clés à retenir
+
+- L'efficience des marchés est un concept fondamental mais sans consensus clair
+- Aperçu des instruments disponibles, volumes et lieux d'échange
+- Une série temporelle empirique diffère d'une marche aléatoire par :
+  - Les faits stylisés (fat tails, clustering de volatilité)
+  - La saisonnalité
+  - Les événements de marché

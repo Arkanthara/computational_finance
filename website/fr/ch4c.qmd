@@ -1,0 +1,61 @@
+---
+title: "Synthèse Ch4 - Données, moyennes mobiles, temps intrinsique"
+---
+
+## À retenir en 60 secondes
+
+- **Données réelles** : toujours en bid/ask, non-lisses, non-équidistantes, bruitées
+- **Traitement** : discrétisation (99.9%) vs interpolation (rare)
+- **SMA** : moyenne simple sur $n$ points, poids égaux, décalage important
+- **WMA** : poids linéaires croissants, meilleure réactivité que SMA
+- **EMA** : $\text{EMA}(t) = \alpha X_t + (1-\alpha)\text{EMA}(t-1)$, mémoire infinie décroissante
+- **EMA asynchrone** : adaptée aux données haute fréquence non-équidistantes (Dacorogna et al.)
+- **Temps intrinsèque** : temps dicté par les changements directionnels du prix, pas par l'horloge
+- **Lois d'échelle** : connectent temps intrinsèque et temps physique
+
+## Formules flash
+
+$$
+\text{SMA}(t) = \frac{1}{n}\sum_{i=0}^{n-1} X_{t-i} \qquad \text{SMA}(t+1) = \text{SMA}(t) - \frac{X_{t-n+1}}{n} + \frac{X_{t+1}}{n}
+$$
+
+$$
+\text{WMA}(t) = \frac{\sum_{i=1}^{n} i \cdot X_{t-n+i}}{\frac{n(n+1)}{2}}
+$$
+
+$$
+\text{EMA}(t) = \alpha \cdot X_t + (1-\alpha) \cdot \text{EMA}(t-1), \quad \alpha = \frac{2}{n+1}
+$$
+
+$$
+\text{EMA asynchrone : } \mu = e^{-\alpha}, \quad \nu = \frac{1-\mu}{\alpha}, \quad \alpha = \frac{t_n - t_{n-1}}{\tau}
+$$
+
+$$
+\langle \Delta x \rangle \sim \Delta t^{\alpha} \qquad \langle \Delta t_{dc} \rangle \sim \left(\frac{\delta}{c}\right)^{\alpha}
+$$
+
+## Pièges classiques
+
+- **Fenêtre trop longue** → signal trop retardé, rate les mouvements importants
+- **Oublier l'initialisation** de l'EMA : $\text{EMA}(1) = X_1$ ou $\text{EMA}(n) = \text{SMA}(n)$
+- **Toute moyenne mobile** induit un décalage temporel — compromis fondamental lissage vs réactivité
+- **Confondre SMA et EMA** : la SMA a une mémoire finie de $n$ points, l'EMA a une mémoire infinie
+- **Appliquer une EMA classique** sur des données non-équidistantes → utiliser l'EMA asynchrone
+- **Temps intrinsèque ≠ temps physique** : un marché volatil "avance vite" en temps intrinsèque
+
+## Schéma mental
+
+```{mermaid}
+flowchart TD
+    D[Données brutes bid/ask] --> T[Discrétisation 99.9%]
+    T --> SMA[SMA<br/>Poids égaux]
+    T --> WMA[WMA<br/>Poids linéaires]
+    T --> EMA[EMA<br/>Poids exponentiels]
+    SMA --> L[Time lag]
+    WMA --> L
+    EMA --> L
+    D --> TI[Temps intrinsèque<br/>Changements directionnels]
+    TI --> VOL[Volatilité]
+    TI --> LIQ[Liquidité overshoots]
+```

@@ -1,0 +1,190 @@
+---
+title: "Chapitre 8 - Modèles à base d'agents"
+---
+
+## Objectifs
+
+- Comprendre la différence entre approches top-down et bottom-up
+- Maîtriser les trois modèles ABM fondamentaux : Cont-Bouchaud, Lux-Marchesi, Minority Game
+- Relier les règles microscopiques aux phénomènes macroscopiques émergents
+- Comprendre la transition de phase dans le Minority Game
+
+## Pourquoi des ABM en finance ?
+
+Les marchés ne sont **pas aléatoires** mais résultent d'**interactions entre participants**. Ces interactions produisent des **faits stylisés** : queues épaisses, clustering de volatilité, etc.
+
+### Deux approches de modélisation
+
+| Approche | Principe | Exemple |
+|----------|----------|---------|
+| **Top-down** | Équations de dynamique agrégée | Black-Scholes, GARCH |
+| **Bottom-up (ABM)** | Agents individuels → comportement émergent | Cont-Bouchaud, Lux-Marchesi, Minority Game |
+
+::: {.callout-tip}
+Les ABM ne cherchent pas à prédire les prix mais à **comprendre les mécanismes** qui produisent les faits stylisés observés empiriquement.
+:::
+
+## Modèle de Cont-Bouchaud
+
+### Focus : le comportement grégaire (*herding*)
+
+Le modèle étudie comment le **mimétisme** entre agents produit des queues épaisses.
+
+### Mécanisme
+
+- Les agents forment des **clusters aléatoires**
+- Chaque cluster décide collectivement :
+  - Acheter avec probabilité $a$
+  - Vendre avec probabilité $a$
+  - Ne rien faire avec probabilité $1 - 2a$
+
+### Résultats
+
+- Si $a = 0.5$ : distribution des rendements **gaussienne**
+- Si $a \ll 0.5$ : distribution à **queues épaisses** (*fat-tailed*)
+
+```{mermaid}
+flowchart TD
+    AG[Agents individuels] --> CL[Formation de clusters<br/>aléatoires]
+    CL --> D{Décision du cluster}
+    D -->|prob a| B[Acheter]
+    D -->|prob a| S[Vendre]
+    D -->|prob 1-2a| N[Ne rien faire]
+    B --> P[Prix]
+    S --> P
+    P --> FT[a ≪ 0.5 → Fat tails]
+```
+
+::: {.callout-important}
+**Résultat clé** : le simple comportement grégaire (clusters qui agissent ensemble) suffit à produire des queues épaisses. Pas besoin d'hypothèses complexes.
+:::
+
+## Modèle de Lux-Marchesi
+
+### Focus : fondamentalistes vs chartistes
+
+Le modèle étudie l'interaction entre deux types d'agents qui peuvent **changer de catégorie**.
+
+### Types d'agents
+
+- **Fondamentalistes** : comparent le prix de marché au prix "vrai" (valeur fondamentale)
+  - Si prix < valeur → achètent
+  - Si prix > valeur → vendent
+- **Chartistes** : suivent les tendances de prix
+  - **Optimistes** : suivent la tendance haussière
+  - **Pessimistes** : suivent la tendance baissière (ou contre-tendance)
+
+### Dynamique clé
+
+Les agents peuvent **changer de catégorie** (fondamentaliste ↔ chartiste, optimiste ↔ pessimiste) selon les conditions de marché.
+
+```{mermaid}
+flowchart LR
+    F[Fondamentalistes<br/>Comparent au prix vrai] <-->|Changement<br/>de catégorie| CO[Chartistes Optimistes<br/>Suivent la tendance ↑]
+    F <-->|Changement<br/>de catégorie| CP[Chartistes Pessimistes<br/>Contre-tendance ↓]
+    CO <-->|Switch| CP
+```
+
+### Résultats
+
+- Reproduit les **queues épaisses** des rendements
+- **Critique l'EMH** (Efficient Market Hypothesis) : les inefficiences émergent naturellement de l'interaction entre types d'agents
+
+::: {.callout-warning}
+Le modèle de Lux-Marchesi montre que l'interaction entre fondamentalistes et chartistes suffit à créer des bulles et des crashs, même sans chocs exogènes.
+:::
+
+## Minority Game (Challet & Zhang, Fribourg)
+
+### Inspiration : le problème du bar El Farol
+
+$N$ personnes décident chaque semaine d'aller ou non à un bar. Le bar est agréable si moins de 60% des personnes y vont. **La minorité gagne**.
+
+### Formalisation
+
+- $N$ agents (impair)
+- **Historique** $\mu(t)$ : séquence de $M$ bits codant les résultats passés
+- Chaque agent possède $S$ stratégies parmi les $2^{2^M}$ stratégies possibles
+- Action : $a_i(t) \in \{+1, -1\}$ (acheter/vendre)
+
+### Sélection de stratégie
+
+L'agent $i$ choisit sa stratégie $s_j$ avec la probabilité :
+
+$$
+P(s_j | t) = \frac{\exp(\lambda \cdot U_{s_j})}{\sum_k \exp(\lambda \cdot U_{s_k})}
+$$
+
+où $U_{s_j}$ est l'utilité cumulée de la stratégie $s_j$ et $\lambda$ contrôle la rationalité.
+
+### Participation et utilité
+
+La **participation** (*attendance*) est :
+
+$$
+A(t) = \sum_{i=1}^{N} a_i(t)
+$$
+
+La **mise à jour de l'utilité** :
+
+$$
+U_{i,s}(t+1) = U_{i,s}(t) - \frac{a_{i,s}^{\mu(t)} \cdot A(t)}{\beta}
+$$
+
+L'utilité augmente quand l'agent est dans la **minorité** (son action est opposée au signe de $A$).
+
+### Paramètre de contrôle
+
+$$
+\alpha = \frac{2^M}{N}
+$$
+
+$\alpha$ est le rapport entre le nombre d'états possibles et le nombre d'agents.
+
+### Prédictibilité
+
+$$
+H = \frac{1}{P} \sum_{\mu} \langle A | \mu \rangle^2
+$$
+
+$H$ mesure à quel point la participation est prévisible à partir de l'historique.
+
+### Transition de phase
+
+Le Minority Game présente une **transition de phase** à $\alpha_c \approx 0.3374$ (pour $S = 2$) :
+
+- **$\alpha < \alpha_c$** (phase symétrique) : les agents se copient → comportement grégaire → $\sigma^2/N$ élevé
+- **$\alpha > \alpha_c$** (phase asymétrique) : les agents se diversifient → comportement quasi-aléatoire → $\sigma^2/N$ faible
+
+::: {.callout-important}
+La variance $\sigma^2/N$ de la participation présente un **minimum** qui peut être **inférieur** à celui de la marche aléatoire ($\sigma^2/N = 1$). Le jeu de la minorité peut être plus efficace que le hasard pur.
+:::
+
+### Lien avec les prix financiers
+
+Le Minority Game se connecte aux marchés via :
+
+$$
+r(t) = \frac{A(t)}{\gamma}
+$$
+
+$$
+P(t) = P(t-1) \cdot \exp\left(\frac{A(t)}{\gamma}\right)
+$$
+
+où $\gamma$ est un paramètre de liquidité. L'excès de demande ($A > 0$) fait monter le prix, l'excès d'offre ($A < 0$) le fait baisser.
+
+## Comparaison des trois modèles
+
+| Modèle | Focus | Mécanisme clé | Résultat principal |
+|--------|-------|---------------|-------------------|
+| **Cont-Bouchaud** | Herding | Clusters aléatoires | Fat tails via mimétisme |
+| **Lux-Marchesi** | Hétérogénéité | Fondamentalistes ↔ Chartistes | Bulles, critique EMH |
+| **Minority Game** | Compétition | La minorité gagne | Transition de phase |
+
+## Points clés à retenir
+
+- Les ABM modélisent la finance de manière **bottom-up** : des règles simples au niveau micro produisent des comportements complexes au niveau macro
+- **Cont-Bouchaud** : le herding (mimétisme) suffit à produire des queues épaisses
+- **Lux-Marchesi** : l'interaction fondamentalistes/chartistes reproduit les faits stylisés et critique l'EMH
+- **Minority Game** : la compétition pour être dans la minorité produit une transition de phase avec des propriétés remarquables

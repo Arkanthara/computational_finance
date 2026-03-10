@@ -1,0 +1,49 @@
+---
+title: "Synthèse Ch9 - Options : bases"
+---
+
+## À retenir en 60 secondes
+
+- **Call** : droit d'acheter → payoff $\max(S_T - K, 0)$
+- **Put** : droit de vendre → payoff $\max(K - S_T, 0)$
+- **Parité put-call** : $c + Ke^{-rT} = p + S_0$
+- **Bornes call** : $S_0 - Ke^{-rT} \leq c \leq S_0$
+- **Bornes put** : $Ke^{-rT} - S_0 \leq p \leq K$
+- Option = valeur intrinsèque + valeur temps
+
+## Formules flash
+
+| Concept | Formule |
+|---------|---------|
+| Black-Scholes call | $c = S_0 N(d_1) - Ke^{-rT}N(d_2)$ |
+| Black-Scholes put | $p = Ke^{-rT}N(-d_2) - S_0 N(-d_1)$ |
+| $d_1$ | $\frac{\ln(S_0/K) + (r+\sigma^2/2)T}{\sigma\sqrt{T}}$ |
+| $d_2$ | $\frac{\ln(S_0/K) + (r-\sigma^2/2)T}{\sigma\sqrt{T}}$ |
+| Binomial : $f$ | $e^{-rT}(p f_u + (1-p) f_d)$ |
+| Binomial : $p$ | $\frac{e^{rT} - d}{u - d}$ |
+| Binomial : $\Delta$ | $\frac{f_u - f_d}{S_0(u - d)}$ |
+| $u, d$ | $e^{\pm\sigma\sqrt{T}}$ |
+
+## Stratégies clés
+
+- **Bull spread** : long call $K_1$ + short call $K_2$ ($K_2 > K_1$)
+- **Butterfly** : long $K_1$ + 2 short $K_2$ + long $K_3$
+- **Protection caisse de pension** : achat de puts → plancher sur drawdowns
+
+## Pièges classiques
+
+- Oublier que la parité put-call ne s'applique qu'aux options **européennes** sans dividende
+- Confondre **payoff** (à maturité) et **profit** (payoff − prime)
+- Le smile de volatilité montre que BS est un **modèle**, pas la réalité
+- L'arbre binomial converge vers BS quand le nombre de pas augmente
+
+```{mermaid}
+flowchart LR
+    A[Option] --> B{Type?}
+    B -->|Call| C["max(S-K,0)"]
+    B -->|Put| D["max(K-S,0)"]
+    C --> E{Pricing}
+    D --> E
+    E -->|Vanilla| F[Black-Scholes]
+    E -->|Exotique| G[Arbre binomial]
+```

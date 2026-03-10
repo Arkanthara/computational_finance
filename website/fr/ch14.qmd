@@ -1,0 +1,187 @@
+---
+title: "Chapitre 14 - Données alternatives et rétrospective"
+---
+
+## Introduction
+
+> *"Data not facts"*
+
+Les **données alternatives** (*alternative data*) sont des sources de données non standard utilisées pour obtenir des insights différents en finance. Ce chapitre suit le livre de référence (2020) qui propose un tour d'horizon du sujet.
+
+---
+
+## A. Introduction et théorie
+
+### Qu'est-ce que la donnée alternative ?
+
+Pas de définition nette, mais au moins une de ces caractéristiques :
+
+- Moins couramment utilisée
+- Tend à être plus coûteuse
+- Généralement hors des marchés financiers
+- Historique plus court
+- Plus difficile à exploiter
+
+**Exemples** : imagerie satellite, médias sociaux, mouvements de navires, IoT, balance sheet, transactions de cartes...
+
+### Pourquoi l'utiliser ?
+
+- Insights **orthogonaux** (vision différente)
+- **Anticipatoire** (ex. PMI)
+- **Complémentaire** (ex. émissions CO₂)
+- Seulement **1%** est actuellement analysé (McKinsey 2016) — raisons : coûts, changement de processus, recrutement
+
+### Données d'échappement (*exhaust data*)
+
+Données générées comme sous-produit d'une activité (ex. activité de trading).
+
+---
+
+## Risques et défis
+
+### Risques
+
+- **Risques légaux** :
+  - Données personnelles (lois régionales, anonymisation)
+  - Web scraping (données non publiques même si accessibles)
+  - Violation des conditions d'utilisation des sites
+  - Limitations contractuelles
+- **Qualité et validité** : ex. fiabilité des tweets, capteurs défaillants
+- **Disparition de fournisseurs** : parfois pour raisons légales
+
+### Défis
+
+- Forme **non structurée** (pas de timestamp, texte/images/vidéos/écriture manuscrite)
+- **Valeurs manquantes**, outliers, anomalies
+- **Matching** : même entité référencée différemment
+- Amélioration de qualité, suppression du superflu
+- Traitement des outliers délicat (peuvent être inhérents au dataset)
+- **Agrégation** en séries temporelles régulières par catégorie ou ticker
+
+---
+
+## Le processus d'utilisation (10 étapes)
+
+```{mermaid}
+flowchart TD
+    A["1. Vision et stratégie"] --> B["2. Identifier les datasets"]
+    B --> C["3. Due diligence fournisseur"]
+    C --> D["4. Pré-évaluer les risques"]
+    D --> E["5. Pré-évaluer le signal (POC)"]
+    E --> F["6. Onboarding des données"]
+    F --> G["7. Preprocessing"]
+    G --> H["8. Extraction du signal"]
+    H --> I["9. Mise en production"]
+    I --> J["10. Maintenance"]
+```
+
+**Métiers nécessaires** : data scouts, data strategists, data engineers, data scientists — la demande est croissante !
+
+---
+
+## B. Applications pratiques
+
+### Données manquantes (*missing data*)
+
+- Étape **cruciale** et première
+- Plus fréquent dans l'espace alternatif
+- **Traitements** :
+  - Suppression (*deletion*)
+  - Remplacement (*replacement*)
+  - Imputation prédictive (littérature dense)
+- Exemple : imputation de séries CDS, débruitage d'images satellite
+
+### Outliers
+
+> *"One man's noise is another man's signal"* (ex. carte de crédit)
+
+- Les exceptions existent : 15 janvier 2015, EUR/CHF floor abandonné
+- Peut être normal dans une population mais pas dans une autre
+
+**Techniques** :
+
+- **Non supervisées** : KNN (distance), LOF (densité), HBOS (histogramme)
+- **Supervisées** : autoencoder
+
+### Données fondamentales automobiles
+
+Sélection d'actions avec algorithme de classement basé sur :
+
+- Volumes de ventes, âge des flottes, volumes de production
+- Utilisation des usines, chiffres d'affaires
+
+### Enquêtes et crowdsourcing
+
+- **PMI** (*Purchasing Managers' Index*) : questionnaire envoyé aux dirigeants → proxy anticipé du PIB
+- **Crowdsourcing** : estimations de prix ou de bénéfices par analystes
+- Exemple : Grapedata — sondage de 700 participants sur la sortie d'un jeu vidéo (JX Mobile III)
+- Défi : taille d'échantillon, couverture, représentativité
+
+### Imagerie satellite
+
+- Puissance prédictive pour la croissance des exportations US
+- Comptage de voitures sur parkings de magasins → estimation des bénéfices
+
+### Données de localisation
+
+- GPS intégré dans voitures, navires, avions, téléphones
+- Exemple : stratégie utilisant l'indice Thasos
+- Comparaison estimations de bénéfices avec score de fréquentation (*footfall*)
+
+### Texte, web, médias sociaux et actualités
+
+- **Hédonometer** : sentiment de bonheur (basé Twitter)
+  - T-stat de 7.7 en régression contre S&P 500
+  - Utilisable pour couper le risque
+- **Twitter-enhanced payrolls** : modèle NFP amélioré par Twitter
+  - Achat si estimation > consensus, vente sinon
+- **Sentiment d'actualités** : score par devise → construction de paires
+  - Achat quand sentiment positif, vente sinon
+
+### Attention des investisseurs
+
+- **Liens Bitly** : peu de clics = réaction payroll atténuée ; beaucoup de clics sur T-notes US = réponse forte
+- **Google Domestic Trends** : sentiment sectoriel → quantifier les chocs, réduire allocation S&P 500
+- **Investopedia IAI** (Investor Anxiety Index) : anxiété mesurée par les recherches → S&P 500 plat quand IAI élevé
+
+### Transactions consommateurs
+
+- **MasterCard Spending Pulse** : données agrégées de transactions par carte
+- **Quandl** : données basées sur reçus anonymisés
+
+---
+
+## Conclusion et rétrospective du cours
+
+::: {.callout-important}
+## Citation clé
+*"Those firms that do not update their investment processes over the next five years could face strategic risks and might very well be outmanoeuvred by competitors that effectively incorporate alt data."* — Deloitte, 2017
+:::
+
+### Où en sommes-nous ?
+
+- Stade **précoce** d'adoption mais nombreux exemples réussis
+- Les données croissent plus vite que les ressources (Sandy Rattray, CEO Man, 2019)
+- **Vous êtes les acteurs** de ce changement en cours
+
+### Pipeline complet du cours
+
+```{mermaid}
+flowchart LR
+    D[Données] --> M[Modèle]
+    M --> S[Signal]
+    S --> Dec[Décision]
+    Dec --> R[Gestion des risques]
+    R --> Mon[Monitoring]
+```
+
+---
+
+## Points clés
+
+- Les données alternatives apportent des insights **orthogonaux**, **anticipatoires** ou **complémentaires**
+- Risques : légaux, qualité, disparition de fournisseurs
+- Défis : données non structurées, valeurs manquantes, matching
+- Processus en **10 étapes** : de la vision à la maintenance
+- Applications : missing data, outliers, automobile, satellite, localisation, social media, transactions
+- Le domaine est en forte croissance — compétences data de plus en plus demandées

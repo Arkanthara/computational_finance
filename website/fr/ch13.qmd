@@ -1,0 +1,238 @@
+---
+title: "Chapitre 13 - Futures, forwards et ESG"
+---
+
+# Partie 1 : Futures et Forwards
+
+## Introduction
+
+Un **contrat futures** (ou forward) est un accord entre deux parties pour acheter ou vendre un actif à un moment futur (maturité $T$) à un prix fixé (strike $K$).
+
+- Ce n'est **pas** une assurance (contrairement aux options) → **obligation** d'acheter ou vendre
+- Futures tradés sur les bourses (ex. CME, Chicago Mercantile Exchange)
+- Instruments : commodités (métaux précieux, céréales, énergie), actions, devises, obligations
+
+::: {.callout-tip}
+## Origine historique
+Les futures ont été créés par/pour les fermiers qui voulaient garantir un prix de vente pour leur récolte.
+:::
+
+### Usages
+
+- Exposition à un actif sans se soucier de la livraison (roll-over)
+- Couverture (hedging) d'un risque existant
+
+---
+
+## Forwards vs Futures
+
+| | **Forward** | **Futures** |
+|---|---|---|
+| Marché | OTC | Bourse (exchange) |
+| Standardisation | Non | Oui |
+| Date de livraison | Spécifique | Gamme de dates |
+| Règlement | À la fin du contrat | **Quotidien** |
+| Clôture | Livraison ou cash settlement | Généralement fermé avant maturité |
+| Risque de contrepartie | Oui | Non (chambre de compensation) |
+
+---
+
+## Opération des marges
+
+### Principe
+
+La bourse organise des **règlements quotidiens** et des contrôles de marge pour assurer que les deux parties honorent leur engagement :
+
+- **Marge initiale** (*initial margin*) : dépôt requis à l'ouverture
+- **Marge de maintenance** (*maintenance margin*) : seuil minimum
+- **Appel de marge** (*margin call*) : quand le solde passe sous la maintenance → renflouer jusqu'à la marge initiale
+- Le solde excédentaire peut être retiré
+
+### Exemple
+
+Achat de 2 contrats futures sur l'or (200 onces) le 5 juin. Prix futures = 400 USD/once. Marge initiale = 2000 USD/contrat, maintenance = 1500 USD/contrat.
+
+| Jour | Prix futures | Gain quotidien | Gain cumulé | Solde marge | Appel de marge |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| | 400 | | | 4000 | |
+| Jun 5 | 397 | −600 | −600 | 3400 | |
+| Jun 6 | 396.10 | −180 | −780 | 3220 | |
+| Jun 9 | 393.30 | −560 | −1340 | 2660 | **+1340** (< 3000) |
+| Jun 10 | 393.60 | +60 | −1280 | 4060 | |
+
+---
+
+## Pricing des futures
+
+### Notations
+
+- $S_t$ : prix du sous-jacent au temps $t$
+- $F_t$ : prix du futures aujourd'hui
+- $T$ : maturité (en années)
+- $r$ : taux sans risque
+
+### Prix théorique (sans revenu/dividende/yield)
+
+**Idée** : le prix est le coût de fournir le sous-jacent à l'échéance → emprunter du cash maintenant et acheter le sous-jacent coûte $S_t e^{r(T-t)}$.
+
+$$\boxed{F_t = S_t \, e^{r(T-t)}}$$
+
+### Arguments d'arbitrage
+
+1. Si $F' > S_t e^{r(T-t)}$ : emprunter, acheter le sous-jacent, vendre le futures → profit $F' - S_t e^{r(T-t)} > 0$
+2. Si $F'' < S_t e^{r(T-t)}$ : acheter le futures, vendre le sous-jacent (short), investir le produit → profit $S_t e^{r(T-t)} - F'' > 0$
+
+→ Le seul prix sans arbitrage est $F_t = S_t e^{r(T-t)}$.
+
+### Avec revenu ou yield
+
+- Avec revenu/dividende $I$ : $F_t = (S_t - I) e^{r(T-t)}$
+- Avec yield ou coût $q$ (ex. stockage) : $F_t = S_t e^{(r-q)(T-t)}$
+
+### Exemple (Hull 3.5)
+
+Forward 4 mois sur une obligation zéro-coupon (maturité 1 an, prix actuel = 930 USD, $r = 6\%$) :
+
+$$F_0 = 930 \, e^{0.06 \times 4/12} = \mathbf{948.79} \text{ USD}$$
+
+---
+
+## Valeur d'un contrat futures
+
+### Formule
+
+La valeur $f_t$ d'un futures de strike $K$ et prix futures $F_t$ :
+
+$$\boxed{f_t = (F_t - K) e^{-r(T-t)}}$$
+
+À la négociation initiale : $K = F_0$ et $f = 0$.
+
+### Sans dividende
+
+$$f_t = S_t - K e^{-r(T-t)}$$
+
+- $S_t$ influence fortement $f_t$ → être exposé à un futures ≈ être exposé au sous-jacent
+- Le taux sans risque a aussi un impact
+
+---
+
+## Contango et backwardation
+
+```{mermaid}
+flowchart LR
+    A[Prix futures] --> B{Position relative?}
+    B -->|"F > S (prix attendu ↑)"| C[Contango]
+    B -->|"F < S (prix attendu ↓)"| D[Backwardation]
+    C --> E["F_T → S_T à maturité"]
+    D --> E
+```
+
+- **Contango** : futures plus cher que le spot → attente de hausse / coûts de portage élevés
+- **Backwardation** : futures moins cher que le spot → attente de baisse / demande forte
+- Dans tous les cas, $F_T$ **converge** vers $S_T$ à maturité
+
+---
+
+# Partie 2 : ESG (Investissement durable)
+
+## Motivation
+
+Le changement climatique, l'effondrement de la biodiversité, les déséquilibres sociaux et les problèmes de gouvernance posent la question : **la finance peut-elle aider ?**
+
+---
+
+## Définition ESG
+
+| Pilier | Thèmes |
+|--------|--------|
+| **E** (Environnement) | Émissions carbone, biodiversité, ressources |
+| **S** (Social) | Droits humains, conditions de travail, égalité |
+| **G** (Gouvernance) | Transparence, rémunération, structure du conseil |
+
+::: {.callout-warning}
+L'investissement durable est un domaine **jeune et en évolution**. Les indicateurs sont multiples : ESG, SDG, ITR, émissions carbone Scope 1-2-3...
+:::
+
+---
+
+## Scoring
+
+### Principes
+
+- Plusieurs systèmes de scoring (MSCI, S&P, ISS, etc.) avec des variations
+- Corrélation toutefois **élevée** entre providers
+- Les entreprises (*corporates*) sont mesurées sur E, S, G → un score est émis
+- Moins de progrès sur les **gouvernements** (mais en évolution)
+
+### Éléments mesurés
+
+- **Émissions carbone** : Scope 1 (directes), Scope 2 (énergie), Scope 3 (chaîne de valeur)
+- **ITR** (*Implied Temperature Rise*) : scénario futur (MSCI)
+- **Égalité de genre** : bientôt un minimum obligatoire
+- **SDG** (*Sustainable Development Goals*) : 17 objectifs quantifiés
+
+### Tendance
+
+Les scores ESG tendent à **augmenter avec le temps** (Lundström 2021).
+
+---
+
+## Stratégies ESG
+
+```{mermaid}
+flowchart TD
+    U[Univers d'investissement] --> F[Filtres ESG]
+    F --> S1[Intégration]
+    F --> S2[Engagement]
+    F --> S3[Vote]
+    F --> S4[Exclusion]
+    F --> S5[Impact]
+    F --> S6[Best-in-class]
+    S1 --> P[Construction portefeuille]
+    S2 --> P
+    S3 --> P
+    S4 --> P
+```
+
+### Types de stratégies
+
+- **Intégration** : incorporer les scores ESG dans l'analyse risque/rendement
+- **Engagement** : dialogue avec les émetteurs pour améliorer leurs pratiques
+- **Vote** : exercer les droits de vote en assemblée générale
+- **Exclusion** : exclure certaines sociétés (normative, charbon, etc.)
+- **Impact** : investir pour un impact mesurable positif
+- **Best-in-class** : sélectionner les meilleurs de chaque secteur
+
+---
+
+## Exemple : situation à compenswiss
+
+### 4 axes de stratégie
+
+1. **Intégration** : benchmarks, dashboard ESG, Swiss Climate Scores
+2. **Vote** : ~100 AG par an en Suisse (avec consultant externe)
+3. **Engagement** (via ASIR) : dialogue avec 150+ émetteurs (ex. travail des enfants dans le cacao)
+4. **Exclusions** : ~100 sociétés exclues (normatives et charbon)
+
+### Données et outils
+
+- Sources : MSCI, ASIR, gérants
+- Traverser les données dans le temps et les structures est essentiel
+- Analyse d'empreinte carbone du portefeuille (comparaison avec benchmark)
+
+---
+
+## Points clés Futures/Forwards
+
+- Les futures obligent à acheter/vendre à maturité (pas optionnel)
+- Mécanisme de roll-over pour rester exposé sans livraison
+- Pricing par coût de réplication : $F_t = S_t e^{r(T-t)}$
+- Valuation : $f_t = (F_t - K)e^{-r(T-t)}$
+- Contango vs backwardation → convergence $F_T \to S_T$
+
+## Points clés ESG
+
+- La finance durable est un domaine jeune mais croissant
+- Indicateurs : ESG, SDG, ITR, émissions carbone
+- Stratégies : intégration, engagement, vote, exclusion, impact
+- Les données sont essentielles pour mesurer et analyser

@@ -1,0 +1,49 @@
+---
+title: "Synthèse Ch13 - Futures, forwards, ESG"
+---
+
+## À retenir en 60 secondes
+
+### Futures / Forwards
+- **Obligation** d'acheter/vendre (≠ option)
+- Forward = OTC, Futures = bourse + marges quotidiennes
+- Pricing : $F_t = S_t e^{r(T-t)}$ (argument d'arbitrage)
+- Avec revenu $I$ : $F_t = (S_t - I)e^{r(T-t)}$, avec yield $q$ : $F_t = S_t e^{(r-q)(T-t)}$
+- Valeur : $f_t = (F_t - K)e^{-r(T-t)}$
+- Contango ($F > S$) vs Backwardation ($F < S$) → convergence à maturité
+
+### ESG
+- 3 piliers : **E**nvironnement, **S**ocial, **G**ouvernance
+- Scores MSCI (AAA→CCC), corrélés entre providers
+- Stratégies : intégration, engagement, vote, exclusion, impact
+
+## Formules flash
+
+| Concept | Formule |
+|---------|---------|
+| Prix futures (simple) | $F_t = S_t e^{r(T-t)}$ |
+| Avec revenu | $F_t = (S_t - I)e^{r(T-t)}$ |
+| Avec yield/coût | $F_t = S_t e^{(r-q)(T-t)}$ |
+| Valeur futures | $f_t = (F_t - K)e^{-r(T-t)}$ |
+| Sans dividende | $f_t = S_t - Ke^{-r(T-t)}$ |
+
+## Opération des marges
+
+1. Dépôt de la **marge initiale**
+2. Règlement quotidien (mark-to-market)
+3. Si solde < **marge de maintenance** → **appel de marge** (renflouer jusqu'à marge initiale)
+
+## Pièges classiques
+
+- Un futures n'est **pas** une option : obligation d'acheter/vendre
+- Le prix futures n'est **pas** une prévision, c'est un coût de réplication sans arbitrage
+- Les scores ESG ne sont **pas** absolus : hétérogénéité entre providers
+- Confondre exclusion (éliminer) et intégration (pondérer)
+
+```{mermaid}
+flowchart LR
+    S[Spot S] -->|"× e^{r(T-t)}"| F[Futures F]
+    F -->|"Contango F>S"| M[Maturité]
+    F -->|"Backwardation F<S"| M
+    M -->|"Convergence"| ST["F_T = S_T"]
+```

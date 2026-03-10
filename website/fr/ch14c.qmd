@@ -1,0 +1,48 @@
+---
+title: "Synthèse Ch14 - Données alternatives et rétrospective"
+---
+
+## À retenir en 60 secondes
+
+- **Donnée alternative** : moins courante, plus coûteuse, hors marchés financiers, historique court
+- Seulement **1%** analysé actuellement (McKinsey 2016)
+- **3 types d'apport** : orthogonal, anticipatoire, complémentaire
+- **Processus en 10 étapes** : vision → dataset → due diligence → risques → POC → onboarding → preprocessing → signal → production → maintenance
+- Pipeline : donnée → signal → décision → contrôle risques
+
+## Sources principales
+
+| Type | Exemples |
+|------|----------|
+| Satellite | Comptage voitures, exports US |
+| Localisation | GPS, Thasos Index, footfall |
+| Social media | Hédonometer, Twitter payrolls, news sentiment |
+| Attention | Bitly, Google Trends, Investopedia IAI |
+| Transactions | MasterCard Pulse, Quandl reçus |
+| Enquêtes | PMI, crowdsourcing analystes |
+| Fondamentales | Automobile (ventes, production) |
+
+## Traitement des données
+
+| Problème | Solutions |
+|----------|-----------|
+| Missing data | Suppression, remplacement, imputation prédictive |
+| Outliers | KNN, LOF, HBOS (non supervisé), autoencoder (supervisé) |
+| Non structuré | NLP, computer vision, preprocessing lourd |
+
+## Pièges classiques
+
+- Confondre corrélation opportuniste et signal économiquement exploitable
+- **Look-ahead bias** : utiliser des données du futur dans le backtest
+- La qualité des données alternatives est souvent **inférieure** aux données classiques
+- Un fournisseur peut **disparaître** → due diligence essentielle
+- *"One man's noise is another man's signal"* — le contexte détermine ce qui est un outlier
+
+```{mermaid}
+flowchart LR
+    D[Données brutes] --> Q[Qualité / Nettoyage]
+    Q --> S[Extraction signal]
+    S --> Dec[Décision d'investissement]
+    Dec --> R[Gestion des risques]
+    R --> M[Monitoring continu]
+```

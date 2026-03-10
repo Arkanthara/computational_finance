@@ -1,0 +1,245 @@
+---
+title: "Chapitre 9 - Options : notions de base"
+---
+
+## Introduction
+
+Une **option** est un instrument financier donnant le **droit** (mais pas l'obligation) d'acheter ou de vendre un actif sous-jacent à un prix fixé (le **strike** $K$) à une date future (la **maturité** $T$).
+
+Les options sont des **assurances** qui viennent avec une **prime** (le prix de l'option).
+
+::: {.callout-tip}
+## Terminologie clé
+- **Call** : droit d'**acheter** le sous-jacent à $K$
+- **Put** : droit de **vendre** le sous-jacent à $K$
+- **Long** : acheteur de l'option (paie la prime)
+- **Short** : vendeur/émetteur de l'option (reçoit la prime)
+- **Européenne** : exercice uniquement à maturité $T$
+- **Américaine** : exercice à tout moment $t \leq T$
+:::
+
+---
+
+## Payoffs et profits
+
+### Payoffs à maturité
+
+Le payoff est la valeur de l'option à l'expiration :
+
+| Position | Payoff |
+|----------|--------|
+| Long call | $\max(S_T - K, 0)$ |
+| Short call | $-\max(S_T - K, 0)$ |
+| Long put | $\max(K - S_T, 0)$ |
+| Short put | $-\max(K - S_T, 0)$ |
+
+### Profits
+
+Le profit tient compte de la prime payée/reçue :
+
+| Position | Profit |
+|----------|--------|
+| Long call | $\max(S_T - K, 0) - c$ |
+| Short call | $c - \max(S_T - K, 0)$ |
+| Long put | $\max(K - S_T, 0) - p$ |
+| Short put | $p - \max(K - S_T, 0)$ |
+
+::: {.callout-important}
+## ITM, ATM, OTM
+- **In the money (ITM)** : l'option a une valeur intrinsèque > 0 (call : $S > K$, put : $S < K$)
+- **At the money (ATM)** : $S \approx K$
+- **Out of the money (OTM)** : pas de valeur intrinsèque (call : $S < K$, put : $S > K$)
+:::
+
+---
+
+## Bornes sur les prix des options
+
+### Bornes supérieures
+
+- **Call** : $c \leq S_0$ (un call ne vaut jamais plus que le sous-jacent)
+- **Put** : $p \leq K$ (un put ne peut rapporter au maximum que $K$, quand $S_T = 0$)
+
+### Bornes inférieures
+
+On démontre par argument d'arbitrage (deux portefeuilles) :
+
+- **Call** : $c \geq S_0 - K e^{-rT}$
+- **Put** : $p \geq K e^{-rT} - S_0$
+
+**Démonstration (call)** : Considérons deux portefeuilles :
+
+- **A** : un call + cash $K e^{-rT}$
+- **B** : l'actif $S$
+
+À maturité $T$ : A vaut $\max(S_T, K)$ et B vaut $S_T$. Donc $A \geq B$ toujours, ce qui implique :
+
+$$c + K e^{-rT} \geq S_0 \quad \Rightarrow \quad c \geq S_0 - K e^{-rT}$$
+
+### Résumé des bornes
+
+$$S_0 - K e^{-rT} \leq c \leq S_0$$
+
+$$K e^{-rT} - S_0 \leq p \leq K$$
+
+---
+
+## Parité put-call
+
+En considérant deux portefeuilles :
+
+- **A** : call $c$ + cash $K e^{-rT}$ → vaut $\max(S_T, K)$
+- **C** : put $p$ + actif $S$ → vaut aussi $\max(S_T, K)$
+
+Comme A et C ont la même valeur à maturité :
+
+$$\boxed{c + K e^{-rT} = p + S_0}$$
+
+::: {.callout-warning}
+Si cette égalité ne tient pas, il y a une opportunité d'arbitrage (free lunch). Le marché corrige rapidement ces anomalies.
+:::
+
+---
+
+## Stratégies de trading avec options
+
+### Long put + long sous-jacent
+
+Le profit ressemble à celui d'un call → illustre la parité put-call.
+
+### Bull spread
+
+Deux variantes :
+
+- **Avec puts** : long put $K_1$, short put $K_2$ ($K_2 > K_1$)
+- **Avec calls** : long call $K_1$, short call $K_2$ ($K_2 > K_1$)
+
+Profit limité à la hausse et à la baisse → pari directionnel modéré.
+
+### Long butterfly
+
+- Long call à $K_1$, 2 short calls à $K_2$, long call à $K_3$ ($K_1 < K_2 < K_3$)
+- Profit maximal quand $S_T = K_2$ → pari sur faible volatilité
+
+### Protection de fonds de pension
+
+- Achat d'un panier de puts pour protéger contre les *tail risks*
+- Réduit les *drawdowns* en les plafonnant
+- Coût : le prix des puts → trouver le *sweet spot* entre profits et réduction de pertes
+
+---
+
+## Pricing par arbre binomial
+
+### Principe
+
+Discrétiser le temps et le prix, puis inférer le prix de l'option en remontant dans le temps en supposant des positions parfaitement couvertes.
+
+### Un pas
+
+```{mermaid}
+flowchart TD
+    S0["S₀, f"] -->|p| Su["S₀·u, fᵤ"]
+    S0 -->|1-p| Sd["S₀·d, f_d"]
+```
+
+- $u$ : mouvement haussier, $d$ : mouvement baissier, $u = 1/d$
+- $p$ : probabilité d'un mouvement haussier
+- Le portefeuille du vendeur : short call + $\Delta$ actifs
+
+### Couverture sans risque
+
+En imposant $P_u = P_d$ (même valeur du portefeuille dans les deux scénarios) :
+
+$$\Delta = \frac{f_u - f_d}{S_0 u - S_0 d}$$
+
+### Prix de l'option
+
+$$\boxed{f = e^{-rT}\left(p \cdot f_u + (1-p) \cdot f_d\right)}$$
+
+avec :
+
+$$p = \frac{e^{rT} - d}{u - d}$$
+
+### Calibration de $u$ et $d$
+
+En supposant que la variance du rendement sur $T$ est $\sigma^2 T$ :
+
+$$u = e^{\sigma\sqrt{T}}, \qquad d = e^{-\sigma\sqrt{T}}$$
+
+### Exemple numérique
+
+Call européen : $K = 21$ USD, $T = 3$ mois, $S_0 = 20$ USD, $u = 1.1$, $d = 0.909$, $r = 12\%$
+
+- $f_u = \max(22 - 21, 0) = 1$, $f_d = \max(18.2 - 21, 0) = 0$
+- $p = \frac{e^{0.12 \times 3/12} - 0.909}{1.1 - 0.909} = 0.6357$
+- $f = e^{-0.12 \times 3/12}(0.6357 \times 1 + 0.3643 \times 0) = \mathbf{0.6169}$ USD
+- $\Delta = \frac{1 - 0}{22 - 18.2} = \mathbf{0.2619}$
+
+### Extension multi-pas
+
+Pour un prix raisonnable, il faut de nombreux pas (ex. 30 pas → $2^{30} \approx 10^9$ chemins possibles).
+
+---
+
+## Pricing Black-Scholes
+
+### Modèle
+
+Pour des options **vanilla** (standard), le modèle de Black-Scholes modélise le prix comme une marche aléatoire gaussienne.
+
+### Formules
+
+**Call** :
+
+$$c_{t=0} = S_0 N(d_1) - K e^{-rT} N(d_2)$$
+
+**Put** :
+
+$$p_{t=0} = K e^{-rT} N(-d_2) - S_0 N(-d_1)$$
+
+avec :
+
+$$d_1 = \frac{\ln(S_0/K) + (r + \sigma^2/2)T}{\sigma\sqrt{T}}$$
+
+$$d_2 = \frac{\ln(S_0/K) + (r - \sigma^2/2)T}{\sigma\sqrt{T}}$$
+
+et $N(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{x} e^{-z^2/2} \, dz$ (fonction de répartition de la loi normale standard).
+
+::: {.callout-tip}
+## Convergence binomial → BS
+Le prix binomial converge vers le prix Black-Scholes quand le nombre de pas augmente.
+:::
+
+### Vérification des bornes avec BS
+
+- $\sigma \to \infty$ : $N(d_1) \to 1$, $N(d_2) \to 0$ → $c \leq S_0$ ✓
+- $\sigma \to 0$ : $N(d_1) \to 1$, $N(d_2) \to 1$ → $c \geq S_0 - K e^{-rT}$ ✓
+
+---
+
+## Volatilité implicite et smile
+
+La **volatilité implicite** est la volatilité $\sigma$ qu'on peut déduire du modèle BS en fixant toutes les autres variables.
+
+Théoriquement, elle devrait être constante (indépendante de $K$ et $T$). En pratique, on observe un **smile de volatilité** :
+
+- La volatilité implicite varie avec le strike → courbe en forme de sourire
+- Cela montre que BS est un **modèle** avec ses limites
+- La volatilité implicite peut servir d'**indicateur d'attentes** du marché
+
+::: {.callout-warning}
+## Options exotiques
+Pour les options exotiques (binaires, barrières, etc.), l'arbre binomial peut être la seule méthode de pricing applicable.
+:::
+
+---
+
+## Points clés
+
+- Les options sont des **droits** (pas des obligations) d'acheter ou vendre
+- Ce sont des **assurances** avec une prime à payer
+- On a établi des **bornes** sur les prix des calls et puts via arguments d'arbitrage
+- La **parité put-call** : $c + Ke^{-rT} = p + S_0$
+- **Deux méthodes de pricing** : arbres binomiaux et Black-Scholes
+- Le **smile de volatilité** montre les limites du modèle BS

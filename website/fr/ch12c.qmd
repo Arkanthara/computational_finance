@@ -1,0 +1,47 @@
+---
+title: "Synthèse Ch12 - Duration et convexité"
+---
+
+## À retenir en 60 secondes
+
+- **Taux forward** : taux futurs implicites dans la courbe zéro-coupon
+- **Duration** : sensibilité premier ordre au yield → $\delta B/B = -\delta y \cdot D$
+- **Convexité** : correction second ordre → $\delta B/B = -D\delta y + \frac{1}{2}C\delta y^2$
+- Duration = moyenne pondérée des temps de paiement
+- Zéro-coupon $n$ ans → duration = $n$ ; avec coupons → duration < $n$
+
+## Formules flash
+
+| Concept | Formule |
+|---------|---------|
+| Forward | $r = \frac{R_2 T_2 - R_1 T_1}{T_2 - T_1}$ |
+| Duration Macaulay | $D = \frac{\sum (t_i-t) c_i e^{-y(t_i-t)}}{B(t)}$ |
+| Sensibilité 1er ordre | $\delta B/B = -\delta y \cdot D$ |
+| Convexité | $C = \frac{1}{B}\frac{\partial^2 B}{\partial y^2}$ |
+| Sensibilité 2nd ordre | $\delta B/B = -D\delta y + \frac{1}{2}C\delta y^2$ |
+| Duration modifiée | $D_{\text{mod}} = D/(1+y/n_c)$ |
+| Duration dollar | $DV01 = D_{\text{mod}} \cdot B / 100$ |
+
+## Mouvements de courbe
+
+| Type | Description |
+|------|-------------|
+| Parallèle | Tous les taux $\pm$ même montant |
+| Pentification | Spread court/long ↑ |
+| Aplatissement | Spread court/long ↓ |
+
+## Pièges classiques
+
+- Duration seule insuffisante pour **grands shifts** → ajouter convexité
+- Les taux forward ne sont pas des **prévisions** mais des taux **d'équilibre** sans arbitrage
+- Duration ≠ maturité (sauf zéro-coupon)
+- Un shift **non-parallèle** nécessite des Key Rate Durations
+
+```{mermaid}
+flowchart TD
+    DY["δy petit?"] -->|Oui| D["δB/B ≈ -D·δy"]
+    DY -->|Non| DC["δB/B ≈ -D·δy + ½C·δy²"]
+    D --> PM[Gestion portefeuille]
+    DC --> PM
+    PM --> WD["Duration pondérée par poids"]
+```

@@ -1,0 +1,200 @@
+---
+title: "Chapitre 12 - Obligations : sensibilités temps et taux"
+---
+
+## Taux forward
+
+### Définition
+
+Les **taux forward** sont les taux d'intérêt implicites dans la courbe zéro-coupon actuelle pour des périodes futures.
+
+### Exemple
+
+| Maturité (ans) | Taux zéro-coupon (%) |
+|:---:|:---:|
+| 1 | 10.0 |
+| 2 | 10.5 |
+| 3 | 10.8 |
+| 4 | 11.0 |
+| 5 | 11.1 |
+
+**Forward 1 an dans 1 an** : le taux pour l'année 2 qui, combiné avec 10% en année 1, donne 10.5% sur 2 ans :
+
+$$100 e^{0.1} e^{x} = 100 e^{0.105 \times 2} \quad \Rightarrow \quad x = 0.105 \times 2 - 0.1 = 11\%$$
+
+**Forward 1 an dans 2 ans** :
+
+$$x = \frac{0.108 \times 3 - 0.105 \times 2}{1} = 11.4\%$$
+
+### Formule générale
+
+$$\boxed{r = \frac{R_2 T_2 - R_1 T_1}{T_2 - T_1}}$$
+
+où $R_1, R_2$ sont les taux pour maturités $T_1$ et $T_2$.
+
+::: {.callout-tip}
+## Argument d'arbitrage
+Si le taux forward 1y1 était de 10% au lieu de 11%, on pourrait vendre un 1 an + un forward à 10%, acheter un 2 ans à 10.5% → profit sans risque :
+$$100(-e^{0.2} + e^{0.21}) > 0$$
+:::
+
+### Application : hypothèques
+
+Pour un achat immobilier dans 1 an avec une hypothèque de 10 ans, le banquier utilise les taux à 11 ans et 1 an pour calculer le taux forward.
+
+**Surface de taux** : on a maintenant une surface (et non plus une courbe) de taux.
+
+---
+
+## Évolution de la courbe des taux
+
+La courbe évolue suite aux interventions des banques centrales (court terme) et à l'activité de marché (toutes maturités).
+
+### Types de mouvements
+
+```{mermaid}
+flowchart TD
+    A[Mouvement de courbe] --> B[Déplacement parallèle]
+    A --> C[Pentification / Steepening]
+    A --> D[Aplatissement / Flattening]
+```
+
+- **Déplacement parallèle** (*parallel shift*) : tous les taux montent/baissent du même montant
+- **Pentification** (*steepening*) : l'écart entre taux courts et longs augmente
+- **Aplatissement** (*flattening*) : l'écart entre taux courts et longs diminue
+
+::: {.callout-warning}
+En pratique, les mouvements sont rarement purement parallèles. La décomposition en parallèle/pentification/aplatissement est une simplification utile.
+:::
+
+---
+
+## Duration de Macaulay
+
+### Définition
+
+La **duration** mesure combien de temps en moyenne le détenteur doit attendre avant de recevoir les paiements.
+
+- Zéro-coupon de maturité $n$ ans → duration = $n$ ans
+- Obligation avec coupons → duration < $n$ ans
+
+### Formule
+
+Rappel de la valorisation :
+
+$$B(t) = \sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)} \qquad (\Delta)$$
+
+(où $c_n$ inclut le principal par convention)
+
+La **duration de Macaulay** :
+
+$$\boxed{D = \frac{\sum_{i=1}^{n} (t_i - t) \cdot c_i \cdot e^{-y(t_i - t)}}{B(t)}}$$
+
+On peut réécrire :
+
+$$D = \sum_{i=1}^{n} (t_i - t) \underbrace{\frac{c_i e^{-y(t_i - t)}}{B(t)}}_{w_i}$$
+
+Les poids $w_i$ sont positifs, $< 1$, et $\sum w_i = 1$ → $D$ est une **moyenne pondérée** des temps de paiement.
+
+### Lien avec la sensibilité au taux
+
+En dérivant $(\Delta)$ par rapport à $y$ :
+
+$$\frac{\partial B}{\partial y} = -B \cdot D$$
+
+Pour un petit shift parallèle $\delta y$ :
+
+$$\boxed{\frac{\delta B}{B} = -\delta y \cdot D}$$
+
+Un shift positif du yield affecte **négativement** le prix de l'obligation.
+
+### Exemple détaillé
+
+Obligation 3 ans, coupon 10%, yield 12% :
+
+| Temps (ans) | Flux (USD) | Valeur actuelle | Poids $w_i$ | $t_i \times w_i$ |
+|:---:|:---:|:---:|:---:|:---:|
+| 0.5 | 5 | 4.709 | 0.050 | 0.025 |
+| 1.0 | 5 | 4.435 | 0.047 | 0.047 |
+| 1.5 | 5 | 4.176 | 0.044 | 0.066 |
+| 2.0 | 5 | 3.933 | 0.042 | 0.083 |
+| 2.5 | 5 | 3.704 | 0.039 | 0.098 |
+| 3.0 | 105 | 73.256 | 0.778 | 2.33 |
+| **Total** | | **94.213** | **1.000** | **2.653** |
+
+$B = 94.213$, $D = 2.653$ (entre 0 et 3 ans).
+
+### Vérification : petit shift $\delta y = 0.1\%$
+
+$$B_{\text{réel}} = 93.963 \quad \Rightarrow \quad \delta B_{\text{réel}} = -0.250$$
+$$\delta B_{\text{est}} = -94.213 \times 2.653 \times 0.001 = -0.250 \quad \checkmark$$
+
+### Vérification : grand shift $\delta y = 1\%$
+
+$$B_{\text{réel}} = 91.749 \quad \Rightarrow \quad \delta B_{\text{réel}} = -2.464$$
+$$\delta B_{\text{est}} = -94.213 \times 2.653 \times 0.01 = -2.499 \quad \neq$$
+
+**Écart significatif** dû à la non-linéarité → besoin de la **convexité**.
+
+---
+
+## Convexité
+
+### Observation
+
+- Une hausse des taux diminue le prix **plus lentement** que linéairement
+- Une baisse des taux augmente le prix **plus rapidement** que linéairement
+- Il y a de la **convexité**
+
+### Formule
+
+$$C = \frac{1}{B} \frac{\partial^2 B}{\partial y^2} = \sum_{i=1}^{n} c_i \, t_i^2 \, e^{-y(t_i - t)}$$
+
+### Approximation améliorée
+
+$$\boxed{\frac{\delta B}{B} = -D \, \delta y + \frac{1}{2} C \, \delta y^2}$$
+
+### Vérification avec convexité ($C = 7.570$, $\delta y = 1\%$)
+
+$$\delta B_{\text{est}} = -94.213 \times 2.653 \times 0.01 + 0.5 \times 94.213 \times 7.570 \times 0.01^2 = -2.464 \quad \checkmark$$
+
+---
+
+## Autres types de duration
+
+### Duration modifiée
+
+Quand le yield $y$ est mesuré en composition $n_c$ fois par an :
+
+$$D_{\text{mod}} = \frac{D}{1 + y/n_c}$$
+
+### Duration dollar (DV01)
+
+Mesure le changement en dollars du prix pour un shift de 1% du yield :
+
+$$D_{\text{dollar}} = \text{DV01} = \frac{D_{\text{mod}} \cdot B}{100}$$
+
+### Autres durations
+
+- **Duration effective** : ajustée pour les obligations avec options incorporées (callables, putables)
+- **Key Rate Duration** : sensibilité à des maturités spécifiques → impact des shifts **non-parallèles**
+
+---
+
+## Gestion de portefeuille obligataire
+
+- La duration d'un portefeuille = **somme pondérée** des durations des constituants
+- Pour un portefeuille multi-devises : une duration **par devise**
+- En période de hausse des taux → maintenir des durations **courtes**
+- La **volatilité** est un bon proxy de la duration
+
+---
+
+## Points clés
+
+- Les taux **forward** sont implicites dans la courbe zéro-coupon actuelle
+- La courbe des taux évolue : shifts parallèles, pentification, aplatissement
+- La **duration** donne la sensibilité au premier ordre : $\delta B/B = -\delta y \cdot D$
+- Pour des shifts plus grands, la **convexité** corrige : $\delta B/B = -D\delta y + \frac{1}{2}C\delta y^2$
+- Différentes mesures de duration : Macaulay, modifiée, dollar, effective
+- La duration se contrôle au niveau du **portefeuille**

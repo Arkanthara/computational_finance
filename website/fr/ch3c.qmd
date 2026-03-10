@@ -1,0 +1,34 @@
+---
+title: "Synthèse Ch3 - Marchés et comportements"
+---
+
+## À retenir en 60 secondes
+
+- **EMH** (Fama, 1960) : faible (prix passés), semi-forte (info publique), forte (info publique + privée)
+- EMH largement **critiquée** : bulles, herding, trading algorithmique
+- **Marchés régulés** (NYSE, SIX) vs **OTC** (Oanda) ; market maker vs broker
+- **Classes d'actifs** : actions, obligations, matières premières, devises
+- **Instruments** : spot, forward, futures, options, indices
+- **Devises** = plus grand marché : ~5 trillions $/jour
+- **Faits stylisés** ≠ marche aléatoire : clustering de volatilité, fat tails, autocorrélation négative, scaling laws, saisonnalité
+- **Événements** : endogènes (liquidité) vs exogènes (news programmées/non programmées)
+
+## Pièges classiques
+
+- Croire que les marchés sont purement aléatoires (les faits stylisés prouvent le contraire)
+- Confondre EMH forme faible et forte
+- Ignorer les fat tails → sous-estimer le risque
+- La saisonnalité existe à toutes les échelles (intraday, hebdomadaire, annuelle)
+
+## Schéma mental
+
+```{mermaid}
+flowchart LR
+    EMH[Hypothèse efficience] --> W[Faible : prix passés]
+    EMH --> SS[Semi-forte : info publique]
+    EMH --> S[Forte : info publique + privée]
+    FS[Faits stylisés] --> VC[Vol. clustering]
+    FS --> FT[Fat tails]
+    FS --> AC[Autocorr. négative]
+    FS --> SL[Scaling laws]
+```

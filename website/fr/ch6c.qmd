@@ -1,0 +1,58 @@
+---
+title: "Synthèse Ch6 - Exécution algorithmique"
+---
+
+## À retenir en 60 secondes
+
+- **Problème** : exécuter un gros ordre sans déplacer le marché
+- **Impact de marché** = temporaire + permanent
+- **TWAP** : tranches égales dans le temps (simple, prévisible)
+- **VWAP** : suit le profil de volume historique, benchmark = $\sum p_i v_i / \sum v_i$
+- **POV** : fraction fixe du volume, $w_i = \alpha \cdot v_i$, $\alpha \in [1\%, 20\%]$
+- **MI** : minimise l'impact, utilise dark pools
+- **IS** : minimise le shortfall = compromis impact vs timing risk
+- **AS** : IS adaptatif — AIM (agressif) / PIM (passif) selon le prix
+- **MC** : cible le prix de clôture
+- **PI** : agressif quand prix favorable, passif sinon
+- **LIQ** : exécute quand liquidité disponible et prix favorable
+- **Frontière efficiente** : MC (coût↑/risque↓) ↔ MI (coût↓/risque↑)
+- **Aversion au risque** $\lambda$ = coût/risque → positionne sur la frontière
+
+## Formules flash
+
+$$
+\text{VWAP} = \frac{\sum_{i} p_i \cdot v_i}{\sum_{i} v_i}
+$$
+
+$$
+\text{POV : } w_i = \alpha \cdot v_i, \quad \tilde{\alpha} = \alpha \cdot \frac{1}{1-\alpha}
+$$
+
+$$
+\lambda = \frac{\text{coût d'exécution}}{\text{risque de timing}}
+$$
+
+## Pièges classiques
+
+- **Optimiser un seul critère** : il faut considérer le compromis coût-risque, pas juste le prix moyen
+- **Oublier l'ajustement POV** : $\tilde{\alpha} = \alpha/(1-\alpha)$ car on contribue soi-même au volume
+- **VWAP comme benchmark** : il inclut ses propres transactions → benchmark biaisé
+- **Confondre impact temporaire et permanent** : le temporaire se résorbe, le permanent reste
+- **Ignorer le coût d'opportunité** : ne pas exécuter a aussi un coût
+- **Algorithme universel** : il n'existe pas — le choix dépend de l'aversion au risque $\lambda$
+
+## Schéma mental
+
+```{mermaid}
+flowchart TD
+    A[Gros ordre à exécuter] --> T{Type d'objectif?}
+    T -->|Minimiser impact| ID[Impact-driven<br/>TWAP / VWAP / POV / MI]
+    T -->|Minimiser coût total| CD[Cost-driven<br/>IS / AS / MC]
+    T -->|Saisir opportunités| OP[Opportuniste<br/>PI / LIQ]
+    ID --> FE[Frontière efficiente]
+    CD --> FE
+    OP --> FE
+    FE --> L{Aversion λ?}
+    L -->|Élevée| MC2[MC : coût↑ risque↓]
+    L -->|Faible| MI2[MI : coût↓ risque↑]
+```

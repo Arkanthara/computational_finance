@@ -1,0 +1,46 @@
+---
+title: "Synthèse Ch10 - Options : grecques"
+---
+
+## À retenir en 60 secondes
+
+- **Delta** ($\Delta$) : sensibilité au spot, $\Delta_c = N(d_1)$, $\Delta_p = N(d_1) - 1$
+- **Theta** ($\Theta$) : passage du temps, généralement négatif, non-hedgeable
+- **Gamma** ($\Gamma$) : courbure, $\Gamma = N'(d_1)/(S_0 \sigma\sqrt{T})$, toujours $> 0$
+- Approximation : $\delta c \approx \Theta\,\delta t + \Delta\,\delta S + \frac{1}{2}\Gamma\,\delta S^2$
+
+## Formules flash
+
+| Grecque | Call | Put |
+|---------|------|-----|
+| $\Delta$ | $N(d_1)$ | $N(d_1) - 1$ |
+| $\Theta$ | $-\frac{S_0 N'(d_1)\sigma}{2\sqrt{T}} - rKe^{-rT}N(d_2)$ | $-\frac{S_0 N'(d_1)\sigma}{2\sqrt{T}} + rKe^{-rT}N(-d_2)$ |
+| $\Gamma$ | $\frac{N'(d_1)}{S_0\sigma\sqrt{T}}$ | idem |
+
+Avec $N'(x) = \frac{1}{\sqrt{2\pi}}e^{-x^2/2}$
+
+## Couverture
+
+| | Achat | Vente |
+|------|-------|-------|
+| Call | $-\Delta_c$ actions | $+\Delta_c$ actions |
+| Put | $-\Delta_p$ actions | $+\Delta_p$ actions |
+
+**Gamma-neutre** : ajouter $w_T = -\Gamma/\Gamma_T$ options tradées, puis réajuster $\Delta$.
+
+## Pièges classiques
+
+- $\Delta$-hedge seul laisse du risque **gamma** (courbure) et **vega** (volatilité)
+- $\Gamma$ ne peut être modifié qu'avec des **options**, pas des actions
+- Ajouter des options pour $\Gamma$ change le $\Delta$ → rebalancer
+- En pratique : delta-hedge quotidien, autres grecques monitorées
+
+```{mermaid}
+flowchart TD
+    P[Portefeuille] --> D["Calcul Δ, Γ, Θ"]
+    D --> DH[Delta-hedge quotidien]
+    DH --> GM{Γ trop grand?}
+    GM -->|Oui| GO[Ajouter options]
+    GO --> RD[Réajuster Δ]
+    GM -->|Non| M[Monitoring continu]
+```

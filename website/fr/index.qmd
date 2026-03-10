@@ -1,0 +1,29 @@
+---
+title: "Finance computationnelle - Parcours complet"
+---
+
+Bienvenue sur la version française du cours **Introduction to computational finance**.
+
+## Structure du site
+
+Chaque chapitre est disponible en deux formats:
+
+- **Détails**: version complète, structurée, avec concepts, formules et exemples.
+- **Synthèse**: version condensée pour révision rapide avant examen.
+
+## Plan du cours
+
+1. Système suisse à 3 piliers, rendements et valeur temps de l'argent
+2. Séries temporelles et modèles autorégressifs
+3. Marchés et comportements
+4. Données, moyenne mobile et temps intrinsique
+5. Carnet d'ordres limite
+6. Exécution algorithmique
+7. Construction de portefeuille
+8. Modèles à base d'agents
+9. Options: notions de base
+10. Options: grecques
+11. Obligations: notions de base
+12. Obligations: sensibilités temps/taux
+13. Futures, forwards et ESG
+14. Données alternatives et rétrospective

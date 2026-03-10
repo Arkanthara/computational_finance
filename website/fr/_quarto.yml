@@ -1,17 +1,15 @@
 project:
   type: website
-  title: "Computational Finace"
+  title: "Finance computationnelle"
   output-dir: ../_site/fr
 
 website:
-  # Language switching setup
+  title: "Finance computationnelle"
 
   navbar:
-    # background: primary
     search: true
-    # Right side for language selector
     right:
-      - text: Langage
+      - text: Langue
         icon: globe
         menu:
           - text: "Anglais"
@@ -26,40 +24,101 @@ website:
     contents:
       - section: "Cours"
         contents: 
-          - section: "Introduction"
+          - section: "1. Systeme suisse a 3 piliers, rendements et valeur temps"
             contents:
               - text: "Details"
-                href: ch0c.qmd
-              - ch0.qmd
+                href: ch1.qmd
               - text: "Synthese"
-                href: ch0r.qmd
-          - section: "Séries temporelles et modèles autorégressifs"
-            contents:
-              - text: "Details"
                 href: ch1c.qmd
-              - ch1.qmd
-              - text: "Synthese"
-                href: ch1r.qmd
-          - section: "Marchés et comportements"
+          - section: "2. Series temporelles et modeles autoregressifs"
             contents:
               - text: "Details"
-                href: ch2c.qmd
-              - ch2.qmd
+                href: ch2.qmd
               - text: "Synthese"
-                href: ch2r.qmd
+                href: ch2c.qmd
+          - section: "3. Marches et comportements"
+            contents:
+              - text: "Details"
+                href: ch3.qmd
+              - text: "Synthese"
+                href: ch3c.qmd
+          - section: "4. Donnees, moyenne mobile et temps intrinsique"
+            contents:
+              - text: "Details"
+                href: ch4.qmd
+              - text: "Synthese"
+                href: ch4c.qmd
+          - section: "5. Carnet d'ordres limite"
+            contents:
+              - text: "Details"
+                href: ch5.qmd
+              - text: "Synthese"
+                href: ch5c.qmd
+          - section: "6. Execution algorithmique"
+            contents:
+              - text: "Details"
+                href: ch6.qmd
+              - text: "Synthese"
+                href: ch6c.qmd
+          - section: "7. Construction de portefeuille"
+            contents:
+              - text: "Details"
+                href: ch7.qmd
+              - text: "Synthese"
+                href: ch7c.qmd
+          - section: "8. Modeles a base d'agents"
+            contents:
+              - text: "Details"
+                href: ch8.qmd
+              - text: "Synthese"
+                href: ch8c.qmd
+          - section: "9. Options - notions de base"
+            contents:
+              - text: "Details"
+                href: ch9.qmd
+              - text: "Synthese"
+                href: ch9c.qmd
+          - section: "10. Options - Grecques"
+            contents:
+              - text: "Details"
+                href: ch10.qmd
+              - text: "Synthese"
+                href: ch10c.qmd
+          - section: "11. Obligations - notions de base"
+            contents:
+              - text: "Details"
+                href: ch11.qmd
+              - text: "Synthese"
+                href: ch11c.qmd
+          - section: "12. Obligations - sensibilites temps et taux"
+            contents:
+              - text: "Details"
+                href: ch12.qmd
+              - text: "Synthese"
+                href: ch12c.qmd
+          - section: "13. Futures, forwards et ESG"
+            contents:
+              - text: "Details"
+                href: ch13.qmd
+              - text: "Synthese"
+                href: ch13c.qmd
+          - section: "14. Donnees alternatives et retrospective"
+            contents:
+              - text: "Details"
+                href: ch14.qmd
+              - text: "Synthese"
+                href: ch14c.qmd
 
 
 format:
   html:
     theme:
-      light: flatly
-      dark: darkly
+      dark: ../macchiato.scss
+      light: ../latte.scss
     toc: true
     embed-resources: true
-  # pdf:
-  #   toc: true
-  # docx:
-  #   toc: true
 
-filters:
-  - diagram
+# execute:
+#   enabled: false
+
+# Mermaid diagrams are rendered natively by Quarto; no external filter needed.

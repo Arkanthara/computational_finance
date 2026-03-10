@@ -1,0 +1,60 @@
+---
+title: "Synthèse Ch5 - Carnet d'ordres limite"
+---
+
+## À retenir en 60 secondes
+
+- **Market maker** (OTC) : inventaire, apparie acheteurs/vendeurs, profit via le spread
+- **LOB** : mécanisme de bourse — ordre appariable → exécution, sinon → ordre limite actif
+- **Ordre** : triplet $x = (p_x, w_x, t_x)$ (prix, taille, temps)
+- **Bid/Ask** : $b(t) = \max p_x$ (achat), $a(t) = \min p_x$ (vente)
+- **Spread** : $s(t) = a(t) - b(t)$, **Mid-price** : $m(t) = \frac{a(t)+b(t)}{2}$
+- **3 cas** pour un ordre d'achat : limite passif ($p_x \leq b$), limite améliorant ($b < p_x < a$), marché ($p_x \geq a$)
+- **Priorités** : Prix-Temps, Pro-rata, Prix-Taille
+- **Faits empiriques** : 70-80% annulation, queues épaisses, impact concave $I(|w|) \sim |w|^\gamma$
+- **Maslov** : modèle simple → reproduit fat tails, Hurst = $\frac{1}{4}$
+
+## Formules flash
+
+$$
+b(t) = \max_{x \in B(t)} p_x \qquad a(t) = \min_{x \in A(t)} p_x
+$$
+
+$$
+s(t) = a(t) - b(t) \qquad m(t) = \frac{a(t) + b(t)}{2}
+$$
+
+$$
+N^b(p,t) = \sum_{\substack{x \in B(t) \\ p_x = p}} w_x \qquad N^a(p,t) = \sum_{\substack{x \in A(t) \\ p_x = p}} w_x
+$$
+
+$$
+\delta_x^{\text{achat}} = b(t) - p_x \qquad \delta_x^{\text{vente}} = p_x - a(t)
+$$
+
+$$
+I(|w|) \sim |w|^{\gamma}, \quad \gamma < 1 \quad \text{(impact concave)}
+$$
+
+## Pièges classiques
+
+- **Confondre ordre limite et ordre de marché** : le limite fournit la liquidité, le marché la consomme
+- **Oublier le risque d'opportunité** des ordres limites : ils peuvent ne jamais être exécutés
+- **Impact concave ≠ linéaire** : doubler la taille ne double pas l'impact
+- **Taux d'annulation élevé** (70-80%) : la majorité des ordres limites sont annulés
+- **Hurst $\frac{1}{4}$** (Maslov) ≠ **Hurst $\frac{1}{2}$** (marche aléatoire) : le LOB produit de l'anti-persistance
+- **Dark pools** : pas de visibilité pré-exécution, utile pour gros ordres mais moins de transparence
+
+## Schéma mental
+
+```{mermaid}
+flowchart TD
+    O[Ordre soumis] --> M{Appariable?}
+    M -->|Oui| MO[Market Order<br/>Consomme liquidité]
+    M -->|Non| LO[Limit Order<br/>Fournit liquidité]
+    MO --> IP[Impact de marché<br/>concave]
+    LO --> C{Exécuté?}
+    C -->|70-80%| AN[Annulé]
+    C -->|20-30%| EX[Exécuté]
+    LO --> PR[Priorité:<br/>Prix-Temps / Pro-rata]
+```

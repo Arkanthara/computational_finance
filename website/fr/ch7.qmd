@@ -1,0 +1,182 @@
+---
+title: "Chapitre 7 - Construction de portefeuille"
+---
+
+## Objectifs
+
+- Comprendre la théorie moderne du portefeuille (Markowitz)
+- Maîtriser le calcul du rendement et du risque d'un portefeuille
+- Comprendre l'effet de la corrélation sur la diversification
+- Savoir calculer la frontière efficiente (Monte-Carlo, forme fermée, optimisation numérique)
+- Intégrer l'actif sans risque et la Capital Market Line (CML)
+
+## Portefeuille et diversification
+
+Un **portefeuille** est une collection d'actifs. Sa raison d'être est la **robustesse par la diversification** : en combinant des actifs imparfaitement corrélés, on réduit le risque total.
+
+## Théorie Moderne du Portefeuille (MPT)
+
+Développée par **Markowitz (1952)**, prix Nobel 1990. Le cadre fondamental rendement-risque.
+
+### Rendement espéré d'un actif
+
+Estimation historique :
+
+$$
+E[R_i] = \frac{1}{T} \sum_{t=1}^{T} R_i(t)
+$$
+
+Alternatives : modèles fondamentaux ou opportunistes.
+
+### Variance d'un actif
+
+$$
+\text{Var}(R_i) = \frac{1}{T} \sum_{t=1}^{T} (R_i(t) - E[R_i])^2
+$$
+
+### Rendement espéré du portefeuille
+
+Pour des poids $w = (w_1, \ldots, w_N)$ :
+
+$$
+E[R_p] = \sum_{i=1}^{N} w_i \cdot E[R_i] = w^T \mu
+$$
+
+### Variance du portefeuille
+
+$$
+\sigma_p^2 = w^T C w = \sum_{i=1}^{N} \sum_{j=1}^{N} w_i w_j \text{Cov}(R_i, R_j)
+$$
+
+où $C$ est la **matrice de covariance** avec $\text{Cov}(R_i, R_j) = \rho_{ij} \sigma_i \sigma_j$.
+
+::: {.callout-important}
+La diversification fonctionne grâce aux **covariances** (ou corrélations) entre actifs. C'est la structure de $C$ qui détermine le bénéfice de la diversification.
+:::
+
+## Effet de la corrélation — Portefeuille de 2 actifs
+
+Considérons deux actifs avec des poids $w_1$ et $w_2 = 1 - w_1$ :
+
+### Cas $\rho = +1$ (corrélation parfaitement positive)
+
+$$
+\sigma_p = w_1 \sigma_1 + w_2 \sigma_2
+$$
+
+**Aucun bénéfice** de diversification. Le risque est la moyenne pondérée des risques individuels.
+
+### Cas $\rho = -1$ (corrélation parfaitement négative)
+
+$$
+\sigma_p = |w_1 \sigma_1 - w_2 \sigma_2|
+$$
+
+Le risque peut être **annulé complètement** en choisissant $w_1 = \frac{\sigma_2}{\sigma_1 + \sigma_2}$.
+
+### Cas intermédiaires ($-1 < \rho < +1$)
+
+Les portefeuilles possibles forment des **ellipses** dans le plan rendement-risque. Plus $\rho$ diminue, plus la courbe se creuse vers la gauche, offrant de meilleures opportunités de diversification.
+
+```{mermaid}
+flowchart LR
+    R1["ρ = +1<br/>Ligne droite<br/>Pas de diversification"] --> R0["ρ = 0<br/>Ellipse<br/>Diversification partielle"]
+    R0 --> RM["ρ = -1<br/>V inversé<br/>Risque annulable"]
+```
+
+::: {.callout-tip}
+En pratique, les corrélations sont rarement extrêmes. Une corrélation de 0.3 à 0.7 entre actions est typique, ce qui offre un bénéfice de diversification significatif.
+:::
+
+## Frontière efficiente
+
+La **frontière efficiente** est l'ensemble des portefeuilles qui **maximisent le rendement pour un niveau de risque donné** (ou minimisent le risque pour un rendement donné).
+
+### Méthode 1 : Monte-Carlo (force brute)
+
+Générer un grand nombre de portefeuilles aléatoires (ex : 5 millions de tirages) et identifier l'enveloppe supérieure dans le plan rendement-risque.
+
+### Méthode 2 : Forme fermée (Lagrange)
+
+On résout analytiquement le problème d'optimisation. On définit les scalaires :
+
+$$
+a = \mathbf{1}^T C^{-1} \mathbf{1}, \quad b = \mathbf{1}^T C^{-1} \mu, \quad c = \mu^T C^{-1} \mu, \quad d = ac - b^2
+$$
+
+Les poids optimaux sont :
+
+$$
+w = C^{-1}(\lambda_1 \cdot \mathbf{1} + \lambda_2 \cdot \mu)
+$$
+
+où $\lambda_1$ et $\lambda_2$ sont les multiplicateurs de Lagrange déterminés par les contraintes.
+
+### Méthode 3 : Optimisation numérique
+
+Résolution du problème contraint :
+
+$$
+\min_w \quad w^T C w - q \cdot w^T \mu
+$$
+
+$$
+\text{s.c.} \quad \mathbf{1}^T w = 1
+$$
+
+Le paramètre $q$ contrôle le compromis risque-rendement. On peut ajouter des contraintes supplémentaires (poids positifs, limites sectorielles, etc.).
+
+::: {.callout-warning}
+La méthode analytique (Lagrange) est élégante mais ne gère pas les **contraintes d'inégalité** (ex : poids $\geq 0$). En pratique, on utilise l'optimisation numérique avec contraintes.
+:::
+
+## Actif sans risque et Capital Market Line
+
+L'introduction d'un **actif sans risque** (rendement $r$, variance nulle) modifie fondamentalement le problème.
+
+### Portefeuille mixte
+
+En combinant l'actif sans risque (poids $w_{rf}$) avec un portefeuille risqué $P_0$ (poids $1 - w_{rf}$) :
+
+$$
+E[R_{P_1}] = w_{rf} \cdot E[r] + (1 - w_{rf}) \cdot E[R_{P_0}]
+$$
+
+$$
+\sigma_{P_1} = (1 - w_{rf}) \cdot \sigma_{P_0}
+$$
+
+### Capital Market Line (CML)
+
+La **CML** est la droite reliant l'actif sans risque au **portefeuille tangent** (point de tangence avec la frontière efficiente).
+
+```{mermaid}
+flowchart LR
+    RF[Actif sans risque<br/>r, σ=0] --> T[Portefeuille tangent<br/>Sharpe maximal]
+    T --> L[Levier<br/>w_rf < 0]
+```
+
+::: {.callout-important}
+Tout investisseur rationnel devrait détenir une combinaison de l'actif sans risque et du portefeuille tangent. C'est le **théorème de séparation** : le choix du portefeuille risqué est indépendant de l'aversion au risque.
+:::
+
+## Exemple pratique : caisse de pension CH simplifiée
+
+Allocation typique d'une caisse de pension suisse :
+
+| Classe d'actifs | Allocation |
+|-----------------|-----------|
+| Obligations CH | 10% |
+| Obligations étrangères | 35% |
+| Actions | 25% |
+| Immobilier | 15% |
+| Matières premières | 10% |
+| Alternatifs | 5% |
+
+## Points clés à retenir
+
+- La **diversification** est le concept central : elle réduit le risque spécifique grâce aux corrélations imparfaites
+- La **MPT de Markowitz** reste la base de la gestion de portefeuille
+- La **frontière efficiente** se calcule par Monte-Carlo, forme fermée (Lagrange) ou optimisation numérique
+- La **CML** avec actif sans risque simplifie le choix d'allocation (théorème de séparation)
+- Différence entre contrainte long-only et portefeuille avec ventes à découvert.
