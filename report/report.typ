@@ -34,9 +34,7 @@ import datetime
 
 data = np.loadtxt('eur_usd_20120101_20120301.txt')
 dates = np.array([datetime.datetime.fromtimestamp(x) for x in data[:, 0]])
-
 bins = np.arange(0, 24*60, 15)
-
 week_bins = np.arange(0, 7*24*60, 15)
 
 def selection(dates: list, day_number: int = 1, week: bool = False) -> list:
@@ -49,7 +47,6 @@ plt.figure()
 plt.hist(selection(dates, day_number=1), bins=len(bins))
 plt.gca().xaxis.set_major_locator(mdates.HourLocator())
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
-plt.legend()
 plt.title("Daily distribution of ticks")
 plt.gcf().autofmt_xdate()
 plt.tight_layout()
@@ -57,13 +54,11 @@ plt.show()
 ```
 
 ```python
-
 plt.figure()
 plt.hist(selection(dates, day_number=1, week=True), bins=len(week_bins))
 plt.gca().xaxis.set_major_locator(mdates.DayLocator())
 plt.gca().xaxis.set_minor_locator(mdates.HourLocator())
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d %b'))
-plt.legend()
 plt.title("Weekly distribution of ticks")
 plt.gcf().autofmt_xdate()
 plt.tight_layout()
@@ -85,6 +80,33 @@ plt.show()
 
 For different values of $phi_1$, simulate and plot an AR(1) process: $X_t = phi_1 X_(t-1) + epsilon_t$ with $X_0 = 0$ and $epsilon_t ~ cal(N)(0, 1)$.
 
+```python
+def AR(phi: float = 0.1, X_0: float = 0, size: int = 1000) -> np.ndarray:
+  X_t = [X_0]
+  for i in range(size):
+    X_t.append(X_t[-1] * phi + np.random.normal(loc=0, scale=1))
+  return np.array(X_t)
+```
+
+#show figure.where(
+  kind: "subfigure"
+): set figure.caption(position: top)
+
+```python
+%| grid-align: bottom
+plt.figure()
+plt.suptitle("Test on values of $\\phi_1$")
+index = 1
+for i, j in zip([0.1, 0.5, 0.9, 1], ["Stationary process\n", "Mean-reverting process\n", "Trendy process\n", "Exploding process\n"]):
+  plt.subplot(2, 2, index)
+  plt.plot(AR(i))
+  plt.title(j + f"$\\phi_1 = {i}$")
+  plt.xlabel("Time")
+  plt.ylabel("$X_t$")
+  index += 1
+plt.show()
+```
+
 In particular, how do you obtain:
 
 - A stationary process?
@@ -97,14 +119,16 @@ In particular, how do you obtain:
 // Section 3
 = Mean-Reversion in Finance: The discrete Vasicek model
 
-In the previous exercise, you explored the theoretical properties of the AR(1) process. In quantitative finance, while stock log-prices $p_t$ (where $p_t = ln(S_t)$ and $S_t$ is the stock price) are often modeled as random walks (a non-stationary AR(1) process with $phi_1 = 1$), interest rates are structurally different: they typically cannot grow indefinitely but instead fluctuate around a long-term macroeconomic equilibrium rate.
+In the previous exercise, you explored the theoretical properties of the AR(1) process.
+
+In quantitative finance, while stock log-prices $p_t$ (where $p_t = ln(S_t)$ and $S_t$ is the stock price) are often modeled as random walks (a non-stationary AR(1) process with $phi_1 = 1$), interest rates are structurally different: they typically cannot grow indefinitely but instead fluctuate around a long-term macroeconomic equilibrium rate.
 
 One of the foundational models capturing this phenomenon is the Vasicek model for the short-term interest rate. In its discrete-time formulation, the interest rate $r_t$ evolves according to:
 
 #v(0.3em)
-#math.equation(block: true, numbering: "(1)")[
-  r_t - r_(t-1) = kappa (theta - r_(t-1)) + sigma epsilon_t
-]
+
+$ r_t - r_(t-1) = kappa (theta - r_(t-1)) + sigma epsilon_t $
+
 #v(0.3em)
 
 where $epsilon_t ~ cal(N)(0, 1)$, $kappa$ represents the speed of mean reversion, $theta$ is the long-term average level, and $sigma$ is the volatility of the rate.
@@ -112,7 +136,18 @@ where $epsilon_t ~ cal(N)(0, 1)$, $kappa$ represents the speed of mean reversion
 Answer the following questions:
 
 #v(0.5em)
-*1. Autoregressive Representation:* Show that the discrete Vasicek model can be algebraically rewritten as a classical AR(1) process with drift, of the form $r_t = c + phi_1 r_(t-1) + sigma epsilon_t$. Explicitly identify the constants $c$ and $phi_1$ in terms of the initial Vasicek parameters $kappa$ and $theta$.
+*1. Autoregressive Representation:* Show that the discrete Vasicek model can be algebraically rewritten as a classical AR(1) process with drift, of the form $r_t = c + phi_1 r_(t-1) + sigma epsilon_t$.
+Explicitly identify the constants $c$ and $phi_1$ in terms of the initial Vasicek parameters $kappa$ and $theta$.
+
+We want to find $phi_1$ and $c$ such as:
+
+#align(left, $
+r_t = r_(t-1) + kappa (theta - r_(t-1)) + sigma epsilon_t &=  c + phi_1 r_(t-1) + sigma epsilon_t \
+<==> r_(t-1) + kappa theta - kappa r_(t-1) &=  c + phi_1 r_(t-1) \
+<==> kappa theta + (1 - kappa) r_(t-1) &=  c + phi_1 r_(t-1) \
+$)
+
+So $phi_1 = (1 - kappa)$ and $c = kappa theta$.
 
 #v(0.5em)
 *2. Mean-Reversion Condition:* Based on your findings from the previous AR(1) exercise (specifically, the mean-reverting process case), what strict mathematical boundaries must the speed of mean reversion $kappa$ satisfy for the interest rate process $r_t$ to be weakly stationary? What are the financial reality and the dynamics of $r_t$ if $kappa = 0$?
