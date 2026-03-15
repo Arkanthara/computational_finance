@@ -1,7 +1,6 @@
 // Main report file
 #import "template.typ": make-report, report-footnote
 #import "metadata.typ": my-report
-// #import ".typst_pyimage/pyimage.typ": pyinit, pycontent, pyimage
 
 // Main content
 #show: make-report.with(my-report)
@@ -89,7 +88,7 @@ def AR(phi: float = 0.1, X_0: float = 0, size: int = 1000) -> np.ndarray:
 ```
 
 #show figure.where(
-  kind: "subfigure"
+  kind: "subfigure",
 ): set figure.caption(position: top)
 
 ```python
@@ -141,16 +140,27 @@ Explicitly identify the constants $c$ and $phi_1$ in terms of the initial Vasice
 
 We want to find $phi_1$ and $c$ such as:
 
-#align(left, $
-r_t = r_(t-1) + kappa (theta - r_(t-1)) + sigma epsilon_t &=  c + phi_1 r_(t-1) + sigma epsilon_t \
-<==> r_(t-1) + kappa theta - kappa r_(t-1) &=  c + phi_1 r_(t-1) \
-<==> kappa theta + (1 - kappa) r_(t-1) &=  c + phi_1 r_(t-1) \
-$)
+#align(
+  left,
+  $
+    r_t = r_(t-1) + kappa (theta - r_(t-1)) + sigma epsilon_t & = c + phi_1 r_(t-1) + sigma epsilon_t \
+                   <==> r_(t-1) + kappa theta - kappa r_(t-1) & = c + phi_1 r_(t-1) \
+                       <==> kappa theta + (1 - kappa) r_(t-1) & = c + phi_1 r_(t-1) \
+  $,
+)
 
 So $phi_1 = (1 - kappa)$ and $c = kappa theta$.
 
 #v(0.5em)
 *2. Mean-Reversion Condition:* Based on your findings from the previous AR(1) exercise (specifically, the mean-reverting process case), what strict mathematical boundaries must the speed of mean reversion $kappa$ satisfy for the interest rate process $r_t$ to be weakly stationary? What are the financial reality and the dynamics of $r_t$ if $kappa = 0$?
+
+To have a mean-reverting process, the condition was found that $abs(phi_1) < 1$.
+
+As $phi_1 = (1 - kappa)$, it means that $0 < kappa < 2$.
+
+In this way, $r_t$ will always return to $0$ value, meaning that $r_t$ will oscillate around the mean $0$ and be weakly stationary.#report-footnote("A weakly stationary process has a constant mean and variance")
+
+If $kappa = 0$, $phi_1 = 1$ meaning that the process $r_t$ follows a random walk, disabling by the way all good predictions.
 
 #v(0.5em)
 *3. Long-term Equilibrium:* Assuming the stationarity condition holds, rigorously compute the unconditional expectation $E[r_t]$ and the unconditional variance $"Var"(r_t)$ as $t -> infinity$. Discuss how the parameter $theta$ dictates the long-term properties of the interest rates model.
