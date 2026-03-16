@@ -1,3 +1,22 @@
+
+#show figure.where(kind: "subfigure"): set figure(supplement: "Figure")
+
+#show figure.where(kind: image): outer => {
+  counter(figure.where(kind: "subfigure")).update(0)
+  set figure(numbering: (..nums) => {
+    let outer-nums = counter(figure.where(kind: image)).at(outer.location())
+    std.numbering("1a", ..outer-nums, ..nums)
+  })
+  show figure.where(kind: "subfigure"): inner => {
+    show figure.caption: it => context {
+      std.numbering("(a)", it.counter.at(inner.location()).last())
+      [ ]
+      it.body
+    }
+    inner
+  }
+  outer
+}
 // Main report file
 #import "template.typ": make-report, report-footnote
 #import "metadata.typ": my-report
@@ -52,6 +71,9 @@ plt.tight_layout()
 plt.show()
 ```
 
+#figure(image(".typst_pyexec/figures/cell_1_1.svg"), caption: [Daily distribution of ticks])
+
+
 ```python
 plt.figure()
 plt.hist(selection(dates, day_number=1, week=True), bins=len(week_bins))
@@ -63,6 +85,9 @@ plt.gcf().autofmt_xdate()
 plt.tight_layout()
 plt.show()
 ```
+
+#figure(image(".typst_pyexec/figures/cell_2_1.svg"), caption: [Weekly distribution of ticks])
+
 
 // time=data[:, 0] % (3600*24)
 //
@@ -87,12 +112,12 @@ def AR(phi: float = 0.1, X_0: float = 0, size: int = 1000) -> np.ndarray:
   return np.array(X_t)
 ```
 
+
 #show figure.where(
   kind: "subfigure",
 ): set figure.caption(position: top)
 
 ```python
-%| grid-align: bottom
 plt.figure()
 plt.suptitle("Test on values of $\\phi_1$")
 index = 1
@@ -105,6 +130,9 @@ for i, j in zip([0.1, 0.5, 0.9, 1], ["Stationary process\n", "Mean-reverting pro
   index += 1
 plt.show()
 ```
+
+#figure(grid(columns: 2, align: bottom, [#figure(image(".typst_pyexec/figures/cell_4_1_1.svg"), kind: "subfigure", caption: [Stationary process #linebreak() $phi_1 = 0.1$])], [#figure(image(".typst_pyexec/figures/cell_4_1_2.svg"), kind: "subfigure", caption: [Mean-reverting process #linebreak() $phi_1 = 0.5$])], [#figure(image(".typst_pyexec/figures/cell_4_1_3.svg"), kind: "subfigure", caption: [Trendy process #linebreak() $phi_1 = 0.9$])], [#figure(image(".typst_pyexec/figures/cell_4_1_4.svg"), kind: "subfigure", caption: [Exploding process #linebreak() $phi_1 = 1$])]), caption: [Test on values of $phi_1$], kind: image)
+
 
 In particular, how do you obtain:
 
@@ -213,6 +241,9 @@ plt.ylabel("Interest rate")
 plt.legend()
 plt.show()
 ```
+
+#figure(image(".typst_pyexec/figures/cell_5_1.svg"), caption: [Simulation of a single path of discrete Vasicek model])
+
 Compared to a random walk, we can observe that in the Vasicek model a growth is always followed by a decline, making the model oscillating around the long-term equilibrium baseline.
 
 This is not the case in a random walk, since it can go far away from the long-term equilibrium without joining it again.
