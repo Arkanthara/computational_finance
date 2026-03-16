@@ -222,8 +222,15 @@ This is not the case in a random walk, since it can go far away from the long-te
 
 *1.* Describe what are bonds and stocks and the difference between them.
 
-#v(0.3em)
+- Bonds are loans to central bank or businesses. These loans must be reimburse at time defined by the contract, and some coupons can be paid at a given frequence depending on the contract.
+- Stocks, also known as shares, are when a buyer buy a part of a company. Then, this buyer receive periodicaly some dividends based on benefit of the company.
+
+The difference between them is that in case of bonds, the person receives money that he must give back at a given time, whereas in case of stocks, the person gives money to buy a part of the company and receive back some money depending on benefits.
+
 *2.* What is an option? A future?
+
+- An option is the right to buy or sell at a given time an asset at a given price.
+- A future is a contract where the two parts are agree to buy an asset at a given time at a given price, however the buyer stop the contract just before the exchange to avoid claiming for instance 1 tone of corn.
 
 #v(0.3em)
 *3.* What is an index? What are the typical methods to weight the items of an index? For instance, what method is used by Nasdaq and S&P 500?
