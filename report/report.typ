@@ -64,13 +64,10 @@ plt.tight_layout()
 plt.show()
 ```
 
-// time=data[:, 0] % (3600*24)
-//
-// bins = np.arange(0,24*60*60 +15*60, 15*60)
-//
-// plt.xticks(ticks=bins[::4]), labels=[…]])
-//
-// labels=[datetime.fromtimestamp(x, timezone.utc).strgtime(‘%Hh’) for x in bins[::4]]
+On both histograms, we can see some seasonality effect.
+Indeed, the number of ticks is low the morning, increase around midday and decrease the evening.
+On both of that, we can see that the last two days of a week, there is only a few ticks.
+This is because more events happen in working hours, and then less events are observed for the weekend because peoples don't work at office.
 
 #v(1em)
 
@@ -80,23 +77,17 @@ plt.show()
 For different values of $phi_1$, simulate and plot an AR(1) process: $X_t = phi_1 X_(t-1) + epsilon_t$ with $X_0 = 0$ and $epsilon_t ~ cal(N)(0, 1)$.
 
 ```python
+%| grid-align: bottom
 def AR(phi: float = 0.1, X_0: float = 0, size: int = 1000) -> np.ndarray:
   X_t = [X_0]
   for i in range(size):
     X_t.append(X_t[-1] * phi + np.random.normal(loc=0, scale=1))
   return np.array(X_t)
-```
 
-#show figure.where(
-  kind: "subfigure",
-): set figure.caption(position: top)
-
-```python
-%| grid-align: bottom
 plt.figure()
 plt.suptitle("Test on values of $\\phi_1$")
 index = 1
-for i, j in zip([0.1, 0.5, 0.9, 1], ["Stationary process\n", "Mean-reverting process\n", "Trendy process\n", "Exploding process\n"]):
+for i, j in zip([0, -0.5, 1, 1.01], ["Stationary process\n", "Mean-reverting process\n", "Trendy process\n", "Exploding process\n"]):
   plt.subplot(2, 2, index)
   plt.plot(AR(i))
   plt.title(j + f"$\\phi_1 = {i}$")
@@ -108,10 +99,10 @@ plt.show()
 
 In particular, how do you obtain:
 
-- A stationary process?
-- A mean-reverting process?
-- A trendy process?
-- An exploding process?
+- A stationary process? A stationary process is obtained for $abs(phi_1) < 1$
+- A mean-reverting process? A mean-reverting porcess is obtained, like the stationary process, for $abs(phi_1) < 1$. Indeed, a stationary process is always mean-reverting since it oscillate around the mean.
+- A trendy process? A trendy process is obtained for $abs(phi_1) = 1$, corresponding to a random walk... Indeed, to get the next step, we stay where we are and we moves randomly according to the noise $epsilon_t$.
+- An exploding process? An exploding process is obtained for $abs(phi_1) > 1$ since each next step increase the value of the current step and add to it some noise.
 
 #v(1em)
 
@@ -234,3 +225,14 @@ The difference between them is that in case of bonds, the person receives money 
 
 #v(0.3em)
 *3.* What is an index? What are the typical methods to weight the items of an index? For instance, what method is used by Nasdaq and S&P 500?
+
+An index is a group of assets into a basket.
+
+#show link: underline
+
+Typical methods used to weight items in an index is to weight using a #link("https://www.investopedia.com/terms/s/sp500.asp")[market-cap weighting] method.
+It consist to weight a company by taking its capitalization and divide it by the total capitalization of all companies. This method is used by the S&P 500 index.
+
+$ "Market Capitalization Weighting Method" = "Item market capitalization"/"Total of all market capitalizations" $
+
+A similar method is used for Nasdaq, also based on the market capitalization of each item. The method is similar to market-cap weighting, but with some modifications to limit influence of biggest items.
