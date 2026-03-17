@@ -109,6 +109,8 @@ to March 1st 2012).
 
 + Plot the time series of mid-price against true time.
 
++ On the same graph, plot the directional changes for $delta = 0.01$.
+
 ```python
 import matplotlib.dates as mdates
 import datetime
@@ -117,19 +119,71 @@ data = np.loadtxt('eur_usd_20120101_20120301.txt')
 dates = np.array([datetime.datetime.fromtimestamp(x) for x in data[:, 0]])
 bids = data[:, 1]
 asks = data[:, 2]
+
+def directional_changes(mid_price: np.ndarray, delta: float = 0.01) -> tuple[np.ndarray, np.ndarray]:
+  index = []
+  values = []
+  mode = "up"
+  x_ext = mid_price[0]
+  for i in range(len(mid_price)):
+    x = mid_price[i]
+    if mode == "up":
+      if x < x_ext:
+       x_ext = x
+      elif (x - x_ext) / x_ext >= delta:
+        x_ext = x
+        mode = "down"
+        values.append(x)
+        index.append(i)
+    else:
+      if x > x_ext:
+        x_ext = x
+      elif (x_ext - x) / x_ext >= delta:
+        x_ext = x
+        mode = "up"
+        values.append(x)
+        index.append(i)
+
+  index = np.array(index).astype(int)
+  values = np.array(values)
+  return index, values
+
+mid_price = (asks + bids) / 2
+
+delta = 0.01
+idx_changes, changes = directional_changes(mid_price, delta=delta)
+
 plt.figure()
 plt.title("Time series of mid-price against true time")
-plt.plot(dates, (asks + bids) / 2)
+plt.plot(dates, (asks + bids) / 2, label="Middle price")
+plt.scatter(dates[idx_changes], changes, color='magenta', label=f"Directional changes with $\\delta={delta}$")
 plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%b %d %Y'))
 plt.gcf().autofmt_xdate()
+plt.ylabel("Price")
+plt.legend()
 plt.show()
 ```
 
-+ On the same graph, plot the directional changes for $delta = 0.01$.
-
 + Draw a log-log plot of the number of directional changes as a function of the scale $delta$
   for values of $delta in [10^(-5), 10^(-2)]$. What do you observe?
+
+```python
+deltas = np.linspace(1e-5, 1e-2, 10)
+counts = np.zeros_like(deltas)
+for i in range(deltas.size):
+  idx, _ = directional_changes(mid_price, delta=deltas[i])
+  counts[i] = idx.size
+
+plt.figure()
+plt.title("Number of directional changes according to the scale $\\delta$")
+plt.scatter(deltas, counts)
+plt.xlabel("$\\delta$")
+plt.ylabel("Number of directional changes")
+plt.xscale('log')
+plt.yscale('log')
+plt.show()
+```
 
 // ─── Section 3 ───────────────────────────────────────────────────────────────
 = Intrinsic Time Return
@@ -141,12 +195,66 @@ of asset returns relative to the standard physical-time approach.
 + Use the provided EUR/USD tick-by-tick dataset. Compute the mid-price as the average of
   bid and ask.
 
+```python
+mid_price = (asks + bids) / 2
+```
+
 + Using $delta = 0.001$ for directional changes:
   - Compute the returns between successive directional change events (intrinsic returns).
+
+```python
+def returns(ts: np.ndarray, N: int = 1) -> np.ndarray:
+  result = np.full(ts.size, np.nan)
+  result[N:] = (ts[N:] - ts[:-N]) / ts[:-N]
+  return result
+
+idx, changes = directional_changes(mid_price, delta=0.001)
+directional_changes_returns = returns(changes)
+```
   - Compute the returns over fixed physical time intervals (e.g., daily returns) for comparison.
+
+```python
+days = np.array([d.date() for d in dates])
+days_idx = np.unique(days, return_index=True)[1]
+
+daily_returns = returns(mid_price[days_idx])
+```
+
   - Plot histograms of both sets of returns. Compare statistical properties (mean, standard
     deviation, skewness, kurtosis) of intrinsic versus physical-time returns, and discuss how
     the use of intrinsic time might provide different insights into market dynamics.
+
+```python
+dc = directional_changes_returns[~np.isnan(directional_changes_returns)]
+dr = daily_returns[~np.isnan(daily_returns)]
+plt.figure()
+plt.suptitle("Histograms of sets of returns")
+plt.subplot(1, 2, 1)
+plt.hist(dc, bins=50)
+plt.title("Directional changes returns")
+plt.subplot(1, 2, 2)
+plt.hist(dr, bins=50)
+plt.title("Daily returns")
+plt.show()
+
+from scipy.stats import skew, kurtosis
+
+print("===========================")
+print("Statistical properties")
+print("===========================\n")
+print("Directional changes returns")
+print("---------------------------")
+print(f"mean:               {np.mean(dc)}")
+print(f"standard deviation: {np.std(dc)}")
+print(f"skewness:           {skew(dc)}")
+print(f"kurtosis:           {kurtosis(dc)}\n")
+print("Daily returns")
+print("---------------------------")
+print(f"mean:               {np.mean(dr)}")
+print(f"standard deviation: {np.std(dr)}")
+print(f"skewness:           {skew(dr)}")
+print(f"kurtosis:           {kurtosis(dr)}\n")
+```
 
 // ─── Section 4 ───────────────────────────────────────────────────────────────
 = Crossover Strategy Simulation
