@@ -31,12 +31,14 @@ ts = 100 + np.cumsum(np.random.uniform(-1, 1, n))
   - A simple moving average (SMA)
 ```python
 def SMA(ts: np.ndarray, N: int) -> np.ndarray:
-  padded_ts = np.pad(ts, pad_width=N - (N % 2), mode="symmetric")
-  return np.convolve(padded_ts, np.ones(N)/N, mode="valid")
+  index = np.arange(len(ts))
+  convolution_index = index[N//2:-N//2 + 1]
+  return convolution_index, np.convolve(ts, np.ones(N)/N, mode="valid")
+
 plt.figure()
 plt.title("Simple Moving Average")
 plt.plot(np.arange(n), ts, label="Time series")
-plt.plot(np.arange(n), SMA(ts, N=10), label="SMA")
+plt.plot(*SMA(ts, N=10), label="SMA")
 plt.legend()
 plt.show()
 ```
@@ -52,7 +54,7 @@ def EMA(ts: np.ndarray, alpha: float) -> np.ndarray:
 plt.figure()
 plt.title("Exponential Moving Average")
 plt.plot(np.arange(n), ts, label="Time series")
-plt.plot(np.arange(n), EMA(ts, alpha=1), label="EMA")
+plt.plot(np.arange(n), EMA(ts, alpha=0.5), label="EMA")
 plt.legend()
 plt.show()
 ```
@@ -60,7 +62,7 @@ plt.show()
   Make sure that $"SMA"("ts", N = 1) = "EMA"("ts", alpha = 1) = "ts"$.
 
 ```python
-assert np.array_equal(ts, SMA(ts, N=1)) and np.array_equal(ts, EMA(ts, alpha=1)), "SMA(ts, N = 1) must be equal to EMA(ts, alpha=1) and ts !"
+assert np.array_equal(ts, SMA(ts, N=1)[1]) and np.array_equal(ts, EMA(ts, alpha=1)), "SMA(ts, N = 1) must be equal to EMA(ts, alpha=1) and ts !"
 ```
 
 
@@ -70,12 +72,12 @@ assert np.array_equal(ts, SMA(ts, N=1)) and np.array_equal(ts, EMA(ts, alpha=1))
   - ${"SMA"("ts", N), "EMA"("ts", alpha = 2 / (N+1)), forall N in {10, 50, 100, 200}}$
 
 ```python
-%| img-width: 140%
+%| img-width: 100%
 plt.figure()
 plt.title("Time series, simple moving average and exponential moving average")
 plt.plot(np.arange(n), ts, label="Time series")
 for N in [10, 50, 100, 200]:
-  plt.plot(np.arange(n), SMA(ts, N), label=f"SMA(ts, N={N})")
+  plt.plot(*SMA(ts, N), label=f"SMA(ts, N={N})")
   plt.plot(np.arange(n), EMA(ts, 2/(N + 1)), label=f"EMA(ts, alpha=2/({N} + 1))")
 plt.legend()
 plt.show()
@@ -109,8 +111,8 @@ to March 1st 2012).
 
 ```python
 import matplotlib.dates as mdates
-
 import datetime
+
 data = np.loadtxt('eur_usd_20120101_20120301.txt')
 dates = np.array([datetime.datetime.fromtimestamp(x) for x in data[:, 0]])
 bids = data[:, 1]
@@ -119,24 +121,9 @@ plt.figure()
 plt.title("Time series of mid-price against true time")
 plt.plot(dates, (asks + bids) / 2)
 plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%b %d %Y'))
 plt.gcf().autofmt_xdate()
 plt.show()
-# bins = np.arange(0, 24*60 * 60, 15 * 60)
-# print(len(bins))
-# def selection(dates: list, day_number: int = 0, week: bool = False) -> list:
-#   first_day = dates[0].date() + datetime.timedelta(days=1)
-#   if week:
-#     return [d for d in dates if first_day <= d.date() < first_day + 
-# datetime.timedelta(days=7)]
-#   return [d for d in dates if d.date() == first_day]
-# plt.figure()
-# plt.hist(selection(dates, day_number=1), bins=len(bins))
-# plt.gca().xaxis.set_major_locator(mdates.HourLocator())
-# plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
-# plt.legend()
-# plt.title("Test")
-# plt.gcf().autofmt_xdate()
-# plt.show()
 ```
 
 + On the same graph, plot the directional changes for $delta = 0.01$.

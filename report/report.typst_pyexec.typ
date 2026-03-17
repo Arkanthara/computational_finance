@@ -32,19 +32,18 @@ ts = 100 + np.cumsum(np.random.uniform(-1, 1, n))
   - A simple moving average (SMA)
 ```python
 def SMA(ts: np.ndarray, N: int) -> np.ndarray:
-    padded_ts = np.pad(ts, pad_width=N - (N % 2), mode="symmetric")
-    return np.convolve(padded_ts, np.ones(N) / N, mode="valid")
+    index = np.arange(len(ts))
+    convolution_index = index[N // 2 : -N // 2 + 1]
+    return convolution_index, np.convolve(ts, np.ones(N) / N, mode="valid")
 
 
 plt.figure()
 plt.title("Simple Moving Average")
 plt.plot(np.arange(n), ts, label="Time series")
-plt.plot(np.arange(n), SMA(ts, N=10), label="SMA")
+plt.plot(*SMA(ts, N=10), label="SMA")
 plt.legend()
 plt.show()
 ```
-
-#raw("---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[144], line 17\n     15 plt.title(\"Simple Moving Average\")\n     16 plt.plot(np.arange(n), ts, label=\"Time series\")\n---> 17 plt.plot(np.arange(n), SMA(ts, N=10), label=\"SMA\")\n     18 plt.legend()\n     19 plt.show()\n\nFile ~/.cache/uv/archive-v0/zuhJDJJIk2YrBDgqeBSJm/lib/python3.14/site-packages/matplotlib/pyplot.py:3838, in plot(scalex, scaley, data, *args, **kwargs)\n   3830 @_copy_docstring_and_deprecators(Axes.plot)\n   3831 def plot(\n   3832     *args: float | ArrayLike | str,\n   (...)   3836     **kwargs,\n   3837 ) -> list[Line2D]:\n-> 3838     return gca().plot(\n   3839         *args,\n   3840         scalex=scalex,\n   3841         scaley=scaley,\n   3842         **({\"data\": data} if data is not None else {}),\n   3843         **kwargs,\n   3844     )\n\nFile ~/.cache/uv/archive-v0/zuhJDJJIk2YrBDgqeBSJm/lib/python3.14/site-packages/matplotlib/axes/_axes.py:1777, in Axes.plot(self, scalex, scaley, data, *args, **kwargs)\n   1534 \"\"\"\n   1535 Plot y versus x as lines and/or markers.\n   1536 \n   (...)   1774 (``'green'``) or hex strings (``'#008000'``).\n   1775 \"\"\"\n   1776 kwargs = cbook.normalize_kwargs(kwargs, mlines.Line2D)\n-> 1777 lines = [*self._get_lines(self, *args, data=data, **kwargs)]\n   1778 for line in lines:\n   1779     self.add_line(line)\n\nFile ~/.cache/uv/archive-v0/zuhJDJJIk2YrBDgqeBSJm/lib/python3.14/site-packages/matplotlib/axes/_base.py:297, in _process_plot_var_args.__call__(self, axes, data, return_kwargs, *args, **kwargs)\n    295     this += args[0],\n    296     args = args[1:]\n--> 297 yield from self._plot_args(\n    298     axes, this, kwargs, ambiguous_fmt_datakey=ambiguous_fmt_datakey,\n    299     return_kwargs=return_kwargs\n    300 )\n\nFile ~/.cache/uv/archive-v0/zuhJDJJIk2YrBDgqeBSJm/lib/python3.14/site-packages/matplotlib/axes/_base.py:494, in _process_plot_var_args._plot_args(self, axes, tup, kwargs, return_kwargs, ambiguous_fmt_datakey)\n    491     axes.yaxis.update_units(y)\n    493 if x.shape[0] != y.shape[0]:\n--> 494     raise ValueError(f\"x and y must have same first dimension, but \"\n    495                      f\"have shapes {x.shape} and {y.shape}\")\n    496 if x.ndim > 2 or y.ndim > 2:\n    497     raise ValueError(f\"x and y can be no greater than 2D, but have \"\n    498                      f\"shapes {x.shape} and {y.shape}\")\n\nValueError: x and y must have same first dimension, but have shapes (1000,) and (1011,)", lang: "traceback")
 
 #figure(image(".typst_pyexec/figures/cell_2_1.svg"), caption: [Simple Moving Average])
 
@@ -61,7 +60,7 @@ def EMA(ts: np.ndarray, alpha: float) -> np.ndarray:
 plt.figure()
 plt.title("Exponential Moving Average")
 plt.plot(np.arange(n), ts, label="Time series")
-plt.plot(np.arange(n), EMA(ts, alpha=1), label="EMA")
+plt.plot(np.arange(n), EMA(ts, alpha=0.5), label="EMA")
 plt.legend()
 plt.show()
 ```
@@ -72,7 +71,7 @@ plt.show()
   Make sure that $"SMA"("ts", N = 1) = "EMA"("ts", alpha = 1) = "ts"$.
 
 ```python
-assert np.array_equal(ts, SMA(ts, N=1)) and np.array_equal(
+assert np.array_equal(ts, SMA(ts, N=1)[1]) and np.array_equal(
     ts, EMA(ts, alpha=1)
 ), "SMA(ts, N = 1) must be equal to EMA(ts, alpha=1) and ts !"
 ```
@@ -89,15 +88,13 @@ plt.figure()
 plt.title("Time series, simple moving average and exponential moving average")
 plt.plot(np.arange(n), ts, label="Time series")
 for N in [10, 50, 100, 200]:
-    plt.plot(np.arange(n), SMA(ts, N), label=f"SMA(ts, N={N})")
+    plt.plot(*SMA(ts, N), label=f"SMA(ts, N={N})")
     plt.plot(np.arange(n), EMA(ts, 2 / (N + 1)), label=f"EMA(ts, alpha=2/({N} + 1))")
 plt.legend()
 plt.show()
 ```
 
-#raw("---------------------------------------------------------------------------\nValueError                                Traceback (most recent call last)\nCell In[146], line 15\n     13 plt.plot(np.arange(n), ts, label=\"Time series\")\n     14 for N in [10, 50, 100, 200]:\n---> 15   plt.plot(np.arange(n), SMA(ts, N), label=f\"SMA(ts, N={N})\")\n     16   plt.plot(np.arange(n), EMA(ts, 2/(N + 1)), label=f\"EMA(ts, alpha=2/({N} + 1))\")\n     17 plt.legend()\n\nFile ~/.cache/uv/archive-v0/zuhJDJJIk2YrBDgqeBSJm/lib/python3.14/site-packages/matplotlib/pyplot.py:3838, in plot(scalex, scaley, data, *args, **kwargs)\n   3830 @_copy_docstring_and_deprecators(Axes.plot)\n   3831 def plot(\n   3832     *args: float | ArrayLike | str,\n   (...)   3836     **kwargs,\n   3837 ) -> list[Line2D]:\n-> 3838     return gca().plot(\n   3839         *args,\n   3840         scalex=scalex,\n   3841         scaley=scaley,\n   3842         **({\"data\": data} if data is not None else {}),\n   3843         **kwargs,\n   3844     )\n\nFile ~/.cache/uv/archive-v0/zuhJDJJIk2YrBDgqeBSJm/lib/python3.14/site-packages/matplotlib/axes/_axes.py:1777, in Axes.plot(self, scalex, scaley, data, *args, **kwargs)\n   1534 \"\"\"\n   1535 Plot y versus x as lines and/or markers.\n   1536 \n   (...)   1774 (``'green'``) or hex strings (``'#008000'``).\n   1775 \"\"\"\n   1776 kwargs = cbook.normalize_kwargs(kwargs, mlines.Line2D)\n-> 1777 lines = [*self._get_lines(self, *args, data=data, **kwargs)]\n   1778 for line in lines:\n   1779     self.add_line(line)\n\nFile ~/.cache/uv/archive-v0/zuhJDJJIk2YrBDgqeBSJm/lib/python3.14/site-packages/matplotlib/axes/_base.py:297, in _process_plot_var_args.__call__(self, axes, data, return_kwargs, *args, **kwargs)\n    295     this += args[0],\n    296     args = args[1:]\n--> 297 yield from self._plot_args(\n    298     axes, this, kwargs, ambiguous_fmt_datakey=ambiguous_fmt_datakey,\n    299     return_kwargs=return_kwargs\n    300 )\n\nFile ~/.cache/uv/archive-v0/zuhJDJJIk2YrBDgqeBSJm/lib/python3.14/site-packages/matplotlib/axes/_base.py:494, in _process_plot_var_args._plot_args(self, axes, tup, kwargs, return_kwargs, ambiguous_fmt_datakey)\n    491     axes.yaxis.update_units(y)\n    493 if x.shape[0] != y.shape[0]:\n--> 494     raise ValueError(f\"x and y must have same first dimension, but \"\n    495                      f\"have shapes {x.shape} and {y.shape}\")\n    496 if x.ndim > 2 or y.ndim > 2:\n    497     raise ValueError(f\"x and y can be no greater than 2D, but have \"\n    498                      f\"shapes {x.shape} and {y.shape}\")\n\nValueError: x and y must have same first dimension, but have shapes (1000,) and (1011,)", lang: "traceback")
-
-#figure(image(".typst_pyexec/figures/cell_5_1.svg", width: 140%), caption: [Time series, simple moving average and exponential moving average])
+#figure(image(".typst_pyexec/figures/cell_5_1.svg", width: 100%), caption: [Time series, simple moving average and exponential moving average])
 
 
   What can you say of SMA vs EMA? How does the fit and the lag relate to $N$?
@@ -131,7 +128,6 @@ to March 1st 2012).
 
 ```python
 import matplotlib.dates as mdates
-
 import datetime
 
 data = np.loadtxt("eur_usd_20120101_20120301.txt")
@@ -142,24 +138,9 @@ plt.figure()
 plt.title("Time series of mid-price against true time")
 plt.plot(dates, (asks + bids) / 2)
 plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %d %Y"))
 plt.gcf().autofmt_xdate()
 plt.show()
-# bins = np.arange(0, 24*60 * 60, 15 * 60)
-# print(len(bins))
-# def selection(dates: list, day_number: int = 0, week: bool = False) -> list:
-#   first_day = dates[0].date() + datetime.timedelta(days=1)
-#   if week:
-#     return [d for d in dates if first_day <= d.date() < first_day +
-# datetime.timedelta(days=7)]
-#   return [d for d in dates if d.date() == first_day]
-# plt.figure()
-# plt.hist(selection(dates, day_number=1), bins=len(bins))
-# plt.gca().xaxis.set_major_locator(mdates.HourLocator())
-# plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
-# plt.legend()
-# plt.title("Test")
-# plt.gcf().autofmt_xdate()
-# plt.show()
 ```
 
 #figure(image(".typst_pyexec/figures/cell_7_1.svg"), caption: [Time series of mid-price against true time])
