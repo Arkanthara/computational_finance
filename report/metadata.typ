@@ -35,7 +35,7 @@
   date: none,
 
   // Document options
-  toc: false,
+  toc: true,
   numbering: true,
   bibliography: none,
   appendix: false,
