@@ -327,13 +327,83 @@ to generate buy and sell signals.
   (e.g., $alpha_f = 2 \/ (N_f + 1)$ with $N_f = 20$) and a slow one with a longer window
   (e.g., $alpha_s = 2 \/ (N_s + 1)$ with $N_s = 2000$).
 
+```python
+mid_price = (asks + bids) / 2
+
+N_f = 20
+N_s = 2000
+
+fast_EMA = EMA(mid_price, alpha=2 / (N_f + 1))
+slow_EMA = EMA(mid_price, alpha=2 / (N_s + 1))
+```
+
+
 + Define a *buy signal* when the fast EMA crosses above the slow EMA and a *sell signal*
   when it crosses below.
+
+```python
+def buy_signal(fast: np.ndarray, slow: np.ndarray) -> np.ndarray:
+    diff = fast - slow
+    buy = np.zeros_like(diff).astype(bool)
+    sell = np.zeros_like(diff).astype(bool)
+    buy[1:] = (diff[1:] > 0) & (diff[:-1] <= 0)
+    sell[1:] = (diff[1:] < 0) & (diff[:-1] >= 0)
+    idx = np.arange(buy.size).astype(int)
+    return idx[buy], idx[sell]
+```
+
 
 + Simulate trading over the available data. For simplicity, assume you buy one unit on a buy
   signal and sell (or short) one unit on a sell signal.
 
+```python
+buy, sell = buy_signal(fast_EMA, slow_EMA)
+```
+
+
 + Plot the mid-price with the fast and slow EMAs, and indicate the buy/sell points.
+
+```python
+def selection(dates: list, day_number: int = 0, week: bool = False) -> list:
+    first_day = dates[0].date() + datetime.timedelta(days=1)
+    result = []
+    if week:
+        for i in range(len(dates)):
+            if first_day <= dates[i].date() < first_day + datetime.timedelta(days=7):
+                result.append(i)
+        return np.array(result).astype(int)
+    for i in range(len(dates)):
+        if dates[i].date() == first_day:
+            result.append(i)
+    return np.array(result).astype(int)
+
+
+day_idx = selection(dates)
+
+day = dates[day_idx]
+fEMA = fast_EMA[day_idx]
+sEMA = slow_EMA[day_idx]
+
+day_buy, day_sell = buy_signal(fEMA, sEMA)
+
+plt.figure()
+plt.title("Visualization of buy signal")
+plt.plot(day, fEMA, label="fast EMA")
+plt.plot(day, sEMA, label="slow EMA")
+# plt.plot(day, mid_price[day_idx], label="mid-price")
+plt.scatter(day[day_buy], fEMA[day_buy], label="Buy signal", color="magenta")
+plt.scatter(day[day_sell], fEMA[day_sell], label="Sell signal", color="cyan")
+plt.gca().xaxis.set_major_locator(mdates.DayLocator())
+plt.gca().xaxis.set_minor_locator(mdates.HourLocator())
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %d %Y"))
+plt.gcf().autofmt_xdate()
+plt.ylabel("Price")
+plt.legend()
+plt.show()
+```
+
+#figure(image(".typst_pyexec/figures/cell_16_1.svg"), caption: [Visualization of buy signal])
+
 
 + Discuss the strategy's effectiveness and potential limitations/improvements, for example try
   resampling the data (e.g., to 5-minute intervals) to reduce the number of signals: would it
