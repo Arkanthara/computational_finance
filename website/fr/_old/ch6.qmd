@@ -1,0 +1,186 @@
+---
+title: "Chapitre 6 - Exécution algorithmique"
+---
+
+## Objectifs
+
+- Comprendre la motivation de l'exécution algorithmique
+- Maîtriser les différentes catégories d'algorithmes (impact-driven, cost-driven, opportunistic)
+- Connaître en détail TWAP, VWAP, POV, MI, IS, AS, MC, PI et LIQ
+- Comprendre les coûts d'exécution et la frontière efficiente des algorithmes
+- Appréhender le concept de trading de portefeuille
+
+## Motivation
+
+**Problème** : vous devez acheter 10 000 actions alors que le volume quotidien est de 10 000. Exécuter en un seul bloc provoquerait un impact de marché considérable. Il faut un **algorithme** pour minimiser les coûts d'exécution.
+
+## Types de coûts
+
+L'exécution d'un ordre engendre de multiples coûts :
+
+| Catégorie | Composantes |
+|-----------|-------------|
+| **Explicites** | Taxes, commissions, frais de bourse |
+| **Spread** | Coût de franchissement du bid-ask |
+| **Impact de marché** | Temporaire + permanent |
+| **Tendance de prix** | Mouvement adverse pendant l'exécution |
+| **Risque de timing** | Incertitude sur le prix futur |
+| **Coût d'opportunité** | Manque à gagner si l'ordre n'est pas exécuté |
+| **Délai** | Coût entre décision et début d'exécution |
+
+::: {.callout-important}
+L'**impact de marché** se décompose en deux parties :
+
+- **Impact temporaire** : déplacement du prix qui se résorbe après l'exécution
+- **Impact permanent** : déplacement du prix qui persiste
+:::
+
+## Classification des algorithmes
+
+```{mermaid}
+flowchart TD
+    A[Algorithmes d'exécution] --> ID[Impact-driven]
+    A --> CD[Cost-driven]
+    A --> OP[Opportunistic]
+    ID --> TWAP[TWAP]
+    ID --> VWAP[VWAP]
+    ID --> POV[POV]
+    ID --> MI[MI]
+    CD --> IS[IS]
+    CD --> AS[AS]
+    CD --> MC[MC]
+    OP --> PI[PI]
+    OP --> LIQ[LIQ]
+```
+
+## Algorithmes Impact-Driven
+
+### TWAP — Time-Weighted Average Price
+
+Divise l'ordre en **tranches égales** réparties uniformément dans le temps.
+
+- **Indépendant** du prix et du volume
+- **Prévisible** et simple à implémenter
+- **Variantes** : mode agressif/passif, ajout de bruit, ajustement dynamique
+
+::: {.callout-tip}
+Le TWAP est le plus simple des algorithmes. Sa prévisibilité est à la fois sa force (simplicité) et sa faiblesse (facilement détectable par d'autres participants).
+:::
+
+### VWAP — Volume-Weighted Average Price
+
+L'objectif est de **suivre le benchmark VWAP** :
+
+$$
+\text{VWAP} = \frac{\sum_{i} p_i \cdot v_i}{\sum_{i} v_i}
+$$
+
+- Utilise le **profil de volume historique** pour anticiper la répartition des volumes
+- Le volume total n'est connu qu'en **fin de journée** → on utilise des estimations historiques
+
+::: {.callout-warning}
+Le VWAP est un benchmark imparfait car il inclut les propres transactions du trader. Plus on exécute agressivement, plus on influence le benchmark qu'on essaie de suivre.
+:::
+
+### POV — Percentage of Volume
+
+L'algorithme exécute une **fraction fixe** du volume de marché :
+
+$$
+w_i = \alpha \cdot v_i
+$$
+
+- $\alpha$ typiquement entre 1% et 20%
+- Ajustement : $\tilde{\alpha} = \alpha \cdot \frac{1}{1-\alpha}$ pour tenir compte de sa propre contribution au volume
+
+### MI — Minimize Impact
+
+Objectif : **minimiser l'impact de marché** total.
+
+- Utilise les **dark pools** pour exécuter sans visibilité
+- Portion exécutée via VWAP/POV passif
+- Minimise l'empreinte de marché
+
+## Algorithmes Cost-Driven
+
+### IS — Implementation Shortfall
+
+Minimise le **manque à gagner** (*shortfall*) entre le prix d'exécution et le prix de décision :
+
+- Équilibre entre **impact** (exécuter vite → impact fort) et **risque de timing** (exécuter lentement → incertitude)
+- C'est le compromis fondamental de l'exécution algorithmique
+
+::: {.callout-important}
+L'IS est souvent considéré comme l'algorithme de référence car il capture explicitement le trade-off entre coûts d'impact et risque de timing.
+:::
+
+### AS — Adaptive Shortfall
+
+Dérivé de l'IS, l'AS s'adapte aux conditions de marché :
+
+- **AIM** (*Aggressive In-the-Money*) : accélère quand le prix est favorable
+- **PIM** (*Passive In-the-Money*) : ralentit quand le prix est favorable (conserve le gain)
+
+### MC — Market Close
+
+Exécution ciblant le **prix de clôture** :
+
+- Très utilisé (beaucoup de benchmarks sont au prix de clôture)
+- L'horizon optimal de trading dépend de la **volatilité** de l'actif
+
+## Algorithmes Opportunistes
+
+### PI — Price Inline
+
+S'adapte au **prix de marché** en temps réel :
+
+- **Agressif** quand le prix est favorable (contre-tendance)
+- **Passif** quand le prix est défavorable
+- Cherche à profiter des mouvements de prix temporaires
+
+### LIQ — Liquidity Driven
+
+Exécute quand la **liquidité est disponible** et le **prix est favorable** :
+
+- Surveille en permanence la profondeur du carnet d'ordres
+- Accélère lors des pics de liquidité
+- Combine critère de prix et critère de volume
+
+## Frontière efficiente des algorithmes
+
+Les algorithmes se positionnent sur une **frontière efficiente** coût-risque :
+
+```{mermaid}
+flowchart LR
+    MC[MC<br/>Risque faible<br/>Coût élevé] --> IS[IS<br/>Compromis<br/>optimal]
+    IS --> VWAP[VWAP<br/>Risque moyen<br/>Coût moyen]
+    VWAP --> MI[MI<br/>Risque élevé<br/>Coût faible]
+```
+
+Le choix de l'algorithme est déterminé par l'**aversion au risque** $\lambda$ :
+
+$$
+\lambda = \frac{\text{coût}}{\text{risque}}
+$$
+
+- $\lambda$ élevé → MC (priorité au coût faible, accepte le risque)
+- $\lambda$ faible → MI (priorité au risque faible, accepte le coût)
+
+::: {.callout-tip}
+L'aversion au risque du trader détermine sa position sur la frontière efficiente. Il n'existe pas d'algorithme universellement optimal.
+:::
+
+## Trading de portefeuille
+
+Le **portfolio trading** consiste à exécuter **simultanément** plusieurs ordres :
+
+- **Diversification** : les impacts individuels peuvent se compenser
+- Corrélation entre actifs : l'exécution coordonnée réduit le risque global
+- Optimisation conjointe des trajectoires d'exécution
+
+## Points clés à retenir
+
+- Il faut éviter un **impact de marché** massif lors de l'exécution de gros ordres
+- Les différents algorithmes utilisent différentes **variables** (temps, volume, prix, liquidité)
+- Une **frontière efficiente** existe entre coût et risque d'exécution
+- L'**aversion au risque** permet d'identifier l'algorithme approprié sur cette frontière

@@ -1,0 +1,289 @@
+---
+title: "Le Carnet d'Ordres a Cours Limite — Quiz"
+filters:
+  - quizdown
+execute:
+  enabled: false
+---
+
+## Niveau 1 — Fondamentaux
+
+```{quizdown}
+### Qu'est-ce que le carnet d'ordres a cours limite (Limit Order Book) ?
+
+> Pense a ce que contient le LOB a un instant donne.
+
+1. [ ] L'historique de toutes les transactions passees sur un marche
+1. [x] L'ensemble des ordres actifs (soumis, non executes, non annules) a un instant t
+    > Correct : le LOB L(t) est bien l'ensemble des ordres en attente d'execution a l'instant t.
+1. [ ] La liste des teneurs de marche autorises a intervenir
+1. [ ] Le registre des prix de cloture journaliers
+```
+
+```{quizdown}
+### Quelle est la definition du bid b(t) ?
+
+> Le bid concerne le cote achat du carnet.
+
+1. [ ] Le prix moyen de toutes les transactions du jour
+1. [ ] Le prix minimal parmi les ordres de vente actifs
+1. [x] Le prix maximal parmi les ordres d'achat actifs
+    > Correct : b(t) = max p_x pour x dans B(t), c'est le meilleur prix qu'un acheteur est pret a payer.
+1. [ ] Le dernier prix auquel une transaction a eu lieu
+```
+
+```{quizdown}
+### Quelle formule definit le spread s(t) ?
+
+> Le spread mesure l'ecart entre le meilleur prix de vente et le meilleur prix d'achat.
+
+1. [ ] s(t) = b(t) + a(t)
+1. [ ] s(t) = m(t) - b(t)
+1. [x] s(t) = a(t) - b(t)
+    > Correct : le spread est toujours positif ou nul. Si a(t) etait inferieur a b(t), un appariement aurait eu lieu immediatement.
+1. [ ] s(t) = (a(t) + b(t)) / 2
+```
+
+```{quizdown}
+### Comment est defini le mid-price m(t) ?
+
+> Le mid-price est une reference de prix qui ne depend ni uniquement du bid ni uniquement de l'ask.
+
+1. [ ] m(t) = a(t) - b(t)
+1. [ ] m(t) = b(t) + s(t)
+1. [ ] m(t) = dernier prix de transaction
+1. [x] m(t) = (a(t) + b(t)) / 2
+    > Correct : le mid-price est la moyenne arithmetique du bid et de l'ask. Il est moins sensible aux variations d'un seul cote.
+```
+
+```{quizdown}
+### Qu'est-ce que le prix relatif (relative price) d'un ordre d'achat ?
+
+> Le prix relatif mesure la distance entre le prix de l'ordre et le meilleur prix de son cote.
+
+1. [x] b(t) - p_x
+    > Correct : pour un achat, delta_x = b(t) - p_x. Un delta nul signifie que l'ordre est place exactement au bid.
+1. [ ] p_x - a(t)
+1. [ ] a(t) - b(t)
+1. [ ] p_x - m(t)
+```
+
+```{quizdown}
+### Quelle est la source de profit principale d'un teneur de marche (market maker) ?
+
+> Le teneur de marche publie en permanence un prix d'achat et un prix de vente.
+
+1. [ ] La speculation sur la hausse des prix
+1. [ ] Les frais de courtage fixes
+1. [x] L'ecart entre le prix d'achat (bid) et le prix de vente (ask)
+    > Correct : le teneur de marche achete au bid et vend a l'ask. Ce spread lui assure un profit meme sans mouvement de prix.
+1. [ ] Les dividendes verses par les entreprises
+```
+
+```{quizdown}
+### Le spread s(t) peut-il etre negatif ?
+
+> Reflechis a ce qui se passerait si l'ask etait inferieur au bid.
+
+1. [ ] Vrai
+1. [x] Faux
+    > Faux : si a(t) < b(t), un appariement aurait lieu immediatement entre l'acheteur et le vendeur. Le spread ne peut donc jamais etre negatif.
+```
+
+---
+
+## Niveau 2 — Comprehension
+
+```{quizdown}
+### Un ordre d'achat est soumis avec un prix p_x tel que b(t) < p_x < a(t). Quel est son type et son effet ?
+
+> L'ordre est place dans le spread, entre le bid et l'ask actuels.
+
+1. [ ] Ordre au marche, execution immediate au prix a(t)
+1. [ ] Ordre a cours limite, le bid reste inchange
+1. [x] Ordre a cours limite, le bid monte jusqu'a p_x
+    > Correct : l'ordre est place dans le spread. Il ne peut pas etre execute immediatement, mais il devient le nouveau meilleur bid, reduisant le spread.
+1. [ ] Ordre au marche, execution au prix p_x
+```
+
+```{quizdown}
+### Quelles affirmations sont vraies concernant les ordres a cours limite (limit orders) ?
+
+> Compare les avantages et inconvenients des ordres limites par rapport aux ordres au marche.
+
+- [x] Ils offrent potentiellement un meilleur prix que les ordres au marche
+    > Correct : un ordre limite permet de choisir son prix d'execution, souvent plus avantageux.
+- [x] Ils comportent un risque de non-execution appele risque d'opportunite
+    > Correct : si le marche n'atteint pas le prix desire, l'ordre n'est jamais execute.
+- [ ] Ils sont toujours executes avant les ordres au marche
+    > Incorrect : les ordres au marche sont executes immediatement ; les ordres limites attendent une contrepartie.
+- [ ] Ils garantissent l'execution au prix specifie
+    > Incorrect : rien ne garantit qu'une contrepartie se presentera au prix desire.
+```
+
+```{quizdown}
+### Sous la regle de priorite prix-temps (price-time priority), comment sont departages des ordres au meme prix ?
+
+> Cette regle est la plus courante sur les grandes bourses organisees.
+
+1. [ ] Par la taille de l'ordre, le plus grand en premier
+1. [ ] Par tirage au sort
+1. [x] Par ordre d'arrivee, le premier arrive est le premier servi (FIFO)
+    > Correct : prix-temps = meilleur prix d'abord, puis FIFO en cas d'egalite de prix.
+1. [ ] Proportionnellement a la taille de chaque ordre
+```
+
+```{quizdown}
+### Qu'est-ce qu'un ordre iceberg (iceberg order) ?
+
+> Ce type d'ordre tire son nom d'un phenomene naturel bien connu.
+
+1. [ ] Un ordre qui s'execute uniquement lorsque le marche est tres volatil
+1. [ ] Un ordre place en dehors des heures de marche
+1. [x] Un ordre dont seule une partie de la taille est visible dans le LOB
+    > Correct : comme un iceberg, seule la partie emergee est affichee. Les grandes institutions l'utilisent pour ne pas devoiler leurs intentions.
+1. [ ] Un ordre qui annule automatiquement un ordre precedent
+```
+
+```{quizdown}
+### Quelle est la principale caracteristique des dark pools ?
+
+> Les dark pools sont des systemes d'echange alternatifs aux bourses organisees.
+
+1. [ ] Ils publient le LOB en temps reel mais avec un delai de 15 minutes
+1. [x] Tous les ordres actifs sont caches et seules des informations partielles sur les executions sont divulguees
+    > Correct : dans un dark pool, les participants ne voient pas les ordres des autres, ce qui permet aux grands investisseurs d'echanger sans impacter visiblement le marche.
+1. [ ] Ils n'acceptent que des ordres au marche
+1. [ ] Ils sont reserves aux particuliers pour proteger leur anonymat
+```
+
+```{quizdown}
+### Quelles proprietes empiriques sont observees de maniere consistante dans les LOBs reels ?
+
+> Certaines proprietes sont robustes quelle que soit la classe d'actif ou la bourse consideree.
+
+- [x] 70 a 80 pourcent des ordres sont annules avant execution
+    > Correct : c'est l'une des proprietes les plus robustes dans la litterature empirique.
+- [x] La distribution des prix relatifs a des queues epaisses (fat tails)
+    > Correct : les ordres places tres loin du bid/ask sont bien plus frequents que ce qu'une loi normale predit.
+- [ ] Les tailles d'ordres suivent une loi normale
+    > Incorrect : les tailles d'ordres sont distribuees de maniere uniforme et concentrees autour de valeurs rondes.
+- [x] L'impact sur le prix est une fonction concave de la taille de l'ordre
+    > Correct : doubler la taille d'un ordre ne double pas son impact sur le prix.
+```
+
+```{quizdown}
+### Pourquoi l'impact d'un ordre sur le prix est-il une fonction concave de sa taille ?
+
+> Pense a ce qui se passe dans le carnet a mesure qu'un ordre consomme de la liquidite disponible.
+
+1. [ ] Parce que les gros ordres sont toujours fractionnes automatiquement par l'algorithme
+1. [ ] Parce que les teneurs de marche abaissent leurs prix pour les gros volumes
+1. [x] Parce qu'a mesure que l'ordre consomme la liquidite, il doit aller chercher des ordres de plus en plus eloignes du meilleur prix
+    > Correct : la profondeur du carnet absorbe progressivement l'ordre. L'impact marginal diminue car chaque lot supplementaire trouve de la liquidite a des niveaux moins favorables mais avec un ecart decroissant.
+1. [ ] Parce que les gros ordres beneficient d'une priorite d'execution speciale
+```
+
+---
+
+## Niveau 3 — Maitrise
+
+```{quizdown}
+## Remets les etapes du cycle de vie d'un ordre dans le bon ordre.
+
+> Pense au cheminement d'un ordre depuis sa soumission jusqu'a sa conclusion.
+
+1. Soumission de l'ordre au LOB
+2. Verification de la possibilite d'appariement immediat
+3. Si non apparie, entree dans le LOB comme ordre actif
+4. Attente d'une contrepartie ou decision d'annulation
+5. Execution ou annulation definitive
+```
+
+```{quizdown}
+### Un trader soumet un ordre d'achat a p_x = 1.52 dans un LOB avec b(t) = 1.50 et a(t) = 1.55. Que se passe-t-il ?
+
+> Situe le prix de l'ordre par rapport au bid et a l'ask actuels.
+
+1. [ ] L'ordre est execute immediatement au prix 1.55
+1. [ ] L'ordre entre dans le LOB sans modifier le bid
+1. [x] L'ordre entre dans le LOB et le bid monte a 1.52
+    > Correct : p_x = 1.52 est dans le spread (1.50 < 1.52 < 1.55). C'est un ordre limite qui devient le nouveau meilleur bid, reduisant le spread de 0.05 a 0.03.
+1. [ ] L'ordre est rejete car il est dans le spread
+```
+
+```{quizdown}
+### Quel est l'exposant de Hurst H produit par le modele de Maslov, et quelle est son interpretation ?
+
+> Compare la valeur obtenue a celle d'une marche aleatoire ordinaire (H = 0.5).
+
+1. [ ] H = 0.5, indiquant une marche aleatoire sans memoire
+1. [ ] H = 0.75, indiquant une tendance persistante
+1. [x] H = 0.25, indiquant une anti-persistance (mean-reverting)
+    > Correct : H = 1/4 < 1/2. Les variations de prix tendent a s'inverser, caracteristique d'un processus anti-persistant. Une montee tend a etre suivie d'une baisse.
+1. [ ] H = 1.0, indiquant une tendance parfaitement lineaire
+```
+
+```{quizdown}
+## Remets les etapes de l'algorithme de Maslov dans le bon ordre pour un pas de temps.
+
+> Suis le deroulement de l'algorithme de Maslov etape par etape.
+
+1. Determination du cote : acheteur ou vendeur avec probabilite 0.5
+2. Choix du type d'ordre : au marche avec prob. 1-r ou a cours limite avec prob. r
+3. Si ordre limite, calcul du prix autour du dernier prix de transaction
+4. Soumission de l'ordre au LOB
+5. Appariement eventuel ou ajout au carnet actif
+```
+
+```{quizdown}
+### Quelles sont les raisons possibles d'un impact permanent (permanent impact) d'un ordre sur le prix ?
+
+> Distingue les effets transitoires des effets durables sur le marche.
+
+- [x] Un ordre peut transmettre de l'information a d'autres traders qui ajustent leurs prix en consequence
+    > Correct : un gros ordre d'achat peut signaler que l'acheteur dispose d'informations positives sur l'actif.
+- [x] Un ordre peut declencher une serie d'actions en cascade d'autres participants
+    > Correct : des ordres stop, des algorithmes, ou des reactions d'autres participants peuvent amplifier et perenniser l'impact initial.
+- [ ] L'impact est toujours permanent par definition dans un LOB
+    > Incorrect : on distingue explicitement impact instantane (potentiellement temporaire) et impact permanent.
+- [ ] Les ordres a cours limite ont toujours plus d'impact permanent que les ordres au marche
+    > Incorrect : les ordres au marche consomment la liquidite disponible et ont generalement un impact instantane plus fort.
+```
+
+```{quizdown}
+### Qu'est-ce que la courbe maitresse (master curve) decrite par Lillo et al. ?
+
+> Cette decouverte suggere un comportement universel au-dela des differences entre actifs.
+
+1. [ ] Une courbe reliant le spread au volume journalier pour chaque action
+1. [ ] La trajectoire theorique optimale d'execution d'un ordre fractionne
+1. [x] Une courbe d'impact universelle obtenue en normalisant l'impact par la capitalisation boursiere, qui suit une loi de puissance pour tous les groupes d'actifs
+    > Correct : Lillo et al. ont montre qu'en normalisant par la capitalisation, les courbes d'impact d'actifs tres differents convergent vers une courbe maitresse unique en loi de puissance.
+1. [ ] La courbe de profondeur moyenne du LOB en fonction du prix relatif
+```
+
+```{quizdown}
+### Un LOB presente b(t) = 1.50 et a(t) = 1.53. Trois ordres arrivent successivement : achat a 1.48, achat a 1.51, achat a 1.53. Quel est le spread apres le deuxieme ordre ?
+
+> Suis l'evolution du bid et de l'ask apres chaque ordre.
+
+1. [ ] 0.03 (inchange)
+1. [x] 0.02
+    > Correct : le deuxieme ordre a p_x = 1.51 est dans le spread (1.50 < 1.51 < 1.53). Il devient le nouveau bid. Le nouveau spread est 1.53 - 1.51 = 0.02.
+1. [ ] 0.01
+1. [ ] 0.00 (execution immediate)
+```
+
+```{quizdown}
+### Quelle difference fondamentale distingue l'approche des economistes de celle des physiciens dans la modelisation du LOB ?
+
+> Ces deux ecoles produisent des modeles tres differents dans leurs hypotheses de base.
+
+1. [ ] Les economistes utilisent des simulations numeriques, les physiciens des modeles analytiques
+1. [x] Les economistes supposent des traders rationnels avec des fonctions d'utilite, les physiciens construisent des modeles simplifies inspires de la physique statistique
+    > Correct : l'approche economique part de l'hypothese de rationalite des agents. L'approche physique (econophysique) cherche a reproduire les proprietes emergentes avec des regles simples.
+1. [ ] Les economistes etudient les marches au comptant, les physiciens les marches a terme
+1. [ ] Les physiciens ignorent completement les donnees empiriques
+    > Incorrect : les physiciens s'appuient au contraire fortement sur les faits empiriques pour calibrer et valider leurs modeles.
+```

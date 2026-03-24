@@ -1,0 +1,133 @@
+---
+title: "Le Carnet d'Ordres à Cours Limité — Révision"
+---
+
+## Mécanismes d'échange (Trading Mechanisms)
+
+| Mécanisme | Contrepartie | Profit | Risque |
+|---|---|---|---|
+| **OTC / Teneur de marché** (Market Maker) | Teneur de marché | Spread bid-ask | Inventaire |
+| **LOB** (Limit Order Book) | Autres participants | — | Opportunité |
+
+> **LOB** $\mathcal{L}(t)$ = ensemble des ordres **actifs** (soumis, non exécutés, non annulés) à l'instant $t$.
+
+---
+
+## Définitions clés (Key Definitions)
+
+Un ordre : $x = (p_x,\ w_x,\ t_x)$ — prix, taille, horodatage
+
+| Symbole | Définition | Formule |
+|---|---|---|
+| $b(t)$ | **Bid** — meilleur prix d'achat | $\max_{x \in B(t)} p_x$ |
+| $a(t)$ | **Ask** — meilleur prix de vente | $\min_{x \in A(t)} p_x$ |
+| $s(t)$ | **Spread** | $a(t) - b(t) \geq 0$ |
+| $m(t)$ | **Mid-price** | $\dfrac{a(t)+b(t)}{2}$ |
+| $\delta^x$ | **Prix relatif** (Relative Price) | $b(t)-p_x$ (achat) / $p_x - a(t)$ (vente) |
+| $\pi$ | **Tick** — plus petit écart de prix | — |
+| $N^b(p,t)$ | **Profondeur bid** (Depth) | $\sum_{\{x \in B(t)\mid\delta^x=p\}} w_x$ |
+| $N^a(p,t)$ | **Profondeur ask** (Depth) | $\sum_{\{x \in A(t)\mid\delta^x=p\}} w_x$ |
+
+---
+
+## Types d'ordres (Order Types)
+
+| Type | Condition (achat) | Exécution | Risque |
+|---|---|---|---|
+| **Ordre à cours limité** (Limit Order) | $p_x \leq b(t)$ ou dans le spread | ❌ Différée | Non-exécution (opportunité) |
+| **Ordre au marché** (Market Order) | $p_x \geq a(t)$ | ✅ Immédiate | Prix défavorable |
+
+⚠️ **Arbitrage fondamental :** meilleur prix ↔ risque de non-exécution
+
+---
+
+## Évolution du LOB — 3 cas (achat)
+
+| Condition | Type | Effet sur $b(t)$ |
+|---|---|---|
+| $p_x \leq b(t)$ | Limite | Inchangé |
+| $b(t) < p_x < a(t)$ | Limite | $b(t) \uparrow$ vers $p_x$ |
+| $p_x \geq a(t)$ | Marché | Exécution au meilleur ask |
+
+---
+
+## Priorités (Priority Rules)
+
+| Règle | Critère 1 | Critère 2 | Favorise |
+|---|---|---|---|
+| **Prix-Temps** (Price-Time) | Meilleur prix | FIFO | Ordres précoces |
+| **Prorata** (Pro-Rata) | Meilleur prix | $w / \sum w$ | Gros ordres |
+| **Prix-Taille** (Price-Size) | Meilleur prix | Plus grand $w$ | Gros ordres |
+
+---
+
+## Visibilité (Visibility)
+
+- **LOB standard** : publié par la plupart des bourses
+- **Ordres iceberg** (Iceberg Orders) : taille partiellement cachée
+- **Dark pools** : LOB opaque, ordres totalement cachés
+
+⚠️ Un LOB transparent donne accès à bien plus que $a(t)$ et $b(t)$ — mais la dynamique reste mal comprise.
+
+---
+
+## Faits empiriques (Empirical Facts)
+
+| Propriété | Observation |
+|---|---|
+| **Taille des ordres** (Order Size) | Uniforme + concentrée sur valeurs rondes |
+| **Prix relatif** $\delta$ | Loi d'échelle, **queues épaisses** (fat tails) |
+| **Annulations** (Cancellations) | **70–80 %** des ordres annulés |
+| **Profondeur** (Depth) | Distribution à queues épaisses |
+| **Impact prix** (Price Impact) | $I(\|w\|)$ **concave** en $\|w\|$ |
+
+> **Impact permanent** ← information transmise aux autres traders ou cascade d'ordres déclenchée.
+
+> **Courbe maîtresse** (Master Curve, Lillo et al.) : après normalisation par capitalisation → loi de puissance universelle.
+
+---
+
+## Modèle de Maslov (Maslov Model)
+
+**Algorithme (à chaque pas) :**
+
+- Acheteur ou vendeur avec $p = 0{,}5$
+- Prob. $1-r$ → **ordre au marché** $(bid/ask,\ \sigma,\ t_x)$
+- Prob. $r$ → **ordre limite** $p_x = p' \mp k$ ($k$ aléatoire, $p'$ = dernier prix)
+- Pas d'annulation
+
+**Résultats clés :**
+
+| Propriété | Valeur / Observation |
+|---|---|
+| Distribution des incréments | **Non-gaussienne**, queues épaisses |
+| Volatilité | **Clustering** (regroupement) |
+| Exposant de Hurst $H$ | $\approx 1/4$ (vs $1/2$ pour marche aléatoire) |
+| Auto-corrélation | **Négative** (anti-persistance) |
+
+> $H < 0{,}5$ → **mean-reverting** (anti-persistant) · $H = 0{,}5$ → marche aléatoire · $H > 0{,}5$ → tendanciel
+
+---
+
+## Relations entre concepts
+
+```{mermaid}
+flowchart LR
+  A[Ordre soumis] --> B{Apparié ?}
+  B -- Oui --> C[Ordre au marché\nMarket Order]
+  B -- Non --> D[Ordre à cours limité\nLimit Order]
+  D --> E[LOB actif]
+  E --> F{Annulé ?}
+  F -- 70-80% --> G[Annulation]
+  F -- 20-30% --> H[Exécution]
+```
+
+---
+
+## Pièges à éviter ⚠️
+
+- $s(t) \geq 0$ **toujours** — si $a(t) < b(t)$, un appariement aurait eu lieu
+- Ordre limite ≠ exécution garantie → **risque d'opportunité**
+- Impact prix **concave** : doubler $|w|$ ne double **pas** l'impact
+- Maslov : modèle homogène → pour l'hétérogénéité → **ABM** (Agent-Based Models)
+- Dark pools : opacité ≠ efficacité garantie

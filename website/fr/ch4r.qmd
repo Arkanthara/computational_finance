@@ -1,0 +1,151 @@
+---
+title: "Données, moyennes mobiles et temps intrinsèque — Révision"
+---
+
+# Données réelles (Real-life Data)
+
+## Idéal vs Réalité
+
+| Attendu | Réalité |
+|---------|---------|
+| Équidistant | Activité irrégulière |
+| Lisse | Bruité |
+| Continu | Sauts possibles |
+| Prix unique | Bid / Ask / Mid |
+
+## Traitement des données
+
+| Approche | Usage | Limite |
+|----------|-------|--------|
+| **Discrétisation** | 99,9% des cas | Informations perdues entre ticks |
+| **Interpolation** | Rare | Hypothèses fortes, temps physique arbitraire |
+
+---
+
+# Moyennes mobiles (Moving Averages)
+
+## Comparaison des trois opérateurs
+
+| | **SMA** | **WMA** | **EMA** |
+|---|---|---|---|
+| Poids | Égaux $\frac{1}{n}$ | Linéaire croissant | Décroissance exponentielle |
+| Mémoire | $n$ observations | $n$ observations | 1 valeur seulement |
+| Mise à jour | Simple | Complexe | Très simple |
+| Mémoire infinie | ✗ | ✗ | ✓ |
+
+## Formules clés
+
+**SMA** — fenêtre $n$ :
+
+$$\text{SMA}(t) = \frac{1}{n}\sum_{i=0}^{n-1} X_{t-i}$$
+
+Mise à jour : $\text{SMA}(t+1) = \text{SMA}(t) - \dfrac{X_{t-n+1}}{n} + \dfrac{X_{t+1}}{n}$
+
+**WMA** — dénominateur $= \dfrac{n(n+1)}{2}$ :
+
+$$\text{WMA}(t) = \frac{\sum_{i=1}^{n} i \cdot X_{t-n+i}}{\frac{n(n+1)}{2}}$$
+
+**EMA** — forme récursive (**formule centrale**) :
+
+$$\boxed{\text{EMA}(t) = \alpha \cdot X_t + (1-\alpha) \cdot \text{EMA}(t-1)}$$
+
+## Choix de $\alpha$ pour l'EMA
+
+| Méthode | Formule | Remarque |
+|---------|---------|----------|
+| Équivalence SMA($n$) | $\alpha = \dfrac{2}{n+1}$ | Même âge moyen, **pas identiques** |
+| Impact résiduel $\epsilon_k$ après $k$ pas | $\alpha = 1 - e^{\log(\epsilon_k)/k}$ | Ex : $k=100$, $\epsilon=1\%$ $\Rightarrow \alpha=0{,}045$ |
+
+## Initialisation (Initial Conditions)
+
+- $\text{EMA}(1) = X_1$ — simple, biais initial possible
+- $\text{EMA}(n) = \text{SMA}(n)$ — plus robuste
+
+⚠️ **Période de chauffe requise** — plus $\alpha$ est petit, plus elle est longue.
+
+## Pièges à éviter
+
+- ⚠️ $\alpha = \frac{2}{n+1}$ **≠** SMA($n$) — seulement l'âge moyen est équivalent
+- ⚠️ Plus le lissage est fort → plus le **décalage temporel (time lag)** est grand — **inévitable**
+- ⚠️ Petit $\alpha$ = lissage fort = lag long ; grand $\alpha$ = réactif = peu lissé
+
+## EMA asynchrone (données irrégulières)
+
+$$\text{EMA}(\tau; x)(t_n) = \mu \cdot \text{EMA}(t_{n-1}) + (\nu - \mu) \cdot x_{n-1} + (1-\nu) \cdot x_n$$
+
+| Paramètre | Définition |
+|-----------|-----------|
+| $\alpha = (t_n - t_{n-1})/\tau$ | Temps écoulé normalisé |
+| $\mu = e^{-\alpha}$ | Décroissance exponentielle |
+| $\nu = (1-\mu)/\alpha$ | Interpolation entre $x_{n-1}$ et $x_n$ |
+
+---
+
+# Temps intrinsèque (Intrinsic Time)
+
+## Pourquoi dépasser le temps physique ?
+
+- Événements importants peuvent survenir **entre** deux observations
+- Début d'observation **arbitraire** (minuit, 5h...)
+- Temps physique **insensible** à l'activité réelle du marché
+
+💡 Solution : laisser le **marché dicter son propre rythme**
+
+## Concepts fondamentaux
+
+| Terme | Définition |
+|-------|-----------|
+| **DC** (Directional Change) | Renversement de prix ≥ seuil $\delta$ depuis le dernier extrême |
+| **OS** (Overshoot) | Mouvement au-delà du DC jusqu'au prochain renversement |
+| **TM** (Total Move) | $\text{TM} = \text{DC} + \text{OS}$ |
+| **$\delta$** | Seuil de détection — contrôle la granularité temporelle |
+
+## Propriétés du temps intrinsèque
+
+- $\delta$ petit → beaucoup de DCs → temps **rapide** (marché volatile)
+- $\delta$ grand → peu de DCs → temps **lent** (marché calme)
+- Nombre de DCs / temps physique ∝ **volatilité**
+- Longueur des OS ∝ **liquidité**
+
+## Algorithme de détection des DCs
+
+```
+mode = "up", x_ext = premier prix, δ fixé
+
+Pour chaque prix x :
+  Si mode = "up" :
+    Si x < x_ext  →  x_ext = x
+    Si (x_ext - x) / x_ext ≥ δ  →  DC up détecté, x_ext = x, mode = "down"
+
+  Si mode = "down" :
+    Si x > x_ext  →  x_ext = x
+    Si (x - x_ext) / x_ext ≥ δ  →  DC down détecté, x_ext = x, mode = "up"
+```
+
+⚠️ Le mode initial est **arbitraire** — l'algorithme converge rapidement.
+
+## Lois d'échelle (Scaling Laws)
+
+Relations empiriques reliant temps intrinsèque et temps physique :
+
+| Loi | Formule |
+|-----|---------|
+| Mouvement de prix vs temps | $\langle \Delta x \rangle \sim \Delta t^{\alpha}$ |
+| Durée moyenne d'un DC | $\langle \Delta t_\text{dc} \rangle \sim (\delta/c)^{\alpha}$ |
+| Nombre de ticks vs $\delta$ | Loi puissance décroissante |
+
+🧠 **20 lois d'échelle** identifiées sur 13 paires de devises FX — **universelles et stables**.
+
+---
+
+# Récapitulatif global
+
+| Concept | Mot-clé | Formule / Règle |
+|---------|---------|-----------------|
+| SMA | Équipondéré | $\frac{1}{n}\sum X_i$ |
+| WMA | Linéaire | Poids $\propto$ récence |
+| EMA | Exponentiel | $\alpha X_t + (1-\alpha)\text{EMA}(t-1)$ |
+| Lag | Inévitable | $\uparrow n$ ou $\downarrow \alpha$ $\Rightarrow$ $\uparrow$ lag |
+| DC | Événement clé | Renversement $\geq \delta$ |
+| Temps intrinsèque | Adaptatif | Déclenché par les prix, pas le temps |
+| Lois d'échelle | Universel | Puissance entre DC et temps physique |

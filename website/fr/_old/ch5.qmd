@@ -1,0 +1,182 @@
+---
+title: "Chapitre 5 - Carnet d'ordres limite (LOB)"
+---
+
+## Objectifs
+
+- Comprendre le rôle du market maker et du carnet d'ordres
+- Maîtriser les définitions fondamentales du LOB (bid, ask, spread, mid-price, profondeur)
+- Comprendre l'évolution du carnet lors de la soumission d'ordres
+- Connaître les règles de priorité et les types d'ordres spéciaux
+- Découvrir les faits empiriques et le modèle de Maslov
+
+## Market Maker vs Carnet d'Ordres
+
+### Market Maker (OTC)
+
+Le **market maker** est un intermédiaire de marché de gré à gré (OTC) :
+
+- Possède un **inventaire** d'actifs
+- Met en relation acheteurs et vendeurs
+- Réalise son profit via le **spread** (écart bid/ask)
+
+### Carnet d'Ordres Limite (LOB)
+
+Le **Limit Order Book** est le mécanisme de négociation sur les marchés organisés (bourses). Quand un ordre $x$ est soumis :
+
+- Si l'ordre est **appariable** → exécution immédiate (*market order*)
+- Sinon → l'ordre devient **actif** et rejoint le carnet (*limit order*)
+
+```{mermaid}
+flowchart TD
+    X[Ordre x soumis] --> M{Appariable?}
+    M -->|Oui| E[Exécution immédiate<br/>Ordre de marché]
+    M -->|Non| L[Inscription au carnet<br/>Ordre limite]
+    E --> I[Impact sur le prix]
+    L --> W[Attente dans le LOB]
+```
+
+## Définitions fondamentales
+
+### Paramètres structurels
+
+- $\sigma$ : taille d'un **lot** (unité de négociation)
+- $w_x \in \pm k\sigma$ : **taille de l'ordre** (multiple du lot)
+- $\pi$ : **tick size** (plus petit intervalle de prix)
+
+### Variables du carnet
+
+Un ordre est défini par le triplet $x = (p_x, w_x, t_x)$ : prix, taille, horodatage.
+
+Les ensembles d'ordres actifs :
+
+- $B(t)$ : ensemble des ordres d'**achat** actifs
+- $A(t)$ : ensemble des ordres de **vente** actifs
+
+Les prix de référence :
+
+$$
+b(t) = \max_{x \in B(t)} p_x \quad \text{(meilleur bid)}
+$$
+
+$$
+a(t) = \min_{x \in A(t)} p_x \quad \text{(meilleur ask)}
+$$
+
+$$
+s(t) = a(t) - b(t) \quad \text{(spread)}
+$$
+
+$$
+m(t) = \frac{a(t) + b(t)}{2} \quad \text{(mid-price)}
+$$
+
+### Prix relatif
+
+Le **prix relatif** $\delta_x$ mesure la distance au meilleur prix :
+
+- Pour un ordre d'achat : $\delta_x = b(t) - p_x$
+- Pour un ordre de vente : $\delta_x = p_x - a(t)$
+
+### Profondeur du carnet
+
+La **profondeur** mesure le volume disponible à chaque niveau de prix :
+
+$$
+N^b(p, t) = \sum_{\substack{x \in B(t) \\ p_x = p}} w_x \quad \text{(profondeur côté achat)}
+$$
+
+$$
+N^a(p, t) = \sum_{\substack{x \in A(t) \\ p_x = p}} w_x \quad \text{(profondeur côté vente)}
+$$
+
+## Évolution du carnet
+
+Considérons un **ordre d'achat** soumis au prix $p_x$. Trois cas se présentent :
+
+### Cas 1 : $p_x \leq b(t)$ — Ordre limite passif
+
+L'ordre rejoint le carnet côté achat. Le meilleur bid $b(t)$ reste **inchangé**.
+
+### Cas 2 : $b(t) < p_x < a(t)$ — Ordre limite améliorant
+
+L'ordre rejoint le carnet et **améliore** le meilleur bid : $b(t) \leftarrow p_x$. Le spread se réduit.
+
+### Cas 3 : $p_x \geq a(t)$ — Ordre de marché
+
+L'ordre est **apparié** avec le(s) meilleur(s) ordre(s) de vente. C'est un *market order* qui consomme de la liquidité.
+
+::: {.callout-important}
+La symétrie est parfaite pour les ordres de vente : remplacer $b(t)$ par $a(t)$ et inverser les inégalités.
+:::
+
+## Règles de priorité
+
+Trois mécanismes principaux d'allocation quand plusieurs ordres coexistent au même prix :
+
+| Règle | Principe | Avantage |
+|-------|----------|----------|
+| **Prix-Temps** | Premier arrivé, premier servi au même prix | Récompense la rapidité |
+| **Pro-rata** | Distribution proportionnelle à la taille | Récompense les gros ordres |
+| **Prix-Taille** | Priorité aux ordres les plus gros au même prix | Favorise la liquidité |
+
+## Ordres spéciaux
+
+### Ordres iceberg
+
+Les **ordres iceberg** cachent une partie de leur taille réelle. Seule une fraction est visible dans le carnet, le reste est révélé au fur et à mesure des exécutions.
+
+### Dark pools
+
+Les **dark pools** sont des carnets d'ordres opaques : les ordres ne sont **pas visibles** avant leur exécution. Avantage : réduction de l'impact de marché pour les gros ordres.
+
+::: {.callout-warning}
+Les ordres limite comportent un **risque d'opportunité** : l'ordre peut ne jamais être exécuté si le marché s'éloigne du prix limite.
+:::
+
+## Faits empiriques du LOB
+
+Les études empiriques révèlent des régularités universelles :
+
+- **Tailles d'ordres** : distribution uniforme/concentrée autour de valeurs rondes
+- **Prix relatifs** : distribution à queues épaisses (*fat-tailed*)
+- **Taux d'annulation** : 70-80% des ordres limites sont annulés avant exécution
+- **Profondeur** : distribution à queues épaisses
+- **Impact de marché** : fonction **concave** de la taille de l'ordre
+
+$$
+I(|w|) \sim |w|^{\gamma} \quad \text{avec } \gamma < 1 \text{ (impact concave)}
+$$
+
+::: {.callout-tip}
+L'impact concave signifie que doubler la taille d'un ordre ne double **pas** son impact de marché. Les premiers lots déplacent le prix plus que les suivants.
+:::
+
+## Modèle de Maslov
+
+Le **modèle de Maslov** est un modèle simplifié de LOB :
+
+### Hypothèses
+
+- À chaque pas de temps, un participant arrive avec probabilité $0.5$ d'être acheteur ou vendeur
+- Avec probabilité $(1-r)$ : **ordre de marché** (exécution immédiate)
+- Avec probabilité $r$ : **ordre limite** (inscription au carnet)
+
+### Résultats remarquables
+
+Malgré sa simplicité, le modèle de Maslov reproduit :
+
+- Des **distributions à queues épaisses** des rendements
+- Une **autocorrélation négative** des rendements
+- Un **exposant de Hurst** de $\frac{1}{4}$ (contre $\frac{1}{2}$ pour une marche aléatoire)
+
+::: {.callout-important}
+L'exposant de Hurst $H = \frac{1}{4} < \frac{1}{2}$ indique un comportement **anti-persistant** : les hausses tendent à être suivies de baisses et vice versa. C'est un fait stylisé observé empiriquement en microstructure.
+:::
+
+## Points clés à retenir
+
+- Le LOB fait interagir les participants de marché dans un cadre transparent et structuré
+- Le carnet rassemble une quantité considérable d'information (prix, volumes, timing)
+- Les **faits empiriques** du LOB sont universels : queues épaisses, taux d'annulation élevé, impact concave
+- Même des **modèles simples** (Maslov) reproduisent les faits stylisés fondamentaux

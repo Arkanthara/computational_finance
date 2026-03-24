@@ -1,182 +1,520 @@
 ---
-title: "Chapitre 5 - Carnet d'ordres limite (LOB)"
+title: "Le Carnet d'Ordres à Cours Limité (Limit Order Book)"
 ---
 
-## Objectifs
+## Introduction
 
-- Comprendre le rôle du market maker et du carnet d'ordres
-- Maîtriser les définitions fondamentales du LOB (bid, ask, spread, mid-price, profondeur)
-- Comprendre l'évolution du carnet lors de la soumission d'ordres
-- Connaître les règles de priorité et les types d'ordres spéciaux
-- Découvrir les faits empiriques et le modèle de Maslov
+Les marchés financiers modernes reposent sur des mécanismes précis permettant à des millions de participants d'échanger des actifs de manière organisée, transparente et efficace. Ce chapitre explore le **Carnet d'Ordres à Cours Limité** (Limit Order Book — LOB), l'outil central qui structure la quasi-totalité des échanges sur les grandes places boursières mondiales.
 
-## Market Maker vs Carnet d'Ordres
+Comprendre le LOB, c'est comprendre :
 
-### Market Maker (OTC)
+- comment les prix se forment à chaque instant,
+- comment les ordres interagissent entre eux,
+- pourquoi certaines stratégies d'exécution sont plus efficaces que d'autres.
 
-Le **market maker** est un intermédiaire de marché de gré à gré (OTC) :
+---
 
-- Possède un **inventaire** d'actifs
-- Met en relation acheteurs et vendeurs
-- Réalise son profit via le **spread** (écart bid/ask)
+## Avec qui échange-t-on ? (With Whom Do We Trade?)
 
-### Carnet d'Ordres Limite (LOB)
+Avant d'aborder le LOB en détail, il est essentiel de comprendre les deux grands modèles d'échange qui coexistent sur les marchés financiers.
 
-Le **Limit Order Book** est le mécanisme de négociation sur les marchés organisés (bourses). Quand un ordre $x$ est soumis :
+### Le Teneur de Marché (Market Maker) — Échanges de Gré à Gré (OTC)
 
-- Si l'ordre est **appariable** → exécution immédiate (*market order*)
-- Sinon → l'ordre devient **actif** et rejoint le carnet (*limit order*)
+#### Définition
 
-```{mermaid}
-flowchart TD
-    X[Ordre x soumis] --> M{Appariable?}
-    M -->|Oui| E[Exécution immédiate<br/>Ordre de marché]
-    M -->|Non| L[Inscription au carnet<br/>Ordre limite]
-    E --> I[Impact sur le prix]
-    L --> W[Attente dans le LOB]
+Un **teneur de marché** (market maker) est un intermédiaire financier qui s'engage à acheter et vendre un actif en continu, en publiant en permanence un prix d'achat (bid) et un prix de vente (ask).
+
+Les échanges réalisés directement avec un teneur de marché, sans passer par une bourse organisée, sont qualifiés d'échanges **de gré à gré** (Over The Counter — OTC).
+
+#### Fonctionnement
+
+Le teneur de marché :
+
+- **détient un inventaire** (stock d'actifs qu'il possède ou qu'il doit),
+- **prend un risque** lié à l'évolution du prix de cet inventaire,
+- **apparie acheteurs et vendeurs** dans la mesure du possible,
+- **se couvre (hedge)** périodiquement auprès d'autres teneurs de marché lorsque son exposition devient trop importante.
+
+💡 **Intuition :** Imaginez un libraire qui achète des livres d'occasion et les revend. Si trop de gens lui vendent le même livre, il se retrouve avec un stock excessif et un risque que le prix de ce livre chute. Il doit alors écouler ce surplus.
+
+#### Exemple concret
+
+Considérons une séquence d'ordres soumis par des participants :
+
+```
+x = {+1, +1, −1, −1, −1, −1, −1, −1, −1, …}
 ```
 
-## Définitions fondamentales
+Du point de vue du teneur de marché, chaque ordre d'un participant génère un ordre inverse :
 
-### Paramètres structurels
+```
+Teneur de marché : {−1, −1, +1, +1, +1, +1, +1, +1, +1, …}
+```
 
-- $\sigma$ : taille d'un **lot** (unité de négociation)
-- $w_x \in \pm k\sigma$ : **taille de l'ordre** (multiple du lot)
-- $\pi$ : **tick size** (plus petit intervalle de prix)
+Rapidement, le teneur de marché accumule une position nette de **−5** (il est massivement vendeur net). Son exposition devient trop risquée, et il doit se couvrir en échangeant avec un autre teneur de marché.
 
-### Variables du carnet
+#### La source de profit du teneur de marché
 
-Un ordre est défini par le triplet $x = (p_x, w_x, t_x)$ : prix, taille, horodatage.
+Le teneur de marché se rémunère grâce à l'**écart acheteur-vendeur** (bid-ask spread) : il achète moins cher (bid) qu'il ne vend (ask). Même sans aucun mouvement de prix, il réalise un profit à chaque aller-retour.
 
-Les ensembles d'ordres actifs :
+🧠 **À retenir :** Le teneur de marché prend un risque d'inventaire en échange d'un profit sur le spread. Ce modèle est typique des marchés OTC comme le marché des changes (Forex).
 
-- $B(t)$ : ensemble des ordres d'**achat** actifs
-- $A(t)$ : ensemble des ordres de **vente** actifs
+---
 
-Les prix de référence :
+### Le Carnet d'Ordres à Cours Limité (Limit Order Book — LOB)
 
-$$
-b(t) = \max_{x \in B(t)} p_x \quad \text{(meilleur bid)}
-$$
+L'alternative au modèle OTC est le **carnet d'ordres à cours limité**, utilisé sur la grande majorité des bourses organisées (NYSE, SIX Swiss Exchange, Euronext, etc.).
 
-$$
-a(t) = \min_{x \in A(t)} p_x \quad \text{(meilleur ask)}
-$$
+Dans ce modèle, les participants n'échangent pas directement avec un teneur de marché. Ils placent leurs ordres dans un système centralisé qui les apparie automatiquement selon des règles précises.
 
-$$
-s(t) = a(t) - b(t) \quad \text{(spread)}
-$$
+💡 **Intuition :** Pensez à une salle des ventes où les acheteurs et les vendeurs affichent leurs offres sur un tableau. Le LOB est ce tableau, géré par un algorithme.
 
-$$
-m(t) = \frac{a(t) + b(t)}{2} \quad \text{(mid-price)}
-$$
+---
 
-### Prix relatif
+## Comportement du Carnet d'Ordres (LOB Behaviour)
 
-Le **prix relatif** $\delta_x$ mesure la distance au meilleur prix :
+### Principe de fonctionnement
 
-- Pour un ordre d'achat : $\delta_x = b(t) - p_x$
-- Pour un ordre de vente : $\delta_x = p_x - a(t)$
+Lorsqu'un ordre $x$ est soumis au LOB, un algorithme effectue immédiatement les vérifications suivantes :
 
-### Profondeur du carnet
+1. **L'ordre peut-il être apparié immédiatement ?**
+   - Exemple : un vendeur propose 100 unités à 50 USD et un acheteur attend d'acheter 100 unités à 50 USD → appariement immédiat.
 
-La **profondeur** mesure le volume disponible à chaque niveau de prix :
+2. **Sinon**, l'ordre devient **actif** : il est enregistré dans le LOB et attend d'être apparié ou annulé.
 
-$$
-N^b(p, t) = \sum_{\substack{x \in B(t) \\ p_x = p}} w_x \quad \text{(profondeur côté achat)}
-$$
+### Définition formelle
 
-$$
-N^a(p, t) = \sum_{\substack{x \in A(t) \\ p_x = p}} w_x \quad \text{(profondeur côté vente)}
-$$
+Le LOB $\mathcal{L}(t)$ est **l'ensemble des ordres actifs à l'instant $t$**, c'est-à-dire les ordres soumis mais pas encore exécutés ni annulés.
 
-## Évolution du carnet
+### Pourquoi étudier la dynamique du LOB ?
 
-Considérons un **ordre d'achat** soumis au prix $p_x$. Trois cas se présentent :
+Comprendre comment le LOB évolue est crucial pour plusieurs raisons pratiques :
 
-### Cas 1 : $p_x \leq b(t)$ — Ordre limite passif
+- **Améliorer l'exécution** : choisir le bon moment et le bon type d'ordre pour minimiser les coûts.
+- **Minimiser l'impact de marché** : éviter de déplacer trop fortement les prix lors d'un gros ordre.
+- **Concevoir de meilleurs algorithmes de trading** : automatiser les décisions d'exécution.
+- **Évaluer la stabilité et la liquidité du marché** : un LOB profond (avec beaucoup d'ordres) indique un marché liquide.
 
-L'ordre rejoint le carnet côté achat. Le meilleur bid $b(t)$ reste **inchangé**.
+---
 
-### Cas 2 : $b(t) < p_x < a(t)$ — Ordre limite améliorant
+## Définitions Formelles (Formal Definitions)
 
-L'ordre rejoint le carnet et **améliore** le meilleur bid : $b(t) \leftarrow p_x$. Le spread se réduit.
+### L'ordre (Order)
 
-### Cas 3 : $p_x \geq a(t)$ — Ordre de marché
+Un ordre est défini par trois caractéristiques :
 
-L'ordre est **apparié** avec le(s) meilleur(s) ordre(s) de vente. C'est un *market order* qui consomme de la liquidité.
+$$x = (p_x,\ w_x,\ t_x)$$
 
-::: {.callout-important}
-La symétrie est parfaite pour les ordres de vente : remplacer $b(t)$ par $a(t)$ et inverser les inégalités.
-:::
+où :
 
-## Règles de priorité
+- $p_x$ : **le prix** auquel l'ordre est soumis,
+- $w_x$ : **la taille** de l'ordre, exprimée en multiples du lot minimal $\sigma$ ; $w_x \in \{\pm k\sigma \mid k = 1, 2, \ldots\}$,
+- $t_x$ : **l'horodatage** (heure d'insertion de l'ordre).
 
-Trois mécanismes principaux d'allocation quand plusieurs ordres coexistent au même prix :
+### Le tick de prix (Price Tick)
 
-| Règle | Principe | Avantage |
-|-------|----------|----------|
-| **Prix-Temps** | Premier arrivé, premier servi au même prix | Récompense la rapidité |
-| **Pro-rata** | Distribution proportionnelle à la taille | Récompense les gros ordres |
-| **Prix-Taille** | Priorité aux ordres les plus gros au même prix | Favorise la liquidité |
+Le **tick** $\pi$ est le plus petit écart de prix possible entre deux ordres consécutifs.
 
-## Ordres spéciaux
+**Exemple :** Si $\pi = 0{,}00001$, alors le prix directement inférieur à $1{,}00000$ est $0{,}99999$.
 
-### Ordres iceberg
+### Le bid et l'ask
 
-Les **ordres iceberg** cachent une partie de leur taille réelle. Seule une fraction est visible dans le carnet, le reste est révélé au fur et à mesure des exécutions.
+- **Bid** $b(t)$ : le meilleur prix d'achat actif, c'est-à-dire le prix maximal parmi tous les ordres d'achat actifs :
 
-### Dark pools
+$$b(t) = \max_{x \in B(t)} p_x$$
 
-Les **dark pools** sont des carnets d'ordres opaques : les ordres ne sont **pas visibles** avant leur exécution. Avantage : réduction de l'impact de marché pour les gros ordres.
+  où $B(t)$ est l'ensemble des ordres d'achat actifs.
 
-::: {.callout-warning}
-Les ordres limite comportent un **risque d'opportunité** : l'ordre peut ne jamais être exécuté si le marché s'éloigne du prix limite.
-:::
+- **Ask** $a(t)$ : le meilleur prix de vente actif, c'est-à-dire le prix minimal parmi tous les ordres de vente actifs :
 
-## Faits empiriques du LOB
+$$a(t) = \min_{x \in A(t)} p_x$$
 
-Les études empiriques révèlent des régularités universelles :
+  où $A(t)$ est l'ensemble des ordres de vente actifs.
 
-- **Tailles d'ordres** : distribution uniforme/concentrée autour de valeurs rondes
-- **Prix relatifs** : distribution à queues épaisses (*fat-tailed*)
-- **Taux d'annulation** : 70-80% des ordres limites sont annulés avant exécution
-- **Profondeur** : distribution à queues épaisses
-- **Impact de marché** : fonction **concave** de la taille de l'ordre
+### L'écart acheteur-vendeur (Bid-Ask Spread)
 
-$$
-I(|w|) \sim |w|^{\gamma} \quad \text{avec } \gamma < 1 \text{ (impact concave)}
-$$
+$$s(t) = a(t) - b(t)$$
 
-::: {.callout-tip}
-L'impact concave signifie que doubler la taille d'un ordre ne double **pas** son impact de marché. Les premiers lots déplacent le prix plus que les suivants.
-:::
+⚠️ Le spread est toujours positif : l'ask est toujours supérieur ou égal au bid. Si ce n'était pas le cas, un appariement aurait eu lieu.
 
-## Modèle de Maslov
+### Le prix médian (Mid-Price)
 
-Le **modèle de Maslov** est un modèle simplifié de LOB :
+$$m(t) = \frac{a(t) + b(t)}{2}$$
 
-### Hypothèses
+Le prix médian est souvent utilisé comme référence du "vrai" prix de l'actif, car il est moins sensible aux fluctuations du bid ou de l'ask individuellement.
 
-- À chaque pas de temps, un participant arrive avec probabilité $0.5$ d'être acheteur ou vendeur
-- Avec probabilité $(1-r)$ : **ordre de marché** (exécution immédiate)
-- Avec probabilité $r$ : **ordre limite** (inscription au carnet)
+### Prix relatif (Relative Price)
 
-### Résultats remarquables
+Le **prix relatif** $\delta^x$ mesure la distance d'un ordre par rapport au meilleur prix de son côté :
 
-Malgré sa simplicité, le modèle de Maslov reproduit :
+$$\delta^x = \begin{cases} b(t) - p_x & \text{si ordre d'achat (buy)} \\ p_x - a(t) & \text{si ordre de vente (sell)} \end{cases}$$
 
-- Des **distributions à queues épaisses** des rendements
-- Une **autocorrélation négative** des rendements
-- Un **exposant de Hurst** de $\frac{1}{4}$ (contre $\frac{1}{2}$ pour une marche aléatoire)
+💡 **Intuition :** Un prix relatif $\delta^x = 0$ signifie que l'ordre est placé exactement au meilleur prix (au bid pour un achat, à l'ask pour une vente). Un $\delta^x > 0$ signifie que l'ordre est placé moins agressivement (plus loin du marché).
 
-::: {.callout-important}
-L'exposant de Hurst $H = \frac{1}{4} < \frac{1}{2}$ indique un comportement **anti-persistant** : les hausses tendent à être suivies de baisses et vice versa. C'est un fait stylisé observé empiriquement en microstructure.
-:::
+### Profondeur du carnet (Depth of the LOB)
 
-## Points clés à retenir
+La **profondeur** du LOB mesure le volume disponible à chaque niveau de prix :
 
-- Le LOB fait interagir les participants de marché dans un cadre transparent et structuré
-- Le carnet rassemble une quantité considérable d'information (prix, volumes, timing)
-- Les **faits empiriques** du LOB sont universels : queues épaisses, taux d'annulation élevé, impact concave
-- Même des **modèles simples** (Maslov) reproduisent les faits stylisés fondamentaux
+- **Côté achat (bid side) :**
+
+$$N^b(p, t) = \sum_{\{x \in B(t) \mid \delta^x = p\}} w_x$$
+
+- **Côté vente (ask side) :**
+
+$$N^a(p, t) = \sum_{\{x \in A(t) \mid \delta^x = p\}} w_x$$
+
+🧠 **À retenir :** La profondeur indique combien de volume est disponible à chaque niveau de prix relatif. Un LOB profond offre davantage de liquidité.
+
+---
+
+## Types d'Ordres (Order Types)
+
+### Ordre à cours limité (Limit Order)
+
+Un **ordre à cours limité** est un ordre qui ne peut pas être exécuté immédiatement au prix souhaité. Il entre dans le LOB et attend une contrepartie.
+
+- Pour un ordre d'**achat** : le prix proposé est inférieur ou égal au bid actuel ($p_x \leq b(t)$), ou compris entre le bid et l'ask ($b(t) < p_x < a(t)$).
+- Pour un ordre de **vente** : logique symétrique.
+
+⚠️ **Risque associé :** Un ordre à cours limité n'est **jamais garanti d'être exécuté**. Si le marché ne revient pas au prix souhaité, l'ordre reste inactif. On parle de **risque d'opportunité** (opportunity risk).
+
+### Ordre au marché (Market Order)
+
+Un **ordre au marché** est un ordre exécuté immédiatement au meilleur prix disponible dans le LOB.
+
+- Pour un ordre d'**achat** : le prix proposé est supérieur ou égal à l'ask ($p_x \geq a(t)$). L'ordre est apparié avec le meilleur vendeur actif.
+
+💡 **Intuition :** L'ordre au marché dit "je veux acheter maintenant, peu importe le prix exact". L'ordre à cours limité dit "je veux acheter, mais seulement à ce prix précis".
+
+🧠 **À retenir :** Il y a un arbitrage fondamental entre les deux types d'ordres :
+
+- **Ordre à cours limité** → meilleur prix potentiel, mais **risque de non-exécution**.
+- **Ordre au marché** → exécution garantie, mais **prix moins favorable**.
+
+---
+
+## Évolution du Carnet d'Ordres (Evolution of the LOB)
+
+### Les trois cas pour un ordre d'achat
+
+Soit $x = (p_x, w_x, t_x)$ un ordre d'achat soumis au LOB. Trois situations sont possibles :
+
+1. **$p_x \leq b(t)$** : l'ordre est un **ordre à cours limité**, placé en dessous du bid. Il entre dans le LOB sans modifier le bid.
+
+2. **$b(t) < p_x < a(t)$** : l'ordre est un **ordre à cours limité**, placé dans le spread. Il entre dans le LOB et **fait monter le bid** jusqu'à $p_x$.
+
+3. **$p_x \geq a(t)$** : l'ordre est un **ordre au marché**, il est immédiatement apparié avec le meilleur vendeur actif au prix $a(t)$.
+
+Pour les ordres de **vente**, la logique est symétrique.
+
+### Exemple numérique détaillé
+
+Considérons un LOB initial avec :
+
+- Bid : $b(t) = 1{,}50$
+- Ask : $a(t) = 1{,}53$
+- Mid-price : $m(t) = 1{,}515$
+- Spread : $s(t) = 0{,}03$
+
+| Ordre soumis | Type | $b(t)$ | $a(t)$ | $m(t)$ | $s(t)$ |
+|---|---|---|---|---|---|
+| Initial | — | 1,50 | 1,53 | 1,515 | 0,03 |
+| $(1{,}48,\ +3\sigma,\ t_1)$ | Limite (L) | 1,50 | 1,53 | 1,515 | 0,03 |
+| $(1{,}51,\ +3\sigma,\ t_2)$ | Limite (L) | **1,51** | 1,53 | **1,52** | **0,02** |
+| $(1{,}53,\ +3\sigma,\ t_3)$ | Marché (M) | 1,51 | **1,54** | **1,525** | **0,03** |
+
+**Analyse :**
+
+- L'ordre à 1,48 est placé sous le bid → ordre limite, aucun changement du bid.
+- L'ordre à 1,51 est dans le spread → nouveau bid à 1,51, spread réduit à 0,02.
+- L'ordre à 1,53 atteint l'ask → exécution immédiate au meilleur ask disponible, qui passe à 1,54.
+
+### Remarques importantes
+
+- Les ordres de vente génèrent des observations symétriques.
+- Les ordres à cours limité sont **moins chers** (meilleur prix obtenu), mais exposent à un risque de non-exécution.
+- ⚠️ Pourquoi ne pas toujours utiliser des ordres à cours limité ? Parce que dans un marché en mouvement rapide, attendre le prix souhaité peut signifier **rater une opportunité** ou pire, laisser une position perdante ouverte.
+
+---
+
+## Gestion des Priorités (Priority Management)
+
+### Le problème
+
+Lorsque plusieurs ordres arrivent au même prix, ou que des ordres au même niveau de prix coexistent, il faut une **politique de priorité** pour décider lequel sera exécuté en premier.
+
+### Les trois règles principales
+
+#### Règle prix-temps (Price-Time Priority)
+
+- **Premier critère :** le meilleur prix est servi en premier.
+- **En cas d'égalité de prix :** le premier arrivé est le premier servi (FIFO — First In, First Out).
+
+✅ **Avantage :** Favorise ceux qui postent leurs ordres tôt. Incite à soumettre des ordres rapidement.
+
+#### Règle prorata (Pro-Rata Priority)
+
+- **Premier critère :** le meilleur prix.
+- **En cas d'égalité :** la quantité exécutée est répartie proportionnellement aux tailles des ordres ($w / \sum w$).
+
+✅ **Avantage :** Favorise les ordres de grande taille.
+
+#### Règle prix-taille (Price-Size Priority)
+
+- **Premier critère :** le meilleur prix.
+- **En cas d'égalité :** le plus grand ordre est servi en premier.
+
+✅ **Avantage :** Récompense les participants qui prennent le plus de risque en taille.
+
+### Exemple illustratif (règle prorata)
+
+Supposons trois ordres au même prix $p_0$ :
+
+- $w_0 = 4$, $w_1 = 2$, $w_2 = 4$ (avec $w_0 = 2w_1 = w_2$)
+
+Un ordre $w = -2$ arrive. Sous la règle prorata :
+
+- Part de $w_0$ : $2 \times \frac{4}{10} = 0{,}8$ → **environ la moitié de $w_0$**
+- Part de $w_1$ : $2 \times \frac{2}{10} = 0{,}4$ → **environ la moitié de $w_1$**
+- Part de $w_2$ : $2 \times \frac{4}{10} = 0{,}8$ → **environ la moitié de $w_2$**
+
+---
+
+## Visibilité et Transparence (Visibility)
+
+### Le principe général
+
+La plupart des bourses organisées publient leur LOB en temps réel (ou avec un léger délai), offrant à tous les participants une visibilité sur les ordres actifs, pas seulement sur le bid et l'ask.
+
+### Complexités et exceptions
+
+Tous les ordres ne sont pas visibles. Plusieurs mécanismes réduisent la transparence :
+
+#### Ordres iceberg (Iceberg Orders)
+
+Un ordre **iceberg** affiche seulement une partie de sa taille réelle dans le LOB. La partie visible est exécutée, puis une nouvelle tranche est révélée.
+
+💡 **Intuition :** Comme un iceberg, seule la partie émergée est visible. Les gros acteurs utilisent ce mécanisme pour ne pas révéler l'ampleur de leurs intentions.
+
+#### Pools sombres (Dark Pools)
+
+Les **dark pools** sont des systèmes d'échanges alternatifs où **tous les ordres actifs sont cachés**.
+
+- Seules des informations partielles sur les exécutions sont divulguées.
+- Ils permettent aux grands investisseurs institutionnels d'échanger de gros volumes sans impacter visiblement le marché.
+
+⚠️ **Limites :** Les dark pools ne sont pas toujours aussi efficaces qu'annoncé. Des scandales ont émergé (ex. Goldman Sachs condamné à une amende de 800 000 USD par des régulateurs américains pour manquement aux obligations de meilleure exécution dans son dark pool).
+
+### Ce que le LOB révèle
+
+Avec un LOB transparent, on a accès à :
+
+- Le bid $b(t)$ et l'ask $a(t)$,
+- La profondeur de chaque niveau de prix,
+- L'historique des ordres soumis, exécutés, annulés,
+- Des informations sur les intentions des participants.
+
+🧠 **À retenir :** Malgré la richesse de ces données, **nous savons encore très peu** sur comment lire et interpréter pleinement la dynamique du LOB. C'est un domaine de recherche actif.
+
+---
+
+## Faits Empiriques (Empirical Facts)
+
+De nombreuses études empiriques ont analysé les propriétés statistiques des LOBs sur différents marchés et actifs. Bien que certains résultats varient selon les contextes (les matières premières ne se comportent pas comme les actions, et le NYSE peut différer du SIX Swiss Exchange), plusieurs **propriétés robustes** ressortent de manière cohérente.
+
+### a) Taille des ordres (Order Size)
+
+**Observation :**
+
+- Les tailles d'ordres sont **distribuées de manière uniforme** à grande échelle.
+- Elles tendent à se **concentrer autour de valeurs rondes** (100, 500, 1000 unités…).
+
+💡 **Intuition :** Les traders ont une préférence naturelle pour les chiffres ronds, ce qui crée des concentrations à ces niveaux.
+
+### b) Prix relatif (Relative Price $\delta$)
+
+**Observation :**
+
+- La distribution des prix relatifs suit une **loi d'échelle** (scaling law), avec des **queues épaisses** (fat tails).
+- Cela implique qu'un nombre non négligeable d'ordres est placé **très loin** du bid/ask courant.
+
+⚠️ **Implication :** Contrairement à ce qu'une distribution normale prédirait, des ordres extrêmement éloignés du prix courant sont bien plus fréquents qu'attendu.
+
+### c) Annulation des ordres (Order Cancellation)
+
+**Observation :**
+
+- **70 % à 80 % des ordres sont annulés** avant d'être exécutés.
+
+🧠 **À retenir :** La grande majorité des ordres soumis au LOB ne mène jamais à une transaction. Cela reflète les stratégies d'exploration de prix, les ordres algorithmiques qui s'ajustent en permanence, et les changements d'intention des participants.
+
+### d) Profondeur du carnet (Depth of the Book)
+
+**Observation :**
+
+- La profondeur du LOB est elle aussi distribuée avec des **queues épaisses**.
+- La forme exacte de la distribution varie selon les marchés (paramètre $\Delta p$ variable).
+
+💡 **Intuition :** Proches du meilleur prix, beaucoup d'ordres s'accumulent. Mais on trouve aussi — plus rarement — des concentrations importantes à des prix éloignés du marché.
+
+### e) Impact sur les prix (Market and Price Impact)
+
+#### Définitions
+
+- **Impact sur le prix** : modification de $a(t)$ et $b(t)$ provoquée par un ordre (peut être temporaire).
+- **Impact de marché** (market impact) : modification plus profonde du LOB, pouvant déclencher une cascade d'autres ordres.
+- **Impact instantané** : effet immédiat sur le prix.
+- **Impact permanent** : effet durable sur le prix, même après que l'ordre a été exécuté.
+
+#### Pourquoi un impact permanent ?
+
+Un ordre peut avoir un impact durable pour deux raisons principales :
+
+1. **Transmission d'information** : un gros ordre d'achat peut signaler que l'acheteur dispose d'informations positives sur l'actif. D'autres traders ajustent leurs prix en conséquence.
+2. **Cascade d'actions** : un ordre peut déclencher des ordres stop, des algorithmes, ou des réactions d'autres participants.
+
+#### Forme de l'impact instantané
+
+**Observation empirique (Lillo et al.) :**
+
+- L'impact instantané $I(|w|)$ est une **fonction concave** de la taille de l'ordre $|w|$ :
+
+$$I(|w|) \text{ concave en } |w|$$
+
+💡 **Intuition :** Doubler la taille d'un ordre ne double pas l'impact sur le prix. L'impact augmente, mais de moins en moins vite. Ce phénomène s'explique par la profondeur croissante du carnet : à mesure qu'un gros ordre "consomme" de la liquidité, il doit aller chercher des ordres de plus en plus éloignés du meilleur prix.
+
+#### La courbe maîtresse (Master Curve)
+
+Lillo et al. ont montré qu'en **normalisant** l'impact par la capitalisation boursière de l'entreprise, on obtient une **courbe maîtresse universelle** pour tous les groupes de capitalisation.
+
+Cette courbe suit une **loi de puissance** (power law), suggérant que des mécanismes statistiques identiques gouvernent l'impact de marché pour des actifs très différents.
+
+⚠️ **Implication pratique :** Cette universalité est cruciale pour concevoir des algorithmes d'exécution optimaux, indépendamment de l'actif négocié.
+
+---
+
+## Modélisation du LOB (LOB Modelling)
+
+### Deux grandes approches
+
+La modélisation des LOBs est un domaine où deux grandes traditions scientifiques s'affrontent :
+
+| Approche | École | Hypothèses | Points forts |
+|---|---|---|---|
+| **Économistes** | Microstructure financière | Traders rationnels, fonctions d'utilité | Fondements théoriques solides |
+| **Physiciens** | Économophysique (Econophysics) | Modèles simplifiés, inspiration physique | Capture les propriétés émergentes |
+
+En pratique, le choix dépend de l'objectif :
+
+- Pour comprendre les **mécanismes fondamentaux** → approche physique.
+- Pour les **recommandations de politique** ou la **théorie des prix** → approche économique.
+- Pour l'**exécution algorithmique** → les deux, combinées avec des modèles d'agents.
+
+### Le Modèle de Maslov (Maslov Model)
+
+#### Présentation
+
+Le modèle proposé par le physicien **Sergei Maslov** [7] est l'un des plus simples, et pourtant l'un des plus riches, pour simuler la dynamique d'un LOB.
+
+#### Algorithme
+
+À chaque pas de temps, un seul trader arrive sur le marché. Le processus est le suivant :
+
+1. **Côté :** avec probabilité 0,5, le trader est acheteur ; sinon, vendeur.
+
+2. **Type d'ordre :**
+   - Avec probabilité $1 - r$ : **ordre au marché** $x = (\text{bid/ask},\ \sigma,\ t_x)$.
+   - Avec probabilité $r$ : **ordre à cours limité** $x = (p_x,\ \sigma,\ t_x)$, avec :
+     - Pour un acheteur : $p_x = p' - k$ (en dessous du dernier prix)
+     - Pour un vendeur : $p_x = p' + k$ (au dessus du dernier prix)
+     - $p'$ est le dernier prix de transaction.
+     - $k$ est une variable aléatoire selon une distribution donnée.
+
+3. **Pas d'annulation** dans la version de base.
+
+#### Exemple simple
+
+Avec 1000 itérations, $r = 0{,}5$, et $k = 1$ avec probabilité 1, le modèle génère :
+
+- Une **distribution à queues épaisses** des variations de prix.
+- Une **anti-corrélation négative** des variations de prix à court terme.
+
+🧠 **À retenir :** Ces propriétés, observées sur les vrais marchés, émergent d'un modèle extrêmement simple. C'est la puissance de l'approche physique : reproduire des comportements complexes à partir de règles élémentaires.
+
+---
+
+## Résultats du Modèle de Maslov
+
+### Dynamique des prix
+
+Le modèle génère une trajectoire de prix **très différente d'une marche aléatoire ordinaire** (random walk) :
+
+- Les grands incréments de prix sont **groupés** (clustered) dans des régions de forte volatilité, séparées par des périodes relativement calmes.
+- Ce phénomène est appelé **volatility clustering** (regroupement de volatilité) et est bien documenté sur les vrais marchés.
+
+### L'exposant de Hurst (Hurst Exponent)
+
+Le modèle produit un **exposant de Hurst** mesuré à **1/4**, bien loin de la valeur 1/2 attendue pour une marche aléatoire.
+
+L'exposant de Hurst $H$ est une mesure de la **mémoire à long terme** d'une série temporelle :
+
+- $H = 0{,}5$ → série sans mémoire (marche aléatoire).
+- $H > 0{,}5$ → tendance persistante (trending).
+- $H < 0{,}5$ → **anti-persistance** (mean-reverting), comme ici.
+
+⚠️ Ce résultat implique que les variations de prix dans le modèle de Maslov sont **anti-persistantes** : une montée tend à être suivie d'une baisse, et vice versa.
+
+### Distribution des incréments de prix
+
+Le modèle produit des distributions **fortement non-gaussiennes** des incréments de prix $p(t + \delta t) - p(t)$ :
+
+- Pour des lags temporels courts ($\delta t = 1, 10, 100$), la distribution est **en forme de tente** (Laplace-like), avec des queues bien plus épaisses que la loi normale.
+- Lorsque le lag $\delta t$ augmente, le pic central s'adoucit progressivement, mais les ailes restent non-gaussiennes.
+
+💡 **Intuition :** Ce comportement est directement observé sur les marchés réels. Le modèle de Maslov, malgré sa simplicité, le reproduit de manière remarquable.
+
+---
+
+## Extensions : Modèles à Base d'Agents (Agent-Based Models)
+
+Le modèle de Maslov suppose que tous les traders sont identiques (**homogènes**). Pour introduire de l'**hétérogénéité** (des traders avec des stratégies, des horizons temporels, et des informations différentes), on utilise les **Modèles à Base d'Agents** (Agent-Based Models — ABM).
+
+Ces modèles sont abordés dans un chapitre dédié. L'idée clé est que des comportements collectifs complexes (bulles, krachs, liquidité asymétrique) peuvent émerger de l'interaction d'agents simples mais hétérogènes.
+
+---
+
+## Points Clés (Key Takeaways)
+
+### Résumé structuré
+
+🧠 Ce qu'il faut retenir de ce chapitre :
+
+**Sur les mécanismes d'échange :**
+
+- Les échanges se font soit avec un teneur de marché (OTC), soit via un LOB (bourses organisées).
+- Le teneur de marché se rémunère via le spread, mais prend un risque d'inventaire.
+- Le LOB est le mécanisme d'échange dominant sur les grandes places boursières.
+
+**Sur la structure du LOB :**
+
+- Un LOB est l'ensemble des ordres actifs à un instant donné.
+- Les ordres à cours limité attendent une contrepartie ; les ordres au marché s'exécutent immédiatement.
+- La profondeur, le spread, le bid et l'ask résument l'état instantané du LOB.
+
+**Sur les faits empiriques :**
+
+- Les tailles d'ordres sont uniformes et concentrées sur des valeurs rondes.
+- Les prix relatifs suivent une loi d'échelle à queues épaisses.
+- 70–80 % des ordres sont annulés avant exécution.
+- L'impact sur le prix est une fonction concave de la taille de l'ordre.
+
+**Sur la modélisation :**
+
+- Un modèle très simple (Maslov) reproduit des propriétés statistiques clés des marchés réels.
+- La distribution des incréments de prix est fortement non-gaussienne.
+- L'exposant de Hurst mesuré ($H \approx 1/4$) indique une anti-persistance marquée.
+
+**Sur les limites actuelles :**
+
+- Le LOB contient bien plus d'information que le seul bid/ask, mais nous ne savons pas encore pleinement comment l'exploiter.
+- C'est un domaine de recherche très actif, à l'intersection de la finance, de la physique statistique et de l'informatique.

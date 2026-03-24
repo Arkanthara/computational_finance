@@ -1,0 +1,319 @@
+---
+title: "Execution algorithmique — Quiz"
+filters:
+  - quizdown
+execute:
+  enabled: false
+---
+
+## Niveau 1 — Fondamentaux
+
+```{quizdown}
+### Qu'est-ce que l'impact de marche (Market Impact) ?
+
+> Pense a ce qui se passe quand un gros ordre arrive sur le marche.
+
+1. [ ] La commission payee au broker pour l'execution d'un ordre
+1. [ ] Le risque lie a l'evolution du prix pendant l'execution
+1. [x] La variation de prix causee par l'execution de son propre ordre
+    > Correct : l'impact de marche designe le deplacement du prix directement provoque par son propre ordre.
+1. [ ] L'ecart entre le prix d'achat et le prix de vente sur le marche
+```
+
+```{quizdown}
+### L'impact de marche se decompose en deux composantes. Lesquelles ?
+
+> Pense a ce qui persiste apres l'execution et ce qui se resorbe.
+
+- [x] Impact temporaire
+    > Correct : l'impact temporaire est une perturbation transitoire du prix qui se resorbe une fois l'ordre absorbe.
+- [ ] Impact transactionnel
+    > Incorrect : cette denomination n'est pas une composante standard de l'impact de marche.
+- [x] Impact permanent
+    > Correct : l'impact permanent est le deplacement definitif du prix, car le marche revise sa valorisation.
+- [ ] Impact opportuniste
+    > Incorrect : ce terme ne designe pas une composante de l'impact de marche.
+```
+
+```{quizdown}
+### Que signifie l'acronyme TWAP ?
+
+1. [ ] Total Weighted Average Price
+1. [x] Time Weighted Average Price
+    > Correct : TWAP signifie Prix Moyen Pondere par le Temps. L'ordre est decoupe en tranches egales reparties uniformement dans le temps.
+1. [ ] Trade Weighted Allocation Program
+1. [ ] Timed Weighted Asset Protocol
+```
+
+```{quizdown}
+### Quelle est la formule du benchmark VWAP ?
+
+> Pense a une moyenne ponderee par les volumes echanges sur la periode.
+
+1. [ ] La somme des prix divise par le nombre de transactions
+1. [ ] La moyenne arithmetique des prix d'ouverture et de cloture
+1. [x] La somme des prix multiplies par les volumes, divisee par la somme des volumes
+    > Correct : VWAP = somme(p_i * v_i) / somme(v_i), ou p_i est le prix et v_i le volume de la transaction i.
+1. [ ] Le prix median pondere par la capitalisation boursiere
+```
+
+```{quizdown}
+### Dans l'algorithme POV, que represente le parametre alpha ?
+
+> Alpha definit la relation entre les ordres de l'algorithme et l'activite du marche.
+
+1. [ ] L'intervalle de temps entre deux tranches
+1. [ ] Le prix de reference cible par l'algorithme
+1. [x] Le taux de participation exprime en proportion du volume echange
+    > Correct : dans POV, w_i = alpha * v_i. Alpha est le pourcentage du volume de marche que l'algo cherche a representer.
+1. [ ] Le nombre total de tranches sur la journee
+```
+
+```{quizdown}
+### Que cherche a minimiser l'algorithme IS (Implementation Shortfall) ?
+
+> IS se concentre sur la comparaison entre deux prix bien precis.
+
+1. [ ] L'ecart entre le prix VWAP du marche et le prix d'execution
+1. [ ] Le nombre de tranches necessaires pour executer l'ordre
+1. [x] L'ecart entre le prix de decision et le prix d'execution effectif
+    > Correct : l'Implementation Shortfall mesure et minimise le manque a gagner entre le prix au moment de la decision d'investissement et le prix finalement obtenu.
+1. [ ] Le spread bid-ask moyen sur la periode d'execution
+```
+
+```{quizdown}
+### L'aversion au risque lambda est definie comme :
+
+> Pense a la relation geometrique entre lambda et la frontiere efficiente.
+
+1. [ ] Le ratio entre le risque et le volume d'execution
+1. [x] Le ratio entre le cout et le risque
+    > Correct : lambda = cout / risque. Geometriquement, lambda est la pente de la droite tangente a la frontiere efficiente depuis l'origine.
+1. [ ] La difference entre le prix de marche et le prix d'execution
+1. [ ] Le pourcentage du volume journalier represente par l'ordre
+```
+
+---
+
+## Niveau 2 — Comprehension
+
+```{quizdown}
+### Quel est le principal inconvenient de l'algorithme TWAP ?
+
+> Reflechis a ce qu'un concurrent peut faire s'il connait la strategie d'execution.
+
+1. [ ] Il necessite des donnees historiques de volume importantes
+1. [ ] Il ne garantit pas l'execution complete de l'ordre
+1. [ ] Il est trop sensible aux variations de prix intraday
+1. [x] Il est tres predictible et expose au risque de front-running
+    > Correct : TWAP execute a intervalles reguliers et en quantites egales, ce qui permet a un adversaire d'anticiper les ordres et d'en profiter (front-running).
+```
+
+```{quizdown}
+### Pourquoi l'algorithme VWAP utilise-t-il des donnees historiques ?
+
+> Identifie la contrainte operationnelle fondamentale du VWAP.
+
+1. [x] Parce que le volume total journalier n'est connu qu'en fin de journee
+    > Correct : le denominateur de la formule VWAP (somme des volumes) ne peut etre calcule qu'a posteriori. Les donnees historiques permettent d'estimer le profil de volume intraday.
+1. [ ] Parce que le prix de cloture est necessaire pour calibrer les tranches
+1. [ ] Parce que les regulations exigent une reference historique pour l'execution
+1. [ ] Parce que le spread bid-ask moyen est tire des donnees passees
+```
+
+```{quizdown}
+### Quelle est la difference fondamentale entre VWAP et POV ?
+
+> Compare comment chacun determine la taille de ses tranches.
+
+1. [ ] VWAP utilise le prix comme signal, POV utilise la liquidite
+1. [ ] VWAP est base sur des intervalles de temps fixes, POV sur des prix
+1. [x] VWAP suit un profil de volume historique predetermine, POV adapte ses tranches au volume reel observe en temps reel
+    > Correct : VWAP planifie ses tranches a l'avance a partir de l'historique ; POV calcule w_i = alpha * v_i avec le volume v_i effectivement observe a chaque intervalle.
+1. [ ] VWAP garantit un prix d'execution, ce que POV ne peut pas faire
+```
+
+```{quizdown}
+### Quels algorithmes supposent que les tendances de court terme sont ephemeres et vont se retourner ?
+
+> Pense aux strategies qui agissent plus agressivement quand le prix est favorable.
+
+- [x] AIM (Aggressive In-the-Money)
+    > Correct : AIM achete plus agressivement quand les prix sont favorables, en anticipant un retour a la moyenne.
+- [ ] PIM (Passive In-the-Money)
+    > Incorrect : PIM suppose au contraire que la tendance persiste, et agit agressivement quand les prix sont defavorables.
+- [x] PI en mode strategie A (counter-trend)
+    > Correct : la strategie A de PI est aussi contre-tendance : elle trade plus agressivement quand les prix sont favorables, anticipant un renversement.
+- [ ] MC (Market Close)
+    > Incorrect : MC cible le prix de cloture et ne fait pas d'hypothese sur la persistance des tendances intraday.
+```
+
+```{quizdown}
+### Quel type de cout de transaction represente generalement la plus grande part ?
+
+> Regarde la decomposition typique des couts selon la classification du cours.
+
+1. [ ] Les commissions broker
+1. [ ] L'impact de marche
+1. [ ] Les spreads bid-ask
+1. [x] Le risque de timing
+    > Correct : le risque de timing represente environ 40% des couts de transaction totaux. C'est la composante dominante, devant le cout de retard (24%) et la tendance de prix (14%).
+```
+
+```{quizdown}
+### Un investisseur avec une forte aversion au risque (lambda eleve) devrait privilegier :
+
+> Lambda eleve signifie que l'investisseur accepte de payer plus pour reduire le risque.
+
+1. [ ] MI (Minimal Impact) ou LIQ (Liquidity Driven)
+1. [x] MC (Market Close) ou IS (Implementation Shortfall)
+    > Correct : lambda eleve oriente vers les algorithmes a faible risque et cout plus eleve sur la frontiere efficiente, comme MC ou IS.
+1. [ ] TWAP ou VWAP exclusivement
+1. [ ] POV avec un alpha tres eleve
+```
+
+```{quizdown}
+### Pourquoi TWAP est-il considere comme hors de la frontiere efficiente ?
+
+> Compare TWAP aux autres algorithmes en termes de rapport cout/risque.
+
+1. [ ] Parce qu'il ne peut pas executer des ordres de grande taille
+1. [ ] Parce qu'il utilise trop de donnees de marche et est donc trop couteux
+1. [x] Parce qu'il existe d'autres algorithmes offrant un cout inferieur pour le meme niveau de risque
+    > Correct : la frontiere efficiente regroupe les algorithmes qui minimisent le cout pour chaque niveau de risque. TWAP se retrouve au-dessus de cette frontiere, ce qui signifie qu'on peut faire mieux.
+1. [ ] Parce qu'il ne garantit pas l'execution de la totalite de l'ordre
+```
+
+---
+
+## Niveau 3 — Maitrise
+
+```{quizdown}
+### Un gestionnaire doit acheter 500 000 actions d'une societe dont le volume journalier moyen est de 200 000 actions. Quelle approche est la plus adaptee ?
+
+> Reflechis a la taille de l'ordre par rapport au volume de marche disponible.
+
+1. [ ] Executer tout en une seule transaction pour minimiser le risque de timing
+1. [ ] Utiliser TWAP sur 15 minutes pour la simplicite
+1. [x] Utiliser un algorithme minimisant l'impact sur plusieurs jours, comme IS ou MI
+    > Correct : l'ordre represente 250% du volume journalier. Une execution rapide provoquerait un impact massif. IS ou MI sur plusieurs jours permettent de lisser l'impact et de controler le risque.
+1. [ ] Utiliser POV avec alpha = 50% pour aller vite
+```
+
+```{quizdown}
+### Dans POV avec alpha = 10%, quelle est la valeur du taux de participation ajuste (alpha tilde) qui corrige l'effet de sa propre participation sur le volume observe ?
+
+> Utilise la formule alpha_tilde = alpha / (1 - alpha).
+
+1. [ ] 10.0%
+1. [ ] 9.1%
+1. [x] 11.1%
+    > Correct : alpha_tilde = 0.10 / (1 - 0.10) = 0.10 / 0.90 = 11.1%. Cette correction evite de sous-estimer sa participation reelle en retirant ses propres ordres du volume observe.
+1. [ ] 12.5%
+```
+
+```{quizdown}
+### Un fonds de pension cherche a liquider une position importante. Sa priorite absolue est d'obtenir un prix de reference reconnu, meme si cela implique un cout eleve. Quel algorithme choisir ?
+
+> Identifie quel algorithme cible un prix de reference largement utilise par les investisseurs institutionnels.
+
+1. [ ] MI (Minimal Impact) — pour minimiser l'impact sur le marche
+1. [ ] POV (Percentage of Volume) — pour suivre le volume de marche
+1. [x] MC (Market Close) — pour obtenir le prix de cloture comme reference
+    > Correct : le prix de cloture est la reference standard pour la valorisation des portefeuilles institutionnels. MC cible precisement ce prix, au prix d'un cout d'execution plus eleve.
+1. [ ] TWAP sur la journee — pour sa simplicite de mise en oeuvre
+```
+
+```{quizdown}
+### Un hedge fund utilise un signal d'investissement a courte duree de vie (alpha decay rapide). Quel parametre d'aversion au risque lambda est le plus adapte et pourquoi ?
+
+> Reflechis a ce qui arrive si l'execution est trop lente quand le signal expire rapidement.
+
+1. [ ] Lambda faible, car on veut minimiser les couts d'execution
+1. [ ] Lambda nul, car le signal justifie de prendre tous les risques
+1. [x] Lambda eleve, car le risque de timing est critique quand le signal expire rapidement
+    > Correct : si le signal d'investissement se degrade vite, attendre pour reduire l'impact de marche est contre-productif. Un lambda eleve favorise une execution rapide (MC, IS) malgre un cout plus eleve.
+1. [ ] Lambda moyen, car tous les algorithmes sont equivalents dans ce cas
+```
+
+```{quizdown}
+### Remets dans le bon ordre les etapes d'une execution algorithmique typique avec IS.
+
+> Pense au processus complet depuis la decision jusqu'a la fin de l'execution.
+
+1. Decision d'investissement — enregistrement du prix de reference
+2. Analyse pre-trade — estimation du cout et du risque
+3. Calibrage du parametre d'aversion au risque lambda
+4. Selection de l'algorithme sur la frontiere efficiente
+5. Execution des tranches avec suivi en temps reel
+6. Mesure du shortfall final entre prix de decision et prix d'execution
+```
+
+```{quizdown}
+### Quels sont les risques specifiques lies au trading de portefeuille (Portfolio Trading) via un broker externe ?
+
+> Pense a ce que le broker recoit comme information et ce qu'il pourrait en faire.
+
+- [ ] Le broker ne peut pas executer plus de 10 actifs simultanement
+    > Incorrect : les brokers specialises en portfolio trading gèrent couramment des centaines d'actifs.
+- [x] Le risque de confidentialite lie a la divulgation de la composition du portefeuille
+    > Correct : confier l'execution a un broker implique de lui communiquer la composition complete du portefeuille, ce qui peut etre exploite.
+- [x] Le risque de mauvais alignement si les ordres ne sont pas executes simultanement
+    > Correct : une execution sequentielle expose temporairement le portefeuille a une mauvaise diversification et une exposition incorrecte au benchmark.
+- [ ] L'impossibilite de contrôler le prix de reference utilise par le broker
+    > Incorrect : les contrats avec les brokers specifialisent generalement le benchmark de reference.
+```
+
+```{quizdown}
+### Remets dans le bon ordre les algorithmes de la frontiere efficiente, du plus couteux et moins risque au moins couteux et plus risque.
+
+> Rappelle-toi de l'ordre canonique sur la frontiere efficiente du cours.
+
+1. MC (Market Close)
+2. IS (Implementation Shortfall)
+3. AS (Adaptive Shortfall)
+4. POV (Percentage of Volume)
+5. PI (Price Inline)
+6. VWAP (Volume Weighted Average Price)
+7. LIQ (Liquidity Driven)
+8. MI (Minimal Impact)
+```
+
+```{quizdown}
+### Un algorithme TWAP execute 10 000 actions en 1 heure avec un intervalle de 15 minutes. Pour reduire sa predictibilite, on ajoute un bruit aleatoire sur les intervalles. Cette modification :
+
+> Reflechis a l'objectif du bruit et a ses consequences sur les proprietes de TWAP.
+
+- [x] Reduit le risque de front-running en rendant les ordres moins anticipables
+    > Correct : la randomisation des intervalles empeche un acteur adverse d'anticiper precisement le moment des prochains ordres.
+- [ ] Ameliore le prix moyen d'execution en ciblant les periodes de forte liquidite
+    > Incorrect : le bruit est aleatoire et ne cible pas specifiquement les periodes liquides.
+- [ ] Rapproche TWAP de la frontiere efficiente de facon significative
+    > Incorrect : la randomisation ameliore la resilience au front-running mais ne change pas fondamentalement la position de TWAP sur la frontiere efficiente.
+- [x] Conserve le meme nombre total d'actions executees
+    > Correct : la randomisation porte sur le timing, pas sur la quantite totale. L'ordre complet est toujours execute.
+```
+
+```{quizdown}
+### Quelle affirmation sur l'algorithme MI (Minimal Impact) est correcte ?
+
+> Identifie la caracteristique distinctive de MI par rapport aux autres algorithmes.
+
+1. [ ] MI garantit un taux de remplissage de 100% grace aux dark pools
+1. [ ] MI utilise exclusivement des donnees historiques de volume pour planifier l'execution
+1. [ ] MI est sur la frontiere efficiente avec le meilleur rapport cout/risque de tous les algorithmes
+1. [x] MI accepte un risque eleve de non-execution pour minimiser l'impact de marche
+    > Correct : en s'appuyant sur les dark pools, MI reduit fortement l'impact visible mais s'expose a un faible taux de completion. Une portion est generalement executee via un algo passif (VWAP/POV) en parallele.
+```
+
+```{quizdown}
+### Dans quel cas l'algorithme PIM (Passive In-the-Money) d'AS est-il preferable a AIM ?
+
+> Compare les hypotheses sur la dynamique des prix que font AIM et PIM.
+
+1. [ ] Quand les marches sont peu volatils et les spreads etroits
+1. [ ] Quand l'investisseur a une forte aversion au risque et cherche un prix garanti
+1. [x] Quand on pense que les tendances de prix persistent plutot qu'elles ne se retournent
+    > Correct : PIM suppose que si le prix evolue defavorablement, cette tendance va continuer. Il reagit donc agressivement sur les prix defavorables pour limiter les pertes futures.
+1. [ ] Quand le volume intraday est tres irregulier et difficile a prevoir
+```

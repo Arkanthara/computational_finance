@@ -1,0 +1,194 @@
+---
+title: "Exécution algorithmique — Révision"
+---
+
+## Concepts fondamentaux
+
+**Impact de marché** (Market Impact) = perturbation du prix causée par son propre ordre
+
+$$\text{Impact} = \underbrace{\text{Impact temporaire}}_{\text{réversible}} + \underbrace{\text{Impact permanent}}_{\text{définitif}}$$
+
+**Règle d'or** : ne pas perturber le marché avec sa propre activité.
+
+---
+
+## Acteurs clés
+
+| Acteur | Rôle |
+|--------|------|
+| Analyste (Analyst) | Génère idées achat/vente |
+| Gestionnaire (Portfolio Manager) | Optimisation, contrôle risque |
+| Trader interne (In-house Trader) | Pré-trade, sélection broker, exécution |
+| Broker / Sell-side | Exécution, reporting |
+
+**Canaux d'exécution** : A = Trader manuel · B = DMA · C/D = Algo · E = Sponsored Access
+
+---
+
+## Les 9 algorithmes — Vue synthétique
+
+| Algo | Focus | Risque | Coût |
+|------|-------|--------|------|
+| **MC** Market Close | Prix de clôture | ↓ faible | ↑ élevé |
+| **IS** Implementation Shortfall | Écart décision/exécution | ↓ | ↑ |
+| **AS** Adaptive Shortfall | IS + réaction au prix | ↓↑ | ↑↓ |
+| **POV** Percentage of Volume | % du volume réel | ↕ | ↕ |
+| **PI** Price Inline | Prix vs benchmark | ↕ | ↕ |
+| **TWAP** Time Weighted Avg Price | Temps régulier | ↑ | ↕ |
+| **VWAP** Volume Weighted Avg Price | Profil volume historique | ↑ | ↕ |
+| **LIQ** Liquidity Driven | Liquidité + prix favorable | ↑ | ↓ |
+| **MI** Minimal Impact | Dark pools, impact mini | ↑↑ élevé | ↓ faible |
+
+---
+
+## Formules essentielles
+
+**VWAP benchmark** :
+
+$$\text{VWAP} = \frac{\sum_i p_i v_i}{\sum_i v_i}$$
+
+**TWAP** — nombre de tranches :
+
+$$n = \frac{t_1 - t_0}{\Delta t} + 1 \quad \Rightarrow \quad w_i = \frac{w}{n}$$
+
+**POV** — taille de tranche :
+
+$$w_i = \alpha \cdot v_i$$
+
+**POV** — correction participation propre :
+
+$$\tilde{\alpha} = \frac{\alpha}{1 - \alpha} \quad \text{ex : } \alpha=5\% \Rightarrow \tilde{\alpha}=5.3\%$$
+
+**Aversion au risque** :
+
+$$\lambda = \frac{\text{coût}}{\text{risque}}$$
+
+---
+
+## Algorithmes — Fiches rapides
+
+### TWAP
+
+- Tranches **égales** dans le temps, indépendant du prix et volume
+- ✅ Simple · ❌ Prévisible · ❌ Ignore le marché
+- Variantes : **+bruit** sur temps/tailles · profil **agressif** (début) ou **passif** (fin)
+
+### VWAP
+
+- Suit le profil de volume **historique** intraday
+- Acheter **sous le VWAP** = bonne exécution
+- ❌ Volume total connu seulement en fin de journée → utilise données historiques
+- ❌ Prix non garanti · ❌ Pas de réaction temps réel
+
+### POV
+
+- Taille proportionnelle au **volume réel observé**
+- $\alpha$ typique : 1 % (petit) à 20 % (grand)
+- Similaire VWAP mais **dynamique** · Toujours prévisible
+
+### MI
+
+- Utilise **dark pools** (marchés opaques) + ordres cachés
+- Risque : faible **taux de remplissage** (completion rate)
+- Souvent hybride : 20 % via VWAP/POV public + reste en dark pool
+
+### IS
+
+- Minimise : **prix exécution − prix décision**
+- Arbitrage : impact de marché ↔ risque de timing
+- Favorise exécution **en début** de session · Inputs : volatilité, aversion au risque
+
+### AS
+
+| Type | Comportement | Hypothèse |
+|------|-------------|-----------|
+| **AIM** Aggressive In-the-Money | Agressif si prix favorables | Tendance **éphémère** → retour à la moyenne |
+| **PIM** Passive In-the-Money | Agressif si prix défavorables | Tendance **persistante** → agir vite |
+
+### MC
+
+- Cible : **prix de clôture** (très utilisé comme référence)
+- Trop tôt → risque timing · Trop tard → impact élevé
+- Horizon optimal = f(volatilité, volume)
+
+### PI
+
+- Adapte activité selon **écart prix courant / benchmark**
+- Stratégie A (counter-trend) · Stratégie P (trend-following)
+- Généralement utilisé en mode **A** (contre-tendance)
+
+### LIQ
+
+- Trade **uniquement** si : liquidité disponible **ET** prix favorable
+- Marchés fragmentés → évaluation difficile
+- ⚠️ Actifs illiquides : risque de déplacement de prix
+
+---
+
+## Coûts de transaction
+
+### Décomposition typique
+
+| Coût | Explicite | Implicite | Part typ. |
+|------|-----------|-----------|-----------|
+| Taxes | ✓ | | 0 % |
+| Coût de retard (Delay cost) | | ✓ | 24 % |
+| Commission broker | ✓ | | 1 % |
+| Frais (Fees) | ✓ | | 2 % |
+| Spread bid-ask | | ✓ | 4 % |
+| Impact de marché | | ✓ | 6 % |
+| Tendance de prix (Price trend) | | ✓ | 14 % |
+| **Risque de timing** | | ✓ | **40 %** |
+| Coût d'opportunité | | ✓ | 9 % |
+
+⚠️ **Timing risk = coût dominant (40 %)** · Liquidité et volatilité = variables les plus difficiles à estimer.
+
+---
+
+## Frontière efficiente (Efficient Frontier)
+
+- Algorithmes tracés dans l'espace **coût vs risque**
+- Frontière = ensemble des algos **minimisant le coût pour un risque donné**
+- Algorithmes **hors frontière** (au-dessus) = inefficaces
+
+**Ordre sur la frontière** (↑ coût, ↓ risque → ↓ coût, ↑ risque) :
+
+$$MC \to IS \to AS \to POV \to PI \to VWAP \to LIQ \to MI$$
+
+⚠️ **TWAP est hors frontière** → inefficace dans la plupart des cas.
+
+---
+
+## Aversion au risque — Choix de l'algorithme
+
+$$\lambda = \frac{\text{coût}}{\text{risque}} \quad \text{(pente de la droite tangente à la frontière)}$$
+
+| $\lambda$ | Profil | Algorithmes préférés |
+|-----------|--------|----------------------|
+| ↑ élevé | Fort aversion au risque | MC, IS |
+| ↕ moyen | Équilibré | AS, POV, PI |
+| ↓ faible | Faible aversion | LIQ, MI |
+
+💡 L'algorithme optimal = **point de tangence** entre la droite de pente $\lambda$ et la frontière efficiente.
+
+---
+
+## Trading de portefeuille — Points clés
+
+- Ordres **simultanés** sur plusieurs actifs pour maintenir la diversification
+- ⚠️ Exécution séquentielle → exposition temporaire incorrecte au benchmark
+- **En interne** : algorithmes de risque de portefeuille intégrés (meta-algorithms)
+- **Via broker** : risque de **confidentialité** (exposition de la composition du portefeuille)
+
+---
+
+## Pièges et points critiques
+
+| ⚠️ Piège | Explication |
+|----------|-------------|
+| TWAP prévisible | Front-running possible si intervalles réguliers |
+| VWAP volume inconnu | Utilise données historiques → déviation possible |
+| MI faible completion | Dark pool peut ne pas remplir l'ordre |
+| MC timing délicat | Ni trop tôt (timing risk) ni trop tard (impact) |
+| POV auto-impact | Corriger avec $\tilde{\alpha}$ si $\alpha$ élevé |
+| TWAP hors frontière | Ne pas utiliser par défaut sans raison de simplicité |
