@@ -1,0 +1,318 @@
+---
+title: "Données, moyennes mobiles et temps intrinsèque — Quiz"
+filters:
+  - quizdown
+execute:
+  enabled: false
+---
+
+## Niveau 1 — Fondamentaux
+
+```{quizdown}
+### Quelles caracteristiques decrivent les donnees financieres reelles a haute frequence ?
+
+> Pense aux differences entre les donnees theoriques ideales et ce que l'on observe sur un marche reel.
+
+- [x] Activite non equidistante dans le temps
+    > Correct : les transactions n'arrivent pas a intervalles reguliers.
+- [ ] Prix parfaitement lisses et continus
+    > Incorrect : les donnees reelles sont generalement bruitees et peuvent presenter des sauts.
+- [x] Presence simultanee d'un prix bid et d'un prix ask
+    > Correct : sur un marche reel, on observe toujours deux prix — acheteur (bid) et vendeur (ask).
+- [x] Comportement potentiellement discontinu des prix
+    > Correct : des sauts de prix peuvent survenir, notamment lors d'evenements macroeconomiques.
+- [ ] Observations strictement equidistantes
+    > Incorrect : c'est la caracteristique du modele idealise, pas de la realite.
+```
+
+```{quizdown}
+### Quelle est la definition d'une moyenne mobile simple (Simple Moving Average — SMA) sur une fenetre de taille n ?
+
+> Rappelle-toi que toutes les observations dans la fenetre jouent le meme role.
+
+1. [ ] La moyenne ponderee des n dernieres observations avec des poids lineaires
+1. [x] La moyenne arithmetique des n dernieres observations avec des poids egaux
+    > Correct : SMA(t) = (X_{t-n+1} + ... + X_t) / n — chaque observation a le meme poids 1/n.
+1. [ ] La somme ponderee de toutes les observations passees avec decroissance exponentielle
+1. [ ] La mediane des n dernieres observations
+```
+
+```{quizdown}
+### Quelle est la formule de mise a jour recursive de l'EMA (Exponential Moving Average) ?
+
+> C'est la propriete centrale de l'EMA — elle n'a besoin que d'une seule valeur en memoire.
+
+1. [ ] EMA(t) = (1/n) * somme des n dernieres valeurs
+1. [ ] EMA(t) = alpha * EMA(t-1) + (1 - alpha) * X_t
+1. [x] EMA(t) = alpha * X_t + (1 - alpha) * EMA(t-1)
+    > Correct : la nouvelle EMA est une combinaison convexe entre l'observation courante et l'EMA precedente.
+1. [ ] EMA(t) = X_t * e^(-alpha)
+```
+
+```{quizdown}
+### La moyenne mobile ponderee (Weighted Moving Average — WMA) attribue les poids les plus eleves a quelles observations ?
+
+> Dans une WMA, l'objectif est de corriger le principal defaut de la SMA concernant l'age des observations.
+
+1. [ ] Aux observations les plus anciennes dans la fenetre
+1. [ ] A toutes les observations de maniere egale
+1. [x] Aux observations les plus recentes
+    > Correct : dans la WMA, le poids d'une observation est proportionnel a sa recence — la plus recente recoit le poids n, la plus ancienne le poids 1.
+1. [ ] Aux observations les plus eloignees de la moyenne
+```
+
+```{quizdown}
+### Quel est le denominateur de la WMA pour une fenetre de taille n ?
+
+> Pense a la somme des entiers de 1 a n.
+
+1. [ ] n
+1. [ ] n * (n - 1) / 2
+1. [x] n * (n + 1) / 2
+    > Correct : le denominateur est 1 + 2 + ... + n = n(n+1)/2.
+1. [ ] n^2
+```
+
+```{quizdown}
+### Qu'est-ce qu'un changement directionnel (Directional Change — DC) dans le cadre du temps intrinseque ?
+
+> Pense a ce qui "declenche" le temps intrinseque dans ce paradigme.
+
+1. [ ] Une variation de prix superieure a la moyenne mobile sur une journee
+1. [ ] Un ecart entre le prix bid et le prix ask superieur a un seuil
+1. [x] Un retournement de prix d'une amplitude superieure ou egale au seuil delta depuis le dernier extreme
+    > Correct : un DC est detecte quand le prix s'eloigne d'un extreme local d'au moins delta (en pourcentage).
+1. [ ] Une rupture de la tendance lineaire sur une periode donnee
+```
+
+```{quizdown}
+### Comment se decompose le mouvement total (Total Move — TM) dans le cadre du temps intrinseque ?
+
+> TM represente l'integralite du mouvement entre deux extremes consecutifs.
+
+1. [x] TM = DC + OS (Directional Change + Overshoot)
+    > Correct : le mouvement total est la somme du changement directionnel et du depassement.
+1. [ ] TM = SMA + EMA
+1. [ ] TM = bid - ask
+1. [ ] TM = DC * OS
+```
+
+---
+
+## Niveau 2 — Comprehension
+
+```{quizdown}
+### Quels sont les deux principaux inconvenients de la SMA ?
+
+> Compare la SMA a l'EMA pour identifier ce qui manque a la SMA.
+
+- [x] Toutes les observations dans la fenetre ont le meme poids, quelle que soit leur anciennete
+    > Correct : une observation vieille de n periodes a autant d'influence qu'une observation recente.
+- [x] Elle introduit un decalage temporel (time lag) d'autant plus grand que n est grand
+    > Correct : le lissage et le lag sont indissociables — plus la fenetre est grande, plus le retard est important.
+- [ ] Elle necessite de stocker un nombre infini d'observations
+    > Incorrect : la SMA ne necessite que les n dernieres observations.
+- [ ] Elle est impossible a calculer de facon recursive
+    > Incorrect : la SMA dispose bien d'une formule de mise a jour recursive efficace.
+```
+
+```{quizdown}
+### Quelle est la relation entre le parametre alpha de l'EMA et la taille de fenetre n d'une SMA equivalente (meme age moyen) ?
+
+> L'objectif est d'egaliser l'age moyen pondere d'une EMA et d'une SMA.
+
+1. [ ] alpha = n / (n + 1)
+1. [ ] alpha = 1 / n
+1. [x] alpha = 2 / (n + 1)
+    > Correct : on obtient cette relation en egalant l'age moyen de l'EMA (1/alpha) avec celui de la SMA ((n+1)/2).
+1. [ ] alpha = 2 / n
+```
+
+```{quizdown}
+### Avec alpha = 2 / (n + 1), une EMA et une SMA de taille n sont-elles identiques ?
+
+> Attention a ne pas confondre equivalence d'age moyen et equivalence de valeur.
+
+1. [ ] Vrai
+1. [x] Faux
+    > Faux : seul l'age moyen pondere est equivalent. Les schemas de ponderation restent differents — la SMA a des poids uniformes, l'EMA des poids exponentiels.
+```
+
+```{quizdown}
+### Quel effet a une diminution de alpha sur une EMA ?
+
+> Rappelle le role de alpha dans la formule de mise a jour : EMA(t) = alpha * X_t + (1 - alpha) * EMA(t-1).
+
+- [x] Le lissage est plus fort
+    > Correct : un petit alpha donne moins de poids a la nouvelle observation et plus a l'historique.
+- [x] Le decalage temporel (time lag) augmente
+    > Correct : plus alpha est petit, plus l'EMA met du temps a reagir aux nouvelles donnees.
+- [ ] L'EMA devient plus reactive aux nouvelles observations
+    > Incorrect : c'est l'effet d'un grand alpha, pas d'un petit.
+- [ ] La periode de chauffe est plus courte
+    > Incorrect : un petit alpha necessite une periode de chauffe plus longue pour stabiliser l'EMA.
+```
+
+```{quizdown}
+### Pourquoi le temps physique est-il qualifie d'arbitraire dans le contexte des marches financiers ?
+
+> Pense aux moments de forte et faible activite sur un marche.
+
+- [x] Le debut de l'observation est un choix arbitraire (minuit, ouverture du marche...)
+    > Correct : il n'existe pas de moment naturel pour commencer a compter le temps.
+- [x] Des evenements importants peuvent se produire entre deux observations sans etre detectes
+    > Correct : si la grille temporelle est trop grossiere, des informations cles sont perdues.
+- [x] Le temps s'ecoule a la meme vitesse que le marche soit tres actif ou inactif
+    > Correct : le temps physique ne tient pas compte du rythme propre du marche.
+- [ ] Le temps physique ne peut pas etre utilise pour calculer des moyennes mobiles
+    > Incorrect : la grande majorite des moyennes mobiles utilisent precisement le temps physique.
+```
+
+```{quizdown}
+### Dans l'algorithme du temps intrinseque, que represente x_ext ?
+
+> x_ext est mis a jour a chaque nouvelle observation selon le mode courant.
+
+1. [ ] La moyenne exponentielle du prix
+1. [ ] Le prix de la derniere transaction
+1. [x] Le dernier extreme local observe (maximum en mode "up", minimum en mode "down")
+    > Correct : x_ext trace le pic ou le creux depuis lequel on mesure l'amplitude du retournement potentiel.
+1. [ ] Le seuil de detection delta
+```
+
+```{quizdown}
+### Que mesure la longueur de l'overshoot (OS) dans le cadre du temps intrinseque ?
+
+> L'overshoot est le mouvement qui se produit apres la detection d'un DC.
+
+1. [ ] La volatilite du marche
+1. [x] La liquidite du marche
+    > Correct : un marche liquide revient rapidement apres le signal, generant un faible OS. Un marche illiquide continue dans la meme direction, generant un grand OS.
+1. [ ] L'amplitude du changement directionnel
+1. [ ] La duree en temps physique du DC
+```
+
+```{quizdown}
+### Quel est l'avantage principal de l'EMA par rapport a la WMA en termes d'implementation ?
+
+> Pense au nombre de valeurs a conserver en memoire pour chaque methode.
+
+1. [ ] L'EMA a des poids plus precis que la WMA
+1. [ ] L'EMA n'a pas de decalage temporel
+1. [x] L'EMA ne necessite de stocker qu'une seule valeur (la derniere EMA) contre n observations pour la WMA
+    > Correct : la formule recursive de l'EMA est extremement efficace — aucun historique n'est necessaire.
+1. [ ] L'EMA n'a pas besoin de parametre de configuration
+```
+
+---
+
+## Niveau 3 — Maitrise
+
+```{quizdown}
+### Un analyste veut une EMA telle qu'une observation ait moins de 5% d'impact apres 60 pas. Quelle methode utiliser pour calculer alpha ?
+
+> Il faut relier l'impact residuel epsilon_k apres k pas au parametre alpha.
+
+1. [ ] alpha = 2 / (60 + 1)
+1. [ ] alpha = 1 - 0.05^(1/60)
+1. [x] alpha = 1 - e^(log(0.05) / 60)
+    > Correct : on utilise (1 - alpha)^k = epsilon_k, d'ou alpha = 1 - exp(log(epsilon_k) / k). Ici alpha = 1 - exp(log(0.05)/60).
+1. [ ] alpha = log(0.05) / 60
+```
+
+```{quizdown}
+### Compare les valeurs numeriques de alpha pour n = 100 selon les deux methodes de calcul.
+
+> Applique les deux formules pour n = 100 et epsilon = 1% apres k = 100 pas.
+
+1. [ ] Les deux methodes donnent exactement le meme alpha
+1. [x] La methode de l'impact residuel donne un alpha plus grand que la methode SMA-equivalente
+    > Correct : methode SMA donne alpha = 2/101 ≈ 0.0198, methode impact residuel (1% apres 100 pas) donne alpha ≈ 0.045 — valeur nettement plus grande.
+1. [ ] La methode SMA-equivalente donne toujours un alpha plus grand
+1. [ ] Il est impossible de comparer les deux methodes
+```
+
+```{quizdown}
+### Remets les etapes de l'algorithme de detection des DCs dans le bon ordre pour le mode "up".
+
+> Pense a ce que fait l'algorithme quand le mode est "up" : il cherche un retournement a la baisse.
+
+1. Observer le nouveau prix x
+2. Verifier si x est inferieur a x_ext et mettre a jour x_ext si oui
+3. Verifier si le ratio (x_ext - x) / x_ext est superieur ou egal a delta
+4. Si oui, enregistrer un DC et passer en mode "down"
+5. Mettre a jour x_ext avec la valeur courante de x
+```
+
+```{quizdown}
+### Remets les trois types de moyennes mobiles dans l'ordre croissant de complexite de mise a jour.
+
+> Pense au nombre d'operations et de valeurs a conserver pour chaque mise a jour.
+
+1. EMA — une seule valeur en memoire, formule en une ligne
+2. SMA — necessite de soustraire l'ancienne valeur et d'ajouter la nouvelle
+3. WMA — necessite de maintenir la somme totale et de recalculer les poids
+```
+
+```{quizdown}
+### Un marche tres volatile est analyse avec le temps intrinseque et un seuil delta fixe. Que peut-on prevoir ?
+
+> Pense a la relation entre volatilite et nombre de DCs.
+
+- [x] Le nombre de DCs par unite de temps physique est eleve
+    > Correct : la volatilite se traduit par de nombreux retournements frequents, donc beaucoup de DCs detectes.
+- [ ] Le temps intrinseque s'ecoule plus lentement que sur un marche calme
+    > Incorrect : plus il y a de DCs, plus le temps intrinseque s'ecoule rapidement.
+- [x] Le temps intrinseque s'ecoule plus vite que sur un marche peu volatil
+    > Correct : chaque DC fait avancer le temps intrinseque d'un pas — plus de DCs signifie un temps intrinseque plus rapide.
+- [ ] Les overshoots sont necessairement plus courts
+    > Incorrect : la longueur des OS est liee a la liquidite, pas directement a la volatilite.
+```
+
+```{quizdown}
+### Quelle affirmation est correcte concernant les lois d'echelle (scaling laws) du temps intrinseque ?
+
+> Ces lois ont ete verifiees empiriquement sur de nombreuses paires de devises.
+
+1. [ ] Les lois d'echelle sont specifiques a une seule paire de devises
+1. [ ] Les lois d'echelle sont lineaires entre les variables
+1. [x] Les lois d'echelle suivent une relation en loi de puissance et sont robustes sur 13 paires de devises FX
+    > Correct : environ 20 lois d'echelle ont ete identifiees, toutes de forme puissance, stables a travers differents marches.
+1. [ ] Les lois d'echelle ne s'appliquent qu'au temps physique
+```
+
+```{quizdown}
+### Dans l'EMA pour donnees asynchrones, quel role joue le parametre mu = e^(-alpha) ?
+
+> Alpha est ici le temps ecoule normalise par le parametre tau.
+
+1. [ ] Il definit le poids donne a la derniere observation
+1. [x] Il introduit le temps physique ecoule dans l'operateur en modulant l'inertie de l'EMA
+    > Correct : mu = exp(-alpha) ou alpha = (t_n - t_{n-1}) / tau. Quand l'intervalle est long, mu est petit et l'EMA s'efface davantage devant la nouvelle observation.
+1. [ ] Il fixe la fenetre equivalente de la SMA
+1. [ ] Il normalise les prix entre zero et un
+```
+
+```{quizdown}
+### Un analyste initialise son EMA avec EMA(1) = X_1 pour une serie longue avec un petit alpha. Quel est le risque ?
+
+> Pense a ce que represente EMA(0) = 0 dans ce cas.
+
+1. [ ] L'EMA diverge et devient infinie
+1. [ ] L'EMA oscille indefiniment sans se stabiliser
+1. [x] L'EMA presente un biais important au debut en raison d'une condition initiale eloignee des valeurs reelles, necessitant une longue periode de chauffe
+    > Correct : avec un petit alpha, la correction du biais initial est lente — l'EMA met de nombreuses periodes a oublier la valeur d'initialisation.
+1. [ ] Il n'y a aucun risque pour une longue serie
+```
+
+```{quizdown}
+### Quelle est la principale raison pour laquelle l'approche par interpolation est rarement utilisee en finance ?
+
+> Compare avec la discrétisation en termes d'hypotheses et de rigidite.
+
+1. [ ] Elle est trop couteuse en calcul
+1. [ ] Elle ne peut pas gerer les donnees haute frequence
+1. [x] Elle repose sur des hypotheses fortes sur la dynamique du prix et le temps physique reste une reference arbitraire et rigide
+    > Correct : l'interpolation force a poser des hypotheses souvent injustifiees sur le comportement du prix entre deux ticks.
+1. [ ] Elle produit toujours des erreurs de prediction superieures a la discretisation
+```
