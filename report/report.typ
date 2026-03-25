@@ -31,6 +31,8 @@ We consider the following version of the model:
   import numpy as np
   import matplotlib.pyplot as plt
 
+  np.random.seed(2026)
+
   def Maslov(iterations: int = 1000, q: float = 0.5, r: float = 0.5, K: float = 1):
     # Initial price
     p = [100.0]
@@ -41,31 +43,35 @@ We consider the following version of the model:
     for i in range(iterations):
       # Buy process
       if (np.random.rand() <= 1 - q):
+        # Buyer
         if (np.random.rand() <= 1 - r):
           if sells:
             sells.sort()
             p.append(sells.pop())
+        # Market maker
         else:
           orders.append(p[-1] - K)
           p.append(p[-1])
+      # Sell process
       else:
+        # Seller
         if (np.random.rand() <= 1 - r):
           if orders:
             orders.sort(reverse=True)
             p.append(orders.pop())
+        # Market maker
         else:
           sells.append(p[-1] + K)
           p.append(p[-1])
-      if len(sells) > 0:
+      if sells:
         best_asks.append(np.min(sells))
       else:
         best_asks.append(np.nan)
-      if len(orders) > 0:
+      if orders:
         best_bids.append(np.max(orders))
       else:
         best_bids.append(np.nan)
     p = np.array(p)
-    print(sells)
     best_asks = np.array(best_asks)
     best_bids = np.array(best_bids)
     mid_price = (best_asks + best_bids)/2
@@ -103,7 +109,27 @@ We consider the following version of the model:
 
 + Plot the histogram of the values of this series. What can you say of this distribution? Is it a normal distribution?
 
+  ```python
+  plt.figure()
+  plt.hist(returns(p), bins=25)
+  plt.title("Histogram of Returns")
+  plt.xlabel("Returns")
+  plt.ylabel("Frequency")
+  plt.show()
+  ```
+
 + Plot and comment the ACF graph of this series.
+
+  ```python
+  from statsmodels.graphics.tsaplots import plot_acf
+
+  plt.figure()
+  plot_acf(returns(p), lags=50)
+  plt.title("ACF of Returns")
+  plt.xlabel("Lags")
+  plt.ylabel("Autocorrelation")
+  plt.show()
+  ```
 
 + Compute the bid–ask spread $s(t) = a(t) - b(t)$ and plot its time series.
 

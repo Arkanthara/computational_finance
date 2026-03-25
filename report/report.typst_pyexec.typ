@@ -1,3 +1,22 @@
+
+#show figure.where(kind: "subfigure"): set figure(supplement: "Figure")
+
+#show figure.where(kind: image): outer => {
+  counter(figure.where(kind: "subfigure")).update(0)
+  set figure(numbering: (..nums) => {
+    let outer-nums = counter(figure.where(kind: image)).at(outer.location())
+    std.numbering("1a", ..outer-nums, ..nums)
+  })
+  show figure.where(kind: "subfigure"): inner => {
+    show figure.caption: it => context {
+      std.numbering("(a)", it.counter.at(inner.location()).last())
+      [ ]
+      it.body
+    }
+    inner
+  }
+  outer
+}
 // Main report file
 #import "template.typ": make-report, report-footnote
 #import "metadata.typ": my-report
@@ -31,6 +50,8 @@ We consider the following version of the model:
   import numpy as np
   import matplotlib.pyplot as plt
   
+  np.random.seed(2026)
+  
   
   def Maslov(iterations: int = 1000, q: float = 0.5, r: float = 0.5, K: float = 1):
       # Initial price
@@ -42,31 +63,35 @@ We consider the following version of the model:
       for i in range(iterations):
           # Buy process
           if np.random.rand() <= 1 - q:
+              # Buyer
               if np.random.rand() <= 1 - r:
                   if sells:
                       sells.sort()
                       p.append(sells.pop())
+              # Market maker
               else:
                   orders.append(p[-1] - K)
                   p.append(p[-1])
+          # Sell process
           else:
+              # Seller
               if np.random.rand() <= 1 - r:
                   if orders:
                       orders.sort(reverse=True)
                       p.append(orders.pop())
+              # Market maker
               else:
                   sells.append(p[-1] + K)
                   p.append(p[-1])
-          if len(sells) > 0:
+          if sells:
               best_asks.append(np.min(sells))
           else:
               best_asks.append(np.nan)
-          if len(orders) > 0:
+          if orders:
               best_bids.append(np.max(orders))
           else:
               best_bids.append(np.nan)
       p = np.array(p)
-      print(sells)
       best_asks = np.array(best_asks)
       best_bids = np.array(best_bids)
       mid_price = (best_asks + best_bids) / 2
@@ -86,8 +111,6 @@ We consider the following version of the model:
   plt.legend()
   plt.show()
   ```
-  
-  #raw("[84.0, 85.0, 85.0, 86.0, 86.0, 87.0, 88.0]")
   
   #image(".typst_pyexec/figures/cell_1_1.svg")
   
@@ -114,7 +137,33 @@ We consider the following version of the model:
 
 + Plot the histogram of the values of this series. What can you say of this distribution? Is it a normal distribution?
 
+  ```python
+  plt.figure()
+  plt.hist(returns(p), bins=25)
+  plt.title("Histogram of Returns")
+  plt.xlabel("Returns")
+  plt.ylabel("Frequency")
+  plt.show()
+  ```
+  
+  #figure(image(".typst_pyexec/figures/cell_3_1.svg"), caption: [Histogram of Returns])
+  
+
 + Plot and comment the ACF graph of this series.
+
+  ```python
+  from statsmodels.graphics.tsaplots import plot_acf
+  
+  plt.figure()
+  plot_acf(returns(p), lags=50)
+  plt.title("ACF of Returns")
+  plt.xlabel("Lags")
+  plt.ylabel("Autocorrelation")
+  plt.show()
+  ```
+  
+  #figure(grid(columns: 1, [#figure(image(".typst_pyexec/figures/cell_4_1.svg"), kind: "subfigure")], [#figure(image(".typst_pyexec/figures/cell_4_2.svg"), kind: "subfigure", caption: [ACF of Returns])]), caption: [ACF of Returns], kind: image)
+  
 
 + Compute the bid–ask spread $s(t) = a(t) - b(t)$ and plot its time series.
 
