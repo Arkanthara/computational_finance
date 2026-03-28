@@ -53,48 +53,40 @@ We consider the following version of the model:
   np.random.seed(2026)
   
   
-  def Maslov(iterations: int = 1000, q: float = 0.5, r: float = 0.5, K: float = 1):
+  def Maslov(iterations: int = 1000, q: float = 0.5, r: float = 0.5, K=1):
       # Initial price
       p = [100.0]
       orders = []
       sells = []
       best_asks = []
       best_bids = []
+      if K is not None and not isinstance(K, (tuple, list)):
+          K_range = (K, K)
+      else:
+          K_range = K
       for i in range(iterations):
-          # Buy process
-          if np.random.rand() <= 1 - q:
-              # Buyer
-              if np.random.rand() <= 1 - r:
-                  if sells:
-                      sells.sort()
-                      p.append(sells.pop())
-                  else:
-                      p.append(p[-1])
-              # Market maker
+          # Randomly classify trader as aggressive or passive
+          is_seller = np.random.rand() < q
+          market_order = np.random.rand() < r
+  
+          if market_order:
+              if is_seller:
+                  orders.sort(reverse=True)
+                  # Add best bid price to the price series
+                  p.append(orders.pop() if orders else p[-1])
               else:
-                  orders.append(p[-1] - K)
-                  p.append(p[-1])
-          # Sell process
+                  sells.sort()
+                  # Add best ask price to the price series
+                  p.append(sells.pop() if sells else p[-1])
           else:
-              # Seller
-              if np.random.rand() <= 1 - r:
-                  if orders:
-                      orders.sort(reverse=True)
-                      p.append(orders.pop())
-                  else:
-                      p.append(p[-1])
-              # Market maker
+              if is_seller:
+                  sells.append(p[-1] + np.random.uniform(*K_range))
+                  p.append(p[-1])
               else:
-                  sells.append(p[-1] + K)
+                  orders.append(p[-1] - np.random.uniform(*K_range))
                   p.append(p[-1])
-          if sells:
-              best_asks.append(np.min(sells))
-          else:
-              best_asks.append(np.nan)
-          if orders:
-              best_bids.append(np.max(orders))
-          else:
-              best_bids.append(np.nan)
+          best_asks.append(np.min(sells) if sells else np.nan)
+          best_bids.append(np.max(orders) if orders else np.nan)
       p = np.array(p)
       best_asks = np.array(best_asks)
       best_bids = np.array(best_bids)
@@ -158,7 +150,7 @@ We consider the following version of the model:
   ```python
   from statsmodels.graphics.tsaplots import plot_acf
   
-  plot_acf(returns(p), lags=np.arange(51))
+  plot_acf(np.nan_to_num(returns(p), nan=0), lags=np.arange(51))
   plt.title("ACF of price evolution")
   plt.xlabel("Lags")
   plt.ylabel("Autocorrelation")
@@ -221,7 +213,7 @@ We consider the following version of the model:
   print("Order book depth (bids):", sell_order_depth)
   ```
   
-  #raw("Order book depth (asks): [ 4  4  9 15 21]\nOrder book depth (bids): [ 2  4  5 10 18]")
+  #raw("Order book depth (asks): [5 5 5 5 5]\nOrder book depth (bids): [ 8 10 18 23 24]")
   
 
 
@@ -480,7 +472,7 @@ We now consider the following version of the model:
   print("Variance of returns:", np.nanvar(returns_ext))
   ```
   
-  #raw("Mean of returns: 2.359222362809064e-05\nVariance of returns: 1.9842517325582804e-05")
+  #raw("Mean of returns: -1.8115547912523527e-05\nVariance of returns: 1.851606858252033e-05")
   
   #figure(image(".typst_pyexec/figures/cell_15_1.svg"), caption: [Histogram of Returns (extended model)])
   
