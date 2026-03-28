@@ -116,8 +116,10 @@ We consider the following version of the model:
   ```python
   def returns(ts: np.ndarray, N: int = 1) -> np.ndarray:
       result = ts.copy()
-      result[:N] = np.nan
-      return (result[N:] - result[:-N]) / result[:-N]
+      result[:N] = np.nan  # Set the first N values to NaN since they cannot be computed
+      result[N:] = (ts[N:] - ts[:-N]) / ts[:-N]
+      result = np.nan_to_num(result, nan=0)  # Replace NaN with 0 for plotting
+      return result
   
   
   plt.figure()
@@ -472,7 +474,7 @@ We now consider the following version of the model:
   print("Variance of returns:", np.nanvar(returns_ext))
   ```
   
-  #raw("Mean of returns: -1.8115547912523527e-05\nVariance of returns: 1.851606858252033e-05")
+  #raw("Mean of returns: -4.762709009323447e-06\nVariance of returns: 1.8421124940297178e-05")
   
   #figure(image(".typst_pyexec/figures/cell_15_1.svg"), caption: [Histogram of Returns (extended model)])
   

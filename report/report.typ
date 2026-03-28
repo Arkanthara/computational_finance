@@ -92,8 +92,10 @@ We consider the following version of the model:
   ```python
   def returns(ts: np.ndarray, N: int = 1) -> np.ndarray:
     result = ts.copy()
-    result[:N] = np.nan
-    return (result[N:] - result[:-N])/result[:-N]
+    result[:N] = np.nan  # Set the first N values to NaN since they cannot be computed
+    result[N:] = (ts[N:] - ts[:-N])/ts[:-N]
+    result = np.nan_to_num(result, nan=0)  # Replace NaN with 0 for plotting
+    return result
 
   plt.figure()
   plt.plot(returns(p))
