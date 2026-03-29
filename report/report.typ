@@ -28,6 +28,7 @@ We consider the following version of the model:
 
 + Implement the procedure above and unroll it for 1000 iterations. Use $q = r = 0.5$ and $K = 1$ with probability 1. Plot the time series of the market, ask, bid and mid prices $p(t)$, $a(t)$, $b(t)$ and $m(t) = (b(t) + a(t)) / 2$. Are there any difference between the mid and the market prices?
   ```python
+  %| label: fig1
   import numpy as np
   import matplotlib.pyplot as plt
 
@@ -77,6 +78,7 @@ We consider the following version of the model:
   p, a, b, mid_price, spread, orders, sells = Maslov()
 
   plt.figure()
+  plt.title("Maslov Model")
   plt.plot(p, label="Price of the market")
   plt.plot(a, label="Asks")
   plt.plot(b, label="Bids")
@@ -87,9 +89,14 @@ We consider the following version of the model:
   plt.show()
   ```
 
+  There is a difference between the mid and the market prices.
+  Indeed, the mid price is the average between the best bid and best ask price whereas the market price is the price of the market.
+  So on the figure @fig1, we can see the market price that has a lot of fluctuations whereas the mid price is like a smooth version of the market price.
+
 + Plot the time series of returns of the market price, what do you observe?
 
   ```python
+  %| label: fig2
   def returns(ts: np.ndarray, N: int = 1) -> np.ndarray:
     result = ts.copy()
     result[:N] = np.nan  # Set the first N values to NaN since they cannot be computed
@@ -105,20 +112,31 @@ We consider the following version of the model:
   plt.show()
   ```
 
+  We observe on @fig2 that the returns of the market price is a weakly stationary process.
+  Indeed, the values varies around the mean 0 which is fixed, and the variance seems to be finite since the scale range of returns is from -0.075 to 0.1.
+
 + Plot the histogram of the values of this series. What can you say of this distribution? Is it a normal distribution?
 
   ```python
+  %| label: fig3
+  returns_values = returns(p)
   plt.figure()
-  plt.hist(returns(p), bins=25)
+  plt.hist(returns_values, bins=25)
   plt.title("Histogram of Returns")
   plt.xlabel("Returns")
   plt.ylabel("Frequency")
   plt.show()
   ```
 
+  On @fig3, we have impression that the distribution of the values of this series follows some kind of normal distribution with high values around the mean and fat tails.
+  Indeed, we can see some notable values around -0.075 and 0.075 that must not appears in a normal distribution, and the mean value is around 6 times bigger than the others.
+
+  This kind of distribution is standard in financial markets since improbable values appears more often in real life than in a normal distribution.
+
 + Plot and comment the ACF graph of this series.
 
   ```python
+  %| label: fig4
   from statsmodels.graphics.tsaplots import plot_acf
 
   plot_acf(np.nan_to_num(returns(p), nan=0), lags=np.arange(51))
@@ -128,9 +146,13 @@ We consider the following version of the model:
   plt.show()
   ```
 
+  We can see on @fig4 that there is not a lot of autocorrelation since the values of the ACF are close to 0 for all lags.
+  However, we can constate that there is some king of periodicity in the values, meaning that a positive return is generally followed by a negative return and vice versa, like in real financial markets.
+
 + Compute the bid–ask spread $s(t) = a(t) - b(t)$ and plot its time series.
 
   ```python
+  %| label: fig5
   plt.figure()
   plt.plot(spread)
   plt.title("Time series of the bid-ask spread")
@@ -142,6 +164,8 @@ We consider the following version of the model:
 + Plot a histogram of the spread values. Comment on whether the distribution is fat-tailed.
 
   ```python
+  %| label: fig6
+
   plt.figure()
   plt.hist(spread, bins=25)
   plt.title("Histogram of the bid-ask spread")
@@ -149,6 +173,8 @@ We consider the following version of the model:
   plt.ylabel("Frequency")
   plt.show()
   ```
+  We can see on @fig6 that there is some values far away from the mean value which appears with a high frequency, meaning that improbable events appears more often than expected.
+  So the distribution is fat-tailed.
 
 + For selected time points, analyze the order book depth: for a range of price levels relative to the best bid/ask, compute the aggregated number of orders.
   ```python
@@ -177,6 +203,7 @@ We consider the following version of the model:
 + Plot the depth distribution and discuss its shape in relation to empirical observations.
   
   ```python
+  %| label: fig7
   width = 0.35
   plt.figure()
   plt.bar(np.arange(1, len(buy_order_depth) + 1) - width/2, buy_order_depth, width=width, label="Ask Depth")
@@ -189,10 +216,14 @@ We consider the following version of the model:
   plt.show()
   ```
 
+  The order book depth seems to have an increasing bid depth whereas the ask depth is more stable.
+  This means that there is more and more people that want to buy asset at lower prices whereas peoples don't want to sell at lower prices, making the bid depth increasing.
+
 
 + Change the parameters of the model to understand how they influence the market and comment about this point.
 
   ```python
+  %| label: fig8
   # Example of changing parameter K
   plt.figure()
   plt.suptitle("Comparison of price evolution with different K values")
@@ -221,7 +252,11 @@ We consider the following version of the model:
   plt.show()
   ```
 
+  We can see on @fig8 that the price evolution is more volatile when K is bigger.
+  This is due to the fact that when K is bigger, offers placed in orders and sells are more far from the market price.
+
   ```python
+  %| label: fig9
   # Example of changing parameter q
   plt.figure()
   plt.suptitle("Comparison of price evolution with different q values")
@@ -250,7 +285,11 @@ We consider the following version of the model:
   plt.show()
   ```
 
+  We can see on @fig9 that when q is less than 0.5, the price tends to decrease whereas when q is bigger than 0.5, the price tends to increase.
+  This is because when q is less than 0.5, there is more sellers than buyers, making the price decrease, and when q is bigger than 0.5, there is more buyers than sellers, making the price increase. 
+
   ```python
+  %| label: fig10
   # Example of changing parameter r
   plt.figure()
   plt.suptitle("Comparison of price evolution with different r values")
@@ -278,6 +317,9 @@ We consider the following version of the model:
   plt.legend()
   plt.show()
   ```
+
+  We can see on @fig10 that r control the volatility of the price evolution since when r is smaller, there is more volatility than when r is bigger.
+  This is due to the fact that when r is smaller, there is more limit orders than market orders, making the buyers and sellers more choisy and the price more volatile, whereas when r is bigger, there is more market orders than limit orders, making the buyers and sellers less choisy and the price less volatile.
 
 #pagebreak()
 
@@ -349,6 +391,7 @@ We now consider the following version of the model:
 + Run the simulation for 1000 iterations with the extended model.
 
   ```python
+  %| label: fig11
   p_ext, a_ext, b_ext, mid_price_ext, spread_ext, orders_ext, sells_ext = Maslov_Extended()
 
   plt.figure()
@@ -366,6 +409,7 @@ We now consider the following version of the model:
 + Record the time series of the market price and compute the returns.
 
   ```python
+  %| label: fig12
   returns_ext = returns(p_ext)
 
   plt.figure()
@@ -379,6 +423,7 @@ We now consider the following version of the model:
 + Plot the histogram of returns and calculate basic statistics (mean, variance).
 
   ```python
+  %| label: fig13
   plt.figure()
   plt.hist(returns_ext, bins=25)
   plt.title("Histogram of Returns (extended model)")
@@ -393,6 +438,7 @@ We now consider the following version of the model:
 + Compute and plot the autocorrelation function (ACF) of the return series.
 
   ```python
+  %| label: fig14
   plot_acf(returns_ext, lags=np.arange(51))
   plt.title("ACF of returns (extended model)")
   plt.xlabel("Lags")
@@ -401,3 +447,17 @@ We now consider the following version of the model:
   ```
 
 + Discuss how the introduction of heterogeneous order sizes and trader behavior affects the price dynamics compared to the baseline model. Comment on any observed changes in volatility clustering or the fat-tailed nature of the return distribution.
+
+  If we look at the price evolution in @fig11, we can see that there is less small fluctuations and more big jumps compared to the baseline model.
+  Indeed, the big jumps are produced by big orders and big sells which tend to appears due to the orders size.
+
+  The returns of the market price in @fig12 seems to have smaller amplitude than the base model, with more sparse values.
+  This is due to the fact that there is less small fluctuations making the returns more sparse.
+
+  The histogram of returns in @fig13 seems to have a fat-tailed distribution with higher frequency pick compared to the base model.
+  Indeed, the mean and the variance of returns are around 0, meaning that the frequency pick is higher than the base model.
+
+  Finally, on the ACF of returns in @fig14, we can see that it is similar to the base model, but with some values more autocorrelated at the end.
+  And each time, a positive return is followed by a negative return and vice versa.
+  But compared to the base model, the autocorrelation seems to be more random with some values that are more autocorrelated than others.
+  This means that this time series is less predictable than the base model, with a more random behavior that seems to be more similar to real financial markets.
