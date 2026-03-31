@@ -29,85 +29,85 @@ website:
               - text: "Details"
                 href: ch1.qmd
               - text: "Synthese"
-                href: ch1c.qmd
+                href: ch1r.qmd
           - section: "2. Series temporelles et modeles autoregressifs"
             contents:
               - text: "Details"
                 href: ch2.qmd
               - text: "Synthese"
-                href: ch2c.qmd
+                href: ch2r.qmd
           - section: "3. Marches et comportements"
             contents:
               - text: "Details"
                 href: ch3.qmd
               - text: "Synthese"
-                href: ch3c.qmd
+                href: ch3r.qmd
           - section: "4. Donnees, moyenne mobile et temps intrinsique"
             contents:
               - text: "Details"
                 href: ch4.qmd
               - text: "Synthese"
-                href: ch4c.qmd
+                href: ch4r.qmd
           - section: "5. Carnet d'ordres limite"
             contents:
               - text: "Details"
                 href: ch5.qmd
               - text: "Synthese"
-                href: ch5c.qmd
+                href: ch5r.qmd
           - section: "6. Execution algorithmique"
             contents:
               - text: "Details"
                 href: ch6.qmd
               - text: "Synthese"
-                href: ch6c.qmd
+                href: ch6r.qmd
           - section: "7. Construction de portefeuille"
             contents:
               - text: "Details"
                 href: ch7.qmd
               - text: "Synthese"
-                href: ch7c.qmd
+                href: ch7r.qmd
           - section: "8. Modeles a base d'agents"
             contents:
               - text: "Details"
                 href: ch8.qmd
               - text: "Synthese"
-                href: ch8c.qmd
+                href: ch8r.qmd
           - section: "9. Options - notions de base"
             contents:
               - text: "Details"
                 href: ch9.qmd
               - text: "Synthese"
-                href: ch9c.qmd
+                href: ch9r.qmd
           - section: "10. Options - Grecques"
             contents:
               - text: "Details"
                 href: ch10.qmd
               - text: "Synthese"
-                href: ch10c.qmd
+                href: ch10r.qmd
           - section: "11. Obligations - notions de base"
             contents:
               - text: "Details"
                 href: ch11.qmd
               - text: "Synthese"
-                href: ch11c.qmd
+                href: ch11r.qmd
           - section: "12. Obligations - sensibilites temps et taux"
             contents:
               - text: "Details"
                 href: ch12.qmd
               - text: "Synthese"
-                href: ch12c.qmd
+                href: ch12r.qmd
           - section: "13. Futures, forwards et ESG"
             contents:
               - text: "Details"
                 href: ch13.qmd
               - text: "Synthese"
-                href: ch13c.qmd
+                href: ch13r.qmd
           - section: "14. Donnees alternatives et retrospective"
             contents:
               - text: "Details"
                 href: ch14.qmd
               - text: "Synthese"
-                href: ch14c.qmd
+                href: ch14r.qmd
 
 
 format:

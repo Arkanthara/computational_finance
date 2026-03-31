@@ -1,0 +1,200 @@
+---
+title: "Construction de Portefeuille — Révision"
+---
+
+# Concepts fondamentaux
+
+**Portefeuille (Portfolio)** : ensemble d'actifs détenus simultanément.
+
+**Diversification (Diversification)** : combiner des actifs peu corrélés pour réduire le risque sans sacrifier le rendement → seul « free lunch » en finance.
+
+**MPT — Théorie Moderne du Portefeuille (Modern Portfolio Theory)** : cadre de Markowitz (1952), Prix Nobel 1990.
+
+---
+
+# Rendement et risque d'un actif
+
+| Mesure | Formule |
+|:---|:---|
+| Rendement espéré historique | $E[R_i] = \frac{1}{T}\sum_{t=1}^{T} R_i(t)$ |
+| Variance | $\text{Var}(R_i) = \frac{1}{T}\sum_{t=1}^{T}(R_i(t) - E[R_i])^2$ |
+| Volatilité | $\sigma_i = \sqrt{\text{Var}(R_i)}$ |
+
+::: {.callout-warning title="Piège"}
+Les rendements espérés sont plus un **art qu'une science** — c'est l'étape la plus incertaine et la plus influente.
+:::
+
+---
+
+# Portefeuille de $N$ actifs
+
+**Contrainte des poids** : $\sum_{i=1}^{N} w_i = 1$
+
+| Mesure | Formule |
+|:---|:---|
+| Rendement | $R_p(t) = \sum_i w_i R_i(t)$ |
+| Rendement espéré | $E[R_p] = \sum_i w_i E[R_i]$ |
+| Variance (double somme) | $\sigma_p^2 = \sum_i \sum_j w_i w_j \text{Cov}(R_i, R_j)$ |
+| Variance (matricielle) | $\sigma_p^2 = \mathbf{w}^T \mathbf{C}\, \mathbf{w}$ |
+
+**Covariance** : $\text{Cov}(X,Y) = E[(X-E[X])(Y-E[Y])]$
+
+**Matrice de covariance $\mathbf{C}$** : encodage complet des relations entre actifs.
+
+::: {.callout-warning title="Piège — Taille d'échantillon"}
+Minimum **$N^2/2$ observations** pour estimer $\mathbf{C}$ de façon fiable.
+:::
+
+---
+
+# Corrélation (Correlation)
+
+$$
+\rho_{ij} = \frac{\text{Cov}(R_i, R_j)}{\sigma_i \sigma_j} \in [-1, +1]
+\quad\Rightarrow\quad
+\text{Cov}(R_i, R_j) = \rho_{ij}\,\sigma_i\sigma_j
+$$
+
+| Valeur de $\rho$ | Interprétation |
+|:---:|:---|
+| $+1$ | Évolution identique — **aucune diversification** |
+| $0$ | Indépendance — diversification partielle |
+| $-1$ | Sens opposé — **diversification maximale** |
+
+---
+
+# Portefeuille de 2 actifs — Impact de $\rho$
+
+$$
+\sigma_P = \sqrt{w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1 w_2 \rho_{12}\sigma_1\sigma_2}
+$$
+
+Exemple : $\sigma_1 = \sigma_2 = 0.10$, $w_1 = w_2 = 0.5$
+
+| $\rho_{12}$ | $\sigma_P$ | Remarque |
+|:---:|:---:|:---|
+| $+1$ | $0.100$ | Moyenne pondérée — pas de gain |
+| $+0.5$ | $0.087$ | |
+| $0$ | $0.071$ | |
+| $-0.5$ | $0.050$ | |
+| $-1$ | $0.000$ | Risque annulé (cas idéal) |
+
+::: {.callout-warning title="Piège"}
+Si $\sigma_1 \neq \sigma_2$, même avec $\rho = -1$ le risque n'est **pas nul** : $\sigma_P = |w_1\sigma_1 - w_2\sigma_2|$.
+:::
+
+---
+
+# Frontière Efficiente (Efficient Frontier)
+
+**Définition** : ensemble des portefeuilles qui maximisent $E[R_p]$ pour un $\sigma_P$ donné (ou minimisent $\sigma_P$ pour un $E[R_p]$ donné).
+
+**Dominance** : un portefeuille A domine C si même rendement et risque plus faible, ou même risque et rendement plus élevé.
+
+---
+
+# Méthodes de calcul
+
+| Méthode | Principe | Avantages | Limites |
+|:---|:---|:---|:---|
+| Monte-Carlo | Tirages aléatoires de $\mathbf{w}$ | Intuitif | Lent, inefficace, $\nearrow$ avec $N$ |
+| Forme fermée (Lagrange) | Solution analytique exacte | Exact, rapide | Poids négatifs possibles, pas de contraintes complexes |
+| Optimisation numérique | `scipy.minimize` | Flexible, contraintes | Optimum local possible |
+
+### Forme fermée — Scalaires clés
+
+$$
+a = \mathbf{1}^T\mathbf{C}^{-1}\mathbf{1},\quad
+b = \mathbf{1}^T\mathbf{C}^{-1}\boldsymbol{\mu},\quad
+c = \boldsymbol{\mu}^T\mathbf{C}^{-1}\boldsymbol{\mu},\quad
+d = ac - b^2
+$$
+
+$$
+\lambda_1 = \frac{c - b\mu_P}{d},\quad
+\lambda_2 = \frac{a\mu_P - b}{d},\quad
+\mathbf{w}^* = \mathbf{C}^{-1}(\lambda_1\mathbf{1} + \lambda_2\boldsymbol{\mu})
+$$
+
+### Optimisation numérique — Problème
+
+$$
+\min_{\mathbf{w}}\;\mathbf{w}^T\mathbf{C}\mathbf{w} - q\,\mathbf{w}^T\boldsymbol{\mu}
+\quad\text{s.c.}\quad
+\mathbf{1}^T\mathbf{w}=1,\quad 0\leq w_i\leq 1
+$$
+
+- $q = 0$ → variance minimale
+- $q \to \infty$ → rendement maximal
+- Faire varier $q$ trace la frontière efficiente entière
+
+::: {.callout-warning title="Effet des contraintes">
+Des contraintes sur les poids **abaissent** la frontière efficiente et **réduisent** la zone de risque atteignable.
+:::
+
+---
+
+# Actif sans risque & CML
+
+**Actif sans risque (Risk-Free Asset)** : obligation souveraine court terme, $\sigma_{rf} = 0$, $\rho_{rf,P} = 0$.
+
+Combinaison actif sans risque ($w_{rf}$) + portefeuille $P_0$ :
+
+| Mesure | Formule |
+|:---|:---|
+| Rendement | $E[R_{P_1}] = w_{rf}\,r + (1-w_{rf})\,E[R_{P_0}]$ |
+| Risque | $\sigma_{P_1} = (1-w_{rf})\,\sigma_{P_0}$ |
+
+→ Relation **linéaire** dans l'espace $(\sigma_P, E[R_p])$.
+
+**CML (Capital Market Line)** : droite tangente à la frontière efficiente passant par $r$.
+
+- Sur la CML → optimal
+- En dessous → sous-optimal
+- Au-delà du point tangent → **levier** (emprunt)
+
+---
+
+# Allocation fonds de pension suisse (type)
+
+| Classe d'actifs | Allocation |
+|:---|:---:|
+| Obligations CH | 10% |
+| Obligations étrangères | 35% |
+| Actions | 25% |
+| Immobilier | 15% |
+| Matières premières | 10% |
+| Alternatives | 5% |
+
+::: {.callout-note title="Points clés institutionnels"}
+- Contraintes **réglementaires** (OPP2) sur chaque classe
+- Nécessité de **diversification géographique** (marché CH trop petit)
+- Expositions de **change** gérées séparément (couverture partielle)
+- Alternatifs = hedge funds, venture capital ; Matières premières = or, pétrole, agri
+:::
+
+---
+
+# Relations entre concepts
+
+```{mermaid}
+flowchart LR
+    A[Actifs\nE[Ri], σi] --> B[Matrice de\nCovariance C]
+    B --> C[Variance\nportefeuille\nwᵀCw]
+    A --> D[Rendement\nespéré\nΣwi·E[Ri]]
+    C --> E[Frontière\nEfficiente]
+    D --> E
+    E --> F[CML + Actif\nsans risque r]
+    F --> G[Portefeuille\nOptimal]
+```
+
+---
+
+# Pièges & points critiques
+
+- **Rendements espérés** : estimation difficile, très influente sur le résultat final
+- **Corrélations en crise** : tendent vers $+1$ → diversification réduite au pire moment
+- **Taille d'échantillon** : trop court → matrice $\mathbf{C}$ peu fiable
+- **Poids négatifs** (forme fermée) : impliquent vente à découvert, souvent irréaliste
+- **Contraintes** : réduisent toujours la frontière efficiente (moins de liberté = moins d'efficacité)
+- **$\rho = -1$** : théorique, quasi inexistant en pratique

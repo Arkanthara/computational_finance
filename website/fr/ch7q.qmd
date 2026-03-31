@@ -1,0 +1,296 @@
+---
+title: "Construction de Portefeuille — Quiz"
+filters:
+  - quizdown
+execute:
+  enabled: false
+---
+
+## Niveau 1 — Fondamentaux
+
+```{quizdown}
+### Quelle est la raison principale de constituer un portefeuille plutôt qu'investir dans un seul actif ?
+
+> Pense à l'effet combiné de plusieurs actifs aux comportements différents.
+
+1. [ ] Maximiser le rendement en concentrant le capital sur le meilleur actif
+1. [x] Créer un véhicule d'investissement plus robuste grâce à la diversification
+    > Correct : la diversification permet de réduire le risque global sans nécessairement sacrifier le rendement espéré.
+1. [ ] Réduire les frais de transaction en regroupant les ordres
+1. [ ] Respecter les exigences réglementaires imposées aux investisseurs
+```
+
+```{quizdown}
+### Qui a introduit la Théorie Moderne du Portefeuille (Modern Portfolio Theory) et en quelle année ?
+
+> Ce travail a valu à son auteur un prix Nobel en 1990.
+
+1. [ ] William Sharpe, 1964
+1. [ ] Eugene Fama, 1970
+1. [x] Harry Markowitz, 1952
+    > Correct : Markowitz a publié son article fondateur en 1952 et a reçu le Prix Nobel d'économie en 1990.
+1. [ ] Robert Merton, 1973
+```
+
+```{quizdown}
+### Comment calcule-t-on le rendement espéré historique d'un actif sur une fenêtre de T periodes ?
+
+> Il s'agit d'une statistique descriptive classique appliquée aux rendements passés.
+
+1. [ ] On prend le rendement maximal observé sur la periode
+1. [ ] On calcule la mediane des rendements sur la periode
+1. [x] On calcule la moyenne arithmetique des rendements sur la periode
+    > Correct : E[Ri] = (1/T) * somme des Ri(t), t allant de 1 a T.
+1. [ ] On prend le dernier rendement observe
+```
+
+```{quizdown}
+### La variance d'un actif mesure :
+
+> Pense a ce que la variance capture dans la distribution des rendements.
+
+1. [ ] Le rendement moyen de l'actif sur une periode donnee
+1. [ ] La valeur maximale de perte possible sur une journee
+1. [x] La dispersion des rendements autour de leur moyenne
+    > Correct : la variance quantifie a quel point les rendements s'ecartent de leur esperance — c'est la mesure de risque de reference.
+1. [ ] La correlation de l'actif avec le marche
+```
+
+```{quizdown}
+### Que represente la matrice de covariance C dans le cadre MPT ?
+
+> Elle contient toutes les informations sur les risques individuels et les relations entre actifs.
+
+1. [ ] Les rendements esperes de chaque actif
+1. [ ] Les poids optimaux du portefeuille
+1. [ ] Les correlations normalisees entre chaque paire d'actifs
+1. [x] Les covariances entre toutes les paires d'actifs, dont les variances sur la diagonale
+    > Correct : sigma_ii = sigma_i^2 sur la diagonale, sigma_ij = Cov(Ri, Rj) hors diagonale.
+```
+
+```{quizdown}
+### Un actif sans risque (risk-free asset) est caracterise par :
+
+> Pense a un bon du Tresor a court terme emis par une banque centrale.
+
+- [x] Une variance nulle
+    > Correct : par definition, l'actif sans risque a sigma_rf = 0.
+- [ ] Un rendement superieur a celui du marche actions
+- [x] Une correlation nulle avec les actifs risques
+    > Correct : rho_rf,P = 0 est une hypothese fondamentale du modele.
+- [ ] Des poids toujours superieurs a 50% dans un portefeuille optimal
+```
+
+---
+
+## Niveau 2 — Comprehension
+
+```{quizdown}
+### La variance d'un portefeuille de deux actifs avec les memes poids, les memes volatilites et une correlation de +1 est egale a :
+
+> Observe ce que la formule sigma_P^2 = w1^2*sigma1^2 + w2^2*sigma2^2 + 2*w1*w2*rho*sigma1*sigma2 devient quand rho = 1.
+
+1. [ ] Zero, car les actifs se compensent
+1. [ ] La moitie de la variance de chaque actif
+1. [x] La variance de chaque actif individuel (moyenne ponderee des volatilites)
+    > Correct : quand rho = 1, sigma_P = w1*sigma1 + w2*sigma2. Aucune diversification n'est realisee.
+1. [ ] La somme des variances des deux actifs
+```
+
+```{quizdown}
+### Que se passe-t-il au risque d'un portefeuille egal-pondere de deux actifs identiques (meme sigma) quand rho passe de +1 a -1 ?
+
+> Explore les cas extremes de la formule de variance du portefeuille.
+
+1. [ ] Le risque reste constant
+1. [ ] Le risque double
+1. [x] Le risque diminue progressivement jusqu'a s'annuler
+    > Correct : quand rho = -1 et w1 = w2 = 0.5 avec sigma1 = sigma2, on obtient sigma_P = 0.
+1. [ ] Le risque augmente car les actifs s'amplifient mutuellement
+```
+
+```{quizdown}
+### Deux actifs ont des volatilites differentes (sigma1 = 0.07, sigma2 = 0.10) avec des poids egaux. Quelle est la volatilite du portefeuille si rho = -1 ?
+
+> Applique la formule : sigma_P = |w1*sigma1 - w2*sigma2|.
+
+1. [ ] 0.00 car la correlation est parfaitement negative
+1. [x] 0.015 car les volatilites differentes ne se compensent pas totalement
+    > Correct : |0.5 * 0.07 - 0.5 * 0.10| = |0.035 - 0.050| = 0.015. Le risque residuel subsiste.
+1. [ ] 0.085 car la correlation n'a pas d'effet
+1. [ ] 0.170 car les risques s'additionnent
+```
+
+```{quizdown}
+### La frontiere efficiente (efficient frontier) correspond a :
+
+> Pense a la definition formelle de l'optimalite dans l'espace risque-rendement.
+
+- [x] Les portefeuilles qui maximisent le rendement pour un risque donne
+    > Correct : c'est la definition directe de la frontiere efficiente.
+- [ ] Tous les portefeuilles realisables avec des poids positifs
+- [x] Les portefeuilles qui minimisent le risque pour un rendement donne
+    > Correct : les deux formulations sont equivalentes — ce sont les memes portefeuilles.
+- [ ] Les portefeuilles investis dans un seul actif
+```
+
+```{quizdown}
+### Dans le cadre de l'optimisation numerique de Markowitz, que represente le parametre q dans la fonction objectif min(w^T*C*w - q*w^T*mu) ?
+
+> Observe comment q pondere les deux termes de la fonction objectif.
+
+1. [ ] Le rendement cible du portefeuille
+1. [ ] Le nombre d'actifs dans le portefeuille
+1. [x] Un parametre d'appetit au risque qui permet de naviguer sur la frontiere efficiente
+    > Correct : q = 0 minimise uniquement le risque (variance minimale) ; q -> infini maximise le rendement. En faisant varier q, on trace la frontiere.
+1. [ ] La contrainte de somme des poids a 1
+```
+
+```{quizdown}
+### Pourquoi la frontiere efficiente contrainte (avec bornes sur les poids) est-elle toujours inferieure ou egale a la frontiere non contrainte ?
+
+> Pense a ce que les contraintes font a l'espace des solutions admissibles.
+
+1. [ ] Les contraintes ameliorent l'optimisation numerique
+1. [ ] Les contraintes eliminent les actifs les moins performants
+1. [x] Les contraintes reduisent l'espace des solutions admissibles, limitant les gains possibles
+    > Correct : toute contrainte supplementaire reduit ou conserve l'ensemble des solutions. La frontiere contrainte est donc forcement en dessous ou egale.
+1. [ ] Les contraintes augmentent les correlations entre actifs
+```
+
+```{quizdown}
+### Combiner un portefeuille risque P0 avec un actif sans risque produit des portefeuilles dont le lieu dans l'espace (sigma, E[R]) est :
+
+> Observe les formules E[R_P1] = wrf*r + (1-wrf)*E[R_P0] et sigma_P1 = (1-wrf)*sigma_P0.
+
+1. [ ] Une courbe parabolique
+1. [x] Une droite reliant l'actif sans risque au portefeuille P0
+    > Correct : les deux formules sont lineaires en wrf, donc le lieu est une droite dans l'espace (sigma, E[R]).
+1. [ ] Une courbe en cloche
+1. [ ] Un arc d'ellipse
+```
+
+```{quizdown}
+### Quel est le minimum d'observations historiques recommande pour estimer de facon fiable la matrice de covariance de N actifs ?
+
+> Il existe une regle empirique basee sur le nombre de parametres a estimer.
+
+1. [ ] N observations
+1. [ ] N log(N) observations
+1. [x] N^2 / 2 observations
+    > Correct : la matrice de covariance contient N*(N+1)/2 parametres independants, ce qui requiert au moins N^2/2 donnees pour une estimation statistiquement fiable.
+1. [ ] 2*N observations
+```
+
+---
+
+## Niveau 3 — Maitrise
+
+```{quizdown}
+### Un gestionnaire dispose de 4 actifs et calcule la frontiere efficiente par Monte-Carlo avec 5 millions de tirages. Il constate que les zones de tres faible risque sont sous-representees. Quelle est la cause principale ?
+
+> Pense a la probabilite d'obtenir des allocations specifiques par tirage aleatoire uniforme.
+
+1. [ ] Le nombre de tirages est insuffisant pour 4 actifs
+1. [x] Les tirages aleatoires uniformes produisent rarement des portefeuilles concentres sur les actifs peu risques
+    > Correct : les combinaisons proches des extremes (100% sur un actif peu risque) sont tres peu probables lors de tirages uniformes dans le simplex des poids.
+1. [ ] La matrice de covariance est mal estimee
+1. [ ] Les actifs peu risques ont des correlations trop eleves
+```
+
+```{quizdown}
+### Un investisseur souhaite maximiser son rendement espere sous contrainte de risque. Il dispose de la frontiere efficiente et du taux sans risque. Quelle strategie est optimale ?
+
+> La CML (Capital Market Line) joue un role central ici.
+
+1. [ ] Choisir le portefeuille sur la frontiere efficiente avec le rendement le plus eleve
+1. [ ] Investir 100% dans l'actif sans risque
+1. [x] Combiner l'actif sans risque avec le portefeuille tangent selon son appetit au risque
+    > Correct : tout portefeuille sur la CML domine les portefeuilles sur la seule frontiere efficiente pour le meme niveau de risque. Le portefeuille tangent est optimal.
+1. [ ] Choisir le portefeuille de variance minimale sur la frontiere efficiente
+```
+
+```{quizdown}
+### Remets les etapes du calcul de la frontiere efficiente par optimisation numerique dans le bon ordre.
+
+> Pense au processus complet depuis les donnees jusqu'au graphique final.
+
+1. Collecter les series de rendements historiques des actifs
+2. Estimer la matrice de covariance et les rendements esperes
+3. Definir la fonction objectif et les contraintes
+4. Faire varier le parametre q et resoudre le probleme a chaque etape
+5. Tracer la courbe risque-rendement des portefeuilles optimaux
+```
+
+```{quizdown}
+### Dans la solution analytique (forme fermee) de Markowitz, qu'implique le fait d'autoriser des poids negatifs ?
+
+> Pense a ce que signifie financierement un poids negatif sur un actif.
+
+1. [ ] Cela reduit le rendement espere du portefeuille
+1. [x] Cela autorise la vente a decouvert (short selling), permettant d'atteindre une frontiere plus haute
+    > Correct : les poids negatifs correspondent a la vente a decouvert. Cela elargit l'espace des solutions et produit une frontiere efficiente au-dessus de celle du cas long-only.
+1. [ ] Cela garantit que le risque du portefeuille est nul
+1. [ ] Cela signifie que la contrainte de somme a 1 n'est pas respectee
+```
+
+```{quizdown}
+### Un fonds de pension suisse a investi 35% en obligations etrangeres et 25% en actions, dont 10% en actions US. Le gestionnaire constate que l'USD represente 35% de l'exposition brute totale. Quelle affirmation est correcte ?
+
+> Pense a la gestion des risques de change dans un portefeuille internationalement diversifie.
+
+1. [ ] L'exposition de change de 35% est incluse dans les 100% d'allocation
+1. [x] L'exposition de change de 35% vient s'ajouter aux 100% et est geree separement via des instruments de couverture
+    > Correct : les expositions de change sont en superposition des allocations de 100% et font l'objet d'une gestion distincte (hedging partiel ou total).
+1. [ ] Le fonds doit imperativement couvrir 100% de l'exposition USD
+1. [ ] L'exposition USD de 35% provient uniquement de la poche actions US de 10%
+```
+
+```{quizdown}
+### Remets les etapes du raisonnement qui justifie la reduction du risque par diversification dans l'ordre logique.
+
+> Suis le fil de la demonstration mathematique de Markowitz.
+
+1. La variance du portefeuille depend des covariances entre actifs
+2. Si les actifs ne sont pas parfaitement correles, les covariances sont inferieures au produit des volatilites
+3. La variance du portefeuille est donc inferieure a la moyenne ponderee des variances individuelles
+4. Il existe des allocations qui reduisent le risque sans diminuer le rendement espere
+5. Ces allocations forment la frontiere efficiente
+```
+
+```{quizdown}
+### Un analyste compare deux portefeuilles A et B. A a un rendement espere de 8% et une volatilite de 12%. B a un rendement espere de 8% et une volatilite de 15%. Quelle conclusion s'impose ?
+
+> Applique le critere de dominance de la theorie MPT.
+
+1. [ ] B est preferable car il offre plus de potentiel de gains extremes
+1. [ ] Les deux portefeuilles sont equivalents
+1. [x] A domine B : meme rendement, risque plus faible — B est sous-optimal
+    > Correct : dans l'espace risque-rendement, A est strictement preferable a B pour tout investisseur rationnel averse au risque. B ne se trouve pas sur la frontiere efficiente.
+1. [ ] On ne peut pas comparer sans connaitre la correlation entre A et B
+```
+
+```{quizdown}
+### Quels sont les principaux risques lies a une estimation de la matrice de covariance sur un historique trop court ?
+
+> Pense aux consequences statistiques et pratiques d'une estimation peu fiable.
+
+- [x] Les correlations estimees sont instables et peu representatives
+    > Correct : avec peu de donnees, l'estimateur de covariance a une variance elevee — les correlations varient fortement selon la fenetre choisie.
+- [ ] Le rendement espere du portefeuille est surestime
+- [x] Les poids optimaux calcules peuvent etre tres sensibles a de petits changements dans les donnees
+    > Correct : l'optimisation de Markowitz est connue pour etre instable quand C est mal estimee — de petites erreurs sur C produisent de grands changements dans w.
+- [ ] La frontiere efficiente est necessairement au-dessus de sa vraie valeur
+```
+
+```{quizdown}
+### Pourquoi les correlations entre actifs tendent-elles a augmenter en periode de crise financiere, et quel en est l'impact sur la diversification ?
+
+> Pense au comportement des investisseurs en periode de stress et a la formule de variance du portefeuille.
+
+1. [ ] Les correlations augmentent car les actifs deviennent plus rentables simultanement
+1. [x] Les correlations augmentent car les investisseurs vendent massivement tous les actifs en meme temps, ce qui reduit l'effet de diversification au pire moment
+    > Correct : en crise, la contagion fait converger les comportements de prix. La diversification, basee sur de faibles correlations normales, perd une grande partie de son efficacite precisement quand elle serait le plus utile.
+1. [ ] Les correlations augmentent uniquement pour les actifs obligataires
+1. [ ] L'impact est nul car la frontiere efficiente reste stable
+```

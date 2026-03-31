@@ -1,0 +1,713 @@
+---
+title: "Construction de Portefeuille (Portfolio Construction)"
+---
+
+# Introduction
+
+Un **portefeuille (portfolio)** est un ensemble d'actifs financiers de natures potentiellement différentes — actions, obligations, immobilier, matières premières, etc. — détenus simultanément par un investisseur.
+
+## Pourquoi constituer un portefeuille ?
+
+L'objectif fondamental est de créer un **véhicule d'investissement plus robuste qu'un actif isolé**.
+
+La notion de « robustesse » varie selon le profil de l'investisseur. Elle peut désigner :
+
+- La maximisation du ratio rendement/risque (ratio de Sharpe ou ratio d'information)
+- La minimisation du *drawdown* (perte maximale observée sur une période)
+- La minimisation du temps de récupération après une perte (*time-to-recovery*), lié à la liquidité
+- D'autres objectifs spécifiques à l'investisseur
+
+::: {.callout-tip title="Intuition"}
+Détenir plusieurs actifs différents permet de lisser les fluctuations : quand l'un perd de la valeur, un autre peut en gagner ou rester stable. C'est le principe de la **diversification**.
+:::
+
+## Les défis de la construction de portefeuille
+
+Construire un bon portefeuille n'est pas trivial. Les principaux défis sont :
+
+- **Caractériser les actifs** : identifier des mesures de risque pertinentes pour chaque actif
+- **Modéliser les rendements futurs** : prévoir les rendements espérés est notoirement difficile
+- **Gérer les corrélations changeantes** : en période de crise, les corrélations entre actifs tendent à augmenter fortement, réduisant l'effet de diversification au moment où on en a le plus besoin
+- **Prendre en compte les comportements des investisseurs** : les biais psychologiques influencent les décisions
+
+---
+
+# La Théorie Moderne du Portefeuille (Modern Portfolio Theory — MPT)
+
+## Origines et contexte
+
+La **Théorie Moderne du Portefeuille (TPM)**, connue en anglais sous le nom de *Modern Portfolio Theory* (MPT), a été introduite par **Harry Markowitz** en **1952** dans son article fondateur.
+
+Cette contribution lui a valu le **Prix Nobel d'économie en 1990**, conjointement avec Merton Miller et William Sharpe.
+
+::: {.callout-note title="À retenir"}
+La MPT reste aujourd'hui l'un des cadres théoriques de référence pour la gestion de portefeuille, malgré ses hypothèses simplificatrices (normalité des rendements, stabilité des corrélations, etc.).
+:::
+
+## L'idée centrale : la diversification
+
+Le concept clé de la MPT est la **diversification (diversification)**.
+
+En sélectionnant des actifs de **natures différentes** — c'est-à-dire dont les rendements ne varient pas de façon identique — un investisseur peut :
+
+- **Compenser partiellement le risque** d'un actif par un autre
+- **Conserver les rendements** de chacun
+
+::: {.callout-tip title="Intuition"}
+Si l'actif A chute lors d'une récession mais que l'actif B reste stable ou monte (par exemple, l'or en période de crise), les détenir ensemble réduit la volatilité globale du portefeuille sans nécessairement sacrifier le rendement moyen.
+:::
+
+---
+
+# Rendement et Risque des Actifs
+
+## Rendement espéré d'un actif (Expected Return)
+
+Le **rendement espéré (expected return)** d'un actif $i$, noté $E[R_i]$, est une estimation du rendement futur de cet actif.
+
+Il existe plusieurs méthodes pour l'estimer :
+
+### Approche historique (Historical Approach)
+
+La méthode la plus simple consiste à calculer la **moyenne arithmétique des rendements passés** sur une fenêtre de temps $T$ :
+
+$$
+E[R_i] = \frac{1}{T} \sum_{t=1}^{T} R_i(t)
+$$
+
+Cette approche repose sur l'hypothèse que **l'histoire se répètera**, ce qui est une hypothèse forte et souvent discutable.
+
+### Approches par modèles (Model-Based Approaches)
+
+Des modèles plus sophistiqués permettent d'intégrer davantage d'informations :
+
+**Modèles fondamentaux (Fundamental models)** : ils utilisent la nature de l'actif (dividendes, coupons, ratios financiers) et des variables macroéconomiques pour estimer des rendements à **long terme**.
+
+**Modèles opportunistes (Opportunistic models)** : en plus des variables macro, ils intègrent des **vues subjectives à court terme** sur l'évolution des marchés.
+
+::: {.callout-warning title="Attention — Art ou science ?"}
+Les praticiens disent souvent : *"Les rendements espérés sont plus un art qu'une science."*
+
+Ce step est pourtant crucial : une mauvaise estimation des rendements espérés peut conduire à des allocations très sous-optimales. C'est la partie la plus délicate de tout le processus.
+:::
+
+## Variance et volatilité d'un actif (Variance & Volatility)
+
+Le **risque** d'un actif est mesuré par sa **variance (variance)**, ou sa **volatilité (volatility)** qui en est la racine carrée.
+
+La variance est généralement calculée à partir des données historiques :
+
+$$
+\text{Var}(R_i) = \frac{1}{T} \sum_{t=1}^{T} \left( R_i(t) - E[R_i] \right)^2
+$$
+
+::: {.callout-tip title="Intuition"}
+La variance mesure à quel point les rendements d'un actif s'écartent de leur moyenne. Plus la variance est grande, plus l'actif est risqué (ses rendements sont imprévisibles).
+:::
+
+Des modèles peuvent également être utilisés pour estimer la volatilité future (par ex. GARCH), mais l'approche historique reste la plus répandue en pratique.
+
+---
+
+# Rendement et Variance d'un Portefeuille
+
+## Pondération des actifs (Asset Weights)
+
+Un portefeuille de $N$ actifs est défini par un **vecteur de poids (weight vector)** $\mathbf{w} = (w_1, w_2, \ldots, w_N)^T$ tel que :
+
+$$
+\sum_{i=1}^{N} w_i = 1
+$$
+
+Chaque $w_i$ représente la **fraction du capital investie** dans l'actif $i$.
+
+::: {.callout-note title="À retenir"}
+Les poids peuvent être positifs (position longue) ou négatifs (vente à découvert, *short selling*). Dans le cas le plus simple, on impose $0 \leq w_i \leq 1$.
+:::
+
+## Rendement du portefeuille
+
+Le rendement du portefeuille à la date $t$ est la **combinaison linéaire pondérée** des rendements des actifs :
+
+$$
+R_p(t) = \sum_{i=1}^{N} w_i R_i(t)
+$$
+
+Son **rendement espéré** est alors, grâce à la linéarité de l'espérance :
+
+$$
+E[R_p] = \sum_{i=1}^{N} w_i E[R_i]
+$$
+
+Cette relation découle directement de la propriété :
+
+$$
+E[aX + bY] = aE[X] + bE[Y]
+$$
+
+::: {.callout-tip title="Intuition"}
+Le rendement espéré du portefeuille est simplement la moyenne pondérée des rendements espérés de ses composantes. C'est intuitif — mais la magie de la diversification opère sur le **risque**, pas sur le rendement.
+:::
+
+## Variance du portefeuille
+
+La **variance du portefeuille** est plus complexe. Elle fait intervenir les **covariances entre actifs** :
+
+$$
+\text{Var}(R_p) = \sigma_p^2 = \sum_{i=1}^{N} \sum_{j=1}^{N} w_i w_j \, \text{Cov}(R_i, R_j)
+$$
+
+La **covariance (covariance)** entre deux actifs est définie comme :
+
+$$
+\text{Cov}(X, Y) = E\left[(X - E[X])(Y - E[Y])\right]
+$$
+
+Cette formule généralise la propriété :
+
+$$
+\text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab\,\text{Cov}(X, Y)
+$$
+
+::: {.callout-tip title="Intuition"}
+La variance du portefeuille dépend non seulement des risques individuels de chaque actif, mais aussi de la façon dont leurs rendements évoluent **ensemble**. Si deux actifs montent et baissent en même temps (covariance positive), ils n'offrent pas de diversification. S'ils évoluent en sens contraire (covariance négative), ils se compensent.
+:::
+
+### Données nécessaires
+
+La **matrice de covariance (covariance matrix)** est généralement estimée à partir des données historiques.
+
+::: {.callout-warning title="Attention — Taille de l'échantillon"}
+Pour estimer de façon statistiquement fiable une matrice de covariance de $N$ actifs, il faut **au moins $N^2 / 2$ observations**. Pour 20 actifs, cela représente 200 données par actif minimum. Un historique trop court rend l'estimation peu fiable.
+:::
+
+## Forme matricielle compacte
+
+En notation matricielle, la variance du portefeuille s'écrit de façon très compacte :
+
+$$
+\sigma_p^2 = \mathbf{w}^T \mathbf{C} \, \mathbf{w}
+$$
+
+où $\mathbf{C}$ est la **matrice de covariance (covariance matrix)**.
+
+### Exemple pour $N = 2$ actifs
+
+Pour deux actifs, on développe explicitement :
+
+$$
+\sigma_p^2 =
+\begin{pmatrix} w_1 & w_2 \end{pmatrix}
+\begin{pmatrix} \sigma_{11} & \sigma_{12} \\ \sigma_{21} & \sigma_{22} \end{pmatrix}
+\begin{pmatrix} w_1 \\ w_2 \end{pmatrix}
+= w_1^2 \sigma_1^2 + w_1 w_2(\sigma_{12} + \sigma_{21}) + w_2^2 \sigma_2^2
+$$
+
+où $\sigma_{ii} = \sigma_i^2$ est la variance de l'actif $i$.
+
+---
+
+# Corrélation (Correlation)
+
+## Définition
+
+La **corrélation (correlation)** entre deux actifs $i$ et $j$ est définie comme la covariance normalisée :
+
+$$
+\rho_{ij} = \frac{\text{Cov}(R_i, R_j)}{\sigma_i \sigma_j} = \frac{E\left[(R_i - E[R_i])(R_j - E[R_j])\right]}{\sqrt{\text{Var}(R_i)} \sqrt{\text{Var}(R_j)}}
+$$
+
+Par définition, la corrélation d'un actif avec lui-même est :
+
+$$
+\rho_{ii} = 1
+$$
+
+Et l'on peut exprimer la covariance à partir de la corrélation :
+
+$$
+\text{Cov}(R_i, R_j) = \rho_{ij} \sigma_i \sigma_j
+$$
+
+## Interprétation
+
+La corrélation est toujours comprise entre $-1$ et $+1$ :
+
+- $\rho = +1$ : les actifs évoluent **parfaitement ensemble** (pas de diversification)
+- $\rho = 0$ : les actifs sont **indépendants** (diversification partielle)
+- $\rho = -1$ : les actifs évoluent en **sens parfaitement opposés** (diversification maximale, annulation possible du risque)
+
+::: {.callout-tip title="Intuition"}
+La matrice de covariance encode toutes les relations entre actifs. Combinée aux rendements espérés et aux volatilités individuelles, elle contient toute l'information nécessaire pour chercher des allocations optimales.
+:::
+
+---
+
+# Portefeuille de 2 Actifs — Analyse de la Diversification
+
+## Cas de référence : même risque, même rendement, même poids
+
+Commençons par un cas simple pour illustrer l'effet de la corrélation.
+
+On fixe :
+
+- $E[R_1] = E[R_2] = 0.20$ (rendement espéré identique)
+- $\sigma_1 = \sigma_2 = 0.10$ (volatilité identique)
+- $w_1 = w_2 = 0.50$ (poids égaux)
+
+Seule la corrélation $\rho_{12}$ varie.
+
+La volatilité du portefeuille est donnée par :
+
+$$
+\sigma_P = \sqrt{w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2 w_1 w_2 \rho_{12} \sigma_1 \sigma_2}
+$$
+
+### Résultats selon la corrélation
+
+**a) $\rho_{12} = 1$**
+
+$$
+\sigma_P = \sqrt{(w_1 \sigma_1 + w_2 \sigma_2)^2} = w_1 \sigma_1 + w_2 \sigma_2 = 0.10
+$$
+
+La volatilité du portefeuille est égale à la **moyenne pondérée** des volatilités. Combiner les deux actifs n'apporte **aucun bénéfice de diversification**.
+
+**b) $\rho_{12} = 0.5$**
+
+$$
+\sigma_P \approx 0.0866
+$$
+
+**c) $\rho_{12} = 0$**
+
+$$
+\sigma_P \approx 0.0707
+$$
+
+**d) $\rho_{12} = -0.5$**
+
+$$
+\sigma_P = 0.05
+$$
+
+**e) $\rho_{12} = -1$**
+
+$$
+\sigma_P = |w_1 \sigma_1 - w_2 \sigma_2| = 0.0
+$$
+
+Avec des actifs parfaitement négativement corrélés et de même poids/volatilité, le risque du portefeuille est **complètement annulé** !
+
+::: {.callout-warning title="Attention — Cas idéal et cas réel"}
+Une corrélation de $-1$ est extrêmement rare dans la pratique. Elle reste un cas limite théorique pour illustrer le potentiel maximal de la diversification.
+:::
+
+## Cas général : actifs asymétriques
+
+Considérons maintenant deux actifs aux caractéristiques différentes :
+
+- $E[R_1] = 0.10$, $E[R_2] = 0.20$
+- $\sigma_1 = 0.07$, $\sigma_2 = 0.10$
+- $w_1 = w_2 = 0.50$
+
+Le rendement espéré du portefeuille est fixé : $E[R_P] = 0.15$.
+
+Les volatilités selon la corrélation sont :
+
+| Corrélation | Volatilité $\sigma_P$ |
+|:-----------:|:--------------------:|
+| $\rho = 1$ | 0.085 |
+| $\rho = 0.5$ | 0.074 |
+| $\rho = 0$ | 0.061 |
+| $\rho = -0.5$ | 0.044 |
+| $\rho = -1$ | 0.015 |
+
+::: {.callout-note title="À retenir"}
+Même avec une corrélation de $-1$, si les volatilités des deux actifs sont différentes, le risque du portefeuille n'est **pas entièrement annulé**. Il subsiste un risque résiduel proportionnel à $|w_1 \sigma_1 - w_2 \sigma_2|$.
+:::
+
+## Effet des poids variables
+
+Lorsque l'on fait **varier les poids** $w_1$ et $w_2$ (tout en maintenant $w_1 + w_2 = 1$), le portefeuille décrit une **courbe dans l'espace (risque, rendement)**.
+
+Ces courbes forment des **ellipses** reliant les deux actifs purs à travers les différents niveaux de corrélation :
+
+- Pour $\rho = 1$ : la courbe est une droite (pas de diversification)
+- Pour $\rho$ décroissant : la courbe se courbe vers la gauche, révélant des portefeuilles avec moins de risque pour le même rendement
+
+::: {.callout-tip title="Intuition"}
+Plus la corrélation est faible (voire négative), plus la courbe s'infléchit vers la gauche. C'est cette courbure qui représente le **gain de diversification** : on peut obtenir le même rendement avec moins de risque, ou plus de rendement pour le même risque.
+:::
+
+---
+
+# La Frontière Efficiente (Efficient Frontier)
+
+## Du portefeuille à 2 actifs au portefeuille de $N$ actifs
+
+En généralisant à $N$ actifs, on peut construire **toutes les combinaisons possibles** de paires d'actifs, puis de triplets, etc.
+
+L'ensemble de tous les portefeuilles réalisables forme un **nuage de points** dans l'espace (risque, rendement). L'enveloppe supérieure gauche de ce nuage est appelée la **frontière efficiente (efficient frontier)**.
+
+::: {.callout-note title="À retenir"}
+La **frontière efficiente** est l'ensemble des portefeuilles qui **maximisent le rendement espéré pour un niveau de risque donné** — ou de façon équivalente, qui **minimisent le risque pour un niveau de rendement donné**.
+:::
+
+## Interprétation graphique
+
+Considérons trois portefeuilles A, B et C dans l'espace (risque, rendement) :
+
+- **A** est sur la frontière efficiente (faible risque)
+- **B** est sur la frontière efficiente (fort rendement)
+- **C** est à l'intérieur du nuage (portefeuille sous-optimal)
+
+**A est meilleur que C** : A offre le même rendement que C, mais avec **moins de risque** ($\sigma_P$ plus faible).
+
+**B est meilleur que C** : B offre le même risque que C, mais avec **plus de rendement** ($E[R_p]$ plus élevé).
+
+::: {.callout-tip title="Intuition"}
+Aucun investisseur rationnel ne choisirait C s'il peut obtenir A ou B. Le choix entre A et B dépend de la **tolérance au risque** de l'investisseur :
+- Un investisseur conservateur préférera A (moins de risque, moins de rendement)
+- Un investisseur agressif préférera B (plus de rendement, plus de risque)
+:::
+
+---
+
+# Méthodes de Calcul de la Frontière Efficiente
+
+## Aperçu des approches
+
+Trois grandes familles de méthodes permettent de calculer la frontière efficiente :
+
+1. **Monte-Carlo** : approche par force brute
+2. **Forme analytique fermée (Closed-Form)** : solution mathématique exacte
+3. **Optimisation numérique (Numerical Optimisation)** : approche pratique la plus répandue
+
+## Méthode Monte-Carlo
+
+### Principe
+
+L'approche Monte-Carlo consiste à :
+
+1. Tirer aléatoirement des vecteurs de poids $\mathbf{w}$ dont les composantes somment à 1
+2. Calculer le rendement et le risque du portefeuille correspondant
+3. Placer le point $(σ_P, E[R_P])$ sur un graphique
+4. Répéter un très grand nombre de fois
+
+### Résultats et limites
+
+L'application à 4 actifs fictifs avec **5 millions de tirages** montre que :
+
+- Le nuage de points révèle la forme générale de la zone réalisable
+- L'actif 4 (le plus risqué) est à l'extrémité droite du nuage
+- Les actifs moins risqués sont inefficaces à 100% d'allocation (visibles par les ellipses autour d'eux)
+
+::: {.callout-warning title="Limites de l'approche Monte-Carlo"}
+Cette méthode présente plusieurs inconvénients majeurs :
+
+- Elle est **très coûteuse en calcul** : des millions de tirages sont nécessaires, et ce nombre croît avec le nombre d'actifs
+- Elle est **inefficace** : les zones aux risques extrêmes (très faibles ou très élevés) sont sous-représentées
+- Elle **ne garantit pas** de trouver la vraie frontière efficiente — elle ne fait qu'approcher la zone réalisable
+:::
+
+## Forme analytique fermée (Closed-Form Solution)
+
+### Formulation du problème
+
+En minimisant $\mathbf{w}^T \mathbf{C} \mathbf{w}$ sous la contrainte $\sum_i w_i = 1$, on peut dériver une **solution analytique exacte** via les multiplicateurs de Lagrange.
+
+On définit les scalaires suivants :
+
+$$
+a = \mathbf{1}^T \mathbf{C}^{-1} \mathbf{1}, \quad b = \mathbf{1}^T \mathbf{C}^{-1} \boldsymbol{\mu}
+$$
+
+$$
+c = \boldsymbol{\mu}^T \mathbf{C}^{-1} \boldsymbol{\mu}, \quad d = a \cdot c - b^2
+$$
+
+où $\boldsymbol{\mu} = (E[R_1], E[R_2], \ldots)^T$ et $\mathbf{1} = (1, 1, \ldots)^T$.
+
+### Multiplicateurs de Lagrange
+
+$$
+\lambda_1 = \frac{c - b \cdot \mu_P}{d}, \quad \lambda_2 = \frac{a \cdot \mu_P - b}{d}
+$$
+
+### Solution en poids optimaux
+
+$$
+\mathbf{w} = \mathbf{C}^{-1}(\lambda_1 \mathbf{1} + \lambda_2 \boldsymbol{\mu})
+$$
+
+La variance minimale associée est :
+
+$$
+\sigma^2 = \mathbf{w}^T \mathbf{C} \mathbf{w} = \lambda_1 + \lambda_2 \mu_P
+$$
+
+où $\mu_P$ est le rendement espéré cible du portefeuille.
+
+### Observations pratiques
+
+La solution analytique produit :
+
+- Une frontière efficiente qui **passe au-dessus** du nuage Monte-Carlo
+- Des poids qui peuvent être **négatifs ou supérieurs à 1** (vente à découvert, levier), ce qui conduit à des portefeuilles avec des rendements encore plus élevés
+- Si l'on **plafonne les allocations** entre 0 et 1, la frontière devient plus contrainte et ne peut pas atteindre les risques élevés
+
+::: {.callout-warning title="Contraintes de signe"}
+Autoriser des poids négatifs revient à permettre la **vente à découvert (short selling)**, ce qui n'est pas toujours réalisable en pratique (réglementation, coûts). Contraindre les poids entre 0 et 1 représente un portefeuille *long only*.
+:::
+
+## Optimisation numérique (Numerical Optimisation)
+
+### Pourquoi l'optimisation numérique ?
+
+C'est la méthode la plus utilisée en pratique, car elle est :
+
+- **Simple à mettre en œuvre** avec des bibliothèques standards (par ex. `scipy.optimize`)
+- **Flexible** : elle permet d'ajouter facilement des contraintes réalistes
+- **Efficace** : elle ne nécessite qu'un petit nombre d'appels à la fonction objectif
+
+### Formulation du problème
+
+On résout le problème de minimisation suivant :
+
+$$
+\min_{\mathbf{w}} \left[ \mathbf{w}^T \mathbf{C} \mathbf{w} - q \mathbf{w}^T \boldsymbol{\mu} \right]
+$$
+
+sous les contraintes :
+
+$$
+\mathbf{1}^T \mathbf{w} = 1 \quad \text{et} \quad 0 \leq w_i \leq 1
+$$
+
+où $q \in [0, +\infty)$ est un **paramètre de risque (risk parameter)** qui permet de naviguer le long de la frontière efficiente :
+
+- $q = 0$ : on minimise uniquement le risque → portefeuille de **variance minimale**
+- $q \to \infty$ : on maximise uniquement le rendement → portefeuille **maximum return**
+
+::: {.callout-tip title="Intuition"}
+En faisant varier $q$ de 0 à $+\infty$, on trace progressivement la **frontière efficiente** depuis le portefeuille le moins risqué jusqu'au portefeuille au rendement maximal.
+:::
+
+### Implémentation en Python
+
+Le code utilise :
+
+- `sci.Bounds` pour imposer $0 \leq w_i \leq 1$
+- `sci.LinearConstraint` pour imposer $\mathbf{1}^T \mathbf{w} = 1$
+- `sci.minimize` avec la méthode `'trust-constr'`
+- Une boucle sur $q \in \{0, 0.5, 1, \ldots, 50\}$
+
+```python
+import scipy.optimize as sci
+import numpy as np
+
+# Définition des bornes et de la contrainte linéaire
+bounds = sci.Bounds([0, 0, 0, 0], [1.0, 1.0, 1.0, 1.0])
+linear_constraint = sci.LinearConstraint([1, 1, 1, 1], [1], [1])
+
+# Fonction objectif
+def to_minimise(x, q):
+    return cov.dot(x).dot(x) - q * er.dot(x)
+
+# Calcul de la frontière efficiente
+eff_risk = []
+eff_ret = []
+w_optim = []
+
+for q in np.arange(0, 50, 0.5):
+    x0 = np.array([1, 1, 1, 1]) / 3
+    res = sci.minimize(to_minimise, x0, method='trust-constr',
+                       bounds=bounds,
+                       constraints=linear_constraint,
+                       options={'verbose': 0},
+                       args=(q))
+    eff_risk += [np.sqrt(cov.dot(res.x).dot(res.x))]
+    eff_ret += [er.dot(res.x)]
+    w_optim += [res.x]
+```
+
+### Résultats sans contraintes
+
+Sans contraintes supplémentaires (uniquement $\sum w_i = 1$ et $0 \leq w_i \leq 1$) :
+
+- La frontière efficiente coïncide avec la limite supérieure du nuage Monte-Carlo
+- Elle va du portefeuille de **risque minimal** jusqu'à l'actif le plus risqué (ici l'actif 4 à 100%)
+- Les allocations aux actifs moins risqués décroissent progressivement à mesure que le risque augmente
+
+### Résultats avec contraintes
+
+On peut imposer des contraintes plus réalistes, par exemple :
+
+- $10\% \leq w_1 \leq 100\%$
+- $5\% \leq w_2 \leq 100\%$
+- $0\% \leq w_3 \leq 25\%$
+- $0\% \leq w_4 \leq 90\%$
+
+Effets observés :
+
+- La frontière efficiente **contrainte est plus basse** que la frontière non contrainte
+- Elle ne peut pas atteindre les niveaux de risque très élevés (ceux de l'actif 4 pur à 100%)
+- Les contraintes reflètent des limites réalistes imposées par la réglementation ou la politique d'investissement
+
+::: {.callout-note title="À retenir — Avantage de l'optimisation numérique"}
+L'optimisation numérique permet d'intégrer très facilement des contraintes complexes :
+contraintes de borne par actif, contraintes sectorielles, contraintes de liquidité, etc. C'est pourquoi elle est la méthode de référence dans l'industrie.
+:::
+
+---
+
+# Actif Sans Risque et Droite du Marché des Capitaux (Capital Market Line — CML)
+
+## L'actif sans risque (Risk-Free Asset)
+
+Un **actif sans risque (risk-free asset)** est un instrument financier dont le rendement est certain, sans volatilité.
+
+En pratique, il s'agit des **obligations souveraines à court terme** émises par une banque centrale (par ex. les bons du Trésor américains, les Bundesanleihen allemands). Le risque de défaut d'un État est considéré comme **négligeable** et approximé à zéro.
+
+::: {.callout-note title="À retenir"}
+L'actif sans risque sert de référence de base. Son rendement $r$ est faible mais garanti. Il n'est pas corrélé avec les autres actifs ($\rho_{rf, P} = 0$) et sa variance est nulle ($\sigma_{rf}^2 = 0$).
+:::
+
+## Combiner l'actif sans risque avec un portefeuille
+
+En combinant l'actif sans risque (de poids $w_{rf}$) et un portefeuille risqué $P_0$ (de poids $1 - w_{rf}$), on obtient un nouveau portefeuille $P_1$.
+
+### Rendement espéré de $P_1$
+
+$$
+E[R_{P_1}] = w_{rf} \, E[r] + (1 - w_{rf}) \, E[R_{P_0}]
+$$
+
+### Risque de $P_1$
+
+En développant la variance :
+
+$$
+\sigma_{P_1}^2 = w_{rf}^2 \underbrace{\sigma_{rf}^2}_{=0} + (1 - w_{rf})^2 \sigma_{P_0}^2 + 2 w_{rf}(1 - w_{rf}) \underbrace{\rho_{rf, P_0}}_{=0} \sigma_{rf} \sigma_{P_0}
+$$
+
+Il ne reste que :
+
+$$
+\sigma_{P_1} = (1 - w_{rf}) \, \sigma_{P_0}
+$$
+
+::: {.callout-tip title="Intuition"}
+Le **risque** et le **rendement** de $P_1$ sont tous les deux des **combinaisons linéaires** de ceux de l'actif sans risque et du portefeuille $P_0$. Dans l'espace (risque, rendement), les portefeuilles combinés se trouvent sur une **droite** reliant l'actif sans risque au portefeuille $P_0$.
+:::
+
+## La Droite du Marché des Capitaux (Capital Market Line — CML)
+
+La **CML (Capital Market Line)** est la droite tangente à la frontière efficiente passant par le point de l'actif sans risque.
+
+Le portefeuille tangent (le point de tangence) est appelé **portefeuille de marché (market portfolio)**.
+
+::: {.callout-note title="À retenir"}
+La CML représente la meilleure combinaison possible entre rendement et risque :
+
+- **En dessous de la CML** : portefeuilles sous-optimaux (on peut faire mieux)
+- **Sur la CML** : combinaisons optimales actif sans risque + portefeuille de marché
+- **Au-delà du portefeuille tangent** : utilisation du levier (emprunter pour investir davantage)
+:::
+
+### Décision d'investissement
+
+Le choix du portefeuille sur la CML dépend :
+
+- De l'**appétit au risque** de l'investisseur
+- Du **niveau de $r$** (le rendement sans risque)
+- De la capacité de l'investisseur à **détenir des liquidités** (position en dessous du portefeuille tangent)
+- De la capacité à utiliser du **levier** (position au-delà du portefeuille tangent)
+
+::: {.callout-tip title="Intuition"}
+Un investisseur conservateur placera une partie de son capital en actif sans risque et le reste dans le portefeuille tangent. Un investisseur agressif pourra emprunter pour investir plus de 100% dans le portefeuille tangent — ce qui amplifie à la fois le rendement et le risque.
+:::
+
+---
+
+# Allocation Typique d'un Fonds de Pension Suisse
+
+## Contexte institutionnel
+
+Un **fonds de pension (pension fund)** est un investisseur institutionnel qui gère l'épargne retraite de ses membres.
+
+Contrairement à un fonds de placement ordinaire, un fonds de pension suisse est soumis à des **contraintes réglementaires** strictes (notamment OPP2 — Ordonnance sur la Prévoyance Professionnelle) qui dictent les limites maximales d'allocation par classe d'actifs.
+
+De plus, la taille relative du marché suisse oblige à une **diversification géographique** importante.
+
+## Allocation type simplifiée
+
+Une allocation type d'un fonds de pension suisse se décompose ainsi :
+
+| Classe d'actifs | Allocation |
+|:----------------|:----------:|
+| Obligations CH | 10% |
+| Obligations étrangères | 35% |
+| Actions | 25% |
+| Immobilier | 15% |
+| Matières premières | 10% |
+| Alternatives | 5% |
+| **Total** | **100%** |
+
+### Décomposition des actions
+
+La poche actions de 25% se subdivise par zone géographique :
+
+| Zone | Allocation |
+|:-----|:----------:|
+| Actions CH | 4% |
+| Actions EU | 8% |
+| Actions marchés émergents | 3% |
+| Actions US | 10% |
+| **Total** | **25%** |
+
+### Gestion des expositions de change
+
+La diversification géographique génère des **expositions aux devises étrangères**, qui peuvent être partiellement couvertes (hedgées) :
+
+| Devise | Exposition brute | Exposition résiduelle (après couverture) |
+|:-------|:----------------:|:----------------------------------------:|
+| EUR | 25% | 3% |
+| USD | 35% | 8% |
+| Marchés émergents | 20% | 4% |
+| **Total** | **80%** | **15%** |
+
+::: {.callout-note title="À retenir"}
+Les expositions de change viennent **s'ajouter** à l'allocation de 100% (elles ne font pas partie des 100% — elles sont gérées séparément via des instruments de couverture). La couverture de change peut être optimisée ou appliquée selon des règles empiriques.
+:::
+
+### Actifs alternatifs et matières premières
+
+- **Matières premières (commodities)** : peuvent inclure l'or, les métaux précieux, le pétrole ou des produits agricoles. Leur faible corrélation avec les actifs traditionnels en fait de bons diversificateurs.
+
+- **Alternatifs (alternatives)** : allocations à des hedge funds, au capital-risque (*venture capital*), aux infrastructures, etc.
+
+---
+
+# Points Clés (Key Takeaways)
+
+::: {.callout-note title="Résumé du chapitre"}
+
+- Un **portefeuille** regroupe plusieurs actifs pour créer un véhicule d'investissement plus robuste qu'un actif seul.
+
+- La **diversification** est le concept central : combiner des actifs peu corrélés réduit le risque global sans nécessairement réduire le rendement espéré.
+
+- La **Théorie Moderne du Portefeuille** de Markowitz (1952) reste le cadre de référence pour la construction de portefeuille.
+
+- La **frontière efficiente** représente l'ensemble des allocations qui maximisent le rendement pour un risque donné (ou minimisent le risque pour un rendement donné).
+
+- La frontière efficiente est généralement calculée par **optimisation numérique**, qui permet d'intégrer facilement des contraintes réalistes sur les poids.
+
+- L'introduction d'un **actif sans risque** et de la **CML** permet d'identifier le portefeuille tangent et de guider le choix de l'investisseur selon son appétit au risque.
+
+:::
+
+::: {.callout-tip title="Intuition finale"}
+La diversification est le seul « repas gratuit » (free lunch) en finance. Elle permet de réduire le risque sans coût en rendement espéré — à condition de choisir des actifs suffisamment peu corrélés entre eux.
+:::
