@@ -205,7 +205,75 @@ Finally, implement an execution algorithm that takes into account the price evol
 
 - Picking again the same initial times, compute the execution prices you got with this method and compare them with the ones previously obtained.
 
+  ```python
+  def price_evolution_based(dates: np.ndarray, prices: np.ndarray, random_index: int, num_slices: int = 12, delta: float = 0.001) -> np.ndarray:
+      execution_prices = []
+      last_price = prices[random_index]
+      slices_executed = 0
+      for i in range(random_index, len(dates)):
+          if slices_executed >= num_slices:
+              break
+          elif prices[i] < last_price - delta:
+              execution_prices.append(prices[i])
+              last_price = prices[i]
+              slices_executed += 1
+          elif prices[i] > last_price:
+              last_price = prices[i]
+      assert len(execution_prices) == num_slices, f"Not enough price drops to execute all slices (actual: {len(execution_prices)})... Try reducing delta."
+      return np.array(execution_prices)
+  
+  differences_price_evolution = np.zeros(20)
+  differences_vwap = np.zeros(20)
+  differences_twap = np.zeros(20)
+  for i in range(20):
+      decision_price = asks[random_indices[i]] * 12e6
+
+      price_evolution_prices = price_evolution_based(dates, asks, random_indices[i]) * 12e6 / 12
+      price_evolution_execution_price = np.sum(price_evolution_prices)  # Assuming equal slices
+      differences_price_evolution[i] = price_evolution_execution_price - decision_price
+
+      vwap_prices, vwap_volumes = vwap(dates, asks, random_indices[i])
+      vwap_volumes *= 12e6
+      vwap_execution_price = np.sum(vwap_prices * vwap_volumes)
+      differences_vwap[i] = vwap_execution_price - decision_price
+
+      twap_prices = twap(dates, asks, random_indices[i]) * 12e6 / 12
+      twap_execution_price = np.sum(twap_prices)
+      differences_twap[i] = twap_execution_price - decision_price
+
+  bar_width = 0.25
+  bar_shift = 0.25
+  plt.figure()
+  plt.bar(np.arange(1, 21) - bar_shift, differences_price_evolution, label='Price Evolution Based Difference', width=bar_width)
+  plt.bar(np.arange(1, 21), differences_vwap, label='VWAP Difference', alpha=0.7, width=bar_width)
+  plt.bar(np.arange(1, 21) + bar_shift, differences_twap, label='TWAP Difference', alpha=0.7, width=bar_width)
+  plt.title("Execution Prices vs Decision Prices")
+  plt.xlabel("Random Index")
+  plt.xticks(range(20), [f"Index {i}" for i in range(1, 21)], rotation=45)
+  plt.ylabel("Price")
+  plt.legend()
+  plt.show()
+  ```
+
+  We can observe that the price-evolution-based method can sometimes lead to better execution prices than the TWAP and VWAP algorithms, like in the case of the random index 18 of the plot.
+  This is probably due to the exploitation of price drops that has occurred during the execution period: indeed, the price-evolution-based method allows to exploit these price drops.
+  However, if there is not enough price drops or if there is some unfavorable market conditions, the price-evolution-based method is similar to TWAP or VWAP method, but can also lead to worse execution prices than the TWAP and VWAP algorithms, like in the case of the random index 6 of the plot.
+
+  So depending on the market conditions, the price-evolution-based method can outperform or underperform the TWAP and VWAP algorithms.
+
+  Compare to the TWAP and VWAP algorithms, the price-evolution-based method has some parameters to tune such as $delta$.
+  The tuning of parameters can lead to better or worse execution prices, but allows to adapt the execution strategy to the current market conditions, which is not possible with the TWAP and VWAP algorithms that are more rigid.
+
 - How should you choose $delta$ to execute the full order over 3 hours?
+
+  To execute the full order over 3 hours, we need to find the right balance for $delta$ that allows to execute all 12 slices.
+  A smaller $delta$ will lead to more frequent executions, while a larger $delta$ will lead to fewer executions.
+
+  To choose $delta$, we can analyze the historical price data to determine the general behavior of the market and the frequency of price changes.
+  In this way, the orders will be executed in the right timelapse.
+
+  And it is also possible to adapt $delta$ dynamically during the execution period to have more flexibility and better adapt to the current market conditions.
+
 
 // ─── Section 4 ──────────────────────────────────────────────────────────────
 = Impact of Market Volatility
@@ -217,6 +285,34 @@ In this task, you will analyze how market volatility affects the execution price
 - Define volatility as the standard deviation of mid-price returns over a rolling window of 30 minutes.
 - Compute this measure for the selected 20 time intervals.
 
+```python
+def compute_volatility(dates: np.ndarray, mid_prices: np.ndarray, window_size: int = 30) -> np.ndarray:
+    returns = np.diff(mid_prices) / mid_prices[:-1]
+    volatility = np.zeros(len(returns))
+    for i in range(window_size, len(returns)):
+        volatility[i] = np.std(returns[i - window_size:i])
+    return volatility
+
+volatility = compute_volatility(dates, mid_prices)
+
+volatility_for_intervals = np.zeros(20)
+for i in range(20):
+    volatility_interval = []
+    for j in range(12):
+        idx = time_indexer(dates, dates[random_indices[i]] + datetime.timedelta(minutes=j * 15), slice_interval=15)
+        if len(idx) > 0:
+            volatility_interval.append(volatility[idx].mean())
+    volatility_for_intervals[i] = np.mean(volatility_interval)
+plt.figure()
+plt.bar(range(20), volatility_for_intervals, label='Volatility for Intervals')
+plt.title("Market Volatility for Selected Intervals")
+plt.xlabel("Random Index")
+plt.xticks(range(20), [f"Index {i}" for i in range(1, 21)], rotation=45)
+plt.ylabel("Volatility")
+plt.legend()
+plt.show()
+```
+
 *2. Analyze Execution Performance Under Different Volatility Conditions:*
 
 - Divide the 20 intervals into two groups:
@@ -225,4 +321,48 @@ In this task, you will analyze how market volatility affects the execution price
 
 - Compute and compare the execution prices obtained using TWAP, VWAP, and price-evolution strategies across both groups. Which strategy performs best in volatile markets?
 
+  ```python
+  %| label: fig1
+  low_volatility_indices = np.argsort(volatility_for_intervals)[:10]
+  high_volatility_indices = np.argsort(volatility_for_intervals)[10:]
+
+  bar_width = 0.25
+  bar_shift = 0.25
+  plt.figure()
+  plt.suptitle("Execution Prices vs Decision Prices")
+  plt.subplot(1, 2, 1)
+  plt.bar(np.arange(1, 11) - bar_shift, differences_price_evolution[low_volatility_indices], label='Price Evolution Based Difference', width=bar_width)
+  plt.bar(np.arange(1, 11), differences_vwap[low_volatility_indices], label='VWAP Difference', alpha=0.7, width=bar_width)
+  plt.bar(np.arange(1, 11) + bar_shift, differences_twap[low_volatility_indices], label='TWAP Difference', alpha=0.7, width=bar_width)
+  plt.title("Execution Prices vs Decision Prices for Low-Volatility Periods")
+  plt.xlabel("Random Index")
+  plt.xticks(range(1, 11), [f"Index {i + 1}" for i in low_volatility_indices], rotation=45)
+  plt.ylabel("Price")
+  plt.legend()
+  plt.subplot(1, 2, 2)
+  plt.bar(np.arange(1, 11) - bar_shift, differences_price_evolution[high_volatility_indices], label='Price Evolution Based Difference', width=bar_width)
+  plt.bar(np.arange(1, 11), differences_vwap[high_volatility_indices], label='VWAP Difference', alpha=0.7, width=bar_width)
+  plt.bar(np.arange(1, 11) + bar_shift, differences_twap[high_volatility_indices], label='TWAP Difference', alpha=0.7, width=bar_width)
+  plt.title("Execution Prices vs Decision Prices for High-Volatility Periods")
+  plt.xlabel("Random Index")
+  plt.xticks(range(1, 11), [f"Index {i + 1}" for i in high_volatility_indices], rotation=45)
+  plt.ylabel("Price")
+  plt.legend()
+  plt.show()
+  ```
+
+  In volatile markets, the VWAP strategy perform globally better than the other strategies.
+  This is due to the fact that the VWAP strategy takes into account the historical volume of data, which allows to better adapt to the market conditions.
+
+  However, the price-evolution-based method can outperform all the other strategies in some cases by exploiting favorable price movements during the execution period, such as in case of index 7 and index 16.
+  But this strategy is sensitive to parameter tuning and can lead to worse execution prices if the parameters are not adapted to the market conditions, such as in case of index 5 and index 6.
+
 - Is there a strategy that minimizes execution price deviation across all market conditions?
+
+  The best strategy to minimize execution price deviation accross all market conditions seems to be the price-evolution-based method, since it can adapt to the market conditions by exploiting favorable price movements during the execution period.
+  For instance, this strategy outperforms the other strategies for index 2 and 13 for low-volatility periods, and for index 7 and 16 for high-volatility periods.
+
+  But to exploit this advantage, it is necessary to have a good tuning of the parameters, which can be difficult and not done properly, leading to worse execution prices than the other strategies, such as in case of index 5 and index 6 for high-volatility periods or in case of index 12 for low-volatility periods.
+
+  On top of that, the price-evolution-based method can adapt to the market conditions by making the parameters dynamic and adaptative to the current market conditions, which is not possible with the TWAP and VWAP strategies that are more rigid.
+  But this can be more challenging to implement and to tune, and can lead to worse execution prices if not done properly.
