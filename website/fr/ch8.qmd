@@ -1,0 +1,502 @@
+---
+title: "Modèles basés sur les agents (Agent Based Models)"
+---
+
+## Introduction : comprendre les marchés par le bas
+
+### Pourquoi modéliser les marchés ?
+
+Les marchés financiers ne sont pas des phénomènes purement aléatoires. Ils résultent d'interactions complexes entre de nombreux participants aux comportements variés. Ces interactions produisent des **faits stylisés** (Stylised Facts) — des régularités statistiques observées empiriquement sur presque tous les marchés — tels que les distributions à queues épaisses (Fat Tails), la volatilité groupée (Volatility Clustering) ou l'autocorrélation des rendements absolus.
+
+Face à ces observations, plusieurs questions fondamentales se posent :
+
+- Comment **expliquer** l'émergence de ces phénomènes ?
+- Comment les **modéliser** de manière réaliste ?
+- Comment **prédire** l'évolution des marchés ?
+
+### Deux grandes familles d'approches
+
+Il existe deux philosophies opposées pour aborder la modélisation des marchés :
+
+**Approche descendante (Top-Down)**
+
+On part d'équations décrivant la dynamique globale du système. Ces modèles sont souvent analytiquement traitables mais peuvent masquer les mécanismes sous-jacents.
+
+**Approche ascendante (Bottom-Up)**
+
+On définit des règles locales simples pour chaque participant (agent), et l'on observe comment leur interaction collective produit une dynamique globale complexe. C'est l'approche des **Modèles Basés sur les Agents** (Agent Based Models, ABM).
+
+::: {.callout-tip title="Intuition"}
+L'idée clé est qu'un comportement microscopique simple peut engendrer une complexité macroscopique difficilement modélisable autrement. L'exemple classique est la **circulation urbaine** : simuler chaque voiture avec des règles simples (accélérer, freiner, changer de file) permet de reproduire des embouteillages, des ondes de congestion et d'autres phénomènes que des équations globales peinent à capturer.
+:::
+
+::: {.callout-note title="À retenir"}
+Les ABM ne prétendent pas nécessairement reproduire **tous** les faits stylisés avec un seul modèle. Chaque modèle cible une ou plusieurs propriétés particulières du marché.
+:::
+
+---
+
+## Tour d'horizon de trois modèles ABM célèbres
+
+Ce chapitre présente trois modèles ABM représentatifs, chacun avec une philosophie différente.
+
+---
+
+### Le modèle de Cont-Bouchaud
+
+#### Contexte et objectif
+
+Le modèle de **Cont et Bouchaud** [11] est issu de la physique statistique. Son objectif principal est de reproduire les **distributions à queues épaisses** (Fat-Tailed Distributions) des rendements financiers à partir d'un mécanisme de **comportement moutonnier** (Herding Behaviour).
+
+#### Mécanisme central : la formation de clusters
+
+Dans ce modèle, les agents ne décident pas individuellement de manière indépendante. Ils se regroupent en **clusters aléatoires**. Chaque cluster prend une décision collective :
+
+- **Vendre** avec probabilité $a$
+- **Acheter** avec probabilité $a$
+- **Ne rien faire** avec probabilité $1 - 2a$
+
+La contrainte $a \leq 0.5$ est imposée pour garantir la cohérence du modèle.
+
+#### Résultats clés selon la valeur de $a$
+
+Le paramètre $a$ contrôle entièrement la nature de la distribution des rendements :
+
+- Lorsque $a = 0.5$ → la distribution des rendements est **gaussienne** (Gaussian Distribution), comme dans un marché parfaitement aléatoire.
+
+- Lorsque $a \ll 0.5$ → la distribution devient **à queues épaisses** (Fat-Tailed Distribution), proche de ce que l'on observe sur les marchés réels.
+
+::: {.callout-tip title="Intuition"}
+Quand les agents se regroupent en grands clusters (phénomène moutonnier), des ordres massifs d'achat ou de vente peuvent apparaître simultanément. Ces épisodes créent des mouvements de prix extrêmes beaucoup plus fréquents qu'une loi normale ne le prédirait — d'où les queues épaisses.
+:::
+
+#### Extensibilité du modèle
+
+L'un des atouts du modèle de Cont-Bouchaud est sa **modularité** : des extensions peuvent être greffées pour étudier des politiques ou des mécanismes supplémentaires, comme l'ajout d'une **Taxe Tobin** (Tobin Tax) sur les transactions financières.
+
+::: {.callout-note title="À retenir"}
+Un mécanisme moutonnier simple suffit à reproduire des distributions de rendements à queues épaisses — une propriété fondamentale des marchés réels absente des modèles gaussiens classiques.
+:::
+
+---
+
+### Le modèle de Lux-Marchesi
+
+#### Contexte et objectif
+
+Le modèle de **Lux et Marchesi** [12] adopte une perspective plus économique. Il cherche à reproduire les propriétés des marchés en simulant l'interaction entre **deux types de participants** aux comportements radicalement différents.
+
+#### Les deux types d'agents
+
+**Les fondamentalistes (Fundamentalists)**
+
+Ces agents comparent le prix de marché actuel à ce qu'ils estiment être la **valeur fondamentale** (True Price) de l'actif :
+
+- Si le prix est trop bas par rapport à la valeur fondamentale → ils **achètent** (ils anticipent un retour vers la valeur intrinsèque).
+- Si le prix est trop élevé → ils **vendent**.
+
+Leur comportement est stabilisateur et ancré sur des fondamentaux économiques.
+
+**Les chartistes (Chartists)**
+
+Ces agents ne s'intéressent pas aux fondamentaux. Ils observent l'**évolution récente des prix** et les actions de leurs voisins. Parmi eux, deux sous-catégories coexistent :
+
+- Les **optimistes** : ils suivent la tendance (Trend Followers). Si le marché monte, ils achètent.
+- Les **pessimistes** : ils vont à contre-courant (Counter-Trend). Ils anticipent un retournement.
+
+#### Dynamique et changement de catégorie
+
+Un élément crucial du modèle est que les agents peuvent **changer de catégorie** en fonction des conditions de marché. Un agent chartiste peut devenir fondamentaliste, et vice-versa.
+
+::: {.callout-tip title="Intuition"}
+Ce mécanisme de migration entre catégories crée une dynamique endogène réaliste : lors d'une bulle, de nombreux agents deviennent chartistes optimistes et amplifient la hausse ; lorsque le marché dévisse, les fondamentalistes reprennent le dessus et ancrent le prix.
+:::
+
+#### Résultats du modèle
+
+Le modèle utilise un paramètre $\tau$ représentant le **décalage temporel des prix** (Price Time-Lag) :
+
+- Les valeurs faibles de $\tau$ correspondent à des horizons courts (ordre du **jour**).
+- Les valeurs élevées de $\tau$ correspondent à des horizons longs (ordre du **mois**).
+
+Les résultats montrent que la diversité des participants de marché permet de reproduire des **distributions à queues épaisses**, et que le comportement du modèle est **partiellement en contradiction avec l'Hypothèse d'Efficience des Marchés** (Efficient Market Hypothesis, EMH), notamment en ce qui concerne la réaction aux nouvelles entrantes.
+
+::: {.callout-note title="À retenir"}
+Le modèle Lux-Marchesi illustre comment la coexistence de stratégies hétérogènes — fondamentalistes stabilisateurs et chartistes déstabilisateurs — produit naturellement des comportements de marché complexes, incluant les queues épaisses et la volatilité groupée.
+:::
+
+---
+
+## Le Minority Game : exploration approfondie
+
+### Le problème du Bar El Farol
+
+#### Présentation du problème
+
+Le **Minority Game** (MG) est directement inspiré du **problème du Bar El Farol**, proposé par l'économiste W. Brian Arthur. Le scénario est le suivant :
+
+- Une population finie de $N$ personnes veut se rendre au seul bar de la ville : le **Bar El Farol**.
+- Si **moins de 60 %** de la population s'y rend → la soirée est meilleure qu'à la maison.
+- Si **plus de 60 %** s'y rend → la foule est trop dense et la soirée est moins agréable qu'à domicile.
+- Chaque individu doit décider **à l'avance** et **simultanément**, sans coordination directe.
+
+#### La tension entre intérêt individuel et collectif
+
+Ce problème met en lumière une tension fondamentale entre deux niveaux d'optimisation :
+
+**Au niveau individuel** : chaque agent cherche à maximiser son plaisir personnel. La meilleure stratégie dépend de ce que font les autres — un problème d'anticipation circulaire.
+
+**Au niveau collectif** : l'objectif global est d'atteindre une **fréquentation de exactement 60 %**. Toute déviation — trop de monde ou trop peu — génère de l'insatisfaction.
+
+::: {.callout-tip title="Intuition"}
+Ce problème capture l'essence des marchés financiers : si tout le monde anticipe une hausse et achète, le prix monte trop — et personne ne profite réellement de l'opportunité. Être dans la **minorité** (acheter quand les autres vendent, et inversement) est souvent la stratégie gagnante.
+:::
+
+#### La dynamique des fluctuations
+
+En pratique, la fréquentation oscille autour du seuil de 60 % sans jamais s'y stabiliser parfaitement. Ces fluctuations produisent en alternance :
+
+- Des périodes où trop de personnes viennent (au-dessus de 60 %) → participants insatisfaits.
+- Des périodes où trop peu viennent (en dessous de 60 %) → des agents auraient pu profiter de la soirée.
+
+Cette dynamique oscillante est un reflet direct des **cycles de marché** observés en finance.
+
+---
+
+### Définitions formelles du Minority Game
+
+#### Proposé par Challet et Zhang
+
+Le **Minority Game** a été formalisé par **Challet et Zhang** [13] (Université de Fribourg). Depuis le papier séminal, de très nombreuses variantes ont été développées.
+
+#### Les paramètres fondamentaux
+
+Le modèle repose sur quatre paramètres essentiels :
+
+- $N$ : le nombre d'agents (toujours **impair** pour garantir l'existence d'une minorité stricte à chaque tour).
+- $M$ : la longueur de l'**historique** $\mu(t)$, codé en bits (0 et 1).
+- $S$ : le nombre de **stratégies** par agent.
+- $P = 2^M$ : le nombre de **patterns d'historique** possibles.
+
+#### L'espace des stratégies
+
+Le nombre total de stratégies disponibles est $2^{2^M}$, ce qui croît de façon extrêmement rapide :
+
+| $M$ | Nombre de stratégies $2^{2^M}$ |
+|-----|-------------------------------|
+| 2   | 16                            |
+| 3   | 256                           |
+| 4   | 65 536                        |
+| 5   | 4 294 967 296                 |
+
+::: {.callout-warning title="Attention : explosion combinatoire"}
+Dès $M = 5$, le nombre de stratégies dépasse 4 milliards. En pratique, **on ne stocke pas les stratégies sous forme de numéros**, mais comme des **vecteurs de $2^M$ bits** choisis aléatoirement.
+:::
+
+Une stratégie peut être vue comme une **table de correspondance** : à chaque historique $\mu \in \{0, 1, \ldots, 2^M - 1\}$, elle associe une action (+1 ou -1).
+
+---
+
+### Sélection des stratégies
+
+#### Le mécanisme de choix probabiliste
+
+À chaque période $t$, chaque agent $i$ dispose de $S$ stratégies. Il choisit sa stratégie $s_j$ avec une probabilité donnée par la **distribution de Boltzmann** (Softmax) :
+
+$$P(s_j^t) = \frac{\exp(\lambda \, U_{s_j}(t))}{\sum_{k=1}^{S} \exp(\lambda \, U_{s_k}(t))}, \quad 1 \leq j \leq S, \quad \lambda > 0$$
+
+où $U_{s_j}(t)$ est la **fonction d'utilité** (score virtuel) de la stratégie $s_j$ à l'instant $t$.
+
+::: {.callout-tip title="Intuition"}
+Le paramètre $\lambda$ contrôle le degré de **rationalité** des agents :
+
+- Si $\lambda \to \infty$ → l'agent choisit **toujours** la stratégie avec le score le plus élevé (comportement déterministe et rationnel).
+- Si $\lambda$ est faible → le choix est plus aléatoire, les stratégies sous-performantes ont quand même une chance d'être sélectionnées.
+:::
+
+#### Définition de l'historique $\mu(t)$
+
+L'historique peut être construit de trois façons différentes :
+
+**Historique aléatoire** : à chaque pas, un nombre aléatoire $\pi$ est tiré :
+
+- Si $\pi < 0.5$ → bit = 0
+- Si $\pi \geq 0.5$ → bit = 1
+
+**Historique endogène** : généré par la dynamique propre du modèle (le résultat du jeu détermine le prochain bit).
+
+**Historique empirique** : construit à partir des prix réels observés :
+
+- Si le rendement est négatif → bit = 0
+- Si le rendement est positif → bit = 1
+
+---
+
+### Actions et présence agrégée
+
+#### L'action individuelle
+
+Pour chaque agent $i$, la stratégie $s_i$ en cours et l'historique $\mu(t)$ déterminent son **action** :
+
+$$a_{i, s_i(t)}^{\mu(t)} = a_i(t) \in \{+1, -1\}$$
+
+où $+1$ correspond à **acheter** et $-1$ à **vendre**.
+
+**Exemple concret** (M=2, historique à 2 bits) :
+
+Supposons une stratégie définie par la table :
+
+| Historique $\mu$ | Action |
+|:-:|:-:|
+| 00 | 0 |
+| 01 | 1 |
+| 10 | -1 |
+| 11 | 0 |
+
+Si l'historique courant est $\mu(t) = 01$ → l'agent choisit $a_i(t) = +1$ (achat).
+
+Si $\mu(t) = 10$ → l'agent choisit $a_i(t) = -1$ (vente).
+
+#### La présence agrégée (Attendance)
+
+La **présence agrégée** $A(t)$ est la somme des actions de tous les agents :
+
+$$A(t) = \sum_{i=1}^{N} a_i^{\mu(t), s_i}$$
+
+$A(t) > 0$ signifie une majorité d'acheteurs, $A(t) < 0$ une majorité de vendeurs. Les agents dans la **minorité** sont ceux dont l'action a le signe **opposé** à $A(t)$ — ce sont les gagnants du tour.
+
+---
+
+### Fonction d'utilité et prédictabilité
+
+#### La mise à jour des scores stratégiques
+
+Le score virtuel (Virtual Score) de la stratégie $s$ de l'agent $i$ est mis à jour après chaque tour selon :
+
+$$U_{i,s}(t+1) = U_{i,s}(t) - a_{i,s}^{\mu(t)} \cdot \frac{A(t)}{\beta}$$
+
+où $\beta$ est un **facteur de normalisation** qui peut prendre les valeurs :
+
+- $\beta = 1$ (pas de normalisation)
+- $\beta = N$ (normalisation par le nombre d'agents)
+- $\beta = 2^M$ (normalisation par le nombre de patterns)
+
+::: {.callout-tip title="Intuition"}
+Cette règle de mise à jour est intuitive : si l'action prescrite par la stratégie $s$ est **de signe opposé** à $A(t)$, cela signifie que la stratégie était dans la minorité — elle a gagné. Son score **augmente**. À l'inverse, une stratégie qui prescrivait l'action majoritaire voit son score **diminuer**.
+:::
+
+#### Le paramètre de contrôle $\alpha$
+
+Un paramètre clé pour analyser le comportement du modèle est défini comme :
+
+$$\alpha = \frac{P}{N} = \frac{2^M}{N}$$
+
+Ce ratio mesure la **complexité de l'information** disponible relativement au nombre d'agents. Il joue un rôle central dans la caractérisation des phases du système.
+
+#### La prédictabilité $H$
+
+La **prédictabilité** (Predictability) est définie comme la moyenne quadratique de la présence conditionnelle :
+
+$$H = \frac{1}{P} \sum_{\mu=0}^{2^M - 1} \langle A | \mu \rangle^2$$
+
+où $\langle \cdot \rangle$ désigne la **moyenne temporelle**.
+
+- Si $\langle A | \mu \rangle \approx 0$ pour tout $\mu$ → l'historique n'apporte aucune information sur le prochain mouvement → marché **imprévisible**.
+- Si $\langle A | \mu \rangle \neq 0$ pour certains $\mu$ → certains patterns historiques prédisent systématiquement le futur → marché **partiellement prévisible**.
+
+---
+
+### Les deux phases du Minority Game
+
+#### Phase symétrique vs phase asymétrique
+
+L'analyse du Minority Game révèle l'existence de **deux régimes** distincts, séparés par une valeur critique $\alpha_c$ :
+
+**Phase symétrique (Symmetric Phase)** — régime $\alpha < \alpha_c$
+
+Dans cette phase :
+
+- La prédictabilité $H$ est **proche de zéro**.
+- Pour chaque historique $\mu$, la probabilité $P(1|\mu)$ que l'action gagnante soit $+1$ est **proche de 0.5** pour tous les $\mu$.
+- Le marché est **essentiellement imprévisible** : l'historique ne permet pas de prédire le prochain mouvement.
+- On est dans un régime de **volatilité élevée** (les agents se marchent trop sur les pieds).
+
+**Phase asymétrique (Asymmetric Phase)** — régime $\alpha > \alpha_c$
+
+Dans cette phase :
+
+- La prédictabilité $H$ **augmente** significativement.
+- Les probabilités $P(1|\mu)$ varient fortement selon $\mu$ : certains patterns prédisent systématiquement un mouvement dans une direction.
+- Le marché exhibe des **structures prévisibles** exploitables.
+- La volatilité est **plus faible** que dans le cas aléatoire de référence.
+
+::: {.callout-tip title="Intuition"}
+La transition entre phases ressemble à une **transition de phase** en physique statistique. En dessous de $\alpha_c$, les agents sont trop nombreux par rapport à l'information disponible : ils se coordonnent involontairement et créent des mouvements erratiques. Au-dessus de $\alpha_c$, l'information est suffisamment riche pour que les stratégies se diversifient efficacement.
+:::
+
+::: {.callout-note title="À retenir"}
+Pour $S = 2$, la valeur critique est $\alpha_c \approx 0.3374$.
+
+Pour un nombre général de stratégies $S$, on a l'approximation :
+
+$$\alpha_c(S) \approx \alpha_{c, S=2} + \frac{S-2}{2}$$
+
+Des **courbes maîtresses** (Master Curves) universelles apparaissent : pour un $S$ donné, les courbes obtenues pour différentes valeurs de $N$ se superposent lorsqu'on les trace en fonction de $\alpha$.
+:::
+
+---
+
+### Volatilité de la présence
+
+#### Calcul de la variance de $A$
+
+La variance (volatilité) de la présence agrégée $A$ est définie comme :
+
+$$\sigma^2 = \text{Var}(A) = \frac{1}{T} \sum_{t=0}^{T} A(t)^2$$
+
+La simplification $\langle A(t) \rangle = 0$ est utilisée (la moyenne temporelle de $A$ est nulle par symétrie).
+
+#### Référence : agents aléatoires et indépendants
+
+Si tous les agents choisissent leur action de façon **aléatoire et indépendante**, avec probabilité 1/2 de choisir $+1$ ou $-1$, alors :
+
+- $\mathbb{E}[a_i(t)] = 0.5 \cdot 1 + 0.5 \cdot (-1) = 0$
+- $\text{Var}(a_i(t)) = 0.5 \cdot 1^2 + 0.5 \cdot (-1)^2 = 1$
+- Par indépendance : $\text{Var}(A(t)) = \sum_{i=1}^N \text{Var}(a_i) = N$
+
+Ainsi, le **benchmark aléatoire** donne $\sigma^2 / N = 1$.
+
+#### Les quatre zones de comportement
+
+En traçant $\sigma^2/N$ en fonction de $\alpha$, on distingue **quatre zones** remarquables :
+
+**Zone 1 — Symétrique, pire que le hasard** ($\alpha < \alpha_c$, $\sigma^2/N > 1$) :
+
+Trop d'agents pour peu d'information. Le comportement moutonnier amplifie les fluctuations au-delà du niveau aléatoire.
+
+**Zone 2 — Symétrique, meilleure que le hasard** ($\alpha$ proche de $\alpha_c$ par en dessous) :
+
+La zone **optimale** : la variance est minimisée juste avant la transition de phase. Les agents exploitent efficacement l'information disponible sans excès de coordination.
+
+**Zone 3 — Asymétrique, meilleure que le hasard** ($\alpha$ légèrement supérieur à $\alpha_c$) :
+
+La volatilité reste inférieure au niveau aléatoire. Les stratégies se diversifient naturellement.
+
+**Zone 4 — Asymétrique, proche du hasard** ($\alpha \gg \alpha_c$) :
+
+Trop peu d'agents par rapport à l'espace des stratégies. Chaque agent joue pratiquement seul — comportement proche du hasard pur.
+
+::: {.callout-tip title="Intuition"}
+La **zone optimale** correspond au point où le nombre d'agents et la richesse de l'information sont en équilibre parfait. C'est là que la coordination collective est la plus efficace — une leçon potentiellement applicable à la conception de marchés.
+:::
+
+---
+
+### Connexion avec les marchés financiers
+
+#### Du Minority Game aux prix d'actifs
+
+Le lien entre le modèle et les marchés financiers réels s'établit via la relation entre la présence agrégée $A(t)$ et les rendements des prix :
+
+$$r(t) = \ln\frac{P(t)}{P(t-1)} = \frac{A(t)}{\lambda}$$
+
+ce qui implique une dynamique de prix :
+
+$$P(t) = P(t-1) \cdot \exp\!\left(\frac{A(t)}{\gamma}\right)$$
+
+où $\gamma$ est typiquement un multiple de $N$ (paramètre de liquidité du marché).
+
+::: {.callout-tip title="Intuition"}
+Un excès d'acheteurs ($A(t) > 0$) pousse le prix à la hausse, et un excès de vendeurs ($A(t) < 0$) le fait baisser. Ce mécanisme est analogue au fonctionnement réel d'un carnet d'ordres.
+:::
+
+#### Extensions pour enrichir le modèle
+
+Plusieurs extensions permettent de rapprocher le Minority Game des données empiriques réelles :
+
+- **Agents contrariants vs suiveurs de tendance** : modifier la fonction d'utilité pour produire deux types de comportements différents.
+- **Autocorrélation** : introduire des termes dans l'utilité qui génèrent des dépendances temporelles.
+- **Participation sélective** : permettre aux agents de **s'abstenir de jouer** lorsque leurs stratégies sont peu performantes. Cette extension est particulièrement importante car elle permet de reproduire des propriétés de la **distribution des rendements** proches de celles observées sur les marchés réels.
+
+---
+
+### Algorithme du Minority Game
+
+#### Description de l'implémentation
+
+L'algorithme du Minority Game de base se déroule comme suit :
+
+**Initialisation :**
+
+1. Définir $N$, $M$, $S$ et $\gamma$.
+2. Choisir un historique initial $\mu$ aléatoire (ex. : $\mu = 00101$ pour $M = 5$).
+3. Créer $N$ agents, chacun avec $S$ stratégies. Chaque stratégie est représentée comme un **vecteur de $2^M$ bits** tirés aléatoirement (éviter de stocker les stratégies par leur indice numérique vu l'explosion combinatoire).
+
+**Boucle principale (T itérations) :**
+
+```
+Pour t = 1 à T :
+    1. Calculer A = somme des actions des agents
+    2. Mettre à jour les scores : U(t+1) = U(t) - a * A / beta
+    3. Sélectionner la stratégie active de chaque agent
+    4. Ajouter un nouveau bit à l'historique mu (éventuellement supprimer le plus vieux)
+    5. Mettre à jour le prix : p = p * exp(A / gamma)
+```
+
+::: {.callout-note title="À retenir"}
+La mise à jour de l'historique est **cruciale** : elle assure que le contexte informationnel évolue au fil du temps, permettant au modèle de générer une dynamique non triviale. C'est la **mémoire du système**.
+:::
+
+---
+
+### Conclusions sur le Minority Game
+
+#### Richesse d'un modèle minimaliste
+
+Le **Minority Game** est remarquable par son **économie de moyens** : avec seulement quelques paramètres ($N$, $M$, $S$), il génère une phénoménologie très riche.
+
+Les propriétés essentielles du modèle peuvent être résumées ainsi :
+
+À chaque tour :
+
+- Les agents choisissent entre deux décisions (+1 ou -1) en fonction de leur meilleure stratégie actuelle.
+- La **minorité gagne** le tour.
+- Les stratégies ayant prédit le côté gagnant sont **récompensées**.
+- L'historique de l'attendance guide l'évolution des stratégies.
+
+Les **comportements émergents** remarquables incluent :
+
+- Le **comportement moutonnier** (Herding Behaviour) — visible dans la phase symétrique.
+- Une **distribution des rendements de prix** proche de ce que l'on observe en réalité.
+- Des **résultats analytiques** dérivables grâce à la structure mathématique du modèle.
+- Un **cadre extensible** permettant de dériver de nombreuses variantes.
+
+::: {.callout-tip title="Intuition"}
+Le Minority Game est un microcosme du marché : des agents hétérogènes, une information limitée et partagée, une compétition pour être dans la minorité. La richesse des comportements émergents — transition de phase, courbes maîtresses, prédictabilité — montre qu'une modélisation minimaliste peut capturer l'essence de dynamiques complexes.
+:::
+
+---
+
+## Points clés à retenir
+
+### Ce que les ABM nous enseignent
+
+La modélisation **ascendante** (Bottom-Up) offre une perspective complémentaire aux approches classiques en finance :
+
+- Les comportements macroscopiques complexes des marchés peuvent **émerger** de règles microscopiques simples.
+- Les **faits stylisés** — distributions à queues épaisses, volatilité groupée — sont reproductibles à partir de comportements individuels simples.
+- Les ABM permettent d'explorer l'impact de **politiques** (ex. : taxe Tobin) ou de **changements structurels** sur la dynamique de marché.
+
+### Les trois modèles en bref
+
+Les trois modèles présentés illustrent chacun une facette différente des marchés :
+
+**Cont-Bouchaud** — Modèle de physiciens focalisant sur le **comportement moutonnier** (Herding Behaviour). Un mécanisme de clustering simple reproduit les distributions à queues épaisses.
+
+**Lux-Marchesi** — Modèle d'économistes simulant l'interaction entre **fondamentalistes** (Fundamentalists) et **chartistes** (Chartists). La diversité des participants produit des dynamiques réalistes.
+
+**Minority Game** (Challet-Zhang) — Modèle de physiciens où les agents cherchent à être dans la **minorité** pour gagner. Permet des résultats analytiques et de nombreuses extensions vers les marchés réels.
+
+::: {.callout-important title="Message central"}
+Il n'existe pas de modèle ABM unique capable de reproduire **tous** les faits stylisés simultanément. Chaque modèle éclaire une dimension particulière du comportement de marché. La valeur de ces approches réside dans leur capacité à **relier mécanismes microscopiques et propriétés macroscopiques** observées empiriquement.
+:::

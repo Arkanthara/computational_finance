@@ -1,0 +1,179 @@
+---
+title: "Modèles basés sur les agents — Révision"
+---
+
+## Approches de modélisation
+
+| Approche | Direction | Principe |
+|---|---|---|
+| Top-Down | Descendante | Équations globales → dynamique |
+| Bottom-Up / ABM | Ascendante | Règles locales → comportement émergent |
+
+::: {.callout-note title="À retenir"}
+Un comportement microscopique simple → complexité macroscopique difficile à modéliser autrement.
+ABM ne reproduit pas **tous** les faits stylisés avec un seul modèle.
+:::
+
+---
+
+## Les 3 modèles ABM
+
+| Modèle | Origine | Focus | Résultat clé |
+|---|---|---|---|
+| **Cont-Bouchaud** | Physique | Herding (moutonnier) | Queues épaisses si $a \ll 0.5$ |
+| **Lux-Marchesi** | Économie | Fondamentalistes + Chartistes | Queues épaisses, contradiction EMH |
+| **Minority Game** | Physique | Minorité gagne | Phases, prédictabilité, analytique |
+
+---
+
+## Cont-Bouchaud
+
+**Mécanisme :** clusters aléatoires → décision collective
+
+- Vendre : proba $a$
+- Acheter : proba $a$
+- Rien : proba $1 - 2a$ (avec $a \leq 0.5$)
+
+| Paramètre | Distribution des rendements |
+|---|---|
+| $a = 0.5$ | Gaussienne (normale) |
+| $a \ll 0.5$ | Queues épaisses (Fat Tails) |
+
+---
+
+## Lux-Marchesi
+
+**2 types d'agents :**
+
+- **Fondamentalistes** : prix trop bas → achètent ; trop haut → vendent
+- **Chartistes optimistes** : suivent la tendance (Trend Followers)
+- **Chartistes pessimistes** : contre-tendance (Counter-Trend)
+
+::: {.callout-warning title="Point critique"}
+Les agents peuvent **changer de catégorie** → dynamique endogène réaliste.
+$\tau$ petit = horizon journalier ; $\tau$ grand = horizon mensuel.
+:::
+
+---
+
+## Minority Game — Paramètres
+
+| Symbole | Signification |
+|---|---|
+| $N$ | Nombre d'agents (toujours **impair**) |
+| $M$ | Longueur de l'historique (bits) |
+| $S$ | Nombre de stratégies par agent |
+| $P = 2^M$ | Nombre de patterns d'historique |
+| $2^{2^M}$ | Nombre **total** de stratégies disponibles |
+| $\alpha = P/N = 2^M/N$ | Paramètre de contrôle |
+
+::: {.callout-warning title="Piège : explosion combinatoire"}
+$M=5$ → $2^{32} \approx 4$ milliards de stratégies. On stocke des **vecteurs de bits**, pas des indices.
+:::
+
+---
+
+## Minority Game — Formules clés
+
+**Sélection de stratégie (Softmax / Boltzmann) :**
+
+$$P(s_j^t) = \frac{\exp(\lambda\, U_{s_j}(t))}{\sum_{k=1}^{S} \exp(\lambda\, U_{s_k}(t))}$$
+
+- $\lambda \to \infty$ → stratégie au score maximal (déterministe)
+
+**Présence agrégée (Attendance) :**
+
+$$A(t) = \sum_{i=1}^{N} a_i^{\mu(t),\, s_i}$$
+
+**Mise à jour de l'utilité (Virtual Score) :**
+
+$$U_{i,s}(t+1) = U_{i,s}(t) - a_{i,s}^{\mu(t)} \cdot \frac{A(t)}{\beta}$$
+
+- $\beta \in \{1,\, N,\, 2^M\}$ — facteur de normalisation
+- Score **augmente** si la stratégie était dans la **minorité**
+
+**Prédictabilité (Predictability) :**
+
+$$H = \frac{1}{P} \sum_{\mu=0}^{2^M-1} \langle A|\mu \rangle^2$$
+
+**Prix / rendements :**
+
+$$r(t) = \frac{A(t)}{\lambda}, \qquad P(t) = P(t-1)\cdot\exp\!\left(\frac{A(t)}{\gamma}\right)$$
+
+---
+
+## Minority Game — Deux phases
+
+| Phase | Condition | $H$ | $P(1|\mu)$ | Volatilité |
+|---|---|---|---|---|
+| **Symétrique** | $\alpha < \alpha_c$ | $\approx 0$ | $\approx 0.5$ pour tout $\mu$ | Élevée (pire que hasard) |
+| **Asymétrique** | $\alpha > \alpha_c$ | Croît | Variable selon $\mu$ | Faible (meilleure que hasard) |
+
+- $\alpha_c \approx 0.3374$ pour $S=2$
+- Approximation générale : $\alpha_c(S) \approx \alpha_{c,S=2} + \dfrac{S-2}{2}$
+- **Courbes maîtresses** : pour $S$ fixé, les courbes $\sigma^2/N$ vs $\alpha$ coïncident pour tout $N$
+
+---
+
+## Minority Game — 4 zones de volatilité
+
+| Zone | Phase | $\sigma^2/N$ | Cause |
+|---|---|---|---|
+| 1 | Symétrique | $> 1$ (pire) | Trop d'agents, herding |
+| 2 | Symétrique (près de $\alpha_c$) | **Minimum** (optimal) | Équilibre info/agents |
+| 3 | Asymétrique | $< 1$ (meilleur) | Bonne diversification |
+| 4 | Asymétrique ($\alpha \gg \alpha_c$) | $\approx 1$ (hasard) | Trop peu d'agents |
+
+**Référence aléatoire :** agents indépendants → $\text{Var}(A) = N$, donc $\sigma^2/N = 1$
+
+---
+
+## Historique $\mu(t)$ — 3 modes
+
+- **Aléatoire** : $\pi < 0.5 \to 0$, sinon $\to 1$
+- **Endogène** : généré par la dynamique du modèle
+- **Empirique** : rendement $< 0 \to 0$, rendement $> 0 \to 1$
+
+---
+
+## Algorithme Minority Game
+
+```
+INIT : choisir N, M, S, γ ; μ aléatoire ; S stratégies par agent (vecteurs 2^M bits)
+
+BOUCLE (T fois) :
+  1. A = Σ a_i          ← présence agrégée
+  2. U(t+1) = U(t) - a·A/β  ← mise à jour scores
+  3. Sélection stratégie active (argmax ou softmax)
+  4. Ajouter bit à μ, supprimer le plus vieux
+  5. p = p · exp(A/γ)   ← mise à jour prix
+```
+
+---
+
+## Relations entre concepts
+
+```{mermaid}
+graph LR
+  M["M (longueur historique)"] --> P["P = 2^M patterns"]
+  P --> alpha["α = P/N"]
+  N["N (agents)"] --> alpha
+  alpha --> phase["Phase : symétrique / asymétrique"]
+  phase --> H["Prédictabilité H"]
+  phase --> sigma["Volatilité σ²/N"]
+  S["S (stratégies)"] --> alphac["α_c(S)"]
+  alphac --> phase
+```
+
+---
+
+## Points critiques / Pièges
+
+::: {.callout-warning title="Pièges fréquents"}
+
+- $N$ doit être **impair** (garantir une minorité stricte à chaque tour)
+- Ne pas confondre $2^M$ (patterns) et $2^{2^M}$ (stratégies totales)
+- Le score $U$ est **virtuel** : toutes les stratégies sont évaluées, même celles non jouées
+- $\lambda \to \infty$ : comportement déterministe pur (stratégie au score max)
+- Zone optimale ≠ phase asymétrique — elle se situe **juste avant** $\alpha_c$
+:::
