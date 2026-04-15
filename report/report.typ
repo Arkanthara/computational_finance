@@ -82,12 +82,14 @@ $sum_(i=1)^(7) w_i = 1$.
       rets.append(ret)
       risks.append(risk)
   plt.figure()
-  plt.plot(risks, rets)
+  plt.scatter(risks, rets)
   plt.xlabel('Risk (Standard Deviation)')
   plt.ylabel('Expected Return')
   plt.title('Monte-Carlo Simulation of Portfolio Performance')
   plt.show()
   ```
+
+  The scatter plot follows an eliptic shape, with a clear upper boundary. This boundary corresponds to the efficient frontier, which represents the set of optimal portfolios that offer the highest expected return for a given level of risk.
 
 *2.* We introduced the following analytical expressions during the course to compute the weight vector that minimizes the risk given a desired portfolio return $mu_p$:
 
@@ -105,14 +107,74 @@ With $bold(mu) = {mu_1, ..., mu_7}$ the expected returns of each stock and $C$ t
 
 Using this expression, draw Markowitz's efficient frontier for portfolio return $mu_p in [-0.0006,\ +0.0004]$.
 
+  ```python
+  def closed_form(mu: np.ndarray, cov: np.ndarray, mu_p: float) -> np.ndarray:
+      """
+      Compute the optimal portfolio weights using the closed-form solution.
+
+      Parameters:
+      mu (np.ndarray): A 1D array of expected returns for each asset.
+      cov (np.ndarray): A 2D array representing the covariance matrix of returns.
+      mu_p (float): The desired portfolio return.
+
+      Returns:
+      np.ndarray: A 1D array of optimal portfolio weights.
+      """
+      ones = np.ones(len(mu))
+      inv_cov = np.linalg.inv(cov)
+
+      a = ones.T @ inv_cov @ ones
+      b = ones.T @ inv_cov @ mu
+      c = mu.T @ inv_cov @ mu
+      d = a * c - b ** 2
+
+      lambda_1 = (c - b * mu_p) / d
+      lambda_2 = (a * mu_p - b) / d
+
+      weights = inv_cov @ (lambda_1 * ones + lambda_2 * mu)
+      
+      return weights.flatten()
+
+  mu = np.mean(returns(data), axis=0)
+  cov = np.cov(returns(data).T)
+
+  mu_p_values = np.linspace(-0.0006, 0.0004, 100)
+  efficient_frontier = []
+  for mu_p in mu_p_values:
+      weights = closed_form(mu, cov, mu_p)
+      ret, risk = portfolio_performance(weights, returns(data))
+      efficient_frontier.append((risk, ret))
+  efficient_frontier = np.array(efficient_frontier)
+
+  plt.figure()
+  plt.plot(efficient_frontier[:, 0], efficient_frontier[:, 1], label='Efficient Frontier')
+  plt.xlabel('Risk (Standard Deviation)')
+  plt.ylabel('Expected Return')
+  plt.title('Markowitz Efficient Frontier')
+  plt.legend()
+  plt.show()
+  ```
+
 *3.* Using the efficient frontier, find the weight of the portfolio with the minimal volatility. What can you say about the return of this portfolio?
+
+  ```python
+  min_vol_index = np.argmin(efficient_frontier[:, 0])
+  min_vol_weights = closed_form(mu, cov, mu_p_values[min_vol_index])
+  min_vol_return, min_vol_risk = portfolio_performance(min_vol_weights, returns(data))
+
+  print(f"Minimum Volatility Portfolio Weights:\n{min_vol_weights}")
+  print(f"Expected Return: {min_vol_return}")
+  print(f"Risk (Standard Deviation): {min_vol_risk}")
+  ```
+
+  The portfolio with the minimal volatility is a portfolio with a return ...
 
 #pagebreak()
 
 // ─── Part 2: No-Short Selling ──────────────────────────────────────────────
 = Optimal Portfolio under No-Short Selling Constraints
 
-At this point, you will extend the optimal portfolio analysis by imposing a no-short selling constraint (i.e.\ all portfolio weights must be non-negative). You will compute the efficient frontier under this additional constraint and compare it to the unconstrained (Markowitz) efficient frontier.
+At this point, you will extend the optimal portfolio analysis by imposing a no-short selling constraint (i.e. all portfolio weights must be non-negative). You will compute the efficient frontier under this additional constraint and compare it to the unconstrained (Markowitz) efficient frontier.
 
 Keep using the provided `closing_prices.csv` file which contains the closing prices of McDonald's, Bank of America, IBM, Chevron, Coca-Cola, Novartis, and AT&T over one year (from 2013-05-01 to 2014-05-01). Load the data and compute the daily returns for each stock.
 
@@ -121,9 +183,76 @@ Keep using the provided `closing_prices.csv` file which contains the closing pri
   - The sum of weights is equal to 1.
   - All weights are non-negative (no short selling).
 
+  The portfolio variance can be expressed as $w^T C w$, where $w$ is the weight vector and $C$ is the covariance matrix of returns.
+  So the optimization problem can be formulated as:
+  $
+    min_w w^T C w - q w^T mu \
+  $
+  with the constraints:
+  - $w^T mu = mu_p$ (target return constraint)
+  - $sum(w) = 1$ (weights sum to 1)
+  - $w_i >= 0$ for all $i$ (no short selling)
+
+  Here, $q in [0, infinity)$ is the risk factor that controls the trade-off between risk and return.
+
+
 *2.* Use a suitable Python optimization library (e.g., `cvxpy`) to solve the constrained problem.
 
+  ```python
+  import cvxpy as cp
+  def optimize_portfolio(mu: np.ndarray, cov: np.ndarray, mu_p: float) -> np.ndarray:
+      """
+      Optimize the portfolio weights under no-short selling constraints.
+
+      Parameters:
+      mu (np.ndarray): A 1D array of expected returns for each asset.
+      cov (np.ndarray): A 2D array representing the covariance matrix of returns.
+      mu_p (float): The desired portfolio return.
+
+      Returns:
+      np.ndarray: A 1D array of optimal portfolio weights.
+      """
+      n = len(mu)
+      w = cp.Variable(n)
+      
+      # Define the objective function (minimize variance)
+      objective = cp.Minimize(cp.quad_form(w, cov))
+      
+      # Define the constraints
+      constraints = [
+          w @ mu == mu_p,  # Target return constraint
+          cp.sum(w) == 1,   # Weights sum to 1
+          w >= 0            # No short selling
+      ]
+      
+      # Solve the optimization problem
+      prob = cp.Problem(objective, constraints)
+      prob.solve()
+      
+      return np.array(w.value)
+  ```
+
 *3.* Plot the constrained efficient frontier over the same range of previous $mu_p$.
+
+  ```python
+  constrained_frontier = []
+  for mu_p in mu_p_values:
+      weights = optimize_portfolio(mu, cov, mu_p)
+      print(weights)
+      print(weights.sum())
+      ret, risk = portfolio_performance(weights, returns(data))
+      constrained_frontier.append((risk, ret))
+  constrained_frontier = np.array(constrained_frontier)
+
+  plt.figure()
+  plt.plot(efficient_frontier[:, 0], efficient_frontier[:, 1], label='Unconstrained Efficient Frontier')
+  plt.plot(constrained_frontier[:, 0], constrained_frontier[:, 1], label='Constrained Efficient Frontier', linestyle='--')
+  plt.xlabel('Risk (Standard Deviation)')
+  plt.ylabel('Expected Return')
+  plt.title('Efficient Frontiers with and without No-Short Selling Constraint')
+  plt.legend()
+  plt.show()
+  ```
 
 *4.* Compare the unconstrained (computed from Exercise \#1) and constrained efficient frontiers.
 
