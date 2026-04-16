@@ -48,29 +48,33 @@ $sum_(i=1)^(7) w_i = 1$.
       return (data[1:] - data[:-1]) / data[:-1]
 
 
-  def portfolio_performance(weights: np.ndarray, returns: np.ndarray) -> tuple[float, float]:
+  def portfolio_performance(weights: np.ndarray, rets: np.ndarray) -> tuple[float, float]:
       """
       Compute the expected return and risk of a portfolio given its weights and the returns of the assets.
 
       Parameters:
       weights (np.ndarray): A 1D array of portfolio weights.
-      returns (np.ndarray): A 2D array where each column represents the returns of an asset.
+      rets (np.ndarray): A 2D array where each column represents the returns of an asset.
 
       Returns:
       tuple[float, float]: A tuple containing the expected return and risk (standard deviation) of the portfolio.
       """
       # Ensure weights sum to 1
-      weights = weights / np.sum(weights)
+      # Due to optimization problem, weights are sometimes None or not valid, so we handle that case
+      try:
+          weights = weights / np.sum(weights)
+      except TypeError:
+          return np.nan, np.nan  # Return NaN return and risk if weights are not valid
 
       # Ensure weights have correct shape
       if weights.ndim == 1:
           weights = weights.reshape(-1, 1)
       
       # Compute expected return
-      expected_return = (np.mean(returns, axis=0) @ weights)[0]
+      expected_return = (np.mean(rets, axis=0) @ weights)[0]
       
       # Compute risk (standard deviation)
-      risk = (np.std(returns, axis=0) @ weights)[0]
+      risk = (np.std(rets, axis=0) @ weights)[0]
       
       return expected_return, risk
 
@@ -78,7 +82,7 @@ $sum_(i=1)^(7) w_i = 1$.
   rets = []
   for _ in range(100000):
       random_weights = np.random.rand(7)
-      ret, risk = portfolio_performance(random_weights, data)
+      ret, risk = portfolio_performance(random_weights, returns(data))
       rets.append(ret)
       risks.append(risk)
   plt.figure()
@@ -136,6 +140,7 @@ Using this expression, draw Markowitz's efficient frontier for portfolio return 
       return weights.flatten()
 
   mu = np.mean(returns(data), axis=0)
+  print(f"Expected returns: {mu}")
   cov = np.cov(returns(data).T)
 
   mu_p_values = np.linspace(-0.0006, 0.0004, 100)
@@ -167,7 +172,11 @@ Using this expression, draw Markowitz's efficient frontier for portfolio return 
   print(f"Risk (Standard Deviation): {min_vol_risk}")
   ```
 
-  The portfolio with the minimal volatility is a portfolio with a return ...
+  The portfolio with the minimal volatility is a portfolio with the highest expected return.
+  This corresponds to the leftmost point on the efficient frontier, which represents the portfolio with the lowest risk.
+  This is counterintuitive. Indeed, in general, we expect a higher return to be associated with a higher risk.
+  However, in this case, the expected returns of the assets have negative values, so the optimization problem is to minimize the negative return to avoid losses, which is equivalent to maximizing the return.
+
 
 #pagebreak()
 
@@ -238,8 +247,6 @@ Keep using the provided `closing_prices.csv` file which contains the closing pri
   constrained_frontier = []
   for mu_p in mu_p_values:
       weights = optimize_portfolio(mu, cov, mu_p)
-      print(weights)
-      print(weights.sum())
       ret, risk = portfolio_performance(weights, returns(data))
       constrained_frontier.append((risk, ret))
   constrained_frontier = np.array(constrained_frontier)
@@ -256,18 +263,52 @@ Keep using the provided `closing_prices.csv` file which contains the closing pri
 
 *4.* Compare the unconstrained (computed from Exercise \#1) and constrained efficient frontiers.
 
+  If we look at the plot, we can see that the constrained efficient frontier has an eliptic shape whereas the unconstrained efficient frontier is a straight line.
+  The constrained efficient frontier is always above the unconstrained efficient frontier, which means that for a given level of risk, the expected return of the constrained portfolio is higher than the expected return of the unconstrained portfolio.
+  I think this is due to the constraints imposed on the optimization problem, such as positive weights which limit the feasible set of portfolios.
+  The unconstrained efficient frontier is more theoretical and may not be achievable in practice, like for instance the portfolio that has the highest expected return with the lowest risk.
+
+  We can constate that the constrained efficient frontier is the same as the unconstrained efficient frontier on a small range of risk, but when the risk increases or decreases, the constrained efficient frontier diverges, which is due to the constraints that limit the feasible set of portfolios.
+
+  If we look at the plot, we can see that there is a part of the constrained efficient frontier that is not defined... This is probably due to the optimization problem that has no solution for some values of $mu_p$, perhaps due to the machine precision or some other problem due to the optimization solver itself.
+
 *5.* Discuss the impact of the no-short selling constraint on the risk-return trade-off.
+
+  The no-short selling constraint limits the set of feasible portfolios by imposing that all weights must be non-negative.
+  So we cannot take advantage of negative expected returns by short selling the assets, which can lead to a higher expected return for a given level of risk. That's why the unconstrained efficient frontier has the highest expected return for the smallest risk, which is not feasible in practice.
+
+  So the no-short selling constraint allows to have a more realistic efficient frontier that is really achievable in practice, but compared to the unconstrained frontier, it also limits the potential return for a given level of risk.
+  Indeed, here with the unconstrained efficient frontier, we can achieve for each level of risk the highest expected return, which is not feasible in practice.
 
 *6.* Identify and report the portfolio with minimal risk under the no-short selling constraint and comment on its expected return.
 
-#v(1em)
+  ```python
+  min_vol_constrained_index = np.nanargmin(constrained_frontier[:, 0])
+  min_vol_constrained_portfolio = constrained_frontier[min_vol_constrained_index]
+  print("Minimum Volatility Portfolio under No-Short Selling Constraint")
+  print(f"Risk: {min_vol_constrained_portfolio[0]:.4f}")
+  print(f"Return: {min_vol_constrained_portfolio[1]:.4f}")
+  ```
+
+  We can see on the plot that the portfolio with the minimal risk under the no-short selling constraint is located at the leftmost point of the constrained efficient frontier, which corresponds to the portfolio with the lowest risk and highest expected return.
+  Indeed,  the risk is about 0.0089 and the expected return is about 0.0001 which corresponds effectively to the leftmost point of the constrained efficient frontier.
+
+  The eliptic shape of the constrained efficient frontier indicates the set of possible portfolios with the area inside the elipse.
+  To minimize the risk and maximize the return, we need to be on the upper boundary of the elipse, which corresponds to the efficient frontier.
+  If we are below, it means that we can find a portfolio with the same level of risk and a higher expected return, so we can be more efficient.
+  So the point that minimizes the risk and maximizes the return is the leftmost point of the constrained efficient frontier, just at the frontier of upper and lower boundary of the elipse.
+  If we remember the first plot, we see that the constrained efficient frontier follows the same eliptic shape as the scatter plot.
+  So the method seems to be consistent with the Monte-Carlo simulation.
+
+  Note that without a certain level of risk, we cannot achieve any return... Indeed, the portfolio starts to have a return only when the risk is about 0.0089, which means that we cannot achieve a return without taking some risk, which is consistent with the general principle of finance that higher returns are associated with higher risks.
+
 #block(
   fill: luma(235),
   inset: 10pt,
   radius: 4pt,
   [
     *Note:* You can use the `cvxpy` library to solve the constrained optimization problem. The library allows you to define the optimization variables, objective function, and constraints in a straightforward manner. Make sure to install it if you haven't already:
-    ```
+    ```bash
     pip install cvxpy
     ```
   ]
