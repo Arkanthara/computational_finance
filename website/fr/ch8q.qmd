@@ -1,0 +1,311 @@
+---
+title: "Modèles basés sur les agents — Quiz"
+filters:
+  - quizdown
+execute:
+  enabled: false
+---
+
+## Niveau 1 — Fondamentaux
+
+```{quizdown}
+### Quelle est la différence entre une approche Top-Down et une approche Bottom-Up en modélisation financière ?
+
+> Pense à la direction du raisonnement : du global vers le local, ou du local vers le global ?
+
+1. [ ] Top-Down part des agents individuels pour déduire la dynamique globale
+1. [x] Bottom-Up part de règles locales entre agents pour faire émerger une dynamique globale
+    > Correct : dans une approche Bottom-Up (ABM), on définit des comportements microscopiques simples et l'on observe la complexité macroscopique qui en émerge.
+1. [ ] Top-Down et Bottom-Up sont des synonymes dans le contexte des ABM
+1. [ ] Bottom-Up utilise uniquement des équations différentielles
+```
+
+```{quizdown}
+### Dans le modèle de Cont-Bouchaud, que se passe-t-il lorsque le paramètre a est très inférieur à 0.5 ?
+
+> Pense à ce que le paramètre a contrôle dans la formation des clusters.
+
+1. [ ] La distribution des rendements devient gaussienne
+1. [ ] Les agents agissent de façon totalement indépendante
+1. [x] La distribution des rendements devient à queues épaisses (Fat-Tailed)
+    > Correct : quand a est faible, les clusters prennent rarement des positions et les quelques décisions massives créent des mouvements extrêmes plus fréquents qu'une loi normale ne le prédit.
+1. [ ] Le modèle diverge et ne produit aucun résultat exploitable
+```
+
+```{quizdown}
+### Dans le modèle de Lux-Marchesi, comment se comportent les fondamentalistes (Fundamentalists) ?
+
+> Pense à ce qui guide leurs décisions d'achat ou de vente.
+
+1. [x] Ils comparent le prix de marché à la valeur fondamentale et achètent si le prix est trop bas
+    > Correct : les fondamentalistes sont des agents stabilisateurs qui ancrent leurs décisions sur la valeur intrinsèque de l'actif.
+1. [ ] Ils suivent la tendance du marché sans tenir compte des fondamentaux
+1. [ ] Ils adoptent toujours une position contra-tendance
+1. [ ] Ils s'abstiennent de toute transaction si le marché est trop volatil
+```
+
+```{quizdown}
+### Dans le Minority Game, pourquoi le nombre d'agents N doit-il toujours etre impair ?
+
+> Pense à ce qui se passe si autant d'agents choisissent +1 que -1.
+
+1. [ ] Pour que le calcul de la variance soit plus simple
+1. [ ] Parce que les stratégies sont indexées sur des nombres impairs
+1. [x] Pour garantir qu'il existe toujours une minorité stricte a chaque tour
+    > Correct : si N est pair, il est possible d'avoir exactement autant d'agents de chaque côté, rendant la notion de minorité indéfinie.
+1. [ ] Pour éviter une division par zéro dans la formule de l'utilité
+```
+
+```{quizdown}
+### Que représente le parametre M dans le Minority Game ?
+
+> M détermine la richesse de l'information disponible pour les agents.
+
+1. [ ] Le nombre d'agents participant au jeu
+1. [ ] Le nombre de stratégies par agent
+1. [x] La longueur de l'historique encode en bits
+    > Correct : M est le nombre de bits composant l'historique mu(t). Il détermine le nombre de patterns possibles P = 2^M.
+1. [ ] Le facteur de normalisation de la fonction d'utilité
+```
+
+```{quizdown}
+### Quel est le nombre total de strategies disponibles dans le Minority Game pour un historique de longueur M ?
+
+> Attention a ne pas confondre le nombre de patterns et le nombre de strategies.
+
+1. [ ] $2^M$
+1. [ ] $M^2$
+1. [ ] $2 \times M$
+1. [x] $2^{2^M}$
+    > Correct : il y a 2^M patterns possibles, et pour chaque pattern une stratégie prescrit +1 ou -1, donnant 2^(2^M) stratégies au total.
+```
+
+```{quizdown}
+### Dans le Minority Game, qu'est-ce que la presence agregee A(t) ?
+
+> Pense a ce que cette quantite mesure sur l'ensemble des agents a un instant t.
+
+1. [ ] La moyenne des scores de stratégies a l'instant t
+1. [ ] Le nombre d'agents ayant choisi la stratégie gagnante
+1. [x] La somme des actions de tous les agents a l'instant t
+    > Correct : A(t) = somme des a_i(t), valant +1 ou -1. Si A(t) > 0, il y a majorité d'acheteurs.
+1. [ ] La probabilité qu'un agent soit dans la minorité
+```
+
+---
+
+## Niveau 2 — Comprehension
+
+```{quizdown}
+### Dans le Minority Game, la mise a jour du score virtuel U recompense quelle situation ?
+
+> Rappelle-toi la formule : U(t+1) = U(t) - a * A / beta.
+
+1. [ ] L'action prescrite par la stratégie est identique au signe de A(t)
+1. [x] L'action prescrite par la stratégie est de signe oppose a A(t)
+    > Correct : si a_i,s et A(t) sont de signes opposés, le produit est négatif, donc -a*A est positif : le score augmente. Etre dans la minorité est récompensé.
+1. [ ] L'agent a utilisé la stratégie avec le score le plus élevé
+1. [ ] L'historique mu(t) correspond a un pattern fréquemment observé
+```
+
+```{quizdown}
+### Que mesure la predictabilite H dans le Minority Game ?
+
+> H est une moyenne sur tous les patterns historiques.
+
+1. [ ] La variance de la présence agrégée A(t) dans le temps
+1. [ ] Le nombre de stratégies capables de battre le hasard
+1. [x] La moyenne quadratique de la presence conditionnelle moyenne de A selon chaque pattern
+    > Correct : H = (1/P) * somme sur mu de <A|mu>^2. Si H est proche de 0, l'historique n'informe pas sur le futur.
+1. [ ] La probabilité qu'un agent change de stratégie lors d'un tour
+```
+
+```{quizdown}
+### Qu'implique un alpha tres superieur a alpha_c dans le Minority Game ?
+
+> Rappelle-toi la définition de alpha = 2^M / N et l'effet d'un grand nombre de patterns relativement au nombre d'agents.
+
+1. [ ] Les agents se coordonnent excessivement, amplifiant la volatilité
+1. [ ] On est dans la phase symétrique avec une prédictabilité nulle
+1. [x] Il y a trop peu d'agents relativement aux patterns : le comportement se rapproche du hasard pur
+    > Correct : quand alpha est très grand, chaque agent a une information tellement diverse que les interactions disparaissent et la variance sigma^2/N tend vers 1 (hasard).
+1. [ ] La variance sigma^2/N atteint son minimum absolu
+```
+
+```{quizdown}
+### Dans la phase symetrique du Minority Game, que vaut approximativement P(1|mu) pour chaque pattern mu ?
+
+> Dans la phase symétrique, les patterns ne permettent pas de distinguer les mouvements futurs.
+
+1. [ ] 0 pour tous les patterns
+1. [x] Environ 0.5 pour tous les patterns
+    > Correct : en phase symétrique, la probabilité que l'action gagnante soit +1 est proche de 0.5 quel que soit le pattern — l'historique est sans valeur prédictive.
+1. [ ] 1 pour certains patterns et 0 pour d'autres
+1. [ ] Varie aléatoirement entre 0 et 1 selon les agents
+```
+
+```{quizdown}
+### Quels mecanismes du modele de Lux-Marchesi sont responsables de la dynamique endogene realiste ?
+
+> Pense a ce qui permet au modèle de ne pas être figé dans une configuration statique.
+
+- [x] Les agents peuvent changer de catégorie (fondamentaliste vers chartiste et vice versa)
+    > Correct : ce mécanisme de migration crée des dynamiques de bulles et corrections sans choc exogène.
+- [ ] Les agents optimisent tous la même fonction objectif globale
+    > Incorrect : chaque type d'agent suit sa propre logique de décision.
+- [x] Les chartistes sont divises en optimistes (suiveurs de tendance) et pessimistes (contre-tendance)
+    > Correct : cette heterogeneite interne aux chartistes enrichit la dynamique du modèle.
+- [ ] Les fondamentalistes ignorent totalement le prix de marché
+    > Incorrect : ils comparent précisément le prix de marché à la valeur fondamentale.
+```
+
+```{quizdown}
+### Quelle est l'approximation du parametre critique alpha_c pour un nombre S de strategies par agent ?
+
+> Pour S=2, alpha_c est connu précisément. Comment évolue-t-il avec S ?
+
+1. [ ] $\alpha_c(S) = \alpha_{c,S=2} \times S$
+1. [ ] $\alpha_c(S) = \alpha_{c,S=2} - \frac{S-2}{2}$
+1. [x] $\alpha_c(S) = \alpha_{c,S=2} + \frac{S-2}{2}$
+    > Correct : le paramètre critique augmente avec S. Pour S=2, alpha_c vaut environ 0.3374.
+1. [ ] $\alpha_c(S) = \frac{2^S}{N}$
+```
+
+```{quizdown}
+### Dans le Minority Game, le parametre lambda dans la formule de selection de strategie controle quoi ?
+
+> Pense au comportement aux valeurs extremes de lambda.
+
+1. [ ] Le facteur de normalisation de la presence agrégée
+1. [x] Le degre de rationalite des agents dans le choix de leurs strategies
+    > Correct : lambda grand -> agent déterministe (choisit toujours la meilleure stratégie) ; lambda faible -> choix plus aléatoire.
+1. [ ] La longueur de l'historique utilisé pour la prédiction
+1. [ ] Le nombre de bits nouveaux ajoutés a l'historique a chaque pas
+```
+
+```{quizdown}
+### Pourquoi stocke-t-on les strategies du Minority Game comme des vecteurs de bits plutot que par leur indice numerique ?
+
+> Compte le nombre de stratégies pour M=5.
+
+1. [ ] Les indices numériques sont réservés aux agents, pas aux stratégies
+1. [x] Le nombre total de strategies croit exponentiellement et devient impossible a indexer pour M grand
+    > Correct : pour M=5, il y a plus de 4 milliards de stratégies. Un vecteur de 2^M bits est bien plus compact et manipulable.
+1. [ ] Les vecteurs de bits permettent de calculer U(t) plus rapidement
+1. [ ] La norme du projet Minority Game l'impose pour des raisons historiques
+```
+
+---
+
+## Niveau 3 — Maitrise
+
+```{quizdown}
+### Remets les etapes de l'algorithme du Minority Game dans le bon ordre.
+
+> Pense au cycle complet d'un tour : d'abord agréger, puis evaluer, puis mettre a jour le contexte.
+
+1. Calculer la presence agregee A(t) en sommant les actions de tous les agents
+2. Mettre a jour les scores virtuels U de toutes les strategies
+3. Selectionner la strategie active de chaque agent selon les scores
+4. Ajouter un nouveau bit a l'historique et supprimer le plus vieux
+5. Mettre a jour le prix selon p = p * exp(A / gamma)
+```
+
+```{quizdown}
+### Un Minority Game est simule avec N=101 agents et M=5 bits d'historique. Quel est le parametre alpha et dans quelle phase le systeme se trouve-t-il probablement (pour S=2) ?
+
+> alpha = 2^M / N. Comparer a alpha_c qui vaut environ 0.3374 pour S=2.
+
+1. [ ] alpha = 5/101 ≈ 0.05, phase asymétrique
+1. [x] alpha = 32/101 ≈ 0.317, phase symetrique (alpha < alpha_c)
+    > Correct : 2^5 = 32, donc alpha = 32/101 ≈ 0.317 < 0.3374 = alpha_c. On est juste en phase symétrique, proche de la zone optimale.
+1. [ ] alpha = 32/101 ≈ 0.317, phase asymétrique
+1. [ ] alpha = 101/32 ≈ 3.16, phase symétrique
+```
+
+```{quizdown}
+### Dans un Minority Game en phase symetrique avec alpha tres inferieur a alpha_c, que observe-t-on sur la volatilite sigma^2/N ?
+
+> Rappelle-toi les 4 zones et ce qui se passe quand les agents sont très nombreux relativement aux patterns.
+
+1. [ ] sigma^2/N est inférieur a 1 : le système est meilleur que le hasard
+1. [ ] sigma^2/N est égal a 1 : le système se comporte comme des agents aléatoires
+1. [x] sigma^2/N est superieur a 1 : le systeme est pire que le hasard (herding)
+    > Correct : en phase symétrique avec petit alpha, les agents trop nombreux se coordonnent involontairement (herding), amplifiant les fluctuations au-delà du niveau aléatoire.
+1. [ ] sigma^2/N est nul : toute la variance est absorbée par les stratégies
+```
+
+```{quizdown}
+### Remets les etapes de construction d'un modele ABM Bottom-Up dans le bon ordre logique.
+
+> Pense a la progression naturelle : d'abord definir, puis simuler, puis analyser.
+
+1. Définir les règles de comportement individuel des agents
+2. Initialiser l'état du système (agents, stratégies, historique)
+3. Simuler les interactions a chaque pas de temps
+4. Calculer les observables macroscopiques (variance, distribution des prix)
+5. Comparer aux faits stylises observes sur les marches reels
+```
+
+```{quizdown}
+### Dans le Minority Game, on passe de l'historique a un prix financier grace a quelle relation ?
+
+> La présence agrégée A(t) joue le rôle du déséquilibre offre/demande.
+
+1. [ ] $P(t) = P(t-1) + A(t) \times \gamma$
+1. [ ] $P(t) = P(t-1) \times A(t) / \gamma$
+1. [x] $P(t) = P(t-1) \times \exp(A(t) / \gamma)$
+    > Correct : le rendement logarithmique r(t) = A(t)/lambda, ce qui implique P(t) = P(t-1)*exp(A(t)/gamma) où gamma est typiquement un multiple de N.
+1. [ ] $P(t) = \exp(A(t)) / P(t-1)$
+```
+
+```{quizdown}
+### Quelles extensions du Minority Game permettent de mieux reproduire les distributions de rendements observees sur les marches reels ?
+
+> Pense a ce qui est absent dans le modèle de base et que l'on retrouve sur les vrais marchés.
+
+- [x] Permettre aux agents de s'abstenir de jouer lorsque leurs strategies sont peu performantes
+    > Correct : la participation sélective modifie la dynamique et rapproche la distribution des rendements des données empiriques.
+- [ ] Imposer que tous les agents utilisent la stratégie au score maximal (lambda infini)
+    > Incorrect : cela rendrait le comportement entièrement déterministe et peu réaliste.
+- [x] Ajouter des agents contrariants ou des suiveurs de tendance via la fonction d'utilite
+    > Correct : différencier les agents par leur rapport a la tendance enrichit la phénoménologie du modèle.
+- [ ] Réduire M a 1 bit pour simplifier l'espace des stratégies
+    > Incorrect : cela appauvrit l'information et réduit la richesse du modèle.
+```
+
+```{quizdown}
+### Un chercheur observe que dans sa simulation du Minority Game, la predictabilite H est elevee et varie fortement selon les patterns mu. Dans quelle phase se trouve-t-il et quelle implication pratique cela a-t-il ?
+
+> Relie l'observation de H a la valeur de alpha par rapport a alpha_c.
+
+1. [ ] Phase symétrique : le marché est imprévisible, aucune stratégie ne peut exploiter l'historique
+1. [x] Phase asymetrique : certains patterns historiques predisent systematiquement la direction future
+    > Correct : en phase asymétrique (alpha > alpha_c), H est élevée et variable selon mu — des agents exploitant ces patterns pourraient obtenir un avantage prédictif.
+1. [ ] Phase optimale : la variance est minimale et aucune information ne subsiste dans l'historique
+1. [ ] Phase de transition : le système est instable et aucune conclusion n'est possible
+```
+
+```{quizdown}
+### Quel fait stylise (Stylised Fact) les trois modeles ABM presentes (Cont-Bouchaud, Lux-Marchesi, Minority Game) ont-ils en commun de pouvoir reproduire ?
+
+> Pense a la propriété statistique des rendements qui s'ecarte le plus d'une loi normale.
+
+1. [ ] La saisonnalité des prix (effets calendaires)
+1. [ ] L'autocorrélation positive des rendements bruts
+1. [x] Les distributions a queues epaisses (Fat-Tailed Distributions) des rendements
+    > Correct : les trois modèles produisent, chacun a sa manière, des distributions de rendements avec des queues plus épaisses que la loi normale.
+1. [ ] La convergence systématique vers la valeur fondamentale
+```
+
+```{quizdown}
+### Dans le Minority Game, les courbes maitresses (Master Curves) de sigma^2/N en fonction de alpha signifient quoi ?
+
+> Ces courbes sont obtenues pour différentes valeurs de N avec le meme S.
+
+1. [ ] La variance dépend uniquement de N et non de alpha
+1. [x] Pour un S donne, les courbes de sigma^2/N en fonction de alpha se superposent pour differentes valeurs de N
+    > Correct : les master curves montrent que alpha = 2^M/N est le vrai paramètre de contrôle du système — la taille N n'a pas d'effet indépendant une fois alpha fixé.
+1. [ ] Les résultats sont indépendants du nombre de stratégies S
+1. [ ] Le modèle produit les mêmes résultats quelle que soit la longueur M de l'historique
+```

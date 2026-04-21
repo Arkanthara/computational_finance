@@ -1,0 +1,327 @@
+---
+title: "Options — Quiz"
+filters:
+  - quizdown
+execute:
+  enabled: false
+---
+
+## Niveau 1 — Fondamentaux
+
+```{quizdown}
+### Quelle est la definition correcte d'une option financiere ?
+
+> Reflechis a la difference entre un droit et une obligation.
+
+1. [ ] L'obligation d'acheter ou de vendre un actif a un prix fixe a une date donnee
+1. [x] Le droit, mais non l'obligation, d'acheter ou de vendre un actif a un prix fixe jusqu'a une date donnee
+    > Correct : une option confere un droit, pas une obligation. C'est ce qui la distingue fondamentalement d'un contrat a terme (futures).
+1. [ ] Un contrat obligeant les deux parties a echanger un actif a maturite
+1. [ ] Une assurance remboursant la totalite de la perte en cas de baisse
+```
+
+```{quizdown}
+### Qu'est-ce qu'un call ?
+
+> Pense a la direction du mouvement de prix qui beneficie au detenteur.
+
+1. [x] Le droit d'acheter un actif au prix d'exercice
+    > Correct : le detenteur d'un call profite d'une hausse du sous-jacent au-dela du strike.
+1. [ ] Le droit de vendre un actif au prix d'exercice
+1. [ ] L'obligation d'acheter un actif au prix du marche
+1. [ ] Une option qui ne peut etre exercee qu'a maturite
+```
+
+```{quizdown}
+### Quelle est la difference entre une option europeenne et une option americaine ?
+
+> La distinction porte sur le moment d'exercice, pas sur la geographie.
+
+1. [ ] L'option europeenne est cotee en euros, l'option americaine en dollars
+1. [ ] L'option americaine ne peut etre exercee qu'a maturite
+1. [x] L'option europeenne ne peut etre exercee qu'a maturite, l'option americaine peut l'etre a tout moment
+    > Correct : l'option europeenne est plus restrictive sur la date d'exercice, ce qui la rend plus simple a modéliser.
+1. [ ] Il n'y a aucune difference pratique entre les deux
+```
+
+```{quizdown}
+### Quelles affirmations sur le short call sont correctes ?
+
+> Le vendeur d'une option assume le risque en echange de la prime.
+
+- [x] Le vendeur encaisse la prime des la vente de l'option
+    > Correct : la prime est percue immediatement par le vendeur (writer).
+- [ ] La perte maximale du vendeur est limitee a la prime encaissee
+    > Incorrect : la perte du short call est theoriquement illimitee car le prix peut monter indefiniment.
+- [x] La perte potentielle est theoriquement illimitee
+    > Correct : c'est la position la plus risquee parmi les quatre positions optionnelles.
+- [ ] Le vendeur a le droit d'acheter l'actif au strike
+```
+
+```{quizdown}
+### Qu'est-ce que la prime d'une option ?
+
+> Pense a l'analogie avec une assurance.
+
+1. [ ] Le gain realise lors de l'exercice de l'option
+1. [ ] La difference entre le strike et le prix du marche
+1. [x] Le prix paye par l'acheteur pour acquerir le droit confere par l'option
+    > Correct : la prime est le cout de l'assurance. Elle est payee au moment de l'achat, independamment de l'exercice futur.
+1. [ ] Le montant du dividende verse pendant la vie de l'option
+```
+
+```{quizdown}
+### Quel est le payoff a maturite d'un long put ?
+
+> Rappelle-toi dans quelle direction de prix le put est benefique.
+
+1. [ ] max(S_T - K, 0)
+1. [ ] min(S_T - K, 0)
+1. [x] max(K - S_T, 0)
+    > Correct : le put est profitable quand le prix de l'actif est inferieur au strike. Le payoff est nul si S_T >= K.
+1. [ ] K - S_T quelles que soient les conditions
+```
+
+```{quizdown}
+### Une option est dite "in the money" (dans la monnaie) pour un call quand...
+
+> Reflechis a quand il serait rationnel d'exercer l'option immediatement.
+
+1. [x] Le prix courant de l'actif est superieur au strike (S_0 > K)
+    > Correct : un call ITM a une valeur intrinseque positive, car exercer permet d'acheter moins cher que le marche.
+1. [ ] Le prix courant de l'actif est inferieur au strike (S_0 < K)
+1. [ ] Le prix courant de l'actif est egal au strike (S_0 = K)
+1. [ ] La maturite est inferieure a 3 mois
+```
+
+---
+
+## Niveau 2 — Comprehension
+
+```{quizdown}
+### Quelles variables augmentent la valeur a la fois d'un call et d'un put ?
+
+> L'une de ces variables augmente l'incertitude sur le prix futur, beneficiant aux deux types d'options.
+
+- [x] La volatilite du sous-jacent
+    > Correct : une volatilite plus elevee accroit la probabilite que le prix atteigne ou depasse le strike, pour les deux types d'options.
+- [ ] Une hausse du prix courant du sous-jacent
+    > Incorrect : la hausse de S_0 augmente le call mais diminue le put.
+- [x] Un allongement de la maturite
+    > Correct : plus de temps signifie plus d'incertitude, ce qui accroit la valeur temporelle des deux types.
+- [ ] Une hausse du taux sans risque
+    > Incorrect : la hausse de r augmente le call mais diminue le put.
+```
+
+```{quizdown}
+### Quelle est la borne superieure correcte pour le prix d'un call europeen ?
+
+> Si cette borne etait violee, quelle operation sans risque serait possible ?
+
+1. [ ] c <= K * e^(-rT)
+1. [x] c <= S_0
+    > Correct : si c > S_0, on pourrait vendre le call et acheter l'actif en empochant la difference sans risque — un arbitrage.
+1. [ ] c <= K
+1. [ ] c <= S_0 - K * e^(-rT)
+```
+
+```{quizdown}
+### La parite put-call s'ecrit :
+
+> Cette relation relie le prix d'un call et d'un put de meme strike et meme maturite.
+
+1. [ ] c + S_0 = p + K * e^(-rT)
+1. [ ] c - p = S_0 - K
+1. [x] c + K * e^(-rT) = p + S_0
+    > Correct : c'est la relation d'equilibre fondamentale. Toute deviation implique une opportunite d'arbitrage.
+1. [ ] c * p = S_0 * K * e^(-rT)
+```
+
+```{quizdown}
+### Dans l'arbre binomial, que represente le delta de couverture ?
+
+> Pense au role du delta dans la construction d'un portefeuille sans risque.
+
+1. [ ] La probabilite risque-neutre d'une hausse du sous-jacent
+1. [ ] Le taux de rendement sans risque annualise
+1. [x] Le nombre d'unites du sous-jacent a detenir pour neutraliser le risque de la position en option
+    > Correct : delta = (f_u - f_d) / (S_0*u - S_0*d). C'est le principe du delta-hedging.
+1. [ ] La difference entre le payoff haussier et le payoff baissier
+```
+
+```{quizdown}
+### Qu'est-ce que la probabilite risque-neutre dans le modele binomial ?
+
+> Ce n'est pas la probabilite reelle d'une hausse du marche.
+
+1. [ ] La probabilite historique que le sous-jacent monte
+1. [ ] La probabilite calibree sur les rendements passes du sous-jacent
+1. [x] Une probabilite artificielle qui garantit l'absence d'arbitrage et permet de pricer l'option comme une esperance actualisee
+    > Correct : p = (e^(rT) - d) / (u - d). Elle n'a pas de signification probabiliste reelle mais permet de calculer le prix par non-arbitrage.
+1. [ ] La probabilite que l'option soit exercee a maturite
+```
+
+```{quizdown}
+### Quel portefeuille a exactement le meme payoff a maturite qu'un long call, illustrant la parite put-call ?
+
+> Combine deux instruments pour reproduire le profil d'un call.
+
+1. [ ] Long put + short actif
+1. [ ] Short put + long actif
+1. [x] Long put + long actif
+    > Correct : long put + long actif = call-like. C'est la strategie de protection qui genere un payoff analogue a celui d'un call, illustrant directement la parite put-call.
+1. [ ] Short call + long actif
+```
+
+```{quizdown}
+### Quelle est la formule du prix d'un call selon Black-Scholes ?
+
+> La formule fait intervenir la fonction de repartition normale N(.).
+
+1. [ ] c = S_0 * N(d_2) - K * e^(-rT) * N(d_1)
+1. [ ] c = K * e^(-rT) * N(d_1) - S_0 * N(d_2)
+1. [x] c = S_0 * N(d_1) - K * e^(-rT) * N(d_2)
+    > Correct : le premier terme represente la valeur actualisee de l'actif si l'option est exercee, le second le cout actualise du paiement du strike.
+1. [ ] c = S_0 * N(-d_1) - K * e^(-rT) * N(-d_2)
+```
+
+```{quizdown}
+### Qu'est-ce que la volatilite implicite (implied volatility) ?
+
+> Elle s'obtient en inversant le modele de Black-Scholes.
+
+1. [ ] La volatilite historique calculee sur les rendements passes du sous-jacent
+1. [ ] La volatilite future realisee a la maturite de l'option
+1. [x] La valeur de sigma que l'on doit injecter dans Black-Scholes pour retrouver le prix observe sur le marche
+    > Correct : on fixe tous les autres parametres et on resout numeriquement pour sigma. Elle reflète les anticipations de volatilite du marche.
+1. [ ] L'ecart-type des prix de l'option sur une periode donnee
+```
+
+---
+
+## Niveau 3 — Maitrise
+
+```{quizdown}
+### Un investisseur anticipe une hausse moderee d'une action mais veut reduire son cout d'entree. Quelle strategie est la plus adaptee ?
+
+> Il faut limiter le gain potentiel pour reduire la prime nette payee.
+
+1. [ ] Long call seul
+1. [x] Bull spread avec des calls (long call K1 + short call K2, K2 > K1)
+    > Correct : le bull spread reduit le cout en vendant un call a strike superieur, limitant le gain au-dela de K2 mais rendant la strategie moins chere.
+1. [ ] Long butterfly
+1. [ ] Long straddle (long call + long put au meme strike)
+```
+
+```{quizdown}
+### Un trader pense que le marche sera tres stable dans les semaines a venir et que la volatilite est surestimee. Quelle strategie convient le mieux ?
+
+> La strategie doit profiter de la stabilite des prix et de la baisse de volatilite.
+
+1. [ ] Long call
+1. [ ] Long put
+1. [ ] Bull spread
+1. [x] Long butterfly (long K1, 2 short K2, long K3)
+    > Correct : le butterfly est concu pour beneficier d'une faible volatilite. Le gain maximal est atteint si S_T = K2 a maturite.
+```
+
+```{quizdown}
+### Remets dans le bon ordre les etapes du calcul du prix d'une option par arbre binomial a une etape.
+
+> On procede de droite a gauche : on commence par les payoffs terminaux.
+
+1. Calculer les payoffs a maturite : f_u et f_d
+2. Calculer la probabilite risque-neutre p = (e^(rT) - d) / (u - d)
+3. Calculer le delta de couverture Delta = (f_u - f_d) / (S_0*u - S_0*d)
+4. Calculer le prix de l'option f = e^(-rT) * (p*f_u + (1-p)*f_d)
+5. Verifier la coherence avec les bornes de non-arbitrage
+```
+
+```{quizdown}
+### Avec S_0 = 20, K = 21, u = 1.1, d = 0.909, r = 12%, T = 3 mois, quel est le payoff f_u du call ?
+
+> Rappelle-toi la definition du payoff d'un call a maturite.
+
+1. [ ] 0 USD
+1. [ ] 20 USD
+1. [x] 1 USD
+    > Correct : f_u = max(S_0*u - K, 0) = max(22 - 21, 0) = 1 USD. Le call est exerce car S_T > K.
+1. [ ] 21 USD
+```
+
+```{quizdown}
+### Pourquoi le prix binomial converge-t-il vers le prix Black-Scholes quand le nombre de pas augmente ?
+
+> Pense a la relation entre l'arbre binomial et le mouvement brownien.
+
+1. [ ] Parce que Black-Scholes est une approximation de l'arbre binomial
+1. [x] Parce que l'arbre binomial discretise le meme processus stochastique que Black-Scholes, et la convergence est assymptotiquement garantie
+    > Correct : Black-Scholes est le cas limite de l'arbre binomial en temps continu. Avec n -> infini, les deux modeles sont equivalents.
+1. [ ] Parce que les deux modeles utilisent exactement la meme probabilite physique
+1. [ ] La convergence n'est garantie que si u = e^(sigma*sqrt(T))
+```
+
+```{quizdown}
+### Un fonds de pension detient un portefeuille actions important. Il craint une chute brutale des marches. Quelle strategie simple de protection peut-il mettre en place ?
+
+> L'objectif est de limiter les pertes en cas de baisse sans renoncer aux gains.
+
+1. [ ] Vendre tous les actifs et placer en obligations
+1. [ ] Acheter des calls sur les indices boursiers
+1. [ ] Vendre des puts sur son portefeuille
+1. [x] Acheter un panier de puts sur les actifs ou sur un indice representatif
+    > Correct : les puts agissent comme des assurances : ils compensent les pertes en dessous du strike. Le cout est la prime payee.
+```
+
+```{quizdown}
+### Le smile de volatilite (volatility smile) indique que...
+
+> Reflechis a ce que la forme du smile implique sur les hypotheses du modele Black-Scholes.
+
+- [x] La volatilite implicite varie selon le strike, contrairement aux hypotheses de Black-Scholes
+    > Correct : Black-Scholes suppose sigma constante. Le smile montre que cette hypothese est violee en pratique.
+- [x] Les actifs reels presentent des queues de distribution plus epaisses que la loi log-normale
+    > Correct : les mouvements extremes sont plus frequents que ce que predit Black-Scholes, ce qui augmente la volatilite implicite des options tres OTM ou ITM.
+- [ ] Black-Scholes est un modele exact qui capture tous les phenomenes de marche
+    > Incorrect : le smile est precisement la preuve que Black-Scholes est un modele simplifie.
+- [ ] La volatilite implicite est constante quelle que soit la maturite
+```
+
+```{quizdown}
+### Remets dans le bon ordre les concepts, du plus simple au plus complexe, pour comprendre le pricing des options.
+
+> Commence par les bases et progresse vers les modeles.
+
+1. Definition du call et du put
+2. Profit et payoff selon les quatre positions
+3. Bornes de prix par non-arbitrage
+4. Parite put-call
+5. Arbre binomial a une etape
+6. Arbre binomial multi-etapes
+7. Modele de Black-Scholes
+8. Volatilite implicite et smile de volatilite
+```
+
+```{quizdown}
+### Si la volatilite implicite augmente fortement alors que tous les autres parametres restent constants, quel est l'effet sur le prix des options ?
+
+> La volatilite beneficie-t-elle de la meme facon aux deux types d'options ?
+
+1. [ ] Le call augmente, le put diminue
+1. [ ] Le call diminue, le put augmente
+1. [x] Le call et le put augmentent tous les deux
+    > Correct : la volatilite accroit la valeur des deux types d'options. Une forte volatilite signifie une plus grande probabilite que le prix s'eloigne fortement du strike, dans un sens ou dans l'autre.
+1. [ ] Ni le call ni le put ne sont affectes par la volatilite
+```
+
+```{quizdown}
+### Laquelle de ces situations constitue une opportunite d'arbitrage ?
+
+> L'arbitrage implique un profit certain sans risque et sans mise de fonds initiale.
+
+1. [ ] Un call se negocie a 5 USD avec S_0 = 50 et K = 52
+1. [ ] Un put se negocie a 3 USD avec K = 40 et S_0 = 42
+1. [x] Un call europeen se negocie a 55 USD avec S_0 = 50
+    > Correct : on a c > S_0, ce qui viole la borne superieure. On peut vendre le call a 55 USD, acheter l'actif a 50 USD et empocher 5 USD sans risque.
+1. [ ] La parite put-call est respectee pour tous les strikes disponibles
+```

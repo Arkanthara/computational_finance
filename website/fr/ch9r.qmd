@@ -1,0 +1,191 @@
+---
+title: "Options — Révision"
+---
+
+## Définitions essentielles
+
+| Terme | Définition |
+|---|---|
+| **Option** | Droit (non obligation) d'acheter ou vendre un actif à un prix fixé (*strike* $K$) jusqu'à la *maturité* $T$ |
+| **Call** | Droit d'**acheter** au strike $K$ |
+| **Put** | Droit de **vendre** au strike $K$ |
+| **Prime** | Prix de l'option (coût de l'assurance) |
+| **Européenne** | Exercice **uniquement à** $T$ |
+| **Américaine** | Exercice **à tout moment** jusqu'à $T$ |
+
+---
+
+## Les 4 positions
+
+| Position | Paye | Reçoit | Perte max | Gain max |
+|---|---|---|---|---|
+| **Long call** | Prime $c$ | — | $c$ | Illimité |
+| **Short call** | — | Prime $c$ | **Illimité** ⚠️ | $c$ |
+| **Long put** | Prime $p$ | — | $p$ | $K - p$ |
+| **Short put** | — | Prime $p$ | $K - p$ | $p$ |
+
+::: {.callout-warning title="Piège"}
+Le **short call** est la seule position à perte **théoriquement illimitée**.
+:::
+
+---
+
+## Payoffs à maturité
+
+| Position | Payoff |
+|---|---|
+| Long call | $\max(S_T - K,\ 0)$ |
+| Short call | $-\max(S_T - K,\ 0)$ |
+| Long put | $\max(K - S_T,\ 0)$ |
+| Short put | $-\max(K - S_T,\ 0)$ |
+
+**Profit = Payoff − Prime**
+
+---
+
+## Moneyness
+
+| État | Call | Put |
+|---|---|---|
+| **In the money (ITM)** | $S_0 > K$ | $S_0 < K$ |
+| **At the money (ATM)** | $S_0 = K$ | $S_0 = K$ |
+| **Out of the money (OTM)** | $S_0 < K$ | $S_0 > K$ |
+
+---
+
+## Variables influençant le prix
+
+| Variable | ↑ Call | ↑ Put |
+|---|---|---|
+| Prix actuel $S_0$ ↑ | ↑ | ↓ |
+| Strike $K$ ↑ | ↓ | ↑ |
+| Maturité $T$ ↑ | ↑ | ↑ |
+| Volatilité $\sigma$ ↑ | ↑ | ↑ |
+| Taux $r$ ↑ | ↑ | ↓ |
+| Dividende ↑ | ↓ | ↑ |
+
+::: {.callout-tip title="À retenir"}
+La volatilité $\sigma$ augmente la valeur des **deux types** d'options.
+:::
+
+---
+
+## Bornes de prix (non-arbitrage)
+
+$$S_0 - Ke^{-rT} \leq c \leq S_0$$
+
+$$Ke^{-rT} - S_0 \leq p \leq K$$
+
+**Rappel actualisation :** $p_0 = p_T \cdot e^{-rT}$
+
+---
+
+## Parité put-call (Put-Call Parity)
+
+$$\boxed{c + Ke^{-rT} = p + S_0}$$
+
+- Condition d'équilibre sans arbitrage
+- Permet de synthétiser un instrument à partir des trois autres
+- **Long put + actif = call-like** (illustre la parité)
+
+---
+
+## Stratégies clés
+
+| Stratégie | Construction | Anticipation |
+|---|---|---|
+| **Bull spread (calls)** | Long call $K_1$ + Short call $K_2$, $K_2 > K_1$ | Hausse modérée |
+| **Bull spread (puts)** | Long put $K_1$ + Short put $K_2$, $K_2 > K_1$ | Hausse modérée |
+| **Long butterfly** | Long $K_1$ + 2 Short $K_2$ + Long $K_3$ | Faible volatilité, stabilité |
+| **Protective put** | Long actif + Long put | Protection contre la baisse |
+
+---
+
+## Pricing — Arbre binomial (Binomial Tree)
+
+**Structure à 1 étape :**
+
+- $S_0 \cdot u$ (hausse) avec probabilité $p$
+- $S_0 \cdot d$ (baisse) avec probabilité $1-p$, $u = 1/d$
+
+**Delta de couverture :**
+
+$$\Delta = \frac{f_u - f_d}{S_0 u - S_0 d}$$
+
+**Probabilité risque-neutre (Risk-Neutral Probability) :**
+
+$$p = \frac{e^{rT} - d}{u - d}$$
+
+**Prix de l'option :**
+
+$$\boxed{f = e^{-rT}\left[p \cdot f_u + (1-p) \cdot f_d\right]}$$
+
+**Calibration :**
+
+$$u = e^{\sigma\sqrt{T}}, \quad d = e^{-\sigma\sqrt{T}}$$
+
+::: {.callout-warning title="Complexité"}
+$n$ étapes → $2^n$ chemins. À 30 étapes : $\approx 10^9$ chemins → coûteux en mémoire.
+:::
+
+---
+
+## Pricing — Black-Scholes (BS)
+
+**Call :**
+
+$$c = S_0 N(d_1) - Ke^{-rT} N(d_2)$$
+
+**Put :**
+
+$$p = Ke^{-rT} N(-d_2) - S_0 N(-d_1)$$
+
+**Avec :**
+
+$$d_1 = \frac{\ln(S_0/K) + (r + \sigma^2/2)T}{\sigma\sqrt{T}}, \quad d_2 = d_1 - \sigma\sqrt{T}$$
+
+$N(x)$ = fonction de répartition normale standard $\mathcal{N}(0,1)$
+
+| Hypothèse BS | Réalité |
+|---|---|
+| $\sigma$ constante | Varie selon $K$ et $T$ |
+| Rendements log-normaux | Queues épaisses (*fat tails*) |
+
+---
+
+## Binomial vs Black-Scholes
+
+| Critère | Binomial | Black-Scholes |
+|---|---|---|
+| Type d'option | Vanille **et** exotique | Vanille uniquement |
+| Formule | Numérique / récursive | Analytique fermée |
+| Convergence | → BS quand $n \to \infty$ | Référence |
+| Complexité | Exponentielle en $n$ | Instantanée |
+
+---
+
+## Volatilité implicite & Smile
+
+- **Volatilité implicite** (*Implied Volatility*) : $\sigma$ extraite de BS en fixant le prix marché.
+- Théoriquement constante selon BS → **en pratique : non**.
+- **Smile** : $\sigma$ implicite plus élevée pour les options très OTM ou ITM.
+- **Surface de volatilité** : smile en fonction de $K$ **et** $T$.
+
+::: {.callout-warning title="Piège"}
+Le smile de volatilité est la preuve que BS est un **modèle**, pas la réalité. Ne jamais oublier ses limites.
+:::
+
+---
+
+## Exemple numérique de référence
+
+**Données :** $S_0 = 20$, $K = 21$, $T = 3/12$, $u = 1.1$, $d = 0.909$, $r = 12\%$
+
+| Calcul | Valeur |
+|---|---|
+| $f_u = \max(22-21, 0)$ | $1$ USD |
+| $f_d = \max(18.2-21, 0)$ | $0$ USD |
+| $p = (e^{0.03} - 0.909) / 0.191$ | $\approx 0.636$ |
+| $f = e^{-0.03}(0.636 \times 1)$ | $\approx 0.617$ USD |
+| $\Delta = 1/(22-18.2)$ | $\approx 0.262$ |
+| BS : $c$ | $\approx 0.593$ USD |

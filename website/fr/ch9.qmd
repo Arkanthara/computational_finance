@@ -1,0 +1,646 @@
+---
+title: "Options - Notions fondamentales"
+---
+
+## Introduction aux options
+
+### Qu'est-ce qu'une option ?
+
+Une **option** est un contrat financier qui donne à son détenteur le **droit** — mais non l'obligation — d'acheter ou de vendre un actif sous-jacent à un prix fixé à l'avance, appelé **prix d'exercice** (Strike), jusqu'à une date donnée appelée **maturité** (Maturity).
+
+Il existe deux types fondamentaux d'options :
+
+- **Call (option d'achat)** : donne le droit d'*acheter* l'actif au prix d'exercice.
+- **Put (option de vente)** : donne le droit de *vendre* l'actif au prix d'exercice.
+
+::: {.callout-note title="À retenir"}
+Une option est une **assurance financière**. L'acheteur paie une prime pour se protéger contre une évolution défavorable du marché, tout en conservant la possibilité de profiter d'une évolution favorable.
+:::
+
+### Options européennes et américaines
+
+La nature de l'option détermine **quand** elle peut être exercée :
+
+- **Option européenne** : ne peut être exercée qu'à la date de maturité exacte. Plus simple à analyser théoriquement, c'est le type privilégié pour les modèles de valorisation.
+- **Option américaine** : peut être exercée à **n'importe quel moment** avant ou à la date de maturité. Plus flexible, mais aussi plus complexe à pricer.
+
+::: {.callout-tip title="Intuition"}
+Pensez à l'option européenne comme un bon d'achat utilisable uniquement à sa date d'expiration, et à l'option américaine comme un bon utilisable à tout moment jusqu'à cette date.
+:::
+
+En pratique, la majorité des options négociées sur les marchés sont **américaines**, mais les modèles théoriques — notamment Black-Scholes — sont développés pour les options européennes, par souci de simplicité mathématique.
+
+### Les quatre positions possibles
+
+Toute transaction sur option implique un **acheteur** (position longue) et un **vendeur** (position courte, aussi appelé *writer* ou émetteur). Cela donne quatre types de positions :
+
+| Position | Description | Droit / Obligation |
+|---|---|---|
+| **Long call** | Achète le droit d'acheter | Paie la prime, droit d'acheter |
+| **Short call** | Vend le droit d'acheter | Reçoit la prime, obligation de vendre |
+| **Long put** | Achète le droit de vendre | Paie la prime, droit de vendre |
+| **Short put** | Vend le droit de vendre | Reçoit la prime, obligation d'acheter |
+
+::: {.callout-warning title="Important"}
+Émettre (vendre) une option, c'est **vendre une assurance**. En contrepartie de la prime reçue, le vendeur prend en charge le risque. Cette position est particulièrement risquée pour le **short call**, dont la perte est théoriquement **illimitée** si le prix de l'actif monte indéfiniment.
+:::
+
+---
+
+## Profit et payoff
+
+### Exemple introductif : le long call
+
+Considérons un investisseur qui achète un **long call** sur un titre $S$ avec les paramètres suivants :
+
+- Prix du call : $c = 5$ USD
+- Prix d'exercice : $K = 60$ USD
+- Maturité : $T$
+
+À maturité, le **profit** de cet investisseur est :
+
+$$\text{Profit} = \max(S_T - K, 0) - c$$
+
+où $S_T$ est le prix de l'actif à maturité.
+
+**Analyse :**
+
+- Si $S_T \leq 60$ : l'option n'est pas exercée (acheter à 60 alors que le marché est moins cher n'a aucun intérêt). La perte est limitée à la prime payée : $-5$ USD.
+- Si $S_T > 60$ : l'option est exercée. Le profit devient positif dès que $S_T > 65$ (le point mort ou *break-even*).
+
+::: {.callout-tip title="Intuition"}
+La prime payée représente le **coût de l'assurance**. Même si l'option n'est jamais exercée, l'investisseur aura protégé son portefeuille ou bénéficié d'un levier potentiel.
+:::
+
+### Profils de profit des quatre positions
+
+Chaque position offre un profil de risque/rendement distinct :
+
+#### Long call
+
+- **Perte maximale** : limitée à la prime $c$.
+- **Gain potentiel** : illimité (le prix peut monter indéfiniment).
+- **Seuil de rentabilité** : $S_T = K + c$.
+
+#### Short call
+
+- **Gain maximal** : limité à la prime $c$ encaissée.
+- **Perte potentielle** : **illimitée** si $S_T$ augmente fortement.
+- C'est la position la plus risquée de toutes.
+
+#### Long put
+
+- **Perte maximale** : limitée à la prime $p$.
+- **Gain potentiel** : limité (au maximum $K - p$, atteint si $S_T = 0$).
+- **Seuil de rentabilité** : $S_T = K - p$.
+
+#### Short put
+
+- **Gain maximal** : limité à la prime $p$ encaissée.
+- **Perte maximale** : $K - p$ (si le sous-jacent tombe à zéro).
+
+::: {.callout-note title="À retenir"}
+L'acheteur d'une option (long) a un **risque limité** à la prime payée. Le vendeur (short) bénéficie de la prime mais accepte un **risque potentiellement très élevé**.
+:::
+
+---
+
+## Variables influençant le prix d'une option
+
+### Les paramètres clés
+
+Le prix d'une option dépend de plusieurs variables fondamentales :
+
+#### Prix courant de l'actif ($S_0$)
+
+Plus le prix actuel de l'actif est élevé par rapport au strike, plus un call est précieux (et moins un put l'est).
+
+#### Prix d'exercice ($K$)
+
+Le strike fixe le niveau à partir duquel l'option est rentable.
+
+#### Notion de *moneyness*
+
+La relation entre $S_0$ et $K$ définit l'état de l'option :
+
+- **At the money (ATM)** : $K = S_0$ — l'option est à la monnaie.
+- **In the money (ITM)** : $K > S_0$ pour un put, $K < S_0$ pour un call — l'option a une valeur intrinsèque positive.
+- **Out of the money (OTM)** : $K < S_0$ pour un put, $K > S_0$ pour un call — l'option n'a pas de valeur intrinsèque.
+
+::: {.callout-tip title="Intuition"}
+La *moneyness* indique à quel point l'option est "utile" immédiatement. Une option ITM a une valeur intrinsèque positive, tandis qu'une option OTM n'a que de la valeur temporelle.
+:::
+
+#### Maturité ($T$)
+
+Plus la maturité est longue, plus il y a d'incertitude sur le futur et donc plus l'option est précieuse — toutes choses égales par ailleurs.
+
+#### Volatilité ($\sigma$)
+
+La volatilité est le paramètre le plus influent. Une forte volatilité augmente la probabilité que l'actif atteigne (ou dépasse) le strike, ce qui augmente la valeur de l'option.
+
+::: {.callout-warning title="Important"}
+La volatilité augmente la valeur **à la fois des calls et des puts**. C'est contre-intuitif au premier abord, mais logique : une plus grande dispersion des prix futurs accroît les chances d'un gain pour les deux types d'options.
+:::
+
+#### Taux sans risque ($r$)
+
+Le taux d'intérêt sans risque influence le prix via l'actualisation du prix d'exercice.
+
+#### Paiements intermédiaires
+
+Les dividendes, coupons ou autres flux versés pendant la vie de l'option réduisent généralement la valeur d'un call (car ils diminuent la valeur de l'actif).
+
+---
+
+## Bornes du prix d'une option
+
+### Rappel mathématique : actualisation
+
+Avant d'établir les bornes, rappelons la relation entre valeur présente et valeur future :
+
+$$p_T = p_0 \cdot e^{rT} \quad \Longleftrightarrow \quad p_0 = p_T \cdot e^{-rT}$$
+
+Cela signifie qu'un montant $K$ reçu en $T$ vaut aujourd'hui $K \cdot e^{-rT}$.
+
+### Bornes supérieures
+
+#### Pour le call : $c \leq S_0$
+
+Si $c > S_0$, un arbitragiste pourrait :
+
+1. Vendre le call (encaisser $c$).
+2. Acheter l'actif (payer $S_0$).
+3. Empocher la différence $c - S_0 > 0$ **sans aucun risque**.
+
+Ce "repas gratuit" (*free lunch*) serait immédiatement exploité par le marché, ramenant le prix à $c \leq S_0$.
+
+#### Pour le put : $p \leq K$
+
+Le payoff maximal d'un put est atteint quand $S_T = 0$ : l'option vaut alors $K$.
+
+Si $p > K$, l'option coûte plus cher que le gain maximum possible : personne ne l'achèterait rationnellement. De plus, l'émetteur pourrait réaliser un profit arbitral.
+
+### Bornes inférieures
+
+#### Pour le call : $c \geq S_0 - K e^{-rT}$
+
+**Démonstration par comparaison de portefeuilles :**
+
+Considérons deux portefeuilles :
+
+- **Portefeuille A** : un call $c$ + cash $K e^{-rT}$ (qui devient $K$ à maturité).
+- **Portefeuille B** : l'actif $S$.
+
+À maturité :
+
+| Cas | Portefeuille A | Portefeuille B |
+|---|---|---|
+| $S_T > K$ | $(S_T - K) + K = S_T$ | $S_T$ |
+| $S_T \leq K$ | $0 + K = K > S_T$ | $S_T$ |
+
+A vaut **toujours au moins autant** que B. Donc :
+
+$$c + K e^{-rT} \geq S_0 \quad \Longrightarrow \quad c \geq S_0 - K e^{-rT}$$
+
+#### Pour le put : $p \geq K e^{-rT} - S_0$
+
+Par un raisonnement symétrique, on montre que :
+
+$$p \geq K e^{-rT} - S_0$$
+
+### Résumé des bornes
+
+::: {.callout-note title="À retenir — Bornes du prix d'une option européenne"}
+$$S_0 - K e^{-rT} \leq c \leq S_0$$
+
+$$K e^{-rT} - S_0 \leq p \leq K$$
+:::
+
+Ces bornes sont des **conditions de non-arbitrage** : si elles sont violées, il existe une opportunité de profit sans risque que le marché corrige rapidement.
+
+---
+
+## Parité put-call (Put-Call Parity)
+
+### Définition et démonstration
+
+La **parité put-call** est une relation fondamentale qui lie le prix d'un call et d'un put de même strike $K$ et de même maturité $T$ sur le même actif.
+
+**Démonstration par comparaison de portefeuilles :**
+
+Considérons :
+
+- **Portefeuille A** : call $c$ + cash $K e^{-rT}$
+- **Portefeuille C** : put $p$ + actif $S$
+
+On a vu que A vaut $\max(S_T, K)$ à maturité. On peut vérifier de même que C vaut aussi $\max(S_T, K)$ :
+
+| Cas | Put | Actif | Total C |
+|---|---|---|---|
+| $S_T > K$ | $0$ | $S_T$ | $S_T$ |
+| $S_T \leq K$ | $K - S_T$ | $S_T$ | $K$ |
+
+Puisque A et C ont **le même payoff à maturité**, leurs valeurs aujourd'hui doivent être égales (sinon il y aurait arbitrage) :
+
+$$\boxed{c + K e^{-rT} = p + S_0}$$
+
+::: {.callout-note title="À retenir — Parité put-call"}
+$$c + K e^{-rT} = p + S_0$$
+
+Cette relation est une **condition d'équilibre du marché des options**. Si elle n'est pas vérifiée, il existe une opportunité d'arbitrage.
+:::
+
+### Interprétation
+
+La parité put-call signifie qu'on peut **synthétiser** n'importe lequel de ces instruments à partir des trois autres :
+
+- Un call = un put + l'actif - cash actualisé.
+- Un put = un call - l'actif + cash actualisé.
+
+::: {.callout-tip title="Intuition"}
+C'est précisément ce que montre la stratégie "long put + long actif" : la combinaison produit un profil de profit identique à celui d'un call, illustrant graphiquement la parité put-call.
+:::
+
+---
+
+## Stratégies de trading avec les options
+
+### Introduction
+
+Les options permettent de construire des **stratégies combinées** offrant des profils de risque/rendement sur mesure. Ces stratégies peuvent viser la protection, la spéculation ou l'exploitation d'anticipations sur la volatilité.
+
+### Long put + long actif (protection)
+
+Cette stratégie illustre directement la parité put-call :
+
+- On achète l'actif $S$ et simultanément un put de strike $K$.
+- Si le prix monte, on bénéficie de la hausse de l'actif.
+- Si le prix baisse en dessous de $K$, le put compense les pertes.
+
+Le profil de profit résultant est **similaire à celui d'un long call** : perte limitée (à la prime du put), gain illimité à la hausse.
+
+::: {.callout-tip title="Intuition"}
+Acheter un put sur une action qu'on détient, c'est souscrire une assurance contre la baisse tout en conservant l'exposition à la hausse.
+:::
+
+### Bull spread (Écart haussier)
+
+Le **bull spread** est une stratégie adaptée à une anticipation de hausse modérée du sous-jacent. Elle limite à la fois le gain maximal et la perte maximale.
+
+#### Bull spread avec des calls
+
+- **Long call** de strike $K_1$ (bas).
+- **Short call** de strike $K_2$ (haut), avec $K_2 > K_1$.
+
+**Logique :**
+
+- On achète un call pour profiter de la hausse.
+- On vend un call à un strike plus élevé pour financer partiellement l'achat.
+- Le gain est plafonné au-delà de $K_2$, mais le coût initial est réduit.
+
+#### Bull spread avec des puts
+
+- **Long put** de strike $K_1$ (bas).
+- **Short put** de strike $K_2$ (haut), avec $K_2 > K_1$.
+
+Le profil de profit est équivalent au bull spread avec des calls (par la parité put-call).
+
+::: {.callout-note title="À retenir"}
+Le bull spread est un compromis : on renonce à une partie du gain potentiel pour réduire le coût de la position et limiter la perte maximale.
+:::
+
+### Long butterfly (Papillon long)
+
+Le **long butterfly** est une stratégie adaptée à une anticipation de faible volatilité : on anticipe que le prix de l'actif restera proche d'un niveau central $K_2$.
+
+**Construction avec des calls :**
+
+- **Long call** à $K_1$ (strike bas).
+- **2 short calls** à $K_2$ (strike médian).
+- **Long call** à $K_3$ (strike haut), avec $K_3 > K_2 > K_1$.
+
+**Profil de profit :**
+
+- Gain maximal atteint si $S_T = K_2$ à maturité.
+- Perte limitée et symétrique si $S_T < K_1$ ou $S_T > K_3$.
+
+::: {.callout-tip title="Intuition"}
+Le butterfly est un pari sur la stabilité du marché. Le vendeur de volatilité implicite construit cette stratégie quand il pense que le marché sur-évalue le risque.
+:::
+
+### Protection d'actifs de fonds de pension
+
+Les fonds de pension gèrent des patrimoines considérables exposés aux marchés actions et obligataires. Pour se protéger contre des **risques extrêmes** (*tail risks*), c'est-à-dire des chutes brutales et importantes, une stratégie courante consiste à :
+
+1. **Acheter un panier de puts** sur les actifs du portefeuille (ou sur un indice représentatif).
+2. Les puts **plancher les pertes** (*floor*) : en cas de drawdown, les puts compensent une partie des pertes.
+3. Le coût de cette protection est la **prime payée** pour les puts.
+
+::: {.callout-warning title="Important — Le compromis protection/performance"}
+Cette stratégie réduit les drawdowns mais a un **coût direct** (les primes). Il faut trouver le juste équilibre entre niveau de protection souhaité et impact sur la performance globale du portefeuille.
+:::
+
+---
+
+## Pricing : l'arbre binomial (Binomial Tree)
+
+### Principe général
+
+L'**arbre binomial** est une méthode de valorisation qui **discrétise le temps et les prix** pour calculer la valeur d'une option par raisonnement rétrograde (*backward induction*).
+
+L'idée centrale est de construire un portefeuille **parfaitement couvert** (delta-neutre) qui élimine tout risque, puis d'utiliser le principe de non-arbitrage pour déduire le prix de l'option.
+
+### Structure de l'arbre à une étape
+
+À l'instant $t = 0$, le prix de l'actif est $S_0$. À la maturité $T$, il peut prendre deux valeurs :
+
+- $S_0 \cdot u$ avec probabilité $p$ (mouvement haussier, *up*).
+- $S_0 \cdot d$ avec probabilité $1-p$ (mouvement baissier, *down*).
+
+On a typiquement $u = 1/d$, par exemple $u = 1.05$ et $d = 0.952$.
+
+Les prix correspondants de l'option sont $f_u$ et $f_d$.
+
+```{mermaid}
+graph LR
+    A["S₀ / f"] -->|"p"| B["S₀·u / fᵤ"]
+    A -->|"1-p"| C["S₀·d / f_d"]
+```
+
+### Calcul du delta de couverture ($\Delta$)
+
+Le **writer** (émetteur) de l'option construit un portefeuille $P$ composé de :
+
+- Une position short sur le call (vente d'une option).
+- $\Delta$ unités de l'actif sous-jacent.
+
+À maturité :
+
+$$P_u = S_0 \cdot u \cdot \Delta - f_u \quad \text{(si hausse)}$$
+
+$$P_d = S_0 \cdot d \cdot \Delta - f_d \quad \text{(si baisse)}$$
+
+Pour **éliminer le risque**, on impose $P_u = P_d$, ce qui donne :
+
+$$\Delta = \frac{f_u - f_d}{S_0 u - S_0 d}$$
+
+::: {.callout-tip title="Intuition"}
+$\Delta$ est le nombre d'actifs à détenir pour **neutraliser parfaitement le risque** de la position en option. C'est le concept de **delta-hedging**, fondamental en gestion des risques sur dérivés.
+:::
+
+### Calcul du prix de l'option
+
+À $t = 0$ :
+
+$$P = S_0 \Delta - f$$
+
+Le portefeuille couvert ne prend aucun risque et doit donc rapporter le taux sans risque :
+
+$$S_0 \Delta - f = (S_0 u \Delta - f_u) e^{-rT}$$
+
+En injectant l'expression de $\Delta$ et en réarrangeant :
+
+$$\boxed{f = e^{-rT} \left[ p \cdot f_u + (1-p) \cdot f_d \right]}$$
+
+avec la **probabilité risque-neutre** (*risk-neutral probability*) :
+
+$$p = \frac{e^{rT} - d}{u - d}$$
+
+::: {.callout-note title="À retenir — Formule de pricing binomial"}
+Le prix de l'option est la **valeur espérée actualisée** de son payoff sous la probabilité risque-neutre $p$. Cette probabilité n'est pas la probabilité réelle du mouvement de prix, mais une probabilité artificielle qui élimine toute opportunité d'arbitrage.
+:::
+
+### Calibration de $u$, $d$ et $p$
+
+La cohérence du modèle impose que l'espérance du prix futur sous la probabilité risque-neutre soit égale au prix forward :
+
+$$S_0 e^{rT} = p \cdot S_0 u + (1-p) \cdot S_0 d$$
+
+Ce qui confirme :
+
+$$p = \frac{e^{rT} - d}{u - d}$$
+
+En choisissant $u = 1/d$ et en supposant que la variance du rendement sur $T$ est $\sigma^2 T$, on peut montrer que :
+
+$$u = e^{\sigma \sqrt{T}}, \quad d = e^{-\sigma \sqrt{T}}$$
+
+::: {.callout-tip title="Intuition"}
+Ces formules font le lien entre la **volatilité historique** $\sigma$ de l'actif et les paramètres $u$, $d$ de l'arbre. Plus la volatilité est grande, plus les branches de l'arbre sont écartées.
+:::
+
+### Exemple numérique
+
+**Données :**
+
+- Actif : $S_0 = 20$ USD
+- Strike : $K = 21$ USD
+- Maturité : $T = 3$ mois $= 3/12$
+- $u = 1.1$, $d = 1/1.1 \approx 0.909$
+- Taux sans risque : $r = 12\%$
+
+**Calcul :**
+
+Les payoffs à maturité :
+
+- $f_u = \max(20 \times 1.1 - 21, 0) = \max(22 - 21, 0) = 1$ USD
+- $f_d = \max(20 \times 0.909 - 21, 0) = \max(18.18 - 21, 0) = 0$ USD
+
+La probabilité risque-neutre :
+
+$$p = \frac{e^{0.12 \times 3/12} - 0.909}{1.1 - 0.909} = \frac{e^{0.03} - 0.909}{0.191} \approx \frac{1.0305 - 0.909}{0.191} \approx 0.636$$
+
+Le prix de l'option :
+
+$$f = e^{-0.12 \times 3/12} \times (0.636 \times 1 + 0.364 \times 0) \approx e^{-0.03} \times 0.636 \approx 0.617 \text{ USD}$$
+
+Le delta de couverture :
+
+$$\Delta = \frac{1 - 0}{22 - 18.2} = \frac{1}{3.8} \approx 0.262$$
+
+**Interprétation :** L'émetteur du call doit acheter environ 0.262 unités de l'actif pour couvrir parfaitement sa position.
+
+### Extension à plusieurs étapes
+
+Un arbre à une seule étape est insuffisant pour représenter fidèlement la réalité. On généralise à **deux étapes ou plus** :
+
+```{mermaid}
+graph LR
+    A["S₀"] --> B["S₀·u"]
+    A --> C["S₀·d"]
+    B --> D["S₀·u²"]
+    B --> E["S₀·ud"]
+    C --> E
+    C --> F["S₀·d²"]
+```
+
+On procède **de droite à gauche** (*backward induction*) : on calcule d'abord les payoffs terminaux, puis on remonte l'arbre en appliquant à chaque nœud la formule de pricing.
+
+::: {.callout-warning title="Complexité computationnelle"}
+Avec 30 étapes, l'arbre comporte $2^{30} \approx 1$ milliard de chemins possibles. Cela peut devenir **extrêmement coûteux** en temps de calcul et en mémoire, et justifie l'intérêt des formules analytiques comme Black-Scholes pour les options vanilles.
+:::
+
+---
+
+## Pricing : le modèle de Black-Scholes
+
+### Contexte et hypothèses
+
+Le modèle de **Black-Scholes** (1973) constitue l'une des avancées les plus importantes de la finance mathématique. Il fournit une **formule analytique fermée** pour le prix d'options européennes vanilles.
+
+Le modèle repose sur l'hypothèse que le prix de l'actif suit un **mouvement brownien géométrique** (marche aléatoire gaussienne en temps continu), caractérisé par :
+
+- Une dérive constante (rendement espéré).
+- Une volatilité $\sigma$ constante.
+
+La dérivation repose sur les mêmes principes que l'arbre binomial (couverture sans risque) mais en temps continu, via le **Lemme d'Itô**.
+
+::: {.callout-note title="À retenir"}
+Le modèle de Black-Scholes est le **cas limite** de l'arbre binomial lorsque le nombre de pas tend vers l'infini et la durée de chaque pas vers zéro. Le prix binomial **converge** vers le prix Black-Scholes.
+:::
+
+### Formules de Black-Scholes
+
+#### Prix d'un call européen
+
+$$c = S_0 N(d_1) - K e^{-rT} N(d_2)$$
+
+#### Prix d'un put européen
+
+$$p = K e^{-rT} N(-d_2) - S_0 N(-d_1)$$
+
+#### Définitions de $d_1$ et $d_2$
+
+$$d_1 = \frac{\ln(S_0 / K) + (r + \sigma^2 / 2) T}{\sigma \sqrt{T}}$$
+
+$$d_2 = \frac{\ln(S_0 / K) + (r - \sigma^2 / 2) T}{\sigma \sqrt{T}} = d_1 - \sigma \sqrt{T}$$
+
+où $N(x)$ est la **fonction de répartition de la loi normale standard** :
+
+$$N(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{x} e^{-z^2/2} \, dz$$
+
+::: {.callout-tip title="Intuition sur les termes"}
+- $S_0 N(d_1)$ : valeur actualisée de l'actif si l'option est exercée, pondérée par la probabilité d'exercice.
+- $K e^{-rT} N(d_2)$ : valeur actualisée du paiement du strike, pondérée par la probabilité d'exercice.
+- $N(d_2)$ peut s'interpréter comme la probabilité risque-neutre que l'option expire dans la monnaie.
+:::
+
+### Vérification des bornes avec Black-Scholes
+
+Black-Scholes doit être cohérent avec les bornes établies précédemment.
+
+#### Borne supérieure : $c \leq S_0$
+
+Quand $\sigma \to \infty$ :
+
+- $d_1 \to +\infty \Rightarrow N(d_1) \to 1$
+- $d_2 \to -\infty \Rightarrow N(d_2) \to 0$
+
+Donc $c \to S_0 \times 1 - K e^{-rT} \times 0 = S_0$. ✓
+
+#### Borne inférieure : $c \geq S_0 - K e^{-rT}$
+
+Quand $\sigma \to 0$ :
+
+- $d_1 \to +\infty \Rightarrow N(d_1) \to 1$
+- $d_2 \to +\infty \Rightarrow N(d_2) \to 1$
+
+Donc $c \to S_0 - K e^{-rT}$. ✓
+
+### Exemple numérique avec Black-Scholes
+
+Reprenons l'exemple précédent ($S_0 = 20$, $K = 21$, $T = 3/12$, $r = 12\%$) et calculons la volatilité implicite à partir de $u = 1.1$ :
+
+$$\sigma = \frac{\ln(u)}{\sqrt{T}} = \frac{\ln(1.1)}{\sqrt{3/12}} \approx \frac{0.0953}{0.5} \approx 0.1906$$
+
+Le prix Black-Scholes donne : **$c \approx 0.593$ USD**.
+
+Le prix binomial à une étape donnait **$0.617$ USD** : l'écart s'explique par la discrétisation. En augmentant le nombre de pas de l'arbre, le prix binomial **converge** vers la valeur Black-Scholes.
+
+### Cas d'utilisation
+
+- **Options vanilles** (calls et puts standards) : Black-Scholes est la référence.
+- **Options exotiques** : l'arbre binomial reste souvent la seule approche tractable.
+
+Les options exotiques incluent :
+
+- **Option binaire** (*binary option*) : payoff fixe si une condition est remplie, zéro sinon.
+- **Option barrière** (*barrier option*) : le payoff dépend du fait que le sous-jacent ait atteint ou non un niveau seuil pendant la vie de l'option.
+
+---
+
+## Le smile de volatilité (Volatility Smile)
+
+### Volatilité implicite
+
+La **volatilité implicite** (*implied volatility*) est la valeur de $\sigma$ qu'il faut injecter dans la formule Black-Scholes pour retrouver le prix observé sur le marché.
+
+En d'autres termes : on fixe $c_{\text{marché}}$, $S_0$, $K$, $r$, $T$ et on résout numériquement pour $\sigma$.
+
+::: {.callout-tip title="Intuition"}
+Si le marché cote un call à 5 USD et que Black-Scholes avec $\sigma = 20\%$ donne 4 USD, la volatilité implicite est supérieure à 20%. Le marché "pense" que la volatilité réelle sera plus élevée que 20%.
+:::
+
+### Le problème : la volatilité implicite n'est pas constante
+
+Dans le modèle Black-Scholes, $\sigma$ est supposée **constante** — elle ne dépend ni du strike $K$ ni de la maturité $T$.
+
+En pratique, si on calcule la volatilité implicite pour différentes options sur le même actif mais avec des strikes différents, on obtient une **courbe en U** (ou en sourire) plutôt qu'une droite horizontale.
+
+### Forme du smile
+
+La volatilité implicite est généralement :
+
+- **Plus élevée** pour les options très OTM ou très ITM.
+- **Plus basse** près de l'ATM.
+
+Cette forme en **sourire** (*smile*) indique que le marché attribue une probabilité plus grande aux mouvements extrêmes (queues de distribution épaisses) que ce que suppose la loi normale de Black-Scholes.
+
+### Surface de volatilité
+
+Lorsqu'on représente la volatilité implicite en fonction à la fois du strike $K$ et de la maturité $T$, on obtient une **surface de volatilité** (*volatility surface*) — une structure tridimensionnelle complexe.
+
+::: {.callout-note title="À retenir"}
+L'existence du smile de volatilité est la preuve que Black-Scholes est un **modèle simplifié** de la réalité. Les actifs réels ne suivent pas exactement une loi log-normale : les rendements présentent des **queues épaisses** (*fat tails*) et une asymétrie (*skewness*) que le modèle ignore.
+:::
+
+### Utilisation pratique de la volatilité implicite
+
+Au-delà du diagnostic des limites de Black-Scholes, la volatilité implicite a une utilisation directe :
+
+- Elle sert d'**indicateur des anticipations de volatilité** du marché.
+- Les traders cotent souvent les options directement **en volatilité implicite** plutôt qu'en prix absolu.
+- Des indices comme le **VIX** (volatilité implicite du S&P 500) sont construits à partir de cette notion.
+
+---
+
+## Points clés à retenir
+
+::: {.callout-note title="Résumé du chapitre"}
+
+**Définitions fondamentales**
+
+- Une option est le **droit** (non l'obligation) d'acheter (call) ou de vendre (put) un actif à un prix d'exercice $K$ jusqu'à la maturité $T$.
+- Elle représente une **assurance financière** dont le coût est la prime.
+
+**Bornes de prix**
+
+- Les prix des options sont encadrés par des bornes dérivées du principe de non-arbitrage :
+  - $S_0 - K e^{-rT} \leq c \leq S_0$
+  - $K e^{-rT} - S_0 \leq p \leq K$
+
+**Parité put-call**
+
+- La relation $c + K e^{-rT} = p + S_0$ est une condition d'équilibre fondamentale.
+
+**Méthodes de pricing**
+
+1. **Arbre binomial** : méthode flexible, applicable aux options exotiques. Peut devenir coûteuse avec de nombreuses étapes.
+2. **Black-Scholes** : formule analytique fermée pour les options vanilles. Rapide et élégante, mais repose sur des hypothèses fortes (loi log-normale, volatilité constante).
+
+**Limites de Black-Scholes**
+
+- Le **smile de volatilité** révèle que la volatilité implicite n'est pas constante dans la réalité, ce qui invalide partiellement les hypothèses du modèle.
+- Black-Scholes reste néanmoins une **référence incontournable** en finance de marché.
+
+:::
