@@ -105,6 +105,7 @@ Let an asset $S$ be valuated at $t = 0$ at $S_0 = 100$. We consider a European o
   call_price_tree = binomial_call(S0, K, T, r, sigma, N)
   print(f"Binomial Tree Call Price (N={N}): {call_price_tree:.2f}")
   ```
+  The result obtained from the binomial tree is close to the Black-Scholes price: 3.26 is very close to 3.25, which is the price obtained from the Black-Scholes formula.
 
 + On the same graph, plot the evolution of the estimated value of the call option as a function of the binomial tree depth, as well as the value derived with Black-Scholes. What do you observe? How deep should be the tree in order to get a reasonable approximation of the Black-Scholes value?
 
@@ -126,11 +127,18 @@ Let an asset $S$ be valuated at $t = 0$ at $S_0 = 100$. We consider a European o
   plt.show()
   ```
 
+  We can observe that with a few depths (e.g., N=10), the binomial tree price is quite far from the Black-Scholes price.
+  As we increase the depth, the binomial tree price converges towards the Black-Scholes price.
+
+  To get a reasonable approximation, we might need a depth of around N=100 or more since we are more close to the Black-Scholes price at that point.
+
+  So the approximation accuracy can be controlled by the depth of the tree, allowing us to balance between computational cost and precision.
+
 = Implied Volatility from Binomial Prices
 
 Using your binomial-tree pricer, compute the implied Black–Scholes volatility for different strikes and tree depths. Plot the resulting volatility "smile" and discuss convergence as the tree deepens.
 
-== 1. Strikes & Tree Depths
+== Strikes & Tree Depths
 
 - Fix $S_0 = 100$, $T = 1$, $r = 0.05$.
 - Consider strikes $K in {80, 90, 100, 110, 120}$.
@@ -144,7 +152,7 @@ Using your binomial-tree pricer, compute the implied Black–Scholes volatility 
   tree_depths = [20, 100, 500]
   ```
 
-== 2. Compute Tree Prices
+== Compute Tree Prices
 
 For each $(K, N)$, compute the call price
 
@@ -155,7 +163,7 @@ $ C_"tree" = "binomial_call"(S_0, K, T, r, sigma_"true", N), quad sigma_"true" =
   tree_prices = {(K, N): binomial_call(S0, K, T, r, sigma_true, N) for K in strikes for N in tree_depths}
   ```
 
-== 3. Implied Volatility via Bisection Method
+== Implied Volatility via Bisection Method
 
 - Implement the Black–Scholes call price
 
@@ -169,7 +177,7 @@ $ d_(1,2) = frac(ln(S_0 \/ K) + (r plus.minus frac(1,2) sigma^2) T, sigma sqrt(T
 
 $ C_"BS"(S_0, K, T, r, sigma_"imp") = C_"tree" $
 
-by using a bisection#footnote[Instead of coding the bisection loop yourself, you can use Python's `scipy.optimize.bisect`. Define $f(sigma) = C_"BS"(S_0, K, T, r, sigma) - C_"tree"$. Call `bisect(f, 1e-4, 2.0, xtol=1e-6)` to find $sigma_"imp"$. This will be more concise and handles convergence for you.] over $sigma in [10^(-4), 2.0]$ with tolerance $10^(-6)$.
+by using a bisection#report-footnote[Instead of coding the bisection loop yourself, you can use Python's `scipy.optimize.bisect`. Define $f(sigma) = C_"BS"(S_0, K, T, r, sigma) - C_"tree"$. Call `bisect(f, 1e-4, 2.0, xtol=1e-6)` to find $sigma_"imp"$. This will be more concise and handles convergence for you.] over $sigma in [10^(-4), 2.0]$ with tolerance $10^(-6)$.
 
   ```python
   from scipy.optimize import bisect
@@ -181,7 +189,7 @@ by using a bisection#footnote[Instead of coding the bisection loop yourself, you
       implied_vols[(K, N)] = sigma_imp
   ```
 
-== 4. Volatility Smile Plot
+== Volatility Smile Plot
 
 - On one chart, plot $sigma_"imp"(K)$ vs. $K$ for each tree depth $N$, then add a horizontal line at $sigma_"true" = 0.20$ as well.
 
@@ -200,3 +208,7 @@ by using a bisection#footnote[Instead of coding the bisection loop yourself, you
   ```
 
 - Comment on how the smile flattens as $N$ increases.
+
+  When the depth of the tree increases, the implied volatility smiles tend to be more flat and closer to the true volatility computed by the Black-Scholes model.
+
+  Indeed, the Black-Scholes model is a continuous-time model, while the binomial tree is a discrete approximation. As we increase the number of steps in the tree, we get a better approximation of the continuous process, which leads to implied volatilities that are more consistent across different strikes and closer to the true volatility, as we can see on the plot where for instance at N=500, the implied volatilities very close to the Black-Scholes volatility across all strikes.
