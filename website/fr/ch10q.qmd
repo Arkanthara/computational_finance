@@ -1,0 +1,311 @@
+---
+title: "Les Grecques des Options — Quiz"
+filters:
+  - quizdown
+execute:
+  enabled: false
+---
+
+## Niveau 1 — Fondamentaux
+
+```{quizdown}
+### Que mesure le Delta d'une option ?
+
+> Pense a la derivee partielle du prix de l'option par rapport a une variable de marche.
+
+1. [ ] La sensibilite du prix de l'option a la volatilite du sous-jacent
+1. [x] La sensibilite du prix de l'option au prix du sous-jacent
+    > Correct : Delta = dc/dS, c'est la derivee partielle du prix de l'option par rapport au prix du sous-jacent.
+1. [ ] La sensibilite du prix de l'option au passage du temps
+1. [ ] La sensibilite du prix de l'option aux taux d'interet
+```
+
+```{quizdown}
+### Que mesure le Gamma d'une option ?
+
+> Le Gamma est une derivee du second ordre, ou une derivee d'une autre grecque.
+
+1. [ ] La variation du prix de l'option avec le temps
+1. [ ] La variation du prix de l'option avec la volatilite
+1. [x] Le taux de variation du Delta par rapport au prix du sous-jacent
+    > Correct : Gamma = dDelta/dS = d2c/dS2. C'est la courbure de la relation prix-sous-jacent.
+1. [ ] La variation du Delta avec le temps
+```
+
+```{quizdown}
+### Quelle est la formule du Delta d'un call europeen sans dividende dans Black-Scholes ?
+
+> Rappelle-toi que le Delta fait intervenir la fonction de repartition normale standard.
+
+1. [ ] N(d2)
+1. [x] N(d1)
+    > Correct : Delta_c = N(d1), ou N est la fonction de repartition de la loi normale standard.
+1. [ ] N(-d1)
+1. [ ] N(d1) - 1
+```
+
+```{quizdown}
+### Quelle est la formule du Delta d'un put europeen sans dividende dans Black-Scholes ?
+
+> Utilise la relation entre le Delta du call et celui du put.
+
+1. [ ] N(d1)
+1. [ ] -N(d2)
+1. [x] N(d1) - 1
+    > Correct : Delta_p = N(d1) - 1. La relation Delta_c - Delta_p = 1 est coherente avec la parite call-put.
+1. [ ] 1 - N(d2)
+```
+
+```{quizdown}
+### Le Gamma est-il toujours positif pour une position longue en options ?
+
+> Pense a la definition du Gamma comme derivee seconde du prix de l'option.
+
+1. [x] Vrai
+    > Vrai : Gamma = N'(d1) / (S0 * sigma * sqrt(T)) > 0 toujours pour une position longue, qu'il s'agisse d'un call ou d'un put.
+1. [ ] Faux
+```
+
+```{quizdown}
+### Quelles affirmations concernant le Theta sont correctes ?
+
+> Pense au role du temps dans la valeur d'une option et aux exceptions possibles.
+
+- [x] Le Theta est generalement negatif
+    > Correct : le passage du temps erode la valeur des options, donc Theta < 0 en general.
+- [ ] Le Theta peut etre couvert par une position sur le sous-jacent
+    > Incorrect : le passage du temps est certain et non aleatoire, il ne peut pas etre hedge.
+- [x] Le Theta d'un put europeen sans dividende peut etre positif
+    > Correct : pour un put profondement dans la monnaie, l'effet de la valeur temporelle de l'argent peut rendre Theta positif.
+- [ ] Le Theta est toujours le meme pour un call et un put de memes caracteristiques
+    > Incorrect : Theta_c et Theta_p different par le signe du terme rKe^(-rT).
+```
+
+```{quizdown}
+### Quelle grecque mesure la sensibilite du prix de l'option a la volatilite implicite ?
+
+> Ce n'est pas une des trois grecques principales detaillees dans le cours.
+
+1. [ ] Rho
+1. [ ] Theta
+1. [x] Vega
+    > Correct : Vega mesure dc/dsigma. Un Vega eleve signifie que l'option est tres sensible aux variations de volatilite.
+1. [ ] Gamma
+```
+
+---
+
+## Niveau 2 — Comprehension
+
+```{quizdown}
+### Quel est le Delta d'un call europeen profondement dans la monnaie (S >> K) ?
+
+> Pense au comportement asymptotique de N(d1) quand d1 tend vers +infini.
+
+1. [ ] Proche de 0
+1. [ ] Proche de 0,5
+1. [x] Proche de 1
+    > Correct : quand S >> K, d1 est tres grand, N(d1) tend vers 1. L'option se comporte presque comme le sous-jacent lui-meme.
+1. [ ] Proche de -1
+```
+
+```{quizdown}
+### Un portefeuille est Delta-neutre. Que signifie cette propriete ?
+
+> Pense a l'effet d'un petit mouvement du sous-jacent sur la valeur du portefeuille.
+
+1. [ ] Le portefeuille ne contient aucune option
+1. [x] La valeur du portefeuille est insensible aux petits mouvements du sous-jacent
+    > Correct : Delta-neutre signifie que la somme ponderee des Deltas du portefeuille est nulle, donc un petit dS n'affecte pas la valeur du portefeuille au premier ordre.
+1. [ ] Le portefeuille est protege contre toutes les variations de marche
+1. [ ] Le Gamma du portefeuille est nul
+```
+
+```{quizdown}
+### Pourquoi la strategie stop-loss ne reproduit-elle pas exactement le prix Black-Scholes ?
+
+> Deux raisons principales expliquent cet ecart.
+
+- [x] Les flux de tresorerie se produisent a des moments differents et doivent etre actualises
+    > Correct : acheter ou vendre des actions a des moments differents a une valeur differente en raison de l'actualisation.
+- [ ] La strategie stop-loss est toujours plus couteuse que Black-Scholes
+    > Incorrect : l'ecart peut aller dans les deux sens selon la trajectoire du sous-jacent.
+- [x] L'ambiguite au point St = K cree des couts supplementaires
+    > Correct : chaque oscillation autour de K genere un aller-retour couteux, surtout si epsilon est petit.
+- [ ] Black-Scholes suppose une volatilite stochastique
+    > Incorrect : Black-Scholes suppose une volatilite constante.
+```
+
+```{quizdown}
+### Que se passe-t-il au Theta d'une option a-la-monnaie (ATM) lorsque la maturite T tend vers 0 ?
+
+> Pense au comportement du terme S0*N'(d1)*sigma / (2*sqrt(T)) quand T est tres petit.
+
+1. [ ] Theta tend vers 0
+1. [ ] Theta tend vers une valeur finie negative
+1. [x] Theta diverge vers moins l'infini
+    > Correct : pour une option ATM, le terme dominant contient 1/sqrt(T) qui explose quand T tend vers 0. La perte de valeur temps est maximale juste avant l'expiration.
+1. [ ] Theta tend vers plus l'infini
+```
+
+```{quizdown}
+### Quel instrument financier peut etre utilise pour modifier le Gamma d'un portefeuille ?
+
+> Un instrument lineaire a un Gamma nul par definition.
+
+1. [ ] Des actions ordinaires
+1. [ ] Des contrats a terme (futures)
+1. [x] D'autres options
+    > Correct : seuls des instruments non lineaires comme les options ont un Gamma non nul. Pour neutraliser le Gamma, il faut necessairement trader des options.
+1. [ ] Des obligations a taux fixe
+```
+
+```{quizdown}
+### Dans l'approximation dc ≈ Theta*dt + Delta*dS + (1/2)*Gamma*dS^2, quel terme explique l'ecart entre la valeur reelle de l'option et son approximation lineaire par Delta ?
+
+> Pense au terme quadratique et a ce qu'il represente geometriquement.
+
+1. [ ] Le terme Theta*dt
+1. [ ] Le terme Delta*dS
+1. [x] Le terme (1/2)*Gamma*dS^2
+    > Correct : c'est le terme de courbure (quadratique) qui explique le gap entre la tangente (approximation Delta) et la courbe reelle du prix de l'option.
+1. [ ] La somme des trois termes
+```
+
+```{quizdown}
+### Un portefeuille a un Gamma eleve (position longue en Gamma). Quelle implication cela a-t-il sur le Theta ?
+
+> Rappelle-toi le trade-off fondamental entre Gamma et Theta dans Black-Scholes.
+
+1. [ ] Le Theta est aussi eleve (positif)
+1. [ ] Le Theta est nul
+1. [x] Le Theta est tres negatif (couteux en valeur temps)
+    > Correct : etre long en Gamma implique un Theta tres negatif. On paye quotidiennement la valeur temps pour beneficier de la courbure lors de grands mouvements.
+1. [ ] Le Theta est independant du Gamma
+```
+
+---
+
+## Niveau 3 — Maitrise
+
+```{quizdown}
+### Remets dans le bon ordre les etapes pour rendre un portefeuille a la fois Gamma-neutre et Delta-neutre.
+
+> La procedure est strictement ordonnee : on commence toujours par neutraliser le Gamma.
+
+1. Calculer la position en options de couverture : w = -Gamma_portefeuille / Gamma_option
+2. Ajouter w options de couverture au portefeuille
+3. Recalculer le nouveau Delta du portefeuille apres ajout des options
+4. Trader le sous-jacent pour reetablir la neutralite Delta
+```
+
+```{quizdown}
+### Un portefeuille est Delta-neutre avec Gamma = -3000. Une option de couverture disponible a Delta = 0,62 et Gamma = 1,5. Combien d'options faut-il acheter pour neutraliser le Gamma ?
+
+> Utilise la formule w = -Gamma_portefeuille / Gamma_option.
+
+1. [ ] 1 500 options
+1. [ ] 4 500 options
+1. [x] 2 000 options
+    > Correct : w = -(-3000) / 1,5 = 2000 options a acheter.
+1. [ ] 3 000 options
+```
+
+```{quizdown}
+### Apres avoir achete 2000 options de couverture (Delta = 0,62) pour neutraliser le Gamma, de combien d'unites du sous-jacent faut-il modifier la position pour retablir la neutralite Delta ?
+
+> Le Delta du portefeuille a change apres l'ajout des options. Calcule la nouvelle exposition Delta.
+
+1. [ ] Acheter 620 unites du sous-jacent
+1. [ ] Vendre 620 unites du sous-jacent
+1. [ ] Acheter 1 240 unites du sous-jacent
+1. [x] Vendre 1 240 unites du sous-jacent
+    > Correct : l'ajout de 2000 options cree un Delta de 2000 x 0,62 = 1240. Pour retablir la neutralite Delta, il faut vendre 1240 unites du sous-jacent.
+```
+
+```{quizdown}
+### Un trader vend 2000 calls avec Delta = 0,6. Il achete 1200 actions pour se couvrir. Le sous-jacent passe de 100 a 102 USD et le Delta passe a 0,65. Que doit faire le trader pour maintenir sa couverture Delta ?
+
+> Calcule le nombre d'actions requis apres le mouvement et compare-le a la position actuelle.
+
+1. [ ] Ne rien faire, la couverture reste valide
+1. [ ] Vendre 100 actions
+1. [x] Acheter 100 actions supplementaires
+    > Correct : le nouveau Delta requis est 0,65 x 2000 = 1300 actions. Il en detient 1200, donc il doit acheter 100 actions supplementaires. C'est le reequilibrage dynamique (dynamic rebalancing).
+1. [ ] Vendre 1200 actions et racheter 1300
+```
+
+```{quizdown}
+### Comparer les methodes de calcul des Grecques : laquelle fournit des derivees exactes avec un cout de calcul en O(1) quel que soit le nombre de parametres ?
+
+> Pense aux methodes avancees mentionnees en fin de cours.
+
+1. [ ] Differences finies centrales
+1. [ ] Methode Monte Carlo avec rapport de vraisemblance
+1. [ ] Methode des differences finies avant
+1. [x] Differentiation automatique en mode adjoint (Adjoint Automatic Differentiation)
+    > Correct : la differentiation automatique en mode adjoint (reverse mode AD) calcule toutes les derivees partielles en un seul passage a travers le code, independamment du nombre de parametres.
+```
+
+```{quizdown}
+### Pour une option americaine de type put avec dividendes, pourquoi Black-Scholes standard est-il insuffisant ?
+
+> Pense aux hypotheses cles du modele de Black-Scholes.
+
+- [x] Black-Scholes ne gere pas l'exercice anticipe (early exercise)
+    > Correct : Black-Scholes est derive pour des options europeennes. L'exercice anticipe des options americaines necessite des methodes comme les arbres binomiaux.
+- [x] Black-Scholes ne prend pas en compte les dividendes dans sa version de base
+    > Correct : la version standard de Black-Scholes suppose un actif sans dividende. Des ajustements ou d'autres modeles sont necessaires.
+- [ ] Black-Scholes surestime toujours le prix des options americaines
+    > Incorrect : la relation n'est pas systematique ; le prix depend des parametres et de la trajectoire.
+- [ ] Black-Scholes ne peut pas calculer le Delta des options americaines
+    > Incorrect : on peut calculer un Delta approche, mais la valeur du prix elle-meme est incorrecte.
+```
+
+```{quizdown}
+### Remets dans le bon ordre les strategies de gestion du risque d'option, de la moins sophistiquee a la plus sophistiquee.
+
+> Pense au niveau de dynamisme et de precision de chaque approche.
+
+1. Option nue (naked option) : aucune couverture
+2. Option couverte (covered option) : achat immediat du sous-jacent
+3. Strategie stop-loss : couverture conditionnelle autour de K
+4. Delta hedge : couverture dynamique au premier ordre
+5. Delta et Gamma hedge : couverture dynamique au second ordre
+```
+
+```{quizdown}
+### Dans le modele de Heston, quelle hypothese de Black-Scholes est relachee ?
+
+> Pense aux limites observees de Black-Scholes face au smile de volatilite.
+
+1. [ ] La continuite des prix du sous-jacent
+1. [x] La constance de la volatilite
+    > Correct : le modele de Heston introduit une volatilite stochastique (stochastic volatility), ce qui permet de reproduire le smile de volatilite observe sur les marches.
+1. [ ] L'absence de dividendes
+1. [ ] La loi normale des rendements
+```
+
+```{quizdown}
+### Quel modele est particulierement adapte pour modeliser des evenements de marche rares et de fort impact comme les krachs boursiers ?
+
+> Ce modele combine un mouvement brownien continu avec des discontinuites aleatoires.
+
+1. [ ] Modele de Heston
+1. [ ] Arbre binomial de Cox-Ross-Rubinstein
+1. [x] Modele de Merton a sauts (Jump-Diffusion Model)
+    > Correct : le modele de Merton (Jump-Diffusion) ajoute des sauts discontinus au mouvement brownien standard, permettant de capturer les evenements rares a fort impact.
+1. [ ] Reseau de neurones LSTM
+```
+
+```{quizdown}
+### Un vendeur d'options (position courte) a un Gamma negatif. Quelle est la consequence sur son profil de risque lors d'un grand mouvement du sous-jacent ?
+
+> Rappelle-toi que Gamma mesure la courbure et pense a l'effet d'un mouvement important dans les deux sens.
+
+1. [ ] Le vendeur beneficie systematiquement des grands mouvements
+1. [ ] Les grands mouvements n'affectent pas le vendeur si la couverture Delta est en place
+1. [x] Les grands mouvements sont defavorables dans les deux directions pour le vendeur
+    > Correct : avec un Gamma negatif, le terme (1/2)*Gamma*dS^2 est toujours negatif. Qu'il monte ou descende fortement, le sous-jacent penalise le vendeur car sa couverture Delta devient obsolete rapidement.
+1. [ ] Seule une baisse du sous-jacent est defavorable pour le vendeur
+```

@@ -5,6 +5,8 @@ project:
 
 website:
   title: "Finance computationnelle"
+  page-footer:
+    center: "Copyright © 2026 University of Geneva"
 
   navbar:
     search: true
@@ -24,91 +26,118 @@ website:
     contents:
       - section: "Cours"
         contents: 
-          - section: "1. Systeme suisse a 3 piliers, rendements et valeur temps"
+          - section: "0. Système suisse à 3 piliers, rendements et valeur temps"
             contents:
-              - text: "Details"
+              - text: "Détails"
+                href: ch0.qmd
+              - text: "Synthèse"
+                href: ch0r.qmd
+              - text: "Quiz"
+                href: ch0q.qmd
+          - section: "1. Séries temporelles et modèles autoregressifs"
+            contents:
+              - text: "Détails"
                 href: ch1.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch1r.qmd
-          - section: "2. Series temporelles et modeles autoregressifs"
+              - text: "Quiz"
+                href: ch1q.qmd
+          - section: "2. Marches et comportements"
             contents:
-              - text: "Details"
+              - text: "Détails"
                 href: ch2.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch2r.qmd
-          - section: "3. Marches et comportements"
+              - text: "Quiz"
+                href: ch2q.qmd
+          - section: "3. Données, moyenne mobile et temps intrinsèque"
             contents:
-              - text: "Details"
+              - text: "Détails"
                 href: ch3.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch3r.qmd
-          - section: "4. Donnees, moyenne mobile et temps intrinsique"
+              - text: "Quiz"
+                href: ch3q.qmd
+          - section: "4. Carnet d'ordres limite"
             contents:
-              - text: "Details"
+              - text: "Détails"
                 href: ch4.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch4r.qmd
-          - section: "5. Carnet d'ordres limite"
+              - text: "Quiz"
+                href: ch4q.qmd
+          - section: "5. Exécution algorithmique"
             contents:
-              - text: "Details"
+              - text: "Détails"
                 href: ch5.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch5r.qmd
-          - section: "6. Execution algorithmique"
+              - text: "Quiz"
+                href: ch5q.qmd
+          - section: "6. Construction de portefeuille"
             contents:
-              - text: "Details"
+              - text: "Détails"
                 href: ch6.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch6r.qmd
-          - section: "7. Construction de portefeuille"
+              - text: "Quiz"
+                href: ch6q.qmd
+          - section: "7. Modèles à base d'agents"
             contents:
-              - text: "Details"
+              - text: "Détails"
                 href: ch7.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch7r.qmd
-          - section: "8. Modeles a base d'agents"
+              - text: "Quiz"
+                href: ch7q.qmd
+          - section: "8. Options - notions de base"
             contents:
-              - text: "Details"
+              - text: "Détails"
                 href: ch8.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch8r.qmd
-          - section: "9. Options - notions de base"
+              - text: "Quiz"
+                href: ch8q.qmd
+          - section: "9. Options - Grecques"
             contents:
-              - text: "Details"
+              - text: "Détails"
                 href: ch9.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch9r.qmd
-          - section: "10. Options - Grecques"
+              - text: "Quiz"
+                href: ch9q.qmd
+          - section: "10. Obligations - notions de base"
             contents:
-              - text: "Details"
+              - text: "Détails"
                 href: ch10.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch10r.qmd
-          - section: "11. Obligations - notions de base"
+              - text: "Quiz"
+                href: ch10q.qmd
+          - section: "11. Obligations - sensibilités temps et taux"
             contents:
-              - text: "Details"
+              - text: "Détails"
                 href: ch11.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch11r.qmd
-          - section: "12. Obligations - sensibilites temps et taux"
+              - text: "Quiz"
+                href: ch11q.qmd
+          - section: "12. Futures, forwards et ESG"
             contents:
-              - text: "Details"
+              - text: "Détails"
                 href: ch12.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch12r.qmd
-          - section: "13. Futures, forwards et ESG"
+              - text: "Quiz"
+                href: ch12q.qmd
+          - section: "13. Données alternatives et rétrospective"
             contents:
-              - text: "Details"
+              - text: "Détails"
                 href: ch13.qmd
-              - text: "Synthese"
+              - text: "Synthèse"
                 href: ch13r.qmd
-          - section: "14. Donnees alternatives et retrospective"
-            contents:
-              - text: "Details"
-                href: ch14.qmd
-              - text: "Synthese"
-                href: ch14r.qmd
-
+              - text: "Quiz"
+                href: ch13q.qmd
 
 format:
   html:

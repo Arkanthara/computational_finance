@@ -1,0 +1,589 @@
+---
+title: "Les Grecques des Options (Options Greeks)"
+---
+
+## Introduction aux Grecques
+
+### Qu'est-ce que les Grecques ?
+
+Les **Grecques** (Greeks) sont des métriques financières qui mesurent la sensibilité du prix d'une option à diverses variables de marché.
+Elles constituent les outils fondamentaux pour comprendre, quantifier et gérer les risques associés aux positions optionnelles.
+
+En pratique, chaque Grecque répond à une question précise :
+
+- *Comment le prix de l'option évolue-t-il si le sous-jacent monte de 1 € ?*
+- *Combien vaut l'option en moins après une journée de passage du temps ?*
+- *Quelle est la courbure de la relation prix-sous-jacent ?*
+
+::: {.callout-note title="À retenir"}
+Les Grecques ne sont pas indépendantes les unes des autres. Elles décrivent des facettes complémentaires d'un même instrument. Gérer une position d'option, c'est gérer simultanément plusieurs Grecques.
+:::
+
+### Les principales Grecques
+
+Les cinq Grecques les plus utilisées dans l'industrie sont les suivantes :
+
+**Delta (Δ)** — Sensibilité au prix du sous-jacent (Sensitivity to underlying price)
+
+- Mesure la variation du prix de l'option pour une variation unitaire du sous-jacent.
+
+**Gamma (Γ)** — Taux de variation du Delta (Rate of change of Delta)
+
+- Mesure la courbure de la relation entre le prix de l'option et le sous-jacent.
+
+**Theta (Θ)** — Sensibilité au passage du temps (Time decay)
+
+- Mesure la perte de valeur de l'option au fil du temps, toutes choses égales par ailleurs.
+
+**Vega (ν)** — Sensibilité à la volatilité (Sensitivity to volatility)
+
+- Mesure la variation du prix de l'option pour une variation d'un point de pourcentage de la volatilité implicite.
+
+**Rho (ρ)** — Sensibilité aux taux d'intérêt (Sensitivity to interest rates)
+
+- Mesure l'impact d'une variation des taux d'intérêt sans risque sur le prix de l'option.
+
+::: {.callout-tip title="Intuition"}
+Imaginez un tableau de bord dans une voiture : le Delta est comme le volant (direction principale), le Gamma est la réponse du volant aux tournants, le Theta est l'indicateur de carburant qui diminue au fil du temps, le Vega capte les turbulences atmosphériques, et le Rho est l'impact de la pente de la route.
+:::
+
+### Pourquoi les Grecques sont-elles importantes ?
+
+Les Grecques ont deux utilités majeures :
+
+1. **Compréhension des risques** : elles donnent une image précise et décomposée des sources de risque d'une position optionnelle.
+
+2. **Gestion dynamique du portefeuille** : elles permettent aux traders et gestionnaires de risque de prendre des décisions informées pour couvrir ou ajuster leurs expositions.
+
+Sans les Grecques, un gestionnaire de portefeuille d'options navigue à vue. Avec elles, il dispose d'une boussole quantitative pour piloter ses risques en temps réel.
+
+---
+
+## Gestion des risques d'une option
+
+### Cas pratique de référence
+
+Pour illustrer les différentes stratégies, on considère tout au long de ce chapitre l'exemple suivant :
+
+- **Position** : vente d'un call européen sur 100 000 actions (sans dividende)
+- **Prix de vente** : 300 000 USD
+- **Prix du sous-jacent** : $S_0 = 49$ USD
+- **Prix d'exercice** : $K = 50$ USD
+- **Taux sans risque** : $r = 5\%$
+- **Volatilité** : $\sigma = 20\%$
+- **Maturité** : $T = 20$ semaines $= 20/52 \approx 0{,}3846$ an
+
+En appliquant la formule de Black-Scholes, le prix théorique du call est de **240 000 USD**.
+
+L'émetteur du call encaisse donc un profit apparent de **60 000 USD**, mais il s'expose à un risque résiduel : si le titre monte fortement, il devra livrer les actions à un prix inférieur au marché.
+
+### Option nue (Naked option) — Ne rien faire
+
+La stratégie la plus simple est de ne rien faire : l'émetteur conserve la prime encaissée sans aucune couverture.
+
+**Analyse des scénarios :**
+
+- **Si $S_T \leq K$ (option non exercée)** : profit $= 300\,000$ USD.
+- **Si $S_T > K$ (option exercée)** : profit $= 300\,000 - (S_T - K) \times 100\,000$ USD.
+
+De manière compacte :
+
+$$\text{Profit} = 300\,000 - \max(S_T - K,\, 0) \times 100\,000$$
+
+::: {.callout-warning title="Risque illimité"}
+Le scénario $S_T > K$ est potentiellement catastrophique. Si le sous-jacent monte à 70 USD par exemple, la perte est de $300\,000 - 2\,000\,000 = -1\,700\,000$ USD. La stratégie nue expose l'émetteur à un risque théoriquement illimité.
+:::
+
+### Option couverte (Covered option) — Acheter les actions immédiatement
+
+L'émetteur achète dès $t = 0$ les 100 000 actions pour se couvrir.
+
+**Analyse des scénarios :**
+
+- **Si $S_T \leq K$ (option non exercée)** : profit $= 300\,000 + (S_T - S_0) \times 100\,000$. Les actions peuvent avoir perdu de la valeur.
+- **Si $S_T > K$ (option exercée)** : profit $= 300\,000 + (K - S_0) \times 100\,000$. Le gain sur les actions est plafonné.
+
+$$\text{Profit} = 300\,000 + (K + \min(S_T - K,\, 0) - S_0) \times 100\,000$$
+
+::: {.callout-warning title="Coût d'opportunité élevé"}
+Acheter 100 000 actions à 49 USD immobilise 4 900 000 USD de capital. Si l'option n'est finalement pas exercée et que le titre a chuté, la perte sur les actions peut largement dépasser le profit sur le call.
+:::
+
+### Stratégie stop-loss (Stop-loss strategy)
+
+La stratégie stop-loss est une approche dynamique intermédiaire :
+
+- **Acheter** les actions lorsque $S_t > K$ (se couvrir quand le risque apparaît).
+- **Vendre** les actions (si elles ont été achetées) lorsque $S_t < K$ (se dénuder quand le risque disparaît).
+
+**Coût initial théorique :**
+
+- Si $S_0 > K$ : coût $= S_0 - K$
+- Sinon : coût $= 0$
+
+Soit : $\text{coût} = \max(S_0 - K,\, 0)$
+
+Ce coût théorique est **différent du prix Black-Scholes** $c$ pour deux raisons fondamentales :
+
+1. **Actualisation** : les flux de trésorerie se produisent à des moments différents et doivent être actualisés.
+
+2. **Ambiguïté au point $S_t = K$** : que faire exactement quand le prix est à la frontière ? Le titre va-t-il monter ou baisser ensuite ?
+
+### Raffinement de la stratégie stop-loss
+
+Pour gérer l'ambiguïté au seuil $K$, on introduit une bande de tolérance $\epsilon$ :
+
+- Acheter lorsque $S_t \geq K + \epsilon$
+- Vendre lorsque $S_t \leq K - \epsilon$
+
+**Inconvénients :**
+
+- Si $\epsilon$ est petit, la fréquence de transaction est très élevée et les coûts de transaction explosent.
+- Si le prix oscille continuellement autour de $K$, chaque franchissement génère un aller-retour coûteux.
+
+::: {.callout-important title="Limite des stratégies simples"}
+Ni la stratégie nue, ni la stratégie couverte, ni le stop-loss ne constituent une solution satisfaisante. La couverture nue est trop risquée, la couverture totale est trop coûteuse, et le stop-loss souffre de coûts de transaction élevés et d'une sensibilité aux oscillations autour de $K$.
+
+La réponse rigoureuse est la **couverture par les Grecques**, en particulier par le **Delta** et le **Gamma**.
+:::
+
+---
+
+## Le Delta (Δ)
+
+### Définition formelle
+
+Le **Delta** (Δ) est la dérivée partielle du prix de l'option par rapport au prix du sous-jacent :
+
+$$\Delta = \frac{\partial c}{\partial S}$$
+
+Il mesure la variation infinitésimale du prix de l'option $c$ pour une variation infinitésimale du prix du sous-jacent $S$.
+
+::: {.callout-tip title="Intuition"}
+Si $\Delta = 0{,}6$, cela signifie qu'une hausse de 1 USD du sous-jacent entraîne une hausse d'environ 0,60 USD du prix du call. Delta est le "coefficient de transmission" entre le mouvement du sous-jacent et le mouvement de l'option.
+:::
+
+### Formules Black-Scholes pour le Delta
+
+Dans le cadre de Black-Scholes, pour des options européennes sur actif sans dividende :
+
+$$\Delta_c = N(d_1) \quad \text{et} \quad \Delta_p = N(d_1) - 1$$
+
+où $N(\cdot)$ est la fonction de répartition de la loi normale standard et $d_1$ est défini par :
+
+$$d_1 = \frac{\ln(S_0/K) + (r + \sigma^2/2)T}{\sigma\sqrt{T}}$$
+
+**Propriétés importantes :**
+
+- $\Delta_c \in [0, 1]$ : le Delta d'un call est toujours positif, compris entre 0 et 1.
+- $\Delta_p \in [-1, 0]$ : le Delta d'un put est toujours négatif, compris entre -1 et 0.
+- Relation de parité : $\Delta_c - \Delta_p = 1$ (ce qui est cohérent avec la parité call-put).
+
+### Comportement du Delta en fonction du prix du sous-jacent
+
+La relation entre le prix d'un call $c$ et le prix du sous-jacent $S$ est **non linéaire** :
+
+- Pour $S \ll K$ (option très en dehors, Out-of-the-money) : $\Delta \approx 0$. Le call a peu de chances d'être exercé ; il réagit peu aux mouvements du sous-jacent.
+- Pour $S \approx K$ (option à la monnaie, At-the-money) : $\Delta \approx 0{,}5$. C'est le point d'inflexion.
+- Pour $S \gg K$ (option très dans la monnaie, In-the-money) : $\Delta \approx 1$. Le call se comporte presque comme le sous-jacent lui-même.
+
+::: {.callout-note title="À retenir"}
+Le Delta d'un call est une approximation de la probabilité (risque-neutre) que l'option soit exercée à maturité. Un $\Delta = 0{,}7$ signifie que l'option a environ 70 % de chances d'être dans la monnaie à l'échéance.
+:::
+
+### Évolution du Delta avec le prix d'exercice
+
+Le graphique Delta vs. Strike $K$ (à $S$ fixé) montre que :
+
+- Quand $K < S$ (option dans la monnaie) : $\Delta_c$ est élevé (proche de 1) car l'option sera probablement exercée.
+- Quand $K > S$ (option hors de la monnaie) : $\Delta_c$ est faible (proche de 0).
+
+Le Delta d'un put est simplement le Delta du call correspondant décalé de $-1$ :
+
+$$\Delta_p = \Delta_c - 1$$
+
+### La couverture Delta (Delta hedging)
+
+#### Principe
+
+L'idée centrale de la **couverture Delta** (Delta hedging) est la suivante :
+
+> Détenir $\Delta$ unités du sous-jacent pour chaque option vendue permet de neutraliser la sensibilité du portefeuille aux petits mouvements du sous-jacent.
+
+Un portefeuille dont le Delta total est nul est dit **Delta-neutre** (Delta-neutral).
+
+#### Exemple de couverture Delta pour un call
+
+**Données :** vente de 2 000 calls, $S = 100$ USD, $c = 10$ USD, $\Delta_c = 0{,}6$.
+
+**Construction de la couverture :**
+
+$$\text{Actions à acheter} = \Delta_c \times \text{Nombre de calls} = 0{,}6 \times 2\,000 = 1\,200 \text{ actions}$$
+
+**Vérification :**
+
+Supposons que $S$ passe à 101 USD. Alors $c' \approx 10 + 0{,}6 \times 1 = 10{,}6$ USD.
+
+$$\text{Profit} = 1\,200 \times (101 - 100) + 2\,000 \times (10 - 10{,}6) = 1\,200 - 1\,200 = 0$$
+
+Le portefeuille est immunisé contre cette variation.
+
+#### Exemple de couverture Delta pour un put
+
+**Données :** vente de 2 000 puts, $S = 100$ USD, $p = 10$ USD, $\Delta_p = -0{,}4$.
+
+**Construction de la couverture :**
+
+$$\text{Actions à vendre} = |\Delta_p| \times \text{Nombre de puts} = 0{,}4 \times 2\,000 = 800 \text{ actions}$$
+
+**Vérification :**
+
+Supposons que $S$ passe à 101 USD. Alors $p' \approx 10 - 0{,}4 \times 1 = 9{,}6$ USD.
+
+$$\text{Profit} = -800 \times (101 - 100) + 2\,000 \times (10 - 9{,}6) = -800 + 800 = 0$$
+
+#### Tableau récapitulatif des actions de couverture
+
+| Position | Acheter | Vendre |
+|----------|---------|--------|
+| Call | $-\Delta_c$ | $\Delta_c$ |
+| Put | $-\Delta_p$ | $\Delta_p$ |
+
+::: {.callout-important title="La couverture Delta est dynamique"}
+Le Delta n'est pas constant : il évolue à chaque instant en fonction du prix du sous-jacent, du temps restant et des autres paramètres. La couverture doit donc être **constamment rééquilibrée** (rebalancing). En pratique, cela se fait à intervalles discrets, ce qui introduit un risque résiduel appelé **risque de rebalancement**.
+:::
+
+---
+
+## Le Theta (Θ)
+
+### Définition formelle
+
+Le **Theta** (Θ) est la dérivée partielle du prix de l'option par rapport au temps :
+
+$$\Theta = \frac{\partial c}{\partial t}$$
+
+Il mesure la perte de valeur de l'option au passage du temps, toutes choses égales par ailleurs.
+
+::: {.callout-tip title="Intuition"}
+Le Theta est souvent appelé la **"valeur temps"** (time decay). Chaque jour qui passe érode une partie de la valeur de l'option. C'est l'ennemi naturel de l'acheteur d'options et l'allié du vendeur.
+:::
+
+### Formules Black-Scholes pour le Theta
+
+Dans le cadre de Black-Scholes, pour des options européennes sans dividende :
+
+$$\Theta_c = -\frac{S_0 N'(d_1) \sigma}{2\sqrt{T}} - rKe^{-rT}N(d_2)$$
+
+$$\Theta_p = -\frac{S_0 N'(d_1) \sigma}{2\sqrt{T}} + rKe^{-rT}N(-d_2)$$
+
+où $N'(x)$ est la densité de probabilité de la loi normale standard :
+
+$$N'(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}$$
+
+### Signe et comportement du Theta
+
+**Règle générale :** le Theta est **négatif** pour la plupart des options — la valeur diminue avec le temps.
+
+**Exceptions notables :**
+
+- **Put européen** sur actif sans dividende : le Theta peut être positif dans certaines configurations (option profondément dans la monnaie, taux d'intérêt non nuls). L'effet de la valeur temporelle de l'argent peut compenser la perte de valeur temps.
+- **Call européen** avec un taux d'intérêt $r$ très élevé : le Theta peut devenir positif.
+
+### Comportement du Theta selon la moneyness
+
+Le comportement du Theta en fonction du temps restant $T$ diffère selon que l'option est dans la monnaie, à la monnaie ou hors de la monnaie :
+
+**Option hors de la monnaie (Out-of-the-money, $K = 110$ dans l'exemple du cours) :**
+
+- Pour $T$ grand, la valeur temps est faible, et $\Theta$ est proche de zéro.
+- Lorsque $T \to 0$, l'option vaut zéro (elle ne sera pas exercée), donc $\Theta \to 0$ aussi.
+
+**Option dans la monnaie (In-the-money, $K = 90$) :**
+
+- $\Theta$ tend vers un plateau : la valeur intrinsèque domine, et la valeur temps se stabilise.
+
+**Option à la monnaie (At-the-money, $K = 100$) :**
+
+- C'est le cas le plus critique. Lorsque $T \to 0$, $\Theta$ **diverge vers $-\infty$** : l'option perd sa valeur temps très rapidement dans les derniers instants avant expiration.
+
+::: {.callout-note title="À retenir"}
+Le Theta ne peut pas être couvert (hedgé) par une transaction sur le sous-jacent, car le passage du temps est **certain et non aléatoire**. Il n'existe pas de stratégie pour éviter l'érosion du temps. En revanche, un vendeur d'options bénéficie de ce Theta positif (il reçoit la prime qui s'érode).
+:::
+
+---
+
+## Le Gamma (Γ)
+
+### Définition formelle
+
+Le **Gamma** (Γ) est la dérivée seconde du prix de l'option par rapport au prix du sous-jacent, ou de façon équivalente, la dérivée première du Delta :
+
+$$\Gamma = \frac{\partial \Delta}{\partial S} = \frac{\partial^2 c}{\partial S^2}$$
+
+Il mesure la **courbure** de la relation entre le prix de l'option et le prix du sous-jacent.
+
+::: {.callout-tip title="Intuition"}
+Si le Delta dit "de combien bouge l'option quand le sous-jacent bouge de 1 USD", le Gamma dit "à quelle vitesse ce Delta lui-même évolue". Un Gamma élevé signifie que le Delta change rapidement : la couverture Delta doit être rééquilibrée fréquemment.
+:::
+
+### Formule Black-Scholes pour le Gamma
+
+Dans le cadre de Black-Scholes, pour des options européennes (call ou put) sans dividende :
+
+$$\Gamma = \frac{N'(d_1)}{S_0 \sigma \sqrt{T}}$$
+
+**Propriété fondamentale :** le Gamma est **toujours strictement positif** ($\Gamma > 0$) pour les options longues. Le Gamma d'un call et d'un put de même caractéristiques sont égaux.
+
+### Comportement du Gamma
+
+**En fonction du temps restant $T$ :**
+
+- **Option hors de la monnaie** : le Gamma monte puis redescend vers zéro à maturité (l'option expire sans valeur).
+- **Option dans la monnaie** : comportement similaire, convergence vers zéro à maturité.
+- **Option à la monnaie** : le Gamma **explose vers $+\infty$** quand $T \to 0$. La courbure est maximale juste avant l'expiration d'une option à la monnaie.
+
+**En fonction du prix du sous-jacent $S_0$ :**
+
+- Le Gamma est **maximal lorsque l'option est à la monnaie** ($S_0 \approx K$).
+- Il décroît symétriquement de part et d'autre du point à la monnaie.
+
+::: {.callout-important title="Risque de Gamma pour le vendeur"}
+Un vendeur d'options a un **Gamma négatif** (position courte en Gamma). Cela signifie que son Delta évolue défavorablement lorsque le sous-jacent bouge fortement. Dans les deux sens (hausse ou baisse), un grand mouvement du sous-jacent est coûteux pour un vendeur d'options à Gamma négatif, car sa couverture Delta devient rapidement obsolète.
+:::
+
+### Rôle du Gamma dans l'approximation du prix
+
+On peut montrer que, pour de petites variations $\delta t$ et $\delta S$, la variation du prix de l'option s'écrit :
+
+$$\delta c \approx \Theta \, \delta t + \Delta \, \delta S + \frac{1}{2} \Gamma \, \delta S^2$$
+
+Cette formule est l'analogue d'un développement de Taylor à l'ordre 2. Elle illustre clairement les rôles respectifs des trois Grecques :
+
+- **$\Theta \, \delta t$** : perte due au passage du temps.
+- **$\Delta \, \delta S$** : variation linéaire due au mouvement du sous-jacent (terme couvert par le Delta hedging).
+- **$\frac{1}{2} \Gamma \, \delta S^2$** : terme de correction quadratique — c'est précisément le "gap" (écart) entre la valeur réelle de l'option et son approximation linéaire par le seul Delta.
+
+::: {.callout-note title="À retenir"}
+Le Delta hedging neutralise le terme $\Delta \, \delta S$, mais laisse subsister le terme $\frac{1}{2} \Gamma \, \delta S^2$. Pour une couverture plus précise, il faut également neutraliser le Gamma (Gamma hedging). La relation entre Theta et Gamma n'est pas anodine : dans le cadre de Black-Scholes, ils sont liés par l'équation aux dérivées partielles de Black-Scholes elle-même.
+:::
+
+---
+
+## Construction de portefeuilles couverts
+
+### Linéarité des Grecques dans un portefeuille
+
+Soit un portefeuille $\Pi$ composé de $n$ options affectées des poids $w_i$. Les Grecques du portefeuille sont les **sommes pondérées** des Grecques individuelles :
+
+$$\frac{\partial \Pi}{\partial S} = \sum_{i=1}^{n} w_i \Delta_i$$
+
+$$\frac{\partial \Pi}{\partial t} = \sum_{i=1}^{n} w_i \Theta_i$$
+
+$$\frac{\partial^2 \Pi}{\partial S^2} = \sum_{i=1}^{n} w_i \Gamma_i$$
+
+Cette propriété est fondamentale : elle signifie que les Grecques se **compensent** (netting) au niveau du portefeuille. Un trader peut donc construire un portefeuille dont certaines Grecques sont nulles en combinant des positions longues et courtes sur différentes options.
+
+### Rendre un portefeuille Gamma-neutre (Gamma-neutral)
+
+#### Pourquoi le Gamma ne peut pas être neutralisé par le sous-jacent ?
+
+Un instrument linéaire (actions, futures) a un Gamma nul par définition (sa dérivée seconde par rapport à $S$ est zéro). Il est donc **impossible** de modifier le Gamma d'un portefeuille en achetant ou vendant simplement le sous-jacent.
+
+Pour modifier le Gamma, il faut **nécessairement trader des options**.
+
+#### Procédure de neutralisation du Gamma
+
+Supposons un portefeuille de Gamma $\Gamma_{\Pi}$ (pouvant être négatif si le portefeuille est court en options).
+
+On dispose d'une option de couverture (traded option) de Gamma $\Gamma_T$.
+
+Pour neutraliser le Gamma du portefeuille, il faut ajouter $w_T$ unités de l'option de couverture tels que :
+
+$$w_T \Gamma_T + \Gamma_{\Pi} = 0 \quad \Rightarrow \quad w_T = -\frac{\Gamma_{\Pi}}{\Gamma_T}$$
+
+#### Exemple complet : Delta-neutre puis Gamma-neutre
+
+**Situation initiale :**
+
+- Le portefeuille est Delta-neutre avec $\Gamma_{\Pi} = -3\,000$.
+- L'option de couverture disponible a $\Delta_T = 0{,}62$ et $\Gamma_T = 1{,}5$.
+
+**Étape 1 — Neutraliser le Gamma :**
+
+$$w_T = -\frac{-3\,000}{1{,}5} = +2\,000 \text{ options à acheter}$$
+
+**Étape 2 — Recalculer le Delta du portefeuille après l'ajout :**
+
+L'ajout de 2 000 options modifie le Delta :
+
+$$\Delta_{\Pi, \text{nouveau}} = 0 + 2\,000 \times 0{,}62 = 1\,240$$
+
+Le portefeuille n'est plus Delta-neutre.
+
+**Étape 3 — Rétablir la neutralité Delta :**
+
+Vendre 1 240 unités du sous-jacent pour compenser.
+
+::: {.callout-tip title="Intuition — L'ordre des opérations"}
+La procédure est toujours dans cet ordre :
+
+1. Neutraliser le Gamma en tradant des **options**.
+2. Rétablir la neutralité Delta en tradant le **sous-jacent**.
+
+Inverser l'ordre ne fonctionne pas : trader le sous-jacent modifie le Delta mais pas le Gamma.
+:::
+
+### Gestion pratique en portefeuille
+
+En pratique, les gestionnaires de portefeuille d'options adoptent la discipline suivante :
+
+- **Delta** : rééquilibrage **quotidien**. C'est la Grecque la plus sensible et la plus facilement couvrable.
+- **Gamma, Theta, Vega** : ces Grecques sont **calculées et surveillées** en continu. Des actions de couverture ne sont prises que lorsque les expositions dépassent des seuils prédéfinis.
+
+::: {.callout-note title="À retenir — Triangle Theta-Gamma"}
+Dans le cadre de Black-Scholes, le Theta et le Gamma d'un portefeuille Delta-neutre sont liés par une relation précise issue de l'EDP de Black-Scholes. Un portefeuille à **Gamma élevé** (position longue en Gamma, favorable aux grands mouvements) a nécessairement un **Theta très négatif** (coûteux en valeur temps). Il n'existe pas de "free lunch" : bénéficier de la courbure a un coût quotidien.
+:::
+
+---
+
+## Modèles alternatifs et méthodes avancées
+
+### Limites du modèle de Black-Scholes
+
+Le modèle de Black-Scholes, bien que fondamental et élégant, repose sur des hypothèses simplificatrices qui ne sont pas toujours vérifiées en pratique :
+
+- **Volatilité constante** : en réalité, la volatilité implicite varie selon le strike et la maturité (smile de volatilité, volatility smile).
+- **Pas de sauts** : le modèle suppose une diffusion continue des prix ; des sauts brutaux sont observés sur les marchés.
+- **Pas de dividendes** (dans la version de base).
+- **Marchés parfaits** : pas de coûts de transaction, liquidité infinie.
+
+### Modèles alternatifs
+
+**Modèle de Heston (Heston Model) :**
+
+- Introduit la **volatilité stochastique** : la volatilité est elle-même un processus aléatoire.
+- Permet de reproduire le smile de volatilité observé sur les marchés.
+- Plus réaliste mais nettement plus complexe à calibrer et à utiliser.
+
+**Modèles à sauts (Jump-Diffusion Models) :**
+
+- Proposés notamment par **Robert Merton**.
+- Combinent une diffusion continue (brownien) avec des sauts discontinus.
+- Permettent de modéliser des événements rares à fort impact (krachs, annonces surprises).
+
+**Arbres binomiaux et trinomiaux (Binomial/Trinomial Trees) :**
+
+- Approches discrètes, particulièrement adaptées aux **options américaines** permettant l'exercice anticipé.
+- L'arbre binomial de Cox-Ross-Rubinstein est une discrétisation du modèle de Black-Scholes.
+- Les arbres trinomiaux offrent une meilleure précision pour un pas de temps donné.
+
+### Machine Learning et IA en pricing d'options
+
+Des approches récentes et prometteuses émergent dans le domaine du pricing et de la couverture d'options :
+
+**Réseaux de neurones (Neural Networks) :**
+
+- Utilisés pour modéliser des relations complexes et non linéaires entre les paramètres de marché et les prix d'options.
+- Permettent de capturer des dynamiques de marché difficiles à paramétrer analytiquement.
+
+**Apprentissage profond — LSTM (Deep Learning — Long Short-Term Memory) :**
+
+- Les réseaux LSTM sont adaptés aux **séries temporelles** (time-series forecasting).
+- Applications en prévision de volatilité et en pricing d'options exotiques.
+
+**Apprentissage par renforcement (Reinforcement Learning) :**
+
+- Approche prometteuse pour optimiser dynamiquement les stratégies de trading et de couverture.
+- L'agent apprend à gérer un portefeuille d'options en minimisant les coûts de couverture tout en maintenant les Grecques dans des bornes acceptables.
+
+### Méthodes avancées de calcul des Grecques
+
+#### Méthodes aux différences finies (Finite Difference Methods)
+
+- **Différences avant et centrées** (Forward and Central Differences) : approximation numérique simple.
+
+$$\Delta \approx \frac{c(S + h) - c(S - h)}{2h}$$
+
+- Approche intuitive, mais **coûteuse en calcul** (nécessite plusieurs évaluations du modèle).
+
+#### Méthodes Monte Carlo
+
+Plusieurs approches existent pour calculer les Grecques par simulation :
+
+- **Méthode du rapport de vraisemblance** (Likelihood Ratio Method) : calcule les Grecques par différentiation de la mesure de probabilité.
+- **Méthode adjointe** (Adjoint Method / Pathwise Derivative Method) : différencie la trajectoire de l'actif sous-jacent plutôt que le modèle de pricing. Fournit des estimations précises et efficaces.
+
+#### Différentiation algorithmique (Algorithmic Differentiation — AD)
+
+- Aussi appelée **différentiation automatique** (Automatic Differentiation).
+- Calcule des **dérivées exactes** (pas d'approximations numériques) de façon efficace grâce à la règle de dérivation en chaîne appliquée automatiquement au code.
+- Particulièrement adaptée aux modèles complexes et aux grands portefeuilles.
+- Deux modes principaux : mode direct (forward mode) et mode adjoint (reverse mode).
+
+::: {.callout-tip title="Intuition — AD vs. Différences finies"}
+Les différences finies évaluent le modèle plusieurs fois avec des perturbations. La différentiation automatique calcule la dérivée en **un seul passage** à travers le code, quelle que soit la complexité du modèle. Pour $n$ paramètres, AD est $O(1)$ en coût supplémentaire (mode adjoint), contre $O(n)$ pour les différences finies.
+:::
+
+---
+
+## Exemple comparatif — Pricing d'un put américain
+
+Pour illustrer l'importance des méthodes numériques, on considère un **put américain** (option avec exercice anticipé possible), pour lequel Black-Scholes ne donne pas de solution exacte :
+
+| Paramètre | Valeur |
+|-----------|--------|
+| Prix spot $S_0$ | 100 USD |
+| Strike $K$ | 100 USD |
+| Taux sans risque $r$ | 5 % |
+| Volatilité $\sigma$ | 20 % |
+| Maturité $T$ | 1 an |
+| Rendement de dividende $q$ | 2 % |
+
+Les résultats des trois méthodes sont :
+
+| Méthode | Prix de l'option | Delta |
+|---------|-----------------|-------|
+| Black-Scholes (européen, référence) | 9,23 USD | 0,587 |
+| Arbre binomial (américain) | 7,50 USD | 0,530 |
+| Monte Carlo (américain) | 7,55 USD | 0,520 |
+
+::: {.callout-note title="À retenir"}
+L'option américaine vaut **moins** que l'option européenne dans cet exemple, ce qui peut sembler contre-intuitif. En réalité, la présence de dividendes et l'exercice anticipé interagissent de façon complexe. Les méthodes numériques (arbre binomial, Monte Carlo) donnent des résultats cohérents entre elles, confirmant la robustesse des approches.
+:::
+
+---
+
+## Points clés du chapitre
+
+::: {.callout-important title="Synthèse du chapitre"}
+
+**Les options sont des instruments exposés à de nombreuses sources de risque**, qui ne peuvent pas être gérées avec une simple position en actions.
+
+Les principaux enseignements de ce chapitre sont :
+
+**Sur les stratégies de couverture :**
+
+- L'option nue (naked) est risquée en cas de forte hausse du sous-jacent.
+- L'option couverte (covered) immobilise un capital important.
+- La stratégie stop-loss est dynamique mais génère des coûts de transaction élevés.
+- La couverture par les Grecques est la solution rigoureuse.
+
+**Sur les Grecques dans Black-Scholes :**
+
+- **Delta (Δ)** = $N(d_1)$ pour le call, $N(d_1) - 1$ pour le put. Permet de construire un portefeuille Delta-neutre en tradant le sous-jacent.
+- **Theta (Θ)** : généralement négatif, mesure l'érosion de valeur avec le temps. Ne peut pas être couvert.
+- **Gamma (Γ)** : toujours positif, mesure la courbure. Ne peut être neutralisé qu'en tradant d'autres options.
+
+**Sur la gestion de portefeuille :**
+
+- Les Grecques se somment linéairement dans un portefeuille.
+- Pour rendre un portefeuille Gamma-neutre : ajouter $-\Gamma_\Pi / \Gamma_T$ options de couverture, puis rétablir la neutralité Delta.
+- En pratique : Delta-hedge quotidien, surveillance et ajustement des autres Grecques au besoin.
+
+**Sur les extensions :**
+
+- Black-Scholes est insuffisant pour les options américaines, les smiles de volatilité et les dynamiques à sauts.
+- Des modèles alternatifs (Heston, Merton jump-diffusion, arbres) et des méthodes numériques avancées (AD, Monte Carlo, arbres) permettent de traiter ces cas.
+
+:::

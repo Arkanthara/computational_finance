@@ -1,0 +1,194 @@
+---
+title: "Les Grecques des Options — Révision"
+---
+
+## Les Grecques — Vue d'ensemble
+
+| Grecque | Symbole | Définition | Formule BS (call) |
+|---------|---------|-----------|-------------------|
+| Delta | Δ | $\partial c / \partial S$ | $N(d_1)$ |
+| Gamma | Γ | $\partial \Delta / \partial S = \partial^2 c / \partial S^2$ | $N'(d_1) / (S_0 \sigma \sqrt{T})$ |
+| Theta | Θ | $\partial c / \partial t$ | $-\frac{S_0 N'(d_1)\sigma}{2\sqrt{T}} - rKe^{-rT}N(d_2)$ |
+| Vega | ν | $\partial c / \partial \sigma$ | — |
+| Rho | ρ | $\partial c / \partial r$ | — |
+
+::: {.callout-note title="Put vs. Call"}
+$\Delta_p = N(d_1) - 1$ | $\Theta_p = -\frac{S_0 N'(d_1)\sigma}{2\sqrt{T}} + rKe^{-rT}N(-d_2)$ | $\Gamma$ **identique** pour call et put
+:::
+
+---
+
+## Rappel Black-Scholes
+
+$$c = S_0 N(d_1) - Ke^{-rT}N(d_2) \qquad p = Ke^{-rT}N(-d_2) - S_0 N(-d_1)$$
+
+$$d_1 = \frac{\ln(S_0/K) + (r + \sigma^2/2)T}{\sigma\sqrt{T}} \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+
+$$N'(x) = \frac{1}{\sqrt{2\pi}}e^{-x^2/2}$$
+
+---
+
+## Stratégies de couverture — Comparaison
+
+| Stratégie | Principe | Risque principal |
+|-----------|---------|-----------------|
+| Nue (Naked) | Ne rien faire | Perte illimitée si $S_T \gg K$ |
+| Couverte (Covered) | Acheter les actions dès $t=0$ | Capital immobilisé, perte si $S_T \ll S_0$ |
+| Stop-loss | Acheter si $S_t > K$, vendre si $S_t < K$ | Coûts de transaction élevés, oscillations autour de $K$ |
+| **Delta hedge** | Détenir $\Delta$ actions par option | Rééquilibrage continu nécessaire |
+
+::: {.callout-important title="Piège — Stop-loss"}
+$\text{coût stop-loss} = \max(S_0 - K, 0) \neq c_{\text{BS}}$ car : (1) actualisation des flux, (2) ambiguïté au point $S_t = K$.
+:::
+
+---
+
+## Delta (Δ)
+
+**Plages de valeurs :**
+
+- Call : $\Delta_c \in [0, 1]$
+- Put : $\Delta_p \in [-1, 0]$
+- Relation : $\Delta_c - \Delta_p = 1$
+
+**Comportement selon la moneyness :**
+
+| Moneyness | $\Delta_c$ (approx.) |
+|-----------|---------------------|
+| OTM ($S \ll K$) | $\approx 0$ |
+| ATM ($S \approx K$) | $\approx 0{,}5$ |
+| ITM ($S \gg K$) | $\approx 1$ |
+
+**Couverture Delta — actions à trader :**
+
+| Position | Acheter | Vendre |
+|----------|---------|--------|
+| Vente call | — | $\Delta_c \times N_{\text{options}}$ |
+| Achat call | $\Delta_c \times N_{\text{options}}$ | — |
+| Vente put | $|\Delta_p| \times N_{\text{options}}$ | — |
+| Achat put | — | $|\Delta_p| \times N_{\text{options}}$ |
+
+::: {.callout-tip title="Exemple rapide"}
+Vente 2 000 calls, $\Delta_c = 0{,}6$ → acheter $1\,200$ actions.
+Si $S : 100 \to 101$ → $c : 10 \to 10{,}6$ → profit $= 1200 \times 1 - 2000 \times 0{,}6 = 0$ ✓
+:::
+
+---
+
+## Theta (Θ)
+
+**Règle générale :** $\Theta < 0$ (érosion temporelle)
+
+**Exceptions** (Θ peut être > 0) :
+
+- Put européen sans dividende (option ITM profonde)
+- Call avec taux $r$ très élevé
+
+**Comportement selon la moneyness ($T \to 0$) :**
+
+| Moneyness | $\Theta$ quand $T \to 0$ |
+|-----------|------------------------|
+| OTM | $\to 0$ |
+| ITM | Plateau (valeur intrinsèque domine) |
+| ATM | **Diverge vers $-\infty$** ⚠️ |
+
+::: {.callout-important title="Θ ne se couvre pas"}
+Le temps est certain → pas de couverture possible. Θ est le **coût quotidien** de détenir une option longue.
+:::
+
+---
+
+## Gamma (Γ)
+
+**Propriété clé :** $\Gamma > 0$ **toujours** (position longue)
+
+**Comportement :**
+
+- **Maximum** quand ATM
+- **Explose** quand ATM et $T \to 0$ ⚠️
+- $\to 0$ à maturité pour ITM/OTM
+
+**Développement de Taylor (approximation du prix) :**
+
+$$\boxed{\delta c \approx \Theta\,\delta t + \Delta\,\delta S + \tfrac{1}{2}\Gamma\,\delta S^2}$$
+
+- $\Delta\,\delta S$ : terme linéaire → couvert par Delta hedge
+- $\frac{1}{2}\Gamma\,\delta S^2$ : terme quadratique → **gap résiduel** après Delta hedge
+
+---
+
+## Portefeuille et Grecques
+
+**Additivité :**
+
+$$\Delta_\Pi = \sum_i w_i \Delta_i \qquad \Theta_\Pi = \sum_i w_i \Theta_i \qquad \Gamma_\Pi = \sum_i w_i \Gamma_i$$
+
+**Rendre un portefeuille Gamma-neutre :**
+
+1. Choisir une option de couverture avec $\Gamma_T$
+2. Ajouter $w_T = -\Gamma_\Pi / \Gamma_T$ options → $\Gamma$ neutralisé
+3. Recalculer $\Delta_\Pi$ → le Delta a changé
+4. Trader le **sous-jacent** pour rétablir $\Delta$-neutralité
+
+::: {.callout-tip title="Exemple"}
+$\Gamma_\Pi = -3\,000$, option de couverture : $\Delta_T = 0{,}62$, $\Gamma_T = 1{,}5$
+
+→ Acheter $3000/1{,}5 = 2\,000$ options → $\Delta_\Pi$ passe à $2000 \times 0{,}62 = 1\,240$
+
+→ Vendre $1\,240$ actions pour rétablir $\Delta$-neutralité
+:::
+
+::: {.callout-important title="Règle d'or"}
+**Modifier Γ** → trader des **options** (le sous-jacent a $\Gamma = 0$)
+
+**Modifier Δ** → trader le **sous-jacent** ou des options
+:::
+
+---
+
+## Triangle Θ–Γ
+
+::: {.callout-warning title="Trade-off fondamental"}
+Portefeuille **long Gamma** (Γ > 0) → **Θ très négatif** (coût quotidien élevé)
+
+Portefeuille **court Gamma** (Γ < 0) → **Θ positif** (encaisse la valeur temps) mais risque sur grands mouvements
+:::
+
+---
+
+## Gestion pratique
+
+- **Delta** : rééquilibrage **quotidien**
+- **Gamma, Theta, Vega** : calculés et surveillés, actions si seuils dépassés
+
+---
+
+## Limites de Black-Scholes & extensions
+
+| Limite | Modèle alternatif |
+|--------|------------------|
+| Volatilité constante (smile ignoré) | **Heston** (vol stochastique) |
+| Pas de sauts | **Merton** Jump-Diffusion |
+| Options américaines (exercice anticipé) | **Arbres binomiaux/trinomiaux** |
+| Relations complexes | **Réseaux de neurones, LSTM** |
+| Couverture optimale dynamique | **Reinforcement Learning** |
+
+**Méthodes de calcul des Grecques :**
+
+| Méthode | Coût | Précision |
+|---------|------|----------|
+| Différences finies | $O(n)$ évaluations | Approchée |
+| Monte Carlo (LRM, Adjoint) | Variable | Bonne |
+| **Différentiation automatique (AD)** | $O(1)$ (mode adjoint) | **Exacte** |
+
+---
+
+## Exemple put américain — Comparaison
+
+Paramètres : $S_0 = K = 100$, $r = 5\%$, $\sigma = 20\%$, $T = 1$ an, $q = 2\%$
+
+| Méthode | Prix | Delta |
+|---------|------|-------|
+| Black-Scholes (européen) | 9,23 USD | 0,587 |
+| Arbre binomial (américain) | 7,50 USD | 0,530 |
+| Monte Carlo (américain) | 7,55 USD | 0,520 |
