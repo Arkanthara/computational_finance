@@ -7,7 +7,7 @@
   logo: "./img/unige.svg",
   logosize: 6cm,
   university: "University of Geneva",
-  title: "Exercise #7",
+  title: "Exercise #8",
 
   // Structured authors
   authors: (
@@ -35,7 +35,7 @@
   date: none,
 
   // Document options
-  toc: true,
+  toc: false,
   numbering: true,
   bibliography: none,
   appendix: false,

@@ -13,304 +13,151 @@
 )
 
 
-// ─── Part 1: Optimal Portfolio ─────────────────────────────────────────────
-= Optimal Portfolio
+// ── Minority Game ────────────────────────────────────────────────────────────
+= Minority Game
 
-In this series we look at the closing prices of McDonald's, Bank of America, IBM, Chevron, Coca-Cola, Novartis and AT&T, over a one-year time span extending from 2013-05-01 to 2014-05-01.
+Let $N$ be the number of agents, $M$ the number of bits of history and $S$ the number of
+strategies available to each agent among the $2^(2^M)$ possible strategies.
 
-Download the file `closing_prices.csv` on Moodle. You can load it with the following Python code:
+- Each agent initializes the utilities of its strategies to zero.
+- Initialize the history $mu(0)$ to a random list of $M$ bits.
+- For $t$ in $1, dots, T$:
+  - Each agent $i in {1, dots, N}$ samples a strategy $s_i (t)$ according to the softmax
+    distribution of utilities:
+    $ frac(exp(Gamma_i u_(s(t))), sum_(s') exp(Gamma_i u_(s'(t)))) quad "where" Gamma_i > 0. $
+  - Given the current history $mu(t)$, each agent uses its chosen strategy $s_i (t)$ to
+    pick an action $a_i (t) in {+1, -1}$.
+  - Compute the attendance:
+    $ A(t) = sum_(i=1)^(N) a_i (t). $
+  - Update the utility of the chosen strategies with a linear payoff:
+    $ u_(s_i)(t) = u_(s_i)(t-1) - a_i (t) dot frac(A(t), beta) $
+  - Remove the oldest bit of history and add a new one.
+
+#v(0.8em)
+
+*1.* #h(0.4em)
+*(a)* Why is the above procedure called a minority game?
+
+      This procedure is called a minority game because we study the global behavior of a population of agents thanks to the modelisation of each agent's behavior. Each agent has to choose a strategy among a set of strategies, and each agent will try to be in the minority group in order to win.
+
+*(b)* What is the role of $Gamma_i$? In particular, what does a large or a small value of
+$Gamma_i$ mean?
+      $Gamma_i$ is a parameter that controls the exploration-exploitation trade-off of the agents. A large value of $Gamma_i$ means that the agent will be more likely to choose the strategy with the highest utility, while a small value of $Gamma_i$ means that the agent will be more likely to explore other strategies.
+
+*2.* #h(0.4em) Implement a minority game. You can use $beta = 1$ and $Gamma_i = 0.01$,
+$forall i in {1, dots, N}$. To add a new bit of history, you can either pick it at random
+or from some function of the attendance ($1$ if positive attendance, $0$ if negative
+attendance for instance).
 
 ```python
-import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 
-df = pd.read_csv('closing_prices.csv')
-data = df.to_numpy()  # if you prefer working with np array
+def minority_game(N: int, M: int, S: int, T: int, beta: float = 1, G: float = 0.5) -> list:
+    """
+    Simulate a minority game with N agents, M bits of history, S strategies, and T time steps.
+    
+    Parameters:
+    - N: Number of agents
+    - M: Number of bits of history
+    - S: Number of strategies available to each agent
+    - T: Number of time steps to simulate
+    - beta: Scaling factor for utility updates
+    - G: Exploration parameter for the softmax distribution
+         Small G means more exploration, large G means more exploitation.
+
+    Returns:
+    - attendance: List of attendance values at each time step
+    """
+    # Initialize utilities
+    u = np.zeros((N, S))
+    
+    # Initialize history
+    history = np.random.randint(2, size=M).tolist()
+    
+    # Store attendance
+    attendance = []
+    
+    for t in range(T):
+        # Sample strategies
+        x = G * u
+        x = x - np.max(x, axis=1, keepdims=True)  # stabilize
+        exp_x = np.exp(x)
+        probs = exp_x / np.sum(exp_x, axis=1, keepdims=True)
+        s = np.array([np.random.choice(S, p=probs[i]) for i in range(N)], dtype=int)
+        
+        # Determine actions based on chosen strategies and current history
+        if M > 0:
+            actions = np.array([1 if history[min(s[i], M-1)] == 1 else -1 for i in range(N)])
+        else:
+            actions = np.random.choice([-1, 1], size=N)
+        
+        # Compute attendance
+        A_t = np.sum(actions)
+        attendance.append(A_t)
+        
+        # Update utilities
+        for i in range(N):
+            u[i, s[i]] -= actions[i] * A_t / beta
+        
+        # Update history
+        new_bit = 1 if A_t > 0 else 0
+        if M > 0:
+          history.pop(0)
+          history.append(new_bit)
+    
+    return attendance
 ```
 
-We define the weight vector of the portfolio $bold(w) = {w_1, ..., w_7}$ such that
-$sum_(i=1)^(7) w_i = 1$.
 
-*1.* Write a function that estimates the expected return and the risk (standard deviation of returns) for a given weight vector. Then, plot the return against the risk for 100 000 randomly chosen weight vectors (Monte-Carlo simulation). What do you observe?
+*3.* #h(0.4em) Simulate a minority game with $S = 2$ strategies for $T = 100$ steps for
+values of $N$ in ${51, 101, 251, 501, 1001}$ and values of $M$ in ${0, 1, dots, 18}$.
+On a log-log plot, represent $sigma^2 \/ N$, the scaled variance of the attendance, against
+$alpha = 2^M \/ N$.
 
-  ```python
-  def returns(data: np.ndarray) -> np.ndarray:
-      """
-      Compute the daily returns from the closing prices.
+```python
+import matplotlib.pyplot as plt
+def plot_scaled_variance(N_values, M_values, T=100):
+    scaled_variances = []
+    alphas = []
+    
+    for N in N_values:
+        for M in M_values:
+            attendance = minority_game(N, M, S=2, T=T, G=1)
+            variance = np.var(attendance)
+            scaled_variance = variance / N
+            alpha = 2**M / N
+            
+            scaled_variances.append(scaled_variance)
+            alphas.append(alpha)
+    
+    plt.figure(figsize=(10, 6))
+    plt.loglog(alphas, scaled_variances, 'o')
+    plt.xlabel(r'$\alpha = \frac{2^M}{N}$')
+    plt.ylabel(r'$\sigma^2 / N$')
+    plt.title('Scaled Variance of Attendance vs Alpha')
+    plt.grid(True)
+    plt.show()
 
-      Parameters:
-      data (np.ndarray): A 2D array where each column represents the closing prices of an asset.
-
-      Returns:
-      np.ndarray: A 2D array of daily returns for each asset.
-      """
-      return (data[1:] - data[:-1]) / data[:-1]
-
-
-  def portfolio_performance(weights: np.ndarray, rets: np.ndarray) -> tuple[float, float]:
-      """
-      Compute the expected return and risk of a portfolio given its weights and the returns of the assets.
-
-      Parameters:
-      weights (np.ndarray): A 1D array of portfolio weights.
-      rets (np.ndarray): A 2D array where each column represents the returns of an asset.
-
-      Returns:
-      tuple[float, float]: A tuple containing the expected return and risk (standard deviation) of the portfolio.
-      """
-      # Ensure weights sum to 1
-      # Due to optimization problem, weights are sometimes None or not valid, so we handle that case
-      try:
-          weights = weights / np.sum(weights)
-      except TypeError:
-          return np.nan, np.nan  # Return NaN return and risk if weights are not valid
-
-      # Ensure weights have correct shape
-      if weights.ndim == 1:
-          weights = weights.reshape(-1, 1)
-      
-      # Compute expected return
-      expected_return = (np.mean(rets, axis=0) @ weights)[0]
-      
-      # Compute risk (standard deviation)
-      risk = (np.std(rets, axis=0) @ weights)[0]
-      
-      return expected_return, risk
-
-  risks = []
-  rets = []
-  for _ in range(100000):
-      random_weights = np.random.rand(7)
-      ret, risk = portfolio_performance(random_weights, returns(data))
-      rets.append(ret)
-      risks.append(risk)
-  plt.figure()
-  plt.scatter(risks, rets)
-  plt.xlabel('Risk (Standard Deviation)')
-  plt.ylabel('Expected Return')
-  plt.title('Monte-Carlo Simulation of Portfolio Performance')
-  plt.show()
-  ```
-
-  The scatter plot follows an eliptic shape, with a clear upper boundary. This boundary corresponds to the efficient frontier, which represents the set of optimal portfolios that offer the highest expected return for a given level of risk.
-
-*2.* We introduced the following analytical expressions during the course to compute the weight vector that minimizes the risk given a desired portfolio return $mu_p$:
-
-$
-a &= bold(1)^T C^(-1) bold(1) \
-b &= bold(1)^T C^(-1) bold(mu) \
-c &= bold(mu)^T C^(-1) bold(mu) \
-d &= a c - b^2 \
-lambda_1 &= (c - b mu_p) / d \
-lambda_2 &= (a mu_p - b) / d \
-bold(w) &= C^(-1)(lambda_1 bold(1) + lambda_2 bold(mu))
-$
-
-With $bold(mu) = {mu_1, ..., mu_7}$ the expected returns of each stock and $C$ the covariance matrix of returns.
-
-Using this expression, draw Markowitz's efficient frontier for portfolio return $mu_p in [-0.0006,\ +0.0004]$.
-
-  ```python
-  def closed_form(mu: np.ndarray, cov: np.ndarray, mu_p: float) -> np.ndarray:
-      """
-      Compute the optimal portfolio weights using the closed-form solution.
-
-      Parameters:
-      mu (np.ndarray): A 1D array of expected returns for each asset.
-      cov (np.ndarray): A 2D array representing the covariance matrix of returns.
-      mu_p (float): The desired portfolio return.
-
-      Returns:
-      np.ndarray: A 1D array of optimal portfolio weights.
-      """
-      ones = np.ones(len(mu))
-      inv_cov = np.linalg.inv(cov)
-
-      a = ones.T @ inv_cov @ ones
-      b = ones.T @ inv_cov @ mu
-      c = mu.T @ inv_cov @ mu
-      d = a * c - b ** 2
-
-      lambda_1 = (c - b * mu_p) / d
-      lambda_2 = (a * mu_p - b) / d
-
-      weights = inv_cov @ (lambda_1 * ones + lambda_2 * mu)
-      
-      return weights.flatten()
-
-  mu = np.mean(returns(data), axis=0)
-  print(f"Expected returns: {mu}")
-  cov = np.cov(returns(data).T)
-
-  mu_p_values = np.linspace(-0.0006, 0.0004, 100)
-  efficient_frontier = []
-  for mu_p in mu_p_values:
-      weights = closed_form(mu, cov, mu_p)
-      ret, risk = portfolio_performance(weights, returns(data))
-      efficient_frontier.append((risk, ret))
-  efficient_frontier = np.array(efficient_frontier)
-
-  plt.figure()
-  plt.plot(efficient_frontier[:, 0], efficient_frontier[:, 1], label='Efficient Frontier')
-  plt.xlabel('Risk (Standard Deviation)')
-  plt.ylabel('Expected Return')
-  plt.title('Markowitz Efficient Frontier')
-  plt.legend()
-  plt.show()
-  ```
-
-*3.* Using the efficient frontier, find the weight of the portfolio with the minimal volatility. What can you say about the return of this portfolio?
-
-  ```python
-  min_vol_index = np.argmin(efficient_frontier[:, 0])
-  min_vol_weights = closed_form(mu, cov, mu_p_values[min_vol_index])
-  min_vol_return, min_vol_risk = portfolio_performance(min_vol_weights, returns(data))
-
-  print(f"Minimum Volatility Portfolio Weights:\n{min_vol_weights}")
-  print(f"Expected Return: {min_vol_return}")
-  print(f"Risk (Standard Deviation): {min_vol_risk}")
-  ```
-
-  The portfolio with the minimal volatility is a portfolio with the highest expected return.
-  This corresponds to the leftmost point on the efficient frontier, which represents the portfolio with the lowest risk.
-  This is counterintuitive. Indeed, in general, we expect a higher return to be associated with a higher risk.
-  However, in this case, the expected returns of the assets have negative values, so the optimization problem is to minimize the negative return to avoid losses, which is equivalent to maximizing the return.
+plot_scaled_variance(N_values=[51, 101, 251, 501, 1001], M_values=range(19))
+```
 
 
-#pagebreak()
+#v(0.4em)
 
-// ─── Part 2: No-Short Selling ──────────────────────────────────────────────
-= Optimal Portfolio under No-Short Selling Constraints
+*4.* #h(0.4em) What is the critical value $alpha_c$ for which the volatility reaches a
+minimum?
 
-At this point, you will extend the optimal portfolio analysis by imposing a no-short selling constraint (i.e. all portfolio weights must be non-negative). You will compute the efficient frontier under this additional constraint and compare it to the unconstrained (Markowitz) efficient frontier.
+To perform the plot, I decided to use $G = 1$ since in this way, the agent will choose the strategy instead of exploring other strategies.
 
-Keep using the provided `closing_prices.csv` file which contains the closing prices of McDonald's, Bank of America, IBM, Chevron, Coca-Cola, Novartis, and AT&T over one year (from 2013-05-01 to 2014-05-01). Load the data and compute the daily returns for each stock.
+The critical value $alpha_c$ for which the volatility reaches a minimum is when $alpha$ is very small (close to zero).
+This means that when the history length $M$ is much smaller than the number of agents $N$, the system has a low volatility... This is due to the fact that when $M$ is small, the agents don't have enough information to make informed decisions, so they tend to make similar decisions, which leads to a low volatility.
 
-*1.* Formulate the portfolio optimization as a minimization problem where the objective is to minimize the portfolio variance subject to the following constraints:
-  - The portfolio return is equal to a given target $mu_p$.
-  - The sum of weights is equal to 1.
-  - All weights are non-negative (no short selling).
+But when $M$ is large, they can make very different decisions thanks to the large amount of information they have. This leads to a high volatility.
 
-  The portfolio variance can be expressed as $w^T C w$, where $w$ is the weight vector and $C$ is the covariance matrix of returns.
-  So the optimization problem can be formulated as:
-  $
-    min_w w^T C w - q w^T mu \
-  $
-  with the constraints:
-  - $w^T mu = mu_p$ (target return constraint)
-  - $sum(w) = 1$ (weights sum to 1)
-  - $w_i >= 0$ for all $i$ (no short selling)
+#v(0.4em)
 
-  Here, $q in [0, infinity)$ is the risk factor that controls the trade-off between risk and return.
-
-
-*2.* Use a suitable Python optimization library (e.g., `cvxpy`) to solve the constrained problem.
-
-  ```python
-  import cvxpy as cp
-  def optimize_portfolio(mu: np.ndarray, cov: np.ndarray, mu_p: float) -> np.ndarray:
-      """
-      Optimize the portfolio weights under no-short selling constraints.
-
-      Parameters:
-      mu (np.ndarray): A 1D array of expected returns for each asset.
-      cov (np.ndarray): A 2D array representing the covariance matrix of returns.
-      mu_p (float): The desired portfolio return.
-
-      Returns:
-      np.ndarray: A 1D array of optimal portfolio weights.
-      """
-      n = len(mu)
-      w = cp.Variable(n)
-      
-      # Define the objective function (minimize variance)
-      objective = cp.Minimize(cp.quad_form(w, cov))
-      
-      # Define the constraints
-      constraints = [
-          w @ mu == mu_p,  # Target return constraint
-          cp.sum(w) == 1,   # Weights sum to 1
-          w >= 0            # No short selling
-      ]
-      
-      # Solve the optimization problem
-      prob = cp.Problem(objective, constraints)
-      prob.solve()
-      
-      return np.array(w.value)
-  ```
-
-*3.* Plot the constrained efficient frontier over the same range of previous $mu_p$.
-
-  ```python
-  constrained_frontier = []
-  for mu_p in mu_p_values:
-      weights = optimize_portfolio(mu, cov, mu_p)
-      ret, risk = portfolio_performance(weights, returns(data))
-      constrained_frontier.append((risk, ret))
-  constrained_frontier = np.array(constrained_frontier)
-
-  plt.figure()
-  plt.plot(efficient_frontier[:, 0], efficient_frontier[:, 1], label='Unconstrained Efficient Frontier')
-  plt.plot(constrained_frontier[:, 0], constrained_frontier[:, 1], label='Constrained Efficient Frontier', linestyle='--')
-  plt.xlabel('Risk (Standard Deviation)')
-  plt.ylabel('Expected Return')
-  plt.title('Efficient Frontiers with and without No-Short Selling Constraint')
-  plt.legend()
-  plt.show()
-  ```
-
-*4.* Compare the unconstrained (computed from Exercise \#1) and constrained efficient frontiers.
-
-  If we look at the plot, we can see that the constrained efficient frontier has an eliptic shape whereas the unconstrained efficient frontier is a straight line.
-  The constrained efficient frontier is always above the unconstrained efficient frontier, which means that for a given level of risk, the expected return of the constrained portfolio is higher than the expected return of the unconstrained portfolio.
-  I think this is due to the constraints imposed on the optimization problem, such as positive weights which limit the feasible set of portfolios.
-  The unconstrained efficient frontier is more theoretical and may not be achievable in practice, like for instance the portfolio that has the highest expected return with the lowest risk.
-
-  We can constate that the constrained efficient frontier is the same as the unconstrained efficient frontier on a small range of risk, but when the risk increases or decreases, the constrained efficient frontier diverges, which is due to the constraints that limit the feasible set of portfolios.
-
-  If we look at the plot, we can see that there is a part of the constrained efficient frontier that is not defined... This is probably due to the optimization problem that has no solution for some values of $mu_p$, perhaps due to the machine precision or some other problem due to the optimization solver itself.
-
-*5.* Discuss the impact of the no-short selling constraint on the risk-return trade-off.
-
-  The no-short selling constraint limits the set of feasible portfolios by imposing that all weights must be non-negative.
-  So we cannot take advantage of negative expected returns by short selling the assets, which can lead to a higher expected return for a given level of risk. That's why the unconstrained efficient frontier has the highest expected return for the smallest risk, which is not feasible in practice.
-
-  So the no-short selling constraint allows to have a more realistic efficient frontier that is really achievable in practice, but compared to the unconstrained frontier, it also limits the potential return for a given level of risk.
-  Indeed, here with the unconstrained efficient frontier, we can achieve for each level of risk the highest expected return, which is not feasible in practice.
-
-*6.* Identify and report the portfolio with minimal risk under the no-short selling constraint and comment on its expected return.
-
-  ```python
-  min_vol_constrained_index = np.nanargmin(constrained_frontier[:, 0])
-  min_vol_constrained_portfolio = constrained_frontier[min_vol_constrained_index]
-  print("Minimum Volatility Portfolio under No-Short Selling Constraint")
-  print(f"Risk: {min_vol_constrained_portfolio[0]:.4f}")
-  print(f"Return: {min_vol_constrained_portfolio[1]:.4f}")
-  ```
-
-  We can see on the plot that the portfolio with the minimal risk under the no-short selling constraint is located at the leftmost point of the constrained efficient frontier, which corresponds to the portfolio with the lowest risk and highest expected return.
-  Indeed,  the risk is about 0.0089 and the expected return is about 0.0001 which corresponds effectively to the leftmost point of the constrained efficient frontier.
-
-  The eliptic shape of the constrained efficient frontier indicates the set of possible portfolios with the area inside the elipse.
-  To minimize the risk and maximize the return, we need to be on the upper boundary of the elipse, which corresponds to the efficient frontier.
-  If we are below, it means that we can find a portfolio with the same level of risk and a higher expected return, so we can be more efficient.
-  So the point that minimizes the risk and maximizes the return is the leftmost point of the constrained efficient frontier, just at the frontier of upper and lower boundary of the elipse.
-  If we remember the first plot, we see that the constrained efficient frontier follows the same eliptic shape as the scatter plot.
-  So the method seems to be consistent with the Monte-Carlo simulation.
-
-  Note that without a certain level of risk, we cannot achieve any return... Indeed, the portfolio starts to have a return only when the risk is about 0.0089, which means that we cannot achieve a return without taking some risk, which is consistent with the general principle of finance that higher returns are associated with higher risks.
-
-#block(
-  fill: luma(235),
-  inset: 10pt,
-  radius: 4pt,
-  [
-    *Note:* You can use the `cvxpy` library to solve the constrained optimization problem. The library allows you to define the optimization variables, objective function, and constraints in a straightforward manner. Make sure to install it if you haven't already:
-    ```bash
-    pip install cvxpy
-    ```
-  ]
-)
-
+*5.* #h(0.4em) *(Optional)* Define an initial price $p(0)$ (for instance $100$) and then
+update it as follows:
+$ p(t) = p(t-1) exp(frac(A(t), lambda)) $
+with $lambda$ some positive constant. What is the intuition behind this update rule? Plot
+price curves for different values of $alpha$ and $lambda$ and comment.
