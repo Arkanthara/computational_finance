@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Modèles basés sur les agents — Révision – Finance computationnelle</title>
+<title>Les Obligations — Fondamentaux (Bonds - Basics) – Finance computationnelle</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -19,6 +19,41 @@ ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
 width: 0.8em;
 margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+}
+pre.numberSource { margin-left: 3em; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -7446,7 +7481,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch8.html">8. Modèles à base d’agents</a></li><li class="breadcrumb-item"><a href="./ch8r.html">Synthèse</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch11.html">11. Obligations - notions de base</a></li><li class="breadcrumb-item"><a href="./ch11.html">Détails</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -7680,13 +7715,13 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
  <span class="menu-text">8. Modèles à base d’agents</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch8.html" class="sidebar-item-text sidebar-link">
@@ -7695,7 +7730,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch8r.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch8r.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Synthèse</span></a>
   </div>
 </li>
@@ -7767,16 +7802,16 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
  <span class="menu-text">11. Obligations - notions de base</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch11.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch11.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Détails</span></a>
   </div>
 </li>
@@ -7893,18 +7928,73 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#approches-de-modélisation" id="toc-approches-de-modélisation" class="nav-link active" data-scroll-target="#approches-de-modélisation">Approches de modélisation</a></li>
-  <li><a href="#les-3-modèles-abm" id="toc-les-3-modèles-abm" class="nav-link" data-scroll-target="#les-3-modèles-abm">Les 3 modèles ABM</a></li>
-  <li><a href="#cont-bouchaud" id="toc-cont-bouchaud" class="nav-link" data-scroll-target="#cont-bouchaud">Cont-Bouchaud</a></li>
-  <li><a href="#lux-marchesi" id="toc-lux-marchesi" class="nav-link" data-scroll-target="#lux-marchesi">Lux-Marchesi</a></li>
-  <li><a href="#minority-game-paramètres" id="toc-minority-game-paramètres" class="nav-link" data-scroll-target="#minority-game-paramètres">Minority Game — Paramètres</a></li>
-  <li><a href="#minority-game-formules-clés" id="toc-minority-game-formules-clés" class="nav-link" data-scroll-target="#minority-game-formules-clés">Minority Game — Formules clés</a></li>
-  <li><a href="#minority-game-deux-phases" id="toc-minority-game-deux-phases" class="nav-link" data-scroll-target="#minority-game-deux-phases">Minority Game — Deux phases</a></li>
-  <li><a href="#minority-game-4-zones-de-volatilité" id="toc-minority-game-4-zones-de-volatilité" class="nav-link" data-scroll-target="#minority-game-4-zones-de-volatilité">Minority Game — 4 zones de volatilité</a></li>
-  <li><a href="#historique-mut-3-modes" id="toc-historique-mut-3-modes" class="nav-link" data-scroll-target="#historique-mut-3-modes">Historique <span class="math inline">\(\mu(t)\)</span> — 3 modes</a></li>
-  <li><a href="#algorithme-minority-game" id="toc-algorithme-minority-game" class="nav-link" data-scroll-target="#algorithme-minority-game">Algorithme Minority Game</a></li>
-  <li><a href="#relations-entre-concepts" id="toc-relations-entre-concepts" class="nav-link" data-scroll-target="#relations-entre-concepts">Relations entre concepts</a></li>
-  <li><a href="#points-critiques-pièges" id="toc-points-critiques-pièges" class="nav-link" data-scroll-target="#points-critiques-pièges">Points critiques / Pièges</a></li>
+  <li><a href="#introduction-aux-obligations" id="toc-introduction-aux-obligations" class="nav-link active" data-scroll-target="#introduction-aux-obligations">Introduction aux obligations</a>
+  <ul class="collapse">
+  <li><a href="#quest-ce-quune-obligation" id="toc-quest-ce-quune-obligation" class="nav-link" data-scroll-target="#quest-ce-quune-obligation">Qu’est-ce qu’une obligation ?</a></li>
+  <li><a href="#structure-dune-obligation" id="toc-structure-dune-obligation" class="nav-link" data-scroll-target="#structure-dune-obligation">Structure d’une obligation</a></li>
+  <li><a href="#le-risque-de-défaut-default-risk" id="toc-le-risque-de-défaut-default-risk" class="nav-link" data-scroll-target="#le-risque-de-défaut-default-risk">Le risque de défaut (Default Risk)</a></li>
+  <li><a href="#exemple-historique" id="toc-exemple-historique" class="nav-link" data-scroll-target="#exemple-historique">Exemple historique</a></li>
+  </ul></li>
+  <li><a href="#valorisation-dune-obligation-valuation" id="toc-valorisation-dune-obligation-valuation" class="nav-link" data-scroll-target="#valorisation-dune-obligation-valuation">Valorisation d’une obligation (Valuation)</a>
+  <ul class="collapse">
+  <li><a href="#principe-général" id="toc-principe-général" class="nav-link" data-scroll-target="#principe-général">Principe général</a></li>
+  <li><a href="#exemple-de-valorisation-pas-à-pas" id="toc-exemple-de-valorisation-pas-à-pas" class="nav-link" data-scroll-target="#exemple-de-valorisation-pas-à-pas">Exemple de valorisation pas à pas</a></li>
+  <li><a href="#notion-de-prime-décote-et-parité-premium-discount-par" id="toc-notion-de-prime-décote-et-parité-premium-discount-par" class="nav-link" data-scroll-target="#notion-de-prime-décote-et-parité-premium-discount-par">Notion de prime, décote et parité (Premium, Discount, Par)</a></li>
+  </ul></li>
+  <li><a href="#procédure-par-tâtonnement-trial-and-error-procedure" id="toc-procédure-par-tâtonnement-trial-and-error-procedure" class="nav-link" data-scroll-target="#procédure-par-tâtonnement-trial-and-error-procedure">Procédure par tâtonnement (Trial and Error Procedure)</a>
+  <ul class="collapse">
+  <li><a href="#problème-inverse-trouver-le-rendement-à-partir-du-prix" id="toc-problème-inverse-trouver-le-rendement-à-partir-du-prix" class="nav-link" data-scroll-target="#problème-inverse-trouver-le-rendement-à-partir-du-prix">Problème inverse : trouver le rendement à partir du prix</a></li>
+  <li><a href="#algorithme-de-tâtonnement" id="toc-algorithme-de-tâtonnement" class="nav-link" data-scroll-target="#algorithme-de-tâtonnement">Algorithme de tâtonnement</a></li>
+  <li><a href="#implémentation-python" id="toc-implémentation-python" class="nav-link" data-scroll-target="#implémentation-python">Implémentation Python</a></li>
+  <li><a href="#vérification-sur-lexemple" id="toc-vérification-sur-lexemple" class="nav-link" data-scroll-target="#vérification-sur-lexemple">Vérification sur l’exemple</a></li>
+  </ul></li>
+  <li><a href="#relation-entre-rendement-et-prix-yield-price-relationship" id="toc-relation-entre-rendement-et-prix-yield-price-relationship" class="nav-link" data-scroll-target="#relation-entre-rendement-et-prix-yield-price-relationship">Relation entre rendement et prix (Yield-Price Relationship)</a>
+  <ul class="collapse">
+  <li><a href="#une-relation-inverse-et-convexe" id="toc-une-relation-inverse-et-convexe" class="nav-link" data-scroll-target="#une-relation-inverse-et-convexe">Une relation inverse et convexe</a></li>
+  <li><a href="#conséquences-pratiques" id="toc-conséquences-pratiques" class="nav-link" data-scroll-target="#conséquences-pratiques">Conséquences pratiques</a></li>
+  <li><a href="#la-convexité-un-avantage-asymétrique" id="toc-la-convexité-un-avantage-asymétrique" class="nav-link" data-scroll-target="#la-convexité-un-avantage-asymétrique">La convexité : un avantage asymétrique</a></li>
+  </ul></li>
+  <li><a href="#rendement-zéro-coupon-zero-coupon-yield" id="toc-rendement-zéro-coupon-zero-coupon-yield" class="nav-link" data-scroll-target="#rendement-zéro-coupon-zero-coupon-yield">Rendement zéro-coupon (Zero Coupon Yield)</a>
+  <ul class="collapse">
+  <li><a href="#problème-de-comparabilité-des-rendements" id="toc-problème-de-comparabilité-des-rendements" class="nav-link" data-scroll-target="#problème-de-comparabilité-des-rendements">Problème de comparabilité des rendements</a></li>
+  <li><a href="#lobligation-zéro-coupon-zero-coupon-bond" id="toc-lobligation-zéro-coupon-zero-coupon-bond" class="nav-link" data-scroll-target="#lobligation-zéro-coupon-zero-coupon-bond">L’obligation zéro-coupon (Zero Coupon Bond)</a></li>
+  <li><a href="#la-courbe-des-taux-zéro-coupon-zero-coupon-yield-curve" id="toc-la-courbe-des-taux-zéro-coupon-zero-coupon-yield-curve" class="nav-link" data-scroll-target="#la-courbe-des-taux-zéro-coupon-zero-coupon-yield-curve">La courbe des taux zéro-coupon (Zero Coupon Yield Curve)</a></li>
+  </ul></li>
+  <li><a href="#algorithme-bootstrap-bootstrap-algorithm" id="toc-algorithme-bootstrap-bootstrap-algorithm" class="nav-link" data-scroll-target="#algorithme-bootstrap-bootstrap-algorithm">Algorithme Bootstrap (Bootstrap Algorithm)</a>
+  <ul class="collapse">
+  <li><a href="#problème-les-zéro-coupons-ne-sont-pas-tous-échangés" id="toc-problème-les-zéro-coupons-ne-sont-pas-tous-échangés" class="nav-link" data-scroll-target="#problème-les-zéro-coupons-ne-sont-pas-tous-échangés">Problème : les zéro-coupons ne sont pas tous échangés</a></li>
+  <li><a href="#données-dentrée" id="toc-données-dentrée" class="nav-link" data-scroll-target="#données-dentrée">Données d’entrée</a></li>
+  <li><a href="#étape-1-maturité-3-mois-tau-0.25" id="toc-étape-1-maturité-3-mois-tau-0.25" class="nav-link" data-scroll-target="#étape-1-maturité-3-mois-tau-0.25">Étape 1 : Maturité 3 mois (<span class="math inline">\(\tau = 0.25\)</span>)</a></li>
+  <li><a href="#étape-2-maturité-6-mois-tau-0.50" id="toc-étape-2-maturité-6-mois-tau-0.50" class="nav-link" data-scroll-target="#étape-2-maturité-6-mois-tau-0.50">Étape 2 : Maturité 6 mois (<span class="math inline">\(\tau = 0.50\)</span>)</a></li>
+  <li><a href="#étape-3-maturité-1-an-tau-1.0" id="toc-étape-3-maturité-1-an-tau-1.0" class="nav-link" data-scroll-target="#étape-3-maturité-1-an-tau-1.0">Étape 3 : Maturité 1 an (<span class="math inline">\(\tau = 1.0\)</span>)</a></li>
+  <li><a href="#étape-4-maturité-1.5-ans-tau-1.5-avec-coupons" id="toc-étape-4-maturité-1.5-ans-tau-1.5-avec-coupons" class="nav-link" data-scroll-target="#étape-4-maturité-1.5-ans-tau-1.5-avec-coupons">Étape 4 : Maturité 1.5 ans (<span class="math inline">\(\tau = 1.5\)</span>) — avec coupons</a></li>
+  <li><a href="#étape-5-maturité-2-ans-tau-2.0" id="toc-étape-5-maturité-2-ans-tau-2.0" class="nav-link" data-scroll-target="#étape-5-maturité-2-ans-tau-2.0">Étape 5 : Maturité 2 ans (<span class="math inline">\(\tau = 2.0\)</span>)</a></li>
+  <li><a href="#résultat-la-courbe-des-taux-zéro-coupon" id="toc-résultat-la-courbe-des-taux-zéro-coupon" class="nav-link" data-scroll-target="#résultat-la-courbe-des-taux-zéro-coupon">Résultat : la courbe des taux zéro-coupon</a></li>
+  </ul></li>
+  <li><a href="#types-dobligations-types-of-bonds" id="toc-types-dobligations-types-of-bonds" class="nav-link" data-scroll-target="#types-dobligations-types-of-bonds">Types d’obligations (Types of Bonds)</a>
+  <ul class="collapse">
+  <li><a href="#obligations-détat-et-obligations-dentreprise" id="toc-obligations-détat-et-obligations-dentreprise" class="nav-link" data-scroll-target="#obligations-détat-et-obligations-dentreprise">Obligations d’État et obligations d’entreprise</a></li>
+  <li><a href="#lécart-de-crédit-credit-spread" id="toc-lécart-de-crédit-credit-spread" class="nav-link" data-scroll-target="#lécart-de-crédit-credit-spread">L’écart de crédit (Credit Spread)</a></li>
+  <li><a href="#agences-de-notation-credit-rating-agencies" id="toc-agences-de-notation-credit-rating-agencies" class="nav-link" data-scroll-target="#agences-de-notation-credit-rating-agencies">Agences de notation (Credit Rating Agencies)</a></li>
+  <li><a href="#hiérarchie-des-rendements-par-notation" id="toc-hiérarchie-des-rendements-par-notation" class="nav-link" data-scroll-target="#hiérarchie-des-rendements-par-notation">Hiérarchie des rendements par notation</a></li>
+  <li><a href="#impact-des-décisions-de-banque-centrale" id="toc-impact-des-décisions-de-banque-centrale" class="nav-link" data-scroll-target="#impact-des-décisions-de-banque-centrale">Impact des décisions de banque centrale</a></li>
+  </ul></li>
+  <li><a href="#risques-associés-aux-obligations-risks" id="toc-risques-associés-aux-obligations-risks" class="nav-link" data-scroll-target="#risques-associés-aux-obligations-risks">Risques associés aux obligations (Risks)</a>
+  <ul class="collapse">
+  <li><a href="#risque-de-taux-dintérêt-interest-rate-risk" id="toc-risque-de-taux-dintérêt-interest-rate-risk" class="nav-link" data-scroll-target="#risque-de-taux-dintérêt-interest-rate-risk">Risque de taux d’intérêt (Interest Rate Risk)</a></li>
+  <li><a href="#risque-de-crédit-credit-risk" id="toc-risque-de-crédit-credit-risk" class="nav-link" data-scroll-target="#risque-de-crédit-credit-risk">Risque de crédit (Credit Risk)</a></li>
+  <li><a href="#risque-dinflation-inflation-risk" id="toc-risque-dinflation-inflation-risk" class="nav-link" data-scroll-target="#risque-dinflation-inflation-risk">Risque d’inflation (Inflation Risk)</a></li>
+  <li><a href="#risque-de-liquidité-liquidity-risk" id="toc-risque-de-liquidité-liquidity-risk" class="nav-link" data-scroll-target="#risque-de-liquidité-liquidity-risk">Risque de liquidité (Liquidity Risk)</a></li>
+  <li><a href="#risque-de-réinvestissement-reinvestment-risk" id="toc-risque-de-réinvestissement-reinvestment-risk" class="nav-link" data-scroll-target="#risque-de-réinvestissement-reinvestment-risk">Risque de réinvestissement (Reinvestment Risk)</a></li>
+  </ul></li>
+  <li><a href="#rôle-des-obligations-dans-un-portefeuille-role-in-portfolio" id="toc-rôle-des-obligations-dans-un-portefeuille-role-in-portfolio" class="nav-link" data-scroll-target="#rôle-des-obligations-dans-un-portefeuille-role-in-portfolio">Rôle des obligations dans un portefeuille (Role in Portfolio)</a>
+  <ul class="collapse">
+  <li><a href="#diversification-diversification" id="toc-diversification-diversification" class="nav-link" data-scroll-target="#diversification-diversification">Diversification (Diversification)</a></li>
+  <li><a href="#génération-de-revenus-income-generation" id="toc-génération-de-revenus-income-generation" class="nav-link" data-scroll-target="#génération-de-revenus-income-generation">Génération de revenus (Income Generation)</a></li>
+  <li><a href="#préservation-du-capital-capital-preservation" id="toc-préservation-du-capital-capital-preservation" class="nav-link" data-scroll-target="#préservation-du-capital-capital-preservation">Préservation du capital (Capital Preservation)</a></li>
+  <li><a href="#allocation-stratégique-strategic-asset-allocation" id="toc-allocation-stratégique-strategic-asset-allocation" class="nav-link" data-scroll-target="#allocation-stratégique-strategic-asset-allocation">Allocation stratégique (Strategic Asset Allocation)</a></li>
+  </ul></li>
+  <li><a href="#points-clés-à-retenir-key-takeaways" id="toc-points-clés-à-retenir-key-takeaways" class="nav-link" data-scroll-target="#points-clés-à-retenir-key-takeaways">Points clés à retenir (Key Takeaways)</a></li>
   </ul>
 </nav>
     </div>
@@ -7912,9 +8002,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch8.html">8. Modèles à base d’agents</a></li><li class="breadcrumb-item"><a href="./ch8r.html">Synthèse</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch11.html">11. Obligations - notions de base</a></li><li class="breadcrumb-item"><a href="./ch11.html">Détails</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Modèles basés sur les agents — Révision</h1>
+<h1 class="title">Les Obligations — Fondamentaux (Bonds - Basics)</h1>
 </div>
 
 
@@ -7931,34 +8021,30 @@ window.Quarto = {
 </header>
 
 
-<section id="approches-de-modélisation" class="level2">
-<h2 class="anchored" data-anchor-id="approches-de-modélisation">Approches de modélisation</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Approche</th>
-<th>Direction</th>
-<th>Principe</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Top-Down</td>
-<td>Descendante</td>
-<td>Équations globales → dynamique</td>
-</tr>
-<tr class="even">
-<td>Bottom-Up / ABM</td>
-<td>Ascendante</td>
-<td>Règles locales → comportement émergent</td>
-</tr>
-</tbody>
-</table>
+<section id="introduction-aux-obligations" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-aux-obligations">Introduction aux obligations</h2>
+<section id="quest-ce-quune-obligation" class="level3">
+<h3 class="anchored" data-anchor-id="quest-ce-quune-obligation">Qu’est-ce qu’une obligation ?</h3>
+<p>Une <strong>obligation</strong> (Bond) est un instrument financier servant à <strong>emprunter ou prêter de l’argent</strong>. Elle établit une relation contractuelle entre deux parties :</p>
+<ul>
+<li><strong>L’émetteur</strong> (Issuer) : l’institution X qui émet l’obligation pour recevoir des fonds.</li>
+<li><strong>L’acheteur</strong> (Bondholder) : l’investisseur Y qui prête de l’argent en échange d’un rendement.</li>
+</ul>
+<p>L’obligation remplit ainsi deux fonctions complémentaires :</p>
+<ul>
+<li>Fournir des <strong>liquidités</strong> à l’émetteur.</li>
+<li>Offrir un <strong>rendement</strong> à l’investisseur en contrepartie du risque qu’il accepte.</li>
+</ul>
+</section>
+<section id="structure-dune-obligation" class="level3">
+<h3 class="anchored" data-anchor-id="structure-dune-obligation">Structure d’une obligation</h3>
+<p>La structure d’une obligation est définie par un <strong>contrat fixe</strong> qui ne change pas au cours de la vie de l’obligation. Elle comprend :</p>
+<ul>
+<li>Le <strong>coupon</strong> (Coupon) : paiements périodiques versés à l’investisseur, représentant la récompense pour avoir prêté de l’argent.</li>
+<li>La <strong>valeur nominale</strong> ou <strong>principal</strong> (Face Value / Principal) : montant remboursé à l’investisseur à l’échéance (Maturity).</li>
+<li>La <strong>maturité</strong> (Maturity) : date à laquelle le principal est remboursé.</li>
+<li>La <strong>fréquence des coupons</strong> : semestrielle, annuelle, etc.</li>
+</ul>
 <div class="callout callout-style-default callout-note callout-titled" title="À retenir">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -7969,327 +8055,794 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Un comportement microscopique simple → complexité macroscopique difficile à modéliser autrement. ABM ne reproduit pas <strong>tous</strong> les faits stylisés avec un seul modèle.</p>
+<p>Le contrat d’une obligation est immuable : les montants et les dates de paiement sont définis à l’émission et ne varient pas.</p>
 </div>
 </div>
-<hr>
 </section>
-<section id="les-3-modèles-abm" class="level2">
-<h2 class="anchored" data-anchor-id="les-3-modèles-abm">Les 3 modèles ABM</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Modèle</th>
-<th>Origine</th>
-<th>Focus</th>
-<th>Résultat clé</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Cont-Bouchaud</strong></td>
-<td>Physique</td>
-<td>Herding (moutonnier)</td>
-<td>Queues épaisses si <span class="math inline">\(a \ll 0.5\)</span></td>
-</tr>
-<tr class="even">
-<td><strong>Lux-Marchesi</strong></td>
-<td>Économie</td>
-<td>Fondamentalistes + Chartistes</td>
-<td>Queues épaisses, contradiction EMH</td>
-</tr>
-<tr class="odd">
-<td><strong>Minority Game</strong></td>
-<td>Physique</td>
-<td>Minorité gagne</td>
-<td>Phases, prédictabilité, analytique</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-<section id="cont-bouchaud" class="level2">
-<h2 class="anchored" data-anchor-id="cont-bouchaud">Cont-Bouchaud</h2>
-<p><strong>Mécanisme :</strong> clusters aléatoires → décision collective</p>
+<section id="le-risque-de-défaut-default-risk" class="level3">
+<h3 class="anchored" data-anchor-id="le-risque-de-défaut-default-risk">Le risque de défaut (Default Risk)</h3>
+<p>Le <strong>risque de défaut</strong> (Default Risk) est le risque que l’émetteur ne soit pas en mesure de rembourser intégralement ses dettes. En cas de faillite :</p>
 <ul>
-<li>Vendre : proba <span class="math inline">\(a\)</span></li>
-<li>Acheter : proba <span class="math inline">\(a\)</span></li>
-<li>Rien : proba <span class="math inline">\(1 - 2a\)</span> (avec <span class="math inline">\(a \leq 0.5\)</span>)</li>
+<li>L’investisseur peut ne récupérer qu’une <strong>fraction</strong> du montant prêté.</li>
+<li>Le montant récupéré est appelé <strong>taux de recouvrement</strong> (Recovery Rate).</li>
 </ul>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Paramètre</th>
-<th>Distribution des rendements</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(a = 0.5\)</span></td>
-<td>Gaussienne (normale)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(a \ll 0.5\)</span></td>
-<td>Queues épaisses (Fat Tails)</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-<section id="lux-marchesi" class="level2">
-<h2 class="anchored" data-anchor-id="lux-marchesi">Lux-Marchesi</h2>
-<p><strong>2 types d’agents :</strong></p>
-<ul>
-<li><strong>Fondamentalistes</strong> : prix trop bas → achètent ; trop haut → vendent</li>
-<li><strong>Chartistes optimistes</strong> : suivent la tendance (Trend Followers)</li>
-<li><strong>Chartistes pessimistes</strong> : contre-tendance (Counter-Trend)</li>
-</ul>
-<div class="callout callout-style-default callout-warning callout-titled" title="Point critique">
+<p>Le coupon est directement lié à ce risque : plus l’émetteur est risqué, plus le coupon doit être élevé pour compenser l’investisseur. On parle de <strong>risque de crédit</strong> (Credit Risk).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Point critique
+<span class="screen-reader-only">Tip</span>Intuition
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Les agents peuvent <strong>changer de catégorie</strong> → dynamique endogène réaliste. <span class="math inline">\(\tau\)</span> petit = horizon journalier ; <span class="math inline">\(\tau\)</span> grand = horizon mensuel.</p>
+<p>Pensez à une obligation comme à un prêt bancaire formalisé et négociable sur un marché. L’émetteur joue le rôle de l’emprunteur, l’acheteur de l’obligation joue le rôle de la banque. Le coupon correspond aux intérêts périodiques, et le principal correspond au capital remboursé en fin de prêt.</p>
 </div>
 </div>
+</section>
+<section id="exemple-historique" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-historique">Exemple historique</h3>
+<p>Les premières obligations physiques comportaient des <strong>coupons numérotés</strong>, littéralement découpables, que le porteur présentait pour recevoir son paiement. L’exemple de la Magee Realty Corporation (1923–1943) illustre ce principe :</p>
+<ul>
+<li>Deux coupons par an, en juin et en décembre.</li>
+<li>Chaque coupon indiquait précisément la date et le montant à percevoir.</li>
+<li>Le contrat était entièrement transparent et non ambigu.</li>
+</ul>
+<p>Cette structure physique est à l’origine du terme « coupon » encore utilisé aujourd’hui dans la finance moderne.</p>
 <hr>
 </section>
-<section id="minority-game-paramètres" class="level2">
-<h2 class="anchored" data-anchor-id="minority-game-paramètres">Minority Game — Paramètres</h2>
+</section>
+<section id="valorisation-dune-obligation-valuation" class="level2">
+<h2 class="anchored" data-anchor-id="valorisation-dune-obligation-valuation">Valorisation d’une obligation (Valuation)</h2>
+<section id="principe-général" class="level3">
+<h3 class="anchored" data-anchor-id="principe-général">Principe général</h3>
+<p>La <strong>valorisation</strong> d’une obligation repose sur le calcul de la <strong>valeur présente</strong> (Present Value) de l’ensemble des flux de trésorerie futurs (coupons + principal).</p>
+<p>La structure des flux est <strong>fixe</strong> (définie par le contrat), mais le <strong>prix</strong> de l’obligation évolue selon les conditions de marché. Le prix B(t) constitue le <strong>degré de liberté</strong> du système.</p>
+<p>La relation fondamentale est :</p>
+<p><span class="math display">\[
+B(t) = \sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)} + P \cdot e^{-y(T - t)}
+\]</span></p>
+<p>où :</p>
+<ul>
+<li><span class="math inline">\(c_i\)</span> : coupon versé à la date <span class="math inline">\(t_i\)</span></li>
+<li><span class="math inline">\(P\)</span> : principal (valeur nominale)</li>
+<li><span class="math inline">\(T\)</span> : maturité</li>
+<li><span class="math inline">\(y\)</span> : rendement requis (Yield)</li>
+<li><span class="math inline">\(t\)</span> : date courante</li>
+</ul>
+</section>
+<section id="exemple-de-valorisation-pas-à-pas" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-de-valorisation-pas-à-pas">Exemple de valorisation pas à pas</h3>
+<p>Considérons une obligation émise par X avec les caractéristiques suivantes :</p>
+<ul>
+<li>Coupon <span class="math inline">\(c_i = 5\)</span> CHF, versé 2 fois par an pendant 2 ans.</li>
+<li>Principal <span class="math inline">\(P = 100\)</span> CHF.</li>
+<li>Rendement requis <span class="math inline">\(y = 5\%\)</span>.</li>
+</ul>
+<p>Les dates de paiement sont <span class="math inline">\(t_1 = 0.5\)</span>, <span class="math inline">\(t_2 = 1.0\)</span>, <span class="math inline">\(t_3 = 1.5\)</span>, <span class="math inline">\(t_4 = 2.0\)</span> ans.</p>
+<section id="calcul-des-valeurs-présentes-des-coupons" class="level4">
+<h4 class="anchored" data-anchor-id="calcul-des-valeurs-présentes-des-coupons">Calcul des valeurs présentes des coupons</h4>
+<p>On actualise chaque coupon à la date courante <span class="math inline">\(t_0 = 0\)</span> :</p>
+<p><span class="math display">\[c_1(t_0) = 5 \cdot e^{-0.05 \times 0.5} = 4.88 \text{ CHF}\]</span></p>
+<p><span class="math display">\[c_2(t_0) = 5 \cdot e^{-0.05 \times 1.0} = 4.76 \text{ CHF}\]</span></p>
+<p><span class="math display">\[c_3(t_0) = 5 \cdot e^{-0.05 \times 1.5} = 4.64 \text{ CHF}\]</span></p>
+<p><span class="math display">\[c_4(t_0) = 5 \cdot e^{-0.05 \times 2.0} = 4.52 \text{ CHF}\]</span></p>
+</section>
+<section id="calcul-de-la-valeur-présente-du-principal" class="level4">
+<h4 class="anchored" data-anchor-id="calcul-de-la-valeur-présente-du-principal">Calcul de la valeur présente du principal</h4>
+<p><span class="math display">\[P(t_0) = 100 \cdot e^{-0.05 \times 2.0} = 90.48 \text{ CHF}\]</span></p>
+</section>
+<section id="prix-de-lobligation" class="level4">
+<h4 class="anchored" data-anchor-id="prix-de-lobligation">Prix de l’obligation</h4>
+<p><span class="math display">\[B(t_0) = 4.88 + 4.76 + 4.64 + 4.52 + 90.48 = \mathbf{109.28 \text{ CHF}}\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’essentiel de la valeur d’une obligation réside dans le remboursement du principal (<span class="math inline">\(90.48\)</span> sur <span class="math inline">\(109.28\)</span>), soit environ 83% du prix total. Les coupons représentent la part complémentaire. C’est pourquoi les variations de taux d’intérêt ont un impact si significatif sur les prix obligataires.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="notion-de-prime-décote-et-parité-premium-discount-par" class="level3">
+<h3 class="anchored" data-anchor-id="notion-de-prime-décote-et-parité-premium-discount-par">Notion de prime, décote et parité (Premium, Discount, Par)</h3>
+<p>Le prix d’une obligation se compare à sa valeur nominale (par, généralement 100) :</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 29%">
+<col style="width: 40%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Symbole</th>
+<th>Situation</th>
+<th>Condition</th>
 <th>Signification</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(N\)</span></td>
-<td>Nombre d’agents (toujours <strong>impair</strong>)</td>
+<td><strong>Au-dessus du pair</strong> (Premium)</td>
+<td><span class="math inline">\(B &gt; 100\)</span></td>
+<td>Le coupon est supérieur au rendement du marché</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(M\)</span></td>
-<td>Longueur de l’historique (bits)</td>
+<td><strong>Au pair</strong> (At Par)</td>
+<td><span class="math inline">\(B = 100\)</span></td>
+<td>Le coupon est égal au rendement du marché</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(S\)</span></td>
-<td>Nombre de stratégies par agent</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(P = 2^M\)</span></td>
-<td>Nombre de patterns d’historique</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(2^{2^M}\)</span></td>
-<td>Nombre <strong>total</strong> de stratégies disponibles</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\alpha = P/N = 2^M/N\)</span></td>
-<td>Paramètre de contrôle</td>
+<td><strong>En-dessous du pair</strong> (Discount)</td>
+<td><span class="math inline">\(B &lt; 100\)</span></td>
+<td>Le coupon est inférieur au rendement du marché</td>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-warning callout-titled" title="Piège : explosion combinatoire">
+<p>Dans notre exemple, <span class="math inline">\(B = 109.28 &gt; 100\)</span> : l’obligation se vend <strong>à prime</strong> (at a premium), car le coupon de 5 CHF est attractif par rapport au rendement de marché de 5%.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Piège : explosion combinatoire
+<span class="screen-reader-only">Note</span>À retenir
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(M=5\)</span> → <span class="math inline">\(2^{32} \approx 4\)</span> milliards de stratégies. On stocke des <strong>vecteurs de bits</strong>, pas des indices.</p>
+<p>Le prix d’une obligation est la valeur actualisée de tous ses flux futurs. La relation entre prix et rendement est <strong>inverse</strong> : quand les taux montent, les prix baissent, et inversement.</p>
 </div>
 </div>
 <hr>
 </section>
-<section id="minority-game-formules-clés" class="level2">
-<h2 class="anchored" data-anchor-id="minority-game-formules-clés">Minority Game — Formules clés</h2>
-<p><strong>Sélection de stratégie (Softmax / Boltzmann) :</strong></p>
-<p><span class="math display">\[P(s_j^t) = \frac{\exp(\lambda\, U_{s_j}(t))}{\sum_{k=1}^{S} \exp(\lambda\, U_{s_k}(t))}\]</span></p>
-<ul>
-<li><span class="math inline">\(\lambda \to \infty\)</span> → stratégie au score maximal (déterministe)</li>
-</ul>
-<p><strong>Présence agrégée (Attendance) :</strong></p>
-<p><span class="math display">\[A(t) = \sum_{i=1}^{N} a_i^{\mu(t),\, s_i}\]</span></p>
-<p><strong>Mise à jour de l’utilité (Virtual Score) :</strong></p>
-<p><span class="math display">\[U_{i,s}(t+1) = U_{i,s}(t) - a_{i,s}^{\mu(t)} \cdot \frac{A(t)}{\beta}\]</span></p>
-<ul>
-<li><span class="math inline">\(\beta \in \{1,\, N,\, 2^M\}\)</span> — facteur de normalisation</li>
-<li>Score <strong>augmente</strong> si la stratégie était dans la <strong>minorité</strong></li>
-</ul>
-<p><strong>Prédictabilité (Predictability) :</strong></p>
-<p><span class="math display">\[H = \frac{1}{P} \sum_{\mu=0}^{2^M-1} \langle A|\mu \rangle^2\]</span></p>
-<p><strong>Prix / rendements :</strong></p>
-<p><span class="math display">\[r(t) = \frac{A(t)}{\lambda}, \qquad P(t) = P(t-1)\cdot\exp\!\left(\frac{A(t)}{\gamma}\right)\]</span></p>
+</section>
+<section id="procédure-par-tâtonnement-trial-and-error-procedure" class="level2">
+<h2 class="anchored" data-anchor-id="procédure-par-tâtonnement-trial-and-error-procedure">Procédure par tâtonnement (Trial and Error Procedure)</h2>
+<section id="problème-inverse-trouver-le-rendement-à-partir-du-prix" class="level3">
+<h3 class="anchored" data-anchor-id="problème-inverse-trouver-le-rendement-à-partir-du-prix">Problème inverse : trouver le rendement à partir du prix</h3>
+<p>La formule de valorisation permet de calculer B(t) connaissant <span class="math inline">\(y\)</span>. Mais en pratique, on observe le <strong>prix de marché</strong> B(t) et on cherche le <strong>rendement implicite</strong> <span class="math inline">\(y\)</span> correspondant.</p>
+<p>Ce problème n’a pas de solution analytique fermée : on utilise une <strong>procédure itérative</strong> (Trial and Error), aussi appelée méthode de bissection ou de recherche numérique.</p>
+</section>
+<section id="algorithme-de-tâtonnement" class="level3">
+<h3 class="anchored" data-anchor-id="algorithme-de-tâtonnement">Algorithme de tâtonnement</h3>
+<p>L’idée est de définir un <strong>résidu</strong> (résidu = écart entre le prix observé et le prix calculé pour un <span class="math inline">\(y\)</span> donné) et de l’annuler :</p>
+<p><span class="math display">\[\text{résidu}(y) = B_{\text{observé}} - \left[\sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t_0)} + 100 \cdot e^{-y(T - t_0)}\right]\]</span></p>
+<p>L’algorithme procède ainsi :</p>
+<ol type="1">
+<li>Partir d’un <strong>rendement initial très élevé</strong> (ex. <span class="math inline">\(y = 100\)</span>).</li>
+<li>Calculer le résidu.</li>
+<li>Si le résidu est positif (prix calculé trop bas) → <strong>diviser <span class="math inline">\(y\)</span> par 2</strong>.</li>
+<li>Si le résidu est négatif (prix calculé trop élevé) → <strong>faire la moyenne</strong> entre le <span class="math inline">\(y\)</span> actuel et le <span class="math inline">\(y\)</span> précédent.</li>
+<li>Répéter jusqu’à ce que <span class="math inline">\(|\text{résidu}| &lt; \epsilon\)</span> (ex. <span class="math inline">\(10^{-3}\)</span>).</li>
+</ol>
+</section>
+<section id="implémentation-python" class="level3">
+<h3 class="anchored" data-anchor-id="implémentation-python">Implémentation Python</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcul du résidu entre le prix observé et le prix théorique</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_residual(y, B):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> B <span class="op">-</span> np.<span class="bu">sum</span>(c <span class="op">*</span> np.exp(<span class="op">-</span>y <span class="op">*</span> (t <span class="op">-</span> t0))) <span class="op">-</span> <span class="dv">100</span> <span class="op">*</span> np.exp(<span class="op">-</span>y <span class="op">*</span> (T <span class="op">-</span> t0))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> trial_and_error(B):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Démarrage avec un rendement élevé</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    last_y <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    residual <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> np.<span class="bu">abs</span>(residual) <span class="op">&gt;</span> <span class="fl">1e-3</span>:</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        y_stored <span class="op">=</span> y</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Si résidu positif : y trop élevé → diviser par 2</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> residual <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>            y <span class="op">=</span> y <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Si résidu négatif : y trop faible → interpoler avec le précédent</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> residual <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                y <span class="op">=</span> (last_y <span class="op">+</span> y) <span class="op">*</span> <span class="fl">0.5</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                residual <span class="op">=</span> compute_residual(y, B)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        last_y <span class="op">=</span> y_stored</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        residual <span class="op">=</span> compute_residual(y, B)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="vérification-sur-lexemple" class="level3">
+<h3 class="anchored" data-anchor-id="vérification-sur-lexemple">Vérification sur l’exemple</h3>
+<p>Pour l’obligation de prix <span class="math inline">\(B = 109.28\)</span> CHF :</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.array([<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>])</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> np.array([<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">5</span>])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> t[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fl">109.28</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> trial_and_error(B)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&#39;Trial and error : y=</span><span class="sc">{</span>y<span class="op">*</span><span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">%&#39;</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># → Trial and error : y=5.00%</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On retrouve bien le rendement de 5% utilisé pour calculer le prix, ce qui valide la procédure.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La procédure par tâtonnement est une <strong>méthode de bissection</strong> adaptée : elle encadre progressivement la solution en réduisant l’intervalle de recherche à chaque itération. C’est un algorithme convergent, robuste, et facile à implémenter.</p>
+</div>
+</div>
 <hr>
 </section>
-<section id="minority-game-deux-phases" class="level2">
-<h2 class="anchored" data-anchor-id="minority-game-deux-phases">Minority Game — Deux phases</h2>
+</section>
+<section id="relation-entre-rendement-et-prix-yield-price-relationship" class="level2">
+<h2 class="anchored" data-anchor-id="relation-entre-rendement-et-prix-yield-price-relationship">Relation entre rendement et prix (Yield-Price Relationship)</h2>
+<section id="une-relation-inverse-et-convexe" class="level3">
+<h3 class="anchored" data-anchor-id="une-relation-inverse-et-convexe">Une relation inverse et convexe</h3>
+<p>La relation entre le rendement <span class="math inline">\(y\)</span> et le prix <span class="math inline">\(B\)</span> d’une obligation est <strong>inversement proportionnelle</strong> :</p>
+<ul>
+<li>Quand <span class="math inline">\(y\)</span> augmente → <span class="math inline">\(B\)</span> diminue.</li>
+<li>Quand <span class="math inline">\(y\)</span> diminue → <span class="math inline">\(B\)</span> augmente.</li>
+</ul>
+<p>Cette relation n’est cependant <strong>pas linéaire</strong> : on observe une <strong>convexité</strong> (Convexity), c’est-à-dire une courbure dans la courbe prix-rendement.</p>
+</section>
+<section id="conséquences-pratiques" class="level3">
+<h3 class="anchored" data-anchor-id="conséquences-pratiques">Conséquences pratiques</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
+<col style="width: 31%">
+<col style="width: 37%">
+<col style="width: 30%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Phase</th>
-<th>Condition</th>
-<th><span class="math inline">\(H\)</span></th>
-<th><span class="math inline">\(P(1|\mu)\)</span></th>
-<th>Volatilité</th>
+<th>Événement de marché</th>
+<th>Impact sur le rendement</th>
+<th>Impact sur le prix</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Symétrique</strong></td>
-<td><span class="math inline">\(\alpha &lt; \alpha_c\)</span></td>
-<td><span class="math inline">\(\approx 0\)</span></td>
-<td><span class="math inline">\(\approx 0.5\)</span> pour tout <span class="math inline">\(\mu\)</span></td>
-<td>Élevée (pire que hasard)</td>
+<td>Hausse des taux d’intérêt</td>
+<td><span class="math inline">\(y\)</span> augmente</td>
+<td><span class="math inline">\(B\)</span> diminue → <strong>perte</strong> pour l’investisseur</td>
 </tr>
 <tr class="even">
-<td><strong>Asymétrique</strong></td>
-<td><span class="math inline">\(\alpha &gt; \alpha_c\)</span></td>
-<td>Croît</td>
-<td>Variable selon <span class="math inline">\(\mu\)</span></td>
-<td>Faible (meilleure que hasard)</td>
+<td>Baisse des taux d’intérêt</td>
+<td><span class="math inline">\(y\)</span> diminue</td>
+<td><span class="math inline">\(B\)</span> augmente → <strong>gain</strong> pour l’investisseur</td>
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-important callout-titled" title="Risque de taux">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Risque de taux
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une hausse des taux d’intérêt entraîne une perte <strong>immédiate</strong> en capital pour les détenteurs d’obligations. Cependant, cette perte est <strong>compensée à terme</strong> si l’investisseur conserve l’obligation jusqu’à maturité ou réinvestit les coupons au nouveau taux plus élevé.</p>
+</div>
+</div>
+</section>
+<section id="la-convexité-un-avantage-asymétrique" class="level3">
+<h3 class="anchored" data-anchor-id="la-convexité-un-avantage-asymétrique">La convexité : un avantage asymétrique</h3>
+<p>La courbure de la relation prix-rendement a une implication favorable pour l’investisseur :</p>
 <ul>
-<li><span class="math inline">\(\alpha_c \approx 0.3374\)</span> pour <span class="math inline">\(S=2\)</span></li>
-<li>Approximation générale : <span class="math inline">\(\alpha_c(S) \approx \alpha_{c,S=2} + \dfrac{S-2}{2}\)</span></li>
-<li><strong>Courbes maîtresses</strong> : pour <span class="math inline">\(S\)</span> fixé, les courbes <span class="math inline">\(\sigma^2/N\)</span> vs <span class="math inline">\(\alpha\)</span> coïncident pour tout <span class="math inline">\(N\)</span></li>
+<li>Pour une même variation de rendement, la <strong>hausse de prix</strong> lors d’une baisse de taux est <strong>plus grande</strong> que la <strong>baisse de prix</strong> lors d’une hausse de taux.</li>
+<li>Cette propriété est appelée <strong>convexité positive</strong> et est valorisée par les investisseurs.</li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Imaginez une courbe légèrement incurvée vers le haut. Si vous mesurez la pente en deux points symétriques autour du centre, la montée à gauche est plus raide que la descente à droite. C’est exactement ce que fait la convexité obligataire : elle protège partiellement l’investisseur contre les hausses de taux.</p>
+</div>
+</div>
 <hr>
 </section>
-<section id="minority-game-4-zones-de-volatilité" class="level2">
-<h2 class="anchored" data-anchor-id="minority-game-4-zones-de-volatilité">Minority Game — 4 zones de volatilité</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Zone</th>
-<th>Phase</th>
-<th><span class="math inline">\(\sigma^2/N\)</span></th>
-<th>Cause</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Symétrique</td>
-<td><span class="math inline">\(&gt; 1\)</span> (pire)</td>
-<td>Trop d’agents, herding</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>Symétrique (près de <span class="math inline">\(\alpha_c\)</span>)</td>
-<td><strong>Minimum</strong> (optimal)</td>
-<td>Équilibre info/agents</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>Asymétrique</td>
-<td><span class="math inline">\(&lt; 1\)</span> (meilleur)</td>
-<td>Bonne diversification</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>Asymétrique (<span class="math inline">\(\alpha \gg \alpha_c\)</span>)</td>
-<td><span class="math inline">\(\approx 1\)</span> (hasard)</td>
-<td>Trop peu d’agents</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Référence aléatoire :</strong> agents indépendants → <span class="math inline">\(\text{Var}(A) = N\)</span>, donc <span class="math inline">\(\sigma^2/N = 1\)</span></p>
-<hr>
 </section>
-<section id="historique-mut-3-modes" class="level2">
-<h2 class="anchored" data-anchor-id="historique-mut-3-modes">Historique <span class="math inline">\(\mu(t)\)</span> — 3 modes</h2>
+<section id="rendement-zéro-coupon-zero-coupon-yield" class="level2">
+<h2 class="anchored" data-anchor-id="rendement-zéro-coupon-zero-coupon-yield">Rendement zéro-coupon (Zero Coupon Yield)</h2>
+<section id="problème-de-comparabilité-des-rendements" class="level3">
+<h3 class="anchored" data-anchor-id="problème-de-comparabilité-des-rendements">Problème de comparabilité des rendements</h3>
+<p>Les rendements calculés à partir d’obligations à coupons dépendent de la <strong>structure des coupons</strong> (montant, fréquence). Deux obligations avec des structures de coupons différentes ne sont donc pas directement comparables sur la base de leur rendement brut.</p>
+<p><strong>Solution</strong> : normaliser sur une base commune, le <strong>standard zéro-coupon</strong> (Zero Coupon Standard).</p>
+</section>
+<section id="lobligation-zéro-coupon-zero-coupon-bond" class="level3">
+<h3 class="anchored" data-anchor-id="lobligation-zéro-coupon-zero-coupon-bond">L’obligation zéro-coupon (Zero Coupon Bond)</h3>
+<p>Une obligation <strong>zéro-coupon</strong> (Zero Coupon Bond) est une obligation qui :</p>
 <ul>
-<li><strong>Aléatoire</strong> : <span class="math inline">\(\pi &lt; 0.5 \to 0\)</span>, sinon <span class="math inline">\(\to 1\)</span></li>
-<li><strong>Endogène</strong> : généré par la dynamique du modèle</li>
-<li><strong>Empirique</strong> : rendement <span class="math inline">\(&lt; 0 \to 0\)</span>, rendement <span class="math inline">\(&gt; 0 \to 1\)</span></li>
+<li>Ne verse <strong>aucun coupon</strong> pendant sa vie.</li>
+<li>Rembourse uniquement le <strong>principal</strong> à maturité.</li>
+<li>Se négocie donc en-dessous du pair (à escompte).</li>
 </ul>
-<hr>
+<p>Le rendement zéro-coupon pour une maturité <span class="math inline">\(\tau\)</span> est noté <span class="math inline">\(r_\tau\)</span> et satisfait :</p>
+<p><span class="math display">\[P \cdot e^{-r_\tau \cdot \tau} = B_{\text{zéro-coupon}}\]</span></p>
 </section>
-<section id="algorithme-minority-game" class="level2">
-<h2 class="anchored" data-anchor-id="algorithme-minority-game">Algorithme Minority Game</h2>
-<pre><code>INIT : choisir N, M, S, γ ; μ aléatoire ; S stratégies par agent (vecteurs 2^M bits)
-
-BOUCLE (T fois) :
-  1. A = Σ a_i          ← présence agrégée
-  2. U(t+1) = U(t) - a·A/β  ← mise à jour scores
-  3. Sélection stratégie active (argmax ou softmax)
-  4. Ajouter bit à μ, supprimer le plus vieux
-  5. p = p · exp(A/γ)   ← mise à jour prix</code></pre>
-<hr>
-</section>
-<section id="relations-entre-concepts" class="level2">
-<h2 class="anchored" data-anchor-id="relations-entre-concepts">Relations entre concepts</h2>
+<section id="la-courbe-des-taux-zéro-coupon-zero-coupon-yield-curve" class="level3">
+<h3 class="anchored" data-anchor-id="la-courbe-des-taux-zéro-coupon-zero-coupon-yield-curve">La courbe des taux zéro-coupon (Zero Coupon Yield Curve)</h3>
+<p>En représentant les rendements zéro-coupon en fonction de la maturité, on obtient la <strong>courbe des taux</strong> (Yield Curve) :</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">graph LR
-  M[&quot;M (longueur historique)&quot;] --&gt; P[&quot;P = 2^M patterns&quot;]
-  P --&gt; alpha[&quot;α = P/N&quot;]
-  N[&quot;N (agents)&quot;] --&gt; alpha
-  alpha --&gt; phase[&quot;Phase : symétrique / asymétrique&quot;]
-  phase --&gt; H[&quot;Prédictabilité H&quot;]
-  phase --&gt; sigma[&quot;Volatilité σ²/N&quot;]
-  S[&quot;S (stratégies)&quot;] --&gt; alphac[&quot;α_c(S)&quot;]
-  alphac --&gt; phase
+    A[&quot;Maturité courte\n(0.25 an)&quot;] --&gt; B[&quot;Maturité moyenne\n(1 an)&quot;] --&gt; C[&quot;Maturité longue\n(2 ans)&quot;]
+    style A fill:#d4e6f1
+    style B fill:#a9cce3
+    style C fill:#7fb3d3
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-<hr>
-</section>
-<section id="points-critiques-pièges" class="level2">
-<h2 class="anchored" data-anchor-id="points-critiques-pièges">Points critiques / Pièges</h2>
-<div class="callout callout-style-default callout-warning callout-titled" title="Pièges fréquents">
+<p>En théorie, la courbe des taux possède les propriétés suivantes :</p>
+<ul>
+<li>Les taux <strong>croissent avec la maturité</strong> (prime de terme).</li>
+<li>La courbe est <strong>lisse et régulière</strong>.</li>
+</ul>
+<p>En pratique, cela peut être très différent : inversions de courbe, bosses, ruptures, etc.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Pièges fréquents
+<span class="screen-reader-only">Note</span>À retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La courbe des taux zéro-coupon est l’outil de référence pour comparer les obligations et actualiser des flux futurs, quelle que soit leur structure de coupon.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="algorithme-bootstrap-bootstrap-algorithm" class="level2">
+<h2 class="anchored" data-anchor-id="algorithme-bootstrap-bootstrap-algorithm">Algorithme Bootstrap (Bootstrap Algorithm)</h2>
+<section id="problème-les-zéro-coupons-ne-sont-pas-tous-échangés" class="level3">
+<h3 class="anchored" data-anchor-id="problème-les-zéro-coupons-ne-sont-pas-tous-échangés">Problème : les zéro-coupons ne sont pas tous échangés</h3>
+<p>Dans la réalité, les obligations zéro-coupon ne couvrent pas toutes les maturités. On ne peut donc pas lire directement les taux zéro-coupon sur le marché pour chaque maturité. Il faut les <strong>reconstruire</strong> à partir des prix d’obligations à coupons observables.</p>
+<p>L’<strong>algorithme Bootstrap</strong> permet d’extraire la courbe des taux zéro-coupon à partir de données de marché observables.</p>
+</section>
+<section id="données-dentrée" class="level3">
+<h3 class="anchored" data-anchor-id="données-dentrée">Données d’entrée</h3>
+<p>Considérons les données de marché suivantes (obligations d’État américaines) :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 21%">
+<col style="width: 40%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Principal (USD)</th>
+<th>Maturité (ans)</th>
+<th>Coupon annuel semestriel (USD)</th>
+<th>Prix (USD)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>100</td>
+<td>0.25</td>
+<td>0</td>
+<td>97.5</td>
+</tr>
+<tr class="even">
+<td>100</td>
+<td>0.50</td>
+<td>0</td>
+<td>94.9</td>
+</tr>
+<tr class="odd">
+<td>100</td>
+<td>1.0</td>
+<td>0</td>
+<td>90.0</td>
+</tr>
+<tr class="even">
+<td>100</td>
+<td>1.5</td>
+<td>8</td>
+<td>96.0</td>
+</tr>
+<tr class="odd">
+<td>100</td>
+<td>2.0</td>
+<td>12</td>
+<td>101.6</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="étape-1-maturité-3-mois-tau-0.25" class="level3">
+<h3 class="anchored" data-anchor-id="étape-1-maturité-3-mois-tau-0.25">Étape 1 : Maturité 3 mois (<span class="math inline">\(\tau = 0.25\)</span>)</h3>
+<p>L’obligation est à zéro-coupon. Le rendement trimestriel est :</p>
+<p><span class="math display">\[\frac{4 \times 2.5}{97.5} = 10.256\%\]</span></p>
+<p>(On multiplie par 4 car il y a 4 trimestres par an, et le gain est de <span class="math inline">\(100 - 97.5 = 2.5\)</span>.)</p>
+<p>On annualise en passant au taux continu :</p>
+<p><span class="math display">\[r_{0.25} = 4 \cdot \ln\left(1 + \frac{0.10256}{4}\right) = \mathbf{10.127\%}\]</span></p>
+</section>
+<section id="étape-2-maturité-6-mois-tau-0.50" class="level3">
+<h3 class="anchored" data-anchor-id="étape-2-maturité-6-mois-tau-0.50">Étape 2 : Maturité 6 mois (<span class="math inline">\(\tau = 0.50\)</span>)</h3>
+<p>Le rendement semestriel est :</p>
+<p><span class="math display">\[\frac{2 \times 5.1}{94.9} = 10.748\%\]</span></p>
+<p>(Le gain est de <span class="math inline">\(100 - 94.9 = 5.1\)</span>, annualisé sur deux semestres.)</p>
+<p>Taux continu annuel :</p>
+<p><span class="math display">\[r_{0.50} = 2 \cdot \ln\left(1 + \frac{0.10748}{2}\right) = \mathbf{10.469\%}\]</span></p>
+</section>
+<section id="étape-3-maturité-1-an-tau-1.0" class="level3">
+<h3 class="anchored" data-anchor-id="étape-3-maturité-1-an-tau-1.0">Étape 3 : Maturité 1 an (<span class="math inline">\(\tau = 1.0\)</span>)</h3>
+<p>Obligation zéro-coupon :</p>
+<p><span class="math display">\[r_{1.0} = \ln\left(1 + \frac{10}{90}\right) = \mathbf{10.536\%}\]</span></p>
+</section>
+<section id="étape-4-maturité-1.5-ans-tau-1.5-avec-coupons" class="level3">
+<h3 class="anchored" data-anchor-id="étape-4-maturité-1.5-ans-tau-1.5-avec-coupons">Étape 4 : Maturité 1.5 ans (<span class="math inline">\(\tau = 1.5\)</span>) — avec coupons</h3>
+<p>L’obligation verse des coupons semestriels de <span class="math inline">\(8/2 = 4\)</span> USD, puis 104 USD à l’échéance.</p>
+<p>On connaît déjà <span class="math inline">\(r_{0.5}\)</span> et <span class="math inline">\(r_{1.0}\)</span>. On peut donc écrire :</p>
+<p><span class="math display">\[4 \cdot e^{-0.10469 \times 0.5} + 4 \cdot e^{-0.10536 \times 1.0} + 104 \cdot e^{-r_{1.5} \times 1.5} = 96\]</span></p>
+<p>En résolvant pour <span class="math inline">\(r_{1.5}\)</span> :</p>
+<p><span class="math display">\[e^{-r_{1.5} \times 1.5} = 0.85196 \implies r_{1.5} = \mathbf{10.681\%}\]</span></p>
+</section>
+<section id="étape-5-maturité-2-ans-tau-2.0" class="level3">
+<h3 class="anchored" data-anchor-id="étape-5-maturité-2-ans-tau-2.0">Étape 5 : Maturité 2 ans (<span class="math inline">\(\tau = 2.0\)</span>)</h3>
+<p>En appliquant la même logique avec les taux <span class="math inline">\(r_{0.5}\)</span>, <span class="math inline">\(r_{1.0}\)</span>, <span class="math inline">\(r_{1.5}\)</span> déjà calculés :</p>
+<p><span class="math display">\[r_{2.0} = \mathbf{10.808\%}\]</span></p>
+</section>
+<section id="résultat-la-courbe-des-taux-zéro-coupon" class="level3">
+<h3 class="anchored" data-anchor-id="résultat-la-courbe-des-taux-zéro-coupon">Résultat : la courbe des taux zéro-coupon</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Maturité (ans)</th>
+<th>Taux zéro-coupon (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.25</td>
+<td>10.127</td>
+</tr>
+<tr class="even">
+<td>0.50</td>
+<td>10.469</td>
+</tr>
+<tr class="odd">
+<td>1.0</td>
+<td>10.536</td>
+</tr>
+<tr class="even">
+<td>1.5</td>
+<td>10.681</td>
+</tr>
+<tr class="odd">
+<td>2.0</td>
+<td>10.808</td>
+</tr>
+</tbody>
+</table>
+<p>La courbe est <strong>croissante avec la maturité</strong>, ce qui est cohérent avec la théorie (prime de terme).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le Bootstrap fonctionne comme une déduction en cascade : on commence par les maturités les plus courtes (pour lesquelles on a directement le taux zéro-coupon), puis on remonte vers les maturités plus longues en utilisant les taux déjà calculés pour isoler l’inconnue restante.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Limites pratiques">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Limites pratiques
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La procédure Bootstrap doit être <strong>répétée régulièrement</strong> car les prix de marché évoluent en permanence. Cette mise à jour continue peut être fastidieuse. De plus, la courbe des taux réelle peut présenter des irrégularités (non-monotonicité, discontinuités) qui compliquent l’interpolation entre les maturités observées.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="types-dobligations-types-of-bonds" class="level2">
+<h2 class="anchored" data-anchor-id="types-dobligations-types-of-bonds">Types d’obligations (Types of Bonds)</h2>
+<section id="obligations-détat-et-obligations-dentreprise" class="level3">
+<h3 class="anchored" data-anchor-id="obligations-détat-et-obligations-dentreprise">Obligations d’État et obligations d’entreprise</h3>
+<p>On distingue principalement deux grandes catégories :</p>
+<ul>
+<li><strong>Obligations d’État</strong> (Government Bonds / Sovereigns / Govies / Treasuries) : émises par des gouvernements ou des banques centrales. Elles bénéficient généralement des meilleures notations (AAA) car le risque de défaut souverain est très faible.</li>
+<li><strong>Obligations d’entreprise</strong> (Corporate Bonds) : émises par des sociétés privées. Elles comportent un risque de crédit plus élevé et offrent donc des rendements supérieurs.</li>
+</ul>
+</section>
+<section id="lécart-de-crédit-credit-spread" class="level3">
+<h3 class="anchored" data-anchor-id="lécart-de-crédit-credit-spread">L’écart de crédit (Credit Spread)</h3>
+<p>Le <strong>spread de crédit</strong> (Credit Spread) est la différence entre le rendement d’une obligation d’entreprise et celui d’une obligation d’État de même maturité :</p>
+<p><span class="math display">\[y_{\text{corporate}} = y_{\text{souverain}} + \text{Credit Spread}\]</span></p>
+<p>Il quantifie le <strong>surcoût d’emprunt</strong> lié au risque de crédit de l’émetteur.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le taux souverain constitue un <strong>plancher</strong> : toute obligation d’entreprise doit offrir au minimum ce taux, plus une prime de risque. Plus l’émetteur est risqué, plus cette prime est élevée.</p>
+</div>
+</div>
+</section>
+<section id="agences-de-notation-credit-rating-agencies" class="level3">
+<h3 class="anchored" data-anchor-id="agences-de-notation-credit-rating-agencies">Agences de notation (Credit Rating Agencies)</h3>
+<p>Les agences de notation évaluent la qualité de crédit des émetteurs :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 23%">
+<col style="width: 28%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Agence</th>
+<th>Meilleure note</th>
+<th>Plus mauvaise note</th>
+<th>Seuil Investment Grade</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>S&amp;P</td>
+<td>AAA</td>
+<td>D</td>
+<td>BBB-</td>
+</tr>
+<tr class="even">
+<td>Moody’s</td>
+<td>Aaa</td>
+<td>C</td>
+<td>Baa3</td>
+</tr>
+<tr class="odd">
+<td>Fitch</td>
+<td>AAA</td>
+<td>D</td>
+<td>BBB-</td>
+</tr>
+</tbody>
+</table>
+<p>Ces notations peuvent <strong>évoluer au cours de la vie de l’obligation</strong>, ce qui est l’une des raisons pour lesquelles le credit spread peut s’élargir (widening) ou se rétrécir (tightening).</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Point clé">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Point clé
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les agences de notation n’incorporent <strong>pas les considérations ESG</strong> (Environnement, Social, Gouvernance) dans leurs notes. Ces aspects font l’objet d’évaluations séparées.</p>
+</div>
+</div>
+</section>
+<section id="hiérarchie-des-rendements-par-notation" class="level3">
+<h3 class="anchored" data-anchor-id="hiérarchie-des-rendements-par-notation">Hiérarchie des rendements par notation</h3>
+<p>La relation entre notation et rendement est claire :</p>
+<ul>
+<li><strong>AAA (État)</strong> → rendement le plus bas, risque le plus faible.</li>
+<li><strong>AA → A → BBB (Investment Grade)</strong> → rendements progressivement plus élevés.</li>
+<li><strong>BB et en-dessous (High Yield / Junk Bonds)</strong> → rendements très élevés, risque élevé.</li>
+</ul>
+<p>Dès qu’une obligation perd le statut <strong>Investment Grade</strong> (dégradation en dessous de BBB-), le coût d’emprunt augmente <strong>significativement</strong>, car beaucoup d’investisseurs institutionnels ne peuvent plus détenir ces titres dans leurs portefeuilles.</p>
+</section>
+<section id="impact-des-décisions-de-banque-centrale" class="level3">
+<h3 class="anchored" data-anchor-id="impact-des-décisions-de-banque-centrale">Impact des décisions de banque centrale</h3>
+<p>Une variation des taux directeurs des banques centrales (ex. Fed, BCE) affecte directement les taux souverains, et donc <strong>par ricochet</strong> tous les taux corporate via la structure :</p>
+<p><span class="math display">\[\Delta y_{\text{corporate}} \approx \Delta y_{\text{souverain}} + \Delta \text{Credit Spread}\]</span></p>
+<hr>
+</section>
+</section>
+<section id="risques-associés-aux-obligations-risks" class="level2">
+<h2 class="anchored" data-anchor-id="risques-associés-aux-obligations-risks">Risques associés aux obligations (Risks)</h2>
+<section id="risque-de-taux-dintérêt-interest-rate-risk" class="level3">
+<h3 class="anchored" data-anchor-id="risque-de-taux-dintérêt-interest-rate-risk">Risque de taux d’intérêt (Interest Rate Risk)</h3>
+<p><strong>Définition</strong> : risque que les variations de taux d’intérêt affectent la valeur de l’obligation.</p>
+<p><strong>Mécanisme</strong> : la relation inverse entre prix et rendement implique que toute hausse de taux entraîne une baisse de prix.</p>
+<p><strong>Sensibilité</strong> : les obligations à <strong>longue maturité</strong> (long duration) sont <strong>plus sensibles</strong> aux variations de taux que les obligations courtes. Intuitivement, un taux plus élevé impacte davantage les flux lointains (forte actualisation).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La <strong>duration</strong> (durée de sensibilité) est la mesure clé du risque de taux. Elle sera étudiée en détail dans le prochain chapitre.</p>
+</div>
+</div>
+</section>
+<section id="risque-de-crédit-credit-risk" class="level3">
+<h3 class="anchored" data-anchor-id="risque-de-crédit-credit-risk">Risque de crédit (Credit Risk)</h3>
+<p><strong>Définition</strong> : risque que l’émetteur ne puisse pas honorer ses obligations de paiement (coupons et/ou principal).</p>
+<p><strong>Mesure</strong> : les notations des agences (Moody’s, S&amp;P, Fitch) constituent un indicateur de probabilité de défaut.</p>
+<p><strong>Compensation</strong> : un risque de crédit plus élevé se traduit par un <strong>spread de crédit</strong> plus élevé, et donc un rendement plus attractif pour l’investisseur.</p>
+</section>
+<section id="risque-dinflation-inflation-risk" class="level3">
+<h3 class="anchored" data-anchor-id="risque-dinflation-inflation-risk">Risque d’inflation (Inflation Risk)</h3>
+<p><strong>Définition</strong> : risque que l’inflation érode le pouvoir d’achat des flux futurs de l’obligation.</p>
+<p><strong>Impact</strong> : le <strong>rendement réel</strong> est la différence entre rendement nominal et inflation :</p>
+<p><span class="math display">\[r_{\text{réel}} \approx r_{\text{nominal}} - \pi\]</span></p>
+<p>où <span class="math inline">\(\pi\)</span> est le taux d’inflation.</p>
+<p><strong>Protection</strong> : certaines obligations sont indexées sur l’inflation, comme les <strong>TIPS</strong> (Treasury Inflation-Protected Securities) américains, dont le principal est ajusté à l’inflation. L’or et les matières premières constituent également des couvertures contre l’inflation.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Risque spécifique aux obligations à coupon fixe">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Risque spécifique aux obligations à coupon fixe
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une obligation à coupon fixe est particulièrement vulnérable à une hausse d’inflation imprévue : les paiements fixes perdent en valeur réelle, tandis que le principal remboursé à maturité vaut moins en termes de pouvoir d’achat.</p>
+</div>
+</div>
+</section>
+<section id="risque-de-liquidité-liquidity-risk" class="level3">
+<h3 class="anchored" data-anchor-id="risque-de-liquidité-liquidity-risk">Risque de liquidité (Liquidity Risk)</h3>
+<p><strong>Définition</strong> : risque qu’un investisseur ne puisse pas céder son obligation rapidement au prix de marché juste.</p>
+<p><strong>Causes</strong> : le marché de certaines obligations peut être peu actif (faible volume d’échanges), notamment pour des émissions de petite taille ou des obligations de secteurs de niche.</p>
+<p><strong>Conséquences</strong> : l’investisseur devra accepter une <strong>décote de liquidité</strong> (liquidity discount) pour trouver un acheteur, ce qui réduit son rendement effectif.</p>
+</section>
+<section id="risque-de-réinvestissement-reinvestment-risk" class="level3">
+<h3 class="anchored" data-anchor-id="risque-de-réinvestissement-reinvestment-risk">Risque de réinvestissement (Reinvestment Risk)</h3>
+<p><strong>Définition</strong> : risque que les flux de trésorerie reçus (coupons, principal) soient réinvestis à un taux inférieur au taux initial.</p>
+<p><strong>Cas particulier — obligations callables</strong> (Callable Bonds) : une obligation callable donne le droit à l’émetteur de la <strong>rembourser avant maturité</strong>. Si les taux baissent, l’émetteur exercera ce droit et remboursera l’obligation, forçant l’investisseur à réinvestir dans un environnement de taux moins favorable.</p>
+<p><strong>Exemple</strong> : Apple Inc. pourrait émettre une obligation callable pour financer un projet. Si les taux baissent par la suite, Apple remboursera l’obligation et réémettra de la dette à moindre coût. L’investisseur initial subit alors un risque de réinvestissement.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le risque de réinvestissement est l’envers du risque de taux : si une hausse de taux pénalise le prix des obligations, elle bénéficie au réinvestissement des coupons. Inversement, une baisse de taux fait monter les prix mais dégrade les conditions de réinvestissement.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="rôle-des-obligations-dans-un-portefeuille-role-in-portfolio" class="level2">
+<h2 class="anchored" data-anchor-id="rôle-des-obligations-dans-un-portefeuille-role-in-portfolio">Rôle des obligations dans un portefeuille (Role in Portfolio)</h2>
+<section id="diversification-diversification" class="level3">
+<h3 class="anchored" data-anchor-id="diversification-diversification">Diversification (Diversification)</h3>
+<p>Les obligations jouent un rôle central dans la <strong>diversification</strong> d’un portefeuille d’investissement.</p>
+<p><strong>Réduction du risque global</strong> : en combinant des actifs dont les rendements sont peu corrélés (ou négativement corrélés), on réduit la volatilité du portefeuille sans nécessairement sacrifier le rendement attendu.</p>
+<p><strong>Corrélation avec les actions</strong> : historiquement, les obligations ont une corrélation <strong>négative ou faible</strong> avec les actions. Lorsque les marchés actions chutent (crise, récession), les investisseurs se réfugient vers les obligations souveraines de qualité, ce qui fait monter leurs prix.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Exception notable — 2022">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Exception notable — 2022
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En 2022, les banques centrales ont massivement relevé leurs taux directeurs pour lutter contre l’inflation. Actions <strong>et</strong> obligations ont simultanément chuté, rendant la corrélation <strong>positive</strong>. Cela illustre que la diversification via les obligations n’est pas inconditionnelle : elle peut défaillir en contexte de hausse rapide des taux.</p>
+</div>
+</div>
+</section>
+<section id="génération-de-revenus-income-generation" class="level3">
+<h3 class="anchored" data-anchor-id="génération-de-revenus-income-generation">Génération de revenus (Income Generation)</h3>
+<p>Les obligations fournissent des <strong>paiements d’intérêts réguliers</strong> :</p>
+<ul>
+<li>Les coupons constituent une <strong>source de revenus prévisible</strong> et stable.</li>
+<li>Cette caractéristique est particulièrement appréciée des investisseurs institutionnels (fonds de pension, assureurs) qui ont des engagements de paiement fixes à honorer.</li>
+<li>Pour les investisseurs individuels en phase de retraite, les obligations offrent un flux de revenus régulier sans nécessiter la vente d’actifs.</li>
+</ul>
+</section>
+<section id="préservation-du-capital-capital-preservation" class="level3">
+<h3 class="anchored" data-anchor-id="préservation-du-capital-capital-preservation">Préservation du capital (Capital Preservation)</h3>
+<p>Les obligations de haute qualité (gouvernements AAA) constituent des <strong>investissements défensifs</strong> :</p>
+<ul>
+<li>À maturité et en l’absence de défaut, l’investisseur récupère intégralement son principal.</li>
+<li>Elles sont particulièrement adaptées aux investisseurs <strong>averses au risque</strong> ou en phase de liquidation de portefeuille.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La préservation du capital est garantie uniquement si l’obligation est détenue jusqu’à maturité et que l’émetteur ne fait pas défaut. Une vente avant maturité expose l’investisseur au risque de prix (taux d’intérêt).</p>
+</div>
+</div>
+</section>
+<section id="allocation-stratégique-strategic-asset-allocation" class="level3">
+<h3 class="anchored" data-anchor-id="allocation-stratégique-strategic-asset-allocation">Allocation stratégique (Strategic Asset Allocation)</h3>
+<p>Les obligations jouent un rôle structurant dans l’<strong>allocation d’actifs</strong> (Asset Allocation) :</p>
+<ul>
+<li>Elles permettent d’ajuster le profil risque/rendement d’un portefeuille diversifié.</li>
+<li>La proportion d’obligations dans un portefeuille varie classiquement en fonction de l’<strong>horizon de placement</strong> et de l’<strong>aversion au risque</strong> de l’investisseur.</li>
+</ul>
+<p><strong>Investissement sur le cycle de vie</strong> (Life-Cycle Investing) : une règle empirique courante suggère d’augmenter la proportion d’obligations à mesure que l’investisseur vieillit :</p>
+<ul>
+<li><strong>Jeune investisseur</strong> → forte proportion d’actions (horizon long, tolérance au risque élevée).</li>
+<li><strong>Investisseur en retraite</strong> → forte proportion d’obligations (horizon court, besoin de revenus stables).</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les obligations apportent de la <strong>stabilité</strong> dans un portefeuille. Elles fonctionnent comme un amortisseur lors des périodes de turbulences sur les marchés actions, à condition que les taux ne montent pas brutalement en parallèle.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="points-clés-à-retenir-key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="points-clés-à-retenir-key-takeaways">Points clés à retenir (Key Takeaways)</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Résumé du chapitre">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Résumé du chapitre
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><span class="math inline">\(N\)</span> doit être <strong>impair</strong> (garantir une minorité stricte à chaque tour)</li>
-<li>Ne pas confondre <span class="math inline">\(2^M\)</span> (patterns) et <span class="math inline">\(2^{2^M}\)</span> (stratégies totales)</li>
-<li>Le score <span class="math inline">\(U\)</span> est <strong>virtuel</strong> : toutes les stratégies sont évaluées, même celles non jouées</li>
-<li><span class="math inline">\(\lambda \to \infty\)</span> : comportement déterministe pur (stratégie au score max)</li>
-<li>Zone optimale ≠ phase asymétrique — elle se situe <strong>juste avant</strong> <span class="math inline">\(\alpha_c\)</span></li>
+<li><p>Une <strong>obligation</strong> est un instrument de dette permettant à un émetteur d’emprunter et à un investisseur de prêter, avec une structure de flux définie contractuellement.</p></li>
+<li><p>Le <strong>prix</strong> d’une obligation est la valeur actualisée de ses flux futurs (coupons + principal), calculée à l’aide du <strong>rendement</strong> (yield).</p></li>
+<li><p>Le prix et le rendement entretiennent une relation <strong>inverse et convexe</strong> : quand les taux montent, les prix baissent.</p></li>
+<li><p>Le <strong>spread de crédit</strong> représente le surcoût d’emprunt d’un émetteur par rapport au taux souverain, reflétant son risque de crédit.</p></li>
+<li><p>La <strong>courbe des taux zéro-coupon</strong> est l’outil de référence pour comparer les obligations et actualiser des flux futurs de manière cohérente.</p></li>
+<li><p>L’<strong>algorithme Bootstrap</strong> permet de reconstruire la courbe des taux zéro-coupon à partir des prix d’obligations à coupons observés sur le marché.</p></li>
+<li><p>Les principaux risques liés aux obligations sont : risque de <strong>taux d’intérêt</strong>, risque de <strong>crédit</strong>, risque d’<strong>inflation</strong>, risque de <strong>liquidité</strong>, et risque de <strong>réinvestissement</strong>.</p></li>
+<li><p>Les obligations jouent un rôle essentiel dans un portefeuille diversifié : <strong>diversification</strong>, <strong>génération de revenus</strong>, <strong>préservation du capital</strong> et <strong>équilibre stratégique</strong>.</p></li>
 </ul>
 </div>
 </div>

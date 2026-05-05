@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Modèles basés sur les agents — Révision – Finance computationnelle</title>
+<title>Les Obligations — Révision – Finance computationnelle</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -7446,7 +7446,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch8.html">8. Modèles à base d’agents</a></li><li class="breadcrumb-item"><a href="./ch8r.html">Synthèse</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch11.html">11. Obligations - notions de base</a></li><li class="breadcrumb-item"><a href="./ch11r.html">Synthèse</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -7680,13 +7680,13 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
  <span class="menu-text">8. Modèles à base d’agents</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch8.html" class="sidebar-item-text sidebar-link">
@@ -7695,7 +7695,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch8r.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch8r.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Synthèse</span></a>
   </div>
 </li>
@@ -7767,13 +7767,13 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
  <span class="menu-text">11. Obligations - notions de base</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch11.html" class="sidebar-item-text sidebar-link">
@@ -7782,7 +7782,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch11r.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch11r.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Synthèse</span></a>
   </div>
 </li>
@@ -7893,18 +7893,21 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#approches-de-modélisation" id="toc-approches-de-modélisation" class="nav-link active" data-scroll-target="#approches-de-modélisation">Approches de modélisation</a></li>
-  <li><a href="#les-3-modèles-abm" id="toc-les-3-modèles-abm" class="nav-link" data-scroll-target="#les-3-modèles-abm">Les 3 modèles ABM</a></li>
-  <li><a href="#cont-bouchaud" id="toc-cont-bouchaud" class="nav-link" data-scroll-target="#cont-bouchaud">Cont-Bouchaud</a></li>
-  <li><a href="#lux-marchesi" id="toc-lux-marchesi" class="nav-link" data-scroll-target="#lux-marchesi">Lux-Marchesi</a></li>
-  <li><a href="#minority-game-paramètres" id="toc-minority-game-paramètres" class="nav-link" data-scroll-target="#minority-game-paramètres">Minority Game — Paramètres</a></li>
-  <li><a href="#minority-game-formules-clés" id="toc-minority-game-formules-clés" class="nav-link" data-scroll-target="#minority-game-formules-clés">Minority Game — Formules clés</a></li>
-  <li><a href="#minority-game-deux-phases" id="toc-minority-game-deux-phases" class="nav-link" data-scroll-target="#minority-game-deux-phases">Minority Game — Deux phases</a></li>
-  <li><a href="#minority-game-4-zones-de-volatilité" id="toc-minority-game-4-zones-de-volatilité" class="nav-link" data-scroll-target="#minority-game-4-zones-de-volatilité">Minority Game — 4 zones de volatilité</a></li>
-  <li><a href="#historique-mut-3-modes" id="toc-historique-mut-3-modes" class="nav-link" data-scroll-target="#historique-mut-3-modes">Historique <span class="math inline">\(\mu(t)\)</span> — 3 modes</a></li>
-  <li><a href="#algorithme-minority-game" id="toc-algorithme-minority-game" class="nav-link" data-scroll-target="#algorithme-minority-game">Algorithme Minority Game</a></li>
-  <li><a href="#relations-entre-concepts" id="toc-relations-entre-concepts" class="nav-link" data-scroll-target="#relations-entre-concepts">Relations entre concepts</a></li>
-  <li><a href="#points-critiques-pièges" id="toc-points-critiques-pièges" class="nav-link" data-scroll-target="#points-critiques-pièges">Points critiques / Pièges</a></li>
+  <li><a href="#définitions-essentielles" id="toc-définitions-essentielles" class="nav-link active" data-scroll-target="#définitions-essentielles">Définitions essentielles</a></li>
+  <li><a href="#formule-de-prix-clé" id="toc-formule-de-prix-clé" class="nav-link" data-scroll-target="#formule-de-prix-clé">Formule de prix (clé !)</a></li>
+  <li><a href="#prix-vs-valeur-nominale" id="toc-prix-vs-valeur-nominale" class="nav-link" data-scroll-target="#prix-vs-valeur-nominale">Prix vs valeur nominale</a></li>
+  <li><a href="#exemple-numérique-rapide" id="toc-exemple-numérique-rapide" class="nav-link" data-scroll-target="#exemple-numérique-rapide">Exemple numérique rapide</a></li>
+  <li><a href="#procédure-par-tâtonnement-trial-error" id="toc-procédure-par-tâtonnement-trial-error" class="nav-link" data-scroll-target="#procédure-par-tâtonnement-trial-error">Procédure par tâtonnement (Trial &amp; Error)</a></li>
+  <li><a href="#courbe-des-taux-zéro-coupon-bootstrap" id="toc-courbe-des-taux-zéro-coupon-bootstrap" class="nav-link" data-scroll-target="#courbe-des-taux-zéro-coupon-bootstrap">Courbe des taux zéro-coupon (Bootstrap)</a>
+  <ul class="collapse">
+  <li><a href="#formules-par-cas" id="toc-formules-par-cas" class="nav-link" data-scroll-target="#formules-par-cas">Formules par cas</a></li>
+  <li><a href="#résultat-exemple" id="toc-résultat-exemple" class="nav-link" data-scroll-target="#résultat-exemple">Résultat exemple</a></li>
+  </ul></li>
+  <li><a href="#types-dobligations" id="toc-types-dobligations" class="nav-link" data-scroll-target="#types-dobligations">Types d’obligations</a></li>
+  <li><a href="#risques-obligataires" id="toc-risques-obligataires" class="nav-link" data-scroll-target="#risques-obligataires">5 Risques obligataires</a></li>
+  <li><a href="#rôle-dans-un-portefeuille" id="toc-rôle-dans-un-portefeuille" class="nav-link" data-scroll-target="#rôle-dans-un-portefeuille">Rôle dans un portefeuille</a></li>
+  <li><a href="#synthèse-des-relations-clés" id="toc-synthèse-des-relations-clés" class="nav-link" data-scroll-target="#synthèse-des-relations-clés">Synthèse des relations clés</a></li>
+  <li><a href="#checklist-révision" id="toc-checklist-révision" class="nav-link" data-scroll-target="#checklist-révision">Checklist révision</a></li>
   </ul>
 </nav>
     </div>
@@ -7912,9 +7915,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch8.html">8. Modèles à base d’agents</a></li><li class="breadcrumb-item"><a href="./ch8r.html">Synthèse</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch11.html">11. Obligations - notions de base</a></li><li class="breadcrumb-item"><a href="./ch11r.html">Synthèse</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Modèles basés sur les agents — Révision</h1>
+<h1 class="title">Les Obligations — Révision</h1>
 </div>
 
 
@@ -7931,339 +7934,363 @@ window.Quarto = {
 </header>
 
 
-<section id="approches-de-modélisation" class="level2">
-<h2 class="anchored" data-anchor-id="approches-de-modélisation">Approches de modélisation</h2>
+<section id="définitions-essentielles" class="level2">
+<h2 class="anchored" data-anchor-id="définitions-essentielles">Définitions essentielles</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 38%">
+<col style="width: 61%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Approche</th>
-<th>Direction</th>
-<th>Principe</th>
+<th>Terme</th>
+<th>Définition</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Top-Down</td>
-<td>Descendante</td>
-<td>Équations globales → dynamique</td>
+<td><strong>Obligation</strong> (Bond)</td>
+<td>Instrument de dette : l’émetteur emprunte, l’investisseur prête</td>
 </tr>
 <tr class="even">
-<td>Bottom-Up / ABM</td>
-<td>Ascendante</td>
-<td>Règles locales → comportement émergent</td>
+<td><strong>Coupon</strong> (Coupon)</td>
+<td>Paiement périodique fixe = récompense du prêteur</td>
+</tr>
+<tr class="odd">
+<td><strong>Principal</strong> (Face Value)</td>
+<td>Montant remboursé à maturité</td>
+</tr>
+<tr class="even">
+<td><strong>Maturité</strong> (Maturity)</td>
+<td>Date de remboursement du principal</td>
+</tr>
+<tr class="odd">
+<td><strong>Rendement</strong> (Yield) <span class="math inline">\(y\)</span></td>
+<td>Taux de retour requis par l’investisseur</td>
+</tr>
+<tr class="even">
+<td><strong>Risque de défaut</strong> (Default Risk)</td>
+<td>Risque de non-remboursement partiel ou total</td>
+</tr>
+<tr class="odd">
+<td><strong>Credit Spread</strong></td>
+<td><span class="math inline">\(y_{\text{corporate}} - y_{\text{souverain}}\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Zéro-coupon</strong> (Zero Coupon)</td>
+<td>Obligation sans coupon, vendue en-dessous du pair</td>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+<hr>
+</section>
+<section id="formule-de-prix-clé" class="level2">
+<h2 class="anchored" data-anchor-id="formule-de-prix-clé">Formule de prix (clé !)</h2>
+<p><span class="math display">\[\boxed{B(t) = \sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)} + P \cdot e^{-y(T-t)}}\]</span></p>
+<ul>
+<li><span class="math inline">\(c_i\)</span> : coupon à <span class="math inline">\(t_i\)</span> — <span class="math inline">\(P\)</span> : principal — <span class="math inline">\(y\)</span> : yield — <span class="math inline">\(T\)</span> : maturité</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled" title="Relation prix ↔ yield">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>À retenir
+<span class="screen-reader-only">Important</span>Relation prix ↔︎ yield
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Un comportement microscopique simple → complexité macroscopique difficile à modéliser autrement. ABM ne reproduit pas <strong>tous</strong> les faits stylisés avec un seul modèle.</p>
+<p><strong>Inverse et convexe</strong> : <span class="math inline">\(y \uparrow \Rightarrow B \downarrow\)</span> et <span class="math inline">\(y \downarrow \Rightarrow B \uparrow\)</span></p>
 </div>
 </div>
 <hr>
 </section>
-<section id="les-3-modèles-abm" class="level2">
-<h2 class="anchored" data-anchor-id="les-3-modèles-abm">Les 3 modèles ABM</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Modèle</th>
-<th>Origine</th>
-<th>Focus</th>
-<th>Résultat clé</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Cont-Bouchaud</strong></td>
-<td>Physique</td>
-<td>Herding (moutonnier)</td>
-<td>Queues épaisses si <span class="math inline">\(a \ll 0.5\)</span></td>
-</tr>
-<tr class="even">
-<td><strong>Lux-Marchesi</strong></td>
-<td>Économie</td>
-<td>Fondamentalistes + Chartistes</td>
-<td>Queues épaisses, contradiction EMH</td>
-</tr>
-<tr class="odd">
-<td><strong>Minority Game</strong></td>
-<td>Physique</td>
-<td>Minorité gagne</td>
-<td>Phases, prédictabilité, analytique</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-<section id="cont-bouchaud" class="level2">
-<h2 class="anchored" data-anchor-id="cont-bouchaud">Cont-Bouchaud</h2>
-<p><strong>Mécanisme :</strong> clusters aléatoires → décision collective</p>
-<ul>
-<li>Vendre : proba <span class="math inline">\(a\)</span></li>
-<li>Acheter : proba <span class="math inline">\(a\)</span></li>
-<li>Rien : proba <span class="math inline">\(1 - 2a\)</span> (avec <span class="math inline">\(a \leq 0.5\)</span>)</li>
-</ul>
+<section id="prix-vs-valeur-nominale" class="level2">
+<h2 class="anchored" data-anchor-id="prix-vs-valeur-nominale">Prix vs valeur nominale</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Paramètre</th>
-<th>Distribution des rendements</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(a = 0.5\)</span></td>
-<td>Gaussienne (normale)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(a \ll 0.5\)</span></td>
-<td>Queues épaisses (Fat Tails)</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-<section id="lux-marchesi" class="level2">
-<h2 class="anchored" data-anchor-id="lux-marchesi">Lux-Marchesi</h2>
-<p><strong>2 types d’agents :</strong></p>
-<ul>
-<li><strong>Fondamentalistes</strong> : prix trop bas → achètent ; trop haut → vendent</li>
-<li><strong>Chartistes optimistes</strong> : suivent la tendance (Trend Followers)</li>
-<li><strong>Chartistes pessimistes</strong> : contre-tendance (Counter-Trend)</li>
-</ul>
-<div class="callout callout-style-default callout-warning callout-titled" title="Point critique">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Point critique
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Les agents peuvent <strong>changer de catégorie</strong> → dynamique endogène réaliste. <span class="math inline">\(\tau\)</span> petit = horizon journalier ; <span class="math inline">\(\tau\)</span> grand = horizon mensuel.</p>
-</div>
-</div>
-<hr>
-</section>
-<section id="minority-game-paramètres" class="level2">
-<h2 class="anchored" data-anchor-id="minority-game-paramètres">Minority Game — Paramètres</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Symbole</th>
-<th>Signification</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(N\)</span></td>
-<td>Nombre d’agents (toujours <strong>impair</strong>)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(M\)</span></td>
-<td>Longueur de l’historique (bits)</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(S\)</span></td>
-<td>Nombre de stratégies par agent</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(P = 2^M\)</span></td>
-<td>Nombre de patterns d’historique</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(2^{2^M}\)</span></td>
-<td>Nombre <strong>total</strong> de stratégies disponibles</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\alpha = P/N = 2^M/N\)</span></td>
-<td>Paramètre de contrôle</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-warning callout-titled" title="Piège : explosion combinatoire">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Piège : explosion combinatoire
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="math inline">\(M=5\)</span> → <span class="math inline">\(2^{32} \approx 4\)</span> milliards de stratégies. On stocke des <strong>vecteurs de bits</strong>, pas des indices.</p>
-</div>
-</div>
-<hr>
-</section>
-<section id="minority-game-formules-clés" class="level2">
-<h2 class="anchored" data-anchor-id="minority-game-formules-clés">Minority Game — Formules clés</h2>
-<p><strong>Sélection de stratégie (Softmax / Boltzmann) :</strong></p>
-<p><span class="math display">\[P(s_j^t) = \frac{\exp(\lambda\, U_{s_j}(t))}{\sum_{k=1}^{S} \exp(\lambda\, U_{s_k}(t))}\]</span></p>
-<ul>
-<li><span class="math inline">\(\lambda \to \infty\)</span> → stratégie au score maximal (déterministe)</li>
-</ul>
-<p><strong>Présence agrégée (Attendance) :</strong></p>
-<p><span class="math display">\[A(t) = \sum_{i=1}^{N} a_i^{\mu(t),\, s_i}\]</span></p>
-<p><strong>Mise à jour de l’utilité (Virtual Score) :</strong></p>
-<p><span class="math display">\[U_{i,s}(t+1) = U_{i,s}(t) - a_{i,s}^{\mu(t)} \cdot \frac{A(t)}{\beta}\]</span></p>
-<ul>
-<li><span class="math inline">\(\beta \in \{1,\, N,\, 2^M\}\)</span> — facteur de normalisation</li>
-<li>Score <strong>augmente</strong> si la stratégie était dans la <strong>minorité</strong></li>
-</ul>
-<p><strong>Prédictabilité (Predictability) :</strong></p>
-<p><span class="math display">\[H = \frac{1}{P} \sum_{\mu=0}^{2^M-1} \langle A|\mu \rangle^2\]</span></p>
-<p><strong>Prix / rendements :</strong></p>
-<p><span class="math display">\[r(t) = \frac{A(t)}{\lambda}, \qquad P(t) = P(t-1)\cdot\exp\!\left(\frac{A(t)}{\gamma}\right)\]</span></p>
-<hr>
-</section>
-<section id="minority-game-deux-phases" class="level2">
-<h2 class="anchored" data-anchor-id="minority-game-deux-phases">Minority Game — Deux phases</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Phase</th>
+<th>Situation</th>
 <th>Condition</th>
-<th><span class="math inline">\(H\)</span></th>
-<th><span class="math inline">\(P(1|\mu)\)</span></th>
-<th>Volatilité</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Symétrique</strong></td>
-<td><span class="math inline">\(\alpha &lt; \alpha_c\)</span></td>
-<td><span class="math inline">\(\approx 0\)</span></td>
-<td><span class="math inline">\(\approx 0.5\)</span> pour tout <span class="math inline">\(\mu\)</span></td>
-<td>Élevée (pire que hasard)</td>
-</tr>
-<tr class="even">
-<td><strong>Asymétrique</strong></td>
-<td><span class="math inline">\(\alpha &gt; \alpha_c\)</span></td>
-<td>Croît</td>
-<td>Variable selon <span class="math inline">\(\mu\)</span></td>
-<td>Faible (meilleure que hasard)</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><span class="math inline">\(\alpha_c \approx 0.3374\)</span> pour <span class="math inline">\(S=2\)</span></li>
-<li>Approximation générale : <span class="math inline">\(\alpha_c(S) \approx \alpha_{c,S=2} + \dfrac{S-2}{2}\)</span></li>
-<li><strong>Courbes maîtresses</strong> : pour <span class="math inline">\(S\)</span> fixé, les courbes <span class="math inline">\(\sigma^2/N\)</span> vs <span class="math inline">\(\alpha\)</span> coïncident pour tout <span class="math inline">\(N\)</span></li>
-</ul>
-<hr>
-</section>
-<section id="minority-game-4-zones-de-volatilité" class="level2">
-<h2 class="anchored" data-anchor-id="minority-game-4-zones-de-volatilité">Minority Game — 4 zones de volatilité</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Zone</th>
-<th>Phase</th>
-<th><span class="math inline">\(\sigma^2/N\)</span></th>
 <th>Cause</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td>Symétrique</td>
-<td><span class="math inline">\(&gt; 1\)</span> (pire)</td>
-<td>Trop d’agents, herding</td>
+<td><strong>Prime</strong> (Premium)</td>
+<td><span class="math inline">\(B &gt; 100\)</span></td>
+<td>Coupon &gt; taux marché</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>Symétrique (près de <span class="math inline">\(\alpha_c\)</span>)</td>
-<td><strong>Minimum</strong> (optimal)</td>
-<td>Équilibre info/agents</td>
+<td><strong>Au pair</strong> (At Par)</td>
+<td><span class="math inline">\(B = 100\)</span></td>
+<td>Coupon = taux marché</td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>Asymétrique</td>
-<td><span class="math inline">\(&lt; 1\)</span> (meilleur)</td>
-<td>Bonne diversification</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>Asymétrique (<span class="math inline">\(\alpha \gg \alpha_c\)</span>)</td>
-<td><span class="math inline">\(\approx 1\)</span> (hasard)</td>
-<td>Trop peu d’agents</td>
+<td><strong>Décote</strong> (Discount)</td>
+<td><span class="math inline">\(B &lt; 100\)</span></td>
+<td>Coupon &lt; taux marché</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Référence aléatoire :</strong> agents indépendants → <span class="math inline">\(\text{Var}(A) = N\)</span>, donc <span class="math inline">\(\sigma^2/N = 1\)</span></p>
 <hr>
 </section>
-<section id="historique-mut-3-modes" class="level2">
-<h2 class="anchored" data-anchor-id="historique-mut-3-modes">Historique <span class="math inline">\(\mu(t)\)</span> — 3 modes</h2>
-<ul>
-<li><strong>Aléatoire</strong> : <span class="math inline">\(\pi &lt; 0.5 \to 0\)</span>, sinon <span class="math inline">\(\to 1\)</span></li>
-<li><strong>Endogène</strong> : généré par la dynamique du modèle</li>
-<li><strong>Empirique</strong> : rendement <span class="math inline">\(&lt; 0 \to 0\)</span>, rendement <span class="math inline">\(&gt; 0 \to 1\)</span></li>
-</ul>
+<section id="exemple-numérique-rapide" class="level2">
+<h2 class="anchored" data-anchor-id="exemple-numérique-rapide">Exemple numérique rapide</h2>
+<blockquote class="blockquote">
+<p>Obligation : <span class="math inline">\(c = 5\)</span> CHF × 4 versements, <span class="math inline">\(P = 100\)</span>, <span class="math inline">\(y = 5\%\)</span></p>
+</blockquote>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Flux</th>
+<th>Valeur présente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(c_1\)</span> à <span class="math inline">\(t=0.5\)</span></td>
+<td><span class="math inline">\(5 \cdot e^{-0.05 \times 0.5} = 4.88\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(c_2\)</span> à <span class="math inline">\(t=1.0\)</span></td>
+<td><span class="math inline">\(5 \cdot e^{-0.05 \times 1.0} = 4.76\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(c_3\)</span> à <span class="math inline">\(t=1.5\)</span></td>
+<td><span class="math inline">\(5 \cdot e^{-0.05 \times 1.5} = 4.64\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(c_4\)</span> à <span class="math inline">\(t=2.0\)</span></td>
+<td><span class="math inline">\(5 \cdot e^{-0.05 \times 2.0} = 4.52\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(P\)</span> à <span class="math inline">\(t=2.0\)</span></td>
+<td><span class="math inline">\(100 \cdot e^{-0.05 \times 2.0} = 90.48\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong><span class="math inline">\(B = 109.28\)</span> → à prime</strong></td>
+</tr>
+</tbody>
+</table>
 <hr>
 </section>
-<section id="algorithme-minority-game" class="level2">
-<h2 class="anchored" data-anchor-id="algorithme-minority-game">Algorithme Minority Game</h2>
-<pre><code>INIT : choisir N, M, S, γ ; μ aléatoire ; S stratégies par agent (vecteurs 2^M bits)
-
-BOUCLE (T fois) :
-  1. A = Σ a_i          ← présence agrégée
-  2. U(t+1) = U(t) - a·A/β  ← mise à jour scores
-  3. Sélection stratégie active (argmax ou softmax)
-  4. Ajouter bit à μ, supprimer le plus vieux
-  5. p = p · exp(A/γ)   ← mise à jour prix</code></pre>
+<section id="procédure-par-tâtonnement-trial-error" class="level2">
+<h2 class="anchored" data-anchor-id="procédure-par-tâtonnement-trial-error">Procédure par tâtonnement (Trial &amp; Error)</h2>
+<p><strong>Objectif</strong> : trouver <span class="math inline">\(y\)</span> connaissant <span class="math inline">\(B\)</span> (problème inverse, pas de solution analytique).</p>
+<p><strong>Résidu</strong> :</p>
+<p><span class="math display">\[\text{résidu}(y) = B_{\text{observé}} - B_{\text{calculé}}(y)\]</span></p>
+<p><strong>Algorithme</strong> :</p>
+<ol type="1">
+<li>Partir de <span class="math inline">\(y\)</span> très élevé (<span class="math inline">\(y = 100\)</span>)</li>
+<li>Résidu <span class="math inline">\(&gt; 0\)</span> → <span class="math inline">\(y \leftarrow y/2\)</span></li>
+<li>Résidu <span class="math inline">\(&lt; 0\)</span> → <span class="math inline">\(y \leftarrow (y_{\text{précédent}} + y)/2\)</span></li>
+<li>Répéter jusqu’à <span class="math inline">\(|\text{résidu}| &lt; 10^{-3}\)</span></li>
+</ol>
 <hr>
 </section>
-<section id="relations-entre-concepts" class="level2">
-<h2 class="anchored" data-anchor-id="relations-entre-concepts">Relations entre concepts</h2>
+<section id="courbe-des-taux-zéro-coupon-bootstrap" class="level2">
+<h2 class="anchored" data-anchor-id="courbe-des-taux-zéro-coupon-bootstrap">Courbe des taux zéro-coupon (Bootstrap)</h2>
+<p><strong>Pourquoi ?</strong> Les rendements de coupons différents ne sont pas comparables → standard zéro-coupon.</p>
+<p><strong>Bootstrap — logique</strong> : extraire les taux zéro un par un, du plus court au plus long.</p>
+<section id="formules-par-cas" class="level3">
+<h3 class="anchored" data-anchor-id="formules-par-cas">Formules par cas</h3>
+<p><strong>Zéro-coupon court terme</strong> (0.25 an) :</p>
+<p><span class="math display">\[r_{0.25} = 4 \cdot \ln\!\left(1 + \frac{\text{gain trimestriel}}{4}\right)\]</span></p>
+<p><strong>Zéro-coupon 1 an</strong> :</p>
+<p><span class="math display">\[r_{1.0} = \ln\!\left(1 + \frac{P - B}{B}\right)\]</span></p>
+<p><strong>Avec coupons</strong> (1.5 an) : isoler <span class="math inline">\(r_{1.5}\)</span> dans :</p>
+<p><span class="math display">\[\sum_i c_i \cdot e^{-r_{t_i} \cdot t_i} + (P + c_{\text{last}}) \cdot e^{-r_{1.5} \cdot 1.5} = B\]</span></p>
+</section>
+<section id="résultat-exemple" class="level3">
+<h3 class="anchored" data-anchor-id="résultat-exemple">Résultat exemple</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Maturité (ans)</th>
+<th><span class="math inline">\(r\)</span> (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.25</td>
+<td>10.127</td>
+</tr>
+<tr class="even">
+<td>0.50</td>
+<td>10.469</td>
+</tr>
+<tr class="odd">
+<td>1.0</td>
+<td>10.536</td>
+</tr>
+<tr class="even">
+<td>1.5</td>
+<td>10.681</td>
+</tr>
+<tr class="odd">
+<td>2.0</td>
+<td>10.808</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="types-dobligations" class="level2">
+<h2 class="anchored" data-anchor-id="types-dobligations">Types d’obligations</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[Obligations] --&gt; B[État / Souveraines\nGovies / Treasuries]
+    A --&gt; C[Entreprises\nCorporate Bonds]
+    B --&gt; D[Meilleure notation AAA\nRendement le plus bas]
+    C --&gt; E[Investment Grade BBB+\nSpread modéré]
+    C --&gt; F[High Yield / Junk BB-\nSpread élevé]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Agences</strong> : S&amp;P (AAA → D) | Moody’s (Aaa → C) | Fitch (AAA → D)</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Formule clé">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Formule clé
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(y_{\text{corporate}} = y_{\text{souverain}} + \text{Credit Spread}\)</span></p>
+</div>
+</div>
+<hr>
+</section>
+<section id="risques-obligataires" class="level2">
+<h2 class="anchored" data-anchor-id="risques-obligataires">5 Risques obligataires</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 35%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Risque</th>
+<th>Mécanisme</th>
+<th>Protection</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Taux</strong> (Interest Rate)</td>
+<td><span class="math inline">\(y \uparrow \Rightarrow B \downarrow\)</span></td>
+<td>Duration courte</td>
+</tr>
+<tr class="even">
+<td><strong>Crédit</strong> (Credit)</td>
+<td>Défaut émetteur</td>
+<td>Notation élevée</td>
+</tr>
+<tr class="odd">
+<td><strong>Inflation</strong> (Inflation)</td>
+<td>Érosion pouvoir d’achat : <span class="math inline">\(r_{\text{réel}} = r_{\text{nom}} - \pi\)</span></td>
+<td>TIPS, or</td>
+</tr>
+<tr class="even">
+<td><strong>Liquidité</strong> (Liquidity)</td>
+<td>Vente à prix décotée</td>
+<td>Obligations liquides</td>
+</tr>
+<tr class="odd">
+<td><strong>Réinvestissement</strong> (Reinvestment)</td>
+<td>Coupons réinvestis à taux plus bas</td>
+<td>Éviter callables</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled" title="Piège — Callable Bonds">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Piège — Callable Bonds
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si les taux baissent → l’émetteur rappelle l’obligation → réinvestissement forcé à taux moindre.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="rôle-dans-un-portefeuille" class="level2">
+<h2 class="anchored" data-anchor-id="rôle-dans-un-portefeuille">Rôle dans un portefeuille</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rôle</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Diversification</strong></td>
+<td>Corrélation négative avec actions (sauf 2022 !)</td>
+</tr>
+<tr class="even">
+<td><strong>Revenus</strong></td>
+<td>Coupons réguliers et prévisibles</td>
+</tr>
+<tr class="odd">
+<td><strong>Préservation capital</strong></td>
+<td>Principal garanti à maturité (si pas de défaut)</td>
+</tr>
+<tr class="even">
+<td><strong>Allocation stratégique</strong></td>
+<td>Part croissante avec l’âge (life-cycle investing)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled" title="Exception 2022">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Exception 2022
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hausse brutale des taux → obligations <strong>et</strong> actions en baisse simultanément → corrélation <strong>positive</strong>.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="synthèse-des-relations-clés" class="level2">
+<h2 class="anchored" data-anchor-id="synthèse-des-relations-clés">Synthèse des relations clés</h2>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">graph LR
-  M[&quot;M (longueur historique)&quot;] --&gt; P[&quot;P = 2^M patterns&quot;]
-  P --&gt; alpha[&quot;α = P/N&quot;]
-  N[&quot;N (agents)&quot;] --&gt; alpha
-  alpha --&gt; phase[&quot;Phase : symétrique / asymétrique&quot;]
-  phase --&gt; H[&quot;Prédictabilité H&quot;]
-  phase --&gt; sigma[&quot;Volatilité σ²/N&quot;]
-  S[&quot;S (stratégies)&quot;] --&gt; alphac[&quot;α_c(S)&quot;]
-  alphac --&gt; phase
+    Y[Yield y ↑] --&gt;|inverse| B[Prix B ↓]
+    B --&gt;|bootstrap| ZC[Courbe zéro-coupon]
+    ZC --&gt;|référence| COMP[Comparaison obligations]
+    RISK[Risque émetteur ↑] --&gt;|+| CS[Credit Spread ↑]
+    CS --&gt;|+| Y
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -8272,27 +8299,17 @@ BOUCLE (T fois) :
 </div>
 <hr>
 </section>
-<section id="points-critiques-pièges" class="level2">
-<h2 class="anchored" data-anchor-id="points-critiques-pièges">Points critiques / Pièges</h2>
-<div class="callout callout-style-default callout-warning callout-titled" title="Pièges fréquents">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Pièges fréquents
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><span class="math inline">\(N\)</span> doit être <strong>impair</strong> (garantir une minorité stricte à chaque tour)</li>
-<li>Ne pas confondre <span class="math inline">\(2^M\)</span> (patterns) et <span class="math inline">\(2^{2^M}\)</span> (stratégies totales)</li>
-<li>Le score <span class="math inline">\(U\)</span> est <strong>virtuel</strong> : toutes les stratégies sont évaluées, même celles non jouées</li>
-<li><span class="math inline">\(\lambda \to \infty\)</span> : comportement déterministe pur (stratégie au score max)</li>
-<li>Zone optimale ≠ phase asymétrique — elle se situe <strong>juste avant</strong> <span class="math inline">\(\alpha_c\)</span></li>
+<section id="checklist-révision" class="level2">
+<h2 class="anchored" data-anchor-id="checklist-révision">Checklist révision</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Je sais calculer <span class="math inline">\(B(t)\)</span> à partir de <span class="math inline">\(y\)</span>, <span class="math inline">\(c_i\)</span>, <span class="math inline">\(P\)</span>, <span class="math inline">\(T\)</span></label></li>
+<li><label><input type="checkbox">Je sais interpréter prime / décote / au pair</label></li>
+<li><label><input type="checkbox">Je comprends l’algorithme Trial &amp; Error (sens de la recherche)</label></li>
+<li><label><input type="checkbox">Je sais appliquer le Bootstrap sur un exemple à coupons</label></li>
+<li><label><input type="checkbox">Je connais les 5 risques et leurs protections</label></li>
+<li><label><input type="checkbox">Je sais que <span class="math inline">\(y_{\text{corp}} = y_{\text{gouv}} + \text{spread}\)</span></label></li>
+<li><label><input type="checkbox">Je comprends pourquoi 2022 a cassé la diversification</label></li>
 </ul>
-</div>
-</div>
 
 
 </section>
