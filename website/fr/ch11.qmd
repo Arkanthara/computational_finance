@@ -1,0 +1,562 @@
+---
+title: "Les Obligations — Fondamentaux (Bonds - Basics)"
+---
+
+## Introduction aux obligations
+
+### Qu'est-ce qu'une obligation ?
+
+Une **obligation** (Bond) est un instrument financier servant à **emprunter ou prêter de l'argent**. Elle établit une relation contractuelle entre deux parties :
+
+- **L'émetteur** (Issuer) : l'institution X qui émet l'obligation pour recevoir des fonds.
+- **L'acheteur** (Bondholder) : l'investisseur Y qui prête de l'argent en échange d'un rendement.
+
+L'obligation remplit ainsi deux fonctions complémentaires :
+
+- Fournir des **liquidités** à l'émetteur.
+- Offrir un **rendement** à l'investisseur en contrepartie du risque qu'il accepte.
+
+### Structure d'une obligation
+
+La structure d'une obligation est définie par un **contrat fixe** qui ne change pas au cours de la vie de l'obligation. Elle comprend :
+
+- Le **coupon** (Coupon) : paiements périodiques versés à l'investisseur, représentant la récompense pour avoir prêté de l'argent.
+- La **valeur nominale** ou **principal** (Face Value / Principal) : montant remboursé à l'investisseur à l'échéance (Maturity).
+- La **maturité** (Maturity) : date à laquelle le principal est remboursé.
+- La **fréquence des coupons** : semestrielle, annuelle, etc.
+
+::: {.callout-note title="À retenir"}
+Le contrat d'une obligation est immuable : les montants et les dates de paiement sont définis à l'émission et ne varient pas.
+:::
+
+### Le risque de défaut (Default Risk)
+
+Le **risque de défaut** (Default Risk) est le risque que l'émetteur ne soit pas en mesure de rembourser intégralement ses dettes. En cas de faillite :
+
+- L'investisseur peut ne récupérer qu'une **fraction** du montant prêté.
+- Le montant récupéré est appelé **taux de recouvrement** (Recovery Rate).
+
+Le coupon est directement lié à ce risque : plus l'émetteur est risqué, plus le coupon doit être élevé pour compenser l'investisseur. On parle de **risque de crédit** (Credit Risk).
+
+::: {.callout-tip title="Intuition"}
+Pensez à une obligation comme à un prêt bancaire formalisé et négociable sur un marché. L'émetteur joue le rôle de l'emprunteur, l'acheteur de l'obligation joue le rôle de la banque. Le coupon correspond aux intérêts périodiques, et le principal correspond au capital remboursé en fin de prêt.
+:::
+
+### Exemple historique
+
+Les premières obligations physiques comportaient des **coupons numérotés**, littéralement découpables, que le porteur présentait pour recevoir son paiement. L'exemple de la Magee Realty Corporation (1923–1943) illustre ce principe :
+
+- Deux coupons par an, en juin et en décembre.
+- Chaque coupon indiquait précisément la date et le montant à percevoir.
+- Le contrat était entièrement transparent et non ambigu.
+
+Cette structure physique est à l'origine du terme « coupon » encore utilisé aujourd'hui dans la finance moderne.
+
+---
+
+## Valorisation d'une obligation (Valuation)
+
+### Principe général
+
+La **valorisation** d'une obligation repose sur le calcul de la **valeur présente** (Present Value) de l'ensemble des flux de trésorerie futurs (coupons + principal).
+
+La structure des flux est **fixe** (définie par le contrat), mais le **prix** de l'obligation évolue selon les conditions de marché. Le prix B(t) constitue le **degré de liberté** du système.
+
+La relation fondamentale est :
+
+$$
+B(t) = \sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)} + P \cdot e^{-y(T - t)}
+$$
+
+où :
+
+- $c_i$ : coupon versé à la date $t_i$
+- $P$ : principal (valeur nominale)
+- $T$ : maturité
+- $y$ : rendement requis (Yield)
+- $t$ : date courante
+
+### Exemple de valorisation pas à pas
+
+Considérons une obligation émise par X avec les caractéristiques suivantes :
+
+- Coupon $c_i = 5$ CHF, versé 2 fois par an pendant 2 ans.
+- Principal $P = 100$ CHF.
+- Rendement requis $y = 5\%$.
+
+Les dates de paiement sont $t_1 = 0.5$, $t_2 = 1.0$, $t_3 = 1.5$, $t_4 = 2.0$ ans.
+
+#### Calcul des valeurs présentes des coupons
+
+On actualise chaque coupon à la date courante $t_0 = 0$ :
+
+$$c_1(t_0) = 5 \cdot e^{-0.05 \times 0.5} = 4.88 \text{ CHF}$$
+
+$$c_2(t_0) = 5 \cdot e^{-0.05 \times 1.0} = 4.76 \text{ CHF}$$
+
+$$c_3(t_0) = 5 \cdot e^{-0.05 \times 1.5} = 4.64 \text{ CHF}$$
+
+$$c_4(t_0) = 5 \cdot e^{-0.05 \times 2.0} = 4.52 \text{ CHF}$$
+
+#### Calcul de la valeur présente du principal
+
+$$P(t_0) = 100 \cdot e^{-0.05 \times 2.0} = 90.48 \text{ CHF}$$
+
+#### Prix de l'obligation
+
+$$B(t_0) = 4.88 + 4.76 + 4.64 + 4.52 + 90.48 = \mathbf{109.28 \text{ CHF}}$$
+
+::: {.callout-tip title="Intuition"}
+L'essentiel de la valeur d'une obligation réside dans le remboursement du principal ($90.48$ sur $109.28$), soit environ 83% du prix total. Les coupons représentent la part complémentaire. C'est pourquoi les variations de taux d'intérêt ont un impact si significatif sur les prix obligataires.
+:::
+
+### Notion de prime, décote et parité (Premium, Discount, Par)
+
+Le prix d'une obligation se compare à sa valeur nominale (par, généralement 100) :
+
+| Situation | Condition | Signification |
+|-----------|-----------|---------------|
+| **Au-dessus du pair** (Premium) | $B > 100$ | Le coupon est supérieur au rendement du marché |
+| **Au pair** (At Par) | $B = 100$ | Le coupon est égal au rendement du marché |
+| **En-dessous du pair** (Discount) | $B < 100$ | Le coupon est inférieur au rendement du marché |
+
+Dans notre exemple, $B = 109.28 > 100$ : l'obligation se vend **à prime** (at a premium), car le coupon de 5 CHF est attractif par rapport au rendement de marché de 5%.
+
+::: {.callout-note title="À retenir"}
+Le prix d'une obligation est la valeur actualisée de tous ses flux futurs. La relation entre prix et rendement est **inverse** : quand les taux montent, les prix baissent, et inversement.
+:::
+
+---
+
+## Procédure par tâtonnement (Trial and Error Procedure)
+
+### Problème inverse : trouver le rendement à partir du prix
+
+La formule de valorisation permet de calculer B(t) connaissant $y$. Mais en pratique, on observe le **prix de marché** B(t) et on cherche le **rendement implicite** $y$ correspondant.
+
+Ce problème n'a pas de solution analytique fermée : on utilise une **procédure itérative** (Trial and Error), aussi appelée méthode de bissection ou de recherche numérique.
+
+### Algorithme de tâtonnement
+
+L'idée est de définir un **résidu** (résidu = écart entre le prix observé et le prix calculé pour un $y$ donné) et de l'annuler :
+
+$$\text{résidu}(y) = B_{\text{observé}} - \left[\sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t_0)} + 100 \cdot e^{-y(T - t_0)}\right]$$
+
+L'algorithme procède ainsi :
+
+1. Partir d'un **rendement initial très élevé** (ex. $y = 100$).
+2. Calculer le résidu.
+3. Si le résidu est positif (prix calculé trop bas) → **diviser $y$ par 2**.
+4. Si le résidu est négatif (prix calculé trop élevé) → **faire la moyenne** entre le $y$ actuel et le $y$ précédent.
+5. Répéter jusqu'à ce que $|\text{résidu}| < \epsilon$ (ex. $10^{-3}$).
+
+### Implémentation Python
+
+```python
+# Calcul du résidu entre le prix observé et le prix théorique
+def compute_residual(y, B):
+    return B - np.sum(c * np.exp(-y * (t - t0))) - 100 * np.exp(-y * (T - t0))
+
+def trial_and_error(B):
+    # Démarrage avec un rendement élevé
+    last_y = 100
+    y = 100
+
+    residual = 1
+    while np.abs(residual) > 1e-3:
+        y_stored = y
+        # Si résidu positif : y trop élevé → diviser par 2
+        if residual > 0:
+            y = y / 2
+        # Si résidu négatif : y trop faible → interpoler avec le précédent
+        else:
+            while residual < 0:
+                y = (last_y + y) * 0.5
+                residual = compute_residual(y, B)
+        last_y = y_stored
+        residual = compute_residual(y, B)
+
+    return y
+```
+
+### Vérification sur l'exemple
+
+Pour l'obligation de prix $B = 109.28$ CHF :
+
+```python
+t0 = 0
+t = np.array([0.5, 1, 1.5, 2])
+c = np.array([5, 5, 5, 5])
+T = t[-1]
+B = 109.28
+
+y = trial_and_error(B)
+print(f'Trial and error : y={y*100:.2f}%')
+# → Trial and error : y=5.00%
+```
+
+On retrouve bien le rendement de 5% utilisé pour calculer le prix, ce qui valide la procédure.
+
+::: {.callout-tip title="Intuition"}
+La procédure par tâtonnement est une **méthode de bissection** adaptée : elle encadre progressivement la solution en réduisant l'intervalle de recherche à chaque itération. C'est un algorithme convergent, robuste, et facile à implémenter.
+:::
+
+---
+
+## Relation entre rendement et prix (Yield-Price Relationship)
+
+### Une relation inverse et convexe
+
+La relation entre le rendement $y$ et le prix $B$ d'une obligation est **inversement proportionnelle** :
+
+- Quand $y$ augmente → $B$ diminue.
+- Quand $y$ diminue → $B$ augmente.
+
+Cette relation n'est cependant **pas linéaire** : on observe une **convexité** (Convexity), c'est-à-dire une courbure dans la courbe prix-rendement.
+
+### Conséquences pratiques
+
+| Événement de marché | Impact sur le rendement | Impact sur le prix |
+|---------------------|-------------------------|--------------------|
+| Hausse des taux d'intérêt | $y$ augmente | $B$ diminue → **perte** pour l'investisseur |
+| Baisse des taux d'intérêt | $y$ diminue | $B$ augmente → **gain** pour l'investisseur |
+
+::: {.callout-important title="Risque de taux"}
+Une hausse des taux d'intérêt entraîne une perte **immédiate** en capital pour les détenteurs d'obligations. Cependant, cette perte est **compensée à terme** si l'investisseur conserve l'obligation jusqu'à maturité ou réinvestit les coupons au nouveau taux plus élevé.
+:::
+
+### La convexité : un avantage asymétrique
+
+La courbure de la relation prix-rendement a une implication favorable pour l'investisseur :
+
+- Pour une même variation de rendement, la **hausse de prix** lors d'une baisse de taux est **plus grande** que la **baisse de prix** lors d'une hausse de taux.
+- Cette propriété est appelée **convexité positive** et est valorisée par les investisseurs.
+
+::: {.callout-tip title="Intuition"}
+Imaginez une courbe légèrement incurvée vers le haut. Si vous mesurez la pente en deux points symétriques autour du centre, la montée à gauche est plus raide que la descente à droite. C'est exactement ce que fait la convexité obligataire : elle protège partiellement l'investisseur contre les hausses de taux.
+:::
+
+---
+
+## Rendement zéro-coupon (Zero Coupon Yield)
+
+### Problème de comparabilité des rendements
+
+Les rendements calculés à partir d'obligations à coupons dépendent de la **structure des coupons** (montant, fréquence). Deux obligations avec des structures de coupons différentes ne sont donc pas directement comparables sur la base de leur rendement brut.
+
+**Solution** : normaliser sur une base commune, le **standard zéro-coupon** (Zero Coupon Standard).
+
+### L'obligation zéro-coupon (Zero Coupon Bond)
+
+Une obligation **zéro-coupon** (Zero Coupon Bond) est une obligation qui :
+
+- Ne verse **aucun coupon** pendant sa vie.
+- Rembourse uniquement le **principal** à maturité.
+- Se négocie donc en-dessous du pair (à escompte).
+
+Le rendement zéro-coupon pour une maturité $\tau$ est noté $r_\tau$ et satisfait :
+
+$$P \cdot e^{-r_\tau \cdot \tau} = B_{\text{zéro-coupon}}$$
+
+### La courbe des taux zéro-coupon (Zero Coupon Yield Curve)
+
+En représentant les rendements zéro-coupon en fonction de la maturité, on obtient la **courbe des taux** (Yield Curve) :
+
+```{mermaid}
+graph LR
+    A["Maturité courte\n(0.25 an)"] --> B["Maturité moyenne\n(1 an)"] --> C["Maturité longue\n(2 ans)"]
+    style A fill:#d4e6f1
+    style B fill:#a9cce3
+    style C fill:#7fb3d3
+```
+
+En théorie, la courbe des taux possède les propriétés suivantes :
+
+- Les taux **croissent avec la maturité** (prime de terme).
+- La courbe est **lisse et régulière**.
+
+En pratique, cela peut être très différent : inversions de courbe, bosses, ruptures, etc.
+
+::: {.callout-note title="À retenir"}
+La courbe des taux zéro-coupon est l'outil de référence pour comparer les obligations et actualiser des flux futurs, quelle que soit leur structure de coupon.
+:::
+
+---
+
+## Algorithme Bootstrap (Bootstrap Algorithm)
+
+### Problème : les zéro-coupons ne sont pas tous échangés
+
+Dans la réalité, les obligations zéro-coupon ne couvrent pas toutes les maturités. On ne peut donc pas lire directement les taux zéro-coupon sur le marché pour chaque maturité. Il faut les **reconstruire** à partir des prix d'obligations à coupons observables.
+
+L'**algorithme Bootstrap** permet d'extraire la courbe des taux zéro-coupon à partir de données de marché observables.
+
+### Données d'entrée
+
+Considérons les données de marché suivantes (obligations d'État américaines) :
+
+| Principal (USD) | Maturité (ans) | Coupon annuel semestriel (USD) | Prix (USD) |
+|-----------------|----------------|-------------------------------|------------|
+| 100 | 0.25 | 0 | 97.5 |
+| 100 | 0.50 | 0 | 94.9 |
+| 100 | 1.0 | 0 | 90.0 |
+| 100 | 1.5 | 8 | 96.0 |
+| 100 | 2.0 | 12 | 101.6 |
+
+### Étape 1 : Maturité 3 mois ($\tau = 0.25$)
+
+L'obligation est à zéro-coupon. Le rendement trimestriel est :
+
+$$\frac{4 \times 2.5}{97.5} = 10.256\%$$
+
+(On multiplie par 4 car il y a 4 trimestres par an, et le gain est de $100 - 97.5 = 2.5$.)
+
+On annualise en passant au taux continu :
+
+$$r_{0.25} = 4 \cdot \ln\left(1 + \frac{0.10256}{4}\right) = \mathbf{10.127\%}$$
+
+### Étape 2 : Maturité 6 mois ($\tau = 0.50$)
+
+Le rendement semestriel est :
+
+$$\frac{2 \times 5.1}{94.9} = 10.748\%$$
+
+(Le gain est de $100 - 94.9 = 5.1$, annualisé sur deux semestres.)
+
+Taux continu annuel :
+
+$$r_{0.50} = 2 \cdot \ln\left(1 + \frac{0.10748}{2}\right) = \mathbf{10.469\%}$$
+
+### Étape 3 : Maturité 1 an ($\tau = 1.0$)
+
+Obligation zéro-coupon :
+
+$$r_{1.0} = \ln\left(1 + \frac{10}{90}\right) = \mathbf{10.536\%}$$
+
+### Étape 4 : Maturité 1.5 ans ($\tau = 1.5$) — avec coupons
+
+L'obligation verse des coupons semestriels de $8/2 = 4$ USD, puis 104 USD à l'échéance.
+
+On connaît déjà $r_{0.5}$ et $r_{1.0}$. On peut donc écrire :
+
+$$4 \cdot e^{-0.10469 \times 0.5} + 4 \cdot e^{-0.10536 \times 1.0} + 104 \cdot e^{-r_{1.5} \times 1.5} = 96$$
+
+En résolvant pour $r_{1.5}$ :
+
+$$e^{-r_{1.5} \times 1.5} = 0.85196 \implies r_{1.5} = \mathbf{10.681\%}$$
+
+### Étape 5 : Maturité 2 ans ($\tau = 2.0$)
+
+En appliquant la même logique avec les taux $r_{0.5}$, $r_{1.0}$, $r_{1.5}$ déjà calculés :
+
+$$r_{2.0} = \mathbf{10.808\%}$$
+
+### Résultat : la courbe des taux zéro-coupon
+
+| Maturité (ans) | Taux zéro-coupon (%) |
+|----------------|----------------------|
+| 0.25 | 10.127 |
+| 0.50 | 10.469 |
+| 1.0 | 10.536 |
+| 1.5 | 10.681 |
+| 2.0 | 10.808 |
+
+La courbe est **croissante avec la maturité**, ce qui est cohérent avec la théorie (prime de terme).
+
+::: {.callout-tip title="Intuition"}
+Le Bootstrap fonctionne comme une déduction en cascade : on commence par les maturités les plus courtes (pour lesquelles on a directement le taux zéro-coupon), puis on remonte vers les maturités plus longues en utilisant les taux déjà calculés pour isoler l'inconnue restante.
+:::
+
+::: {.callout-warning title="Limites pratiques"}
+La procédure Bootstrap doit être **répétée régulièrement** car les prix de marché évoluent en permanence. Cette mise à jour continue peut être fastidieuse. De plus, la courbe des taux réelle peut présenter des irrégularités (non-monotonicité, discontinuités) qui compliquent l'interpolation entre les maturités observées.
+:::
+
+---
+
+## Types d'obligations (Types of Bonds)
+
+### Obligations d'État et obligations d'entreprise
+
+On distingue principalement deux grandes catégories :
+
+- **Obligations d'État** (Government Bonds / Sovereigns / Govies / Treasuries) : émises par des gouvernements ou des banques centrales. Elles bénéficient généralement des meilleures notations (AAA) car le risque de défaut souverain est très faible.
+- **Obligations d'entreprise** (Corporate Bonds) : émises par des sociétés privées. Elles comportent un risque de crédit plus élevé et offrent donc des rendements supérieurs.
+
+### L'écart de crédit (Credit Spread)
+
+Le **spread de crédit** (Credit Spread) est la différence entre le rendement d'une obligation d'entreprise et celui d'une obligation d'État de même maturité :
+
+$$y_{\text{corporate}} = y_{\text{souverain}} + \text{Credit Spread}$$
+
+Il quantifie le **surcoût d'emprunt** lié au risque de crédit de l'émetteur.
+
+::: {.callout-tip title="Intuition"}
+Le taux souverain constitue un **plancher** : toute obligation d'entreprise doit offrir au minimum ce taux, plus une prime de risque. Plus l'émetteur est risqué, plus cette prime est élevée.
+:::
+
+### Agences de notation (Credit Rating Agencies)
+
+Les agences de notation évaluent la qualité de crédit des émetteurs :
+
+| Agence | Meilleure note | Plus mauvaise note | Seuil Investment Grade |
+|--------|----------------|-------------------|------------------------|
+| S&P | AAA | D | BBB- |
+| Moody's | Aaa | C | Baa3 |
+| Fitch | AAA | D | BBB- |
+
+Ces notations peuvent **évoluer au cours de la vie de l'obligation**, ce qui est l'une des raisons pour lesquelles le credit spread peut s'élargir (widening) ou se rétrécir (tightening).
+
+::: {.callout-important title="Point clé"}
+Les agences de notation n'incorporent **pas les considérations ESG** (Environnement, Social, Gouvernance) dans leurs notes. Ces aspects font l'objet d'évaluations séparées.
+:::
+
+### Hiérarchie des rendements par notation
+
+La relation entre notation et rendement est claire :
+
+- **AAA (État)** → rendement le plus bas, risque le plus faible.
+- **AA → A → BBB (Investment Grade)** → rendements progressivement plus élevés.
+- **BB et en-dessous (High Yield / Junk Bonds)** → rendements très élevés, risque élevé.
+
+Dès qu'une obligation perd le statut **Investment Grade** (dégradation en dessous de BBB-), le coût d'emprunt augmente **significativement**, car beaucoup d'investisseurs institutionnels ne peuvent plus détenir ces titres dans leurs portefeuilles.
+
+### Impact des décisions de banque centrale
+
+Une variation des taux directeurs des banques centrales (ex. Fed, BCE) affecte directement les taux souverains, et donc **par ricochet** tous les taux corporate via la structure :
+
+$$\Delta y_{\text{corporate}} \approx \Delta y_{\text{souverain}} + \Delta \text{Credit Spread}$$
+
+---
+
+## Risques associés aux obligations (Risks)
+
+### Risque de taux d'intérêt (Interest Rate Risk)
+
+**Définition** : risque que les variations de taux d'intérêt affectent la valeur de l'obligation.
+
+**Mécanisme** : la relation inverse entre prix et rendement implique que toute hausse de taux entraîne une baisse de prix.
+
+**Sensibilité** : les obligations à **longue maturité** (long duration) sont **plus sensibles** aux variations de taux que les obligations courtes. Intuitivement, un taux plus élevé impacte davantage les flux lointains (forte actualisation).
+
+::: {.callout-note title="À retenir"}
+La **duration** (durée de sensibilité) est la mesure clé du risque de taux. Elle sera étudiée en détail dans le prochain chapitre.
+:::
+
+### Risque de crédit (Credit Risk)
+
+**Définition** : risque que l'émetteur ne puisse pas honorer ses obligations de paiement (coupons et/ou principal).
+
+**Mesure** : les notations des agences (Moody's, S&P, Fitch) constituent un indicateur de probabilité de défaut.
+
+**Compensation** : un risque de crédit plus élevé se traduit par un **spread de crédit** plus élevé, et donc un rendement plus attractif pour l'investisseur.
+
+### Risque d'inflation (Inflation Risk)
+
+**Définition** : risque que l'inflation érode le pouvoir d'achat des flux futurs de l'obligation.
+
+**Impact** : le **rendement réel** est la différence entre rendement nominal et inflation :
+
+$$r_{\text{réel}} \approx r_{\text{nominal}} - \pi$$
+
+où $\pi$ est le taux d'inflation.
+
+**Protection** : certaines obligations sont indexées sur l'inflation, comme les **TIPS** (Treasury Inflation-Protected Securities) américains, dont le principal est ajusté à l'inflation. L'or et les matières premières constituent également des couvertures contre l'inflation.
+
+::: {.callout-warning title="Risque spécifique aux obligations à coupon fixe"}
+Une obligation à coupon fixe est particulièrement vulnérable à une hausse d'inflation imprévue : les paiements fixes perdent en valeur réelle, tandis que le principal remboursé à maturité vaut moins en termes de pouvoir d'achat.
+:::
+
+### Risque de liquidité (Liquidity Risk)
+
+**Définition** : risque qu'un investisseur ne puisse pas céder son obligation rapidement au prix de marché juste.
+
+**Causes** : le marché de certaines obligations peut être peu actif (faible volume d'échanges), notamment pour des émissions de petite taille ou des obligations de secteurs de niche.
+
+**Conséquences** : l'investisseur devra accepter une **décote de liquidité** (liquidity discount) pour trouver un acheteur, ce qui réduit son rendement effectif.
+
+### Risque de réinvestissement (Reinvestment Risk)
+
+**Définition** : risque que les flux de trésorerie reçus (coupons, principal) soient réinvestis à un taux inférieur au taux initial.
+
+**Cas particulier — obligations callables** (Callable Bonds) : une obligation callable donne le droit à l'émetteur de la **rembourser avant maturité**. Si les taux baissent, l'émetteur exercera ce droit et remboursera l'obligation, forçant l'investisseur à réinvestir dans un environnement de taux moins favorable.
+
+**Exemple** : Apple Inc. pourrait émettre une obligation callable pour financer un projet. Si les taux baissent par la suite, Apple remboursera l'obligation et réémettra de la dette à moindre coût. L'investisseur initial subit alors un risque de réinvestissement.
+
+::: {.callout-tip title="Intuition"}
+Le risque de réinvestissement est l'envers du risque de taux : si une hausse de taux pénalise le prix des obligations, elle bénéficie au réinvestissement des coupons. Inversement, une baisse de taux fait monter les prix mais dégrade les conditions de réinvestissement.
+:::
+
+---
+
+## Rôle des obligations dans un portefeuille (Role in Portfolio)
+
+### Diversification (Diversification)
+
+Les obligations jouent un rôle central dans la **diversification** d'un portefeuille d'investissement.
+
+**Réduction du risque global** : en combinant des actifs dont les rendements sont peu corrélés (ou négativement corrélés), on réduit la volatilité du portefeuille sans nécessairement sacrifier le rendement attendu.
+
+**Corrélation avec les actions** : historiquement, les obligations ont une corrélation **négative ou faible** avec les actions. Lorsque les marchés actions chutent (crise, récession), les investisseurs se réfugient vers les obligations souveraines de qualité, ce qui fait monter leurs prix.
+
+::: {.callout-important title="Exception notable — 2022"}
+En 2022, les banques centrales ont massivement relevé leurs taux directeurs pour lutter contre l'inflation. Actions **et** obligations ont simultanément chuté, rendant la corrélation **positive**. Cela illustre que la diversification via les obligations n'est pas inconditionnelle : elle peut défaillir en contexte de hausse rapide des taux.
+:::
+
+### Génération de revenus (Income Generation)
+
+Les obligations fournissent des **paiements d'intérêts réguliers** :
+
+- Les coupons constituent une **source de revenus prévisible** et stable.
+- Cette caractéristique est particulièrement appréciée des investisseurs institutionnels (fonds de pension, assureurs) qui ont des engagements de paiement fixes à honorer.
+- Pour les investisseurs individuels en phase de retraite, les obligations offrent un flux de revenus régulier sans nécessiter la vente d'actifs.
+
+### Préservation du capital (Capital Preservation)
+
+Les obligations de haute qualité (gouvernements AAA) constituent des **investissements défensifs** :
+
+- À maturité et en l'absence de défaut, l'investisseur récupère intégralement son principal.
+- Elles sont particulièrement adaptées aux investisseurs **averses au risque** ou en phase de liquidation de portefeuille.
+
+::: {.callout-note title="À retenir"}
+La préservation du capital est garantie uniquement si l'obligation est détenue jusqu'à maturité et que l'émetteur ne fait pas défaut. Une vente avant maturité expose l'investisseur au risque de prix (taux d'intérêt).
+:::
+
+### Allocation stratégique (Strategic Asset Allocation)
+
+Les obligations jouent un rôle structurant dans l'**allocation d'actifs** (Asset Allocation) :
+
+- Elles permettent d'ajuster le profil risque/rendement d'un portefeuille diversifié.
+- La proportion d'obligations dans un portefeuille varie classiquement en fonction de l'**horizon de placement** et de l'**aversion au risque** de l'investisseur.
+
+**Investissement sur le cycle de vie** (Life-Cycle Investing) : une règle empirique courante suggère d'augmenter la proportion d'obligations à mesure que l'investisseur vieillit :
+
+- **Jeune investisseur** → forte proportion d'actions (horizon long, tolérance au risque élevée).
+- **Investisseur en retraite** → forte proportion d'obligations (horizon court, besoin de revenus stables).
+
+::: {.callout-tip title="Intuition"}
+Les obligations apportent de la **stabilité** dans un portefeuille. Elles fonctionnent comme un amortisseur lors des périodes de turbulences sur les marchés actions, à condition que les taux ne montent pas brutalement en parallèle.
+:::
+
+---
+
+## Points clés à retenir (Key Takeaways)
+
+::: {.callout-note title="Résumé du chapitre"}
+
+- Une **obligation** est un instrument de dette permettant à un émetteur d'emprunter et à un investisseur de prêter, avec une structure de flux définie contractuellement.
+
+- Le **prix** d'une obligation est la valeur actualisée de ses flux futurs (coupons + principal), calculée à l'aide du **rendement** (yield).
+
+- Le prix et le rendement entretiennent une relation **inverse et convexe** : quand les taux montent, les prix baissent.
+
+- Le **spread de crédit** représente le surcoût d'emprunt d'un émetteur par rapport au taux souverain, reflétant son risque de crédit.
+
+- La **courbe des taux zéro-coupon** est l'outil de référence pour comparer les obligations et actualiser des flux futurs de manière cohérente.
+
+- L'**algorithme Bootstrap** permet de reconstruire la courbe des taux zéro-coupon à partir des prix d'obligations à coupons observés sur le marché.
+
+- Les principaux risques liés aux obligations sont : risque de **taux d'intérêt**, risque de **crédit**, risque d'**inflation**, risque de **liquidité**, et risque de **réinvestissement**.
+
+- Les obligations jouent un rôle essentiel dans un portefeuille diversifié : **diversification**, **génération de revenus**, **préservation du capital** et **équilibre stratégique**.
+
+:::

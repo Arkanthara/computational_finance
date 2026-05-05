@@ -1,0 +1,177 @@
+---
+title: "Les Obligations — Révision"
+---
+
+## Définitions essentielles
+
+| Terme | Définition |
+|-------|-----------|
+| **Obligation** (Bond) | Instrument de dette : l'émetteur emprunte, l'investisseur prête |
+| **Coupon** (Coupon) | Paiement périodique fixe = récompense du prêteur |
+| **Principal** (Face Value) | Montant remboursé à maturité |
+| **Maturité** (Maturity) | Date de remboursement du principal |
+| **Rendement** (Yield) $y$ | Taux de retour requis par l'investisseur |
+| **Risque de défaut** (Default Risk) | Risque de non-remboursement partiel ou total |
+| **Credit Spread** | $y_{\text{corporate}} - y_{\text{souverain}}$ |
+| **Zéro-coupon** (Zero Coupon) | Obligation sans coupon, vendue en-dessous du pair |
+
+---
+
+## Formule de prix (clé !)
+
+$$\boxed{B(t) = \sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)} + P \cdot e^{-y(T-t)}}$$
+
+- $c_i$ : coupon à $t_i$ — $P$ : principal — $y$ : yield — $T$ : maturité
+
+::: {.callout-important title="Relation prix ↔ yield"}
+**Inverse et convexe** : $y \uparrow \Rightarrow B \downarrow$ et $y \downarrow \Rightarrow B \uparrow$
+:::
+
+---
+
+## Prix vs valeur nominale
+
+| Situation | Condition | Cause |
+|-----------|-----------|-------|
+| **Prime** (Premium) | $B > 100$ | Coupon > taux marché |
+| **Au pair** (At Par) | $B = 100$ | Coupon = taux marché |
+| **Décote** (Discount) | $B < 100$ | Coupon < taux marché |
+
+---
+
+## Exemple numérique rapide
+
+> Obligation : $c = 5$ CHF × 4 versements, $P = 100$, $y = 5\%$
+
+| Flux | Valeur présente |
+|------|----------------|
+| $c_1$ à $t=0.5$ | $5 \cdot e^{-0.05 \times 0.5} = 4.88$ |
+| $c_2$ à $t=1.0$ | $5 \cdot e^{-0.05 \times 1.0} = 4.76$ |
+| $c_3$ à $t=1.5$ | $5 \cdot e^{-0.05 \times 1.5} = 4.64$ |
+| $c_4$ à $t=2.0$ | $5 \cdot e^{-0.05 \times 2.0} = 4.52$ |
+| $P$ à $t=2.0$ | $100 \cdot e^{-0.05 \times 2.0} = 90.48$ |
+| **Total** | **$B = 109.28$ → à prime** |
+
+---
+
+## Procédure par tâtonnement (Trial & Error)
+
+**Objectif** : trouver $y$ connaissant $B$ (problème inverse, pas de solution analytique).
+
+**Résidu** :
+
+$$\text{résidu}(y) = B_{\text{observé}} - B_{\text{calculé}}(y)$$
+
+**Algorithme** :
+
+1. Partir de $y$ très élevé ($y = 100$)
+2. Résidu $> 0$ → $y \leftarrow y/2$
+3. Résidu $< 0$ → $y \leftarrow (y_{\text{précédent}} + y)/2$
+4. Répéter jusqu'à $|\text{résidu}| < 10^{-3}$
+
+---
+
+## Courbe des taux zéro-coupon (Bootstrap)
+
+**Pourquoi ?** Les rendements de coupons différents ne sont pas comparables → standard zéro-coupon.
+
+**Bootstrap — logique** : extraire les taux zéro un par un, du plus court au plus long.
+
+### Formules par cas
+
+**Zéro-coupon court terme** (0.25 an) :
+
+$$r_{0.25} = 4 \cdot \ln\!\left(1 + \frac{\text{gain trimestriel}}{4}\right)$$
+
+**Zéro-coupon 1 an** :
+
+$$r_{1.0} = \ln\!\left(1 + \frac{P - B}{B}\right)$$
+
+**Avec coupons** (1.5 an) : isoler $r_{1.5}$ dans :
+
+$$\sum_i c_i \cdot e^{-r_{t_i} \cdot t_i} + (P + c_{\text{last}}) \cdot e^{-r_{1.5} \cdot 1.5} = B$$
+
+### Résultat exemple
+
+| Maturité (ans) | $r$ (%) |
+|---------------|---------|
+| 0.25 | 10.127 |
+| 0.50 | 10.469 |
+| 1.0 | 10.536 |
+| 1.5 | 10.681 |
+| 2.0 | 10.808 |
+
+---
+
+## Types d'obligations
+
+```{mermaid}
+graph TD
+    A[Obligations] --> B[État / Souveraines\nGovies / Treasuries]
+    A --> C[Entreprises\nCorporate Bonds]
+    B --> D[Meilleure notation AAA\nRendement le plus bas]
+    C --> E[Investment Grade BBB+\nSpread modéré]
+    C --> F[High Yield / Junk BB-\nSpread élevé]
+```
+
+**Agences** : S&P (AAA → D) | Moody's (Aaa → C) | Fitch (AAA → D)
+
+::: {.callout-note title="Formule clé"}
+$y_{\text{corporate}} = y_{\text{souverain}} + \text{Credit Spread}$
+:::
+
+---
+
+## 5 Risques obligataires
+
+| Risque | Mécanisme | Protection |
+|--------|-----------|------------|
+| **Taux** (Interest Rate) | $y \uparrow \Rightarrow B \downarrow$ | Duration courte |
+| **Crédit** (Credit) | Défaut émetteur | Notation élevée |
+| **Inflation** (Inflation) | Érosion pouvoir d'achat : $r_{\text{réel}} = r_{\text{nom}} - \pi$ | TIPS, or |
+| **Liquidité** (Liquidity) | Vente à prix décotée | Obligations liquides |
+| **Réinvestissement** (Reinvestment) | Coupons réinvestis à taux plus bas | Éviter callables |
+
+::: {.callout-warning title="Piège — Callable Bonds"}
+Si les taux baissent → l'émetteur rappelle l'obligation → réinvestissement forcé à taux moindre.
+:::
+
+---
+
+## Rôle dans un portefeuille
+
+| Rôle | Détail |
+|------|--------|
+| **Diversification** | Corrélation négative avec actions (sauf 2022 !) |
+| **Revenus** | Coupons réguliers et prévisibles |
+| **Préservation capital** | Principal garanti à maturité (si pas de défaut) |
+| **Allocation stratégique** | Part croissante avec l'âge (life-cycle investing) |
+
+::: {.callout-important title="Exception 2022"}
+Hausse brutale des taux → obligations **et** actions en baisse simultanément → corrélation **positive**.
+:::
+
+---
+
+## Synthèse des relations clés
+
+```{mermaid}
+graph LR
+    Y[Yield y ↑] -->|inverse| B[Prix B ↓]
+    B -->|bootstrap| ZC[Courbe zéro-coupon]
+    ZC -->|référence| COMP[Comparaison obligations]
+    RISK[Risque émetteur ↑] -->|+| CS[Credit Spread ↑]
+    CS -->|+| Y
+```
+
+---
+
+## Checklist révision
+
+- [ ] Je sais calculer $B(t)$ à partir de $y$, $c_i$, $P$, $T$
+- [ ] Je sais interpréter prime / décote / au pair
+- [ ] Je comprends l'algorithme Trial & Error (sens de la recherche)
+- [ ] Je sais appliquer le Bootstrap sur un exemple à coupons
+- [ ] Je connais les 5 risques et leurs protections
+- [ ] Je sais que $y_{\text{corp}} = y_{\text{gouv}} + \text{spread}$
+- [ ] Je comprends pourquoi 2022 a cassé la diversification

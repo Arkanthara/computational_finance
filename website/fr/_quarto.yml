@@ -50,15 +50,7 @@ website:
                 href: ch2r.qmd
               - text: "Quiz"
                 href: ch2q.qmd
-          - section: "3. Données, moyenne mobile et temps intrinsèque"
-            contents:
-              - text: "Détails"
-                href: ch3.qmd
-              - text: "Synthèse"
-                href: ch3r.qmd
-              - text: "Quiz"
-                href: ch3q.qmd
-          - section: "4. Carnet d'ordres limite"
+          - section: "4. Données, moyenne mobile et temps intrinsèque"
             contents:
               - text: "Détails"
                 href: ch4.qmd
@@ -66,7 +58,7 @@ website:
                 href: ch4r.qmd
               - text: "Quiz"
                 href: ch4q.qmd
-          - section: "5. Exécution algorithmique"
+          - section: "5. Carnet d'ordres limite"
             contents:
               - text: "Détails"
                 href: ch5.qmd
@@ -74,7 +66,7 @@ website:
                 href: ch5r.qmd
               - text: "Quiz"
                 href: ch5q.qmd
-          - section: "6. Construction de portefeuille"
+          - section: "6. Exécution algorithmique"
             contents:
               - text: "Détails"
                 href: ch6.qmd
@@ -82,7 +74,7 @@ website:
                 href: ch6r.qmd
               - text: "Quiz"
                 href: ch6q.qmd
-          - section: "7. Modèles à base d'agents"
+          - section: "7. Construction de portefeuille"
             contents:
               - text: "Détails"
                 href: ch7.qmd
@@ -90,7 +82,7 @@ website:
                 href: ch7r.qmd
               - text: "Quiz"
                 href: ch7q.qmd
-          - section: "8. Options - notions de base"
+          - section: "8. Modèles à base d'agents"
             contents:
               - text: "Détails"
                 href: ch8.qmd
@@ -98,7 +90,7 @@ website:
                 href: ch8r.qmd
               - text: "Quiz"
                 href: ch8q.qmd
-          - section: "9. Options - Grecques"
+          - section: "9. Options - notions de base"
             contents:
               - text: "Détails"
                 href: ch9.qmd
@@ -106,7 +98,7 @@ website:
                 href: ch9r.qmd
               - text: "Quiz"
                 href: ch9q.qmd
-          - section: "10. Obligations - notions de base"
+          - section: "10. Options - Grecques"
             contents:
               - text: "Détails"
                 href: ch10.qmd
@@ -114,7 +106,7 @@ website:
                 href: ch10r.qmd
               - text: "Quiz"
                 href: ch10q.qmd
-          - section: "11. Obligations - sensibilités temps et taux"
+          - section: "11. Obligations - notions de base"
             contents:
               - text: "Détails"
                 href: ch11.qmd
@@ -122,7 +114,7 @@ website:
                 href: ch11r.qmd
               - text: "Quiz"
                 href: ch11q.qmd
-          - section: "12. Futures, forwards et ESG"
+          - section: "12. Obligations - sensibilités temps et taux"
             contents:
               - text: "Détails"
                 href: ch12.qmd
@@ -130,7 +122,7 @@ website:
                 href: ch12r.qmd
               - text: "Quiz"
                 href: ch12q.qmd
-          - section: "13. Données alternatives et rétrospective"
+          - section: "13. Futures, forwards et ESG"
             contents:
               - text: "Détails"
                 href: ch13.qmd
@@ -138,6 +130,14 @@ website:
                 href: ch13r.qmd
               - text: "Quiz"
                 href: ch13q.qmd
+          - section: "14. Données alternatives et rétrospective"
+            contents:
+              - text: "Détails"
+                href: ch14.qmd
+              - text: "Synthèse"
+                href: ch14r.qmd
+              - text: "Quiz"
+                href: ch14q.qmd
 
 format:
   html:

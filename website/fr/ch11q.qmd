@@ -1,0 +1,316 @@
+---
+title: "Les Obligations — Quiz"
+filters:
+  - quizdown
+execute:
+  enabled: false
+---
+
+## Niveau 1 — Fondamentaux
+
+```{quizdown}
+### Qu'est-ce qu'une obligation (Bond) ?
+
+> Pensez au rôle de chaque partie dans la transaction.
+
+1. [ ] Un contrat d'assurance entre deux entreprises
+1. [x] Un instrument de dette par lequel un emetteur emprunte des fonds aupres d'un investisseur
+    > Correct : l'emetteur recoit des liquidites et l'investisseur recoit des coupons en contrepartie du risque assume.
+1. [ ] Une action donnant droit a des dividendes
+1. [ ] Un depot bancaire a terme fixe
+```
+
+```{quizdown}
+### Parmi les elements suivants, lesquels font partie de la structure contractuelle d'une obligation ?
+
+> Le contrat d'une obligation est fixe a l'emission et ne change pas.
+
+- [x] Le montant des coupons
+    > Correct : les coupons sont definis contractuellement et ne varient pas.
+- [x] La date de maturite
+    > Correct : la date de remboursement du principal est fixee des l'emission.
+- [ ] Le prix de marche de l'obligation
+    > Incorrect : le prix de marche evolue en fonction des conditions de marche et n'est pas fixe.
+- [x] Le principal (Face Value)
+    > Correct : le montant rembourse a maturite est contractuellement fixe.
+- [ ] Le taux d'inflation futur
+```
+
+```{quizdown}
+### Que represente le coupon (Coupon) d'une obligation ?
+
+> Pensez a la nature de la relation entre emetteur et investisseur.
+
+1. [ ] La valeur de revente de l'obligation sur le marche secondaire
+1. [ ] Le montant total rembourse a maturite
+1. [x] Un paiement periodique verse a l'investisseur en contrepartie du pret consenti
+    > Correct : le coupon retribue l'investisseur pour le risque de credit qu'il accepte.
+1. [ ] La difference entre le prix d'achat et la valeur nominale
+```
+
+```{quizdown}
+### Une obligation se negocie "a prime" (at a premium). Quelle est la situation ?
+
+> Comparez le prix de marche a la valeur nominale de reference (100).
+
+1. [ ] Le prix de marche est inferieur a 100
+1. [ ] Le prix de marche est exactement egal a 100
+1. [x] Le prix de marche est superieur a 100
+    > Correct : une obligation se vend a prime quand son coupon est superieur au rendement exige par le marche.
+1. [ ] L'obligation est en situation de defaut
+```
+
+```{quizdown}
+### Qu'est-ce que le risque de defaut (Default Risk) dans le contexte obligataire ?
+
+> Pensez a ce qui peut arriver si l'emetteur rencontre des difficultes financieres.
+
+1. [ ] Le risque que les taux d'interet montent apres l'achat de l'obligation
+1. [ ] Le risque que l'inflation depasse le coupon verse
+1. [x] Le risque que l'emetteur ne rembourse pas integralement ses dettes en cas de faillite
+    > Correct : en cas de defaut, l'investisseur ne recupere generalement qu'une fraction du capital (taux de recouvrement).
+1. [ ] Le risque de ne pas pouvoir revendre l'obligation rapidement
+```
+
+```{quizdown}
+### Quelle agence de notation utilise l'echelle "Aaa" a "C" ?
+
+> Chaque agence a ses propres codes de notation.
+
+1. [ ] S&P
+1. [x] Moody's
+    > Correct : Moody's utilise Aaa (meilleure) jusqu'a C (plus mauvaise). S&P et Fitch utilisent AAA a D.
+1. [ ] Fitch
+1. [ ] Bloomberg
+```
+
+---
+
+## Niveau 2 — Comprehension
+
+```{quizdown}
+### Quelle est la formule correcte du prix d'une obligation B(t) ?
+
+> Le prix est la somme des valeurs actualisees de tous les flux futurs.
+
+1. [ ] La somme des coupons bruts divises par la maturite
+1. [ ] Le principal multiplie par le rendement annuel
+1. [x] La somme des coupons actualises plus le principal actualise, en utilisant le taux d'actualisation continu
+    > Correct : B(t) = somme(ci * exp(-y*(ti-t))) + P * exp(-y*(T-t)).
+1. [ ] La moyenne arithmetique des flux futurs
+```
+
+```{quizdown}
+### Un investisseur observe que le prix d'une obligation qu'il detient vient de baisser. Qu'en deduire ?
+
+> Rappelez-vous de la relation fondamentale entre prix et rendement.
+
+1. [ ] Le rendement (yield) de l'obligation a baisse
+1. [x] Le rendement (yield) de l'obligation a augmente
+    > Correct : la relation entre prix et rendement est inverse. Une baisse de prix correspond a une hausse de rendement.
+1. [ ] La qualite de credit de l'emetteur s'est amelioree
+1. [ ] L'obligation arrive a maturite plus tot que prevu
+```
+
+```{quizdown}
+### Pourquoi utilise-t-on le standard zero-coupon pour comparer les obligations ?
+
+> Pensez aux differences de structure entre deux obligations quelconques.
+
+1. [ ] Parce que les obligations zero-coupon sont les plus nombreuses sur le marche
+1. [ ] Parce que les agences de notation n'evaluent que les zero-coupons
+1. [x] Parce que les rendements d'obligations a coupons differents ne sont pas directement comparables entre eux
+    > Correct : le standard zero-coupon permet de comparer des obligations sur une base homogene, independamment de leur structure de coupon.
+1. [ ] Parce que les zero-coupons n'ont pas de risque de taux
+```
+
+```{quizdown}
+### Qu'est-ce que le credit spread ?
+
+> Pensez a la decomposition du rendement d'une obligation d'entreprise.
+
+1. [ ] La difference de prix entre deux obligations de meme maturite
+1. [x] La difference entre le rendement d'une obligation d'entreprise et celui d'une obligation souveraine de meme maturite
+    > Correct : credit spread = y_corporate - y_souverain. Il mesure le surcout d'emprunt lie au risque de credit.
+1. [ ] Le taux de coupon d'une obligation a haut rendement
+1. [ ] L'ecart entre le prix d'achat et le prix de vente sur le marche secondaire
+```
+
+```{quizdown}
+### Parmi les affirmations suivantes sur la relation prix-rendement, lesquelles sont correctes ?
+
+> La courbe reliant prix et rendement a une forme bien particuliere.
+
+- [x] La relation est inverse : quand le rendement monte, le prix baisse
+    > Correct : c'est la propriete fondamentale des obligations.
+- [ ] La relation est lineaire
+    > Incorrect : la relation est convexe (courbe), pas lineaire.
+- [x] La relation est convexe : une baisse de taux produit un gain de prix plus grand qu'une hausse equivalente ne produit une perte
+    > Correct : cette asymetrie favorable s'appelle la convexite positive.
+- [ ] Le prix monte quand le rendement monte
+    > Incorrect : c'est exactement l'inverse.
+```
+
+```{quizdown}
+### Dans la procedure par tatonnement (Trial and Error), que fait-on si le residu est positif ?
+
+> Un residu positif signifie que le prix calcule est inferieur au prix observe.
+
+1. [ ] On augmente le rendement y
+1. [x] On divise le rendement y par 2
+    > Correct : un residu positif indique que y est trop eleve (prix calcule trop bas). On reduit donc y en le divisant par 2.
+1. [ ] On ajoute le rendement precedent au rendement actuel
+1. [ ] On arrete la procedure
+```
+
+```{quizdown}
+### Une obligation est dite "callable" (rachetable). Quel risque cela amplifie-t-il principalement ?
+
+> Pensez a ce qui se passe si l'emetteur exerce son droit quand les taux baissent.
+
+1. [ ] Le risque de credit
+1. [ ] Le risque d'inflation
+1. [x] Le risque de reinvestissement (Reinvestment Risk)
+    > Correct : si les taux baissent, l'emetteur rachete l'obligation et l'investisseur doit reinvestir dans un environnement moins favorable.
+1. [ ] Le risque de liquidite
+```
+
+---
+
+## Niveau 3 — Maitrise
+
+```{quizdown}
+### Remettez les etapes de l'algorithme Bootstrap dans le bon ordre.
+
+> Le Bootstrap extrait les taux zero-coupon du plus court au plus long.
+
+1. Identifier les obligations de marche disponibles (prix et coupons)
+2. Calculer les taux zero-coupon pour les maturites courtes sans coupon
+3. Utiliser les taux deja calcules pour actualiser les coupons intermediaires
+4. Isoler et calculer le taux zero-coupon de la maturite suivante
+5. Repeter jusqu'a couvrir toutes les maturites souhaitees
+```
+
+```{quizdown}
+### Remettez les etapes de valorisation d'une obligation dans le bon ordre.
+
+> Pour obtenir le prix, il faut traiter chaque flux separement avant de les sommer.
+
+1. Identifier tous les flux futurs (coupons et principal) et leurs dates
+2. Choisir le rendement requis y adapte au risque de l'emetteur
+3. Actualiser chaque flux avec la formule d'actualisation continue
+4. Sommer toutes les valeurs actualisees
+5. Comparer le resultat a 100 pour determiner si l'obligation est a prime, au pair ou en decote
+```
+
+```{quizdown}
+### Une obligation d'Etat (AAA) et une obligation d'entreprise (BB) ont la meme maturite. Laquelle offre le rendement le plus eleve et pourquoi ?
+
+> Pensez au lien entre risque et remuneration.
+
+1. [ ] L'obligation d'Etat, car les gouvernements paient mieux
+1. [x] L'obligation d'entreprise BB, car son risque de credit plus eleve exige une prime de rendement supplementaire
+    > Correct : le credit spread compense l'investisseur pour le risque de defaut superieur de l'emetteur BB (haut rendement / junk).
+1. [ ] Elles offrent le meme rendement car la maturite est identique
+1. [ ] L'obligation d'Etat, car elle est plus liquide
+```
+
+```{quizdown}
+### En 2022, les banques centrales ont fortement releve leurs taux directeurs. Quelles consequences cela a-t-il eues sur un portefeuille traditionnel actions-obligations ?
+
+> 2022 a ete une annee atypique pour la diversification.
+
+1. [ ] Les obligations ont monte, compensant la baisse des actions
+1. [ ] Les deux classes d'actifs sont restees stables
+1. [ ] Les obligations ont monte, amplifiant le gain sur les actions
+1. [x] Les obligations et les actions ont toutes deux baisse simultanement, rendant la correlation positive
+    > Correct : la hausse brutale des taux a fait chuter les prix obligataires en meme temps que les marches actions, illustrant les limites de la diversification en periode de hausse rapide des taux.
+```
+
+```{quizdown}
+### Pour une obligation identique, laquelle est la plus sensible a une variation de taux d'interet ?
+
+> Pensez a l'impact de l'actualisation sur des flux tres eloignes dans le temps.
+
+1. [x] Une obligation de maturite 20 ans
+    > Correct : plus la duration est longue, plus les flux sont eloignes et donc plus sensibles aux variations de taux d'actualisation. C'est le principe de la duration.
+1. [ ] Une obligation de maturite 1 an
+1. [ ] Une obligation zero-coupon de maturite 6 mois
+1. [ ] La maturite n'a aucune influence sur la sensibilite aux taux
+```
+
+```{quizdown}
+### Un investisseur achete une obligation au prix de 94.9 USD, sans coupon, maturite 6 mois, principal 100 USD. Quel est le taux zero-coupon annualise en capitalisation continue ?
+
+> Utilisez la formule : r = 2 * ln(1 + gain_semestriel / 2).
+
+1. [ ] 5.0%
+1. [ ] 10.748%
+1. [x] Environ 10.469%
+    > Correct : le gain semestriel est (100 - 94.9) / 94.9 * 2 = 10.748%, puis r_0.5 = 2 * ln(1 + 0.10748/2) = 10.469%.
+1. [ ] Environ 5.374%
+```
+
+```{quizdown}
+### Parmi les roles suivants, lesquels sont attribues aux obligations dans un portefeuille diversifie ?
+
+> Pensez aux differentes contributions d'un actif obligataire a un portefeuille.
+
+- [x] Reduction du risque global par diversification
+    > Correct : la correlation historiquement faible ou negative avec les actions reduit la volatilite du portefeuille.
+- [x] Generation de revenus reguliers via les coupons
+    > Correct : les paiements de coupons sont fixes et previsibles.
+- [ ] Exposition aux dividendes des entreprises
+    > Incorrect : les dividendes concernent les actions, pas les obligations.
+- [x] Preservation du capital a maturite en l'absence de defaut
+    > Correct : le principal est rembourse integralement a maturite si l'emetteur ne fait pas defaut.
+- [ ] Protection garantie contre toute hausse des taux
+    > Incorrect : les obligations restent exposees au risque de taux, surtout en cas de hausse brutale.
+```
+
+```{quizdown}
+### Un investisseur detient une obligation a coupon fixe de 3% alors que l'inflation passe a 5%. Qu'observe-t-il ?
+
+> Le rendement reel est la difference entre rendement nominal et inflation.
+
+1. [ ] Son rendement reel est de 8%
+1. [ ] Son rendement reel est de 3%
+1. [x] Son rendement reel est negatif, d'environ -2%
+    > Correct : rendement reel = coupon nominal - inflation = 3% - 5% = -2%. L'inflation erode le pouvoir d'achat des flux fixes.
+1. [ ] Son rendement reel est nul car le coupon couvre l'inflation
+```
+
+```{quizdown}
+### La courbe des taux zero-coupon issue du Bootstrap est-elle toujours parfaitement lisse et croissante ?
+
+1. [ ] Vrai
+1. [x] Faux
+    > Faux : en pratique, la courbe peut presenter des irregularites, des inversions ou des discontinuites selon les conditions de marche. Elle doit etre recalculee regulierement lorsque les prix evoluent.
+```
+
+```{quizdown}
+### Quel type d'obligation offre une protection explicite contre le risque d'inflation ?
+
+> Certains titres ajustent leur principal en fonction d'un indice de prix.
+
+1. [ ] Les obligations callable (Callable Bonds)
+1. [ ] Les obligations zero-coupon (Zero Coupon Bonds)
+1. [x] Les TIPS (Treasury Inflation-Protected Securities)
+    > Correct : les TIPS ajustent leur principal a l'inflation, preservant ainsi le rendement reel de l'investisseur.
+1. [ ] Les obligations a haut rendement (High Yield Bonds)
+```
+
+```{quizdown}
+### Pourquoi le credit spread d'une obligation d'entreprise peut-il s'elargir au cours de la vie de l'obligation ?
+
+> Pensez aux evenements qui peuvent affecter la perception du risque d'un emetteur.
+
+- [x] Une degradation de la notation de credit de l'emetteur par une agence
+    > Correct : une note plus basse signale un risque de defaut accru, ce qui elargit le spread exige par les investisseurs.
+- [ ] Une baisse des taux directeurs de la banque centrale
+    > Incorrect : cela affecte les taux souverains mais pas necessairement le spread de credit.
+- [x] Une deterioration du bilan ou des resultats financiers de l'emetteur
+    > Correct : un affaiblissement fondamental de l'emetteur augmente la probabilite de defaut percue.
+- [ ] Une hausse du prix de l'obligation sur le marche secondaire
+    > Incorrect : une hausse du prix correspond a une baisse du rendement, pas forcement a un elargissement du spread.
+```
