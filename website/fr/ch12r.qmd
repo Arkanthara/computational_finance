@@ -1,0 +1,162 @@
+---
+title: "Obligations : sensibilité au temps et aux taux — Révision"
+---
+
+# Taux forward (Forward Rates)
+
+## Définition & formule clé
+
+**Taux forward** : taux d'intérêt implicitement contenu dans la courbe zéro-coupon pour une période future.
+
+$$\boxed{r_{T_1, T_2} = \frac{R_2 T_2 - R_1 T_1}{T_2 - T_1}}$$
+
+- $R_1, R_2$ : taux zéro-coupon aux maturités $T_1 < T_2$
+- Convention : **composition continue**
+
+## Logique d'absence d'arbitrage
+
+Deux stratégies équivalentes sur 2 ans → même résultat final :
+
+| Stratégie | Calcul |
+|:----------|:-------|
+| Investir 2 ans directement | $100 \cdot e^{R_2 \cdot 2}$ |
+| Investir 1 an + forward 1y1 | $100 \cdot e^{R_1} \cdot e^{r_{1,2}}$ |
+
+→ Si $r_{1,2}$ dévie → **arbitrage possible** (profit sans risque).
+
+## Exemple numérique
+
+| Maturité | Taux zéro (%) | Taux forward année suivante (%) |
+|:--------:|:-------------:|:-------------------------------:|
+| 1 an     | 10,0          | —                               |
+| 2 ans    | 10,5          | **11,0**                        |
+| 3 ans    | 10,8          | **11,4**                        |
+
+Calcul 1y1 : $\frac{0{,}105 \times 2 - 0{,}10 \times 1}{1} = 11\%$
+
+::: {.callout-tip title="Application pratique"}
+**Prêt immobilier futur** : prêt dans 1 an pour 10 ans → banquier utilise les taux à **1 an** et **11 ans**.
+:::
+
+---
+
+# Évolution de la courbe des taux (Yield Curve Evolution)
+
+| Mouvement | Description | Signal économique |
+|:----------|:------------|:------------------|
+| **Déplacement parallèle** (Parallel shift) | Tous les taux bougent du même montant | Politique monétaire uniforme |
+| **Aplatissement** (Flattening) | Taux courts ↑ et/ou taux longs ↓ | Anticipation de ralentissement |
+| **Pentification** (Steepening) | Taux courts ↓ et/ou taux longs ↑ | Anticipation de reprise |
+
+::: {.callout-note title="À retenir"}
+- Partie **courte** de la courbe → pilotée par les **banques centrales**
+- Partie **longue** → pilotée par le **marché**
+:::
+
+---
+
+# Duration (Duration)
+
+## Définition — Duration de Macaulay
+
+$$\boxed{D = \sum_{i=1}^{n} (t_i - t) \cdot \frac{c_i \, e^{-y(t_i-t)}}{B(t)}}$$
+
+→ Moyenne pondérée des dates de paiement (poids = valeur actualisée relative de chaque flux).
+
+| Type d'obligation | Duration |
+|:------------------|:---------|
+| Zéro-coupon, maturité $n$ | $D = n$ |
+| Obligation à coupons, maturité $n$ | $D < n$ |
+
+## Relation duration–prix ⚠️
+
+$$\boxed{\frac{\delta B}{B} \approx -D \cdot \delta y}$$
+
+- Hausse des taux ($\delta y > 0$) → **baisse du prix**
+- Duration élevée → **sensibilité forte**
+
+## Validation numérique (exemple 10 %, 3 ans, yield 12 %)
+
+| Paramètre | Valeur |
+|:----------|:------:|
+| Prix $B$ | 94,213 USD |
+| Duration $D$ | 2,653 ans |
+
+Pour $\delta y = 0{,}1\%$ → estimation = réalité = **−0,250 USD** ✓
+
+Pour $\delta y = 1{,}0\%$ → estimation = −2,499 USD ≠ réel = −2,464 USD ⚠️
+
+---
+
+# Convexité (Convexity)
+
+## Formule
+
+$$\boxed{C = \frac{1}{B}\frac{\partial^2 B}{\partial y^2} = \sum_{i=1}^{n} \frac{c_i \, t_i^2 \, e^{-y(t_i-t)}}{B}}$$
+
+## Approximation du 2nd ordre
+
+$$\boxed{\frac{\delta B}{B} \approx -D \cdot \delta y + \frac{1}{2} C \cdot (\delta y)^2}$$
+
+Pour $\delta y = 1\%$, $C = 7{,}570$ → résultat exact = **−2,464 USD** ✓
+
+::: {.callout-important title="Piège fréquent"}
+La **duration seule sous-estime** l'impact d'un grand choc de taux. Toujours ajouter la convexité pour $|\delta y| \geq 0{,}5\%$.
+
+La convexité est **favorable** au détenteur : pertes plus faibles / gains plus grands que prédit linéairement.
+:::
+
+---
+
+# Types de duration
+
+| Type | Formule | Usage |
+|:-----|:--------|:------|
+| **Macaulay** | $D = \sum w_i \cdot t_i$ | Mesure du risque de taux |
+| **Modifiée** (Modified) | $D_{\text{mod}} = \dfrac{D}{1 + y/n_c}$ | Sensibilité relative au taux |
+| **En dollars / DV01** | $\text{DV01} = \dfrac{D_{\text{mod}} \cdot B}{100}$ | Gestion de portefeuille |
+| **Effective** | Ajustée pour options incorporées | Callable / putable bonds |
+| **Par facteur clé** (Key Rate) | Sensibilité par segment de courbe | Chocs non parallèles |
+
+---
+
+# Gestion de portefeuille
+
+$$D_{\text{portefeuille}} = \sum_k w_k \cdot D_k$$
+
+- **Taux en hausse** → réduire la duration (vendre long, acheter court)
+- **Taux en baisse** → augmenter la duration
+- Duration ≈ bon **proxy de volatilité** du portefeuille
+- Portefeuille multi-devises → duration calculée **par devise**
+
+---
+
+# Relations entre concepts
+
+```{mermaid}
+graph TD
+    A[Courbe zéro-coupon] --> B[Taux forward]
+    A --> C[Duration de Macaulay]
+    C --> D[Duration modifiée]
+    D --> E[DV01]
+    C --> F[Approximation 1er ordre]
+    G[Convexité] --> H[Approximation 2e ordre]
+    F --> H
+    A --> I[Évolution de la courbe]
+    I --> J[Déplacement parallèle]
+    I --> K[Aplatissement]
+    I --> L[Pentification]
+```
+
+---
+
+# Formules à retenir absolument
+
+| Formule | Signification |
+|:--------|:--------------|
+| $r = \dfrac{R_2 T_2 - R_1 T_1}{T_2 - T_1}$ | Taux forward entre $T_1$ et $T_2$ |
+| $\dfrac{\partial B}{\partial y} = -B \cdot D$ | Dérivée prix/taux |
+| $\dfrac{\delta B}{B} \approx -D \cdot \delta y$ | Approximation 1er ordre |
+| $\dfrac{\delta B}{B} \approx -D \cdot \delta y + \dfrac{1}{2}C(\delta y)^2$ | Approximation 2e ordre |
+| $D_{\text{mod}} = \dfrac{D}{1 + y/n_c}$ | Duration modifiée |
+| $\text{DV01} = \dfrac{D_{\text{mod}} \cdot B}{100}$ | Dollar duration |

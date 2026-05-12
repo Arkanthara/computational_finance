@@ -1,0 +1,562 @@
+---
+title: "Obligations : sensibilité au temps et aux taux"
+---
+
+# Taux forward (Forward Rates)
+
+## Introduction : de la courbe zéro-coupon aux taux forward
+
+Jusqu'à présent, nous avons construit la **courbe des taux zéro-coupon** (zero-coupon yield curve).
+Cette courbe indique le rendement actuel pour une maturité donnée, sans versement de coupon intermédiaire.
+
+On peut aller plus loin : à partir de cette même courbe, il est possible d'**inférer les taux d'intérêt futurs implicites**, c'est-à-dire les taux forward.
+
+::: {.callout-note title="À retenir"}
+La courbe zéro-coupon décrit ce que le marché offre *aujourd'hui* pour différentes maturités.
+
+Les taux forward décrivent ce que le marché *anticipe implicitement* pour des périodes futures.
+:::
+
+## Définition des taux forward
+
+Les **taux forward** (forward rates) sont les taux d'intérêt implicitement contenus dans la courbe des taux zéro-coupon actuels, pour des périodes de temps situées dans le futur.
+
+En d'autres termes, si l'on connaît le taux à 1 an et le taux à 2 ans, on peut déduire quel taux est *implicitement anticipé* pour la deuxième année.
+
+::: {.callout-tip title="Intuition"}
+Imaginez deux chemins équivalents pour placer de l'argent pendant 2 ans :
+
+- **Chemin A** : investir directement à 2 ans au taux zéro-coupon 2 ans.
+- **Chemin B** : investir à 1 an, puis réinvestir la deuxième année à un taux à déterminer.
+
+Pour qu'il n'y ait pas d'**arbitrage** (profit sans risque), les deux chemins doivent donner le même résultat. Le taux de réinvestissement implicite est précisément le taux forward.
+:::
+
+## Exemple numérique de référence
+
+Considérons la courbe zéro-coupon suivante :
+
+| Maturité (années) | Taux zéro-coupon (%) |
+|:-----------------:|:--------------------:|
+| 1                 | 10,0                 |
+| 2                 | 10,5                 |
+| 3                 | 10,8                 |
+| 4                 | 11,0                 |
+| 5                 | 11,1                 |
+
+La courbe est **croissante** (upward sloping) : les taux augmentent avec la maturité, ce qui est la forme la plus courante en temps normal.
+
+## Calcul du taux forward 1 an dans 1 an (1y1)
+
+### Mise en place
+
+Supposons un investissement de **100 USD**.
+
+- Investissement à **1 an** au taux de 10 % :
+
+$$100 \cdot e^{0{,}10 \times 1} = 110{,}52 \text{ USD}$$
+
+- Investissement à **2 ans** au taux de 10,5 % :
+
+$$100 \cdot e^{0{,}105 \times 2} = 123{,}37 \text{ USD}$$
+
+### Calcul du taux forward
+
+Le taux forward 1y1 (1 an dans 1 an) est le taux $x$ tel que :
+
+$$100 \cdot e^{0{,}10} \cdot e^{x} = 100 \cdot e^{0{,}105 \times 2}$$
+
+Ce qui donne :
+
+$$0{,}10 + x = 0{,}105 \times 2 \implies x = 11\%$$
+
+::: {.callout-tip title="Intuition"}
+Le taux forward 1y1 est le **chaînon manquant** : c'est le taux que doit offrir la deuxième année pour que les deux stratégies (1 an + 1 an, ou directement 2 ans) soient financièrement équivalentes.
+:::
+
+### Implémentation pratique
+
+En pratique, on peut **répliquer** ce taux forward en :
+
+1. **Achetant** une obligation à 2 ans.
+2. **Vendant** une obligation à 1 an.
+
+La différence de valeur correspond exactement à l'investissement au taux forward :
+
+$$123{,}37 - 110{,}52 = 12{,}85 = 110{,}52 \cdot e^{0{,}11 \times 1} - 110{,}52$$
+
+## Absence d'arbitrage et taux forward
+
+::: {.callout-warning title="Condition d'absence d'arbitrage"}
+Si le taux forward 1y1 n'était **pas** de 11 %, il existerait une opportunité d'arbitrage (free lunch).
+:::
+
+### Exemple d'arbitrage
+
+Supposons que le taux forward 1y1 soit de 10 % au lieu de 11 %.
+
+Un investisseur rationnel pourrait :
+
+- **Vendre** une obligation à 1 an à 10 %.
+- **Vendre** un forward 1y1 à 10 %.
+- **Acheter** une obligation à 2 ans à 10,5 %.
+
+Le profit sans risque après 2 ans serait :
+
+$$-100 \cdot e^{0{,}10} \cdot e^{0{,}10} + 100 \cdot e^{0{,}105 \times 2} = 100 \left(-e^{0{,}20} + e^{0{,}21}\right) > 0$$
+
+Cet arbitrage disparaît dès que le taux forward est à son niveau d'équilibre de 11 %.
+
+## Calcul du taux forward 1 an dans 2 ans (1y2)
+
+De manière analogue, le taux forward 1y2 (1 an commençant dans 2 ans) est :
+
+$$100 \cdot e^{0{,}105 \times 2} \cdot e^{x} = 100 \cdot e^{0{,}108 \times 3}$$
+
+$$\implies x = \frac{0{,}108 \times 3 - 0{,}105 \times 2}{1} = 11{,}4\%$$
+
+## Formule générale des taux forward
+
+On peut généraliser la procédure. Le taux forward entre les maturités $T_1$ et $T_2$ (avec $T_2 > T_1$) est :
+
+$$r = \frac{R_2 T_2 - R_1 T_1}{T_2 - T_1}$$
+
+où $R_1$ et $R_2$ sont les taux zéro-coupon pour les maturités $T_1$ et $T_2$ respectivement.
+
+::: {.callout-note title="À retenir"}
+Cette formule repose sur la **composition en continu** (continuous compounding). Si l'on utilise d'autres conventions (capitalisation semi-annuelle, annuelle, etc.), la formule est légèrement plus complexe, mais le principe reste identique.
+:::
+
+### Tableau récapitulatif
+
+| Maturité (années) | Taux zéro-coupon (%) | Taux forward pour la dernière année (%) |
+|:-----------------:|:--------------------:|:----------------------------------------:|
+| 1                 | 10,0                 | —                                        |
+| 2                 | 10,5                 | 11,0                                     |
+| 3                 | 10,8                 | 11,4                                     |
+| 4                 | 11,0                 | …                                        |
+| 5                 | 11,1                 | …                                        |
+
+On dispose désormais d'une **surface de taux** (rate surface) plutôt que d'une simple courbe.
+
+## Application pratique : le crédit immobilier (Mortgage)
+
+::: {.callout-tip title="Intuition — Exemple concret"}
+Vous souhaitez acheter une maison dans **1 an** et contracter un prêt immobilier (mortgage) de **10 ans**.
+
+Le banquier a besoin de fixer le taux de ce prêt dès aujourd'hui. Il utilise :
+
+- Le taux zéro-coupon à **11 ans** (maturité totale = 1 + 10).
+- Le taux zéro-coupon à **1 an** (période avant le début du prêt).
+
+Le taux du prêt est alors le taux **forward 10 ans dans 1 an**, calculé à partir de ces deux taux.
+
+C'est exactement la même logique que celle présentée ci-dessus.
+:::
+
+---
+
+# Évolution de la courbe des taux (Yield Curve Evolution)
+
+## Introduction
+
+La courbe des taux n'est pas statique : elle **évolue en permanence** sous l'effet de deux forces principales :
+
+- Les **interventions des banques centrales** (central bank interventions), qui agissent surtout sur la partie courte de la courbe.
+- L'**activité de marché** (market activity) des investisseurs, qui affecte l'ensemble des maturités.
+
+## Les trois mouvements types de la courbe
+
+### Déplacement parallèle (Parallel Shift)
+
+L'ensemble de la courbe monte ou descend **uniformément**, sans changer de forme.
+
+- Tous les taux, quelle que soit leur maturité, augmentent (ou diminuent) du même montant.
+- C'est le mouvement le plus simple à modéliser et à couvrir.
+
+::: {.callout-tip title="Intuition"}
+Imaginez que la banque centrale augmente ses taux directeurs de 0,5 % : si l'ensemble du marché réagit proportionnellement, la courbe se déplace vers le haut de 0,5 % sur toutes les maturités.
+:::
+
+### Aplatissement (Flattening)
+
+L'écart entre les taux courts et les taux longs **se réduit**.
+
+- Les taux longs baissent et/ou les taux courts montent.
+- La courbe devient plus plate, voire inversée.
+- Un **aplatissement** est souvent interprété comme un signal de ralentissement économique anticipé.
+
+### Pentification (Steepening)
+
+L'écart entre les taux courts et les taux longs **s'élargit**.
+
+- Les taux longs montent et/ou les taux courts baissent.
+- La courbe devient plus pentue.
+- Une **pentification** est souvent associée à des anticipations de reprise économique ou d'inflation future.
+
+## Résumé des mouvements
+
+```{mermaid}
+graph LR
+    A[Courbe des taux] --> B[Déplacement parallèle]
+    A --> C[Aplatissement]
+    A --> D[Pentification]
+    B --> E[Tous les taux bougent du même montant]
+    C --> F[Taux courts ↑ et/ou taux longs ↓]
+    D --> G[Taux courts ↓ et/ou taux longs ↑]
+```
+
+::: {.callout-note title="À retenir"}
+Dans la pratique, les mouvements réels de la courbe sont une **combinaison** de ces trois types. La décomposition en parallèle / aplatissement / pentification est un outil analytique utile pour comprendre et mesurer les risques de taux.
+:::
+
+---
+
+# Duration (Duration)
+
+## Qu'est-ce que la duration ?
+
+La **duration** (duration) est une mesure fondamentale de la sensibilité du prix d'une obligation aux variations de taux d'intérêt.
+
+Elle a une double interprétation :
+
+1. **Temporelle** : la duration mesure combien de temps en moyenne le détenteur d'une obligation doit attendre avant de recevoir ses flux de trésorerie (cash flows).
+2. **De sensibilité** : la duration quantifie la variation de prix d'une obligation pour un déplacement parallèle de la courbe des taux.
+
+::: {.callout-tip title="Intuition"}
+Pensez à la duration comme au **centre de gravité temporel** des flux de trésorerie d'une obligation.
+
+- Plus les flux arrivent tôt → duration courte → faible sensibilité aux taux.
+- Plus les flux arrivent tard → duration longue → forte sensibilité aux taux.
+:::
+
+## Cas particuliers
+
+- Une **obligation zéro-coupon** (zero-coupon bond) à maturité $n$ ans a une duration **exactement égale à $n$ ans** : un seul flux à l'échéance.
+- Une **obligation à coupons** (coupon-bearing bond) a une duration **strictement inférieure** à sa maturité : elle verse des coupons intermédiaires qui « tirent » le centre de gravité vers le présent.
+
+## Rappel : prix d'une obligation
+
+Le prix $B(t)$ d'une obligation est la somme actualisée de ses flux futurs :
+
+$$B(t) = \sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)}$$
+
+où :
+
+- $c_i$ : flux de trésorerie à la date $t_i$ (le dernier flux $c_n$ inclut le principal).
+- $y$ : taux d'actualisation (yield to maturity).
+- $t$ : date actuelle.
+
+## Définition formelle de la duration de Macaulay
+
+La **duration de Macaulay** (Macaulay Duration) est définie par :
+
+$$D = \frac{\displaystyle\sum_{i=1}^{n} (t_i - t) \cdot c_i \cdot e^{-y(t_i - t)}}{B(t)}$$
+
+### Interprétation comme moyenne pondérée
+
+On peut réécrire cette expression de façon plus parlante :
+
+$$D = \sum_{i=1}^{n} (t_i - t) \cdot \frac{c_i \cdot e^{-y(t_i - t)}}{B(t)}$$
+
+Chaque terme $(t_i - t)$ est pondéré par le **poids relatif** du flux $i$ dans la valeur totale de l'obligation :
+
+$$w_i = \frac{c_i \cdot e^{-y(t_i - t)}}{B(t)}$$
+
+On vérifie que :
+
+- $w_i > 0$ : chaque poids est positif (flux positifs).
+- $w_i < 1$ : chaque poids est inférieur à 1 (normalisé par $B(t)$).
+- $\sum_{i=1}^{n} w_i = 1$ : les poids somment à 1 (par définition de $B(t)$).
+
+La duration est donc une **moyenne pondérée** des dates de paiement, pondérée par la valeur actualisée de chaque flux.
+
+## Lien entre duration et sensibilité au taux
+
+### Dérivée du prix par rapport au taux
+
+En dérivant $B(t)$ par rapport à $y$ :
+
+$$\frac{\partial B}{\partial y} = -\sum_{i=1}^{n} c_i \cdot (t_i - t) \cdot e^{-y(t_i - t)}$$
+
+En substituant la définition de la duration :
+
+$$\frac{\partial B}{\partial y} = -B \cdot D$$
+
+### Approximation du changement de prix
+
+Pour un petit déplacement parallèle $\delta y$ de la courbe des taux :
+
+$$\frac{\delta B}{B} \approx -D \cdot \delta y$$
+
+::: {.callout-important title="Relation fondamentale duration–prix"}
+$$\boxed{\frac{\delta B}{B} = -D \cdot \delta y}$$
+
+- Un déplacement **positif** (hausse) des taux entraîne une **baisse** du prix de l'obligation.
+- L'ampleur de cette baisse est **proportionnelle à la duration** $D$.
+:::
+
+Cette relation justifie l'utilisation de la duration comme mesure de risque de taux.
+
+---
+
+# Exemple de calcul de duration
+
+## Présentation du cas
+
+Considérons une obligation à **3 ans** avec :
+
+- Coupon annuel : **10 %** (versé semestriellement, soit 5 USD tous les 6 mois).
+- Valeur nominale : **100 USD**.
+- Taux d'actualisation (yield) : **12 %** (en composition continue).
+
+## Tableau de calcul
+
+| Temps (années) | Flux (USD) | Valeur actualisée (USD)            | Poids $w_i$                        | $t_i \times w_i$ |
+|:--------------:|:----------:|:----------------------------------:|:----------------------------------:|:-----------------:|
+| 0,5            | 5          | $5 e^{-0{,}12 \times 0{,}5} = 4{,}709$ | $4{,}709 / 94{,}213 = 0{,}050$    | 0,025             |
+| 1,0            | 5          | 4,435                              | 0,047                              | 0,047             |
+| 1,5            | 5          | 4,176                              | 0,044                              | 0,066             |
+| 2,0            | 5          | 3,933                              | 0,042                              | 0,083             |
+| 2,5            | 5          | 3,704                              | 0,039                              | 0,098             |
+| 3,0            | 105        | 73,256                             | 0,778                              | 2,330             |
+| **Total**      |            | **94,213**                         | **1,000**                          | **2,653**         |
+
+### Résultats
+
+- Prix de l'obligation : $B = 94{,}213$ USD
+- Duration de Macaulay : $D = 2{,}653$ ans
+
+::: {.callout-note title="À retenir"}
+La duration de **2,653 ans** est bien **inférieure à la maturité de 3 ans** et **supérieure à 0**, ce qui est cohérent : les coupons intermédiaires tirent le centre de gravité vers le présent.
+:::
+
+---
+
+# Validation de l'approximation par la duration
+
+## Petit déplacement : $\delta y = 0{,}1\%$
+
+Calculons le nouveau prix avec un taux de $12{,}1\%$ :
+
+$$B = 5e^{-0{,}121 \times 0{,}5} + 5e^{-0{,}121 \times 1} + \cdots + 105e^{-0{,}121 \times 3} = 93{,}963 \text{ USD}$$
+
+**Variation réelle :**
+
+$$\delta B_{\text{réel}} = 93{,}963 - 94{,}213 = -0{,}250 \text{ USD}$$
+
+**Estimation par la duration :**
+
+$$\delta B_{\text{est}} = -B \cdot D \cdot \delta y = -94{,}213 \times 2{,}653 \times 0{,}001 = -0{,}250 \text{ USD}$$
+
+::: {.callout-tip title="Intuition"}
+Pour un **petit** déplacement de taux, l'approximation linéaire par la duration est **très précise**. C'est le régime dans lequel la duration est un excellent outil de gestion du risque.
+:::
+
+## Grand déplacement : $\delta y = 1{,}0\%$
+
+Calculons le nouveau prix avec un taux de $13\%$ :
+
+$$B = 5e^{-0{,}13 \times 0{,}5} + 5e^{-0{,}13 \times 1} + \cdots + 105e^{-0{,}13 \times 3} = 91{,}749 \text{ USD}$$
+
+**Variation réelle :**
+
+$$\delta B_{\text{réel}} = 91{,}749 - 94{,}213 = -2{,}464 \text{ USD}$$
+
+**Estimation par la duration :**
+
+$$\delta B_{\text{est}} = -94{,}213 \times 2{,}653 \times 0{,}01 = -2{,}499 \text{ USD}$$
+
+::: {.callout-warning title="Limite de l'approximation linéaire"}
+L'écart entre $-2{,}464$ et $-2{,}499$ est significatif : **l'approximation par la duration seule n'est plus suffisante** pour de grands déplacements de taux.
+
+Cela s'explique par la **non-linéarité** (nonlinearity) de la relation prix–taux, que l'on appelle **convexité** (convexity).
+:::
+
+---
+
+# Convexité (Convexity)
+
+## Phénomène de convexité
+
+La relation entre le prix d'une obligation et le taux d'intérêt n'est **pas linéaire** :
+
+- Une **hausse** des taux diminue le prix, mais **moins vite** que ne le prédirait une relation linéaire.
+- Une **baisse** des taux augmente le prix, mais **plus vite** que ne le prédirait une relation linéaire.
+
+Cette asymétrie s'appelle la **convexité** (convexity) : la courbe prix–taux est une fonction **convexe**.
+
+::: {.callout-tip title="Intuition"}
+La convexité est une propriété **favorable** pour le détenteur d'une obligation :
+
+- En cas de hausse des taux, les pertes sont **moins importantes** que prévu.
+- En cas de baisse des taux, les gains sont **plus importants** que prévu.
+
+Plus la convexité est élevée, plus l'obligation est robuste aux mouvements de taux.
+:::
+
+## Mesure de la convexité
+
+La convexité $C$ est définie par la dérivée seconde du prix normalisée :
+
+$$C = \frac{1}{B} \frac{\partial^2 B}{\partial y^2} = \sum_{i=1}^{n} \frac{c_i \, t_i^2 \, e^{-y(t_i - t)}}{B}$$
+
+## Approximation du second ordre
+
+En incluant la convexité dans l'approximation de Taylor au second ordre :
+
+$$\frac{\delta B}{B} \approx -D \cdot \delta y + \frac{1}{2} C \cdot (\delta y)^2$$
+
+::: {.callout-important title="Approximation complète prix–taux"}
+$$\boxed{\frac{\delta B}{B} \approx -D \cdot \delta y + \frac{1}{2} C \cdot (\delta y)^2}$$
+
+- Le terme en $\delta y$ est la **correction de premier ordre** (duration).
+- Le terme en $(\delta y)^2$ est la **correction de second ordre** (convexité).
+:::
+
+## Validation numérique
+
+Pour notre obligation, la convexité vaut $C = 7{,}570$.
+
+Pour un déplacement de $\delta y = 1\%$ :
+
+$$\delta B_{\text{est}} = -94{,}213 \times 2{,}653 \times 0{,}01 + \frac{1}{2} \times 94{,}213 \times 7{,}570 \times (0{,}01)^2$$
+
+$$= -2{,}499 + 0{,}0356 = -2{,}464 \text{ USD}$$
+
+Ce résultat correspond **exactement** à la variation réelle de $-2{,}464$ USD (à la 4e décimale près).
+
+::: {.callout-note title="À retenir"}
+L'introduction de la **convexité** dans l'approximation permet de capturer la non-linéarité et d'obtenir une estimation beaucoup plus précise pour les grands mouvements de taux.
+:::
+
+---
+
+# Autres types de duration
+
+## Duration de Macaulay (Macaulay Duration)
+
+C'est la duration présentée dans ce chapitre.
+
+- **Définition** : moyenne pondérée des dates de paiement, pondérée par la valeur actualisée de chaque flux.
+- **Unité** : années.
+- **Usage** : mesure du risque de taux d'intérêt, approximation des variations de prix pour de petits mouvements.
+
+$$D(t) = \frac{\displaystyle\sum_{i=1}^{n} (t_i - t) \cdot c_i \cdot e^{-y(t_i - t)}}{\displaystyle\sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)}}$$
+
+## Duration modifiée (Modified Duration)
+
+La **duration modifiée** (modified duration) adapte la duration de Macaulay à une convention de capitalisation discrète.
+
+$$D_{\text{mod}}(t) = \frac{D(t)}{1 + y / n_c}$$
+
+où $n_c$ est le **nombre de périodes de capitalisation par an** (par exemple, $n_c = 2$ pour une capitalisation semestrielle).
+
+::: {.callout-tip title="Intuition"}
+La duration modifiée est directement interprétable comme une **élasticité** : elle mesure la variation relative du prix pour une variation d'un point de base (0,01 %) du taux.
+
+En composition continue, la duration modifiée est identique à la duration de Macaulay (puisque $n_c \to \infty$).
+:::
+
+## Duration en dollars (Dollar Duration / DV01)
+
+La **duration en dollars** (dollar duration ou DV01 — Dollar Value of a Basis Point) mesure la **variation absolue** du prix en dollars pour une variation de 1 % (100 points de base) du taux :
+
+$$D_{\text{dollar}}(t) = \text{DV01} = \frac{D_{\text{mod}}(t) \cdot B}{100}$$
+
+- **Usage** : très répandue en gestion de portefeuille (portfolio management) et en gestion des risques (risk management).
+- Elle permet de comparer directement les sensibilités de différentes obligations ou portefeuilles.
+
+## Duration effective (Effective Duration)
+
+La **duration effective** (effective duration) est une mesure ajustée pour les obligations avec des **options incorporées** (embedded options), comme :
+
+- Les obligations remboursables par anticipation (callable bonds).
+- Les obligations avec option de vente (putable bonds).
+
+Pour ces instruments, la duration de Macaulay n'est pas directement applicable car les flux futurs dépendent de l'évolution des taux.
+
+## Duration par facteur clé (Key Rate Duration)
+
+La **duration par facteur clé** (key rate duration) mesure la sensibilité du prix d'une obligation à des variations de taux sur des **maturités spécifiques**, et non à un déplacement parallèle de toute la courbe.
+
+- Elle permet d'analyser l'impact des **déplacements non parallèles** (flattening, steepening) de la courbe.
+- Particulièrement utile pour gérer des portefeuilles exposés à différents segments de la courbe.
+
+::: {.callout-note title="À retenir"}
+| Type de duration | Ce qu'elle mesure | Usage principal |
+|:-----------------|:------------------|:----------------|
+| Macaulay | Durée moyenne des flux (années) | Mesure du risque |
+| Modifiée | Sensibilité relative au taux | Approximation de prix |
+| En dollars (DV01) | Sensibilité absolue ($) | Gestion de portefeuille |
+| Effective | Sensibilité avec options incorporées | Obligations complexes |
+| Par facteur clé | Sensibilité par segment de courbe | Déplacements non parallèles |
+:::
+
+---
+
+# Duration : conclusions et gestion de portefeuille
+
+## Duration au niveau du portefeuille
+
+La duration d'un **portefeuille** (portfolio) est la **somme pondérée** des durations de ses composantes :
+
+$$D_{\text{portefeuille}} = \sum_{k} w_k \cdot D_k$$
+
+où $w_k$ est le poids de l'obligation $k$ dans le portefeuille (en valeur de marché).
+
+Pour un portefeuille **multi-devises** (multi-currency), une duration séparée est calculée **par devise**.
+
+## Pilotage de la duration en gestion de portefeuille
+
+La duration est l'un des outils de contrôle du risque les plus utilisés en gestion obligataire.
+
+- **En période de hausse des taux** : réduire la duration du portefeuille limite les pertes.
+- **En période de baisse des taux** : augmenter la duration maximise les gains.
+- La duration est un **bon proxy de la volatilité** d'un portefeuille obligataire.
+
+::: {.callout-tip title="Intuition"}
+Un gérant obligataire qui anticipe une hausse des taux cherchera à **raccourcir la duration** de son portefeuille — en vendant des obligations longues et en achetant des obligations courtes — pour minimiser l'impact négatif.
+:::
+
+## Relation duration–rendement
+
+Il existe une tension naturelle entre duration et rendement :
+
+- Une duration **élevée** → sensibilité forte aux taux → **risque plus important**.
+- Mais aussi → rendement attendu généralement **plus élevé** (prime de risque de durée).
+
+Ce compromis est au cœur de la gestion actif-passif (ALM — Asset-Liability Management).
+
+---
+
+# Points clés du chapitre
+
+::: {.callout-important title="Synthèse"}
+**Taux forward**
+
+- Les taux forward sont implicitement contenus dans la courbe des taux zéro-coupon actuelle.
+- En l'absence d'arbitrage, $r = \dfrac{R_2 T_2 - R_1 T_1}{T_2 - T_1}$.
+- Ils sont utilisés pour tarifer des produits à terme (prêts futurs, swaps, etc.).
+
+**Évolution de la courbe**
+
+- La courbe des taux évolue sous l'effet des banques centrales et du marché.
+- Les mouvements types sont : déplacement parallèle, aplatissement, pentification.
+
+**Duration**
+
+- La duration de Macaulay est la moyenne pondérée des dates de paiement.
+- $\dfrac{\delta B}{B} \approx -D \cdot \delta y$ pour de petits déplacements.
+- Plus la duration est élevée, plus l'obligation est sensible aux variations de taux.
+
+**Convexité**
+
+- Pour de grands déplacements, il faut ajouter un terme de convexité : $\dfrac{\delta B}{B} \approx -D \cdot \delta y + \dfrac{1}{2} C \cdot (\delta y)^2$.
+- La convexité est une propriété favorable pour le détenteur de l'obligation.
+
+**Gestion de portefeuille**
+
+- La duration d'un portefeuille est la moyenne pondérée des durations de ses composantes.
+- Elle est contrôlée activement en fonction des anticipations sur les taux.
+:::

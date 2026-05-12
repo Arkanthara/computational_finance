@@ -1,0 +1,338 @@
+---
+title: "Obligations : sensibilité au temps et aux taux — Quiz"
+filters:
+  - quizdown
+execute:
+  enabled: false
+---
+
+## Niveau 1 — Fondamentaux
+
+```{quizdown}
+### Que représente un taux forward (forward rate) ?
+
+> Réfléchis à ce que l'on peut déduire d'une courbe zéro-coupon existante...
+
+1. [ ] Le taux d'intérêt moyen observé sur le marché aujourd'hui
+1. [x] Le taux d'intérêt implicitement contenu dans la courbe zéro-coupon pour une période future
+    > Correct : les taux forward sont implicitement contenus dans les taux zéro-coupon actuels. Ils représentent ce que le marché anticipe pour des périodes futures.
+1. [ ] Le taux d'intérêt fixé par la banque centrale pour l'année prochaine
+1. [ ] Le taux moyen entre deux taux zéro-coupon consécutifs
+```
+
+```{quizdown}
+### Quelle est la formule correcte pour calculer un taux forward entre les maturités T1 et T2 en composition continue ?
+
+> R1 et R2 désignent les taux zéro-coupon pour les maturités T1 et T2 respectivement...
+
+1. [ ] r = (R1 + R2) / 2
+1. [ ] r = R2 - R1
+1. [x] r = (R2 * T2 - R1 * T1) / (T2 - T1)
+    > Correct : cette formule garantit l'absence d'arbitrage entre investir directement sur la période T1-T2 ou décomposer l'investissement.
+1. [ ] r = (R1 * T2 - R2 * T1) / (T2 - T1)
+    > Incorrect : l'ordre des termes est inversé. Il faut bien R2 * T2 au numérateur, pas R1 * T2.
+```
+
+```{quizdown}
+### Quelle est la définition de la duration de Macaulay (Macaulay Duration) ?
+
+> Pense à ce que représentent les poids dans la formule de la duration...
+
+1. [ ] La maturité résiduelle de l'obligation
+1. [ ] La variation du prix pour une hausse de taux de 1 %
+1. [x] La moyenne pondérée des dates de paiement, pondérée par la valeur actualisée de chaque flux
+    > Correct : la duration est le centre de gravité temporel des flux de trésorerie, pondérés par leur valeur actualisée relative.
+1. [ ] Le taux de rendement actuariel de l'obligation
+```
+
+```{quizdown}
+### Une obligation zéro-coupon (zero-coupon bond) de maturité 5 ans a une duration de combien d'années ?
+
+> Un zéro-coupon ne verse qu'un seul flux, à l'échéance...
+
+1. [ ] Moins de 5 ans, car le taux d'actualisation réduit la valeur
+1. [ ] Variable selon le niveau des taux du marché
+1. [x] Exactement 5 ans
+    > Correct : un zéro-coupon n'a qu'un seul flux, à l'échéance. La moyenne pondérée est donc exactement égale à la maturité.
+1. [ ] Plus de 5 ans, car la convexité s'ajoute à la duration
+```
+
+```{quizdown}
+### Pour une obligation à coupons de maturité n, quelle affirmation est correcte concernant sa duration D ?
+
+> Compare avec le cas du zéro-coupon de même maturité...
+
+1. [ ] D est strictement supérieure à n
+1. [ ] D est égale à n
+1. [x] D est strictement inférieure à n
+    > Correct : les coupons intermédiaires tirent le centre de gravité temporel vers le présent, réduisant la duration en dessous de la maturité.
+1. [ ] D peut être supérieure ou inférieure à n selon le niveau des taux
+```
+
+```{quizdown}
+### La convexité (convexity) d'une obligation est une propriété favorable ou défavorable pour le détenteur ?
+
+> Réfléchis au comportement asymétrique du prix face aux hausses et baisses de taux...
+
+1. [x] Favorable
+    > Correct : la convexité implique que les pertes en cas de hausse des taux sont moins importantes que prévu linéairement, et que les gains en cas de baisse sont plus importants.
+1. [ ] Défavorable
+1. [ ] Neutre, elle n'affecte pas la valeur de l'obligation
+1. [ ] Cela dépend du signe du déplacement de taux
+```
+
+```{quizdown}
+### Quels types de duration existent dans la classification présentée dans ce cours ?
+
+> Plusieurs variantes ont été développées pour répondre à des besoins spécifiques...
+
+- [x] Duration de Macaulay (Macaulay Duration)
+    > Correct : c'est la duration de base, définie comme moyenne pondérée des dates de paiement.
+- [x] Duration modifiée (Modified Duration)
+    > Correct : ajuste la duration de Macaulay à une convention de capitalisation discrète.
+- [ ] Duration stochastique (Stochastic Duration)
+    > Incorrect : ce type n'est pas présenté dans ce cours.
+- [x] Duration en dollars / DV01 (Dollar Duration)
+    > Correct : mesure la variation absolue du prix en dollars pour une variation de 1 % du taux.
+- [x] Duration par facteur clé (Key Rate Duration)
+    > Correct : mesure la sensibilité à des variations sur des maturités spécifiques de la courbe.
+```
+
+---
+
+## Niveau 2 — Comprehension
+
+```{quizdown}
+### Quelle relation fondamentale lie la duration D au prix B et au taux y ?
+
+> Dérive le prix B par rapport au taux y et injecte la définition de D...
+
+1. [ ] dB/dy = B * D
+1. [x] dB/dy = -B * D
+    > Correct : la derivée du prix par rapport au taux est négative et proportionnelle au produit B * D. La duration est donc bien une mesure de sensibilité.
+1. [ ] dB/dy = -D / B
+1. [ ] dB/dy = D / B
+```
+
+```{quizdown}
+### Quelle approximation du premier ordre relie la variation relative du prix delta(B)/B au déplacement de taux delta(y) ?
+
+> Il s'agit de la relation de base que la duration permet d'établir...
+
+1. [ ] delta(B)/B = D * delta(y)
+1. [x] delta(B)/B = -D * delta(y)
+    > Correct : une hausse de taux (delta(y) > 0) entraîne une baisse du prix. Le signe négatif est essentiel.
+1. [ ] delta(B)/B = -D * delta(y) + C * delta(y)^2
+1. [ ] delta(B)/B = D / delta(y)
+```
+
+```{quizdown}
+### Pourquoi la duration seule est-elle insuffisante pour estimer l'impact d'un grand choc de taux ?
+
+> Réfléchis à la nature mathématique de la relation prix-taux...
+
+1. [ ] Parce que la duration change quand les taux évoluent
+1. [ ] Parce que la duration dépend de la maturité résiduelle
+1. [x] Parce que la relation prix-taux est non linéaire, et la duration ne capture que le terme de premier ordre
+    > Correct : pour de grands mouvements de taux, le terme de convexité (second ordre) devient significatif. Ignorer la convexité entraîne une erreur d'estimation non négligeable.
+1. [ ] Parce que la duration est définie uniquement pour des taux positifs
+```
+
+```{quizdown}
+### Quelle est la formule de la duration modifiée (Modified Duration) ?
+
+> Elle relie la duration de Macaulay à une convention de capitalisation discrète, avec nc périodes par an...
+
+1. [ ] D_mod = D * (1 + y / nc)
+1. [x] D_mod = D / (1 + y / nc)
+    > Correct : la duration modifiée est obtenue en divisant la duration de Macaulay par (1 + y/nc), ce qui l'adapte à une convention de capitalisation non continue.
+1. [ ] D_mod = D - y / nc
+1. [ ] D_mod = D * nc / y
+```
+
+```{quizdown}
+### Comment calcule-t-on la duration (DV01) d'un portefeuille obligataire composé de plusieurs obligations ?
+
+> Pense à comment combiner les propriétés individuelles des obligations...
+
+1. [ ] En prenant la duration de l'obligation de plus grande valeur de marché
+1. [ ] En faisant la moyenne arithmétique simple des durations individuelles
+1. [x] En calculant la somme pondérée des durations individuelles, pondérée par les poids en valeur de marché
+    > Correct : D_portefeuille = somme(w_k * D_k). La duration est additive selon les poids en valeur de marché.
+1. [ ] En additionnant directement les durations de chaque obligation
+```
+
+```{quizdown}
+### Un gestionnaire de portefeuille anticipe une hausse prochaine des taux d'intérêt. Quelle action est la plus appropriée ?
+
+> Réfléchis au signe de la relation delta(B)/B = -D * delta(y)...
+
+1. [ ] Augmenter la duration du portefeuille pour amplifier les gains
+1. [x] Réduire la duration du portefeuille pour limiter les pertes
+    > Correct : une hausse de taux (delta(y) > 0) entraîne une baisse du prix. Plus la duration est faible, plus la perte est limitée.
+1. [ ] Maintenir la duration constante, elle n'affecte pas les gains ou pertes
+1. [ ] Eliminer toutes les obligations longues et n'acheter que des obligations courtes sans analyse préalable
+```
+
+```{quizdown}
+### Lequel de ces mouvements de la courbe des taux correspond a un aplatissement (flattening) ?
+
+> Pense a l'évolution de l'écart entre les taux courts et les taux longs...
+
+1. [ ] Les taux courts et longs augmentent tous du même montant
+1. [x] Les taux courts augmentent et/ou les taux longs diminuent, réduisant l'écart
+    > Correct : l'aplatissement réduit la pente de la courbe. Il est souvent associé à une anticipation de ralentissement économique.
+1. [ ] Les taux courts diminuent et/ou les taux longs augmentent, élargissant l'écart
+1. [ ] La courbe se déplace vers le bas de façon uniforme
+```
+
+```{quizdown}
+### Quelle partie de la courbe des taux est principalement influencée par les interventions des banques centrales ?
+
+> Réfléchis aux instruments sur lesquels les banques centrales agissent directement...
+
+1. [x] La partie courte de la courbe (court terme)
+    > Correct : les banques centrales fixent les taux directeurs qui influencent directement les taux à court terme.
+1. [ ] La partie longue de la courbe (long terme)
+1. [ ] La partie médiane uniquement (5 à 10 ans)
+1. [ ] L'ensemble de la courbe de façon identique
+```
+
+---
+
+## Niveau 3 — Maitrise
+
+```{quizdown}
+### La courbe zéro-coupon indique les taux suivants : 1 an = 10 %, 2 ans = 10,5 %. Quel est le taux forward 1 an dans 1 an ?
+
+> Applique la formule r = (R2 * T2 - R1 * T1) / (T2 - T1) avec les valeurs données...
+
+1. [ ] 10,25 %
+    > Incorrect : 10,25 % serait la simple moyenne arithmétique, ce qui ignore la structure temporelle.
+1. [x] 11 %
+    > Correct : r = (0,105 * 2 - 0,10 * 1) / 1 = (0,21 - 0,10) / 1 = 11 %.
+1. [ ] 10,5 %
+1. [ ] 10,75 %
+```
+
+```{quizdown}
+### Avec les taux suivants : 2 ans = 10,5 % et 3 ans = 10,8 %, quel est le taux forward 1 an dans 2 ans ?
+
+> Applique la formule générale avec T1 = 2 et T2 = 3...
+
+1. [ ] 11 %
+1. [ ] 11,1 %
+1. [x] 11,4 %
+    > Correct : r = (0,108 * 3 - 0,105 * 2) / 1 = (0,324 - 0,210) / 1 = 11,4 %.
+1. [ ] 10,65 %
+    > Incorrect : 10,65 % serait la moyenne des deux taux, ce qui n'est pas la bonne formule.
+```
+
+```{quizdown}
+### Une obligation a une duration D = 2,653 ans et un prix B = 94,213 USD. Pour un déplacement de taux de +0,1 %, quelle est l'estimation de la variation de prix ?
+
+> Utilise la relation delta(B) = -B * D * delta(y)...
+
+1. [ ] +0,250 USD
+1. [ ] -2,499 USD
+1. [x] -0,250 USD
+    > Correct : delta(B) = -94,213 * 2,653 * 0,001 = -0,250 USD. Le signe négatif reflète la relation inverse prix-taux.
+1. [ ] -0,025 USD
+    > Incorrect : attention à l'unité de delta(y). Un déplacement de 0,1 % = 0,001 en décimal, pas 0,01.
+```
+
+```{quizdown}
+### Pour le même portefeuille (B = 94,213, D = 2,653), l'estimation par la duration seule pour un choc de +1 % donne -2,499 USD alors que la variation réelle est -2,464 USD. Comment expliquer cet écart ?
+
+> Pense à la forme de la courbe prix-taux et à l'ordre de l'approximation utilisée...
+
+1. [ ] L'écart est dû à une erreur de calcul dans la duration
+1. [ ] L'écart provient d'une mauvaise estimation du prix de l'obligation
+1. [x] La relation prix-taux est non linéaire (convexe) : la duration ne capture que le premier ordre de l'approximation de Taylor
+    > Correct : pour des chocs importants, le terme de convexité (second ordre) devient significatif. Ici, ajouter 0,5 * C * (delta(y))^2 avec C = 7,570 corrige exactement l'écart.
+1. [ ] L'écart prouve que la duration est un mauvais indicateur de risque
+```
+
+```{quizdown}
+### Quelle est la formule d'approximation complète au second ordre qui corrige l'estimation de prix en incluant la convexite ?
+
+> Il s'agit du developpement de Taylor a l'ordre 2 de B en fonction de y...
+
+1. [ ] delta(B)/B = -D * delta(y) - (1/2) * C * (delta(y))^2
+1. [ ] delta(B)/B = D * delta(y) + (1/2) * C * (delta(y))^2
+1. [x] delta(B)/B = -D * delta(y) + (1/2) * C * (delta(y))^2
+    > Correct : le signe positif devant le terme de convexité reflète que la convexité joue toujours en faveur du détenteur de l'obligation.
+1. [ ] delta(B)/B = -D * delta(y) * C * (delta(y))^2
+```
+
+```{quizdown}
+### Dans quel contexte pratique les taux forward sont-ils directement utilises par les banques ?
+
+> Pense a un produit financier courant impliquant un engagement de taux pour une periode future...
+
+1. [ ] Pour fixer le taux de rendement des obligations zero-coupon
+1. [ ] Pour calculer la duration d'un portefeuille multi-devises
+1. [x] Pour calculer le taux d'un credit immobilier futur, en combinant les taux zero-coupon de maturites differentes
+    > Correct : si un client veut un prêt dans 1 an pour 10 ans, la banque utilise les taux zéro-coupon à 1 an et 11 ans pour calculer le taux forward à proposer.
+1. [ ] Pour estimer l'impact d'une variation de taux sur le prix d'une action
+```
+
+```{quizdown}
+### Remets dans l'ordre les etapes du calcul de la duration de Macaulay d'une obligation.
+
+> Chaque etape s'appuie sur la precedente...
+
+1. Calculer la valeur actualisee de chaque flux ci * exp(-y * ti)
+2. Diviser chaque valeur actualisee par le prix total B pour obtenir les poids wi
+3. Multiplier chaque poids wi par la date correspondante ti
+4. Sommer les produits (ti * wi) pour obtenir la duration D
+```
+
+```{quizdown}
+### Un investisseur compare deux obligations de meme maturite : l'une a coupons eleves, l'autre a coupons faibles. Laquelle a la duration la plus longue ?
+
+> Rappelle-toi l'effet des coupons intermediaires sur le centre de gravite temporel des flux...
+
+1. [ ] Celle a coupons eleves
+    > Incorrect : des coupons eleves signifient des flux plus importants à court terme, ce qui tire la duration vers le présent et la raccourcit.
+1. [x] Celle a coupons faibles
+    > Correct : des coupons faibles concentrent davantage la valeur sur le remboursement final, éloignant le centre de gravité dans le temps et allongeant la duration.
+1. [ ] Les deux ont la même duration car elles ont la même maturité
+1. [ ] Impossible de conclure sans connaître le niveau des taux
+```
+
+```{quizdown}
+### Quelle affirmation sur la Key Rate Duration (duration par facteur cle) est correcte ?
+
+> Ce type de duration a été conçu pour dépasser les limites du déplacement parallèle...
+
+1. [ ] Elle mesure la variation du prix pour un déplacement parallèle de toute la courbe
+1. [x] Elle mesure la sensibilité du prix à des variations de taux sur des maturités spécifiques, permettant d'analyser les chocs non parallèles
+    > Correct : contrairement à la duration de Macaulay, la Key Rate Duration décompose la sensibilité par segment de la courbe.
+1. [ ] Elle est équivalente au DV01 pour les obligations à taux fixe
+1. [ ] Elle s'applique uniquement aux obligations avec options incorporées
+```
+
+```{quizdown}
+### Remets dans l'ordre les etapes permettant de verifier l'absence d'arbitrage pour un taux forward.
+
+> Pense à la stratégie consistant à acheter une obligation longue et vendre une obligation courte...
+
+1. Observer les taux zero-coupon a deux maturites T1 et T2
+2. Calculer le taux forward theorique avec la formule r = (R2*T2 - R1*T1)/(T2 - T1)
+3. Comparer le taux forward theorique au taux forward observable sur le marche
+4. Si les deux taux different, construire une strategie d'achat/vente pour en profiter
+5. L'arbitrage disparait quand le taux observe converge vers le taux theorique
+```
+
+```{quizdown}
+### Quelle est la signification du DV01 (Dollar Value of a Basis Point) ?
+
+> Un point de base correspond a 0,01 %...
+
+1. [ ] La valeur en dollars d'une obligation pour un taux de 1 %
+1. [ ] La variation relative du prix de l'obligation pour une hausse de 1 point de base
+1. [x] La variation absolue en dollars du prix de l'obligation pour une variation de 1 % du taux
+    > Correct : DV01 = D_mod * B / 100. C'est un outil clé en gestion de portefeuille car il exprime le risque en termes monétaires absolus.
+1. [ ] Le rendement en dollars d'une obligation de valeur nominale 1 USD
+```
