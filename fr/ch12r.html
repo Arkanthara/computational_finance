@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Options - Notions fondamentales – Finance computationnelle</title>
+<title>Obligations : sensibilité au temps et aux taux — Révision – Finance computationnelle</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -7446,7 +7446,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch9.html">9. Options - notions de base</a></li><li class="breadcrumb-item"><a href="./ch9.html">Détails</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch12.html">12. Obligations - sensibilités temps et taux</a></li><li class="breadcrumb-item"><a href="./ch12r.html">Synthèse</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -7709,16 +7709,16 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
  <span class="menu-text">9. Options - notions de base</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch9.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch9.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Détails</span></a>
   </div>
 </li>
@@ -7796,13 +7796,13 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
  <span class="menu-text">12. Obligations - sensibilités temps et taux</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch12.html" class="sidebar-item-text sidebar-link">
@@ -7811,7 +7811,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch12r.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch12r.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Synthèse</span></a>
   </div>
 </li>
@@ -7893,68 +7893,28 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction-aux-options" id="toc-introduction-aux-options" class="nav-link active" data-scroll-target="#introduction-aux-options">Introduction aux options</a>
+  <li><a href="#taux-forward-forward-rates" id="toc-taux-forward-forward-rates" class="nav-link active" data-scroll-target="#taux-forward-forward-rates">Taux forward (Forward Rates)</a>
   <ul class="collapse">
-  <li><a href="#quest-ce-quune-option" id="toc-quest-ce-quune-option" class="nav-link" data-scroll-target="#quest-ce-quune-option">Qu’est-ce qu’une option ?</a></li>
-  <li><a href="#options-européennes-et-américaines" id="toc-options-européennes-et-américaines" class="nav-link" data-scroll-target="#options-européennes-et-américaines">Options européennes et américaines</a></li>
-  <li><a href="#les-quatre-positions-possibles" id="toc-les-quatre-positions-possibles" class="nav-link" data-scroll-target="#les-quatre-positions-possibles">Les quatre positions possibles</a></li>
-  </ul></li>
-  <li><a href="#profit-et-payoff" id="toc-profit-et-payoff" class="nav-link" data-scroll-target="#profit-et-payoff">Profit et payoff</a>
-  <ul class="collapse">
-  <li><a href="#exemple-introductif-le-long-call" id="toc-exemple-introductif-le-long-call" class="nav-link" data-scroll-target="#exemple-introductif-le-long-call">Exemple introductif : le long call</a></li>
-  <li><a href="#profils-de-profit-des-quatre-positions" id="toc-profils-de-profit-des-quatre-positions" class="nav-link" data-scroll-target="#profils-de-profit-des-quatre-positions">Profils de profit des quatre positions</a></li>
-  </ul></li>
-  <li><a href="#variables-influençant-le-prix-dune-option" id="toc-variables-influençant-le-prix-dune-option" class="nav-link" data-scroll-target="#variables-influençant-le-prix-dune-option">Variables influençant le prix d’une option</a>
-  <ul class="collapse">
-  <li><a href="#les-paramètres-clés" id="toc-les-paramètres-clés" class="nav-link" data-scroll-target="#les-paramètres-clés">Les paramètres clés</a></li>
-  </ul></li>
-  <li><a href="#bornes-du-prix-dune-option" id="toc-bornes-du-prix-dune-option" class="nav-link" data-scroll-target="#bornes-du-prix-dune-option">Bornes du prix d’une option</a>
-  <ul class="collapse">
-  <li><a href="#rappel-mathématique-actualisation" id="toc-rappel-mathématique-actualisation" class="nav-link" data-scroll-target="#rappel-mathématique-actualisation">Rappel mathématique : actualisation</a></li>
-  <li><a href="#bornes-supérieures" id="toc-bornes-supérieures" class="nav-link" data-scroll-target="#bornes-supérieures">Bornes supérieures</a></li>
-  <li><a href="#bornes-inférieures" id="toc-bornes-inférieures" class="nav-link" data-scroll-target="#bornes-inférieures">Bornes inférieures</a></li>
-  <li><a href="#résumé-des-bornes" id="toc-résumé-des-bornes" class="nav-link" data-scroll-target="#résumé-des-bornes">Résumé des bornes</a></li>
-  </ul></li>
-  <li><a href="#parité-put-call-put-call-parity" id="toc-parité-put-call-put-call-parity" class="nav-link" data-scroll-target="#parité-put-call-put-call-parity">Parité put-call (Put-Call Parity)</a>
-  <ul class="collapse">
-  <li><a href="#définition-et-démonstration" id="toc-définition-et-démonstration" class="nav-link" data-scroll-target="#définition-et-démonstration">Définition et démonstration</a></li>
-  <li><a href="#interprétation" id="toc-interprétation" class="nav-link" data-scroll-target="#interprétation">Interprétation</a></li>
-  </ul></li>
-  <li><a href="#stratégies-de-trading-avec-les-options" id="toc-stratégies-de-trading-avec-les-options" class="nav-link" data-scroll-target="#stratégies-de-trading-avec-les-options">Stratégies de trading avec les options</a>
-  <ul class="collapse">
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#long-put-long-actif-protection" id="toc-long-put-long-actif-protection" class="nav-link" data-scroll-target="#long-put-long-actif-protection">Long put + long actif (protection)</a></li>
-  <li><a href="#bull-spread-écart-haussier" id="toc-bull-spread-écart-haussier" class="nav-link" data-scroll-target="#bull-spread-écart-haussier">Bull spread (Écart haussier)</a></li>
-  <li><a href="#long-butterfly-papillon-long" id="toc-long-butterfly-papillon-long" class="nav-link" data-scroll-target="#long-butterfly-papillon-long">Long butterfly (Papillon long)</a></li>
-  <li><a href="#protection-dactifs-de-fonds-de-pension" id="toc-protection-dactifs-de-fonds-de-pension" class="nav-link" data-scroll-target="#protection-dactifs-de-fonds-de-pension">Protection d’actifs de fonds de pension</a></li>
-  </ul></li>
-  <li><a href="#pricing-larbre-binomial-binomial-tree" id="toc-pricing-larbre-binomial-binomial-tree" class="nav-link" data-scroll-target="#pricing-larbre-binomial-binomial-tree">Pricing : l’arbre binomial (Binomial Tree)</a>
-  <ul class="collapse">
-  <li><a href="#principe-général" id="toc-principe-général" class="nav-link" data-scroll-target="#principe-général">Principe général</a></li>
-  <li><a href="#structure-de-larbre-à-une-étape" id="toc-structure-de-larbre-à-une-étape" class="nav-link" data-scroll-target="#structure-de-larbre-à-une-étape">Structure de l’arbre à une étape</a></li>
-  <li><a href="#calcul-du-delta-de-couverture-delta" id="toc-calcul-du-delta-de-couverture-delta" class="nav-link" data-scroll-target="#calcul-du-delta-de-couverture-delta">Calcul du delta de couverture (<span class="math inline">\(\Delta\)</span>)</a></li>
-  <li><a href="#calcul-du-prix-de-loption" id="toc-calcul-du-prix-de-loption" class="nav-link" data-scroll-target="#calcul-du-prix-de-loption">Calcul du prix de l’option</a></li>
-  <li><a href="#calibration-de-u-d-et-p" id="toc-calibration-de-u-d-et-p" class="nav-link" data-scroll-target="#calibration-de-u-d-et-p">Calibration de <span class="math inline">\(u\)</span>, <span class="math inline">\(d\)</span> et <span class="math inline">\(p\)</span></a></li>
+  <li><a href="#définition-formule-clé" id="toc-définition-formule-clé" class="nav-link" data-scroll-target="#définition-formule-clé">Définition &amp; formule clé</a></li>
+  <li><a href="#logique-dabsence-darbitrage" id="toc-logique-dabsence-darbitrage" class="nav-link" data-scroll-target="#logique-dabsence-darbitrage">Logique d’absence d’arbitrage</a></li>
   <li><a href="#exemple-numérique" id="toc-exemple-numérique" class="nav-link" data-scroll-target="#exemple-numérique">Exemple numérique</a></li>
-  <li><a href="#extension-à-plusieurs-étapes" id="toc-extension-à-plusieurs-étapes" class="nav-link" data-scroll-target="#extension-à-plusieurs-étapes">Extension à plusieurs étapes</a></li>
   </ul></li>
-  <li><a href="#pricing-le-modèle-de-black-scholes" id="toc-pricing-le-modèle-de-black-scholes" class="nav-link" data-scroll-target="#pricing-le-modèle-de-black-scholes">Pricing : le modèle de Black-Scholes</a>
+  <li><a href="#évolution-de-la-courbe-des-taux-yield-curve-evolution" id="toc-évolution-de-la-courbe-des-taux-yield-curve-evolution" class="nav-link" data-scroll-target="#évolution-de-la-courbe-des-taux-yield-curve-evolution">Évolution de la courbe des taux (Yield Curve Evolution)</a></li>
+  <li><a href="#duration-duration" id="toc-duration-duration" class="nav-link" data-scroll-target="#duration-duration">Duration (Duration)</a>
   <ul class="collapse">
-  <li><a href="#contexte-et-hypothèses" id="toc-contexte-et-hypothèses" class="nav-link" data-scroll-target="#contexte-et-hypothèses">Contexte et hypothèses</a></li>
-  <li><a href="#formules-de-black-scholes" id="toc-formules-de-black-scholes" class="nav-link" data-scroll-target="#formules-de-black-scholes">Formules de Black-Scholes</a></li>
-  <li><a href="#vérification-des-bornes-avec-black-scholes" id="toc-vérification-des-bornes-avec-black-scholes" class="nav-link" data-scroll-target="#vérification-des-bornes-avec-black-scholes">Vérification des bornes avec Black-Scholes</a></li>
-  <li><a href="#exemple-numérique-avec-black-scholes" id="toc-exemple-numérique-avec-black-scholes" class="nav-link" data-scroll-target="#exemple-numérique-avec-black-scholes">Exemple numérique avec Black-Scholes</a></li>
-  <li><a href="#cas-dutilisation" id="toc-cas-dutilisation" class="nav-link" data-scroll-target="#cas-dutilisation">Cas d’utilisation</a></li>
+  <li><a href="#définition-duration-de-macaulay" id="toc-définition-duration-de-macaulay" class="nav-link" data-scroll-target="#définition-duration-de-macaulay">Définition — Duration de Macaulay</a></li>
+  <li><a href="#relation-durationprix" id="toc-relation-durationprix" class="nav-link" data-scroll-target="#relation-durationprix">Relation duration–prix ⚠️</a></li>
+  <li><a href="#validation-numérique-exemple-10-3-ans-yield-12" id="toc-validation-numérique-exemple-10-3-ans-yield-12" class="nav-link" data-scroll-target="#validation-numérique-exemple-10-3-ans-yield-12">Validation numérique (exemple 10 %, 3 ans, yield 12 %)</a></li>
   </ul></li>
-  <li><a href="#le-smile-de-volatilité-volatility-smile" id="toc-le-smile-de-volatilité-volatility-smile" class="nav-link" data-scroll-target="#le-smile-de-volatilité-volatility-smile">Le smile de volatilité (Volatility Smile)</a>
+  <li><a href="#convexité-convexity" id="toc-convexité-convexity" class="nav-link" data-scroll-target="#convexité-convexity">Convexité (Convexity)</a>
   <ul class="collapse">
-  <li><a href="#volatilité-implicite" id="toc-volatilité-implicite" class="nav-link" data-scroll-target="#volatilité-implicite">Volatilité implicite</a></li>
-  <li><a href="#le-problème-la-volatilité-implicite-nest-pas-constante" id="toc-le-problème-la-volatilité-implicite-nest-pas-constante" class="nav-link" data-scroll-target="#le-problème-la-volatilité-implicite-nest-pas-constante">Le problème : la volatilité implicite n’est pas constante</a></li>
-  <li><a href="#forme-du-smile" id="toc-forme-du-smile" class="nav-link" data-scroll-target="#forme-du-smile">Forme du smile</a></li>
-  <li><a href="#surface-de-volatilité" id="toc-surface-de-volatilité" class="nav-link" data-scroll-target="#surface-de-volatilité">Surface de volatilité</a></li>
-  <li><a href="#utilisation-pratique-de-la-volatilité-implicite" id="toc-utilisation-pratique-de-la-volatilité-implicite" class="nav-link" data-scroll-target="#utilisation-pratique-de-la-volatilité-implicite">Utilisation pratique de la volatilité implicite</a></li>
+  <li><a href="#formule" id="toc-formule" class="nav-link" data-scroll-target="#formule">Formule</a></li>
+  <li><a href="#approximation-du-2nd-ordre" id="toc-approximation-du-2nd-ordre" class="nav-link" data-scroll-target="#approximation-du-2nd-ordre">Approximation du 2nd ordre</a></li>
   </ul></li>
-  <li><a href="#points-clés-à-retenir" id="toc-points-clés-à-retenir" class="nav-link" data-scroll-target="#points-clés-à-retenir">Points clés à retenir</a></li>
+  <li><a href="#types-de-duration" id="toc-types-de-duration" class="nav-link" data-scroll-target="#types-de-duration">Types de duration</a></li>
+  <li><a href="#gestion-de-portefeuille" id="toc-gestion-de-portefeuille" class="nav-link" data-scroll-target="#gestion-de-portefeuille">Gestion de portefeuille</a></li>
+  <li><a href="#relations-entre-concepts" id="toc-relations-entre-concepts" class="nav-link" data-scroll-target="#relations-entre-concepts">Relations entre concepts</a></li>
+  <li><a href="#formules-à-retenir-absolument" id="toc-formules-à-retenir-absolument" class="nav-link" data-scroll-target="#formules-à-retenir-absolument">Formules à retenir absolument</a></li>
   </ul>
 </nav>
     </div>
@@ -7962,9 +7922,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch9.html">9. Options - notions de base</a></li><li class="breadcrumb-item"><a href="./ch9.html">Détails</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch12.html">12. Obligations - sensibilités temps et taux</a></li><li class="breadcrumb-item"><a href="./ch12r.html">Synthèse</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Options - Notions fondamentales</h1>
+<h1 class="title">Obligations : sensibilité au temps et aux taux — Révision</h1>
 </div>
 
 
@@ -7981,172 +7941,118 @@ window.Quarto = {
 </header>
 
 
-<section id="introduction-aux-options" class="level2">
-<h2 class="anchored" data-anchor-id="introduction-aux-options">Introduction aux options</h2>
-<section id="quest-ce-quune-option" class="level3">
-<h3 class="anchored" data-anchor-id="quest-ce-quune-option">Qu’est-ce qu’une option ?</h3>
-<p>Une <strong>option</strong> est un contrat financier qui donne à son détenteur le <strong>droit</strong> — mais non l’obligation — d’acheter ou de vendre un actif sous-jacent à un prix fixé à l’avance, appelé <strong>prix d’exercice</strong> (Strike), jusqu’à une date donnée appelée <strong>maturité</strong> (Maturity).</p>
-<p>Il existe deux types fondamentaux d’options :</p>
+<section id="taux-forward-forward-rates" class="level1">
+<h1>Taux forward (Forward Rates)</h1>
+<section id="définition-formule-clé" class="level2">
+<h2 class="anchored" data-anchor-id="définition-formule-clé">Définition &amp; formule clé</h2>
+<p><strong>Taux forward</strong> : taux d’intérêt implicitement contenu dans la courbe zéro-coupon pour une période future.</p>
+<p><span class="math display">\[\boxed{r_{T_1, T_2} = \frac{R_2 T_2 - R_1 T_1}{T_2 - T_1}}\]</span></p>
 <ul>
-<li><strong>Call (option d’achat)</strong> : donne le droit d’<em>acheter</em> l’actif au prix d’exercice.</li>
-<li><strong>Put (option de vente)</strong> : donne le droit de <em>vendre</em> l’actif au prix d’exercice.</li>
+<li><span class="math inline">\(R_1, R_2\)</span> : taux zéro-coupon aux maturités <span class="math inline">\(T_1 &lt; T_2\)</span></li>
+<li>Convention : <strong>composition continue</strong></li>
 </ul>
-<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+</section>
+<section id="logique-dabsence-darbitrage" class="level2">
+<h2 class="anchored" data-anchor-id="logique-dabsence-darbitrage">Logique d’absence d’arbitrage</h2>
+<p>Deux stratégies équivalentes sur 2 ans → même résultat final :</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Stratégie</th>
+<th style="text-align: left;">Calcul</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Investir 2 ans directement</td>
+<td style="text-align: left;"><span class="math inline">\(100 \cdot e^{R_2 \cdot 2}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Investir 1 an + forward 1y1</td>
+<td style="text-align: left;"><span class="math inline">\(100 \cdot e^{R_1} \cdot e^{r_{1,2}}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>→ Si <span class="math inline">\(r_{1,2}\)</span> dévie → <strong>arbitrage possible</strong> (profit sans risque).</p>
+</section>
+<section id="exemple-numérique" class="level2">
+<h2 class="anchored" data-anchor-id="exemple-numérique">Exemple numérique</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Maturité</th>
+<th style="text-align: center;">Taux zéro (%)</th>
+<th style="text-align: center;">Taux forward année suivante (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1 an</td>
+<td style="text-align: center;">10,0</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2 ans</td>
+<td style="text-align: center;">10,5</td>
+<td style="text-align: center;"><strong>11,0</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3 ans</td>
+<td style="text-align: center;">10,8</td>
+<td style="text-align: center;"><strong>11,4</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Calcul 1y1 : <span class="math inline">\(\frac{0{,}105 \times 2 - 0{,}10 \times 1}{1} = 11\%\)</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Application pratique">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>À retenir
+<span class="screen-reader-only">Tip</span>Application pratique
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Une option est une <strong>assurance financière</strong>. L’acheteur paie une prime pour se protéger contre une évolution défavorable du marché, tout en conservant la possibilité de profiter d’une évolution favorable.</p>
+<p><strong>Prêt immobilier futur</strong> : prêt dans 1 an pour 10 ans → banquier utilise les taux à <strong>1 an</strong> et <strong>11 ans</strong>.</p>
 </div>
 </div>
+<hr>
 </section>
-<section id="options-européennes-et-américaines" class="level3">
-<h3 class="anchored" data-anchor-id="options-européennes-et-américaines">Options européennes et américaines</h3>
-<p>La nature de l’option détermine <strong>quand</strong> elle peut être exercée :</p>
-<ul>
-<li><strong>Option européenne</strong> : ne peut être exercée qu’à la date de maturité exacte. Plus simple à analyser théoriquement, c’est le type privilégié pour les modèles de valorisation.</li>
-<li><strong>Option américaine</strong> : peut être exercée à <strong>n’importe quel moment</strong> avant ou à la date de maturité. Plus flexible, mais aussi plus complexe à pricer.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Pensez à l’option européenne comme un bon d’achat utilisable uniquement à sa date d’expiration, et à l’option américaine comme un bon utilisable à tout moment jusqu’à cette date.</p>
-</div>
-</div>
-<p>En pratique, la majorité des options négociées sur les marchés sont <strong>américaines</strong>, mais les modèles théoriques — notamment Black-Scholes — sont développés pour les options européennes, par souci de simplicité mathématique.</p>
 </section>
-<section id="les-quatre-positions-possibles" class="level3">
-<h3 class="anchored" data-anchor-id="les-quatre-positions-possibles">Les quatre positions possibles</h3>
-<p>Toute transaction sur option implique un <strong>acheteur</strong> (position longue) et un <strong>vendeur</strong> (position courte, aussi appelé <em>writer</em> ou émetteur). Cela donne quatre types de positions :</p>
+<section id="évolution-de-la-courbe-des-taux-yield-curve-evolution" class="level1">
+<h1>Évolution de la courbe des taux (Yield Curve Evolution)</h1>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 25%">
+<col style="width: 30%">
+<col style="width: 44%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Position</th>
-<th>Description</th>
-<th>Droit / Obligation</th>
+<th style="text-align: left;">Mouvement</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Signal économique</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Long call</strong></td>
-<td>Achète le droit d’acheter</td>
-<td>Paie la prime, droit d’acheter</td>
+<td style="text-align: left;"><strong>Déplacement parallèle</strong> (Parallel shift)</td>
+<td style="text-align: left;">Tous les taux bougent du même montant</td>
+<td style="text-align: left;">Politique monétaire uniforme</td>
 </tr>
 <tr class="even">
-<td><strong>Short call</strong></td>
-<td>Vend le droit d’acheter</td>
-<td>Reçoit la prime, obligation de vendre</td>
+<td style="text-align: left;"><strong>Aplatissement</strong> (Flattening)</td>
+<td style="text-align: left;">Taux courts ↑ et/ou taux longs ↓</td>
+<td style="text-align: left;">Anticipation de ralentissement</td>
 </tr>
 <tr class="odd">
-<td><strong>Long put</strong></td>
-<td>Achète le droit de vendre</td>
-<td>Paie la prime, droit de vendre</td>
-</tr>
-<tr class="even">
-<td><strong>Short put</strong></td>
-<td>Vend le droit de vendre</td>
-<td>Reçoit la prime, obligation d’acheter</td>
+<td style="text-align: left;"><strong>Pentification</strong> (Steepening)</td>
+<td style="text-align: left;">Taux courts ↓ et/ou taux longs ↑</td>
+<td style="text-align: left;">Anticipation de reprise</td>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-warning callout-titled" title="Important">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Émettre (vendre) une option, c’est <strong>vendre une assurance</strong>. En contrepartie de la prime reçue, le vendeur prend en charge le risque. Cette position est particulièrement risquée pour le <strong>short call</strong>, dont la perte est théoriquement <strong>illimitée</strong> si le prix de l’actif monte indéfiniment.</p>
-</div>
-</div>
-<hr>
-</section>
-</section>
-<section id="profit-et-payoff" class="level2">
-<h2 class="anchored" data-anchor-id="profit-et-payoff">Profit et payoff</h2>
-<section id="exemple-introductif-le-long-call" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-introductif-le-long-call">Exemple introductif : le long call</h3>
-<p>Considérons un investisseur qui achète un <strong>long call</strong> sur un titre <span class="math inline">\(S\)</span> avec les paramètres suivants :</p>
-<ul>
-<li>Prix du call : <span class="math inline">\(c = 5\)</span> USD</li>
-<li>Prix d’exercice : <span class="math inline">\(K = 60\)</span> USD</li>
-<li>Maturité : <span class="math inline">\(T\)</span></li>
-</ul>
-<p>À maturité, le <strong>profit</strong> de cet investisseur est :</p>
-<p><span class="math display">\[\text{Profit} = \max(S_T - K, 0) - c\]</span></p>
-<p>où <span class="math inline">\(S_T\)</span> est le prix de l’actif à maturité.</p>
-<p><strong>Analyse :</strong></p>
-<ul>
-<li>Si <span class="math inline">\(S_T \leq 60\)</span> : l’option n’est pas exercée (acheter à 60 alors que le marché est moins cher n’a aucun intérêt). La perte est limitée à la prime payée : <span class="math inline">\(-5\)</span> USD.</li>
-<li>Si <span class="math inline">\(S_T &gt; 60\)</span> : l’option est exercée. Le profit devient positif dès que <span class="math inline">\(S_T &gt; 65\)</span> (le point mort ou <em>break-even</em>).</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>La prime payée représente le <strong>coût de l’assurance</strong>. Même si l’option n’est jamais exercée, l’investisseur aura protégé son portefeuille ou bénéficié d’un levier potentiel.</p>
-</div>
-</div>
-</section>
-<section id="profils-de-profit-des-quatre-positions" class="level3">
-<h3 class="anchored" data-anchor-id="profils-de-profit-des-quatre-positions">Profils de profit des quatre positions</h3>
-<p>Chaque position offre un profil de risque/rendement distinct :</p>
-<section id="long-call" class="level4">
-<h4 class="anchored" data-anchor-id="long-call">Long call</h4>
-<ul>
-<li><strong>Perte maximale</strong> : limitée à la prime <span class="math inline">\(c\)</span>.</li>
-<li><strong>Gain potentiel</strong> : illimité (le prix peut monter indéfiniment).</li>
-<li><strong>Seuil de rentabilité</strong> : <span class="math inline">\(S_T = K + c\)</span>.</li>
-</ul>
-</section>
-<section id="short-call" class="level4">
-<h4 class="anchored" data-anchor-id="short-call">Short call</h4>
-<ul>
-<li><strong>Gain maximal</strong> : limité à la prime <span class="math inline">\(c\)</span> encaissée.</li>
-<li><strong>Perte potentielle</strong> : <strong>illimitée</strong> si <span class="math inline">\(S_T\)</span> augmente fortement.</li>
-<li>C’est la position la plus risquée de toutes.</li>
-</ul>
-</section>
-<section id="long-put" class="level4">
-<h4 class="anchored" data-anchor-id="long-put">Long put</h4>
-<ul>
-<li><strong>Perte maximale</strong> : limitée à la prime <span class="math inline">\(p\)</span>.</li>
-<li><strong>Gain potentiel</strong> : limité (au maximum <span class="math inline">\(K - p\)</span>, atteint si <span class="math inline">\(S_T = 0\)</span>).</li>
-<li><strong>Seuil de rentabilité</strong> : <span class="math inline">\(S_T = K - p\)</span>.</li>
-</ul>
-</section>
-<section id="short-put" class="level4">
-<h4 class="anchored" data-anchor-id="short-put">Short put</h4>
-<ul>
-<li><strong>Gain maximal</strong> : limité à la prime <span class="math inline">\(p\)</span> encaissée.</li>
-<li><strong>Perte maximale</strong> : <span class="math inline">\(K - p\)</span> (si le sous-jacent tombe à zéro).</li>
-</ul>
 <div class="callout callout-style-default callout-note callout-titled" title="À retenir">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -8157,733 +8063,222 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>L’acheteur d’une option (long) a un <strong>risque limité</strong> à la prime payée. Le vendeur (short) bénéficie de la prime mais accepte un <strong>risque potentiellement très élevé</strong>.</p>
+<ul>
+<li>Partie <strong>courte</strong> de la courbe → pilotée par les <strong>banques centrales</strong></li>
+<li>Partie <strong>longue</strong> → pilotée par le <strong>marché</strong></li>
+</ul>
 </div>
 </div>
 <hr>
 </section>
-</section>
-</section>
-<section id="variables-influençant-le-prix-dune-option" class="level2">
-<h2 class="anchored" data-anchor-id="variables-influençant-le-prix-dune-option">Variables influençant le prix d’une option</h2>
-<section id="les-paramètres-clés" class="level3">
-<h3 class="anchored" data-anchor-id="les-paramètres-clés">Les paramètres clés</h3>
-<p>Le prix d’une option dépend de plusieurs variables fondamentales :</p>
-<section id="prix-courant-de-lactif-s_0" class="level4">
-<h4 class="anchored" data-anchor-id="prix-courant-de-lactif-s_0">Prix courant de l’actif (<span class="math inline">\(S_0\)</span>)</h4>
-<p>Plus le prix actuel de l’actif est élevé par rapport au strike, plus un call est précieux (et moins un put l’est).</p>
-</section>
-<section id="prix-dexercice-k" class="level4">
-<h4 class="anchored" data-anchor-id="prix-dexercice-k">Prix d’exercice (<span class="math inline">\(K\)</span>)</h4>
-<p>Le strike fixe le niveau à partir duquel l’option est rentable.</p>
-</section>
-<section id="notion-de-moneyness" class="level4">
-<h4 class="anchored" data-anchor-id="notion-de-moneyness">Notion de <em>moneyness</em></h4>
-<p>La relation entre <span class="math inline">\(S_0\)</span> et <span class="math inline">\(K\)</span> définit l’état de l’option :</p>
-<ul>
-<li><strong>At the money (ATM)</strong> : <span class="math inline">\(K = S_0\)</span> — l’option est à la monnaie.</li>
-<li><strong>In the money (ITM)</strong> : <span class="math inline">\(K &gt; S_0\)</span> pour un put, <span class="math inline">\(K &lt; S_0\)</span> pour un call — l’option a une valeur intrinsèque positive.</li>
-<li><strong>Out of the money (OTM)</strong> : <span class="math inline">\(K &lt; S_0\)</span> pour un put, <span class="math inline">\(K &gt; S_0\)</span> pour un call — l’option n’a pas de valeur intrinsèque.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>La <em>moneyness</em> indique à quel point l’option est “utile” immédiatement. Une option ITM a une valeur intrinsèque positive, tandis qu’une option OTM n’a que de la valeur temporelle.</p>
-</div>
-</div>
-</section>
-<section id="maturité-t" class="level4">
-<h4 class="anchored" data-anchor-id="maturité-t">Maturité (<span class="math inline">\(T\)</span>)</h4>
-<p>Plus la maturité est longue, plus il y a d’incertitude sur le futur et donc plus l’option est précieuse — toutes choses égales par ailleurs.</p>
-</section>
-<section id="volatilité-sigma" class="level4">
-<h4 class="anchored" data-anchor-id="volatilité-sigma">Volatilité (<span class="math inline">\(\sigma\)</span>)</h4>
-<p>La volatilité est le paramètre le plus influent. Une forte volatilité augmente la probabilité que l’actif atteigne (ou dépasse) le strike, ce qui augmente la valeur de l’option.</p>
-<div class="callout callout-style-default callout-warning callout-titled" title="Important">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>La volatilité augmente la valeur <strong>à la fois des calls et des puts</strong>. C’est contre-intuitif au premier abord, mais logique : une plus grande dispersion des prix futurs accroît les chances d’un gain pour les deux types d’options.</p>
-</div>
-</div>
-</section>
-<section id="taux-sans-risque-r" class="level4">
-<h4 class="anchored" data-anchor-id="taux-sans-risque-r">Taux sans risque (<span class="math inline">\(r\)</span>)</h4>
-<p>Le taux d’intérêt sans risque influence le prix via l’actualisation du prix d’exercice.</p>
-</section>
-<section id="paiements-intermédiaires" class="level4">
-<h4 class="anchored" data-anchor-id="paiements-intermédiaires">Paiements intermédiaires</h4>
-<p>Les dividendes, coupons ou autres flux versés pendant la vie de l’option réduisent généralement la valeur d’un call (car ils diminuent la valeur de l’actif).</p>
-<hr>
-</section>
-</section>
-</section>
-<section id="bornes-du-prix-dune-option" class="level2">
-<h2 class="anchored" data-anchor-id="bornes-du-prix-dune-option">Bornes du prix d’une option</h2>
-<section id="rappel-mathématique-actualisation" class="level3">
-<h3 class="anchored" data-anchor-id="rappel-mathématique-actualisation">Rappel mathématique : actualisation</h3>
-<p>Avant d’établir les bornes, rappelons la relation entre valeur présente et valeur future :</p>
-<p><span class="math display">\[p_T = p_0 \cdot e^{rT} \quad \Longleftrightarrow \quad p_0 = p_T \cdot e^{-rT}\]</span></p>
-<p>Cela signifie qu’un montant <span class="math inline">\(K\)</span> reçu en <span class="math inline">\(T\)</span> vaut aujourd’hui <span class="math inline">\(K \cdot e^{-rT}\)</span>.</p>
-</section>
-<section id="bornes-supérieures" class="level3">
-<h3 class="anchored" data-anchor-id="bornes-supérieures">Bornes supérieures</h3>
-<section id="pour-le-call-c-leq-s_0" class="level4">
-<h4 class="anchored" data-anchor-id="pour-le-call-c-leq-s_0">Pour le call : <span class="math inline">\(c \leq S_0\)</span></h4>
-<p>Si <span class="math inline">\(c &gt; S_0\)</span>, un arbitragiste pourrait :</p>
-<ol type="1">
-<li>Vendre le call (encaisser <span class="math inline">\(c\)</span>).</li>
-<li>Acheter l’actif (payer <span class="math inline">\(S_0\)</span>).</li>
-<li>Empocher la différence <span class="math inline">\(c - S_0 &gt; 0\)</span> <strong>sans aucun risque</strong>.</li>
-</ol>
-<p>Ce “repas gratuit” (<em>free lunch</em>) serait immédiatement exploité par le marché, ramenant le prix à <span class="math inline">\(c \leq S_0\)</span>.</p>
-</section>
-<section id="pour-le-put-p-leq-k" class="level4">
-<h4 class="anchored" data-anchor-id="pour-le-put-p-leq-k">Pour le put : <span class="math inline">\(p \leq K\)</span></h4>
-<p>Le payoff maximal d’un put est atteint quand <span class="math inline">\(S_T = 0\)</span> : l’option vaut alors <span class="math inline">\(K\)</span>.</p>
-<p>Si <span class="math inline">\(p &gt; K\)</span>, l’option coûte plus cher que le gain maximum possible : personne ne l’achèterait rationnellement. De plus, l’émetteur pourrait réaliser un profit arbitral.</p>
-</section>
-</section>
-<section id="bornes-inférieures" class="level3">
-<h3 class="anchored" data-anchor-id="bornes-inférieures">Bornes inférieures</h3>
-<section id="pour-le-call-c-geq-s_0---k-e-rt" class="level4">
-<h4 class="anchored" data-anchor-id="pour-le-call-c-geq-s_0---k-e-rt">Pour le call : <span class="math inline">\(c \geq S_0 - K e^{-rT}\)</span></h4>
-<p><strong>Démonstration par comparaison de portefeuilles :</strong></p>
-<p>Considérons deux portefeuilles :</p>
-<ul>
-<li><strong>Portefeuille A</strong> : un call <span class="math inline">\(c\)</span> + cash <span class="math inline">\(K e^{-rT}\)</span> (qui devient <span class="math inline">\(K\)</span> à maturité).</li>
-<li><strong>Portefeuille B</strong> : l’actif <span class="math inline">\(S\)</span>.</li>
-</ul>
-<p>À maturité :</p>
+<section id="duration-duration" class="level1">
+<h1>Duration (Duration)</h1>
+<section id="définition-duration-de-macaulay" class="level2">
+<h2 class="anchored" data-anchor-id="définition-duration-de-macaulay">Définition — Duration de Macaulay</h2>
+<p><span class="math display">\[\boxed{D = \sum_{i=1}^{n} (t_i - t) \cdot \frac{c_i \, e^{-y(t_i-t)}}{B(t)}}\]</span></p>
+<p>→ Moyenne pondérée des dates de paiement (poids = valeur actualisée relative de chaque flux).</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Cas</th>
-<th>Portefeuille A</th>
-<th>Portefeuille B</th>
+<th style="text-align: left;">Type d’obligation</th>
+<th style="text-align: left;">Duration</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(S_T &gt; K\)</span></td>
-<td><span class="math inline">\((S_T - K) + K = S_T\)</span></td>
-<td><span class="math inline">\(S_T\)</span></td>
+<td style="text-align: left;">Zéro-coupon, maturité <span class="math inline">\(n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(D = n\)</span></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(S_T \leq K\)</span></td>
-<td><span class="math inline">\(0 + K = K &gt; S_T\)</span></td>
-<td><span class="math inline">\(S_T\)</span></td>
+<td style="text-align: left;">Obligation à coupons, maturité <span class="math inline">\(n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(D &lt; n\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>A vaut <strong>toujours au moins autant</strong> que B. Donc :</p>
-<p><span class="math display">\[c + K e^{-rT} \geq S_0 \quad \Longrightarrow \quad c \geq S_0 - K e^{-rT}\]</span></p>
 </section>
-<section id="pour-le-put-p-geq-k-e-rt---s_0" class="level4">
-<h4 class="anchored" data-anchor-id="pour-le-put-p-geq-k-e-rt---s_0">Pour le put : <span class="math inline">\(p \geq K e^{-rT} - S_0\)</span></h4>
-<p>Par un raisonnement symétrique, on montre que :</p>
-<p><span class="math display">\[p \geq K e^{-rT} - S_0\]</span></p>
-</section>
-</section>
-<section id="résumé-des-bornes" class="level3">
-<h3 class="anchored" data-anchor-id="résumé-des-bornes">Résumé des bornes</h3>
-<div class="callout callout-style-default callout-note callout-titled" title="À retenir — Bornes du prix d&#39;une option européenne">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>À retenir — Bornes du prix d’une option européenne
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[S_0 - K e^{-rT} \leq c \leq S_0\]</span></p>
-<p><span class="math display">\[K e^{-rT} - S_0 \leq p \leq K\]</span></p>
-</div>
-</div>
-<p>Ces bornes sont des <strong>conditions de non-arbitrage</strong> : si elles sont violées, il existe une opportunité de profit sans risque que le marché corrige rapidement.</p>
-<hr>
-</section>
-</section>
-<section id="parité-put-call-put-call-parity" class="level2">
-<h2 class="anchored" data-anchor-id="parité-put-call-put-call-parity">Parité put-call (Put-Call Parity)</h2>
-<section id="définition-et-démonstration" class="level3">
-<h3 class="anchored" data-anchor-id="définition-et-démonstration">Définition et démonstration</h3>
-<p>La <strong>parité put-call</strong> est une relation fondamentale qui lie le prix d’un call et d’un put de même strike <span class="math inline">\(K\)</span> et de même maturité <span class="math inline">\(T\)</span> sur le même actif.</p>
-<p><strong>Démonstration par comparaison de portefeuilles :</strong></p>
-<p>Considérons :</p>
+<section id="relation-durationprix" class="level2">
+<h2 class="anchored" data-anchor-id="relation-durationprix">Relation duration–prix ⚠️</h2>
+<p><span class="math display">\[\boxed{\frac{\delta B}{B} \approx -D \cdot \delta y}\]</span></p>
 <ul>
-<li><strong>Portefeuille A</strong> : call <span class="math inline">\(c\)</span> + cash <span class="math inline">\(K e^{-rT}\)</span></li>
-<li><strong>Portefeuille C</strong> : put <span class="math inline">\(p\)</span> + actif <span class="math inline">\(S\)</span></li>
+<li>Hausse des taux (<span class="math inline">\(\delta y &gt; 0\)</span>) → <strong>baisse du prix</strong></li>
+<li>Duration élevée → <strong>sensibilité forte</strong></li>
 </ul>
-<p>On a vu que A vaut <span class="math inline">\(\max(S_T, K)\)</span> à maturité. On peut vérifier de même que C vaut aussi <span class="math inline">\(\max(S_T, K)\)</span> :</p>
+</section>
+<section id="validation-numérique-exemple-10-3-ans-yield-12" class="level2">
+<h2 class="anchored" data-anchor-id="validation-numérique-exemple-10-3-ans-yield-12">Validation numérique (exemple 10 %, 3 ans, yield 12 %)</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Cas</th>
-<th>Put</th>
-<th>Actif</th>
-<th>Total C</th>
+<th style="text-align: left;">Paramètre</th>
+<th style="text-align: center;">Valeur</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(S_T &gt; K\)</span></td>
-<td><span class="math inline">\(0\)</span></td>
-<td><span class="math inline">\(S_T\)</span></td>
-<td><span class="math inline">\(S_T\)</span></td>
+<td style="text-align: left;">Prix <span class="math inline">\(B\)</span></td>
+<td style="text-align: center;">94,213 USD</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(S_T \leq K\)</span></td>
-<td><span class="math inline">\(K - S_T\)</span></td>
-<td><span class="math inline">\(S_T\)</span></td>
-<td><span class="math inline">\(K\)</span></td>
+<td style="text-align: left;">Duration <span class="math inline">\(D\)</span></td>
+<td style="text-align: center;">2,653 ans</td>
 </tr>
 </tbody>
 </table>
-<p>Puisque A et C ont <strong>le même payoff à maturité</strong>, leurs valeurs aujourd’hui doivent être égales (sinon il y aurait arbitrage) :</p>
-<p><span class="math display">\[\boxed{c + K e^{-rT} = p + S_0}\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="À retenir — Parité put-call">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>À retenir — Parité put-call
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[c + K e^{-rT} = p + S_0\]</span></p>
-<p>Cette relation est une <strong>condition d’équilibre du marché des options</strong>. Si elle n’est pas vérifiée, il existe une opportunité d’arbitrage.</p>
-</div>
-</div>
+<p>Pour <span class="math inline">\(\delta y = 0{,}1\%\)</span> → estimation = réalité = <strong>−0,250 USD</strong> ✓</p>
+<p>Pour <span class="math inline">\(\delta y = 1{,}0\%\)</span> → estimation = −2,499 USD ≠ réel = −2,464 USD ⚠️</p>
+<hr>
 </section>
-<section id="interprétation" class="level3">
-<h3 class="anchored" data-anchor-id="interprétation">Interprétation</h3>
-<p>La parité put-call signifie qu’on peut <strong>synthétiser</strong> n’importe lequel de ces instruments à partir des trois autres :</p>
-<ul>
-<li>Un call = un put + l’actif - cash actualisé.</li>
-<li>Un put = un call - l’actif + cash actualisé.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+</section>
+<section id="convexité-convexity" class="level1">
+<h1>Convexité (Convexity)</h1>
+<section id="formule" class="level2">
+<h2 class="anchored" data-anchor-id="formule">Formule</h2>
+<p><span class="math display">\[\boxed{C = \frac{1}{B}\frac{\partial^2 B}{\partial y^2} = \sum_{i=1}^{n} \frac{c_i \, t_i^2 \, e^{-y(t_i-t)}}{B}}\]</span></p>
+</section>
+<section id="approximation-du-2nd-ordre" class="level2">
+<h2 class="anchored" data-anchor-id="approximation-du-2nd-ordre">Approximation du 2nd ordre</h2>
+<p><span class="math display">\[\boxed{\frac{\delta B}{B} \approx -D \cdot \delta y + \frac{1}{2} C \cdot (\delta y)^2}\]</span></p>
+<p>Pour <span class="math inline">\(\delta y = 1\%\)</span>, <span class="math inline">\(C = 7{,}570\)</span> → résultat exact = <strong>−2,464 USD</strong> ✓</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Piège fréquent">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition
+<span class="screen-reader-only">Important</span>Piège fréquent
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>C’est précisément ce que montre la stratégie “long put + long actif” : la combinaison produit un profil de profit identique à celui d’un call, illustrant graphiquement la parité put-call.</p>
+<p>La <strong>duration seule sous-estime</strong> l’impact d’un grand choc de taux. Toujours ajouter la convexité pour <span class="math inline">\(|\delta y| \geq 0{,}5\%\)</span>.</p>
+<p>La convexité est <strong>favorable</strong> au détenteur : pertes plus faibles / gains plus grands que prédit linéairement.</p>
 </div>
 </div>
 <hr>
 </section>
 </section>
-<section id="stratégies-de-trading-avec-les-options" class="level2">
-<h2 class="anchored" data-anchor-id="stratégies-de-trading-avec-les-options">Stratégies de trading avec les options</h2>
-<section id="introduction" class="level3">
-<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
-<p>Les options permettent de construire des <strong>stratégies combinées</strong> offrant des profils de risque/rendement sur mesure. Ces stratégies peuvent viser la protection, la spéculation ou l’exploitation d’anticipations sur la volatilité.</p>
-</section>
-<section id="long-put-long-actif-protection" class="level3">
-<h3 class="anchored" data-anchor-id="long-put-long-actif-protection">Long put + long actif (protection)</h3>
-<p>Cette stratégie illustre directement la parité put-call :</p>
-<ul>
-<li>On achète l’actif <span class="math inline">\(S\)</span> et simultanément un put de strike <span class="math inline">\(K\)</span>.</li>
-<li>Si le prix monte, on bénéficie de la hausse de l’actif.</li>
-<li>Si le prix baisse en dessous de <span class="math inline">\(K\)</span>, le put compense les pertes.</li>
-</ul>
-<p>Le profil de profit résultant est <strong>similaire à celui d’un long call</strong> : perte limitée (à la prime du put), gain illimité à la hausse.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Acheter un put sur une action qu’on détient, c’est souscrire une assurance contre la baisse tout en conservant l’exposition à la hausse.</p>
-</div>
-</div>
-</section>
-<section id="bull-spread-écart-haussier" class="level3">
-<h3 class="anchored" data-anchor-id="bull-spread-écart-haussier">Bull spread (Écart haussier)</h3>
-<p>Le <strong>bull spread</strong> est une stratégie adaptée à une anticipation de hausse modérée du sous-jacent. Elle limite à la fois le gain maximal et la perte maximale.</p>
-<section id="bull-spread-avec-des-calls" class="level4">
-<h4 class="anchored" data-anchor-id="bull-spread-avec-des-calls">Bull spread avec des calls</h4>
-<ul>
-<li><strong>Long call</strong> de strike <span class="math inline">\(K_1\)</span> (bas).</li>
-<li><strong>Short call</strong> de strike <span class="math inline">\(K_2\)</span> (haut), avec <span class="math inline">\(K_2 &gt; K_1\)</span>.</li>
-</ul>
-<p><strong>Logique :</strong></p>
-<ul>
-<li>On achète un call pour profiter de la hausse.</li>
-<li>On vend un call à un strike plus élevé pour financer partiellement l’achat.</li>
-<li>Le gain est plafonné au-delà de <span class="math inline">\(K_2\)</span>, mais le coût initial est réduit.</li>
-</ul>
-</section>
-<section id="bull-spread-avec-des-puts" class="level4">
-<h4 class="anchored" data-anchor-id="bull-spread-avec-des-puts">Bull spread avec des puts</h4>
-<ul>
-<li><strong>Long put</strong> de strike <span class="math inline">\(K_1\)</span> (bas).</li>
-<li><strong>Short put</strong> de strike <span class="math inline">\(K_2\)</span> (haut), avec <span class="math inline">\(K_2 &gt; K_1\)</span>.</li>
-</ul>
-<p>Le profil de profit est équivalent au bull spread avec des calls (par la parité put-call).</p>
-<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>À retenir
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Le bull spread est un compromis : on renonce à une partie du gain potentiel pour réduire le coût de la position et limiter la perte maximale.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="long-butterfly-papillon-long" class="level3">
-<h3 class="anchored" data-anchor-id="long-butterfly-papillon-long">Long butterfly (Papillon long)</h3>
-<p>Le <strong>long butterfly</strong> est une stratégie adaptée à une anticipation de faible volatilité : on anticipe que le prix de l’actif restera proche d’un niveau central <span class="math inline">\(K_2\)</span>.</p>
-<p><strong>Construction avec des calls :</strong></p>
-<ul>
-<li><strong>Long call</strong> à <span class="math inline">\(K_1\)</span> (strike bas).</li>
-<li><strong>2 short calls</strong> à <span class="math inline">\(K_2\)</span> (strike médian).</li>
-<li><strong>Long call</strong> à <span class="math inline">\(K_3\)</span> (strike haut), avec <span class="math inline">\(K_3 &gt; K_2 &gt; K_1\)</span>.</li>
-</ul>
-<p><strong>Profil de profit :</strong></p>
-<ul>
-<li>Gain maximal atteint si <span class="math inline">\(S_T = K_2\)</span> à maturité.</li>
-<li>Perte limitée et symétrique si <span class="math inline">\(S_T &lt; K_1\)</span> ou <span class="math inline">\(S_T &gt; K_3\)</span>.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Le butterfly est un pari sur la stabilité du marché. Le vendeur de volatilité implicite construit cette stratégie quand il pense que le marché sur-évalue le risque.</p>
-</div>
-</div>
-</section>
-<section id="protection-dactifs-de-fonds-de-pension" class="level3">
-<h3 class="anchored" data-anchor-id="protection-dactifs-de-fonds-de-pension">Protection d’actifs de fonds de pension</h3>
-<p>Les fonds de pension gèrent des patrimoines considérables exposés aux marchés actions et obligataires. Pour se protéger contre des <strong>risques extrêmes</strong> (<em>tail risks</em>), c’est-à-dire des chutes brutales et importantes, une stratégie courante consiste à :</p>
-<ol type="1">
-<li><strong>Acheter un panier de puts</strong> sur les actifs du portefeuille (ou sur un indice représentatif).</li>
-<li>Les puts <strong>plancher les pertes</strong> (<em>floor</em>) : en cas de drawdown, les puts compensent une partie des pertes.</li>
-<li>Le coût de cette protection est la <strong>prime payée</strong> pour les puts.</li>
-</ol>
-<div class="callout callout-style-default callout-warning callout-titled" title="Important — Le compromis protection/performance">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Important — Le compromis protection/performance
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Cette stratégie réduit les drawdowns mais a un <strong>coût direct</strong> (les primes). Il faut trouver le juste équilibre entre niveau de protection souhaité et impact sur la performance globale du portefeuille.</p>
-</div>
-</div>
+<section id="types-de-duration" class="level1">
+<h1>Types de duration</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 40%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Formule</th>
+<th style="text-align: left;">Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Macaulay</strong></td>
+<td style="text-align: left;"><span class="math inline">\(D = \sum w_i \cdot t_i\)</span></td>
+<td style="text-align: left;">Mesure du risque de taux</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Modifiée</strong> (Modified)</td>
+<td style="text-align: left;"><span class="math inline">\(D_{\text{mod}} = \dfrac{D}{1 + y/n_c}\)</span></td>
+<td style="text-align: left;">Sensibilité relative au taux</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>En dollars / DV01</strong></td>
+<td style="text-align: left;"><span class="math inline">\(\text{DV01} = \dfrac{D_{\text{mod}} \cdot B}{100}\)</span></td>
+<td style="text-align: left;">Gestion de portefeuille</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Effective</strong></td>
+<td style="text-align: left;">Ajustée pour options incorporées</td>
+<td style="text-align: left;">Callable / putable bonds</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Par facteur clé</strong> (Key Rate)</td>
+<td style="text-align: left;">Sensibilité par segment de courbe</td>
+<td style="text-align: left;">Chocs non parallèles</td>
+</tr>
+</tbody>
+</table>
 <hr>
 </section>
-</section>
-<section id="pricing-larbre-binomial-binomial-tree" class="level2">
-<h2 class="anchored" data-anchor-id="pricing-larbre-binomial-binomial-tree">Pricing : l’arbre binomial (Binomial Tree)</h2>
-<section id="principe-général" class="level3">
-<h3 class="anchored" data-anchor-id="principe-général">Principe général</h3>
-<p>L’<strong>arbre binomial</strong> est une méthode de valorisation qui <strong>discrétise le temps et les prix</strong> pour calculer la valeur d’une option par raisonnement rétrograde (<em>backward induction</em>).</p>
-<p>L’idée centrale est de construire un portefeuille <strong>parfaitement couvert</strong> (delta-neutre) qui élimine tout risque, puis d’utiliser le principe de non-arbitrage pour déduire le prix de l’option.</p>
-</section>
-<section id="structure-de-larbre-à-une-étape" class="level3">
-<h3 class="anchored" data-anchor-id="structure-de-larbre-à-une-étape">Structure de l’arbre à une étape</h3>
-<p>À l’instant <span class="math inline">\(t = 0\)</span>, le prix de l’actif est <span class="math inline">\(S_0\)</span>. À la maturité <span class="math inline">\(T\)</span>, il peut prendre deux valeurs :</p>
+<section id="gestion-de-portefeuille" class="level1">
+<h1>Gestion de portefeuille</h1>
+<p><span class="math display">\[D_{\text{portefeuille}} = \sum_k w_k \cdot D_k\]</span></p>
 <ul>
-<li><span class="math inline">\(S_0 \cdot u\)</span> avec probabilité <span class="math inline">\(p\)</span> (mouvement haussier, <em>up</em>).</li>
-<li><span class="math inline">\(S_0 \cdot d\)</span> avec probabilité <span class="math inline">\(1-p\)</span> (mouvement baissier, <em>down</em>).</li>
+<li><strong>Taux en hausse</strong> → réduire la duration (vendre long, acheter court)</li>
+<li><strong>Taux en baisse</strong> → augmenter la duration</li>
+<li>Duration ≈ bon <strong>proxy de volatilité</strong> du portefeuille</li>
+<li>Portefeuille multi-devises → duration calculée <strong>par devise</strong></li>
 </ul>
-<p>On a typiquement <span class="math inline">\(u = 1/d\)</span>, par exemple <span class="math inline">\(u = 1.05\)</span> et <span class="math inline">\(d = 0.952\)</span>.</p>
-<p>Les prix correspondants de l’option sont <span class="math inline">\(f_u\)</span> et <span class="math inline">\(f_d\)</span>.</p>
+<hr>
+</section>
+<section id="relations-entre-concepts" class="level1">
+<h1>Relations entre concepts</h1>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">graph LR
-    A[&quot;S₀ / f&quot;] --&gt;|&quot;p&quot;| B[&quot;S₀·u / fᵤ&quot;]
-    A --&gt;|&quot;1-p&quot;| C[&quot;S₀·d / f_d&quot;]
+<pre class="mermaid mermaid-js">graph TD
+    A[Courbe zéro-coupon] --&gt; B[Taux forward]
+    A --&gt; C[Duration de Macaulay]
+    C --&gt; D[Duration modifiée]
+    D --&gt; E[DV01]
+    C --&gt; F[Approximation 1er ordre]
+    G[Convexité] --&gt; H[Approximation 2e ordre]
+    F --&gt; H
+    A --&gt; I[Évolution de la courbe]
+    I --&gt; J[Déplacement parallèle]
+    I --&gt; K[Aplatissement]
+    I --&gt; L[Pentification]
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-</section>
-<section id="calcul-du-delta-de-couverture-delta" class="level3">
-<h3 class="anchored" data-anchor-id="calcul-du-delta-de-couverture-delta">Calcul du delta de couverture (<span class="math inline">\(\Delta\)</span>)</h3>
-<p>Le <strong>writer</strong> (émetteur) de l’option construit un portefeuille <span class="math inline">\(P\)</span> composé de :</p>
-<ul>
-<li>Une position short sur le call (vente d’une option).</li>
-<li><span class="math inline">\(\Delta\)</span> unités de l’actif sous-jacent.</li>
-</ul>
-<p>À maturité :</p>
-<p><span class="math display">\[P_u = S_0 \cdot u \cdot \Delta - f_u \quad \text{(si hausse)}\]</span></p>
-<p><span class="math display">\[P_d = S_0 \cdot d \cdot \Delta - f_d \quad \text{(si baisse)}\]</span></p>
-<p>Pour <strong>éliminer le risque</strong>, on impose <span class="math inline">\(P_u = P_d\)</span>, ce qui donne :</p>
-<p><span class="math display">\[\Delta = \frac{f_u - f_d}{S_0 u - S_0 d}\]</span></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="math inline">\(\Delta\)</span> est le nombre d’actifs à détenir pour <strong>neutraliser parfaitement le risque</strong> de la position en option. C’est le concept de <strong>delta-hedging</strong>, fondamental en gestion des risques sur dérivés.</p>
-</div>
-</div>
-</section>
-<section id="calcul-du-prix-de-loption" class="level3">
-<h3 class="anchored" data-anchor-id="calcul-du-prix-de-loption">Calcul du prix de l’option</h3>
-<p>À <span class="math inline">\(t = 0\)</span> :</p>
-<p><span class="math display">\[P = S_0 \Delta - f\]</span></p>
-<p>Le portefeuille couvert ne prend aucun risque et doit donc rapporter le taux sans risque :</p>
-<p><span class="math display">\[S_0 \Delta - f = (S_0 u \Delta - f_u) e^{-rT}\]</span></p>
-<p>En injectant l’expression de <span class="math inline">\(\Delta\)</span> et en réarrangeant :</p>
-<p><span class="math display">\[\boxed{f = e^{-rT} \left[ p \cdot f_u + (1-p) \cdot f_d \right]}\]</span></p>
-<p>avec la <strong>probabilité risque-neutre</strong> (<em>risk-neutral probability</em>) :</p>
-<p><span class="math display">\[p = \frac{e^{rT} - d}{u - d}\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="À retenir — Formule de pricing binomial">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>À retenir — Formule de pricing binomial
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Le prix de l’option est la <strong>valeur espérée actualisée</strong> de son payoff sous la probabilité risque-neutre <span class="math inline">\(p\)</span>. Cette probabilité n’est pas la probabilité réelle du mouvement de prix, mais une probabilité artificielle qui élimine toute opportunité d’arbitrage.</p>
-</div>
-</div>
-</section>
-<section id="calibration-de-u-d-et-p" class="level3">
-<h3 class="anchored" data-anchor-id="calibration-de-u-d-et-p">Calibration de <span class="math inline">\(u\)</span>, <span class="math inline">\(d\)</span> et <span class="math inline">\(p\)</span></h3>
-<p>La cohérence du modèle impose que l’espérance du prix futur sous la probabilité risque-neutre soit égale au prix forward :</p>
-<p><span class="math display">\[S_0 e^{rT} = p \cdot S_0 u + (1-p) \cdot S_0 d\]</span></p>
-<p>Ce qui confirme :</p>
-<p><span class="math display">\[p = \frac{e^{rT} - d}{u - d}\]</span></p>
-<p>En choisissant <span class="math inline">\(u = 1/d\)</span> et en supposant que la variance du rendement sur <span class="math inline">\(T\)</span> est <span class="math inline">\(\sigma^2 T\)</span>, on peut montrer que :</p>
-<p><span class="math display">\[u = e^{\sigma \sqrt{T}}, \quad d = e^{-\sigma \sqrt{T}}\]</span></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Ces formules font le lien entre la <strong>volatilité historique</strong> <span class="math inline">\(\sigma\)</span> de l’actif et les paramètres <span class="math inline">\(u\)</span>, <span class="math inline">\(d\)</span> de l’arbre. Plus la volatilité est grande, plus les branches de l’arbre sont écartées.</p>
-</div>
-</div>
-</section>
-<section id="exemple-numérique" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-numérique">Exemple numérique</h3>
-<p><strong>Données :</strong></p>
-<ul>
-<li>Actif : <span class="math inline">\(S_0 = 20\)</span> USD</li>
-<li>Strike : <span class="math inline">\(K = 21\)</span> USD</li>
-<li>Maturité : <span class="math inline">\(T = 3\)</span> mois <span class="math inline">\(= 3/12\)</span></li>
-<li><span class="math inline">\(u = 1.1\)</span>, <span class="math inline">\(d = 1/1.1 \approx 0.909\)</span></li>
-<li>Taux sans risque : <span class="math inline">\(r = 12\%\)</span></li>
-</ul>
-<p><strong>Calcul :</strong></p>
-<p>Les payoffs à maturité :</p>
-<ul>
-<li><span class="math inline">\(f_u = \max(20 \times 1.1 - 21, 0) = \max(22 - 21, 0) = 1\)</span> USD</li>
-<li><span class="math inline">\(f_d = \max(20 \times 0.909 - 21, 0) = \max(18.18 - 21, 0) = 0\)</span> USD</li>
-</ul>
-<p>La probabilité risque-neutre :</p>
-<p><span class="math display">\[p = \frac{e^{0.12 \times 3/12} - 0.909}{1.1 - 0.909} = \frac{e^{0.03} - 0.909}{0.191} \approx \frac{1.0305 - 0.909}{0.191} \approx 0.636\]</span></p>
-<p>Le prix de l’option :</p>
-<p><span class="math display">\[f = e^{-0.12 \times 3/12} \times (0.636 \times 1 + 0.364 \times 0) \approx e^{-0.03} \times 0.636 \approx 0.617 \text{ USD}\]</span></p>
-<p>Le delta de couverture :</p>
-<p><span class="math display">\[\Delta = \frac{1 - 0}{22 - 18.2} = \frac{1}{3.8} \approx 0.262\]</span></p>
-<p><strong>Interprétation :</strong> L’émetteur du call doit acheter environ 0.262 unités de l’actif pour couvrir parfaitement sa position.</p>
-</section>
-<section id="extension-à-plusieurs-étapes" class="level3">
-<h3 class="anchored" data-anchor-id="extension-à-plusieurs-étapes">Extension à plusieurs étapes</h3>
-<p>Un arbre à une seule étape est insuffisant pour représenter fidèlement la réalité. On généralise à <strong>deux étapes ou plus</strong> :</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph LR
-    A[&quot;S₀&quot;] --&gt; B[&quot;S₀·u&quot;]
-    A --&gt; C[&quot;S₀·d&quot;]
-    B --&gt; D[&quot;S₀·u²&quot;]
-    B --&gt; E[&quot;S₀·ud&quot;]
-    C --&gt; E
-    C --&gt; F[&quot;S₀·d²&quot;]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>On procède <strong>de droite à gauche</strong> (<em>backward induction</em>) : on calcule d’abord les payoffs terminaux, puis on remonte l’arbre en appliquant à chaque nœud la formule de pricing.</p>
-<div class="callout callout-style-default callout-warning callout-titled" title="Complexité computationnelle">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Complexité computationnelle
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Avec 30 étapes, l’arbre comporte <span class="math inline">\(2^{30} \approx 1\)</span> milliard de chemins possibles. Cela peut devenir <strong>extrêmement coûteux</strong> en temps de calcul et en mémoire, et justifie l’intérêt des formules analytiques comme Black-Scholes pour les options vanilles.</p>
-</div>
-</div>
 <hr>
 </section>
-</section>
-<section id="pricing-le-modèle-de-black-scholes" class="level2">
-<h2 class="anchored" data-anchor-id="pricing-le-modèle-de-black-scholes">Pricing : le modèle de Black-Scholes</h2>
-<section id="contexte-et-hypothèses" class="level3">
-<h3 class="anchored" data-anchor-id="contexte-et-hypothèses">Contexte et hypothèses</h3>
-<p>Le modèle de <strong>Black-Scholes</strong> (1973) constitue l’une des avancées les plus importantes de la finance mathématique. Il fournit une <strong>formule analytique fermée</strong> pour le prix d’options européennes vanilles.</p>
-<p>Le modèle repose sur l’hypothèse que le prix de l’actif suit un <strong>mouvement brownien géométrique</strong> (marche aléatoire gaussienne en temps continu), caractérisé par :</p>
-<ul>
-<li>Une dérive constante (rendement espéré).</li>
-<li>Une volatilité <span class="math inline">\(\sigma\)</span> constante.</li>
-</ul>
-<p>La dérivation repose sur les mêmes principes que l’arbre binomial (couverture sans risque) mais en temps continu, via le <strong>Lemme d’Itô</strong>.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>À retenir
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Le modèle de Black-Scholes est le <strong>cas limite</strong> de l’arbre binomial lorsque le nombre de pas tend vers l’infini et la durée de chaque pas vers zéro. Le prix binomial <strong>converge</strong> vers le prix Black-Scholes.</p>
-</div>
-</div>
-</section>
-<section id="formules-de-black-scholes" class="level3">
-<h3 class="anchored" data-anchor-id="formules-de-black-scholes">Formules de Black-Scholes</h3>
-<section id="prix-dun-call-européen" class="level4">
-<h4 class="anchored" data-anchor-id="prix-dun-call-européen">Prix d’un call européen</h4>
-<p><span class="math display">\[c = S_0 N(d_1) - K e^{-rT} N(d_2)\]</span></p>
-</section>
-<section id="prix-dun-put-européen" class="level4">
-<h4 class="anchored" data-anchor-id="prix-dun-put-européen">Prix d’un put européen</h4>
-<p><span class="math display">\[p = K e^{-rT} N(-d_2) - S_0 N(-d_1)\]</span></p>
-</section>
-<section id="définitions-de-d_1-et-d_2" class="level4">
-<h4 class="anchored" data-anchor-id="définitions-de-d_1-et-d_2">Définitions de <span class="math inline">\(d_1\)</span> et <span class="math inline">\(d_2\)</span></h4>
-<p><span class="math display">\[d_1 = \frac{\ln(S_0 / K) + (r + \sigma^2 / 2) T}{\sigma \sqrt{T}}\]</span></p>
-<p><span class="math display">\[d_2 = \frac{\ln(S_0 / K) + (r - \sigma^2 / 2) T}{\sigma \sqrt{T}} = d_1 - \sigma \sqrt{T}\]</span></p>
-<p>où <span class="math inline">\(N(x)\)</span> est la <strong>fonction de répartition de la loi normale standard</strong> :</p>
-<p><span class="math display">\[N(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{x} e^{-z^2/2} \, dz\]</span></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition sur les termes">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition sur les termes
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><span class="math inline">\(S_0 N(d_1)\)</span> : valeur actualisée de l’actif si l’option est exercée, pondérée par la probabilité d’exercice.</li>
-<li><span class="math inline">\(K e^{-rT} N(d_2)\)</span> : valeur actualisée du paiement du strike, pondérée par la probabilité d’exercice.</li>
-<li><span class="math inline">\(N(d_2)\)</span> peut s’interpréter comme la probabilité risque-neutre que l’option expire dans la monnaie.</li>
-</ul>
-</div>
-</div>
-</section>
-</section>
-<section id="vérification-des-bornes-avec-black-scholes" class="level3">
-<h3 class="anchored" data-anchor-id="vérification-des-bornes-avec-black-scholes">Vérification des bornes avec Black-Scholes</h3>
-<p>Black-Scholes doit être cohérent avec les bornes établies précédemment.</p>
-<section id="borne-supérieure-c-leq-s_0" class="level4">
-<h4 class="anchored" data-anchor-id="borne-supérieure-c-leq-s_0">Borne supérieure : <span class="math inline">\(c \leq S_0\)</span></h4>
-<p>Quand <span class="math inline">\(\sigma \to \infty\)</span> :</p>
-<ul>
-<li><span class="math inline">\(d_1 \to +\infty \Rightarrow N(d_1) \to 1\)</span></li>
-<li><span class="math inline">\(d_2 \to -\infty \Rightarrow N(d_2) \to 0\)</span></li>
-</ul>
-<p>Donc <span class="math inline">\(c \to S_0 \times 1 - K e^{-rT} \times 0 = S_0\)</span>. ✓</p>
-</section>
-<section id="borne-inférieure-c-geq-s_0---k-e-rt" class="level4">
-<h4 class="anchored" data-anchor-id="borne-inférieure-c-geq-s_0---k-e-rt">Borne inférieure : <span class="math inline">\(c \geq S_0 - K e^{-rT}\)</span></h4>
-<p>Quand <span class="math inline">\(\sigma \to 0\)</span> :</p>
-<ul>
-<li><span class="math inline">\(d_1 \to +\infty \Rightarrow N(d_1) \to 1\)</span></li>
-<li><span class="math inline">\(d_2 \to +\infty \Rightarrow N(d_2) \to 1\)</span></li>
-</ul>
-<p>Donc <span class="math inline">\(c \to S_0 - K e^{-rT}\)</span>. ✓</p>
-</section>
-</section>
-<section id="exemple-numérique-avec-black-scholes" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-numérique-avec-black-scholes">Exemple numérique avec Black-Scholes</h3>
-<p>Reprenons l’exemple précédent (<span class="math inline">\(S_0 = 20\)</span>, <span class="math inline">\(K = 21\)</span>, <span class="math inline">\(T = 3/12\)</span>, <span class="math inline">\(r = 12\%\)</span>) et calculons la volatilité implicite à partir de <span class="math inline">\(u = 1.1\)</span> :</p>
-<p><span class="math display">\[\sigma = \frac{\ln(u)}{\sqrt{T}} = \frac{\ln(1.1)}{\sqrt{3/12}} \approx \frac{0.0953}{0.5} \approx 0.1906\]</span></p>
-<p>Le prix Black-Scholes donne : <strong><span class="math inline">\(c \approx 0.593\)</span> USD</strong>.</p>
-<p>Le prix binomial à une étape donnait <strong><span class="math inline">\(0.617\)</span> USD</strong> : l’écart s’explique par la discrétisation. En augmentant le nombre de pas de l’arbre, le prix binomial <strong>converge</strong> vers la valeur Black-Scholes.</p>
-</section>
-<section id="cas-dutilisation" class="level3">
-<h3 class="anchored" data-anchor-id="cas-dutilisation">Cas d’utilisation</h3>
-<ul>
-<li><strong>Options vanilles</strong> (calls et puts standards) : Black-Scholes est la référence.</li>
-<li><strong>Options exotiques</strong> : l’arbre binomial reste souvent la seule approche tractable.</li>
-</ul>
-<p>Les options exotiques incluent :</p>
-<ul>
-<li><strong>Option binaire</strong> (<em>binary option</em>) : payoff fixe si une condition est remplie, zéro sinon.</li>
-<li><strong>Option barrière</strong> (<em>barrier option</em>) : le payoff dépend du fait que le sous-jacent ait atteint ou non un niveau seuil pendant la vie de l’option.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="le-smile-de-volatilité-volatility-smile" class="level2">
-<h2 class="anchored" data-anchor-id="le-smile-de-volatilité-volatility-smile">Le smile de volatilité (Volatility Smile)</h2>
-<section id="volatilité-implicite" class="level3">
-<h3 class="anchored" data-anchor-id="volatilité-implicite">Volatilité implicite</h3>
-<p>La <strong>volatilité implicite</strong> (<em>implied volatility</em>) est la valeur de <span class="math inline">\(\sigma\)</span> qu’il faut injecter dans la formule Black-Scholes pour retrouver le prix observé sur le marché.</p>
-<p>En d’autres termes : on fixe <span class="math inline">\(c_{\text{marché}}\)</span>, <span class="math inline">\(S_0\)</span>, <span class="math inline">\(K\)</span>, <span class="math inline">\(r\)</span>, <span class="math inline">\(T\)</span> et on résout numériquement pour <span class="math inline">\(\sigma\)</span>.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Si le marché cote un call à 5 USD et que Black-Scholes avec <span class="math inline">\(\sigma = 20\%\)</span> donne 4 USD, la volatilité implicite est supérieure à 20%. Le marché “pense” que la volatilité réelle sera plus élevée que 20%.</p>
-</div>
-</div>
-</section>
-<section id="le-problème-la-volatilité-implicite-nest-pas-constante" class="level3">
-<h3 class="anchored" data-anchor-id="le-problème-la-volatilité-implicite-nest-pas-constante">Le problème : la volatilité implicite n’est pas constante</h3>
-<p>Dans le modèle Black-Scholes, <span class="math inline">\(\sigma\)</span> est supposée <strong>constante</strong> — elle ne dépend ni du strike <span class="math inline">\(K\)</span> ni de la maturité <span class="math inline">\(T\)</span>.</p>
-<p>En pratique, si on calcule la volatilité implicite pour différentes options sur le même actif mais avec des strikes différents, on obtient une <strong>courbe en U</strong> (ou en sourire) plutôt qu’une droite horizontale.</p>
-</section>
-<section id="forme-du-smile" class="level3">
-<h3 class="anchored" data-anchor-id="forme-du-smile">Forme du smile</h3>
-<p>La volatilité implicite est généralement :</p>
-<ul>
-<li><strong>Plus élevée</strong> pour les options très OTM ou très ITM.</li>
-<li><strong>Plus basse</strong> près de l’ATM.</li>
-</ul>
-<p>Cette forme en <strong>sourire</strong> (<em>smile</em>) indique que le marché attribue une probabilité plus grande aux mouvements extrêmes (queues de distribution épaisses) que ce que suppose la loi normale de Black-Scholes.</p>
-</section>
-<section id="surface-de-volatilité" class="level3">
-<h3 class="anchored" data-anchor-id="surface-de-volatilité">Surface de volatilité</h3>
-<p>Lorsqu’on représente la volatilité implicite en fonction à la fois du strike <span class="math inline">\(K\)</span> et de la maturité <span class="math inline">\(T\)</span>, on obtient une <strong>surface de volatilité</strong> (<em>volatility surface</em>) — une structure tridimensionnelle complexe.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>À retenir
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>L’existence du smile de volatilité est la preuve que Black-Scholes est un <strong>modèle simplifié</strong> de la réalité. Les actifs réels ne suivent pas exactement une loi log-normale : les rendements présentent des <strong>queues épaisses</strong> (<em>fat tails</em>) et une asymétrie (<em>skewness</em>) que le modèle ignore.</p>
-</div>
-</div>
-</section>
-<section id="utilisation-pratique-de-la-volatilité-implicite" class="level3">
-<h3 class="anchored" data-anchor-id="utilisation-pratique-de-la-volatilité-implicite">Utilisation pratique de la volatilité implicite</h3>
-<p>Au-delà du diagnostic des limites de Black-Scholes, la volatilité implicite a une utilisation directe :</p>
-<ul>
-<li>Elle sert d’<strong>indicateur des anticipations de volatilité</strong> du marché.</li>
-<li>Les traders cotent souvent les options directement <strong>en volatilité implicite</strong> plutôt qu’en prix absolu.</li>
-<li>Des indices comme le <strong>VIX</strong> (volatilité implicite du S&amp;P 500) sont construits à partir de cette notion.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="points-clés-à-retenir" class="level2">
-<h2 class="anchored" data-anchor-id="points-clés-à-retenir">Points clés à retenir</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Résumé du chapitre">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Résumé du chapitre
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Définitions fondamentales</strong></p>
-<ul>
-<li>Une option est le <strong>droit</strong> (non l’obligation) d’acheter (call) ou de vendre (put) un actif à un prix d’exercice <span class="math inline">\(K\)</span> jusqu’à la maturité <span class="math inline">\(T\)</span>.</li>
-<li>Elle représente une <strong>assurance financière</strong> dont le coût est la prime.</li>
-</ul>
-<p><strong>Bornes de prix</strong></p>
-<ul>
-<li>Les prix des options sont encadrés par des bornes dérivées du principe de non-arbitrage :
-<ul>
-<li><span class="math inline">\(S_0 - K e^{-rT} \leq c \leq S_0\)</span></li>
-<li><span class="math inline">\(K e^{-rT} - S_0 \leq p \leq K\)</span></li>
-</ul></li>
-</ul>
-<p><strong>Parité put-call</strong></p>
-<ul>
-<li>La relation <span class="math inline">\(c + K e^{-rT} = p + S_0\)</span> est une condition d’équilibre fondamentale.</li>
-</ul>
-<p><strong>Méthodes de pricing</strong></p>
-<ol type="1">
-<li><strong>Arbre binomial</strong> : méthode flexible, applicable aux options exotiques. Peut devenir coûteuse avec de nombreuses étapes.</li>
-<li><strong>Black-Scholes</strong> : formule analytique fermée pour les options vanilles. Rapide et élégante, mais repose sur des hypothèses fortes (loi log-normale, volatilité constante).</li>
-</ol>
-<p><strong>Limites de Black-Scholes</strong></p>
-<ul>
-<li>Le <strong>smile de volatilité</strong> révèle que la volatilité implicite n’est pas constante dans la réalité, ce qui invalide partiellement les hypothèses du modèle.</li>
-<li>Black-Scholes reste néanmoins une <strong>référence incontournable</strong> en finance de marché.</li>
-</ul>
-</div>
-</div>
+<section id="formules-à-retenir-absolument" class="level1">
+<h1>Formules à retenir absolument</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 37%">
+<col style="width: 62%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Formule</th>
+<th style="text-align: left;">Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(r = \dfrac{R_2 T_2 - R_1 T_1}{T_2 - T_1}\)</span></td>
+<td style="text-align: left;">Taux forward entre <span class="math inline">\(T_1\)</span> et <span class="math inline">\(T_2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\dfrac{\partial B}{\partial y} = -B \cdot D\)</span></td>
+<td style="text-align: left;">Dérivée prix/taux</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\dfrac{\delta B}{B} \approx -D \cdot \delta y\)</span></td>
+<td style="text-align: left;">Approximation 1er ordre</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\dfrac{\delta B}{B} \approx -D \cdot \delta y + \dfrac{1}{2}C(\delta y)^2\)</span></td>
+<td style="text-align: left;">Approximation 2e ordre</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(D_{\text{mod}} = \dfrac{D}{1 + y/n_c}\)</span></td>
+<td style="text-align: left;">Duration modifiée</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\text{DV01} = \dfrac{D_{\text{mod}} \cdot B}{100}\)</span></td>
+<td style="text-align: left;">Dollar duration</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>
