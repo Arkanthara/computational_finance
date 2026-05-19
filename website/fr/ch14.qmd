@@ -1,0 +1,599 @@
+---
+title: "Investissement durable et ESG"
+---
+
+## Pourquoi l'investissement durable ?
+
+### Un constat préoccupant
+
+L'investissement durable — aussi appelé finance durable ou investissement responsable — émerge comme une réponse aux grandes crises systémiques que traverse notre monde contemporain. Avant d'en comprendre les mécanismes financiers, il convient de saisir pourquoi cette approche est devenue incontournable.
+
+Plusieurs phénomènes convergents alarment la communauté scientifique et les décideurs économiques :
+
+- **Le changement climatique** : les températures mondiales ont augmenté de plus d'1°C au-dessus de la référence 1951–1980, avec des records atteints en 2016 et 2020. Le GIEC (Groupe d'experts intergouvernemental sur l'évolution du climat, *Intergovernmental Panel on Climate Change* — IPCC) documente cette trajectoire de manière rigoureuse.
+
+- **L'effondrement de la biodiversité** : l'Indice Planète Vivante (*Global Living Planet Index*) a chuté de **69 %** entre 1970 et 2020. Cet indice, calculé à partir du suivi de milliers d'espèces de vertébrés, illustre la vitesse alarmante à laquelle les populations animales disparaissent.
+
+- **Les déséquilibres sociaux** : inégalités de genre, migrations forcées, accès inégal aux ressources essentielles (eau, santé, éducation), constituent des fractures profondes dans le tissu social mondial.
+
+- **Les problèmes de gouvernance** : corruption, instabilité financière systémique, manque de transparence dans les pratiques d'entreprise.
+
+::: {.callout-tip title="Intuition"}
+Imaginez un thermomètre planétaire qui monte, un compteur de biodiversité qui chute, et des inégalités sociales qui se creusent. La question devient : la finance, qui alloue des milliers de milliards d'euros chaque année, peut-elle orienter ces ressources différemment pour contribuer à des solutions ?
+:::
+
+### La finance peut-elle aider ?
+
+La question posée dans le cours est directe : **face au changement climatique, à l'effondrement de la biodiversité, aux déséquilibres sociaux et aux problèmes de gouvernance, la finance peut-elle être d'une quelconque aide ?**
+
+La réponse est nuancée mais affirmative. La finance ne peut pas, à elle seule, résoudre ces crises — ce serait illusoire. En revanche, elle dispose d'un levier puissant : **l'allocation du capital**. En orientant les investissements vers des entreprises et des projets plus responsables, les acteurs financiers peuvent :
+
+- Renchérir le coût du capital pour les entreprises polluantes (les incitant à changer),
+- Financer la transition énergétique et écologique,
+- Exercer une pression via leurs droits de vote en assemblée générale,
+- Engager un dialogue direct avec les directions d'entreprises.
+
+---
+
+## Définitions et terminologie
+
+### Un concept, de nombreux noms
+
+Le domaine de la finance durable est caractérisé par une prolifération de termes qui désignent, en réalité, un concept central commun. On parle indifféremment de :
+
+- **Finance durable** (*Sustainable Finance*)
+- **Investissement ESG** (*ESG Investing*) — ESG pour Environnemental, Social, Gouvernance
+- **Investissement socialement responsable — ISR** (*Socially Responsible Investing — SRI*)
+- **Finance verte** (*Green Finance*)
+- **Investissement responsable** (*Responsible Investment*)
+- **Développement durable** (*Sustainable Development*)
+- **Risque climatique** (*Climate Risk*)
+
+::: {.callout-note title="À retenir"}
+Tous ces termes s'inscrivent dans un même univers conceptuel : intégrer des critères non-financiers (environnementaux, sociaux, de gouvernance) dans les décisions d'investissement. La référence académique majeure sur ce sujet est le cours de Thierry Roncalli (2022–2023), disponible à l'adresse [https://dx.doi.org/10.2139/ssrn.4339823](https://dx.doi.org/10.2139/ssrn.4339823), fort de 1 114 slides et toujours en évolution.
+:::
+
+### Pourquoi l'investissement durable est-il difficile ?
+
+Malgré son intérêt évident, l'investissement durable est qualifié de **redoutable** (*daunting*) pour plusieurs raisons :
+
+- La complexité des enjeux est immense : le changement climatique seul mobilise des disciplines aussi variées que la physique, l'économie, le droit, la sociologie.
+- Les données sont imparfaites, partielles, non standardisées.
+- Les indicateurs sont multiples et parfois contradictoires.
+- Les compromis (arbitrages entre performance financière et impact) sont réels et difficiles à quantifier.
+- La réglementation évolue rapidement et varie selon les pays.
+
+C'est la raison pour laquelle l'entrée dans ce domaine s'apparente — comme le montre la métaphore graphique du cours — à tirer une pelote de laine qui révèle un bloc de plus en plus lourd : **les gaz à effet de serre et le réchauffement climatique**.
+
+---
+
+## Les piliers ESG : définition et structure
+
+### Les trois piliers
+
+L'acronyme **ESG** structure l'ensemble du cadre d'analyse non-financière autour de trois piliers :
+
+- **E — Environnemental** (*Environmental*) : impact sur l'environnement naturel
+- **S — Social** : impact sur les parties prenantes humaines
+- **G — Gouvernance** (*Governance*) : qualité des structures de direction et de contrôle
+
+### Les 10 thèmes et 37 enjeux clés (MSCI, 2023)
+
+Le fournisseur de données MSCI a structuré les critères ESG en **10 thèmes** regroupés dans les 3 piliers, eux-mêmes décomposés en **37 enjeux clés** (*Key Issues*).
+
+#### Pilier Environnemental
+
+Le pilier Environnemental couvre quatre thèmes principaux :
+
+**1. Changement climatique** (*Climate Change*)
+
+Ce thème analyse l'exposition d'une entreprise aux risques et opportunités liés au changement climatique. Les enjeux clés incluent :
+
+- Émissions de carbone (*Carbon Emissions*) ★
+- Empreinte carbone des produits (*Product Carbon Footprint*)
+- Impact environnemental du financement (*Financing Environmental Impact*)
+- Vulnérabilité au changement climatique (*Climate Change Vulnerability*)
+
+**2. Ressources naturelles** (*Natural Resources*)
+
+- Stress hydrique (*Water Stress*) ★
+- Biodiversité et utilisation des terres (*Biodiversity & Land Use*)
+- Approvisionnement en matières premières (*Raw Material Sourcing*)
+
+**3. Pollution et déchets** (*Pollution & Waste*)
+
+- Émissions toxiques et déchets (*Toxic Emissions & Waste*) ★
+- Emballages et déchets (*Packaging Material & Waste*)
+- Déchets électroniques (*Electronic Waste*)
+
+**4. Opportunités environnementales** (*Environmental Opportunities*)
+
+- Opportunités dans les technologies propres (*Opportunities in Clean Tech*)
+- Opportunités dans les bâtiments verts (*Opportunities in Green Building*)
+- Opportunités dans les énergies renouvelables (*Opp's in Renewable Energy*)
+
+#### Pilier Social
+
+**5. Capital humain** (*Human Capital*)
+
+- Gestion du travail (*Labor Management*) ★
+- Santé et sécurité (*Health & Safety*) ★
+- Développement du capital humain (*Human Capital Development*)
+- Normes du travail dans la chaîne d'approvisionnement (*Supply Chain Labor Standards*)
+
+**6. Responsabilité produit** (*Product Liability*)
+
+- Sécurité et qualité des produits (*Product Safety & Quality*)
+- Sécurité chimique (*Chemical Safety*)
+- Sécurité des produits financiers (*Financial Product Safety*)
+- Vie privée et sécurité des données (*Privacy & Data Security*)
+- Investissement responsable (*Responsible Investment*)
+- Risque de santé et démographique (*Health & Demographic Risk*)
+
+**7. Opposition des parties prenantes** (*Stakeholder Opposition*)
+
+- Approvisionnement controversé (*Controversial Sourcing*)
+
+**8. Opportunités sociales** (*Social Opportunities*)
+
+- Accès aux communications (*Access to Communications*)
+- Accès aux soins de santé (*Access to Health Care*)
+- Accès à la finance (*Access to Finance*)
+- Opportunités en nutrition et santé (*Opp's in Nutrition & Health*)
+
+#### Pilier Gouvernance
+
+**9. Gouvernance d'entreprise** (*Corporate Governance*) ★★
+
+- Conseil d'administration (*Board*) ★★
+- Rémunération (*Pay*) ★★
+- Actionnariat (*Ownership*) ★★
+- Comptabilité (*Accounting*) ★★
+
+**10. Comportement de l'entreprise** (*Corporate Behavior*)
+
+- Éthique des affaires (*Business Ethics*) ★
+- Pratiques anticoncurrentielles (*Anti-Competitive Practices*) ★
+- Transparence fiscale (*Tax Transparency*) ★
+- Corruption et instabilité (*Corruption & Instability*)
+- Instabilité du système financier (*Financial System Instability*)
+
+::: {.callout-note title="À retenir"}
+★ indique les enjeux "universels", évalués pour toutes les sociétés de l'Indice Mondial MSCI.
+
+★★ indique que le Conseil, la Rémunération, l'Actionnariat et la Comptabilité contribuent directement au score de Gouvernance d'entreprise pour toutes les sociétés — mais les 0 à 10 sous-scores ne sont pas encore disponibles.
+:::
+
+---
+
+## La notation ESG (*Scoring*)
+
+### Principes de base
+
+#### Multiplicité des systèmes de notation
+
+Il existe de **nombreux systèmes de notation ESG** proposés par des fournisseurs de données différents, parmi lesquels :
+
+- **MSCI** — l'un des plus utilisés au monde
+- **Sustainalytics** (filiale de Morningstar)
+- **S&P Global ESG**
+- **Refinitiv** (filiale de LSEG)
+- **Bloomberg ESG**
+- **ISS ESG**
+
+Chaque fournisseur construit sa propre méthodologie, avec des pondérations, des sources de données et des échelles différentes.
+
+#### Corrélation entre les systèmes
+
+Bien que les notations présentent des **différences parfois significatives** d'un fournisseur à l'autre, la corrélation globale reste positive. Une étude comparative entre Sustainalytics et MSCI sur les 1 200 actions du S&P 1200 (janvier 2016) montre un **R² d'environ 0,32** : les deux systèmes s'accordent sur la direction générale, mais présentent une dispersion notable.
+
+::: {.callout-tip title="Intuition"}
+Pensez aux agences de notation de crédit (Moody's, S&P, Fitch) : elles s'accordent souvent sur les grands équilibres mais peuvent diverger dans les détails. L'ESG présente une situation similaire, voire avec davantage de dispersion car les données non-financières sont moins standardisées que les données comptables.
+:::
+
+::: {.callout-warning title="Point important"}
+Une corrélation positive ne signifie pas que les deux systèmes donnent le même score à chaque entreprise. La divergence entre notateurs ESG (*rating disagreement*) est un problème bien documenté dans la littérature académique. Elle complique l'interprétation et la comparaison des portefeuilles ESG.
+:::
+
+### Structure de la notation ESG (MSCI, depuis 2023)
+
+Depuis 2023, MSCI calcule la **note ESG globale** comme une **moyenne pondérée** des scores obtenus sur les trois piliers E, S et G. La pondération reflète la matérialité de chaque enjeu pour le secteur d'activité de l'entreprise.
+
+La note correspond à un **classement relatif** (*ranking*) au sein d'un univers sectoriel. Elle est exprimée sur une échelle allant de **CCC** (très mauvais) à **AAA** (leader), en passant par B, BB, BBB, A, AA.
+
+#### Exemple : AstraZeneca (AZN)
+
+AstraZeneca, groupe pharmaceutique britannique, illustre bien le fonctionnement de la notation :
+
+- **Note MSCI** : AA (stable depuis septembre 2016)
+- **Positionnement** : leader parmi 93 sociétés pharmaceutiques de l'indice MSCI ACWI
+- **Distribution dans l'industrie** : environ 29 % des sociétés ont une note CCC ou B, tandis qu'une minorité atteint AA ou AAA
+
+Les forces d'AstraZeneca se situent dans le développement du capital humain et l'accès aux soins de santé. Ses points faibles relatifs concernent la sécurité et la qualité des produits.
+
+#### Tendance générale des scores
+
+::: {.callout-note title="À retenir"}
+Des recherches académiques (Lundström, 2021) montrent que les **scores ESG ont tendance à augmenter avec le temps**. Cela peut refléter une amélioration réelle des pratiques des entreprises, mais aussi un effet de reporting croissant (les entreprises apprennent à mieux documenter leurs actions) et des biais méthodologiques des notateurs.
+:::
+
+### Les émissions carbone (Scope 1, 2 et 3)
+
+Un volet central de la notation ESG concerne les **émissions de gaz à effet de serre**, mesurées ou estimées selon trois périmètres (*scopes*) :
+
+- **Scope 1** : émissions directes produites par l'entreprise (ex. : chaudières, véhicules de flotte)
+- **Scope 2** : émissions indirectes liées à l'énergie consommée (ex. : électricité achetée)
+- **Scope 3** : toutes les autres émissions indirectes, en amont (fournisseurs) et en aval (utilisation des produits par les clients)
+
+::: {.callout-tip title="Intuition"}
+Pour un constructeur automobile, le Scope 3 est de loin le plus important : les émissions des voitures en circulation chez les clients sont bien supérieures aux émissions de ses usines. Ignorer le Scope 3 conduirait à une vision très incomplète de l'impact climatique réel de l'entreprise.
+:::
+
+### La modélisation du futur : le score ITR
+
+Le **score ITR** (*Implied Temperature Rise* — Hausse de température implicite), développé notamment par MSCI, tente de modéliser la **trajectoire climatique future** d'une entreprise ou d'un portefeuille.
+
+- Il exprime, en degrés Celsius, le réchauffement global auquel conduirait un monde où toutes les entreprises adoptent le même comportement que celle analysée.
+- Un ITR de 1,5°C est aligné avec l'Accord de Paris ; un ITR de 3°C ou 4°C est très préoccupant.
+
+Ce type d'indicateur permet de comparer les engagements climatiques des entreprises à des trajectoires scientifiquement définies.
+
+### Égalité de genre
+
+La **parité hommes-femmes** est un indicateur social de plus en plus suivi. Les entreprises sont tenues de le déclarer et, dans de nombreuses juridictions, un minimum légal sera bientôt obligatoire (notamment en Europe avec la directive sur la parité dans les conseils d'administration).
+
+### Les Objectifs de développement durable (ODD)
+
+Les **Objectifs de Développement Durable** (*Sustainable Development Goals — SDGs*), adoptés par l'ONU en 2015, constituent un référentiel universel de 17 objectifs à atteindre d'ici 2030 :
+
+1. Pas de pauvreté
+2. Faim zéro
+3. Bonne santé et bien-être
+4. Éducation de qualité
+5. Égalité entre les sexes
+6. Eau propre et assainissement
+7. Énergie propre et d'un coût abordable
+8. Travail décent et croissance économique
+9. Industrie, innovation et infrastructure
+10. Inégalités réduites
+11. Villes et communautés durables
+12. Consommation et production responsables
+13. Mesures relatives à la lutte contre les changements climatiques
+14. Vie aquatique
+15. Vie terrestre
+16. Paix, justice et institutions efficaces
+17. Partenariats pour la réalisation des objectifs
+
+Ces objectifs sont désormais **quantifiés** par les fournisseurs de données et intégrés dans les analyses de portefeuille.
+
+#### Exemple d'utilisation des ODD : Shell (2022)
+
+Le rapport de durabilité 2022 de Shell illustre comment une grande entreprise pétrolière s'approprie le cadre des ODD. Shell y indique contribuer directement à 13 des 17 ODD via sa stratégie *Powering Progress* — incluant notamment :
+
+- ODD 7 : Énergie propre
+- ODD 13 : Lutte contre le changement climatique
+- ODD 14 : Vie aquatique
+- ODD 15 : Vie terrestre
+
+::: {.callout-warning title="Point important"}
+Il convient d'apprécier ces déclarations d'entreprise avec un regard critique. Le fait qu'une entreprise pétrolière revendique une contribution aux ODD environnementaux soulève la question du *greenwashing* (écoblanchiment) : la communication sur le développement durable peut parfois surpasser les actions concrètes. Les outils de notation ESG tentent de dépasser les déclarations d'intention pour mesurer les impacts réels.
+:::
+
+#### Exemple d'utilisation des ODD : Suisse (niveau national)
+
+Les ODD s'appliquent aussi aux **États**. Le tableau de bord des ODD pour la Suisse (source : *sdgindex.org*) présente, à titre d'exemple :
+
+- **Rang SDG** : 8e sur 163 pays
+- **Score SDG** : 80,8
+- **Score de débordement** (*Spillover Score*) : 52,1 — cet indicateur mesure les effets négatifs qu'un pays impose à d'autres via son commerce, ses chaînes d'approvisionnement et ses investissements
+
+La Suisse progresse dans de nombreux domaines mais présente encore des défis significatifs, notamment pour la vie marine (ODD 14) et les modes de consommation responsables (ODD 12).
+
+---
+
+## Les stratégies ESG possibles
+
+### Une taxonomie en sept catégories
+
+La **classification Eurosif (2019)**, reprise par Thierry Roncalli, identifie sept grandes stratégies d'investissement ESG, allant du plus passif au plus actif :
+
+```{mermaid}
+flowchart TD
+    A[Stratégies ESG] --> B[1. Exclusion]
+    A --> C[2. Valeurs / Norms]
+    A --> D[3. Sélection positive]
+    A --> E[4. Thématique]
+    A --> F[5. Intégration]
+    A --> G[6. Engagement]
+    A --> H[7. Impact]
+```
+
+### Stratégie 1 : Exclusion (*Exclusion Policy & Negative / Worst-in-class Screening*)
+
+**Définition** : Cette stratégie consiste à **exclure** de l'univers d'investissement certaines entreprises, secteurs ou pays qui ne satisfont pas à des critères minimaux.
+
+**Deux variantes principales** :
+
+- **Exclusion normative** : on exclut les entreprises qui violent des conventions internationales (ex. : fabricants de mines antipersonnel, bombes à sous-munitions — interdits par les conventions d'Ottawa et d'Oslo).
+- **Exclusion sectorielle** : on exclut des industries entières jugées incompatibles avec les valeurs de l'investisseur (ex. : tabac, jeux d'argent, armement, charbon au-delà d'un certain seuil).
+- **Worst-in-class** : on exclut les entreprises les moins bien notées ESG dans chaque secteur.
+
+::: {.callout-tip title="Intuition"}
+C'est la stratégie la plus simple à comprendre et à implémenter. Un fonds "éthique" qui refuse d'investir dans des producteurs de tabac applique une exclusion sectorielle. L'inconvénient est qu'il ne pousse pas ces entreprises à changer — il les ignore simplement.
+:::
+
+**Avantages** : Facile à communiquer ; forte cohérence avec certaines valeurs éthiques.
+
+**Limites** : Ne crée pas de dialogue avec l'entreprise ; peut générer un biais sectoriel important dans le portefeuille ; ne garantit pas un meilleur impact sur le monde.
+
+### Stratégie 2 : Valeurs / Filtrage normatif (*Norms-based Screening*)
+
+**Définition** : On filtre l'univers d'investissement en vérifiant le respect par les entreprises des **standards et normes internationaux**, tels que :
+
+- Les principes directeurs de l'ONU relatifs aux entreprises et aux droits de l'homme
+- Les conventions de l'OIT (Organisation Internationale du Travail)
+- Le Pacte Mondial des Nations Unies (*UN Global Compact*)
+- Les conventions de l'OCDE pour les entreprises multinationales
+
+::: {.callout-note title="À retenir"}
+La différence avec l'exclusion sectorielle est subtile mais importante : le filtrage normatif exclut des entreprises sur la base de **comportements contraires à des normes universelles** (ex. : recours au travail des enfants), indépendamment du secteur d'activité.
+:::
+
+### Stratégie 3 : Sélection positive / Best-in-class (*Positive or Best-in-class Screening*)
+
+**Définition** : On sélectionne **activement** les entreprises les mieux notées ESG au sein de chaque secteur d'activité.
+
+**Fonctionnement** :
+
+- On conserve la même exposition sectorielle que l'indice de référence,
+- Mais dans chaque secteur, on surpondère les "leaders ESG" et sous-pondère les "retardataires ESG".
+
+::: {.callout-tip title="Intuition"}
+Plutôt que d'exclure les secteurs polluants, on investit dans les entreprises pétrolières qui polluent **le moins** et qui font **le plus d'efforts** vers la transition. L'idée est d'inciter à une course vers le haut (*race to the top*) plutôt que d'abandonner les secteurs difficiles.
+:::
+
+**Avantage** : Permet de maintenir une diversification sectorielle plus grande.
+
+**Limite** : Une société peut être "meilleure de sa catégorie" tout en restant objectivement peu vertueuse sur le plan absolu.
+
+### Stratégie 4 : Investissement thématique (*Sustainability Themed Investing*)
+
+**Définition** : On concentre les investissements sur des **thèmes de durabilité spécifiques**, comme :
+
+- Les **obligations vertes** (*Green Bonds*) : obligations dont les fonds sont fléchés vers des projets environnementaux
+- Les fonds d'énergies renouvelables
+- Les fonds d'eau potable
+- Les fonds liés à l'agriculture durable
+- Les fonds d'économie circulaire
+
+::: {.callout-note title="À retenir"}
+L'investissement thématique est souvent associé à un fort potentiel de croissance, car ces secteurs bénéficient d'un soutien réglementaire croissant (taxonomie européenne, Green Deal). Cependant, il peut générer des risques de concentration et des problèmes de valorisation si les thèmes sont surévalués.
+:::
+
+### Stratégie 5 : Intégration ESG (*ESG Integration*)
+
+**Définition** : Les critères ESG sont **intégralement intégrés** dans le processus de gestion de portefeuille, au même titre que les critères financiers traditionnels (valorisation, rentabilité, risque).
+
+**Fonctionnement concret** :
+
+- Les scores ESG entrent dans les modèles de sélection d'actifs,
+- Les analystes financiers intègrent les risques ESG dans leurs modèles de valorisation,
+- Les benchmarks (indices de référence) sont construits avec des filtres ESG,
+- Des tableaux de bord ESG permettent de suivre le profil extra-financier du portefeuille en temps réel.
+
+::: {.callout-tip title="Intuition"}
+L'intégration part de l'hypothèse que les risques ESG sont des **risques financiers réels à long terme** : une entreprise très polluante s'expose à des réglementations plus strictes, à des taxes carbone, à des procès — tous ces risques se traduisent in fine par des risques pour la valeur de l'action.
+:::
+
+### Stratégie 6 : Engagement et droits de vote (*Voting Policy & Shareholder Activism*)
+
+**Définition** : En tant qu'actionnaire, on **exerce son influence** sur les entreprises via :
+
+- Le **vote en assemblée générale** (*General Meeting*) sur les résolutions soumises aux actionnaires
+- Le **dialogue direct** (*engagement*) avec les directions et conseils d'administration
+- La **publication de rapports** critiques ou de propositions d'actionnaires
+
+**Exemples de résolutions sur lesquelles un investisseur peut voter** :
+
+- Approbation des comptes annuels
+- Rémunération des dirigeants (*Say on Pay*)
+- Composition du conseil d'administration
+- Stratégie climatique de l'entreprise
+
+::: {.callout-warning title="Point important"}
+L'engagement est une stratégie **active et coûteuse en ressources humaines** : elle requiert des équipes spécialisées, des connaissances juridiques et une capacité à dialoguer dans plusieurs langues avec des centaines d'entreprises. C'est pourquoi elle est souvent réalisée via des coalitions ou des prestataires spécialisés.
+:::
+
+### Stratégie 7 : Investissement d'impact (*Impact Investing*)
+
+**Définition** : On cherche à générer, au-delà du rendement financier, un **impact social ou environnemental mesurable et intentionnel**.
+
+**Caractéristiques distinctives** :
+
+- **Intentionnalité** : l'impact est voulu, pas un sous-produit,
+- **Mesurabilité** : l'impact est quantifié (ex. : tonnes de CO₂ évitées, nombre de personnes sortis de la pauvreté),
+- **Additionnalité** : l'investissement crée un impact qui n'aurait pas eu lieu sans lui.
+
+**Exemples** :
+
+- Fonds de microfinance qui prêtent aux entrepreneurs des pays émergents sans accès au crédit bancaire,
+- Obligations à impact social (*Social Impact Bonds*),
+- Fonds d'infrastructures vertes dans des zones vulnérables au changement climatique.
+
+::: {.callout-note title="À retenir"}
+L'investissement d'impact représente l'expression la plus aboutie de la finance durable : on ne cherche pas simplement à éviter de nuire, mais à **contribuer positivement** de manière vérifiable. C'est aussi la stratégie la plus difficile à standardiser et à évaluer objectivement.
+:::
+
+---
+
+## Exemple pratique : compenswiss, de la théorie à la pratique
+
+### Présentation de compenswiss
+
+**Compenswiss** est le gestionnaire du Fonds de compensation de l'AVS/AI/APG (assurance vieillesse et survivants, assurance invalidité et allocations pour perte de gain), la caisse de retraite nationale suisse. C'est l'un des grands investisseurs institutionnels en Suisse, gérant plusieurs dizaines de milliards de francs.
+
+Son approche ESG, présentée dans le cours (situation fin 2022), illustre comment les stratégies théoriques se déclinent concrètement dans la gestion d'un fonds de pension.
+
+### Les quatre piliers de l'approche ESG de compenswiss
+
+L'approche de compenswiss s'articule autour de quatre axes pratiques :
+
+```{mermaid}
+quadrantChart
+    title Approche ESG compenswiss
+    x-axis Faible engagement --> Fort engagement
+    y-axis Indirect --> Direct
+    quadrant-1 Engagement actif
+    quadrant-2 Dialogue direct
+    quadrant-3 Mesure & Suivi
+    quadrant-4 Droits formels
+    Intégration: [0.2, 0.2]
+    Exercice droits de vote: [0.7, 0.3]
+    Engagement via ASIR: [0.8, 0.8]
+    Exclusions: [0.3, 0.7]
+```
+
+#### Axe 1 : Intégration
+
+L'intégration ESG chez compenswiss passe par :
+
+- L'utilisation de **benchmarks ESG** comme référence pour les mandats de gestion,
+- Un **tableau de bord ESG** propriétaire permettant de suivre les indicateurs E, S et G du portefeuille en temps réel,
+- Le suivi des **Swiss Climate Scores** — un référentiel développé en Suisse pour mesurer la compatibilité climatique des portefeuilles.
+
+L'outil de tableau de bord permet notamment de visualiser :
+
+- Le score ESG global du portefeuille vs. le benchmark (ex. : AA pour les deux à fin 2022)
+- La décomposition par pilier (E, S, G) avec scores et pondérations
+- La distribution des notations ESG dans le portefeuille
+- Le taux de couverture (*coverage*) — la proportion des actifs sous gestion pour lesquels une donnée ESG est disponible
+
+#### Axe 2 : Exercice des droits de vote en Suisse
+
+Compenswiss vote lors des **assemblées générales** (*General Meetings*) des sociétés suisses dans lesquelles elle est investie — environ **100 AG par an** en Suisse.
+
+Cette activité est confiée à un **consultant externe spécialisé**, car l'analyse de chaque résolution est chronophage et requiert une expertise spécifique. Des **règles de vote** préalablement définies guident les décisions.
+
+Les données historiques (2015–2022) montrent :
+
+- Une **augmentation de la part des "toutes motions acceptées"** (*all motions accepted*), en lien avec le déploiement progressif de la loi suisse sur les rémunérations abusives,
+- Une proportion stable des votes avec **"une motion rejetée"** (*one motion rejected*), principalement sur les questions de rémunération des dirigeants.
+
+::: {.callout-tip title="Intuition"}
+Le droit de vote est une forme de pression douce mais réelle. Quand un grand investisseur institutionnel vote contre la rémunération d'un dirigeant, cela fait les gros titres et peut influencer la direction. Multiplié par des dizaines de grands fonds qui coordonnent leurs votes, cet effet devient significatif.
+:::
+
+#### Axe 3 : Engagement via ASIR
+
+L'engagement est réalisé à travers **ASIR** (*Association Suisse pour des Investissements Responsables*), dont compenswiss est cofondateur. Cette structure permet de mutualiser les ressources et d'amplifier la voix des investisseurs.
+
+L'engagement ASIR couvre :
+
+- Un dialogue avec plus de **150 émetteurs** (entreprises dans lesquelles les membres sont investis)
+- Des thèmes variés : éthique des affaires, environnement, droits de l'homme, droits des travailleurs
+- Un sujet spécifique emblématique : le **travail des enfants dans la filière cacao**
+
+L'évolution des engagements entre 2019 et 2022 montre :
+
+- Une **augmentation du nombre total de cas**, notamment tirée par les engagements sur les droits de l'homme,
+- Une **distribution thématique relativement stable** sur les autres dimensions (éthique des affaires, environnement, droits du travail).
+
+::: {.callout-warning title="Point important"}
+L'engagement est un processus de **long terme**. Un dialogue ouvert avec une entreprise sur ses pratiques sociales peut durer plusieurs années avant de produire des effets tangibles. La patience et la persistance sont des conditions nécessaires à l'efficacité de cette approche.
+:::
+
+#### Axe 4 : Exclusions
+
+Compenswiss applique des exclusions à **environ 100 sociétés**, sur deux bases :
+
+- **Exclusions normatives** : entreprises qui violent des conventions internationales fondamentales (ex. : fabricants d'armes prohibées)
+- **Exclusions charbon** : entreprises dont le chiffre d'affaires dépasse un seuil lié à l'extraction ou à l'utilisation du charbon (le seuil a été abaissé de 50 % à 30 %, illustrant un durcissement progressif de la politique)
+
+### Analyse de l'empreinte carbone du portefeuille compenswiss
+
+Un exemple d'analyse concrète concerne le **suivi de l'empreinte carbone** (*carbon footprint*) du portefeuille sur la période juin 2020 – décembre 2022, mesurée en **tonnes de CO₂ équivalent par million de dollars investi** (tCO₂e / M$ investi).
+
+**Observations clés** :
+
+- Le **benchmark idéal** (trajectoire cible) affiche une **baisse régulière** sur la période — cohérent avec une trajectoire de décarbonation,
+- Le **benchmark** de marché suit également une tendance baissière, quoique moins prononcée,
+- Le **portefeuille de compenswiss** présente une empreinte carbone **plus élevée** que le benchmark idéal, mais avec une **tendance décroissante**,
+- Les seuils d'exclusion charbon (50 % puis 30 %) ont eu un impact visible sur la trajectoire du portefeuille.
+
+::: {.callout-note title="À retenir"}
+Cet exemple illustre l'utilité des **données et des outils ESG** : ils permettent de visualiser la progression, de détecter les écarts par rapport à la trajectoire cible, et de mettre en évidence des **conséquences inattendues** de certaines décisions d'investissement. Sans mesure, il n'y a pas de pilotage possible.
+:::
+
+::: {.callout-tip title="Intuition"}
+La gestion ESG est analogue à la gestion d'un régime alimentaire : sans mesure précise des apports caloriques (ici, des émissions carbone), on avance à l'aveugle. Les outils de données ESG jouent le rôle de ce tableau de suivi indispensable.
+:::
+
+### Les données et outils : un enjeu central
+
+L'expérience de compenswiss souligne un point crucial : la mise en œuvre concrète de l'ESG repose sur la **qualité et la richesse des données disponibles**.
+
+Les sources de données utilisées comprennent :
+
+- **MSCI** : scores ESG et notations
+- **ASIR** : données d'engagement
+- **Gestionnaires de fonds délégués** : rapports ESG des mandats externalisés
+
+Le défi est double :
+
+1. **La couverture** : toutes les sociétés ne sont pas notées (notamment les PME, les émetteurs souverains, les actifs non cotés),
+2. **La traversée du temps** : les données ESG évoluent, les méthodologies changent — il faut pouvoir analyser le portefeuille à différentes dates pour suivre la progression.
+
+::: {.callout-warning title="Point important"}
+La qualité des outils informatiques de gestion des données ESG est un **avantage compétitif** pour les investisseurs institutionnels. Traverser les données dans le temps (comparaisons historiques) et dans les structures (look-through des fonds délégués jusqu'aux actifs sous-jacents) est une compétence clé qui conditionne la fiabilité de l'analyse.
+:::
+
+---
+
+## Principaux enseignements
+
+### Ce que l'investissement durable peut et ne peut pas faire
+
+La finance durable est un domaine en pleine croissance, mais il convient d'en avoir une vision lucide et équilibrée.
+
+**Ce qu'elle peut faire** :
+
+- Orienter le capital vers des activités moins polluantes et plus responsables,
+- Exercer une pression sur les entreprises via l'actionnariat,
+- Contribuer à réduire le coût du capital pour les entreprises vertueuses et à l'augmenter pour les autres,
+- Améliorer la conscience des risques non-financiers à long terme,
+- Financer directement des projets à impact positif mesurable.
+
+**Ce qu'elle ne peut pas faire** :
+
+- Résoudre seule les crises environnementales et sociales,
+- Remplacer les politiques publiques et la réglementation,
+- Garantir un rendement supérieur à court terme,
+- Éliminer les problèmes de données imparfaites et de greenwashing.
+
+### Résumé des concepts clés
+
+::: {.callout-note title="À retenir — Les points essentiels du chapitre"}
+
+**Sur le contexte** : les activités humaines actuelles ne sont pas soutenables. Le changement climatique, l'effondrement de la biodiversité et les inégalités appellent une réponse systémique. La finance est un levier parmi d'autres.
+
+**Sur les indicateurs** : de nombreux acronymes structurent le domaine — ESG (Environnemental, Social, Gouvernance), ODD / SDG (Objectifs de Développement Durable), ITR (Hausse de température implicite), émissions carbone Scope 1/2/3. Chacun répond à un besoin de mesure différent.
+
+**Sur les données** : mesurer, analyser, prévoir et anticiper — tout cela requiert des données fiables. La gestion des données dans le temps et à travers les structures de portefeuille est un enjeu opérationnel majeur.
+
+**Sur les stratégies** : toute une palette de stratégies ESG existe — Intégration, Engagement, Vote, Impact, Exclusion — et elles sont souvent combinées dans la pratique.
+
+**Sur la pratique** : l'expérience de compenswiss montre qu'une approche ESG institutionnelle rigoureuse combine simultanément intégration dans les processus, exercice des droits de vote, engagement actionnarial et politique d'exclusion.
+:::
+
+### La finance durable : un domaine jeune et en mouvement
+
+La finance durable est un champ **relativement récent** à l'échelle de l'histoire financière, mais il **croît très rapidement** :
+
+- Les volumes d'actifs sous gestion avec critères ESG augmentent chaque année,
+- La réglementation se densifie (SFDR en Europe, taxonomie verte européenne, loi PACTE en France, recommandations FINMA en Suisse),
+- Les données s'améliorent progressivement (reporting obligatoire croissant),
+- La recherche académique sur l'efficacité des stratégies ESG s'intensifie.
+
+::: {.callout-tip title="Intuition"}
+Investir en finance durable aujourd'hui ressemble à investir dans la gestion des risques au début des années 1990 : les outils sont imparfaits, la réglementation encore incomplète, mais la direction est irréversible. Les acteurs qui développent les compétences et les données ESG aujourd'hui auront un avantage durable.
+:::

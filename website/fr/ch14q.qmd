@@ -1,0 +1,348 @@
+---
+title: "Investissement durable et ESG — Quiz"
+filters:
+  - quizdown
+execute:
+  enabled: false
+---
+
+## Niveau 1 — Fondamentaux
+
+```{quizdown}
+### De combien a chuté l'Indice Planète Vivante entre 1970 et 2020 ?
+
+> Pense au chiffre clé qui illustre l'effondrement de la biodiversité mondiale.
+
+1. [ ] 42 %
+1. [ ] 55 %
+1. [x] 69 %
+    > Correct : l'Indice Planète Vivante (Global Living Planet Index) a chuté de 69 % entre 1970 et 2020, signalant un effondrement massif des populations de vertébrés.
+1. [ ] 85 %
+    > Incorrect : ce chiffre est trop élevé. La chute réelle est de 69 %.
+```
+
+```{quizdown}
+### Que signifie l'acronyme ESG ?
+
+> Pense aux trois dimensions non-financières d'une entreprise.
+
+1. [ ] Economique, Social, Gouvernance
+1. [x] Environnemental, Social, Gouvernance
+    > Correct : E pour Environnemental, S pour Social, G pour Gouvernance — les trois piliers du cadre d'analyse extra-financière.
+1. [ ] Environnemental, Sociétal, Gestion
+1. [ ] Energétique, Social, Gouvernance
+```
+
+```{quizdown}
+### Quels termes sont des synonymes reconnus de "finance durable" ?
+
+> Plusieurs appellations coexistent pour désigner le même concept central.
+
+- [x] Investissement socialement responsable (ISR)
+    > Correct : ISR (Socially Responsible Investing — SRI) est un synonyme courant.
+- [x] Finance verte (Green Finance)
+    > Correct : la finance verte est une composante et un synonyme de la finance durable.
+- [ ] Finance comportementale (Behavioral Finance)
+    > Incorrect : la finance comportementale est un champ distinct qui étudie les biais cognitifs des investisseurs.
+- [x] Investissement responsable (Responsible Investment)
+    > Correct : l'investissement responsable est bien un synonyme de finance durable.
+- [ ] Finance quantitative (Quantitative Finance)
+    > Incorrect : la finance quantitative désigne l'utilisation de modèles mathématiques, sans lien direct avec les critères durables.
+```
+
+```{quizdown}
+### En combien de piliers le cadre ESG de MSCI est-il structuré ?
+
+> Pense à l'acronyme lui-même.
+
+1. [ ] 2
+1. [x] 3
+    > Correct : Environnemental, Social, Gouvernance — trois piliers qui se décomposent ensuite en 10 thèmes et 37 enjeux clés.
+1. [ ] 5
+1. [ ] 7
+```
+
+```{quizdown}
+### Combien de thèmes le cadre ESG MSCI (2023) recense-t-il au total ?
+
+> Ces thèmes se répartissent entre les trois piliers E, S et G.
+
+1. [ ] 5
+1. [ ] 7
+1. [x] 10
+    > Correct : 10 thèmes au total — 4 pour l'Environnemental (Changement climatique, Ressources naturelles, Pollution et déchets, Opportunités environnementales), 4 pour le Social (Capital humain, Responsabilité produit, Opposition des parties prenantes, Opportunités sociales) et 2 pour la Gouvernance (Gouvernance d'entreprise, Comportement de l'entreprise).
+1. [ ] 37
+    > Incorrect : 37 est le nombre d'enjeux clés (Key Issues), pas de thèmes.
+```
+
+```{quizdown}
+### Que mesure le Scope 3 des émissions carbone ?
+
+> Le Scope 3 est le plus large des trois périmètres d'émissions.
+
+1. [ ] Les émissions directes produites par l'entreprise
+    > Incorrect : ce sont les émissions de Scope 1 (chaudières, flotte de véhicules, etc.).
+1. [ ] Les émissions liées à l'énergie achetée par l'entreprise
+    > Incorrect : ce sont les émissions de Scope 2 (électricité achetée, chaleur, vapeur).
+1. [x] Toutes les autres émissions indirectes, en amont et en aval de l'activité
+    > Correct : le Scope 3 couvre l'ensemble des émissions indirectes — fournisseurs (amont) et utilisation des produits par les clients (aval). C'est souvent le périmètre le plus important mais aussi le plus difficile à mesurer.
+1. [ ] Uniquement les émissions des fournisseurs directs
+    > Incorrect : le Scope 3 inclut aussi les émissions en aval, notamment l'usage des produits par les clients.
+```
+
+```{quizdown}
+### Le Scope 2 des émissions carbone concerne les émissions directes de l'entreprise.
+
+> Réfléchis à la distinction entre émissions directes et indirectes.
+
+1. [ ] Vrai
+1. [x] Faux
+    > Faux : le Scope 2 couvre les émissions indirectes liées à l'énergie achetée (électricité, chaleur, vapeur). Les émissions directes appartiennent au Scope 1.
+```
+
+```{quizdown}
+### Que représente le score ITR (Implied Temperature Rise) ?
+
+> Pense à une métrique qui traduit la trajectoire d'une entreprise en unité climatique.
+
+1. [ ] L'historique des températures dans les usines d'une entreprise
+1. [ ] Le pourcentage de réduction d'émissions d'une entreprise sur 10 ans
+1. [x] La hausse de température mondiale implicite si toutes les entreprises se comportaient comme l'entreprise analysée
+    > Correct : l'ITR exprime en degrés Celsius le réchauffement global auquel conduirait un monde où toutes les entreprises adoptent le même comportement que celle analysée. La cible Accord de Paris est 1,5 degré Celsius.
+1. [ ] Le risque physique climatique auquel l'entreprise est exposée
+    > Incorrect : bien que lié au climat, l'ITR mesure la trajectoire future de l'entreprise, pas son exposition aux risques physiques.
+```
+
+```{quizdown}
+### Combien d'Objectifs de Développement Durable (ODD — SDGs) ont été adoptés par l'ONU en 2015 ?
+
+> Ces objectifs ont un horizon temporel fixé à 2030.
+
+1. [ ] 10
+1. [ ] 12
+1. [ ] 15
+1. [x] 17
+    > Correct : 17 ODD ont été adoptés lors du Sommet de l'ONU en 2015, avec un horizon de réalisation fixé à 2030.
+```
+
+## Niveau 2 — Comprehension
+
+```{quizdown}
+### Comment MSCI calcule-t-il le score ESG global depuis 2023 ?
+
+> Pense à la manière dont les trois piliers sont combinés.
+
+1. [ ] Par la note la plus basse parmi E, S et G
+1. [ ] Par simple addition des trois scores piliers
+1. [x] Par une moyenne pondérée des scores E, S et G
+    > Correct : depuis 2023, MSCI calcule le score ESG comme une moyenne pondérée des scores obtenus sur les trois piliers, la pondération reflétant la matérialité sectorielle de chaque enjeu.
+1. [ ] Par la note médiane parmi E, S et G
+```
+
+```{quizdown}
+### Sur l'échelle de notation MSCI, quelle note est attribuée aux leaders ESG ?
+
+> L'échelle va de la pire note à la meilleure en plusieurs échelons.
+
+1. [ ] AAA
+    > Incorrect : AAA est bien une très bonne note, mais ce n'est pas la seule note "leader". Attention, il faut aussi inclure AA dans la catégorie leader.
+1. [ ] CCC
+    > Incorrect : CCC est la pire note sur l'échelle MSCI — elle désigne les retardataires ESG.
+1. [x] AA et AAA
+    > Correct : les notes AA et AAA correspondent aux "leaders ESG" dans le système de notation MSCI. CCC et B désignent les "retardataires" (Laggards).
+1. [ ] A et AA
+```
+
+```{quizdown}
+### Quelle est la correlation (R au carre) observée entre Sustainalytics et MSCI sur le S&P 1200 en janvier 2016 ?
+
+> Ce chiffre illustre le problème de divergence entre les notateurs ESG.
+
+1. [ ] 0,75
+    > Incorrect : une telle valeur indiquerait une forte concordance entre les systèmes, ce qui n'est pas le cas.
+1. [x] 0,32
+    > Correct : le R² observé est d'environ 0,32 — les deux systèmes s'accordent sur la direction générale, mais présentent une dispersion notable. Ce phénomène est connu sous le nom de "rating disagreement".
+1. [ ] 0,12
+    > Incorrect : ce chiffre trop faible indiquerait une quasi-absence de corrélation entre les deux systèmes.
+1. [ ] 0,90
+```
+
+```{quizdown}
+### Quelle est la principale difference entre la stratégie d'exclusion sectorielle et le filtrage normatif (norms-based screening) ?
+
+> Pense au critère utilisé pour exclure une entreprise dans chaque cas.
+
+1. [x] L'exclusion sectorielle vise des industries entières ; le filtrage normatif cible des entreprises ayant enfreint des normes internationales, quel que soit leur secteur.
+    > Correct : l'exclusion sectorielle (ex. tabac, charbon) s'applique à des industries. Le filtrage normatif exclut des entreprises sur la base de comportements contraires à des standards universels (ONU, OIT), indépendamment du secteur.
+1. [ ] Le filtrage normatif vise des industries entières ; l'exclusion sectorielle cible des comportements.
+    > Incorrect : c'est l'inverse. L'exclusion sectorielle porte sur des industries, le filtrage normatif sur des comportements contraires à des normes.
+1. [ ] Les deux stratégies sont identiques.
+1. [ ] L'exclusion sectorielle est basée sur des critères financiers.
+```
+
+```{quizdown}
+### Quelles sont les trois conditions indispensables a l'investissement d'impact (impact investing) ?
+
+> Ces trois caractéristiques distinguent l'impact investing des autres stratégies ESG.
+
+- [x] Intentionnalité (l'impact est voulu)
+    > Correct : l'impact doit être intentionnel, pas un sous-produit fortuit de l'investissement.
+- [ ] Maximisation du rendement financier
+    > Incorrect : l'impact investing ne requiert pas la maximisation du rendement — il accepte parfois un rendement inférieur en échange d'un impact positif.
+- [x] Mesurabilité (l'impact est quantifié)
+    > Correct : l'impact doit être mesuré et reporté de manière rigoureuse (ex. tonnes de CO2 evitées, nombre de personnes sorties de la pauvreté).
+- [x] Additionnalité (l'impact n'aurait pas eu lieu sans l'investissement)
+    > Correct : l'additionnalité garantit que l'investissement crée réellement un impact nouveau et non une simple redirection de capital existant.
+- [ ] Diversification sectorielle maximale
+    > Incorrect : la diversification sectorielle n'est pas une condition de l'impact investing.
+```
+
+```{quizdown}
+### La stratégie "best-in-class" permet de maintenir une diversification sectorielle plus large que la stratégie d'exclusion sectorielle.
+
+> Réfléchis aux secteurs qui sont conservés dans chaque stratégie.
+
+1. [x] Vrai
+    > Vrai : dans l'approche best-in-class, tous les secteurs — y compris les secteurs polluants — restent représentés dans le portefeuille. On surpondère simplement les meilleurs acteurs ESG de chaque secteur. L'exclusion sectorielle, en revanche, supprime entièrement certaines industries.
+1. [ ] Faux
+```
+
+```{quizdown}
+### Quelle limite majeure s'applique a la stratégie best-in-class ?
+
+> Pense a la différence entre un classement relatif et une performance absolue.
+
+1. [ ] Elle exclut trop de secteurs et reduit la diversification.
+    > Incorrect : c'est un reproche fait a l'exclusion sectorielle, pas au best-in-class.
+1. [x] Une entreprise peut être "meilleure de sa catégorie" tout en restant objectivement peu vertueuse en termes absolus.
+    > Correct : dans un secteur très polluant, l'"entreprise la moins pire" reste polluante. Le best-in-class ne garantit pas une performance ESG absolue satisfaisante.
+1. [ ] Elle ne prend pas en compte le pilier Gouvernance.
+1. [ ] Elle est réservée aux marchés émergents.
+```
+
+```{quizdown}
+### Quelles affirmations sont exactes concernant l'évolution des scores ESG dans le temps ?
+
+> S'appuyer sur les recherches académiques citées dans le cours.
+
+- [x] Les scores ESG tendent à augmenter avec le temps selon Lundström (2021).
+    > Correct : des recherches montrent une tendance générale a la hausse des scores ESG au fil du temps.
+- [x] Cette hausse peut refleter une amélioration réelle des pratiques ET un meilleur reporting.
+    > Correct : les deux phénomènes coexistent — certaines entreprises progressent réellement, d'autres apprennent simplement mieux a documenter leurs actions.
+- [ ] Les scores ESG sont stables dans le temps par construction.
+    > Incorrect : les scores évoluent avec les pratiques des entreprises, les méthodologies des notateurs et la qualité du reporting.
+- [ ] La hausse des scores garantit une réduction effective des émissions carbone.
+    > Incorrect : une hausse de score ESG peut être liée au reporting sans réduction réelle des émissions. C'est un biais potentiel du système de notation.
+```
+
+## Niveau 3 — Maitrise
+
+```{quizdown}
+### Un fonds de pension décide de ne plus investir dans les fabricants d'armes prohibées par les conventions d'Ottawa et d'Oslo. Quelle stratégie applique-t-il ?
+
+> Distingue bien les différentes formes d'exclusion.
+
+1. [ ] Exclusion sectorielle
+    > Incorrect : l'exclusion sectorielle vise une industrie entière (ex. tabac). Ici, le critère est le respect de conventions internationales, pas l'appartenance à un secteur.
+1. [x] Filtrage normatif (norms-based screening)
+    > Correct : les conventions d'Ottawa (mines antipersonnel) et d'Oslo (bombes à sous-munitions) sont des normes internationales universelles. Exclure les contrevenants a ces normes relève du filtrage normatif.
+1. [ ] Investissement d'impact
+1. [ ] Engagement actionnarial
+```
+
+```{quizdown}
+### Un gérant intègre les scores ESG directement dans ses modèles de valorisation et ajuste les pondérations de son portefeuille en conséquence. Quelle stratégie suit-il ?
+
+> Pense a la stratégie qui incorpore les critères ESG dans tout le processus de gestion.
+
+1. [ ] Exclusion
+1. [ ] Investissement thématique
+1. [x] Intégration ESG (ESG Integration)
+    > Correct : l'intégration ESG consiste a incorporer les critères E, S et G dans les processus de sélection, valorisation et construction de portefeuille, au même titre que les critères financiers traditionnels.
+1. [ ] Engagement
+```
+
+```{quizdown}
+### Remets les étapes suivantes dans l'ordre logique d'une analyse ESG de portefeuille.
+
+> Pense au cheminement naturel : d'abord mesurer, puis analyser, puis agir.
+
+1. Collecte des données ESG (scores, Scopes, ODD)
+2. Calcul du profil ESG du portefeuille
+3. Comparaison avec le benchmark
+4. Identification des écarts et des risques ESG
+5. Définition des actions correctives (exclusions, engagement, réallocation)
+```
+
+```{quizdown}
+### Concernant l'approche ESG de compenswiss a fin 2022, quels éléments sont exacts ?
+
+> S'appuyer sur les quatre axes d'action concrets présentés dans le cours.
+
+- [x] Compenswiss vote lors d'environ 100 assemblées générales par an en Suisse.
+    > Correct : environ 100 AG par an en Suisse, avec l'aide d'un consultant externe spécialisé.
+- [ ] Compenswiss gère l'engagement directement sans passer par un tiers.
+    > Incorrect : l'engagement est réalisé via ASIR (Association Suisse pour des Investissements Responsables), dont compenswiss est cofondateur.
+- [x] Les exclusions charbon de compenswiss ont vu leur seuil passer de 50 % a 30 % du chiffre d'affaires.
+    > Correct : le seuil d'exclusion charbon a été abaissé de 50 % a 30 %, reflétant un durcissement progressif de la politique ESG.
+- [x] L'engagement via ASIR couvre le dialogue avec plus de 150 emetteurs.
+    > Correct : ASIR dialogue avec plus de 150 sociétés au nom de ses membres, sur des thèmes comme les droits humains, l'environnement et l'éthique des affaires.
+- [ ] Le portefeuille de compenswiss affiche une empreinte carbone inférieure au benchmark idéal.
+    > Incorrect : l'analyse carbone montre que l'empreinte du portefeuille reste supérieure au benchmark idéal, bien que sur une trajectoire décroissante.
+```
+
+```{quizdown}
+### Remets les 7 stratégies ESG dans l'ordre de classification Eurosif (2019), de la moins active a la plus active.
+
+> Pense au degré d'implication croissant de l'investisseur dans chaque stratégie.
+
+1. Exclusion
+2. Filtrage normatif (Norms-based screening)
+3. Sélection positive (Best-in-class)
+4. Investissement thématique
+5. Intégration ESG
+6. Engagement et droits de vote
+7. Investissement d'impact
+```
+
+```{quizdown}
+### Un analyste constate que le score ESG d'une entreprise pétrolière a fortement augmenté mais que ses émissions carbone absolues ont stagné. Quelle conclusion est la plus rigoureuse ?
+
+> Pense aux biais potentiels des systèmes de notation ESG.
+
+1. [ ] L'entreprise a reellement amélioré son impact environnemental.
+    > Incorrect : une hausse de score ESG sans réduction des émissions absolues ne prouve pas une amélioration réelle de l'impact.
+1. [ ] Le score ESG est inutile comme indicateur.
+    > Incorrect : le score ESG reste un outil utile, mais il doit être complété par d'autres indicateurs.
+1. [x] La hausse du score peut refleter un meilleur reporting sans amélioration environnementale réelle — un risque de biais de notation.
+    > Correct : c'est un exemple typique de la limite des scores ESG. Les entreprises apprennent a mieux documenter et communiquer leurs actions, ce qui peut faire monter le score indépendamment des résultats concrets. C'est pourquoi il est essentiel de croiser le score ESG avec des données brutes comme les émissions en tonnes absolues.
+1. [ ] La méthode de notation est nécessairement frauduleuse.
+```
+
+```{quizdown}
+### Que signifie le "Spillover Score" dans le contexte des ODD nationaux ?
+
+> Ce score est distinct du score SDG principal d'un pays.
+
+1. [ ] Le score moyen des ODD d'un pays sur les 17 objectifs
+1. [ ] Le classement du pays parmi les nations membres de l'ONU
+1. [x] La mesure des effets négatifs qu'un pays impose a d'autres via son commerce, ses chaines d'approvisionnement et ses investissements
+    > Correct : le Spillover Score mesure les externalités négatives exportées — un pays peut avoir un bon score SDG domestique tout en ayant un fort impact négatif sur d'autres pays via ses importations ou ses investissements à l'étranger.
+1. [ ] La variation annuelle du score SDG d'un pays
+    > Incorrect : la variation annuelle est tracée par les tendances (fleches dans le tableau de bord), pas par le Spillover Score.
+```
+
+```{quizdown}
+### Quels éléments expliquent pourquoi l'engagement actionnarial est souvent réalisé via des coalitions ou des prestataires spécialisés ?
+
+> Pense aux contraintes pratiques de ce type d'activité.
+
+- [x] L'engagement requiert des ressources humaines importantes et des expertises multiples.
+    > Correct : analyser les pratiques de centaines d'entreprises, dialoguer en plusieurs langues et suivre les dossiers dans le temps est très consommateur de ressources.
+- [x] Mutualiser les ressources amplifie la voix des investisseurs face aux entreprises.
+    > Correct : une coalition de grands investisseurs institutionnels a plus de poids qu'un seul fonds pour influer sur les décisions d'une direction.
+- [ ] L'engagement est interdit aux fonds de pension en gestion directe.
+    > Incorrect : les fonds de pension peuvent pratiquer l'engagement directement, mais la mutualisation est souvent préférée pour des raisons de coût et d'efficacité.
+- [ ] Les prestataires spécialisés garantissent un résultat immédiat.
+    > Incorrect : l'engagement est un processus de long terme — les résultats peuvent prendre plusieurs années a se matérialiser.
+```

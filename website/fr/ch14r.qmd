@@ -1,0 +1,235 @@
+---
+title: "Investissement durable et ESG — Révision"
+---
+
+## Contexte & Motivation
+
+::: {.callout-warning title="Chiffres clés à retenir"}
+- **−69 %** : chute de l'Indice Planète Vivante (*Global Living Planet Index*) entre 1970 et 2020
+- **+1 °C** : hausse des températures mondiales au-dessus de la référence 1951–1980
+- Records de chaleur : **2016** et **2020**
+:::
+
+**Question centrale** : Face aux crises (climat, biodiversité, inégalités, gouvernance), la finance peut-elle aider via l'**allocation du capital** ?
+
+---
+
+## Terminologie — Synonymes
+
+| Terme français | Terme anglais |
+|---|---|
+| Finance durable | Sustainable Finance |
+| Investissement ESG | ESG Investing |
+| Investissement socialement responsable (ISR) | Socially Responsible Investing (SRI) |
+| Finance verte | Green Finance |
+| Investissement responsable | Responsible Investment |
+| Risque climatique | Climate Risk |
+| Développement durable | Sustainable Development |
+
+::: {.callout-note title="À retenir"}
+Tous ces termes convergent vers le même concept : intégrer des critères **non-financiers** dans les décisions d'investissement.
+:::
+
+---
+
+## Les 3 Piliers ESG (MSCI 2023)
+
+### Structure : 3 piliers → 10 thèmes → 37 enjeux clés
+
+| Pilier | Thèmes |
+|---|---|
+| **E — Environnemental** | Changement climatique · Ressources naturelles · Pollution & Déchets · Opportunités environnementales |
+| **S — Social** | Capital humain · Responsabilité produit · Opposition parties prenantes · Opportunités sociales |
+| **G — Gouvernance** | Gouvernance d'entreprise ★★ · Comportement de l'entreprise |
+
+**★** = enjeu universel (toutes sociétés de l'indice MSCI)
+
+**★★** = Board, Pay, Ownership, Accounting → contribuent directement au score G
+
+### Enjeux clés sélectionnés
+
+**E** : Émissions carbone ★, Water Stress ★, Toxic Emissions ★, Clean Tech, Green Building
+
+**S** : Labor Management ★, Health & Safety ★, Product Safety, Privacy & Data Security
+
+**G** : Board ★★, Pay ★★, Business Ethics ★, Anti-Competitive Practices ★, Tax Transparency ★
+
+---
+
+## Notation ESG (*Scoring*)
+
+### Principes
+
+- **Nombreux systèmes** : MSCI, Sustainalytics, S&P Global, Refinitiv, Bloomberg, ISS ESG
+- **Corrélation positive** mais **divergence réelle** entre notateurs (*rating disagreement*)
+- Exemple : R² ≈ **0,32** entre Sustainalytics et MSCI (S&P 1200, jan. 2016)
+
+### Échelle MSCI (depuis 2023)
+
+$$\text{Score ESG} = \text{moyenne pondérée}(E,\ S,\ G)$$
+
+| Note | Signification |
+|---|---|
+| **AAA / AA** | Leader ESG |
+| **A / BBB / BB** | Moyen |
+| **B / CCC** | Retardataire ESG (Laggard) |
+
+::: {.callout-warning title="Piège"}
+Le score correspond à un **classement relatif** au sein du secteur — pas une mesure absolue de vertu environnementale.
+:::
+
+- **Tendance** : les scores ESG augmentent avec le temps (Lundström 2021) → amélioration réelle + effet reporting
+
+### Émissions carbone — Scopes
+
+| Scope | Contenu | Exemple |
+|---|---|---|
+| **1** | Émissions directes | Chaudières, flotte véhicules |
+| **2** | Énergie indirecte consommée | Électricité achetée |
+| **3** | Toutes autres émissions amont/aval | Utilisation produits par clients |
+
+::: {.callout-warning title="Piège"}
+Le Scope 3 est souvent le plus important mais le plus difficile à mesurer — l'ignorer fausse l'analyse.
+:::
+
+### Score ITR (*Implied Temperature Rise*)
+
+- Hausse de température implicite si toutes les entreprises se comportaient comme celle analysée
+- **Cible** : ≤ 1,5 °C (Accord de Paris)
+- Score élevé (3–4 °C) = très préoccupant
+
+### ODD (*Sustainable Development Goals — SDGs*)
+
+17 objectifs ONU (2015, horizon 2030) — désormais **quantifiés** dans les analyses de portefeuille
+
+| N° | Objectif | N° | Objectif |
+|---|---|---|---|
+| 1 | Pas de pauvreté | 10 | Inégalités réduites |
+| 2 | Faim zéro | 11 | Villes durables |
+| 3 | Santé & bien-être | 12 | Consommation responsable |
+| 4 | Éducation de qualité | 13 | Lutte contre le climat |
+| 5 | Égalité des genres | 14 | Vie aquatique |
+| 6 | Eau propre | 15 | Vie terrestre |
+| 7 | Énergie propre | 16 | Paix & justice |
+| 8 | Travail décent | 17 | Partenariats |
+| 9 | Industrie & innovation | | |
+
+---
+
+## Les 7 Stratégies ESG (Eurosif, 2019)
+
+| # | Stratégie | Description courte |
+|---|---|---|
+| 1 | **Exclusion** | Exclure secteurs / normative / worst-in-class |
+| 2 | **Valeurs** (*Norms-based*) | Filtrer selon normes internationales (ONU, OIT) |
+| 3 | **Sélection positive** (*Best-in-class*) | Surpondérer les leaders ESG par secteur |
+| 4 | **Thématique** | Flécher vers thèmes durables (ex. obligations vertes) |
+| 5 | **Intégration** | ESG intégré dans tout le processus de gestion |
+| 6 | **Engagement** | Vote en AG + dialogue avec les directions |
+| 7 | **Impact** | Impact mesurable, intentionnel et additionnel |
+
+### Points clés par stratégie
+
+**Exclusion** → simple à implémenter · ne change pas l'entreprise · biais sectoriel possible
+
+**Best-in-class** → maintient diversification · une entreprise peut être "meilleure" tout en restant polluante
+
+**Intégration** → ESG = risque financier long terme · benchmarks ESG · dashboards
+
+**Engagement** → coûteux en ressources · souvent mutualisé (coalitions) · résultats à long terme
+
+**Impact** → 3 conditions : **intentionnalité** + **mesurabilité** + **additionnalité**
+
+---
+
+## Cas pratique : compenswiss (fin 2022)
+
+### Les 4 axes
+
+| Axe | Actions concrètes |
+|---|---|
+| **1. Intégration** | Benchmarks ESG · Dashboard ESG · Swiss Climate Scores |
+| **2. Vote** | ~100 AG/an en Suisse · consultant externe · règles de vote définies |
+| **3. Engagement** | Via ASIR (cofondé) · 150+ émetteurs · thèmes : droits humains, travail, environnement |
+| **4. Exclusions** | ~100 sociétés · normatives + charbon (seuil abaissé 50 % → 30 %) |
+
+### Analyse empreinte carbone (juin 2020 – déc. 2022)
+
+- Unité : **tCO₂e / M$ investi**
+- Trajectoires : Portfolio > Benchmark > Benchmark idéal
+- Tendance générale : **décroissante** pour les trois courbes
+- Impact visible de l'abaissement du seuil charbon
+
+::: {.callout-note title="Leçon clé"}
+Sans données et outils ESG → pas de pilotage possible. La **couverture** (% d'actifs avec données ESG) et la **traversée dans le temps** sont des enjeux opérationnels critiques.
+:::
+
+### Engagement via ASIR
+
+- Nombre de cas total : **en hausse** (tiré par droits de l'homme)
+- Distribution thématique : **stable** (éthique, environnement, travail)
+- Engagement = processus **long terme**
+
+### Vote en Suisse
+
+- Part "toutes motions acceptées" : **en hausse** (loi sur rémunérations abusives)
+- Part "une motion rejetée" : **stable** (surtout rémunération dirigeants)
+
+---
+
+## Relations entre concepts
+
+```{mermaid}
+flowchart LR
+    A[Crises globales\nClimat · Biodiversité · Social] --> B[Finance durable]
+    B --> C[Mesure : ESG / ODD / ITR / Scope 1-2-3]
+    C --> D[Données & Outils]
+    D --> E[Stratégies]
+    E --> E1[Exclusion]
+    E --> E2[Best-in-class]
+    E --> E3[Intégration]
+    E --> E4[Engagement]
+    E --> E5[Impact]
+```
+
+---
+
+## Points critiques / Pièges
+
+::: {.callout-warning title="Pièges à éviter"}
+
+- **Divergence des notateurs** : un score ESG varie selon le fournisseur → ne pas traiter un seul score comme une vérité absolue
+
+- **Relatif ≠ Absolu** : être "best-in-class" dans un secteur polluant ne signifie pas être vertueux en absolu
+
+- **Greenwashing** : une entreprise peut communiquer sur les ODD sans actions réelles — valider avec des données tierces
+
+- **Scope 3 ignoré** : souvent le périmètre le plus important, mais aussi le plus difficile à mesurer
+
+- **Hausse des scores dans le temps** : peut refléter amélioration réelle OU simplement meilleur reporting
+
+- **Engagement ≠ résultat immédiat** : l'impact d'un dialogue actionnaire se mesure sur plusieurs années
+
+:::
+
+---
+
+## Synthèse finale
+
+::: {.callout-note title="Messages essentiels"}
+
+1. Les activités humaines actuelles **ne sont pas soutenables**
+
+2. La finance **ne peut pas tout résoudre** mais peut orienter le capital
+
+3. **ESG** = 3 piliers · 10 thèmes · 37 enjeux · notation relative par secteur
+
+4. **Scopes 1/2/3** et **ITR** = outils de mesure de l'impact climatique
+
+5. **7 stratégies** ESG existent, souvent combinées en pratique
+
+6. La **donnée ESG** est centrale : couverture, qualité, temporalité
+
+7. Finance durable = domaine **jeune, en croissance, en cours de standardisation**
+
+:::
