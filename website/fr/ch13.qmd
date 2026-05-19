@@ -1,0 +1,392 @@
+---
+title: "Contrats à terme : Futures et Forwards"
+---
+
+## Introduction aux contrats à terme
+
+Un **contrat à terme** (Forward / Futures) est un accord entre deux parties pour acheter ou vendre un actif à une date future précise (la **maturité**, notée $T$) à un prix convenu dès aujourd'hui (le **prix d'exercice** ou **strike**, noté $K$).
+
+Contrairement aux options, les contrats à terme confèrent une **obligation** et non un droit : les deux parties *doivent* honorer la transaction à l'échéance.
+
+::: {.callout-note title="À retenir"}
+Dans un contrat à terme, l'acheteur et le vendeur s'engagent de manière irrévocable. Il n'existe pas de notion de prime à payer comme pour les options.
+:::
+
+### Origine historique
+
+Les contrats à terme ont été créés à l'origine par et pour les **agriculteurs (farmers)**. L'objectif était de leur permettre de fixer à l'avance le prix de vente de leur récolte, éliminant ainsi l'incertitude liée aux fluctuations des prix des matières premières agricoles.
+
+::: {.callout-tip title="Intuition"}
+Imaginez un agriculteur qui sème du blé en mars. Il ne sait pas quel sera le prix du blé en septembre lors de la récolte. En concluant dès mars un contrat à terme à un prix fixé, il s'assure un revenu prévisible, quelles que soient les conditions du marché au moment de la récolte.
+:::
+
+### Instruments sous-jacents concernés
+
+Les contrats à terme couvrent une grande variété de sous-jacents :
+
+- **Matières premières (Commodities)** : métaux précieux (or, argent), céréales (blé, maïs), énergie (pétrole, gaz naturel)
+
+- **Actions et indices boursiers (Equity)** : contrats sur un indice comme le S&P 500
+
+- **Devises (Currencies)** : par exemple EUR/USD
+
+- **Obligations d'État (Treasury bonds)** : contrats sur des bons du Trésor américain
+
+### Usages pratiques
+
+Les contrats à terme servent principalement à deux fins :
+
+1. **Exposition à un actif sans livraison physique** : un investisseur peut s'exposer à l'or ou au pétrole sans jamais prendre livraison du métal ou du baril. Il lui suffit de *roller* (renouveler) sa position avant l'échéance.
+
+2. **Couverture de risque (Hedging)** : une entreprise exposée à un risque de change ou de prix de matière première peut utiliser des futures pour neutraliser ce risque.
+
+::: {.callout-tip title="Intuition"}
+Le *roll* d'un contrat consiste à clôturer le contrat arrivant à échéance et à en ouvrir simultanément un nouveau sur la même livraison mais avec une maturité plus éloignée. Cela permet de maintenir une exposition continue sans jamais prendre livraison du sous-jacent.
+:::
+
+---
+
+## Forwards versus Futures
+
+Bien que reposant sur le même principe fondamental, les **forwards** et les **futures** diffèrent sur plusieurs aspects importants.
+
+### Tableau comparatif
+
+| Caractéristique | Forward | Futures |
+|---|---|---|
+| Lieu de négociation | Marché de gré à gré (OTC) | Marché organisé (bourse) |
+| Standardisation | Non standardisé | Standardisé |
+| Dates de livraison | Dates spécifiques | Plage de dates de livraison |
+| Règlement | À l'échéance du contrat | Quotidien (*daily settlement*) |
+| Dénouement | Livraison physique ou règlement en cash | Généralement clôturé avant la maturité |
+
+### Explication des différences clés
+
+**Standardisation et place boursière**
+
+Les futures sont négociés sur des marchés organisés comme le **CME (Chicago Mercantile Exchange)**. Les contrats sont entièrement standardisés : taille du lot, date d'échéance, actif sous-jacent précis. Cela facilite la liquidité et la transparence des prix.
+
+Les forwards, eux, sont des contrats **sur mesure** négociés de gré à gré (OTC, *Over The Counter*) entre deux parties. Ils offrent plus de flexibilité mais sont moins liquides et comportent un **risque de contrepartie** (risque que l'autre partie ne respecte pas ses engagements).
+
+**Règlement quotidien des futures**
+
+Le règlement quotidien (*daily settlement* ou *marking to market*) est une caractéristique fondamentale des futures : chaque jour, les gains et pertes sont calculés et portés directement au crédit ou au débit du compte de l'investisseur. Ce mécanisme est étroitement lié au système de marges, détaillé dans la section suivante.
+
+::: {.callout-note title="À retenir"}
+Le risque de contrepartie est quasi nul pour les futures grâce à la chambre de compensation (*clearing house*) qui garantit les transactions. En revanche, ce risque existe pleinement pour les forwards OTC.
+:::
+
+---
+
+## Mécanisme des marges (Operation of Margins)
+
+### Problématique du risque de contrepartie
+
+Lorsqu'un investisseur s'engage dans un contrat futures, il existe un risque que la partie adverse ne puisse pas honorer ses engagements financiers à l'échéance. Pour se prémunir contre ce risque, les bourses organisées ont mis en place un **système de marges** géré par la chambre de compensation.
+
+Ce système repose sur trois mécanismes :
+
+- Le dépôt d'une **marge initiale** à l'ouverture du contrat
+
+- Le maintien d'une **marge de maintenance** minimale
+
+- Les **appels de marge** (*margin calls*) lorsque le solde passe sous le seuil de maintenance
+
+### Les trois composantes du système de marges
+
+#### Marge initiale (Initial Margin)
+
+À l'ouverture d'un contrat futures, l'investisseur doit déposer une somme garantie auprès de son courtier. Cette somme, la **marge initiale**, représente une fraction de la valeur totale du contrat.
+
+::: {.callout-tip title="Intuition"}
+La marge initiale fonctionne comme une caution : elle montre que l'investisseur dispose des ressources nécessaires pour faire face à des pertes à court terme. Elle ne représente pas le prix du contrat, mais une garantie de bonne foi.
+:::
+
+#### Marge de maintenance (Maintenance Margin)
+
+La **marge de maintenance** est le solde minimal en dessous duquel le compte de l'investisseur ne doit pas descendre. Elle est généralement inférieure à la marge initiale.
+
+#### Appel de marge (Margin Call)
+
+Lorsque les pertes accumulées font descendre le solde du compte en dessous de la marge de maintenance, un **appel de marge** est déclenché. L'investisseur doit alors reconstituer son solde jusqu'au niveau de la **marge initiale** (et non seulement jusqu'à la marge de maintenance).
+
+À l'inverse, si le solde dépasse la marge initiale du fait de gains cumulés, l'excédent peut être **retiré librement** par l'investisseur.
+
+### Exemple numérique détaillé
+
+Considérons l'exemple suivant (tiré du cours) :
+
+- Un investisseur ouvre **2 contrats futures** le 5 juin pour acheter **200 onces d'or** en juin de l'année suivante.
+- Prix futures initial : **400 USD/once**
+- Taille d'un contrat : **100 onces**
+- **Marge initiale** : 2 000 USD par contrat → **4 000 USD au total**
+- **Marge de maintenance** : 1 500 USD par contrat → **3 000 USD au total**
+
+| Jour | Prix futures (USD) | Gain journalier (USD) | Gain cumulé (USD) | Solde marge (USD) | Appel de marge (USD) |
+|---|---|---|---|---|---|
+| — | 400,00 | — | — | 4 000 | — |
+| 5 juin | 397,00 | −600 | −600 | 3 400 | — |
+| 6 juin | 396,10 | −180 | −780 | 3 220 | — |
+| 9 juin | 393,30 | −560 | −1 340 | 2 660 | **+1 340** |
+| 10 juin | 393,60 | +60 | −1 280 | 4 060 | — |
+| … | … | … | … | … | — |
+
+**Calcul du gain journalier** : le gain journalier est calculé comme la variation du prix futures multipliée par la taille totale du contrat.
+
+Pour le 5 juin : $(397{,}00 - 400{,}00) \times 200 = -600$ USD
+
+Pour le 9 juin : $(393{,}30 - 396{,}10) \times 200 = -560$ USD, ce qui fait descendre le solde à 2 660 USD, **inférieur** à la marge de maintenance de 3 000 USD → appel de marge de 1 340 USD pour revenir à 4 000 USD.
+
+::: {.callout-warning title="Point important"}
+L'appel de marge ramène toujours le solde au niveau de la **marge initiale**, pas simplement au niveau de la marge de maintenance. L'investisseur doit impérativement répondre à l'appel de marge dans les délais imposés par le courtier, sous peine de voir sa position liquidée de force.
+:::
+
+---
+
+## Valorisation des contrats à terme (Futures Pricing)
+
+### Notations et cadre théorique
+
+Pour évaluer le prix d'un contrat futures, on définit les variables suivantes :
+
+- $t$ : date courante
+
+- $T$ : maturité du contrat (en années)
+
+- $S_t$ : prix du sous-jacent à la date $t$
+
+- $F_t$ : prix du contrat futures aujourd'hui
+
+- $r$ : taux d'intérêt sans risque annuel (continu)
+
+On suppose dans un premier temps que le sous-jacent **ne verse ni revenu, ni dividende, ni rendement**.
+
+### Intuition économique du prix d'un futures
+
+La logique centrale de valorisation repose sur le **coût de réplication** : quel est le coût de se retrouver en possession du sous-jacent à la date $T$ ?
+
+La stratégie de réplication simple est la suivante :
+
+1. Emprunter $S_t$ dollars aujourd'hui au taux sans risque $r$
+
+2. Acheter immédiatement une unité du sous-jacent au prix $S_t$
+
+3. À maturité $T$, rembourser l'emprunt, dont la valeur est devenue $S_t \cdot e^{r(T-t)}$
+
+Puisque cette stratégie reproduit exactement ce que fournirait un contrat futures, le prix juste du futures est :
+
+$$F_t = S_t \cdot e^{r(T-t)}$$
+
+::: {.callout-tip title="Intuition"}
+Le prix d'un futures correspond au prix spot *porté dans le temps* au taux sans risque. En d'autres termes, il intègre le **coût de financement** (coût du capital immobilisé) pour détenir l'actif jusqu'à la maturité. Si vous pouviez acheter de l'or aujourd'hui à 400 USD et le financer au taux sans risque pendant 4 mois, le coût total à terme est $400 \cdot e^{r \cdot 4/12}$.
+:::
+
+### Démonstration par l'argument d'arbitrage (Arbitrage Arguments)
+
+L'argument d'arbitrage est une façon rigoureuse de prouver que $F_t = S_t \cdot e^{r(T-t)}$ est le seul prix cohérent.
+
+#### Cas 1 : le prix futures est trop élevé
+
+Supposons $F_t' > S_t \cdot e^{r(T-t)}$.
+
+Un arbitragiste peut alors :
+
+1. Emprunter $S_t$ au taux $r$
+
+2. Acheter une unité du sous-jacent à $S_t$
+
+3. Vendre (shorter) un contrat futures au prix $F_t'$
+
+4. À maturité, livrer le sous-jacent et encaisser $F_t'$, puis rembourser l'emprunt $S_t \cdot e^{r(T-t)}$
+
+Profit sans risque : $F_t' - S_t \cdot e^{r(T-t)} > 0$
+
+#### Cas 2 : le prix futures est trop bas
+
+Supposons $F_t'' < S_t \cdot e^{r(T-t)}$.
+
+Un arbitragiste peut alors :
+
+1. Vendre à découvert (*short sell*) le sous-jacent et encaisser $S_t$
+
+2. Investir $S_t$ au taux sans risque $r$
+
+3. Acheter un contrat futures au prix $F_t''$
+
+4. À maturité, utiliser les $S_t \cdot e^{r(T-t)}$ accumulés, payer $F_t''$ pour recevoir le sous-jacent et le rendre au prêteur
+
+Profit sans risque : $S_t \cdot e^{r(T-t)} - F_t'' > 0$
+
+::: {.callout-note title="À retenir"}
+La conclusion est que tout écart par rapport à $F_t = S_t \cdot e^{r(T-t)}$ crée une opportunité d'arbitrage. En supposant que les marchés sont efficients et qu'aucune opportunité d'arbitrage ne persiste, ce prix est le seul possible.
+:::
+
+### Ajustements : revenus, dividendes et rendements
+
+Dans la pratique, de nombreux sous-jacents génèrent des revenus intermédiaires qui modifient la formule de base.
+
+#### Cas avec revenu ou dividende discret $I$
+
+Si le sous-jacent verse un revenu ou dividende $I$ (actualisé à la date $t$), l'investisseur qui détient le sous-jacent bénéficie de ce revenu. Le coût de réplication est réduit d'autant :
+
+$$F_t = (S_t - I) \cdot e^{r(T-t)}$$
+
+::: {.callout-tip title="Intuition"}
+Détenir l'actif en direct procure un avantage (le dividende $I$) par rapport à simplement détenir le contrat futures. Le prix du futures doit donc être abaissé pour compenser cet avantage.
+:::
+
+#### Cas avec rendement continu ou coût de stockage $q$
+
+Si le sous-jacent offre un **rendement continu** $q$ (par exemple, un taux de dividende pour une action, ou un coupon pour une obligation d'État) ou engendre un **coût de portage** $q$ (par exemple, frais de stockage pour le pétrole ou les céréales) :
+
+$$F_t = S_t \cdot e^{(r-q)(T-t)}$$
+
+- Si $q > 0$ correspond à un **revenu** (dividende, coupon), le prix futures est diminué
+
+- Si $q < 0$ correspond à un **coût** (stockage), le prix futures est augmenté
+
+::: {.callout-note title="À retenir"}
+Sans perte de généralité, le cours se concentre sur les futures **sans revenu, dividende ni rendement**, ce qui correspond à la formule de base $F_t = S_t \cdot e^{r(T-t)}$.
+:::
+
+### Exemple numérique (Hull, exemple 3.5)
+
+**Énoncé** : On considère un contrat forward à **4 mois** pour acheter une **obligation zéro-coupon** arrivant à maturité dans un an à compter d'aujourd'hui.
+
+- Prix actuel de l'obligation : $S_0 = 930$ USD
+
+- À maturité du contrat (dans 4 mois), l'obligation aura encore **8 mois** à courir
+
+- Taux sans risque à 4 mois : $r = 6\%$ par an
+
+**Calcul** : Comme l'obligation zéro-coupon ne verse aucun coupon, on utilise directement la formule de base :
+
+$$F_0 = 930 \cdot e^{0{,}06 \times \frac{4}{12}} = 930 \cdot e^{0{,}02} \approx 948{,}79 \text{ USD}$$
+
+**Interprétation** : Le prix de livraison négocié aujourd'hui pour acheter l'obligation dans 4 mois serait de **948,79 USD**. Ce prix rémunère simplement le coût de financement de la position pendant 4 mois.
+
+---
+
+## Valeur d'un contrat futures en cours de vie (Valuation)
+
+### Distinction entre prix et valeur
+
+Il est essentiel de distinguer deux grandeurs :
+
+- $F_t$ : le **prix du futures** à la date $t$ — c'est le prix de livraison *actuel* du marché, déterminé par l'offre et la demande
+
+- $f_t$ : la **valeur du futures** à la date $t$ — c'est la valeur économique (gain ou perte latent) d'un contrat déjà ouvert, par rapport au prix convenu initialement
+
+### Prix d'exercice initial $K$
+
+À l'ouverture du contrat, le prix de livraison $K$ est fixé égal au prix de marché $F_0$. À ce moment-là, la valeur du contrat est **nulle** : $f_0 = 0$.
+
+Au fil du temps, le prix de marché $F_t$ évolue (offre/demande, nouvelles informations), tandis que $K$ reste fixe. Un écart apparaît entre $F_t$ et $K$, ce qui donne une valeur non nulle au contrat.
+
+### Formule de valorisation
+
+La valeur d'un contrat futures à la date $t$, pour un contrat dont le prix d'exercice est $K$ et la maturité $T$, s'écrit :
+
+$$f_t = (F_t - K) \cdot e^{-r(T-t)}$$
+
+C'est simplement l'actualisation du **gain ou de la perte attendu** à la maturité (flux de trésorerie en $T$ : $F_t - K$), ramené à la date $t$ par actualisation au taux sans risque.
+
+::: {.callout-tip title="Intuition"}
+Si le prix du marché $F_t$ est supérieur au prix convenu $K$, l'acheteur du futures est en position gagnante : il a verrouillé un prix d'achat avantageux. La valeur $f_t$ est donc positive. Inversement, si $F_t < K$, l'acheteur est en position perdante et $f_t$ est négatif.
+:::
+
+### Valeur en l'absence de dividende ni rendement
+
+En substituant la formule de prix $F_t = S_t \cdot e^{r(T-t)}$ dans l'expression de $f_t$ :
+
+$$f_t = \left(S_t \cdot e^{r(T-t)} - K\right) \cdot e^{-r(T-t)} = S_t - K \cdot e^{-r(T-t)}$$
+
+Cette formule révèle trois sources d'exposition pour le détenteur d'un contrat futures :
+
+1. **Exposition au sous-jacent** : $S_t$ influence directement $f_t$. Détenir un futures, c'est être partiellement exposé au sous-jacent lui-même.
+
+2. **Exposition aux anticipations sur $S_T$** : $F_t$ (et donc $f_t$) reflète les anticipations du marché sur la valeur future du sous-jacent.
+
+3. **Exposition au taux sans risque** : La valeur actualisée de $K$, soit $K \cdot e^{-r(T-t)}$, dépend de $r$. Une hausse des taux augmente la valeur du futures pour l'acheteur (en réduisant la valeur actualisée du prix à payer $K$).
+
+::: {.callout-warning title="Point important"}
+À l'ouverture du contrat, $K = F_0$ et donc $f_0 = S_0 - F_0 \cdot e^{-r(T-0)} = S_0 - S_0 = 0$. La valeur initiale est bien nulle, ce qui est cohérent : aucune des deux parties ne paie de prime à l'autre à l'ouverture.
+:::
+
+---
+
+## Contango et Backwardation
+
+### Définitions
+
+La **structure par terme** des prix futures (la relation entre le prix futures et la maturité) peut prendre deux formes opposées.
+
+**Contango** : Le prix futures $F_t$ est **supérieur** au prix spot attendu $E[S_T]$. La courbe des prix futures est croissante.
+
+**Backwardation** (ou rétrogradation normale) : Le prix futures $F_t$ est **inférieur** au prix spot attendu $E[S_T]$. La courbe des prix futures est décroissante.
+
+::: {.callout-tip title="Intuition"}
+En contango, le marché anticipe une hausse des prix (ou reflète un coût de portage élevé, comme le stockage ou les intérêts). En backwardation, le marché anticipe une baisse des prix ou reflète une **prime de commodité** (*convenience yield*) élevée — c'est-à-dire que les acteurs du marché valorisent fortement le fait de disposer physiquement de l'actif maintenant.
+:::
+
+### Interprétation économique
+
+| Situation | Signal du marché |
+|---|---|
+| **Contango** | Prix attendu en hausse ; coût de portage ou d'intérêt élevé ; peu de demande immédiate |
+| **Backwardation** | Prix attendu en baisse ; forte demande immédiate ; *convenience yield* élevé |
+
+Ces deux états ne sont pas permanents : un marché peut **basculer du contango à la backwardation** (et inversement) au cours de la vie d'un contrat, selon l'évolution des anticipations et des conditions d'offre/demande.
+
+::: {.callout-warning title="Point important — Convergence à maturité"}
+Quelle que soit la structure initiale (contango ou backwardation), le prix futures $F_T$ **converge nécessairement** vers le prix spot $S_T$ à l'approche de la maturité.
+
+Cette convergence est une propriété fondamentale : si $F_T \neq S_T$ à maturité, il existerait une opportunité d'arbitrage triviale (acheter le moins cher, vendre le plus cher).
+:::
+
+### Représentation graphique
+
+Le graphique ci-dessous (tiré du cours) illustre les deux cas :
+
+```{mermaid}
+graph LR
+    A["Aujourd'hui\n(F_0)"] -->|Contango : F_t > Spot attendu| B["Maturité\n(F_T = S_T)"]
+    A -->|Backwardation : F_t < Spot attendu| B
+```
+
+En contango, la courbe des prix futures *descend* vers $S_T$ au fil du temps.
+En backwardation, la courbe *monte* vers $S_T$ au fil du temps.
+
+---
+
+## Points clés à retenir (Key Takeaways)
+
+### Récapitulatif global
+
+::: {.callout-note title="À retenir — Synthèse du chapitre"}
+- Les **contrats à terme** (Futures / Forwards) permettent d'acheter ou de vendre un actif dans le futur à un prix fixé aujourd'hui.
+
+- L'engagement est **obligatoire** (pas de choix comme pour les options).
+
+- Un mécanisme de **roll-over** permet de rester exposé sans jamais prendre livraison physique.
+
+- Les **futures** sont régulés et standardisés (échanges organisés) ; les **forwards** sont moins régulés (OTC).
+
+- Le **mécanisme de marges** protège les deux parties contre le risque de contrepartie.
+
+- Le **prix d'un futures** est dérivé par un argument de non-arbitrage : $F_t = S_t \cdot e^{r(T-t)}$ (sans revenu ni rendement).
+
+- La **valeur d'un futures** reflète les anticipations du marché et vaut $f_t = S_t - K \cdot e^{-r(T-t)}$.
+
+- La structure par terme peut être en **contango** ou en **backwardation**, mais converge toujours vers le spot à maturité.
+:::
+
+### Tableau de synthèse des formules
+
+| Contexte | Formule |
+|---|---|
+| Pas de revenu, dividende ni rendement | $F_t = S_t \cdot e^{r(T-t)}$ |
+| Avec revenu ou dividende discret $I$ | $F_t = (S_t - I) \cdot e^{r(T-t)}$ |
+| Avec rendement continu ou coût $q$ | $F_t = S_t \cdot e^{(r-q)(T-t)}$ |
+| Valeur d'un contrat existant | $f_t = (F_t - K) \cdot e^{-r(T-t)}$ |
+| Valeur simplifiée (sans dividende) | $f_t = S_t - K \cdot e^{-r(T-t)}$ |

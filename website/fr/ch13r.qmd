@@ -1,0 +1,129 @@
+---
+title: "Contrats à terme — Révision"
+---
+
+## Définitions essentielles
+
+| Terme | Définition |
+|---|---|
+| **Futures / Forward** | Accord d'achat/vente d'un actif à maturité $T$ au prix $K$ |
+| **Strike $K$** | Prix de livraison fixé à l'ouverture |
+| **Maturité $T$** | Date d'exécution obligatoire du contrat |
+| **Roll-over** | Renouvellement du contrat avant échéance pour éviter livraison |
+| **Contango** | $F_t >$ spot attendu → courbe croissante |
+| **Backwardation** | $F_t <$ spot attendu → courbe décroissante |
+
+::: {.callout-warning title="Piège clé"}
+Futures ≠ Options → **obligation** d'acheter/vendre (pas de choix possible).
+:::
+
+---
+
+## Forwards vs Futures
+
+| Critère | Forward | Futures |
+|---|---|---|
+| Marché | OTC (gré à gré) | Bourse (ex. CME) |
+| Standardisation | Non | Oui |
+| Dates livraison | Spécifiques | Plage de dates |
+| Règlement | À l'échéance | **Quotidien** |
+| Risque contrepartie | Élevé | Quasi nul (chambre de compensation) |
+| Dénouement | Livraison / cash | Clôture avant maturité |
+
+---
+
+## Mécanisme des marges
+
+**3 composantes :**
+
+- **Marge initiale** — dépôt à l'ouverture (ex. 2 000 USD/contrat)
+
+- **Marge de maintenance** — seuil minimal (ex. 1 500 USD/contrat)
+
+- **Appel de marge** — si solde < maintenance → reconstituer jusqu'à la marge **initiale**
+
+**Gain journalier** = $\Delta F_t \times$ taille du contrat
+
+::: {.callout-note title="Exemple — 2 contrats or (100 oz), $F_0 = 400$"}
+Marge initiale : 4 000 USD | Maintenance : 3 000 USD
+
+Jour 9 juin : solde 2 660 USD < 3 000 → appel de marge **+1 340 USD**
+:::
+
+---
+
+## Formules de pricing
+
+| Contexte | Formule |
+|---|---|
+| Sans revenu / dividende / rendement | $F_t = S_t \cdot e^{r(T-t)}$ |
+| Avec revenu discret $I$ | $F_t = (S_t - I)\cdot e^{r(T-t)}$ |
+| Avec rendement continu $q$ | $F_t = S_t \cdot e^{(r-q)(T-t)}$ |
+| Valeur d'un contrat existant | $f_t = (F_t - K)\cdot e^{-r(T-t)}$ |
+| Valeur simplifiée (sans dividende) | $f_t = S_t - K\cdot e^{-r(T-t)}$ |
+
+::: {.callout-tip title="Intuition pricing"}
+$F_t$ = coût de **réplication** = prix spot porté au taux sans risque jusqu'à $T$.
+:::
+
+---
+
+## Argument d'arbitrage
+
+**Si $F_t' > S_t e^{r(T-t)}$** → emprunter, acheter spot, shorter futures → profit $F_t' - S_t e^{r(T-t)} > 0$
+
+**Si $F_t'' < S_t e^{r(T-t)}$** → shorter spot, investir, acheter futures → profit $S_t e^{r(T-t)} - F_t'' > 0$
+
+→ Conclusion : seul $F_t = S_t \cdot e^{r(T-t)}$ élimine tout arbitrage.
+
+---
+
+## Valeur d'un futures $f_t$
+
+**3 sources d'exposition :**
+
+- $S_t$ → exposition directe au sous-jacent
+
+- $F_t$ → anticipations sur $S_T$
+
+- $r$ → taux sans risque (via $K \cdot e^{-r(T-t)}$)
+
+::: {.callout-note title="À l'ouverture"}
+$K = F_0$ → $f_0 = 0$ : aucune prime échangée à l'ouverture.
+:::
+
+---
+
+## Contango / Backwardation
+
+| | Contango | Backwardation |
+|---|---|---|
+| $F_t$ vs spot attendu | $F_t >$ spot | $F_t <$ spot |
+| Signal marché | Prix attendu ↑, carry élevé | Prix attendu ↓, demande immédiate ↑ |
+| Courbe | Croissante | Décroissante |
+
+::: {.callout-warning title="Propriété universelle"}
+Dans **tous** les cas : $F_T \xrightarrow[]{t \to T} S_T$ (convergence à maturité).
+:::
+
+---
+
+## Exemple numérique — Obligation zéro-coupon (Hull 3.5)
+
+- $S_0 = 930$ USD, $r = 6\%$, $T = 4/12$ an
+
+$$F_0 = 930 \cdot e^{0{,}06 \times \frac{4}{12}} \approx 948{,}79 \text{ USD}$$
+
+---
+
+## Pièges & points critiques
+
+- **Futures ≠ Option** : pas de choix, obligation ferme
+
+- **Appel de marge** → reconstitue jusqu'à la marge *initiale* (pas maintenance)
+
+- **$q > 0$ revenu** → $F_t$ diminue ; **$q > 0$ coût de stockage** → $F_t$ augmente
+
+- **$f_0 = 0$** toujours à l'ouverture
+
+- **Convergence** $F_T = S_T$ toujours vraie à maturité

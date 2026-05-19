@@ -1,0 +1,299 @@
+---
+title: "Contrats à terme — Quiz"
+filters:
+  - quizdown
+execute:
+  enabled: false
+---
+
+## Niveau 1 — Fondamentaux
+
+```{quizdown}
+### Qu'est-ce qu'un contrat à terme (futures ou forward) ?
+
+> Pense à ce qui distingue un contrat à terme d'une option.
+
+1. [ ] Un droit d'acheter ou vendre un actif à une date future
+1. [x] Une obligation d'acheter ou vendre un actif à une date future à un prix fixé aujourd'hui
+    > Correct : le contrat à terme crée une obligation ferme pour les deux parties, contrairement à l'option qui confère un droit.
+1. [ ] Un contrat d'assurance contre la baisse d'un actif
+1. [ ] Un produit dérivé qui ne nécessite aucun dépôt initial
+```
+
+```{quizdown}
+### Dans quelle catégorie de marché les contrats futures sont-ils négociés ?
+
+> Pense à la différence entre marchés organisés et marchés de gré à gré.
+
+1. [ ] Marché de gré à gré (OTC)
+1. [x] Marché organise (bourse), par exemple le CME
+    > Correct : les futures sont standardisés et négociés sur des marchés organisés comme le Chicago Mercantile Exchange.
+1. [ ] Marché interbancaire uniquement
+1. [ ] Marché primaire des obligations
+```
+
+```{quizdown}
+### Quels sont les sous-jacents sur lesquels peuvent porter des contrats futures ?
+
+> Les futures ont été créés à l'origine pour un type particulier de sous-jacent.
+
+- [x] Matieres premieres (cereales, metaux precieux, energie)
+    > Correct : les futures ont été créés historiquement pour les matières premières agricoles.
+- [x] Devises
+    > Correct : les futures de change permettent de se couvrir contre le risque de change.
+- [x] Obligations d'Etat
+    > Correct : les futures sur Treasury bonds sont parmi les plus liquides au monde.
+- [ ] Contrats d'assurance vie
+    > Incorrect : les contrats d'assurance vie ne sont pas des sous-jacents de futures standardisés.
+- [x] Actions et indices boursiers
+    > Correct : les futures sur indices (S&P 500, Euro Stoxx...) sont très répandus.
+```
+
+```{quizdown}
+### Qu'est-ce que le "roll-over" d'un contrat futures ?
+
+> Pense à ce qui se passe si un investisseur ne souhaite pas prendre livraison du sous-jacent.
+
+1. [ ] La reconduction automatique d'un appel de marge
+1. [ ] Le transfert du contrat à une contrepartie tierce
+1. [x] La cloture du contrat arrivant a echeance et l'ouverture d'un nouveau contrat sur la meme echeance plus lointaine
+    > Correct : le roll-over permet de maintenir une exposition continue au sous-jacent sans jamais en prendre livraison physique.
+1. [ ] Le remboursement de la marge initiale a l'investisseur
+```
+
+```{quizdown}
+### Quelle est la principale difference entre un forward et un futures concernant le reglement ?
+
+> Pense a ce qui se passe chaque jour de bourse avec un futures.
+
+1. [ ] Le forward est regle quotidiennement, le futures est regle a l'echeance
+1. [x] Le futures est regle quotidiennement (marking to market), le forward est regle a l'echeance
+    > Correct : le marking to market quotidien est une caracteristique fondamentale des futures, absente des forwards OTC.
+1. [ ] Les deux sont regles a l'echeance
+1. [ ] Les deux sont regles quotidiennement
+```
+
+```{quizdown}
+### A l'ouverture d'un contrat futures, quelle est la valeur du contrat pour l'acheteur ?
+
+> Pense au lien entre le prix de livraison K et le prix de marche F_0 a l'ouverture.
+
+1. [ ] Egale a la marge initiale deposee
+1. [ ] Egale au prix spot du sous-jacent
+1. [x] Nulle (zero)
+    > Correct : a l'ouverture, K est fixe egal a F_0, donc f_0 = 0. Aucune prime n'est echangee entre les deux parties.
+1. [ ] Egale a la difference entre le prix futures et le prix spot
+```
+
+---
+
+## Niveau 2 — Comprehension
+
+```{quizdown}
+### Pourquoi le prix d'un futures sans revenu ni dividende vaut-il F_t = S_t * exp(r*(T-t)) ?
+
+> Pense a la strategie qui consiste a repliquer le contrat futures sur le marche au comptant.
+
+1. [ ] Car c'est le prix moyen anticipe par le marche pour le sous-jacent a maturite
+1. [ ] Car c'est le prix fixe par la chambre de compensation
+1. [x] Car c'est le cout de repliquer la detention du sous-jacent jusqu'a la maturite en empruntant au taux sans risque
+    > Correct : emprunter S_t au taux r et acheter le sous-jacent coute S_t * exp(r*(T-t)) a maturite, ce qui est le prix juste du futures.
+1. [ ] Car c'est le prix qui maximise le profit de l'acheteur
+```
+
+```{quizdown}
+### Un contrat futures porte sur un actif versant un revenu discret I. Quelle est la formule du prix futures ?
+
+> Compare le cout de detention de l'actif avec et sans revenu intermediaire.
+
+1. [ ] F_t = S_t * exp(r*(T-t))
+1. [ ] F_t = S_t * exp((r+I)*(T-t))
+1. [x] F_t = (S_t - I) * exp(r*(T-t))
+    > Correct : le revenu I reduit le cout net de detention du sous-jacent, donc le prix futures est diminue en consequence.
+1. [ ] F_t = S_t / I * exp(r*(T-t))
+```
+
+```{quizdown}
+### Si le prix d'un futures est superieur a S_t * exp(r*(T-t)), quelle strategie d'arbitrage peut-on mettre en place ?
+
+> Pense a ce que tu peux faire avec le sous-jacent et le futures simultanement.
+
+1. [ ] Acheter le futures et acheter le sous-jacent
+1. [x] Emprunter, acheter le sous-jacent au prix spot, shorter le futures
+    > Correct : cette strategie genere un profit sans risque egal a F_t - S_t * exp(r*(T-t)) > 0 a maturite.
+1. [ ] Shorter le sous-jacent et shorter le futures
+1. [ ] Acheter le futures et investir au taux sans risque
+```
+
+```{quizdown}
+### Que represente la valeur f_t d'un futures existant, par opposition au prix F_t ?
+
+> Distingue bien le "prix de marche actuel" et la "valeur d'un contrat deja ouvert".
+
+1. [ ] f_t est le prix auquel on peut ouvrir un nouveau contrat futures aujourd'hui
+1. [x] f_t est le gain ou la perte latent d'un contrat deja ouvert au prix K, actualise a aujourd'hui
+    > Correct : f_t = (F_t - K) * exp(-r*(T-t)). C'est la valeur economique pour le detenteur d'un contrat au prix K, par rapport au prix de marche actuel F_t.
+1. [ ] f_t est toujours egal a zero par definition
+1. [ ] f_t est le montant de la marge initiale restante
+```
+
+```{quizdown}
+### Un marche futures est en contango. Qu'est-ce que cela signifie ?
+
+> Pense a la relation entre le prix futures et le prix spot anticipe.
+
+1. [ ] Le prix futures est inferieur au prix spot attendu a maturite
+1. [ ] Le prix futures converge vers zero a maturite
+1. [x] Le prix futures est superieur au prix spot attendu, refletant un cout de portage eleve ou des anticipations de hausse
+    > Correct : en contango, F_t > spot attendu. Cela traduit generalement un cout de financement ou de stockage eleve, ou des anticipations de hausse des prix.
+1. [ ] Le marche est illiquide et les prix ne sont pas fiables
+```
+
+```{quizdown}
+### Quelle propriete fondamentale est toujours verifiee a maturite d'un contrat futures, que le marche soit en contango ou en backwardation ?
+
+> Pense a ce qui se passe si cette propriete n'etait pas verifiee a l'echeance.
+
+1. [ ] F_T est egal a la marge initiale
+1. [ ] F_T est egal a zero
+1. [x] F_T converge vers S_T (le prix spot a maturite)
+    > Correct : si F_T etait different de S_T, il existerait une opportunite d'arbitrage triviale. La convergence est donc necessaire.
+1. [ ] F_T est egal a K (le prix d'exercice initial)
+```
+
+```{quizdown}
+### Quelles sont les trois sources d'exposition d'un detenteur de futures (valeur f_t = S_t - K*exp(-r*(T-t))) ?
+
+> Analyse chaque terme de la formule de valeur du futures.
+
+- [x] Le prix spot du sous-jacent S_t
+    > Correct : S_t influence directement f_t — detenir un futures revient en partie a etre expose au sous-jacent.
+- [x] Les anticipations sur S_T via F_t
+    > Correct : le prix futures F_t reflete les anticipations du marche sur la valeur future du sous-jacent.
+- [x] Le taux sans risque r
+    > Correct : r impacte la valeur actualisee de K (K*exp(-r*(T-t))).
+- [ ] La marge initiale deposee
+    > Incorrect : la marge initiale est une garantie, elle n'entre pas dans la formule de valeur du futures.
+- [ ] La volatilite implicite du sous-jacent
+    > Incorrect : la volatilite intervient dans la valorisation des options, pas dans celle des futures (pas de convexite).
+```
+
+---
+
+## Niveau 3 — Maitrise
+
+```{quizdown}
+### Remets dans l'ordre les etapes du mecanisme de marge lors d'une journee defavorable.
+
+> Pense au deroulement chronologique d'une seance de bourse avec pertes.
+
+1. Calcul du gain ou de la perte journaliere (marking to market)
+2. Mise a jour du solde de la marge
+3. Comparaison du solde avec la marge de maintenance
+4. Emission d'un appel de marge si le solde est inferieur a la marge de maintenance
+5. Reconstitution du solde jusqu'au niveau de la marge initiale
+```
+
+```{quizdown}
+### Un investisseur detient 1 contrat futures sur l'or (100 onces). Le prix futures passe de 1 900 USD a 1 885 USD. La marge initiale est de 6 000 USD et la marge de maintenance est de 4 500 USD. Le solde actuel avant cette seance est de 4 700 USD. Que se passe-t-il ?
+
+> Calcule d'abord la perte journaliere, puis compare le nouveau solde a la marge de maintenance.
+
+1. [ ] Aucun appel de marge, le solde reste suffisant
+1. [ ] Appel de marge pour reconstituer jusqu'a la marge de maintenance (4 500 USD)
+1. [x] Appel de marge pour reconstituer jusqu'a la marge initiale (6 000 USD)
+    > Correct : perte = (1885 - 1900) * 100 = -1 500 USD. Nouveau solde = 4 700 - 1 500 = 3 200 USD < 4 500 USD (maintenance). Appel de marge = 6 000 - 3 200 = 2 800 USD pour revenir a la marge initiale.
+1. [ ] La position est automatiquement liquidee
+```
+
+```{quizdown}
+### Le prix spot d'une action est de 50 USD. Le taux sans risque est de 4% par an. L'action ne verse pas de dividende. Quel est le prix d'un futures a 6 mois sur cette action ?
+
+> Applique la formule de base F_t = S_t * exp(r*(T-t)).
+
+1. [ ] 50,00 USD
+1. [ ] 52,00 USD
+1. [x] Environ 51,01 USD
+    > Correct : F_0 = 50 * exp(0,04 * 0,5) = 50 * exp(0,02) ≈ 50 * 1,0202 ≈ 51,01 USD.
+1. [ ] Environ 54,08 USD
+    > Incorrect : ce serait le resultat avec T = 2 ans, pas 6 mois.
+```
+
+```{quizdown}
+### Un investisseur a ouvert un contrat futures il y a 3 mois au prix K = 500 USD. Aujourd'hui, le prix de marche du futures est F_t = 520 USD. Le taux sans risque est de 5% et la maturite restante est de 3 mois. Quelle est la valeur actuelle du contrat pour l'acheteur ?
+
+> Applique la formule f_t = (F_t - K) * exp(-r*(T-t)).
+
+1. [ ] 0 USD, la valeur est toujours nulle
+1. [ ] 20,00 USD
+1. [x] Environ 19,75 USD
+    > Correct : f_t = (520 - 500) * exp(-0,05 * 0,25) = 20 * exp(-0,0125) ≈ 20 * 0,9876 ≈ 19,75 USD.
+1. [ ] -19,75 USD
+    > Incorrect : c'est la valeur pour le vendeur du contrat, pas pour l'acheteur.
+```
+
+```{quizdown}
+### Remets dans le bon ordre les etapes de l'argument d'arbitrage quand F_t est trop bas (F_t < S_t * exp(r*(T-t))).
+
+> Pense a comment exploiter la sous-evaluation du futures.
+
+1. Vendre le sous-jacent a decouvert (short sell) et encaisser S_t
+2. Investir le produit de la vente au taux sans risque r
+3. Acheter un contrat futures au prix F_t
+4. A maturite, recevoir S_t * exp(r*(T-t)) de l'investissement
+5. Payer F_t pour recevoir le sous-jacent et le rendre au preteur
+6. Encaisser le profit sans risque S_t * exp(r*(T-t)) - F_t
+```
+
+```{quizdown}
+### Un marche de matieres premieres passe du contango a la backwardation au cours de la vie d'un contrat futures. Qu'est-ce que cela indique generalement ?
+
+> Pense a ce que chaque regime reflete comme anticipations et conditions de marche.
+
+1. [ ] Le marche a commis une erreur de valorisation initiale
+1. [ ] La chambre de compensation a modifie les conditions du contrat
+1. [x] Les anticipations ou les conditions d'offre et de demande immediates ont evolue en cours de vie du contrat
+    > Correct : le passage de contango en backwardation peut indiquer une forte hausse de la demande immediate, une baisse des stocks disponibles ou une revision des anticipations de prix a la baisse.
+1. [ ] Le taux sans risque est devenu negatif
+```
+
+```{quizdown}
+### Pourquoi les forwards comportent-ils un risque de contrepartie plus eleve que les futures ?
+
+> Pense a la structure institutionnelle qui differencie les deux marches.
+
+1. [ ] Car les forwards ont des maturites plus courtes
+1. [ ] Car les forwards ne sont pas reglementes par les autorites boursières
+1. [x] Car les forwards sont des contrats OTC sans chambre de compensation pour garantir les engagements des deux parties
+    > Correct : sur les marches de futures, la chambre de compensation se substitue a chaque contrepartie et garantit les transactions. Les forwards OTC n'ont pas ce mecanisme, exposant chaque partie au risque de defaut de l'autre.
+1. [ ] Car les forwards ne necessitent aucun depot de marge
+```
+
+```{quizdown}
+### Un contrat futures porte sur du ble dont le stockage coute 2% par an (cost of carry). Le prix spot est de 300 USD. Avec un taux sans risque de 3% et une maturite de 6 mois, quel est le prix futures ?
+
+> Utilise la formule avec rendement continu q, en interpretant correctement le signe du cost of carry.
+
+1. [ ] Environ 304,53 USD (avec r = 3% seulement)
+1. [x] Environ 307,57 USD (avec r + q = 5% pour le cout de stockage)
+    > Correct : le cout de stockage est un cout de portage, donc q est negatif dans la formule F = S * exp((r-q)*(T-t)) avec q = -2%, ce qui revient a utiliser r + 2% = 5%. F = 300 * exp(0,05 * 0,5) ≈ 307,57 USD.
+1. [ ] Environ 300,00 USD (le prix futures est egal au spot)
+1. [ ] Environ 301,50 USD (avec q = 2% en rendement positif)
+    > Incorrect : le cout de stockage augmente le prix futures (il est un cout, pas un revenu), donc F_t doit etre plus eleve, pas plus bas.
+```
+
+```{quizdown}
+### Vrai ou Faux : dans un contrat futures, l'acheteur peut choisir de ne pas acheter le sous-jacent si le prix evolue defavorablement, comme dans une option d'achat (call).
+
+1. [ ] Vrai
+1. [x] Faux
+    > Faux : contrairement a une option, un contrat futures cree une obligation ferme et irrevocable pour les deux parties. Il n'y a aucune possibilite de se desister (sauf a cloture la position sur le marche avant l'echeance).
+```
+
+```{quizdown}
+### Vrai ou Faux : l'appel de marge vise a reconstituer le solde jusqu'au niveau de la marge de maintenance.
+
+1. [ ] Vrai
+1. [x] Faux
+    > Faux : l'appel de marge reconstitue le solde jusqu'au niveau de la marge INITIALE, et non de la marge de maintenance. C'est un point critique souvent confondu.
+```
