@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Les Obligations — Révision – Finance computationnelle</title>
+<title>Investissement durable et ESG – Finance computationnelle</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -7098,145 +7098,6 @@ z-index: 1000;
 }
 </style>
 
-  <script>/*
- * Polyfill service v3.111.0
- * Disable minification (remove `.min` from URL path) for more info
-*/
-
-(function(self, undefined) {!function(t){"use strict";function e(t){switch(typeof t){case"undefined":return"undefined";case"boolean":return"boolean";case"number":return"number";case"string":return"string";default:return null===t?"null":"object"}}function r(t){return Object.prototype.toString.call(t).replace(/^\[object *|\]$/g,"")}function n(t){return"function"==typeof t}function o(t){if(null===t||t===B)throw TypeError();return Object(t)}function i(t){return t>>0}function f(t){return t>>>0}function u(e){if(!("TYPED_ARRAY_POLYFILL_NO_ARRAY_ACCESSORS"in t)){if(e.length>N)throw RangeError("Array too large for polyfill");var r;for(r=0;r<e.length;r+=1)!function n(t){try{Object.defineProperty(e,t,{get:function(){return e._getter(t)},set:function(r){e._setter(t,r)},enumerable:!0,configurable:!1})}catch(r){}}(r)}}function a(t,e){var r=32-e;return t<<r>>r}function h(t,e){var r=32-e;return t<<r>>>r}function y(t){return[255&t]}function s(t){return a(t[0],8)}function l(t){return[255&t]}function p(t){return h(t[0],8)}function c(t){return t=x(Number(t)),[t<0?0:t>255?255:255&t]}function b(t){return[255&t,t>>8&255]}function g(t){return a(t[1]<<8|t[0],16)}function E(t){return[255&t,t>>8&255]}function v(t){return h(t[1]<<8|t[0],16)}function _(t){return[255&t,t>>8&255,t>>16&255,t>>24&255]}function O(t){return a(t[3]<<24|t[2]<<16|t[1]<<8|t[0],32)}function d(t){return[255&t,t>>8&255,t>>16&255,t>>24&255]}function j(t){return h(t[3]<<24|t[2]<<16|t[1]<<8|t[0],32)}function P(t,e,r){function n(t){var e=m(t),r=t-e;return r<.5?e:r>.5?e+1:e%2?e+1:e}var o,i,f,u=(1<<e-1)-1;if(t!==t)i=(1<<e)-1,f=F(2,r-1),o=0;else if(t===Infinity||t===-Infinity)i=(1<<e)-1,f=0,o=t<0?1:0;else if(0===t)i=0,f=0,o=1/t==-Infinity?1:0;else if(o=t<0,(t=M(t))>=F(2,1-u)){i=Y(m(I(t)/S),1023);var a=t/F(2,i);a<1&&(i-=1,a*=2),a>=2&&(i+=1,a/=2);var h=F(2,r);f=n(a*h)-h,i+=u,f/h>=1&&(i+=1,f=0),i>2*u&&(i=(1<<e)-1,f=0)}else i=0,f=n(t/F(2,1-u-r));var y,s=[];for(y=r;y;y-=1)s.push(f%2?1:0),f=m(f/2);for(y=e;y;y-=1)s.push(i%2?1:0),i=m(i/2);s.push(o?1:0),s.reverse();for(var l=s.join(""),p=[];l.length;)p.unshift(parseInt(l.substring(0,8),2)),l=l.substring(8);return p}function T(t,e,r){var n,o,i,f,u,a,h,y,s=[];for(n=0;n<t.length;++n)for(i=t[n],o=8;o;o-=1)s.push(i%2?1:0),i>>=1;return s.reverse(),f=s.join(""),u=(1<<e-1)-1,a=parseInt(f.substring(0,1),2)?-1:1,h=parseInt(f.substring(1,1+e),2),y=parseInt(f.substring(1+e),2),h===(1<<e)-1?0!==y?NaN:a*Infinity:h>0?a*F(2,h-u)*(1+y/F(2,r)):0!==y?a*F(2,-(u-1))*(y/F(2,r)):a<0?-0:0}function w(t){return T(t,11,52)}function A(t){return P(t,11,52)}function L(t){return T(t,8,23)}function R(t){return P(t,8,23)}var B=void 0,N=1e5,S=Math.LN2,M=Math.abs,m=Math.floor,I=Math.log,U=Math.max,Y=Math.min,F=Math.pow,x=Math.round;!function(){var t=Object.defineProperty,e=!function(){try{return Object.defineProperty({},"x",{})}catch(t){return!1}}();t&&!e||(Object.defineProperty=function(e,r,n){if(t)try{return t(e,r,n)}catch(o){}if(e!==Object(e))throw TypeError("Object.defineProperty called on non-object");return Object.prototype.__defineGetter__&&"get"in n&&Object.prototype.__defineGetter__.call(e,r,n.get),Object.prototype.__defineSetter__&&"set"in n&&Object.prototype.__defineSetter__.call(e,r,n.set),"value"in n&&(e[r]=n.value),e})}(),function(){function a(t){if((t=i(t))<0)throw RangeError("ArrayBuffer size is not a small enough positive integer.");Object.defineProperty(this,"byteLength",{value:t}),Object.defineProperty(this,"_bytes",{value:Array(t)});for(var e=0;e<t;e+=1)this._bytes[e]=0}function h(){if(!arguments.length||"object"!=typeof arguments[0])return function(t){if((t=i(t))<0)throw RangeError("length is not a small enough positive integer.");Object.defineProperty(this,"length",{value:t}),Object.defineProperty(this,"byteLength",{value:t*this.BYTES_PER_ELEMENT}),Object.defineProperty(this,"buffer",{value:new a(this.byteLength)}),Object.defineProperty(this,"byteOffset",{value:0})}.apply(this,arguments);if(arguments.length>=1&&"object"===e(arguments[0])&&arguments[0]instanceof h)return function(t){if(this.constructor!==t.constructor)throw TypeError();var e=t.length*this.BYTES_PER_ELEMENT;Object.defineProperty(this,"buffer",{value:new a(e)}),Object.defineProperty(this,"byteLength",{value:e}),Object.defineProperty(this,"byteOffset",{value:0}),Object.defineProperty(this,"length",{value:t.length});for(var r=0;r<this.length;r+=1)this._setter(r,t._getter(r))}.apply(this,arguments);if(arguments.length>=1&&"object"===e(arguments[0])&&!(arguments[0]instanceof h)&&!(arguments[0]instanceof a||"ArrayBuffer"===r(arguments[0])))return function(t){var e=t.length*this.BYTES_PER_ELEMENT;Object.defineProperty(this,"buffer",{value:new a(e)}),Object.defineProperty(this,"byteLength",{value:e}),Object.defineProperty(this,"byteOffset",{value:0}),Object.defineProperty(this,"length",{value:t.length});for(var r=0;r<this.length;r+=1){var n=t[r];this._setter(r,Number(n))}}.apply(this,arguments);if(arguments.length>=1&&"object"===e(arguments[0])&&(arguments[0]instanceof a||"ArrayBuffer"===r(arguments[0])))return function(t,e,r){if((e=f(e))>t.byteLength)throw RangeError("byteOffset out of range");if(e%this.BYTES_PER_ELEMENT)throw RangeError("buffer length minus the byteOffset is not a multiple of the element size.");if(r===B){var n=t.byteLength-e;if(n%this.BYTES_PER_ELEMENT)throw RangeError("length of buffer minus byteOffset not a multiple of the element size");r=n/this.BYTES_PER_ELEMENT}else r=f(r),n=r*this.BYTES_PER_ELEMENT;if(e+n>t.byteLength)throw RangeError("byteOffset and length reference an area beyond the end of the buffer");Object.defineProperty(this,"buffer",{value:t}),Object.defineProperty(this,"byteLength",{value:n}),Object.defineProperty(this,"byteOffset",{value:e}),Object.defineProperty(this,"length",{value:r})}.apply(this,arguments);throw TypeError()}function P(t,e,r){var n=function(){Object.defineProperty(this,"constructor",{value:n}),h.apply(this,arguments),u(this)};"__proto__"in n?n.__proto__=h:(n.from=h.from,n.of=h.of),n.BYTES_PER_ELEMENT=t;var o=function(){};return o.prototype=T,n.prototype=new o,Object.defineProperty(n.prototype,"BYTES_PER_ELEMENT",{value:t}),Object.defineProperty(n.prototype,"_pack",{value:e}),Object.defineProperty(n.prototype,"_unpack",{value:r}),n}t.ArrayBuffer=t.ArrayBuffer||a,Object.defineProperty(h,"from",{value:function(t){return new this(t)}}),Object.defineProperty(h,"of",{value:function(){return new this(arguments)}});var T={};h.prototype=T,Object.defineProperty(h.prototype,"_getter",{value:function(t){if(arguments.length<1)throw SyntaxError("Not enough arguments");if((t=f(t))>=this.length)return B;var e,r,n=[];for(e=0,r=this.byteOffset+t*this.BYTES_PER_ELEMENT;e<this.BYTES_PER_ELEMENT;e+=1,r+=1)n.push(this.buffer._bytes[r]);return this._unpack(n)}}),Object.defineProperty(h.prototype,"get",{value:h.prototype._getter}),Object.defineProperty(h.prototype,"_setter",{value:function(t,e){if(arguments.length<2)throw SyntaxError("Not enough arguments");if(!((t=f(t))>=this.length)){var r,n,o=this._pack(e);for(r=0,n=this.byteOffset+t*this.BYTES_PER_ELEMENT;r<this.BYTES_PER_ELEMENT;r+=1,n+=1)this.buffer._bytes[n]=o[r]}}}),Object.defineProperty(h.prototype,"constructor",{value:h}),Object.defineProperty(h.prototype,"copyWithin",{value:function(t,e){var r=arguments[2],n=o(this),u=n.length,a=f(u);a=U(a,0);var h,y=i(t);h=y<0?U(a+y,0):Y(y,a);var s,l=i(e);s=l<0?U(a+l,0):Y(l,a);var p;p=r===B?a:i(r);var c;c=p<0?U(a+p,0):Y(p,a);var b,g=Y(c-s,a-h);for(s<h&&h<s+g?(b=-1,s=s+g-1,h=h+g-1):b=1;g>0;)n._setter(h,n._getter(s)),s+=b,h+=b,g-=1;return n}}),Object.defineProperty(h.prototype,"every",{value:function(t){if(this===B||null===this)throw TypeError();var e=Object(this),r=f(e.length);if(!n(t))throw TypeError();for(var o=arguments[1],i=0;i<r;i++)if(!t.call(o,e._getter(i),i,e))return!1;return!0}}),Object.defineProperty(h.prototype,"fill",{value:function(t){var e=arguments[1],r=arguments[2],n=o(this),u=n.length,a=f(u);a=U(a,0);var h,y=i(e);h=y<0?U(a+y,0):Y(y,a);var s;s=r===B?a:i(r);var l;for(l=s<0?U(a+s,0):Y(s,a);h<l;)n._setter(h,t),h+=1;return n}}),Object.defineProperty(h.prototype,"filter",{value:function(t){if(this===B||null===this)throw TypeError();var e=Object(this),r=f(e.length);if(!n(t))throw TypeError();for(var o=[],i=arguments[1],u=0;u<r;u++){var a=e._getter(u);t.call(i,a,u,e)&&o.push(a)}return new this.constructor(o)}}),Object.defineProperty(h.prototype,"find",{value:function(t){var e=o(this),r=e.length,i=f(r);if(!n(t))throw TypeError();for(var u=arguments.length>1?arguments[1]:B,a=0;a<i;){var h=e._getter(a),y=t.call(u,h,a,e);if(Boolean(y))return h;++a}return B}}),Object.defineProperty(h.prototype,"findIndex",{value:function(t){var e=o(this),r=e.length,i=f(r);if(!n(t))throw TypeError();for(var u=arguments.length>1?arguments[1]:B,a=0;a<i;){var h=e._getter(a),y=t.call(u,h,a,e);if(Boolean(y))return a;++a}return-1}}),Object.defineProperty(h.prototype,"forEach",{value:function(t){if(this===B||null===this)throw TypeError();var e=Object(this),r=f(e.length);if(!n(t))throw TypeError();for(var o=arguments[1],i=0;i<r;i++)t.call(o,e._getter(i),i,e)}}),Object.defineProperty(h.prototype,"indexOf",{value:function(t){if(this===B||null===this)throw TypeError();var e=Object(this),r=f(e.length);if(0===r)return-1;var n=0;if(arguments.length>0&&(n=Number(arguments[1]),n!==n?n=0:0!==n&&n!==1/0&&n!==-1/0&&(n=(n>0||-1)*m(M(n)))),n>=r)return-1;for(var o=n>=0?n:U(r-M(n),0);o<r;o++)if(e._getter(o)===t)return o;return-1}}),Object.defineProperty(h.prototype,"join",{value:function(t){if(this===B||null===this)throw TypeError();for(var e=Object(this),r=f(e.length),n=Array(r),o=0;o<r;++o)n[o]=e._getter(o);return n.join(t===B?",":t)}}),Object.defineProperty(h.prototype,"lastIndexOf",{value:function(t){if(this===B||null===this)throw TypeError();var e=Object(this),r=f(e.length);if(0===r)return-1;var n=r;arguments.length>1&&(n=Number(arguments[1]),n!==n?n=0:0!==n&&n!==1/0&&n!==-1/0&&(n=(n>0||-1)*m(M(n))));for(var o=n>=0?Y(n,r-1):r-M(n);o>=0;o--)if(e._getter(o)===t)return o;return-1}}),Object.defineProperty(h.prototype,"map",{value:function(t){if(this===B||null===this)throw TypeError();var e=Object(this),r=f(e.length);if(!n(t))throw TypeError();var o=[];o.length=r;for(var i=arguments[1],u=0;u<r;u++)o[u]=t.call(i,e._getter(u),u,e);return new this.constructor(o)}}),Object.defineProperty(h.prototype,"reduce",{value:function(t){if(this===B||null===this)throw TypeError();var e=Object(this),r=f(e.length);if(!n(t))throw TypeError();if(0===r&&1===arguments.length)throw TypeError();var o,i=0;for(o=arguments.length>=2?arguments[1]:e._getter(i++);i<r;)o=t.call(B,o,e._getter(i),i,e),i++;return o}}),Object.defineProperty(h.prototype,"reduceRight",{value:function(t){if(this===B||null===this)throw TypeError();var e=Object(this),r=f(e.length);if(!n(t))throw TypeError();if(0===r&&1===arguments.length)throw TypeError();var o,i=r-1;for(o=arguments.length>=2?arguments[1]:e._getter(i--);i>=0;)o=t.call(B,o,e._getter(i),i,e),i--;return o}}),Object.defineProperty(h.prototype,"reverse",{value:function(){if(this===B||null===this)throw TypeError();for(var t=Object(this),e=f(t.length),r=m(e/2),n=0,o=e-1;n<r;++n,--o){var i=t._getter(n);t._setter(n,t._getter(o)),t._setter(o,i)}return t}}),Object.defineProperty(h.prototype,"set",{value:function(t,e){if(arguments.length<1)throw SyntaxError("Not enough arguments");var r,n,o,i,u,a,h,y,s,l;if("object"==typeof arguments[0]&&arguments[0].constructor===this.constructor){if(r=arguments[0],(o=f(arguments[1]))+r.length>this.length)throw RangeError("Offset plus length of array is out of range");if(y=this.byteOffset+o*this.BYTES_PER_ELEMENT,s=r.length*this.BYTES_PER_ELEMENT,r.buffer===this.buffer){for(l=[],u=0,a=r.byteOffset;u<s;u+=1,a+=1)l[u]=r.buffer._bytes[a];for(u=0,h=y;u<s;u+=1,h+=1)this.buffer._bytes[h]=l[u]}else for(u=0,a=r.byteOffset,h=y;u<s;u+=1,a+=1,h+=1)this.buffer._bytes[h]=r.buffer._bytes[a]}else{if("object"!=typeof arguments[0]||"undefined"==typeof arguments[0].length)throw TypeError("Unexpected argument type(s)");if(n=arguments[0],i=f(n.length),(o=f(arguments[1]))+i>this.length)throw RangeError("Offset plus length of array is out of range");for(u=0;u<i;u+=1)a=n[u],this._setter(o+u,Number(a))}}}),Object.defineProperty(h.prototype,"slice",{value:function(t,e){for(var r=o(this),n=r.length,u=f(n),a=i(t),h=a<0?U(u+a,0):Y(a,u),y=e===B?u:i(e),s=y<0?U(u+y,0):Y(y,u),l=s-h,p=r.constructor,c=new p(l),b=0;h<s;){var g=r._getter(h);c._setter(b,g),++h,++b}return c}}),Object.defineProperty(h.prototype,"some",{value:function(t){if(this===B||null===this)throw TypeError();var e=Object(this),r=f(e.length);if(!n(t))throw TypeError();for(var o=arguments[1],i=0;i<r;i++)if(t.call(o,e._getter(i),i,e))return!0;return!1}}),Object.defineProperty(h.prototype,"sort",{value:function(t){function e(e,r){return e!==e&&r!==r?0:e!==e?1:r!==r?-1:t!==B?t(e,r):e<r?-1:e>r?1:0}if(this===B||null===this)throw TypeError();for(var r=Object(this),n=f(r.length),o=Array(n),i=0;i<n;++i)o[i]=r._getter(i);for(o.sort(e),i=0;i<n;++i)r._setter(i,o[i]);return r}}),Object.defineProperty(h.prototype,"subarray",{value:function(t,e){function r(t,e,r){return t<e?e:t>r?r:t}t=i(t),e=i(e),arguments.length<1&&(t=0),arguments.length<2&&(e=this.length),t<0&&(t=this.length+t),e<0&&(e=this.length+e),t=r(t,0,this.length),e=r(e,0,this.length);var n=e-t;return n<0&&(n=0),new this.constructor(this.buffer,this.byteOffset+t*this.BYTES_PER_ELEMENT,n)}});var N=P(1,y,s),S=P(1,l,p),I=P(1,c,p),F=P(2,b,g),x=P(2,E,v),k=P(4,_,O),C=P(4,d,j),z=P(4,R,L),D=P(8,A,w);t.Int8Array=t.Int8Array||N,t.Uint8Array=t.Uint8Array||S,t.Uint8ClampedArray=t.Uint8ClampedArray||I,t.Int16Array=t.Int16Array||F,t.Uint16Array=t.Uint16Array||x,t.Int32Array=t.Int32Array||k,t.Uint32Array=t.Uint32Array||C,t.Float32Array=t.Float32Array||z,t.Float64Array=t.Float64Array||D}(),function(){function e(t,e){return n(t.get)?t.get(e):t[e]}function o(t,e,n){if(!(t instanceof ArrayBuffer||"ArrayBuffer"===r(t)))throw TypeError();if((e=f(e))>t.byteLength)throw RangeError("byteOffset out of range");if(n=n===B?t.byteLength-e:f(n),e+n>t.byteLength)throw RangeError("byteOffset and length reference an area beyond the end of the buffer");Object.defineProperty(this,"buffer",{value:t}),Object.defineProperty(this,"byteLength",{value:n}),Object.defineProperty(this,"byteOffset",{value:e})}function i(t){return function r(n,o){if((n=f(n))+t.BYTES_PER_ELEMENT>this.byteLength)throw RangeError("Array index out of range");n+=this.byteOffset;for(var i=new Uint8Array(this.buffer,n,t.BYTES_PER_ELEMENT),u=[],h=0;h<t.BYTES_PER_ELEMENT;h+=1)u.push(e(i,h));return Boolean(o)===Boolean(a)&&u.reverse(),e(new t(new Uint8Array(u).buffer),0)}}function u(t){return function r(n,o,i){if((n=f(n))+t.BYTES_PER_ELEMENT>this.byteLength)throw RangeError("Array index out of range");var u,h,y=new t([o]),s=new Uint8Array(y.buffer),l=[];for(u=0;u<t.BYTES_PER_ELEMENT;u+=1)l.push(e(s,u));Boolean(i)===Boolean(a)&&l.reverse(),h=new Uint8Array(this.buffer,n,t.BYTES_PER_ELEMENT),h.set(l)}}var a=function(){var t=new Uint16Array([4660]);return 18===e(new Uint8Array(t.buffer),0)}();Object.defineProperty(o.prototype,"getUint8",{value:i(Uint8Array)}),Object.defineProperty(o.prototype,"getInt8",{value:i(Int8Array)}),Object.defineProperty(o.prototype,"getUint16",{value:i(Uint16Array)}),Object.defineProperty(o.prototype,"getInt16",{value:i(Int16Array)}),Object.defineProperty(o.prototype,"getUint32",{value:i(Uint32Array)}),Object.defineProperty(o.prototype,"getInt32",{value:i(Int32Array)}),Object.defineProperty(o.prototype,"getFloat32",{value:i(Float32Array)}),Object.defineProperty(o.prototype,"getFloat64",{value:i(Float64Array)}),Object.defineProperty(o.prototype,"setUint8",{value:u(Uint8Array)}),Object.defineProperty(o.prototype,"setInt8",{value:u(Int8Array)}),Object.defineProperty(o.prototype,"setUint16",{value:u(Uint16Array)}),Object.defineProperty(o.prototype,"setInt16",{value:u(Int16Array)}),Object.defineProperty(o.prototype,"setUint32",{value:u(Uint32Array)}),Object.defineProperty(o.prototype,"setInt32",{value:u(Int32Array)}),Object.defineProperty(o.prototype,"setFloat32",{value:u(Float32Array)}),Object.defineProperty(o.prototype,"setFloat64",{value:u(Float64Array)}),t.DataView=t.DataView||o}()}(self);if (!("defineProperty"in Object&&function(){try{var e={}
-return Object.defineProperty(e,"test",{value:42}),!0}catch(t){return!1}}()
-)) {!function(e){var t=Object.prototype.hasOwnProperty.call(Object.prototype,"__defineGetter__"),r="A property cannot both have accessors and be writable or have a value";Object.defineProperty=function n(o,i,f){if(e&&(o===window||o===document||o===Element.prototype||o instanceof Element))return e(o,i,f);if(null===o||!(o instanceof Object||"object"==typeof o))throw new TypeError("Object.defineProperty called on non-object");if(!(f instanceof Object))throw new TypeError("Property description must be an object");var c=String(i),a="value"in f||"writable"in f,p="get"in f&&typeof f.get,s="set"in f&&typeof f.set;if(p){if(p===undefined)return o;if("function"!==p)throw new TypeError("Getter must be a function");if(!t)throw new TypeError("Getters & setters cannot be defined on this javascript engine");if(a)throw new TypeError(r);Object.__defineGetter__.call(o,c,f.get)}else o[c]=f.value;if(s){if(s===undefined)return o;if("function"!==s)throw new TypeError("Setter must be a function");if(!t)throw new TypeError("Getters & setters cannot be defined on this javascript engine");if(a)throw new TypeError(r);Object.__defineSetter__.call(o,c,f.set)}return"value"in f&&(o[c]=f.value),o}}(Object.defineProperty);}if (!("name"in Function.prototype
-)) {!function(){var n=/^\s*function\s+([^(\s]*)\s*/,t=Function,e=t.prototype,r=e.constructor,o=function(o){var c,u;return o===t||o===r?u="Function":o!==e&&(c=(""+o).match(n),u=c&&c[1]),u||""};Object.defineProperty(e,"name",{get:function c(){var n=this,t=o(n);return n!==e&&Object.defineProperty(n,"name",{value:t,configurable:!0}),t},configurable:!0})}();}if (!("EPSILON"in Number
-)) {Object.defineProperty(Number,"EPSILON",{enumerable:!1,configurable:!1,writable:!1,value:Math.pow(2,-52)});}if (!("MAX_SAFE_INTEGER"in Number
-)) {Object.defineProperty(Number,"MAX_SAFE_INTEGER",{enumerable:!1,configurable:!1,writable:!1,value:Math.pow(2,53)-1});}if (!("MIN_SAFE_INTEGER"in Number
-)) {Object.defineProperty(Number,"MIN_SAFE_INTEGER",{enumerable:!1,configurable:!1,writable:!1,value:-(Math.pow(2,53)-1)});}function ArrayCreate(r){if(1/r==-Infinity&&(r=0),r>Math.pow(2,32)-1)throw new RangeError("Invalid array length");var n=[];return n.length=r,n}function Call(t,l){var n=arguments.length>2?arguments[2]:[];if(!1===IsCallable(t))throw new TypeError(Object.prototype.toString.call(t)+"is not a function.");return t.apply(l,n)}function CreateDataProperty(e,r,t){var a={value:t,writable:!0,enumerable:!0,configurable:!0};try{return Object.defineProperty(e,r,a),!0}catch(n){return!1}}function CreateDataPropertyOrThrow(t,r,o){var e=CreateDataProperty(t,r,o);if(!e)throw new TypeError("Cannot assign value `"+Object.prototype.toString.call(o)+"` to property `"+Object.prototype.toString.call(r)+"` on object `"+Object.prototype.toString.call(t)+"`");return e}function CreateMethodProperty(e,r,t){var a={value:t,writable:!0,enumerable:!1,configurable:!0};Object.defineProperty(e,r,a)}if (!("acosh"in Math
-)) {CreateMethodProperty(Math,"acosh",function t(a){return isNaN(a)?NaN:a<1?NaN:1===a?0:a===Infinity?Infinity:Math.log(a+Math.sqrt(a*a-1))});}if (!("asinh"in Math
-)) {CreateMethodProperty(Math,"asinh",function n(i){return isNaN(i)?NaN:0===i&&1/i===Infinity?0:0===i&&1/i==-Infinity?-0:i===Infinity?Infinity:i===-Infinity?-Infinity:Math.log(i+Math.sqrt(i*i+1))});}if (!("atanh"in Math
-)) {CreateMethodProperty(Math,"atanh",function n(t){return isNaN(t)?NaN:t<-1?NaN:t>1?NaN:-1===t?-Infinity:1===t?Infinity:0===t&&1/t===Infinity?0:0===t&&1/t==-Infinity?-0:Math.log((1+t)/(1-t))/2});}if (!("cbrt"in Math
-)) {CreateMethodProperty(Math,"cbrt",function n(t){if(isNaN(t))return NaN;if(0===t&&1/t===Infinity)return 0;if(0===t&&1/t==-Infinity)return-0;if(t===Infinity)return Infinity;if(t===-Infinity)return-Infinity;var i=Math.pow(Math.abs(t),1/3);return t<0?-i:i});}if (!("cosh"in Math
-)) {CreateMethodProperty(Math,"cosh",function n(t){if(isNaN(t))return NaN;if(0===t&&1/t===Infinity)return 1;if(0===t&&1/t==-Infinity)return 1;if(t===Infinity)return Infinity;if(t===-Infinity)return Infinity;if((t=Math.abs(t))>709){var i=Math.exp(.5*t);return i/2*i}return((i=Math.exp(t))+1/i)/2});}if (!("expm1"in Math
-)) {CreateMethodProperty(Math,"expm1",function n(i){return isNaN(i)?NaN:0===i&&1/i===Infinity?0:0===i&&1/i==-Infinity?-0:i===Infinity?Infinity:i===-Infinity?-1:i>-1e-6&&i<1e-6?i+i*i/2:Math.exp(i)-1});}if (!("fround"in Math
-)) {CreateMethodProperty(Math,"fround",function(n){return isNaN(n)?NaN:1/n==+Infinity||1/n==-Infinity||n===+Infinity||n===-Infinity?n:new Float32Array([n])[0]});}if (!("hypot"in Math
-)) {CreateMethodProperty(Math,"hypot",function t(n,r){if(0===arguments.length)return 0;for(var i=0,e=0,a=0;a<arguments.length;++a){if(arguments[a]===Infinity)return Infinity;if(arguments[a]===-Infinity)return Infinity;var f=Math.abs(Number(arguments[a]));f>e&&(i*=Math.pow(e/f,2),e=f),0===f&&0===e||(i+=Math.pow(f/e,2))}return e*Math.sqrt(i)});}if (!("log10"in Math
-)) {CreateMethodProperty(Math,"log10",function t(e){return Math.log(e)/Math.LN10});}if (!("log1p"in Math
-)) {CreateMethodProperty(Math,"log1p",function r(t){if(-1<(t=Number(t))&&t<1){for(var o=t,e=2;e<=300;e++)o+=Math.pow(-1,e-1)*Math.pow(t,e)/e;return o}return Math.log(1+t)});}if (!("log2"in Math
-)) {CreateMethodProperty(Math,"log2",function t(e){return Math.log(e)/Math.LN2});}if (!("sign"in Math
-)) {CreateMethodProperty(Math,"sign",function i(n){return n=Number(n),isNaN(n)?NaN:1/n==-Infinity?-0:1/n===Infinity?0:n<0?-1:n>0?1:void 0});}if (!("sinh"in Math
-)) {CreateMethodProperty(Math,"sinh",function r(t){var a=t<0?-1:1,e=Math.abs(t);if(e<22){if(e<Math.pow(2,-28))return t;var h=Math.exp(e)-1;return e<1?a*(2*h-h*h/(h+1))/2:a*(h+h/(h+1))/2}if(e<709.7822265625)return a*Math.exp(e)/2;var n=Math.exp(.5*e);return(h=a*n/2)*n});}if (!("tanh"in Math
-)) {CreateMethodProperty(Math,"tanh",function t(n){var e;return n===Infinity?1:n===-Infinity?-1:((e=Math.exp(2*n))-1)/(e+1)});}if (!("trunc"in Math
-)) {CreateMethodProperty(Math,"trunc",function t(r){return r<0?Math.ceil(r):Math.floor(r)});}if (!("freeze"in Object
-)) {CreateMethodProperty(Object,"freeze",function e(r){return r});}if (!("getPrototypeOf"in Object
-)) {CreateMethodProperty(Object,"getPrototypeOf",function t(o){if(o!==Object(o))throw new TypeError("Object.getPrototypeOf called on non-object");var e=o.__proto__;return e||null===e?e:"function"==typeof o.constructor&&o instanceof o.constructor?o.constructor.prototype:o instanceof Object?Object.prototype:null});}if (!("keys"in Object&&function(){return 2===Object.keys(arguments).length}(1,2)&&function(){try{return Object.keys(""),!0}catch(t){return!1}}()
-)) {CreateMethodProperty(Object,"keys",function(){"use strict";function t(){var t;try{t=Object.create({})}catch(r){return!0}return o.call(t,"__proto__")}function r(t){var r=n.call(t),e="[object Arguments]"===r;return e||(e="[object Array]"!==r&&null!==t&&"object"==typeof t&&"number"==typeof t.length&&t.length>=0&&"[object Function]"===n.call(t.callee)),e}var e=Object.prototype.hasOwnProperty,n=Object.prototype.toString,o=Object.prototype.propertyIsEnumerable,c=!o.call({toString:null},"toString"),l=o.call(function(){},"prototype"),i=["toString","toLocaleString","valueOf","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","constructor"],u=function(t){var r=t.constructor;return r&&r.prototype===t},a={$console:!0,$external:!0,$frame:!0,$frameElement:!0,$frames:!0,$innerHeight:!0,$innerWidth:!0,$outerHeight:!0,$outerWidth:!0,$pageXOffset:!0,$pageYOffset:!0,$parent:!0,$scrollLeft:!0,$scrollTop:!0,$scrollX:!0,$scrollY:!0,$self:!0,$webkitIndexedDB:!0,$webkitStorageInfo:!0,$window:!0},f=function(){if("undefined"==typeof window)return!1;for(var t in window)try{if(!a["$"+t]&&e.call(window,t)&&null!==window[t]&&"object"==typeof window[t])try{u(window[t])}catch(r){return!0}}catch(r){return!0}return!1}(),p=function(t){if("undefined"==typeof window||!f)return u(t);try{return u(t)}catch(r){return!1}};return function s(o){var u="[object Function]"===n.call(o),a=r(o),f="[object String]"===n.call(o),s=[];if(o===undefined||null===o)throw new TypeError("Cannot convert undefined or null to object");var y=l&&u;if(f&&o.length>0&&!e.call(o,0))for(var h=0;h<o.length;++h)s.push(String(h));if(a&&o.length>0)for(var g=0;g<o.length;++g)s.push(String(g));else for(var w in o)t()&&"__proto__"===w||y&&"prototype"===w||!e.call(o,w)||s.push(String(w));if(c)for(var d=p(o),$=0;$<i.length;++$)d&&"constructor"===i[$]||!e.call(o,i[$])||s.push(i[$]);return s}}());}function Get(n,t){return n[t]}function HasOwnProperty(r,t){return Object.prototype.hasOwnProperty.call(r,t)}function HasProperty(n,r){return r in n}function IsArray(r){return"[object Array]"===Object.prototype.toString.call(r)}if (!("isArray"in Array
-)) {CreateMethodProperty(Array,"isArray",function r(e){return IsArray(e)});}function IsCallable(n){return"function"==typeof n}if (!("bind"in Function.prototype
-)) {CreateMethodProperty(Function.prototype,"bind",function t(n){var r=Array,o=Object,e=r.prototype,l=function g(){},p=e.slice,a=e.concat,i=e.push,c=Math.max,u=this;if(!IsCallable(u))throw new TypeError("Function.prototype.bind called on incompatible "+u);for(var y,h=p.call(arguments,1),s=function(){if(this instanceof y){var t=u.apply(this,a.call(h,p.call(arguments)));return o(t)===t?t:this}return u.apply(n,a.call(h,p.call(arguments)))},f=c(0,u.length-h.length),b=[],d=0;d<f;d++)i.call(b,"$"+d);return y=Function("binder","return function ("+b.join(",")+"){ return binder.apply(this, arguments); }")(s),u.prototype&&(l.prototype=u.prototype,y.prototype=new l,l.prototype=null),y});}function RequireObjectCoercible(e){if(null===e||e===undefined)throw TypeError(Object.prototype.toString.call(e)+" is not coercible to Object.");return e}function SameValueNonNumber(e,n){return e===n}function ToBoolean(o){return Boolean(o)}function ToNumber(r){return Number(r)}function ToObject(e){if(null===e||e===undefined)throw TypeError();return Object(e)}function GetV(t,e){return ToObject(t)[e]}function GetMethod(e,n){var r=GetV(e,n);if(null===r||r===undefined)return undefined;if(!1===IsCallable(r))throw new TypeError("Method not callable: "+n);return r}function ToUint32(n){var i=Number(n);return isNaN(i)||1/i===Infinity||1/i==-Infinity||i===Infinity||i===-Infinity?0:(i<0?-1:1)*Math.floor(Math.abs(i))>>>0}if (!("clz32"in Math
-)) {CreateMethodProperty(Math,"clz32",function t(r){var e=ToUint32(r);return e?32-e.toString(2).length:32});}if (!("imul"in Math
-)) {CreateMethodProperty(Math,"imul",function t(r,e){var n=ToUint32(r),o=ToUint32(e),i=n>>>16&65535,a=65535&n,u=o>>>16&65535,h=65535&o;return a*h+(i*h+a*u<<16>>>0)|0});}function Type(e){switch(typeof e){case"undefined":return"undefined";case"boolean":return"boolean";case"number":return"number";case"string":return"string";case"symbol":return"symbol";default:return null===e?"null":"Symbol"in self&&(e instanceof self.Symbol||e.constructor===self.Symbol)?"symbol":"object"}}if (!("isFinite"in Number
-)) {!function(){var e=self;CreateMethodProperty(Number,"isFinite",function i(n){return"number"===Type(n)&&e.isFinite(n)})}();}if (!("isNaN"in Number
-)) {!function(){var e=self;CreateMethodProperty(Number,"isNaN",function r(n){return"number"===Type(n)&&!!e.isNaN(n)})}();}if (!("isExtensible"in Object
-)) {!function(e){CreateMethodProperty(Object,"isExtensible",function t(n){return"object"===Type(n)&&(!e||e(n))})}(Object.isExtensible);}if (!("seal"in Object&&function(){try{return Object.seal("1"),!0}catch(t){return!1}}()
-)) {!function(e){CreateMethodProperty(Object,"seal",function t(c){return"object"===Type(c)?c:e?e(c):c})}(Object.seal);}if (!("flags"in RegExp.prototype
-)) {Object.defineProperty(RegExp.prototype,"flags",{configurable:!0,enumerable:!1,get:function(){var e=this;if("object"!==Type(e))throw new TypeError("Method called on incompatible type: must be an object.");var o="";return ToBoolean(Get(e,"global"))&&(o+="g"),ToBoolean(Get(e,"ignoreCase"))&&(o+="i"),ToBoolean(Get(e,"multiline"))&&(o+="m"),ToBoolean(Get(e,"unicode"))&&(o+="u"),ToBoolean(Get(e,"sticky"))&&(o+="y"),o}});}function CreateIterResultObject(e,r){if("boolean"!==Type(r))throw new Error;var t={};return CreateDataProperty(t,"value",e),CreateDataProperty(t,"done",r),t}function GetPrototypeFromConstructor(t,o){var r=Get(t,"prototype");return"object"!==Type(r)&&(r=o),r}function IsConstructor(t){return"object"===Type(t)&&("function"==typeof t&&!!t.prototype)}function IsRegExp(e){if("object"!==Type(e))return!1;var n="Symbol"in self&&"match"in self.Symbol?Get(e,self.Symbol.match):undefined;if(n!==undefined)return ToBoolean(n);try{var t=e.lastIndex;return e.lastIndex=0,RegExp.prototype.exec.call(e),!0}catch(l){}finally{e.lastIndex=t}return!1}function IteratorClose(r,t){if("object"!==Type(r["[[Iterator]]"]))throw new Error(Object.prototype.toString.call(r["[[Iterator]]"])+"is not an Object.");var e=r["[[Iterator]]"],o=GetMethod(e,"return");if(o===undefined)return t;try{var n=Call(o,e)}catch(c){var a=c}if(t)return t;if(a)throw a;if("object"!==Type(n))throw new TypeError("Iterator's return method returned a non-object.");return t}function IteratorComplete(t){if("object"!==Type(t))throw new Error(Object.prototype.toString.call(t)+"is not an Object.");return ToBoolean(Get(t,"done"))}function IteratorNext(t){if(arguments.length<2)var e=Call(t["[[NextMethod]]"],t["[[Iterator]]"]);else e=Call(t["[[NextMethod]]"],t["[[Iterator]]"],[arguments[1]]);if("object"!==Type(e))throw new TypeError("bad iterator");return e}function IteratorStep(t){var r=IteratorNext(t);return!0!==IteratorComplete(r)&&r}function IteratorValue(t){if("object"!==Type(t))throw new Error(Object.prototype.toString.call(t)+"is not an Object.");return Get(t,"value")}function OrdinaryToPrimitive(r,t){if("string"===t)var e=["toString","valueOf"];else e=["valueOf","toString"];for(var i=0;i<e.length;++i){var n=e[i],a=Get(r,n);if(IsCallable(a)){var o=Call(a,r);if("object"!==Type(o))return o}}throw new TypeError("Cannot convert to primitive.")}function SameValue(e,a){return Type(e)===Type(a)&&("number"===Type(e)?!(!isNaN(e)||!isNaN(a))||(0!==e||0!==a||1/e==1/a)&&e===a:SameValueNonNumber(e,a))}if (!("is"in Object
-)) {CreateMethodProperty(Object,"is",function e(t,r){return SameValue(t,r)});}function SameValueZero(n,e){return Type(n)===Type(e)&&("number"===Type(n)?!(!isNaN(n)||!isNaN(e))||(1/n===Infinity&&1/e==-Infinity||(1/n==-Infinity&&1/e===Infinity||n===e)):SameValueNonNumber(n,e))}function ToInteger(n){if("symbol"===Type(n))throw new TypeError("Cannot convert a Symbol value to a number");var t=Number(n);return isNaN(t)?0:1/t===Infinity||1/t==-Infinity||t===Infinity||t===-Infinity?t:(t<0?-1:1)*Math.floor(Math.abs(t))}if (!("copyWithin"in Array.prototype&&function(){try{var t=function n(){}
-t.prototype[0]="foo"
-var o=new t
-o[1]=1,o[2]=2,o.length=3
-var r=Array.prototype.copyWithin.call(o,1,0)
-return!(!r[0]||Object.prototype.hasOwnProperty.call(r,"0")||!Object.prototype.hasOwnProperty.call(r,"1")||"foo"!==r[0]||"foo"!==r[1]||1!==r[2]||3!==r.length)}catch(e){return!1}}()
-)) {CreateMethodProperty(Array.prototype,"copyWithin",function t(r,e){"use strict";var a=arguments[2];if(null===this||this===undefined)throw new TypeError("Cannot call method on "+this);var n=Object(this),i=ToInteger(n.length);i<=0&&(i=0),i=i===Infinity?Math.pow(2,53)-1:Math.min(i,Math.pow(2,53)-1),i=Math.max(i,0);var h,o=ToInteger(r);h=o<0?Math.max(i+o,0):Math.min(o,i);var M,m=ToInteger(e);M=m<0?Math.max(i+m,0):Math.min(m,i);var v;v=a===undefined?i:ToInteger(a);var p;p=v<0?Math.max(i+v,0):Math.min(v,i);var s,d=Math.min(p-M,i-h);for(M<h&&h<M+d?(s=-1,M=M+d-1,h=h+d-1):s=1;d>0;){var f=String(M),g=String(h);if(HasProperty(n,f)){var l=n[f];n[g]=l}else delete n[g];M+=s,h+=s,d-=1}return n});}if (!("isInteger"in Number
-)) {CreateMethodProperty(Number,"isInteger",function e(n){return"number"===Type(n)&&(!isNaN(n)&&n!==Infinity&&n!==-Infinity&&ToInteger(n)===n)});}if (!("isSafeInteger"in Number
-)) {CreateMethodProperty(Number,"isSafeInteger",function e(r){if("number"!==Type(r))return!1;if(isNaN(r)||r===Infinity||r===-Infinity)return!1;var t=ToInteger(r);return t===r&&Math.abs(t)<=Math.pow(2,53)-1});}function ToLength(n){var t=ToInteger(n);return t<=0?0:Math.min(t,Math.pow(2,53)-1)}function ToPrimitive(e){var t=arguments.length>1?arguments[1]:undefined;if("object"===Type(e)){if(arguments.length<2)var i="default";else t===String?i="string":t===Number&&(i="number");var r="function"==typeof self.Symbol&&"symbol"==typeof self.Symbol.toPrimitive?GetMethod(e,self.Symbol.toPrimitive):undefined;if(r!==undefined){var n=Call(r,e,[i]);if("object"!==Type(n))return n;throw new TypeError("Cannot convert exotic object to primitive.")}return"default"===i&&(i="number"),OrdinaryToPrimitive(e,i)}return e}function ToString(t){switch(Type(t)){case"symbol":throw new TypeError("Cannot convert a Symbol value to a string");case"object":return ToString(ToPrimitive(t,String));default:return String(t)}}if (!("fill"in Array.prototype
-)) {CreateMethodProperty(Array.prototype,"fill",function t(e){for(var r=arguments[1],n=arguments[2],o=ToObject(this),a=ToLength(Get(o,"length")),h=ToInteger(r),i=h<0?Math.max(a+h,0):Math.min(h,a),g=n===undefined?a:ToInteger(n),M=g<0?Math.max(a+g,0):Math.min(g,a);i<M;){o[ToString(i)]=e,i+=1}return o});}if (!("find"in Array.prototype
-)) {CreateMethodProperty(Array.prototype,"find",function e(r){var t=ToObject(this),n=ToLength(Get(t,"length"));if(!1===IsCallable(r))throw new TypeError(r+" is not a function");for(var o=arguments.length>1?arguments[1]:undefined,a=0;a<n;){var i=ToString(a),f=Get(t,i);if(ToBoolean(Call(r,o,[f,a,t])))return f;a+=1}return undefined});}if (!("findIndex"in Array.prototype
-)) {CreateMethodProperty(Array.prototype,"findIndex",function e(r){var t=ToObject(this),n=ToLength(Get(t,"length"));if(!1===IsCallable(r))throw new TypeError(r+" is not a function");for(var o=arguments.length>1?arguments[1]:undefined,a=0;a<n;){var i=ToString(a),l=Get(t,i);if(ToBoolean(Call(r,o,[l,a,t])))return a;a+=1}return-1});}if (!("forEach"in Array.prototype
-)) {CreateMethodProperty(Array.prototype,"forEach",function r(t){var e=ToObject(this),n=e instanceof String?e.split(""):e,o=ToLength(Get(e,"length"));if(!1===IsCallable(t))throw new TypeError(t+" is not a function");for(var a=arguments.length>1?arguments[1]:undefined,i=0;i<o;){var f=ToString(i);if(HasProperty(n,f)){var l=Get(n,f);Call(t,a,[l,i,e])}i+=1}return undefined});}if (!("includes"in Array.prototype
-)) {CreateMethodProperty(Array.prototype,"includes",function e(r){"use strict";var t=ToObject(this),o=ToLength(Get(t,"length"));if(0===o)return!1;var n=ToInteger(arguments[1]);if(n>=0)var a=n;else(a=o+n)<0&&(a=0);for(;a<o;){var i=Get(t,ToString(a));if(SameValueZero(r,i))return!0;a+=1}return!1});}if (!("indexOf"in Array.prototype
-)) {CreateMethodProperty(Array.prototype,"indexOf",function r(t){var e=ToObject(this),n=ToLength(Get(e,"length"));if(0===n)return-1;var i=ToInteger(arguments[1]);if(i>=n)return-1;if(i>=0)var o=1/i==-Infinity?0:i;else(o=n+i)<0&&(o=0);for(;o<n;){if(HasProperty(e,ToString(o))){if(t===Get(e,ToString(o)))return o}o+=1}return-1});}if (!("getOwnPropertyNames"in Object&&function(){try{return Object.getOwnPropertyNames(1),!0}catch(t){return!1}}()
-)) {!function(){var t={}.toString,e="".split,r=[].concat,o=Object.prototype.hasOwnProperty,c=Object.getOwnPropertyNames||Object.keys,n="object"==typeof self?c(self):[];CreateMethodProperty(Object,"getOwnPropertyNames",function l(a){var p=ToObject(a);if("[object Window]"===t.call(p))try{return c(p)}catch(j){return r.call([],n)}p="[object String]"==t.call(p)?e.call(p,""):Object(p);for(var i=c(p),s=["length","prototype"],O=0;O<s.length;O++){var b=s[O];o.call(p,b)&&!i.includes(b)&&i.push(b)}if(i.includes("__proto__")){var f=i.indexOf("__proto__");i.splice(f,1)}return i})}();}if (!("endsWith"in String.prototype
-)) {CreateMethodProperty(String.prototype,"endsWith",function e(t){"use strict";var r=arguments.length>1?arguments[1]:undefined,n=RequireObjectCoercible(this),i=ToString(n);if(IsRegExp(t))throw new TypeError("First argument to String.prototype.endsWith must not be a regular expression");var o=ToString(t),s=i.length,g=r===undefined?s:ToInteger(r),h=Math.min(Math.max(g,0),s),u=o.length,a=h-u;return!(a<0)&&i.substr(a,u)===o});}if (!("includes"in String.prototype
-)) {CreateMethodProperty(String.prototype,"includes",function e(t){"use strict";var r=arguments.length>1?arguments[1]:undefined,n=RequireObjectCoercible(this),i=ToString(n);if(IsRegExp(t))throw new TypeError("First argument to String.prototype.includes must not be a regular expression");var o=ToString(t),g=ToInteger(r),a=i.length,p=Math.min(Math.max(g,0),a);return-1!==String.prototype.indexOf.call(i,o,p)});}if (!("repeat"in String.prototype
-)) {CreateMethodProperty(String.prototype,"repeat",function r(e){"use strict";var t=RequireObjectCoercible(this),n=ToString(t),o=ToInteger(e);if(o<0)throw new RangeError("Invalid count value");if(o===Infinity)throw new RangeError("Invalid count value");return 0===o?"":new Array(o+1).join(n)});}if (!("startsWith"in String.prototype
-)) {CreateMethodProperty(String.prototype,"startsWith",function t(e){"use strict";var r=arguments.length>1?arguments[1]:undefined,n=RequireObjectCoercible(this),i=ToString(n);if(IsRegExp(e))throw new TypeError("First argument to String.prototype.startsWith must not be a regular expression");var o=ToString(e),s=ToInteger(r),a=i.length,g=Math.min(Math.max(s,0),a);return!(o.length+g>a)&&0===i.substr(g).indexOf(e)});}function ToPropertyKey(r){var i=ToPrimitive(r,String);return"symbol"===Type(i)?i:ToString(i)}if (!("getOwnPropertyDescriptor"in Object&&"function"==typeof Object.getOwnPropertyDescriptor&&function(){try{return"3"===Object.getOwnPropertyDescriptor("13.7",1).value}catch(t){return!1}}()
-)) {!function(){var e=Object.getOwnPropertyDescriptor,t=function(){try{return 1===Object.defineProperty(document.createElement("div"),"one",{get:function(){return 1}}).one}catch(e){return!1}},r={}.toString,n="".split;CreateMethodProperty(Object,"getOwnPropertyDescriptor",function c(o,i){var a=ToObject(o);a=("string"===Type(a)||a instanceof String)&&"[object String]"==r.call(o)?n.call(o,""):Object(o);var u=ToPropertyKey(i);if(t)try{return e(a,u)}catch(l){}if(HasOwnProperty(a,u))return{enumerable:!0,configurable:!0,writable:!0,value:a[u]}})}();}if (!("assign"in Object
-)) {CreateMethodProperty(Object,"assign",function e(t,r){var n=ToObject(t);if(1===arguments.length)return n;var o,c,a,l,i=Array.prototype.slice.call(arguments,1);for(o=0;o<i.length;o++){var p=i[o];for(p===undefined||null===p?a=[]:(l="[object String]"===Object.prototype.toString.call(p)?String(p).split(""):ToObject(p),a=Object.keys(l)),c=0;c<a.length;c++){var b,y=a[c];try{var g=Object.getOwnPropertyDescriptor(l,y);b=g!==undefined&&!0===g.enumerable}catch(u){b=Object.prototype.propertyIsEnumerable.call(l,y)}if(b){var j=Get(l,y);n[y]=j}}}return n});}if (!("defineProperties"in Object
-)) {CreateMethodProperty(Object,"defineProperties",function e(r,t){if("object"!==Type(r))throw new TypeError("Object.defineProperties called on non-object");for(var o=ToObject(t),n=Object.keys(o),c=[],i=0;i<n.length;i++){var b=n[i],f=Object.getOwnPropertyDescriptor(o,b);if(f!==undefined&&f.enumerable){var p=Get(o,b),a=p;c.push([b,a])}}for(var j=0;j<c.length;j++){var d=c[j][0];a=c[j][1],Object.defineProperty(r,d,a)}return r});}if (!("create"in Object
-)) {!function(){function e(){}if({__proto__:null}instanceof Object)t=function(){var e=document.createElement("iframe");e.style.display="none";var o=document.body||document.documentElement;o.appendChild(e),e.src="javascript:";var n=e.contentWindow.Object.prototype;o.removeChild(e),e=null,delete n.constructor,delete n.hasOwnProperty,delete n.propertyIsEnumerable,delete n.isPrototypeOf,delete n.toLocaleString,delete n.toString,delete n.valueOf;var r=function l(){};return r.prototype=n,t=function(){return new r},new r};else var t=function(){return{__proto__:null}};CreateMethodProperty(Object,"create",function o(n,r){if("object"!==Type(n)&&"null"!==Type(n))throw new TypeError("Object prototype may only be an Object or null");if("null"===Type(n))var l=t();else e.prototype=n,l=new e,l.__proto__=n,l.constructor.prototype=n,l.__proto__=n;return 1 in arguments?Object.defineProperties(l,r):l})}();}function OrdinaryCreateFromConstructor(r,e){var t=arguments[2]||{},o=GetPrototypeFromConstructor(r,e),a=Object.create(o);for(var n in t)Object.prototype.hasOwnProperty.call(t,n)&&Object.defineProperty(a,n,{configurable:!0,enumerable:!1,writable:!0,value:t[n]});return a}function Construct(r){var t=arguments.length>2?arguments[2]:r,o=arguments.length>1?arguments[1]:[];if(!IsConstructor(r))throw new TypeError("F must be a constructor.");if(!IsConstructor(t))throw new TypeError("newTarget must be a constructor.");if(t===r)return new(Function.prototype.bind.apply(r,[null].concat(o)));var n=OrdinaryCreateFromConstructor(t,Object.prototype);return Call(r,n,o)}if (!("of"in Array
-)) {CreateMethodProperty(Array,"of",function r(){var r=arguments.length,t=arguments,e=this;if(IsConstructor(e))var a=Construct(e,[r]);else a=ArrayCreate(r);for(var o=0;o<r;){var n=t[o],h=ToString(o);CreateDataPropertyOrThrow(a,h,n),o+=1}return a.length=r,a});}function ArraySpeciesCreate(e,r){if(0===r&&1/r==-Infinity&&(r=0),!1===IsArray(e))return ArrayCreate(r);var n=Get(e,"constructor");if("object"===Type(n)&&null===(n="Symbol"in self&&"species"in self.Symbol?Get(n,self.Symbol.species):undefined)&&(n=undefined),n===undefined)return ArrayCreate(r);if(!IsConstructor(n))throw new TypeError("C must be a constructor");return Construct(n,[r])}if (!("filter"in Array.prototype
-)) {CreateMethodProperty(Array.prototype,"filter",function r(e){var t=ToObject(this),o=ToLength(Get(t,"length"));if(!1===IsCallable(e))throw new TypeError(e+" is not a function");for(var a=arguments.length>1?arguments[1]:undefined,n=ArraySpeciesCreate(t,0),i=0,l=0;i<o;){var f=ToString(i);if(HasProperty(t,f)){var h=Get(t,f);ToBoolean(Call(e,a,[h,i,t]))&&(CreateDataPropertyOrThrow(n,ToString(l),h),l+=1)}i+=1}return n});}if (!("map"in Array.prototype
-)) {CreateMethodProperty(Array.prototype,"map",function r(e){var t=ToObject(this),a=ToLength(Get(t,"length"));if(!1===IsCallable(e))throw new TypeError(e+" is not a function");for(var o=arguments.length>1?arguments[1]:undefined,n=ArraySpeciesCreate(t,a),i=0;i<a;){var p=ToString(i);if(HasProperty(t,p)){var h=Get(t,p),l=Call(e,o,[h,i,t]);CreateDataPropertyOrThrow(n,p,l)}i+=1}return n});}if (!("sort"in Array.prototype&&function(){var r={length:3,0:2,1:1,2:3}
-return Array.prototype.sort.call(r,function(r,t){return r-t})===r}()
-)) {"use strict";var origSort=Array.prototype.sort;CreateMethodProperty(Array.prototype,"sort",function r(t){if(t!==undefined&&!1===IsCallable(t))throw new TypeError("The comparison function must be either a function or undefined");if(t===undefined)origSort.call(this);else{var e=Array.prototype.map.call(this,function(r,t){return{item:r,index:t}});origSort.call(e,function(r,e){var i=t.call(undefined,r.item,e.item);return 0===i?r.index-e.index:i});for(var i in e)Object.prototype.hasOwnProperty.call(e,i)&&e[i].item!==this[i]&&(this[i]=e[i].item)}return this});}if (!("setPrototypeOf"in Object
-)) {!function(){if(!Object.setPrototypeOf){var t,e,o=Object.getOwnPropertyNames,r=Object.getOwnPropertyDescriptor,n=Object.create,c=Object.defineProperty,_=Object.getPrototypeOf,f=Object.prototype,p=function(t,e){return o(e).forEach(function(o){c(t,o,r(e,o))}),t},O=function i(t,e){return p(n(e),t)};try{t=r(f,"__proto__").set,t.call({},null),e=function a(e,o){return t.call(e,o),e}}catch(u){t={__proto__:null},t instanceof Object?e=O:(t.__proto__=f,e=t instanceof Object?function o(t,e){return t.__proto__=e,t}:function r(t,e){return _(t)?(t.__proto__=e,t):O(t,e)})}CreateMethodProperty(Object,"setPrototypeOf",e)}}();}if (!("Symbol"in self&&0===self.Symbol.length
-)) {!function(e,r,n){"use strict";function t(e){if("symbol"===Type(e))return e;throw TypeError(e+" is not a symbol")}var u,o=function(){try{var r={};return e.defineProperty(r,"t",{configurable:!0,enumerable:!1,get:function(){return!0},set:undefined}),!!r.t}catch(n){return!1}}(),i=0,a=""+Math.random(),c="__symbol:",l=c.length,f="__symbol@@"+a,s={},v="defineProperty",y="defineProperties",b="getOwnPropertyNames",p="getOwnPropertyDescriptor",h="propertyIsEnumerable",m=e.prototype,d=m.hasOwnProperty,g=m[h],w=m.toString,S=Array.prototype.concat,P=e.getOwnPropertyNames?e.getOwnPropertyNames(self):[],O=e[b],j=function $(e){if("[object Window]"===w.call(e))try{return O(e)}catch(r){return S.call([],P)}return O(e)},E=e[p],N=e.create,T=e.keys,_=e.freeze||e,k=e[v],F=e[y],I=E(e,b),x=function(e,r,n){if(!d.call(e,f))try{k(e,f,{enumerable:!1,configurable:!1,writable:!1,value:{}})}catch(t){e[f]={}}e[f]["@@"+r]=n},z=function(e,r){var n=N(e);return j(r).forEach(function(e){q.call(r,e)&&L(n,e,r[e])}),n},A=function(e){var r=N(e);return r.enumerable=!1,r},D=function ee(){},M=function(e){return e!=f&&!d.call(H,e)},W=function(e){return e!=f&&d.call(H,e)},q=function re(e){var r=""+e;return W(r)?d.call(this,r)&&this[f]&&this[f]["@@"+r]:g.call(this,e)},B=function(r){var n={enumerable:!1,configurable:!0,get:D,set:function(e){u(this,r,{enumerable:!1,configurable:!0,writable:!0,value:e}),x(this,r,!0)}};try{k(m,r,n)}catch(o){m[r]=n.value}H[r]=k(e(r),"constructor",J);var t=E(G.prototype,"description");return t&&k(H[r],"description",t),_(H[r])},C=function(e){var r=t(e);if(Y){var n=V(r);if(""!==n)return n.slice(1,-1)}if(s[r]!==undefined)return s[r];var u=r.toString(),o=u.lastIndexOf("0.");return u=u.slice(10,o),""===u?undefined:u},G=function ne(){var r=arguments[0];if(this instanceof ne)throw new TypeError("Symbol is not a constructor");var n=c.concat(r||"",a,++i);r===undefined||null!==r&&!isNaN(r)&&""!==String(r)||(s[n]=String(r));var t=B(n);return o||e.defineProperty(t,"description",{configurable:!0,enumerable:!1,value:C(t)}),t},H=N(null),J={value:G},K=function(e){return H[e]},L=function te(e,r,n){var t=""+r;return W(t)?(u(e,t,n.enumerable?A(n):n),x(e,t,!!n.enumerable)):k(e,r,n),e},Q=function(e){return function(r){return d.call(e,f)&&d.call(e[f],"@@"+r)}},R=function ue(e){return j(e).filter(e===m?Q(e):W).map(K)};I.value=L,k(e,v,I),I.value=R,k(e,"getOwnPropertySymbols",I),I.value=function oe(e){return j(e).filter(M)},k(e,b,I),I.value=function ie(e,r){var n=R(r);return n.length?T(r).concat(n).forEach(function(n){q.call(r,n)&&L(e,n,r[n])}):F(e,r),e},k(e,y,I),I.value=q,k(m,h,I),I.value=G,k(n,"Symbol",I),I.value=function(e){var r=c.concat(c,e,a);return r in m?H[r]:B(r)},k(G,"for",I),I.value=function(e){if(M(e))throw new TypeError(e+" is not a symbol");return d.call(H,e)?e.slice(2*l,-a.length):void 0},k(G,"keyFor",I),I.value=function ae(e,r){var n=E(e,r);return n&&W(r)&&(n.enumerable=q.call(e,r)),n},k(e,p,I),I.value=function ce(e,r){return 1===arguments.length||void 0===r?N(e):z(e,r)},k(e,"create",I);var U=null===function(){return this}.call(null);if(I.value=U?function(){var e=w.call(this);return"[object String]"===e&&W(this)?"[object Symbol]":e}:function(){if(this===window)return"[object Null]";var e=w.call(this);return"[object String]"===e&&W(this)?"[object Symbol]":e},k(m,"toString",I),u=function(e,r,n){var t=E(m,r);delete m[r],k(e,r,n),e!==m&&k(m,r,t)},function(){try{var r={};return e.defineProperty(r,"t",{configurable:!0,enumerable:!1,get:function(){return!0},set:undefined}),!!r.t}catch(n){return!1}}()){var V;try{V=Function("s","var v = s.valueOf(); return { [v]() {} }[v].name;")}catch(Z){}var X=function(){},Y=V&&"inferred"===X.name?V:null;e.defineProperty(n.Symbol.prototype,"description",{configurable:!0,enumerable:!1,get:function(){return C(this)}})}}(Object,0,self);}if (!("Symbol"in self&&"hasInstance"in self.Symbol
-)) {Object.defineProperty(Symbol,"hasInstance",{value:Symbol("hasInstance")});}if (!("Symbol"in self&&"isConcatSpreadable"in self.Symbol
-)) {Object.defineProperty(Symbol,"isConcatSpreadable",{value:Symbol("isConcatSpreadable")});}if (!("Symbol"in self&&"iterator"in self.Symbol
-)) {Object.defineProperty(self.Symbol,"iterator",{value:self.Symbol("iterator")});}function GetIterator(t){var e=arguments.length>1?arguments[1]:GetMethod(t,Symbol.iterator),r=Call(e,t);if("object"!==Type(r))throw new TypeError("bad iterator");var o=GetV(r,"next"),a=Object.create(null);return a["[[Iterator]]"]=r,a["[[NextMethod]]"]=o,a["[[Done]]"]=!1,a}if (!("Symbol"in self&&"match"in self.Symbol
-)) {Object.defineProperty(Symbol,"match",{value:Symbol("match")});}if (!("Symbol"in self&&"replace"in self.Symbol
-)) {Object.defineProperty(Symbol,"replace",{value:Symbol("replace")});}if (!("Symbol"in self&&"search"in self.Symbol
-)) {Object.defineProperty(Symbol,"search",{value:Symbol("search")});}if (!("Symbol"in self&&"species"in self.Symbol
-)) {Object.defineProperty(Symbol,"species",{value:Symbol("species")});}if (!("Map"in self&&function(t){try{var n=new t.Map([[1,1],[2,2]])
-return 0===t.Map.length&&2===n.size&&"Symbol"in t&&"iterator"in t.Symbol&&"function"==typeof n[t.Symbol.iterator]}catch(e){return!1}}(self)
-)) {!function(e){function t(e,t){if("object"!==Type(e))throw new TypeError("createMapIterator called on incompatible receiver "+Object.prototype.toString.call(e));if(!0!==e._es6Map)throw new TypeError("createMapIterator called on incompatible receiver "+Object.prototype.toString.call(e));var r=Object.create(u);return Object.defineProperty(r,"[[Map]]",{configurable:!0,enumerable:!1,writable:!0,value:e}),Object.defineProperty(r,"[[MapNextIndex]]",{configurable:!0,enumerable:!1,writable:!0,value:0}),Object.defineProperty(r,"[[MapIterationKind]]",{configurable:!0,enumerable:!1,writable:!0,value:t}),r}var r=function(){try{var e={};return Object.defineProperty(e,"t",{configurable:!0,enumerable:!1,get:function(){return!0},set:undefined}),!!e.t}catch(t){return!1}}(),o=0,a=Symbol("meta_"+(1e8*Math.random()+"").replace(".","")),n=function(e){if("object"==typeof e?null!==e:"function"==typeof e){if(!Object.isExtensible(e))return!1;if(!Object.prototype.hasOwnProperty.call(e,a)){var t=typeof e+"-"+ ++o;Object.defineProperty(e,a,{configurable:!1,enumerable:!1,writable:!1,value:t})}return e[a]}return""+e},i=function(e,t){var r=n(t);if(!1===r)return p(e,t);var o=e._table[r];return o!==undefined&&o},p=function(e,t){for(var r=0;r<e._keys.length;r++){var o=e._keys[r];if(o!==c&&SameValueZero(o,t))return r}return!1},l=function(e,t,r){var o=n(t);return!1!==o&&(!1===r?delete e._table[o]:e._table[o]=r,!0)},c=Symbol("undef"),y=function f(){if(!(this instanceof f))throw new TypeError('Constructor Map requires "new"');var e=OrdinaryCreateFromConstructor(this,f.prototype,{_table:{},_keys:[],_values:[],_size:0,_es6Map:!0});r||Object.defineProperty(e,"size",{configurable:!0,enumerable:!1,writable:!0,value:0});var t=arguments.length>0?arguments[0]:undefined;if(null===t||t===undefined)return e;var o=e.set;if(!IsCallable(o))throw new TypeError("Map.prototype.set is not a function");try{for(var a=GetIterator(t);;){var n=IteratorStep(a);if(!1===n)return e;var i=IteratorValue(n);if("object"!==Type(i))try{throw new TypeError("Iterator value "+i+" is not an entry object")}catch(u){return IteratorClose(a,u)}try{var p=i[0],l=i[1];o.call(e,p,l)}catch(s){return IteratorClose(a,s)}}}catch(s){if(Array.isArray(t)||"[object Arguments]"===Object.prototype.toString.call(t)||t.callee){var c,y=t.length;for(c=0;c<y;c++)o.call(e,t[c][0],t[c][1])}}return e};Object.defineProperty(y,"prototype",{configurable:!1,enumerable:!1,writable:!1,value:{}}),r?Object.defineProperty(y,Symbol.species,{configurable:!0,enumerable:!1,get:function(){return this},set:undefined}):CreateMethodProperty(y,Symbol.species,y),CreateMethodProperty(y.prototype,"clear",function b(){var e=this;if("object"!==Type(e))throw new TypeError("Method Map.prototype.clear called on incompatible receiver "+Object.prototype.toString.call(e));if(!0!==e._es6Map)throw new TypeError("Method Map.prototype.clear called on incompatible receiver "+Object.prototype.toString.call(e));for(var t=e._keys,o=0;o<t.length;o++)e._keys[o]=c,e._values[o]=c;return this._size=0,r||(this.size=this._size),this._table={},undefined}),CreateMethodProperty(y.prototype,"constructor",y),CreateMethodProperty(y.prototype,"delete",function(e){var t=this;if("object"!==Type(t))throw new TypeError("Method Map.prototype.clear called on incompatible receiver "+Object.prototype.toString.call(t));if(!0!==t._es6Map)throw new TypeError("Method Map.prototype.clear called on incompatible receiver "+Object.prototype.toString.call(t));var o=i(t,e);if(!1!==o){var a=t._keys[o];if(a!==c&&SameValueZero(a,e))return this._keys[o]=c,this._values[o]=c,this._size=--this._size,r||(this.size=this._size),l(this,e,!1),!0}return!1}),CreateMethodProperty(y.prototype,"entries",function h(){return t(this,"key+value")}),CreateMethodProperty(y.prototype,"forEach",function(e){var t=this;if("object"!==Type(t))throw new TypeError("Method Map.prototype.forEach called on incompatible receiver "+Object.prototype.toString.call(t));if(!0!==t._es6Map)throw new TypeError("Method Map.prototype.forEach called on incompatible receiver "+Object.prototype.toString.call(t));if(!IsCallable(e))throw new TypeError(Object.prototype.toString.call(e)+" is not a function.");if(arguments[1])var r=arguments[1];for(var o=t._keys,a=0;a<o.length;a++)t._keys[a]!==c&&t._values[a]!==c&&e.call(r,t._values[a],t._keys[a],t);return undefined}),CreateMethodProperty(y.prototype,"get",function d(e){var t=this;if("object"!==Type(t))throw new TypeError("Method Map.prototype.get called on incompatible receiver "+Object.prototype.toString.call(t));if(!0!==t._es6Map)throw new TypeError("Method Map.prototype.get called on incompatible receiver "+Object.prototype.toString.call(t));var r=i(t,e);if(!1!==r){var o=t._keys[r];if(o!==c&&SameValueZero(o,e))return t._values[r]}return undefined}),CreateMethodProperty(y.prototype,"has",function v(e){var t=this;if("object"!=typeof t)throw new TypeError("Method Map.prototype.has called on incompatible receiver "+Object.prototype.toString.call(t));if(!0!==t._es6Map)throw new TypeError("Method Map.prototype.has called on incompatible receiver "+Object.prototype.toString.call(t));var r=i(t,e);if(!1!==r){var o=t._keys[r];if(o!==c&&SameValueZero(o,e))return!0}return!1}),CreateMethodProperty(y.prototype,"keys",function M(){return t(this,"key")}),CreateMethodProperty(y.prototype,"set",function w(e,t){var o=this;if("object"!==Type(o))throw new TypeError("Method Map.prototype.set called on incompatible receiver "+Object.prototype.toString.call(o));if(!0!==o._es6Map)throw new TypeError("Method Map.prototype.set called on incompatible receiver "+Object.prototype.toString.call(o));var a=i(o,e);if(!1!==a)o._values[a]=t;else{-0===e&&(e=0);var n={"[[Key]]":e,"[[Value]]":t};o._keys.push(n["[[Key]]"]),o._values.push(n["[[Value]]"]),l(o,e,o._keys.length-1),++o._size,r||(o.size=o._size)}return o}),r&&Object.defineProperty(y.prototype,"size",{configurable:!0,enumerable:!1,get:function(){var e=this;if("object"!==Type(e))throw new TypeError("Method Map.prototype.size called on incompatible receiver "+Object.prototype.toString.call(e));if(!0!==e._es6Map)throw new TypeError("Method Map.prototype.size called on incompatible receiver "+Object.prototype.toString.call(e));return this._size},set:undefined}),CreateMethodProperty(y.prototype,"values",function j(){return t(this,"value")}),CreateMethodProperty(y.prototype,Symbol.iterator,y.prototype.entries),"name"in y||Object.defineProperty(y,"name",{configurable:!0,enumerable:!1,writable:!1,value:"Map"});var u={};Object.defineProperty(u,"isMapIterator",{configurable:!1,enumerable:!1,writable:!1,value:!0}),CreateMethodProperty(u,"next",function _(){var e=this;if("object"!==Type(e))throw new TypeError("Method %MapIteratorPrototype%.next called on incompatible receiver "+Object.prototype.toString.call(e));if(!e.isMapIterator)throw new TypeError("Method %MapIteratorPrototype%.next called on incompatible receiver "+Object.prototype.toString.call(e));var t=e["[[Map]]"],r=e["[[MapNextIndex]]"],o=e["[[MapIterationKind]]"];if(t===undefined)return CreateIterResultObject(undefined,!0);if(!t._es6Map)throw new Error(Object.prototype.toString.call(t)+" has a [[MapData]] internal slot.");for(var a=t._keys,n=a.length;r<n;){var i=Object.create(null);if(i["[[Key]]"]=t._keys[r],i["[[Value]]"]=t._values[r],r+=1,e["[[MapNextIndex]]"]=r,i["[[Key]]"]!==c){if("key"===o)var p=i["[[Key]]"];else if("value"===o)p=i["[[Value]]"];else{if("key+value"!==o)throw new Error;p=[i["[[Key]]"],i["[[Value]]"]]}return CreateIterResultObject(p,!1)}}return e["[[Map]]"]=undefined,CreateIterResultObject(undefined,!0)}),CreateMethodProperty(u,Symbol.iterator,function g(){return this});try{CreateMethodProperty(e,"Map",y)}catch(s){e.Map=y}}(self);}if (!("Set"in self&&function(){try{var e=new self.Set([1,2])
-return 0===self.Set.length&&2===e.size&&"Symbol"in self&&"iterator"in self.Symbol&&"function"==typeof e[self.Symbol.iterator]}catch(t){return!1}}()
-)) {!function(e){function t(e,t){if("object"!=typeof e)throw new TypeError("createSetIterator called on incompatible receiver "+Object.prototype.toString.call(e));if(!0!==e._es6Set)throw new TypeError("createSetIterator called on incompatible receiver "+Object.prototype.toString.call(e));var r=Object.create(i);return Object.defineProperty(r,"[[IteratedSet]]",{configurable:!0,enumerable:!1,writable:!0,value:e}),Object.defineProperty(r,"[[SetNextIndex]]",{configurable:!0,enumerable:!1,writable:!0,value:0}),Object.defineProperty(r,"[[SetIterationKind]]",{configurable:!0,enumerable:!1,writable:!0,value:t}),r}var r=function(){try{var e={};return Object.defineProperty(e,"t",{configurable:!0,enumerable:!1,get:function(){return!0},set:undefined}),!!e.t}catch(t){return!1}}(),o=Symbol("undef"),n=function c(){if(!(this instanceof c))throw new TypeError('Constructor Set requires "new"');var e=OrdinaryCreateFromConstructor(this,c.prototype,{_values:[],_size:0,_es6Set:!0});r||Object.defineProperty(e,"size",{configurable:!0,enumerable:!1,writable:!0,value:0});var t=arguments.length>0?arguments[0]:undefined;if(null===t||t===undefined)return e;var o=e.add;if(!IsCallable(o))throw new TypeError("Set.prototype.add is not a function");try{for(var n=GetIterator(t);;){var a=IteratorStep(n);if(!1===a)return e;var i=IteratorValue(a);try{o.call(e,i)}catch(y){return IteratorClose(n,y)}}}catch(y){if(!Array.isArray(t)&&"[object Arguments]"!==Object.prototype.toString.call(t)&&!t.callee)throw y;var l,p=t.length;for(l=0;l<p;l++)o.call(e,t[l])}return e};Object.defineProperty(n,"prototype",{configurable:!1,enumerable:!1,writable:!1,value:{}}),r?Object.defineProperty(n,Symbol.species,{configurable:!0,enumerable:!1,get:function(){return this},set:undefined}):CreateMethodProperty(n,Symbol.species,n),CreateMethodProperty(n.prototype,"add",function p(e){var t=this;if("object"!=typeof t)throw new TypeError("Method Set.prototype.add called on incompatible receiver "+Object.prototype.toString.call(t));if(!0!==t._es6Set)throw new TypeError("Method Set.prototype.add called on incompatible receiver "+Object.prototype.toString.call(t));for(var n=t._values,a=0;a<n.length;a++){var i=n[a];if(i!==o&&SameValueZero(i,e))return t}return 0===e&&1/e==-Infinity&&(e=0),t._values.push(e),this._size=++this._size,r||(this.size=this._size),t}),CreateMethodProperty(n.prototype,"clear",function y(){var e=this;if("object"!=typeof e)throw new TypeError("Method Set.prototype.clear called on incompatible receiver "+Object.prototype.toString.call(e));if(!0!==e._es6Set)throw new TypeError("Method Set.prototype.clear called on incompatible receiver "+Object.prototype.toString.call(e));for(var t=e._values,n=0;n<t.length;n++)t[n]=o;return this._size=0,r||(this.size=this._size),undefined}),CreateMethodProperty(n.prototype,"constructor",n),CreateMethodProperty(n.prototype,"delete",function(e){var t=this;if("object"!=typeof t)throw new TypeError("Method Set.prototype.delete called on incompatible receiver "+Object.prototype.toString.call(t));if(!0!==t._es6Set)throw new TypeError("Method Set.prototype.delete called on incompatible receiver "+Object.prototype.toString.call(t));for(var n=t._values,a=0;a<n.length;a++){var i=n[a];if(i!==o&&SameValueZero(i,e))return n[a]=o,this._size=--this._size,r||(this.size=this._size),!0}return!1}),CreateMethodProperty(n.prototype,"entries",function u(){return t(this,"key+value")}),CreateMethodProperty(n.prototype,"forEach",function f(e){var t=this;if("object"!=typeof t)throw new TypeError("Method Set.prototype.forEach called on incompatible receiver "+Object.prototype.toString.call(t));if(!0!==t._es6Set)throw new TypeError("Method Set.prototype.forEach called on incompatible receiver "+Object.prototype.toString.call(t));if(!IsCallable(e))throw new TypeError(Object.prototype.toString.call(e)+" is not a function.");if(arguments[1])var r=arguments[1];for(var n=t._values,a=0;a<n.length;a++){var i=n[a];i!==o&&e.call(r,i,i,t)}return undefined}),CreateMethodProperty(n.prototype,"has",function d(e){var t=this;if("object"!=typeof t)throw new TypeError("Method Set.prototype.forEach called on incompatible receiver "+Object.prototype.toString.call(t));if(!0!==t._es6Set)throw new TypeError("Method Set.prototype.forEach called on incompatible receiver "+Object.prototype.toString.call(t));for(var r=t._values,n=0;n<r.length;n++){var a=r[n];if(a!==o&&SameValueZero(a,e))return!0}return!1});var a=function h(){return t(this,"value")};CreateMethodProperty(n.prototype,"values",a),CreateMethodProperty(n.prototype,"keys",a),r&&Object.defineProperty(n.prototype,"size",{configurable:!0,enumerable:!1,get:function(){var e=this;if("object"!=typeof e)throw new TypeError("Method Set.prototype.size called on incompatible receiver "+Object.prototype.toString.call(e));if(!0!==e._es6Set)throw new TypeError("Method Set.prototype.size called on incompatible receiver "+Object.prototype.toString.call(e));for(var t=e._values,r=0,n=0;n<t.length;n++){t[n]!==o&&(r+=1)}return r},set:undefined}),CreateMethodProperty(n.prototype,Symbol.iterator,a),"name"in n||Object.defineProperty(n,"name",{configurable:!0,enumerable:!1,writable:!1,value:"Set"});var i={};Object.defineProperty(i,"isSetIterator",{configurable:!1,enumerable:!1,writable:!1,value:!0}),CreateMethodProperty(i,"next",function b(){var e=this;if("object"!=typeof e)throw new TypeError("Method %SetIteratorPrototype%.next called on incompatible receiver "+Object.prototype.toString.call(e));if(!e.isSetIterator)throw new TypeError("Method %SetIteratorPrototype%.next called on incompatible receiver "+Object.prototype.toString.call(e));var t=e["[[IteratedSet]]"],r=e["[[SetNextIndex]]"],n=e["[[SetIterationKind]]"];if(t===undefined)return CreateIterResultObject(undefined,!0);if(!t._es6Set)throw new Error(Object.prototype.toString.call(t)+" does not have [[SetData]] internal slot.");for(var a=t._values,i=a.length;r<i;){var l=a[r];if(r+=1,e["[[SetNextIndex]]"]=r,l!==o)return"key+value"===n?CreateIterResultObject([l,l],!1):CreateIterResultObject(l,!1)}return e["[[IteratedSet]]"]=undefined,CreateIterResultObject(undefined,!0)}),CreateMethodProperty(i,Symbol.iterator,function s(){return this});try{CreateMethodProperty(e,"Set",n)}catch(l){e.Set=n}}(self);}if (!("from"in Array&&function(){try{return Array.from({length:-Infinity}),"a"===Array.from(new self.Set(["a"]))[0]&&"a"===Array.from(new self.Map([["a","one"]]))[0][0]}catch(r){return!1}}()
-)) {!function(){function r(r){return"string"==typeof r||"object"==typeof r&&"[object String]"===t.call(r)}var t=Object.prototype.toString,e=String.prototype.match;CreateMethodProperty(Array,"from",function o(t){var o=this,a=arguments.length>1?arguments[1]:undefined;if(a===undefined)var n=!1;else{if(!1===IsCallable(a))throw new TypeError(Object.prototype.toString.call(a)+" is not a function.");var i=arguments.length>2?arguments[2]:undefined;if(i!==undefined)var l=i;else l=undefined;n=!0}var u=GetMethod(t,Symbol.iterator);if(u!==undefined){if(IsConstructor(o))var f=Construct(o);else f=ArrayCreate(0);for(var c=GetIterator(t,u),s=0;;){if(s>=Math.pow(2,53)-1){var h=new TypeError("Iteration count can not be greater than or equal 9007199254740991.");return IteratorClose(c,h)}var y=ToString(s),C=IteratorStep(c);if(!1===C)return f.length=s,f;var g=IteratorValue(C);if(n)try{var p=Call(a,l,[g,s])}catch(b){return IteratorClose(c,b)}else p=g;try{CreateDataPropertyOrThrow(f,y,p)}catch(b){return IteratorClose(c,b)}s+=1}}if(r(t))var v=e.call(t,/[\uD800-\uDBFF][\uDC00-\uDFFF]?|[^\uD800-\uDFFF]|./g)||[];else v=ToObject(t);var d=ToLength(Get(v,"length"));for(f=IsConstructor(o)?Construct(o,[d]):ArrayCreate(d),s=0;s<d;){y=ToString(s);var I=Get(v,y);p=!0===n?Call(a,l,[I,s]):I,CreateDataPropertyOrThrow(f,y,p),s+=1}return f.length=d,f})}();}if (!("Symbol"in self&&"split"in self.Symbol
-)) {Object.defineProperty(Symbol,"split",{value:Symbol("split")});}if (!("Symbol"in self&&"toPrimitive"in self.Symbol
-)) {Object.defineProperty(Symbol,"toPrimitive",{value:Symbol("toPrimitive")});}if (!("Symbol"in self&&"toStringTag"in self.Symbol
-)) {Object.defineProperty(Symbol,"toStringTag",{value:Symbol("toStringTag")});}if (!("Promise"in self
-)) {!function(){"use strict";function n(){return tn[q][B]||D}function t(n){return n&&"object"==typeof n}function e(n){return"function"==typeof n}function r(n,t){return n instanceof t}function o(n){return r(n,A)}function i(n,t,e){if(!t(n))throw a(e)}function u(){try{return b.apply(R,arguments)}catch(n){return Y.e=n,Y}}function c(n,t){return b=n,R=t,u}function f(n,t){function e(){for(var e=0;e<o;)t(r[e],r[e+1]),r[e++]=T,r[e++]=T;o=0,r.length>n&&(r.length=n)}var r=L(n),o=0;return function(n,t){r[o++]=n,r[o++]=t,2===o&&tn.nextTick(e)}}function s(n,t){var o,i,u,f,s=0;if(!n)throw a(N);var l=n[tn[q][z]];if(e(l))i=l.call(n);else{if(!e(n.next)){if(r(n,L)){for(o=n.length;s<o;)t(n[s],s++);return s}throw a(N)}i=n}for(;!(u=i.next()).done;)if((f=c(t)(u.value,s++))===Y)throw e(i[G])&&i[G](),f.e;return s}function a(n){return new TypeError(n)}function l(n){return(n?"":Q)+(new A).stack}function h(n,t){var e="on"+n.toLowerCase(),r=F[e];E&&E.listeners(n).length?n===X?E.emit(n,t._v,t):E.emit(n,t):r?r({reason:t._v,promise:t}):tn[n](t._v,t)}function v(n){return n&&n._s}function _(n){if(v(n))return new n(Z);var t,r,o;return t=new n(function(n,e){if(t)throw a();r=n,o=e}),i(r,e),i(o,e),t}function d(n,t){var e=!1;return function(r){e||(e=!0,I&&(n[M]=l(!0)),t===U?g(n,r):y(n,t,r))}}function p(n,t,r,o){return e(r)&&(t._onFulfilled=r),e(o)&&(n[J]&&h(W,n),t._onRejected=o),I&&(t._p=n),n[n._c++]=t,n._s!==$&&rn(n,t),t}function m(n){if(n._umark)return!0;n._umark=!0;for(var t,e=0,r=n._c;e<r;)if(t=n[e++],t._onRejected||m(t))return!0}function w(n,t){function e(n){return r.push(n.replace(/^\s+|\s+$/g,""))}var r=[];return I&&(t[M]&&e(t[M]),function o(n){n&&K in n&&(o(n._next),e(n[K]+""),o(n._p))}(t)),(n&&n.stack?n.stack:n)+("\n"+r.join("\n")).replace(nn,"")}function j(n,t){return n(t)}function y(n,t,e){var r=0,i=n._c;if(n._s===$)for(n._s=t,n._v=e,t===O&&(I&&o(e)&&(e.longStack=w(e,n)),on(n));r<i;)rn(n,n[r++]);return n}function g(n,r){if(r===n&&r)return y(n,O,a(V)),n;if(r!==S&&(e(r)||t(r))){var o=c(k)(r);if(o===Y)return y(n,O,o.e),n;e(o)?(I&&v(r)&&(n._next=r),v(r)?x(n,r,o):tn.nextTick(function(){x(n,r,o)})):y(n,U,r)}else y(n,U,r);return n}function k(n){return n.then}function x(n,t,e){var r=c(e,t)(function(e){t&&(t=S,g(n,e))},function(e){t&&(t=S,y(n,O,e))});r===Y&&t&&(y(n,O,r.e),t=S)}var T,b,R,S=null,C="object"==typeof self,F=self,P=F.Promise,E=F.process,H=F.console,I=!0,L=Array,A=Error,O=1,U=2,$=3,q="Symbol",z="iterator",B="species",D=q+"("+B+")",G="return",J="_uh",K="_pt",M="_st",N="Invalid argument",Q="\nFrom previous ",V="Chaining cycle detected for promise",W="rejectionHandled",X="unhandledRejection",Y={e:S},Z=function(){},nn=/^.+\/node_modules\/yaku\/.+\n?/gm,tn=function(n){var r,o=this;if(!t(o)||o._s!==T)throw a("Invalid this");if(o._s=$,I&&(o[K]=l()),n!==Z){if(!e(n))throw a(N);r=c(n)(d(o,U),d(o,O)),r===Y&&y(o,O,r.e)}};tn["default"]=tn,function en(n,t){for(var e in t)n[e]=t[e]}(tn.prototype,{then:function(n,t){if(this._s===undefined)throw a();return p(this,_(tn.speciesConstructor(this,tn)),n,t)},"catch":function(n){return this.then(T,n)},"finally":function(n){return this.then(function(t){return tn.resolve(n()).then(function(){return t})},function(t){return tn.resolve(n()).then(function(){throw t})})},_c:0,_p:S}),tn.resolve=function(n){return v(n)?n:g(_(this),n)},tn.reject=function(n){return y(_(this),O,n)},tn.race=function(n){var t=this,e=_(t),r=function(n){y(e,U,n)},o=function(n){y(e,O,n)},i=c(s)(n,function(n){t.resolve(n).then(r,o)});return i===Y?t.reject(i.e):e},tn.all=function(n){function t(n){y(o,O,n)}var e,r=this,o=_(r),i=[];return(e=c(s)(n,function(n,u){r.resolve(n).then(function(n){i[u]=n,--e||y(o,U,i)},t)}))===Y?r.reject(e.e):(e||y(o,U,[]),o)},tn.Symbol=F[q]||{},c(function(){Object.defineProperty(tn,n(),{get:function(){return this}})})(),tn.speciesConstructor=function(t,e){var r=t.constructor;return r?r[n()]||e:e},tn.unhandledRejection=function(n,t){H&&H.error("Uncaught (in promise)",I?t.longStack:w(n,t))},tn.rejectionHandled=Z,tn.enableLongStackTrace=function(){I=!0},tn.nextTick=C?function(n){P?new P(function(n){n()}).then(n):setTimeout(n)}:E.nextTick,tn._s=1;var rn=f(999,function(n,t){var e,r;return(r=n._s!==O?t._onFulfilled:t._onRejected)===T?void y(t,n._s,n._v):(e=c(j)(r,n._v))===Y?void y(t,O,e.e):void g(t,e)}),on=f(9,function(n){m(n)||(n[J]=1,h(X,n))});F.Promise=tn}();}if (!("Symbol"in self&&"unscopables"in self.Symbol
-)) {Object.defineProperty(Symbol,"unscopables",{value:Symbol("unscopables")});}if (!((function(){try{if("WeakMap"in self&&0===self.WeakMap.length){var e={},t=new self.WeakMap([[e,"test"]])
-return"test"===t.get(e)&&!1===t["delete"](0)}return!1}catch(a){return!1}})()
-)) {!function(e){var t=Symbol("undef"),r=function a(){if(!(this instanceof a))throw new TypeError('Constructor WeakMap requires "new"');var e=OrdinaryCreateFromConstructor(this,a.prototype,{_keys:[],_values:[],_es6WeakMap:!0}),t=arguments.length>0?arguments[0]:undefined;if(null===t||t===undefined)return e;var r=Get(e,"set");if(!IsCallable(r))throw new TypeError("WeakMap.prototype.set is not a function");try{for(var o=GetIterator(t);;){var p=IteratorStep(o);if(!1===p)return e;var n=IteratorValue(p);if("object"!==Type(n))try{throw new TypeError("Iterator value "+n+" is not an entry object")}catch(s){return IteratorClose(o,s)}try{var i=Get(n,"0"),l=Get(n,"1");Call(r,e,[i,l])}catch(u){return IteratorClose(o,u)}}}catch(u){if(Array.isArray(t)||"[object Arguments]"===Object.prototype.toString.call(t)||t.callee){var y,c=t.length;for(y=0;y<c;y++)i=t[y][0],l=t[y][1],Call(r,e,[i,l])}}return e};Object.defineProperty(r,"prototype",{configurable:!1,enumerable:!1,writable:!1,value:{}}),CreateMethodProperty(r.prototype,"constructor",r),CreateMethodProperty(r.prototype,"delete",function(e){var r=this;if("object"!==Type(r))throw new TypeError("Method WeakMap.prototype.clear called on incompatible receiver "+Object.prototype.toString.call(r));if(!0!==r._es6WeakMap)throw new TypeError("Method WeakMap.prototype.clear called on incompatible receiver "+Object.prototype.toString.call(r));var o=r._keys;if("object"!==Type(e))return!1;for(var a=0;a<o.length;a++)if(r._keys[a]!==t&&SameValue(r._keys[a],e))return this._keys[a]=t,this._values[a]=t,this._size=--this._size,!0;return!1}),CreateMethodProperty(r.prototype,"get",function p(e){var r=this;if("object"!==Type(r))throw new TypeError("Method WeakMap.prototype.get called on incompatible receiver "+Object.prototype.toString.call(r));if(!0!==r._es6WeakMap)throw new TypeError("Method WeakMap.prototype.get called on incompatible receiver "+Object.prototype.toString.call(r));var o=r._keys;if("object"!==Type(e))return undefined;for(var a=0;a<o.length;a++)if(r._keys[a]!==t&&SameValue(r._keys[a],e))return r._values[a];return undefined}),CreateMethodProperty(r.prototype,"has",function n(e){var r=this;if("object"!=typeof r)throw new TypeError("Method WeakMap.prototype.has called on incompatible receiver "+Object.prototype.toString.call(r));if(!0!==r._es6WeakMap)throw new TypeError("Method WeakMap.prototype.has called on incompatible receiver "+Object.prototype.toString.call(r));var o=r._keys;if("object"!==Type(e))return!1;for(var a=0;a<o.length;a++)if(r._keys[a]!==t&&SameValue(r._keys[a],e))return!0;return!1}),CreateMethodProperty(r.prototype,"set",function i(e,r){var o=this;if("object"!==Type(o))throw new TypeError("Method WeakMap.prototype.set called on incompatible receiver "+Object.prototype.toString.call(o));if(!0!==o._es6WeakMap)throw new TypeError("Method WeakMap.prototype.set called on incompatible receiver "+Object.prototype.toString.call(o));var a=o._keys;if("object"!==Type(e))throw new TypeError("Invalid value used as weak map key");for(var p=0;p<a.length;p++)if(o._keys[p]!==t&&SameValue(o._keys[p],e))return o._values[p]=r,o;var n={"[[Key]]":e,"[[Value]]":r};return o._keys.push(n["[[Key]]"]),o._values.push(n["[[Value]]"]),o}),Object.defineProperty(r.prototype,Symbol.toStringTag,{configurable:!0,enumerable:!1,writable:!1,value:"WeakMap"}),"name"in r||Object.defineProperty(r,"name",{configurable:!0,enumerable:!1,writable:!1,value:"WeakMap"});try{CreateMethodProperty(e,"WeakMap",r)}catch(o){e.WeakMap=r}}(self);}if (!((function(e){try{if(Object.prototype.hasOwnProperty.call(e,"WeakSet")&&0===e.WeakSet.length){var t={},r=new e.WeakSet([t])
-return r.has(t)&&!1===r["delete"](0)}return!1}catch(a){return!1}})(self)
-)) {!function(e){var t=Symbol("undef"),r=function a(){if(!(this instanceof a))throw new TypeError('Constructor WeakSet requires "new"');var e=OrdinaryCreateFromConstructor(this,a.prototype,{_values:[],_size:0,_es6WeakSet:!0}),t=arguments.length>0?arguments[0]:undefined;if(null===t||t===undefined)return e;var r=Get(e,"add");if(!IsCallable(r))throw new TypeError("WeakSet.prototype.add is not a function");try{for(var o=GetIterator(t);;){var n=IteratorStep(o);if(!1===n)return e;var l=IteratorValue(n);try{Call(r,e,[l])}catch(c){return IteratorClose(o,c)}}}catch(c){if(IsArray(t)||"[object Arguments]"===Object.prototype.toString.call(t)||t.callee){var p,i=t.length;for(p=0;p<i;p++)Call(r,e,[t[p]])}}return e};Object.defineProperty(r,"prototype",{configurable:!1,enumerable:!1,writable:!1,value:{}}),CreateMethodProperty(r.prototype,"add",function n(e){var r=this;if("object"!==Type(r))throw new TypeError("Method WeakSet.prototype.add called on incompatible receiver "+Object.prototype.toString.call(r));if(!0!==r._es6WeakSet)throw new TypeError("Method WeakSet.prototype.add called on incompatible receiver "+Object.prototype.toString.call(r));if("object"!==Type(e))throw new TypeError("Invalid value used in weak set");for(var o=r._values,a=0;a<o.length;a++){var n=o[a];if(n!==t&&SameValueZero(n,e))return r}return r._values.push(e),r}),CreateMethodProperty(r.prototype,"constructor",r),CreateMethodProperty(r.prototype,"delete",function(e){var r=this;if("object"!==Type(r))throw new TypeError("Method WeakSet.prototype.delete called on incompatible receiver "+Object.prototype.toString.call(r));if(!0!==r._es6WeakSet)throw new TypeError("Method WeakSet.prototype.delete called on incompatible receiver "+Object.prototype.toString.call(r));if("object"!==Type(e))return!1;for(var o=r._values,a=0;a<o.length;a++){var n=o[a];if(n!==t&&SameValueZero(n,e))return o[a]=t,!0}return!1}),CreateMethodProperty(r.prototype,"has",function l(e){var r=this;if("object"!==Type(r))throw new TypeError("Method WeakSet.prototype.has called on incompatible receiver "+Object.prototype.toString.call(r));if(!0!==r._es6WeakSet)throw new TypeError("Method WeakSet.prototype.has called on incompatible receiver "+Object.prototype.toString.call(r));var o=r._values;if("object"!==Type(e))return!1;for(var a=0;a<o.length;a++){var n=o[a];if(n!==t&&SameValueZero(n,e))return!0}return!1}),"name"in r||Object.defineProperty(r,"name",{configurable:!0,enumerable:!1,writable:!1,value:"WeakSet"});try{CreateMethodProperty(e,"WeakSet",r)}catch(o){e.WeakSet=r}}(self);}function TrimString(e,u){var r=RequireObjectCoercible(e),t=ToString(r),n=/[\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF]+/.source;if("start"===u)var p=String.prototype.replace.call(t,new RegExp("^"+n,"g"),"");else p="end"===u?String.prototype.replace.call(t,new RegExp(n+"$","g"),""):String.prototype.replace.call(t,new RegExp("^"+n+"|"+n+"$","g"),"");return p}if (!("trim"in String.prototype&&function(){var r="​᠎"
-return!"\t\n\x0B\f\r                　\u2028\u2029\ufeff".trim()&&r.trim()===r}()
-)) {CreateMethodProperty(String.prototype,"trim",function t(){"use strict";var t=this;return TrimString(t,"start+end")});}if (!("parseFloat"in Number&&1/parseFloat("\t\n\x0B\f\r                　\u2028\u2029\ufeff-0")==-Infinity
-)) {!function(r,t){var a=function o(t){var a=String(t).trim(),e=r(a);return 0===e&&"-"==a.charAt(0)?-0:e};try{CreateMethodProperty(t,"parseFloat",a)}catch(e){t.parseFloat=a}CreateMethodProperty(Number,"parseFloat",t.parseFloat)}(parseFloat,this);}if (!("parseInt"in Number&&8===Number.parseInt("08")
-)) {!function(t,r){var e=function a(r,e){var n=String(r).trim();return t(n,e>>>0||(/^[-+]?0[xX]/.test(n)?16:10))};try{CreateMethodProperty(r,"parseInt",e)}catch(n){r.parseInt=e}CreateMethodProperty(Number,"parseInt",r.parseInt)}(parseInt,this);}function UTF16Decode(e,n){return 1024*(e-55296)+(n-56320)+65536}if (!("codePointAt"in String.prototype
-)) {CreateMethodProperty(String.prototype,"codePointAt",function e(t){var r=RequireObjectCoercible(this),o=ToString(r),n=ToInteger(t),i=o.length;if(n<0||n>=i)return undefined;var c=String.prototype.charCodeAt.call(o,n);if(c<55296||c>56319||n+1===i)return c;var a=String.prototype.charCodeAt.call(o,n+1);return a<56320||a>57343?c:UTF16Decode(c,a)});}function UTF16Encoding(n){return n<=65535?n:[Math.floor((n-65536)/1024)+55296,(n-65536)%1024+56320]}if (!("fromCodePoint"in String&&1===String.fromCodePoint.length
-)) {CreateMethodProperty(String,"fromCodePoint",function r(o){for(var t=[],e=arguments,n=arguments.length,a=[],i=0;i<n;){a=[];var l=e[i],p=ToNumber(l);if(!1===SameValue(p,ToInteger(p)))throw new RangeError("Invalid code point "+Object.prototype.toString.call(p));if(p<0||p>1114111)throw new RangeError("Invalid code point "+Object.prototype.toString.call(p));var c=UTF16Encoding(p);IsArray(c)?a=a.concat(c):a.push(c),i+=1,t.push(String.fromCharCode.apply(null,a))}return 0===n?"":t.join("")});}var Iterator=function(){var e=function(){return this.length=0,this},t=function(e){if("function"!=typeof e)throw new TypeError(e+" is not a function");return e},_=function(e,n){if(!(this instanceof _))return new _(e,n);Object.defineProperties(this,{__list__:{writable:!0,value:e},__context__:{writable:!0,value:n},__nextIndex__:{writable:!0,value:0}}),n&&(t(n.on),n.on("_add",this._onAdd.bind(this)),n.on("_delete",this._onDelete.bind(this)),n.on("_clear",this._onClear.bind(this)))};return Object.defineProperties(_.prototype,Object.assign({constructor:{value:_,configurable:!0,enumerable:!1,writable:!0},_next:{value:function(){var e;if(this.__list__)return this.__redo__&&(e=this.__redo__.shift())!==undefined?e:this.__nextIndex__<this.__list__.length?this.__nextIndex__++:void this._unBind()},configurable:!0,enumerable:!1,writable:!0},next:{value:function(){return this._createResult(this._next())},configurable:!0,enumerable:!1,writable:!0},_createResult:{value:function(e){return e===undefined?{done:!0,value:undefined}:{done:!1,value:this._resolve(e)}},configurable:!0,enumerable:!1,writable:!0},_resolve:{value:function(e){return this.__list__[e]},configurable:!0,enumerable:!1,writable:!0},_unBind:{value:function(){this.__list__=null,delete this.__redo__,this.__context__&&(this.__context__.off("_add",this._onAdd.bind(this)),this.__context__.off("_delete",this._onDelete.bind(this)),this.__context__.off("_clear",this._onClear.bind(this)),this.__context__=null)},configurable:!0,enumerable:!1,writable:!0},toString:{value:function(){return"[object Iterator]"},configurable:!0,enumerable:!1,writable:!0}},{_onAdd:{value:function(e){if(!(e>=this.__nextIndex__)){if(++this.__nextIndex__,!this.__redo__)return void Object.defineProperty(this,"__redo__",{value:[e],configurable:!0,enumerable:!1,writable:!1});this.__redo__.forEach(function(t,_){t>=e&&(this.__redo__[_]=++t)},this),this.__redo__.push(e)}},configurable:!0,enumerable:!1,writable:!0},_onDelete:{value:function(e){var t;e>=this.__nextIndex__||(--this.__nextIndex__,this.__redo__&&(t=this.__redo__.indexOf(e),-1!==t&&this.__redo__.splice(t,1),this.__redo__.forEach(function(t,_){t>e&&(this.__redo__[_]=--t)},this)))},configurable:!0,enumerable:!1,writable:!0},_onClear:{value:function(){this.__redo__&&e.call(this.__redo__),this.__nextIndex__=0},configurable:!0,enumerable:!1,writable:!0}})),Object.defineProperty(_.prototype,Symbol.iterator,{value:function(){return this},configurable:!0,enumerable:!1,writable:!0}),Object.defineProperty(_.prototype,Symbol.toStringTag,{value:"Iterator",configurable:!1,enumerable:!1,writable:!0}),_}();var ArrayIterator=function(){var e=function(t,r){if(!(this instanceof e))return new e(t,r);Iterator.call(this,t),r=r?String.prototype.includes.call(r,"key+value")?"key+value":String.prototype.includes.call(r,"key")?"key":"value":"value",Object.defineProperty(this,"__kind__",{value:r,configurable:!1,enumerable:!1,writable:!1})};return Object.setPrototypeOf&&Object.setPrototypeOf(e,Iterator.prototype),e.prototype=Object.create(Iterator.prototype,{constructor:{value:e,configurable:!0,enumerable:!1,writable:!0},_resolve:{value:function(e){return"value"===this.__kind__?this.__list__[e]:"key+value"===this.__kind__?[e,this.__list__[e]]:e},configurable:!0,enumerable:!1,writable:!0},toString:{value:function(){return"[object Array Iterator]"},configurable:!0,enumerable:!1,writable:!0}}),e}();if (!("Symbol"in self&&"iterator"in self.Symbol&&!!Array.prototype.entries
-)) {CreateMethodProperty(Array.prototype,"entries",function r(){var r=ToObject(this);return new ArrayIterator(r,"key+value")});}if (!("Symbol"in self&&"iterator"in self.Symbol&&!!Array.prototype.keys
-)) {CreateMethodProperty(Array.prototype,"keys",function r(){var r=ToObject(this);return new ArrayIterator(r,"key")});}if (!("values"in Array.prototype
-)) {"Symbol"in self&&"iterator"in Symbol&&"function"==typeof Array.prototype[Symbol.iterator]?CreateMethodProperty(Array.prototype,"values",Array.prototype[Symbol.iterator]):CreateMethodProperty(Array.prototype,"values",function r(){var r=ToObject(this);return new ArrayIterator(r,"value")});}if (!("Symbol"in self&&"iterator"in self.Symbol&&!!Array.prototype[self.Symbol.iterator]
-)) {CreateMethodProperty(Array.prototype,Symbol.iterator,Array.prototype.values);}var StringIterator=function(){var t=function(e){if(!(this instanceof t))return new t(e);e=String(e),Iterator.call(this,e),Object.defineProperty(this,"__length__",{value:e.length,configurable:!1,enumerable:!1,writable:!1})};return Object.setPrototypeOf&&Object.setPrototypeOf(t,Iterator),t.prototype=Object.create(Iterator.prototype,{constructor:{value:t,configurable:!0,enumerable:!1,writable:!0},_next:{value:function(){if(this.__list__)return this.__nextIndex__<this.__length__?this.__nextIndex__++:void this._unBind()},configurable:!0,enumerable:!1,writable:!0},_resolve:{value:function(t){var e,r=this.__list__[t];return this.__nextIndex__===this.__length__?r:(e=r.charCodeAt(0),e>=55296&&e<=56319?r+this.__list__[this.__nextIndex__++]:r)},configurable:!0,enumerable:!1,writable:!0},toString:{value:function(){return"[object String Iterator]"},configurable:!0,enumerable:!1,writable:!0}}),t}();if (!("Symbol"in self&&"iterator"in self.Symbol&&!!String.prototype[self.Symbol.iterator]
-)) {CreateMethodProperty(String.prototype,Symbol.iterator,function(){var r=RequireObjectCoercible(this),t=ToString(r);return new StringIterator(t)});}})('object' === typeof window && window || 'object' === typeof self && self || 'object' === typeof global && global || {});</script>
-  
-  <script>
-    (function () {
-      var script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src  = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js";
-      document.getElementsByTagName("head")[0].appendChild(script);
-    })();
-  </script>
-
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -7446,7 +7307,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch11.html">11. Obligations - notions de base</a></li><li class="breadcrumb-item"><a href="./ch11r.html">Synthèse</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch14.html">14. Données alternatives et rétrospective</a></li><li class="breadcrumb-item"><a href="./ch14.html">Détails</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -7767,13 +7628,13 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
  <span class="menu-text">11. Obligations - notions de base</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch11.html" class="sidebar-item-text sidebar-link">
@@ -7782,7 +7643,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch11r.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch11r.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Synthèse</span></a>
   </div>
 </li>
@@ -7854,16 +7715,16 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="true">
  <span class="menu-text">14. Données alternatives et rétrospective</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch14.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch14.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Détails</span></a>
   </div>
 </li>
@@ -7893,21 +7754,54 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#définitions-essentielles" id="toc-définitions-essentielles" class="nav-link active" data-scroll-target="#définitions-essentielles">Définitions essentielles</a></li>
-  <li><a href="#formule-de-prix-clé" id="toc-formule-de-prix-clé" class="nav-link" data-scroll-target="#formule-de-prix-clé">Formule de prix (clé !)</a></li>
-  <li><a href="#prix-vs-valeur-nominale" id="toc-prix-vs-valeur-nominale" class="nav-link" data-scroll-target="#prix-vs-valeur-nominale">Prix vs valeur nominale</a></li>
-  <li><a href="#exemple-numérique-rapide" id="toc-exemple-numérique-rapide" class="nav-link" data-scroll-target="#exemple-numérique-rapide">Exemple numérique rapide</a></li>
-  <li><a href="#procédure-par-tâtonnement-trial-error" id="toc-procédure-par-tâtonnement-trial-error" class="nav-link" data-scroll-target="#procédure-par-tâtonnement-trial-error">Procédure par tâtonnement (Trial &amp; Error)</a></li>
-  <li><a href="#courbe-des-taux-zéro-coupon-bootstrap" id="toc-courbe-des-taux-zéro-coupon-bootstrap" class="nav-link" data-scroll-target="#courbe-des-taux-zéro-coupon-bootstrap">Courbe des taux zéro-coupon (Bootstrap)</a>
+  <li><a href="#pourquoi-linvestissement-durable" id="toc-pourquoi-linvestissement-durable" class="nav-link active" data-scroll-target="#pourquoi-linvestissement-durable">Pourquoi l’investissement durable ?</a>
   <ul class="collapse">
-  <li><a href="#formules-par-cas" id="toc-formules-par-cas" class="nav-link" data-scroll-target="#formules-par-cas">Formules par cas</a></li>
-  <li><a href="#résultat-exemple" id="toc-résultat-exemple" class="nav-link" data-scroll-target="#résultat-exemple">Résultat exemple</a></li>
+  <li><a href="#un-constat-préoccupant" id="toc-un-constat-préoccupant" class="nav-link" data-scroll-target="#un-constat-préoccupant">Un constat préoccupant</a></li>
+  <li><a href="#la-finance-peut-elle-aider" id="toc-la-finance-peut-elle-aider" class="nav-link" data-scroll-target="#la-finance-peut-elle-aider">La finance peut-elle aider ?</a></li>
   </ul></li>
-  <li><a href="#types-dobligations" id="toc-types-dobligations" class="nav-link" data-scroll-target="#types-dobligations">Types d’obligations</a></li>
-  <li><a href="#risques-obligataires" id="toc-risques-obligataires" class="nav-link" data-scroll-target="#risques-obligataires">5 Risques obligataires</a></li>
-  <li><a href="#rôle-dans-un-portefeuille" id="toc-rôle-dans-un-portefeuille" class="nav-link" data-scroll-target="#rôle-dans-un-portefeuille">Rôle dans un portefeuille</a></li>
-  <li><a href="#synthèse-des-relations-clés" id="toc-synthèse-des-relations-clés" class="nav-link" data-scroll-target="#synthèse-des-relations-clés">Synthèse des relations clés</a></li>
-  <li><a href="#checklist-révision" id="toc-checklist-révision" class="nav-link" data-scroll-target="#checklist-révision">Checklist révision</a></li>
+  <li><a href="#définitions-et-terminologie" id="toc-définitions-et-terminologie" class="nav-link" data-scroll-target="#définitions-et-terminologie">Définitions et terminologie</a>
+  <ul class="collapse">
+  <li><a href="#un-concept-de-nombreux-noms" id="toc-un-concept-de-nombreux-noms" class="nav-link" data-scroll-target="#un-concept-de-nombreux-noms">Un concept, de nombreux noms</a></li>
+  <li><a href="#pourquoi-linvestissement-durable-est-il-difficile" id="toc-pourquoi-linvestissement-durable-est-il-difficile" class="nav-link" data-scroll-target="#pourquoi-linvestissement-durable-est-il-difficile">Pourquoi l’investissement durable est-il difficile ?</a></li>
+  </ul></li>
+  <li><a href="#les-piliers-esg-définition-et-structure" id="toc-les-piliers-esg-définition-et-structure" class="nav-link" data-scroll-target="#les-piliers-esg-définition-et-structure">Les piliers ESG : définition et structure</a>
+  <ul class="collapse">
+  <li><a href="#les-trois-piliers" id="toc-les-trois-piliers" class="nav-link" data-scroll-target="#les-trois-piliers">Les trois piliers</a></li>
+  <li><a href="#les-10-thèmes-et-37-enjeux-clés-msci-2023" id="toc-les-10-thèmes-et-37-enjeux-clés-msci-2023" class="nav-link" data-scroll-target="#les-10-thèmes-et-37-enjeux-clés-msci-2023">Les 10 thèmes et 37 enjeux clés (MSCI, 2023)</a></li>
+  </ul></li>
+  <li><a href="#la-notation-esg-scoring" id="toc-la-notation-esg-scoring" class="nav-link" data-scroll-target="#la-notation-esg-scoring">La notation ESG (<em>Scoring</em>)</a>
+  <ul class="collapse">
+  <li><a href="#principes-de-base" id="toc-principes-de-base" class="nav-link" data-scroll-target="#principes-de-base">Principes de base</a></li>
+  <li><a href="#structure-de-la-notation-esg-msci-depuis-2023" id="toc-structure-de-la-notation-esg-msci-depuis-2023" class="nav-link" data-scroll-target="#structure-de-la-notation-esg-msci-depuis-2023">Structure de la notation ESG (MSCI, depuis 2023)</a></li>
+  <li><a href="#les-émissions-carbone-scope-1-2-et-3" id="toc-les-émissions-carbone-scope-1-2-et-3" class="nav-link" data-scroll-target="#les-émissions-carbone-scope-1-2-et-3">Les émissions carbone (Scope 1, 2 et 3)</a></li>
+  <li><a href="#la-modélisation-du-futur-le-score-itr" id="toc-la-modélisation-du-futur-le-score-itr" class="nav-link" data-scroll-target="#la-modélisation-du-futur-le-score-itr">La modélisation du futur : le score ITR</a></li>
+  <li><a href="#égalité-de-genre" id="toc-égalité-de-genre" class="nav-link" data-scroll-target="#égalité-de-genre">Égalité de genre</a></li>
+  <li><a href="#les-objectifs-de-développement-durable-odd" id="toc-les-objectifs-de-développement-durable-odd" class="nav-link" data-scroll-target="#les-objectifs-de-développement-durable-odd">Les Objectifs de développement durable (ODD)</a></li>
+  </ul></li>
+  <li><a href="#les-stratégies-esg-possibles" id="toc-les-stratégies-esg-possibles" class="nav-link" data-scroll-target="#les-stratégies-esg-possibles">Les stratégies ESG possibles</a>
+  <ul class="collapse">
+  <li><a href="#une-taxonomie-en-sept-catégories" id="toc-une-taxonomie-en-sept-catégories" class="nav-link" data-scroll-target="#une-taxonomie-en-sept-catégories">Une taxonomie en sept catégories</a></li>
+  <li><a href="#stratégie-1-exclusion-exclusion-policy-negative-worst-in-class-screening" id="toc-stratégie-1-exclusion-exclusion-policy-negative-worst-in-class-screening" class="nav-link" data-scroll-target="#stratégie-1-exclusion-exclusion-policy-negative-worst-in-class-screening">Stratégie 1 : Exclusion (<em>Exclusion Policy &amp; Negative / Worst-in-class Screening</em>)</a></li>
+  <li><a href="#stratégie-2-valeurs-filtrage-normatif-norms-based-screening" id="toc-stratégie-2-valeurs-filtrage-normatif-norms-based-screening" class="nav-link" data-scroll-target="#stratégie-2-valeurs-filtrage-normatif-norms-based-screening">Stratégie 2 : Valeurs / Filtrage normatif (<em>Norms-based Screening</em>)</a></li>
+  <li><a href="#stratégie-3-sélection-positive-best-in-class-positive-or-best-in-class-screening" id="toc-stratégie-3-sélection-positive-best-in-class-positive-or-best-in-class-screening" class="nav-link" data-scroll-target="#stratégie-3-sélection-positive-best-in-class-positive-or-best-in-class-screening">Stratégie 3 : Sélection positive / Best-in-class (<em>Positive or Best-in-class Screening</em>)</a></li>
+  <li><a href="#stratégie-4-investissement-thématique-sustainability-themed-investing" id="toc-stratégie-4-investissement-thématique-sustainability-themed-investing" class="nav-link" data-scroll-target="#stratégie-4-investissement-thématique-sustainability-themed-investing">Stratégie 4 : Investissement thématique (<em>Sustainability Themed Investing</em>)</a></li>
+  <li><a href="#stratégie-5-intégration-esg-esg-integration" id="toc-stratégie-5-intégration-esg-esg-integration" class="nav-link" data-scroll-target="#stratégie-5-intégration-esg-esg-integration">Stratégie 5 : Intégration ESG (<em>ESG Integration</em>)</a></li>
+  <li><a href="#stratégie-6-engagement-et-droits-de-vote-voting-policy-shareholder-activism" id="toc-stratégie-6-engagement-et-droits-de-vote-voting-policy-shareholder-activism" class="nav-link" data-scroll-target="#stratégie-6-engagement-et-droits-de-vote-voting-policy-shareholder-activism">Stratégie 6 : Engagement et droits de vote (<em>Voting Policy &amp; Shareholder Activism</em>)</a></li>
+  <li><a href="#stratégie-7-investissement-dimpact-impact-investing" id="toc-stratégie-7-investissement-dimpact-impact-investing" class="nav-link" data-scroll-target="#stratégie-7-investissement-dimpact-impact-investing">Stratégie 7 : Investissement d’impact (<em>Impact Investing</em>)</a></li>
+  </ul></li>
+  <li><a href="#exemple-pratique-compenswiss-de-la-théorie-à-la-pratique" id="toc-exemple-pratique-compenswiss-de-la-théorie-à-la-pratique" class="nav-link" data-scroll-target="#exemple-pratique-compenswiss-de-la-théorie-à-la-pratique">Exemple pratique : compenswiss, de la théorie à la pratique</a>
+  <ul class="collapse">
+  <li><a href="#présentation-de-compenswiss" id="toc-présentation-de-compenswiss" class="nav-link" data-scroll-target="#présentation-de-compenswiss">Présentation de compenswiss</a></li>
+  <li><a href="#les-quatre-piliers-de-lapproche-esg-de-compenswiss" id="toc-les-quatre-piliers-de-lapproche-esg-de-compenswiss" class="nav-link" data-scroll-target="#les-quatre-piliers-de-lapproche-esg-de-compenswiss">Les quatre piliers de l’approche ESG de compenswiss</a></li>
+  <li><a href="#analyse-de-lempreinte-carbone-du-portefeuille-compenswiss" id="toc-analyse-de-lempreinte-carbone-du-portefeuille-compenswiss" class="nav-link" data-scroll-target="#analyse-de-lempreinte-carbone-du-portefeuille-compenswiss">Analyse de l’empreinte carbone du portefeuille compenswiss</a></li>
+  <li><a href="#les-données-et-outils-un-enjeu-central" id="toc-les-données-et-outils-un-enjeu-central" class="nav-link" data-scroll-target="#les-données-et-outils-un-enjeu-central">Les données et outils : un enjeu central</a></li>
+  </ul></li>
+  <li><a href="#principaux-enseignements" id="toc-principaux-enseignements" class="nav-link" data-scroll-target="#principaux-enseignements">Principaux enseignements</a>
+  <ul class="collapse">
+  <li><a href="#ce-que-linvestissement-durable-peut-et-ne-peut-pas-faire" id="toc-ce-que-linvestissement-durable-peut-et-ne-peut-pas-faire" class="nav-link" data-scroll-target="#ce-que-linvestissement-durable-peut-et-ne-peut-pas-faire">Ce que l’investissement durable peut et ne peut pas faire</a></li>
+  <li><a href="#résumé-des-concepts-clés" id="toc-résumé-des-concepts-clés" class="nav-link" data-scroll-target="#résumé-des-concepts-clés">Résumé des concepts clés</a></li>
+  <li><a href="#la-finance-durable-un-domaine-jeune-et-en-mouvement" id="toc-la-finance-durable-un-domaine-jeune-et-en-mouvement" class="nav-link" data-scroll-target="#la-finance-durable-un-domaine-jeune-et-en-mouvement">La finance durable : un domaine jeune et en mouvement</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -7915,9 +7809,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch11.html">11. Obligations - notions de base</a></li><li class="breadcrumb-item"><a href="./ch11r.html">Synthèse</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch14.html">14. Données alternatives et rétrospective</a></li><li class="breadcrumb-item"><a href="./ch14.html">Détails</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Les Obligations — Révision</h1>
+<h1 class="title">Investissement durable et ESG</h1>
 </div>
 
 
@@ -7934,384 +7828,816 @@ window.Quarto = {
 </header>
 
 
-<section id="définitions-essentielles" class="level2">
-<h2 class="anchored" data-anchor-id="définitions-essentielles">Définitions essentielles</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 38%">
-<col style="width: 61%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Terme</th>
-<th>Définition</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Obligation</strong> (Bond)</td>
-<td>Instrument de dette : l’émetteur emprunte, l’investisseur prête</td>
-</tr>
-<tr class="even">
-<td><strong>Coupon</strong> (Coupon)</td>
-<td>Paiement périodique fixe = récompense du prêteur</td>
-</tr>
-<tr class="odd">
-<td><strong>Principal</strong> (Face Value)</td>
-<td>Montant remboursé à maturité</td>
-</tr>
-<tr class="even">
-<td><strong>Maturité</strong> (Maturity)</td>
-<td>Date de remboursement du principal</td>
-</tr>
-<tr class="odd">
-<td><strong>Rendement</strong> (Yield) <span class="math inline">\(y\)</span></td>
-<td>Taux de retour requis par l’investisseur</td>
-</tr>
-<tr class="even">
-<td><strong>Risque de défaut</strong> (Default Risk)</td>
-<td>Risque de non-remboursement partiel ou total</td>
-</tr>
-<tr class="odd">
-<td><strong>Credit Spread</strong></td>
-<td><span class="math inline">\(y_{\text{corporate}} - y_{\text{souverain}}\)</span></td>
-</tr>
-<tr class="even">
-<td><strong>Zéro-coupon</strong> (Zero Coupon)</td>
-<td>Obligation sans coupon, vendue en-dessous du pair</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-<section id="formule-de-prix-clé" class="level2">
-<h2 class="anchored" data-anchor-id="formule-de-prix-clé">Formule de prix (clé !)</h2>
-<p><span class="math display">\[\boxed{B(t) = \sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)} + P \cdot e^{-y(T-t)}}\]</span></p>
+<section id="pourquoi-linvestissement-durable" class="level2">
+<h2 class="anchored" data-anchor-id="pourquoi-linvestissement-durable">Pourquoi l’investissement durable ?</h2>
+<section id="un-constat-préoccupant" class="level3">
+<h3 class="anchored" data-anchor-id="un-constat-préoccupant">Un constat préoccupant</h3>
+<p>L’investissement durable — aussi appelé finance durable ou investissement responsable — émerge comme une réponse aux grandes crises systémiques que traverse notre monde contemporain. Avant d’en comprendre les mécanismes financiers, il convient de saisir pourquoi cette approche est devenue incontournable.</p>
+<p>Plusieurs phénomènes convergents alarment la communauté scientifique et les décideurs économiques :</p>
 <ul>
-<li><span class="math inline">\(c_i\)</span> : coupon à <span class="math inline">\(t_i\)</span> — <span class="math inline">\(P\)</span> : principal — <span class="math inline">\(y\)</span> : yield — <span class="math inline">\(T\)</span> : maturité</li>
+<li><p><strong>Le changement climatique</strong> : les températures mondiales ont augmenté de plus d’1°C au-dessus de la référence 1951–1980, avec des records atteints en 2016 et 2020. Le GIEC (Groupe d’experts intergouvernemental sur l’évolution du climat, <em>Intergovernmental Panel on Climate Change</em> — IPCC) documente cette trajectoire de manière rigoureuse.</p></li>
+<li><p><strong>L’effondrement de la biodiversité</strong> : l’Indice Planète Vivante (<em>Global Living Planet Index</em>) a chuté de <strong>69 %</strong> entre 1970 et 2020. Cet indice, calculé à partir du suivi de milliers d’espèces de vertébrés, illustre la vitesse alarmante à laquelle les populations animales disparaissent.</p></li>
+<li><p><strong>Les déséquilibres sociaux</strong> : inégalités de genre, migrations forcées, accès inégal aux ressources essentielles (eau, santé, éducation), constituent des fractures profondes dans le tissu social mondial.</p></li>
+<li><p><strong>Les problèmes de gouvernance</strong> : corruption, instabilité financière systémique, manque de transparence dans les pratiques d’entreprise.</p></li>
 </ul>
-<div class="callout callout-style-default callout-important callout-titled" title="Relation prix ↔ yield">
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Relation prix ↔︎ yield
+<span class="screen-reader-only">Tip</span>Intuition
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Inverse et convexe</strong> : <span class="math inline">\(y \uparrow \Rightarrow B \downarrow\)</span> et <span class="math inline">\(y \downarrow \Rightarrow B \uparrow\)</span></p>
+<p>Imaginez un thermomètre planétaire qui monte, un compteur de biodiversité qui chute, et des inégalités sociales qui se creusent. La question devient : la finance, qui alloue des milliers de milliards d’euros chaque année, peut-elle orienter ces ressources différemment pour contribuer à des solutions ?</p>
+</div>
+</div>
+</section>
+<section id="la-finance-peut-elle-aider" class="level3">
+<h3 class="anchored" data-anchor-id="la-finance-peut-elle-aider">La finance peut-elle aider ?</h3>
+<p>La question posée dans le cours est directe : <strong>face au changement climatique, à l’effondrement de la biodiversité, aux déséquilibres sociaux et aux problèmes de gouvernance, la finance peut-elle être d’une quelconque aide ?</strong></p>
+<p>La réponse est nuancée mais affirmative. La finance ne peut pas, à elle seule, résoudre ces crises — ce serait illusoire. En revanche, elle dispose d’un levier puissant : <strong>l’allocation du capital</strong>. En orientant les investissements vers des entreprises et des projets plus responsables, les acteurs financiers peuvent :</p>
+<ul>
+<li>Renchérir le coût du capital pour les entreprises polluantes (les incitant à changer),</li>
+<li>Financer la transition énergétique et écologique,</li>
+<li>Exercer une pression via leurs droits de vote en assemblée générale,</li>
+<li>Engager un dialogue direct avec les directions d’entreprises.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="définitions-et-terminologie" class="level2">
+<h2 class="anchored" data-anchor-id="définitions-et-terminologie">Définitions et terminologie</h2>
+<section id="un-concept-de-nombreux-noms" class="level3">
+<h3 class="anchored" data-anchor-id="un-concept-de-nombreux-noms">Un concept, de nombreux noms</h3>
+<p>Le domaine de la finance durable est caractérisé par une prolifération de termes qui désignent, en réalité, un concept central commun. On parle indifféremment de :</p>
+<ul>
+<li><strong>Finance durable</strong> (<em>Sustainable Finance</em>)</li>
+<li><strong>Investissement ESG</strong> (<em>ESG Investing</em>) — ESG pour Environnemental, Social, Gouvernance</li>
+<li><strong>Investissement socialement responsable — ISR</strong> (<em>Socially Responsible Investing — SRI</em>)</li>
+<li><strong>Finance verte</strong> (<em>Green Finance</em>)</li>
+<li><strong>Investissement responsable</strong> (<em>Responsible Investment</em>)</li>
+<li><strong>Développement durable</strong> (<em>Sustainable Development</em>)</li>
+<li><strong>Risque climatique</strong> (<em>Climate Risk</em>)</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Tous ces termes s’inscrivent dans un même univers conceptuel : intégrer des critères non-financiers (environnementaux, sociaux, de gouvernance) dans les décisions d’investissement. La référence académique majeure sur ce sujet est le cours de Thierry Roncalli (2022–2023), disponible à l’adresse <a href="https://dx.doi.org/10.2139/ssrn.4339823">https://dx.doi.org/10.2139/ssrn.4339823</a>, fort de 1 114 slides et toujours en évolution.</p>
+</div>
+</div>
+</section>
+<section id="pourquoi-linvestissement-durable-est-il-difficile" class="level3">
+<h3 class="anchored" data-anchor-id="pourquoi-linvestissement-durable-est-il-difficile">Pourquoi l’investissement durable est-il difficile ?</h3>
+<p>Malgré son intérêt évident, l’investissement durable est qualifié de <strong>redoutable</strong> (<em>daunting</em>) pour plusieurs raisons :</p>
+<ul>
+<li>La complexité des enjeux est immense : le changement climatique seul mobilise des disciplines aussi variées que la physique, l’économie, le droit, la sociologie.</li>
+<li>Les données sont imparfaites, partielles, non standardisées.</li>
+<li>Les indicateurs sont multiples et parfois contradictoires.</li>
+<li>Les compromis (arbitrages entre performance financière et impact) sont réels et difficiles à quantifier.</li>
+<li>La réglementation évolue rapidement et varie selon les pays.</li>
+</ul>
+<p>C’est la raison pour laquelle l’entrée dans ce domaine s’apparente — comme le montre la métaphore graphique du cours — à tirer une pelote de laine qui révèle un bloc de plus en plus lourd : <strong>les gaz à effet de serre et le réchauffement climatique</strong>.</p>
+<hr>
+</section>
+</section>
+<section id="les-piliers-esg-définition-et-structure" class="level2">
+<h2 class="anchored" data-anchor-id="les-piliers-esg-définition-et-structure">Les piliers ESG : définition et structure</h2>
+<section id="les-trois-piliers" class="level3">
+<h3 class="anchored" data-anchor-id="les-trois-piliers">Les trois piliers</h3>
+<p>L’acronyme <strong>ESG</strong> structure l’ensemble du cadre d’analyse non-financière autour de trois piliers :</p>
+<ul>
+<li><strong>E — Environnemental</strong> (<em>Environmental</em>) : impact sur l’environnement naturel</li>
+<li><strong>S — Social</strong> : impact sur les parties prenantes humaines</li>
+<li><strong>G — Gouvernance</strong> (<em>Governance</em>) : qualité des structures de direction et de contrôle</li>
+</ul>
+</section>
+<section id="les-10-thèmes-et-37-enjeux-clés-msci-2023" class="level3">
+<h3 class="anchored" data-anchor-id="les-10-thèmes-et-37-enjeux-clés-msci-2023">Les 10 thèmes et 37 enjeux clés (MSCI, 2023)</h3>
+<p>Le fournisseur de données MSCI a structuré les critères ESG en <strong>10 thèmes</strong> regroupés dans les 3 piliers, eux-mêmes décomposés en <strong>37 enjeux clés</strong> (<em>Key Issues</em>).</p>
+<section id="pilier-environnemental" class="level4">
+<h4 class="anchored" data-anchor-id="pilier-environnemental">Pilier Environnemental</h4>
+<p>Le pilier Environnemental couvre quatre thèmes principaux :</p>
+<p><strong>1. Changement climatique</strong> (<em>Climate Change</em>)</p>
+<p>Ce thème analyse l’exposition d’une entreprise aux risques et opportunités liés au changement climatique. Les enjeux clés incluent :</p>
+<ul>
+<li>Émissions de carbone (<em>Carbon Emissions</em>) ★</li>
+<li>Empreinte carbone des produits (<em>Product Carbon Footprint</em>)</li>
+<li>Impact environnemental du financement (<em>Financing Environmental Impact</em>)</li>
+<li>Vulnérabilité au changement climatique (<em>Climate Change Vulnerability</em>)</li>
+</ul>
+<p><strong>2. Ressources naturelles</strong> (<em>Natural Resources</em>)</p>
+<ul>
+<li>Stress hydrique (<em>Water Stress</em>) ★</li>
+<li>Biodiversité et utilisation des terres (<em>Biodiversity &amp; Land Use</em>)</li>
+<li>Approvisionnement en matières premières (<em>Raw Material Sourcing</em>)</li>
+</ul>
+<p><strong>3. Pollution et déchets</strong> (<em>Pollution &amp; Waste</em>)</p>
+<ul>
+<li>Émissions toxiques et déchets (<em>Toxic Emissions &amp; Waste</em>) ★</li>
+<li>Emballages et déchets (<em>Packaging Material &amp; Waste</em>)</li>
+<li>Déchets électroniques (<em>Electronic Waste</em>)</li>
+</ul>
+<p><strong>4. Opportunités environnementales</strong> (<em>Environmental Opportunities</em>)</p>
+<ul>
+<li>Opportunités dans les technologies propres (<em>Opportunities in Clean Tech</em>)</li>
+<li>Opportunités dans les bâtiments verts (<em>Opportunities in Green Building</em>)</li>
+<li>Opportunités dans les énergies renouvelables (<em>Opp’s in Renewable Energy</em>)</li>
+</ul>
+</section>
+<section id="pilier-social" class="level4">
+<h4 class="anchored" data-anchor-id="pilier-social">Pilier Social</h4>
+<p><strong>5. Capital humain</strong> (<em>Human Capital</em>)</p>
+<ul>
+<li>Gestion du travail (<em>Labor Management</em>) ★</li>
+<li>Santé et sécurité (<em>Health &amp; Safety</em>) ★</li>
+<li>Développement du capital humain (<em>Human Capital Development</em>)</li>
+<li>Normes du travail dans la chaîne d’approvisionnement (<em>Supply Chain Labor Standards</em>)</li>
+</ul>
+<p><strong>6. Responsabilité produit</strong> (<em>Product Liability</em>)</p>
+<ul>
+<li>Sécurité et qualité des produits (<em>Product Safety &amp; Quality</em>)</li>
+<li>Sécurité chimique (<em>Chemical Safety</em>)</li>
+<li>Sécurité des produits financiers (<em>Financial Product Safety</em>)</li>
+<li>Vie privée et sécurité des données (<em>Privacy &amp; Data Security</em>)</li>
+<li>Investissement responsable (<em>Responsible Investment</em>)</li>
+<li>Risque de santé et démographique (<em>Health &amp; Demographic Risk</em>)</li>
+</ul>
+<p><strong>7. Opposition des parties prenantes</strong> (<em>Stakeholder Opposition</em>)</p>
+<ul>
+<li>Approvisionnement controversé (<em>Controversial Sourcing</em>)</li>
+</ul>
+<p><strong>8. Opportunités sociales</strong> (<em>Social Opportunities</em>)</p>
+<ul>
+<li>Accès aux communications (<em>Access to Communications</em>)</li>
+<li>Accès aux soins de santé (<em>Access to Health Care</em>)</li>
+<li>Accès à la finance (<em>Access to Finance</em>)</li>
+<li>Opportunités en nutrition et santé (<em>Opp’s in Nutrition &amp; Health</em>)</li>
+</ul>
+</section>
+<section id="pilier-gouvernance" class="level4">
+<h4 class="anchored" data-anchor-id="pilier-gouvernance">Pilier Gouvernance</h4>
+<p><strong>9. Gouvernance d’entreprise</strong> (<em>Corporate Governance</em>) ★★</p>
+<ul>
+<li>Conseil d’administration (<em>Board</em>) ★★</li>
+<li>Rémunération (<em>Pay</em>) ★★</li>
+<li>Actionnariat (<em>Ownership</em>) ★★</li>
+<li>Comptabilité (<em>Accounting</em>) ★★</li>
+</ul>
+<p><strong>10. Comportement de l’entreprise</strong> (<em>Corporate Behavior</em>)</p>
+<ul>
+<li>Éthique des affaires (<em>Business Ethics</em>) ★</li>
+<li>Pratiques anticoncurrentielles (<em>Anti-Competitive Practices</em>) ★</li>
+<li>Transparence fiscale (<em>Tax Transparency</em>) ★</li>
+<li>Corruption et instabilité (<em>Corruption &amp; Instability</em>)</li>
+<li>Instabilité du système financier (<em>Financial System Instability</em>)</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>★ indique les enjeux “universels”, évalués pour toutes les sociétés de l’Indice Mondial MSCI.</p>
+<p>★★ indique que le Conseil, la Rémunération, l’Actionnariat et la Comptabilité contribuent directement au score de Gouvernance d’entreprise pour toutes les sociétés — mais les 0 à 10 sous-scores ne sont pas encore disponibles.</p>
 </div>
 </div>
 <hr>
 </section>
-<section id="prix-vs-valeur-nominale" class="level2">
-<h2 class="anchored" data-anchor-id="prix-vs-valeur-nominale">Prix vs valeur nominale</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Situation</th>
-<th>Condition</th>
-<th>Cause</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Prime</strong> (Premium)</td>
-<td><span class="math inline">\(B &gt; 100\)</span></td>
-<td>Coupon &gt; taux marché</td>
-</tr>
-<tr class="even">
-<td><strong>Au pair</strong> (At Par)</td>
-<td><span class="math inline">\(B = 100\)</span></td>
-<td>Coupon = taux marché</td>
-</tr>
-<tr class="odd">
-<td><strong>Décote</strong> (Discount)</td>
-<td><span class="math inline">\(B &lt; 100\)</span></td>
-<td>Coupon &lt; taux marché</td>
-</tr>
-</tbody>
-</table>
-<hr>
 </section>
-<section id="exemple-numérique-rapide" class="level2">
-<h2 class="anchored" data-anchor-id="exemple-numérique-rapide">Exemple numérique rapide</h2>
-<blockquote class="blockquote">
-<p>Obligation : <span class="math inline">\(c = 5\)</span> CHF × 4 versements, <span class="math inline">\(P = 100\)</span>, <span class="math inline">\(y = 5\%\)</span></p>
-</blockquote>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Flux</th>
-<th>Valeur présente</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(c_1\)</span> à <span class="math inline">\(t=0.5\)</span></td>
-<td><span class="math inline">\(5 \cdot e^{-0.05 \times 0.5} = 4.88\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(c_2\)</span> à <span class="math inline">\(t=1.0\)</span></td>
-<td><span class="math inline">\(5 \cdot e^{-0.05 \times 1.0} = 4.76\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(c_3\)</span> à <span class="math inline">\(t=1.5\)</span></td>
-<td><span class="math inline">\(5 \cdot e^{-0.05 \times 1.5} = 4.64\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(c_4\)</span> à <span class="math inline">\(t=2.0\)</span></td>
-<td><span class="math inline">\(5 \cdot e^{-0.05 \times 2.0} = 4.52\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(P\)</span> à <span class="math inline">\(t=2.0\)</span></td>
-<td><span class="math inline">\(100 \cdot e^{-0.05 \times 2.0} = 90.48\)</span></td>
-</tr>
-<tr class="even">
-<td><strong>Total</strong></td>
-<td><strong><span class="math inline">\(B = 109.28\)</span> → à prime</strong></td>
-</tr>
-</tbody>
-</table>
-<hr>
 </section>
-<section id="procédure-par-tâtonnement-trial-error" class="level2">
-<h2 class="anchored" data-anchor-id="procédure-par-tâtonnement-trial-error">Procédure par tâtonnement (Trial &amp; Error)</h2>
-<p><strong>Objectif</strong> : trouver <span class="math inline">\(y\)</span> connaissant <span class="math inline">\(B\)</span> (problème inverse, pas de solution analytique).</p>
-<p><strong>Résidu</strong> :</p>
-<p><span class="math display">\[\text{résidu}(y) = B_{\text{observé}} - B_{\text{calculé}}(y)\]</span></p>
-<p><strong>Algorithme</strong> :</p>
+<section id="la-notation-esg-scoring" class="level2">
+<h2 class="anchored" data-anchor-id="la-notation-esg-scoring">La notation ESG (<em>Scoring</em>)</h2>
+<section id="principes-de-base" class="level3">
+<h3 class="anchored" data-anchor-id="principes-de-base">Principes de base</h3>
+<section id="multiplicité-des-systèmes-de-notation" class="level4">
+<h4 class="anchored" data-anchor-id="multiplicité-des-systèmes-de-notation">Multiplicité des systèmes de notation</h4>
+<p>Il existe de <strong>nombreux systèmes de notation ESG</strong> proposés par des fournisseurs de données différents, parmi lesquels :</p>
+<ul>
+<li><strong>MSCI</strong> — l’un des plus utilisés au monde</li>
+<li><strong>Sustainalytics</strong> (filiale de Morningstar)</li>
+<li><strong>S&amp;P Global ESG</strong></li>
+<li><strong>Refinitiv</strong> (filiale de LSEG)</li>
+<li><strong>Bloomberg ESG</strong></li>
+<li><strong>ISS ESG</strong></li>
+</ul>
+<p>Chaque fournisseur construit sa propre méthodologie, avec des pondérations, des sources de données et des échelles différentes.</p>
+</section>
+<section id="corrélation-entre-les-systèmes" class="level4">
+<h4 class="anchored" data-anchor-id="corrélation-entre-les-systèmes">Corrélation entre les systèmes</h4>
+<p>Bien que les notations présentent des <strong>différences parfois significatives</strong> d’un fournisseur à l’autre, la corrélation globale reste positive. Une étude comparative entre Sustainalytics et MSCI sur les 1 200 actions du S&amp;P 1200 (janvier 2016) montre un <strong>R² d’environ 0,32</strong> : les deux systèmes s’accordent sur la direction générale, mais présentent une dispersion notable.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pensez aux agences de notation de crédit (Moody’s, S&amp;P, Fitch) : elles s’accordent souvent sur les grands équilibres mais peuvent diverger dans les détails. L’ESG présente une situation similaire, voire avec davantage de dispersion car les données non-financières sont moins standardisées que les données comptables.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Point important">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Point important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une corrélation positive ne signifie pas que les deux systèmes donnent le même score à chaque entreprise. La divergence entre notateurs ESG (<em>rating disagreement</em>) est un problème bien documenté dans la littérature académique. Elle complique l’interprétation et la comparaison des portefeuilles ESG.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="structure-de-la-notation-esg-msci-depuis-2023" class="level3">
+<h3 class="anchored" data-anchor-id="structure-de-la-notation-esg-msci-depuis-2023">Structure de la notation ESG (MSCI, depuis 2023)</h3>
+<p>Depuis 2023, MSCI calcule la <strong>note ESG globale</strong> comme une <strong>moyenne pondérée</strong> des scores obtenus sur les trois piliers E, S et G. La pondération reflète la matérialité de chaque enjeu pour le secteur d’activité de l’entreprise.</p>
+<p>La note correspond à un <strong>classement relatif</strong> (<em>ranking</em>) au sein d’un univers sectoriel. Elle est exprimée sur une échelle allant de <strong>CCC</strong> (très mauvais) à <strong>AAA</strong> (leader), en passant par B, BB, BBB, A, AA.</p>
+<section id="exemple-astrazeneca-azn" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-astrazeneca-azn">Exemple : AstraZeneca (AZN)</h4>
+<p>AstraZeneca, groupe pharmaceutique britannique, illustre bien le fonctionnement de la notation :</p>
+<ul>
+<li><strong>Note MSCI</strong> : AA (stable depuis septembre 2016)</li>
+<li><strong>Positionnement</strong> : leader parmi 93 sociétés pharmaceutiques de l’indice MSCI ACWI</li>
+<li><strong>Distribution dans l’industrie</strong> : environ 29 % des sociétés ont une note CCC ou B, tandis qu’une minorité atteint AA ou AAA</li>
+</ul>
+<p>Les forces d’AstraZeneca se situent dans le développement du capital humain et l’accès aux soins de santé. Ses points faibles relatifs concernent la sécurité et la qualité des produits.</p>
+</section>
+<section id="tendance-générale-des-scores" class="level4">
+<h4 class="anchored" data-anchor-id="tendance-générale-des-scores">Tendance générale des scores</h4>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Des recherches académiques (Lundström, 2021) montrent que les <strong>scores ESG ont tendance à augmenter avec le temps</strong>. Cela peut refléter une amélioration réelle des pratiques des entreprises, mais aussi un effet de reporting croissant (les entreprises apprennent à mieux documenter leurs actions) et des biais méthodologiques des notateurs.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="les-émissions-carbone-scope-1-2-et-3" class="level3">
+<h3 class="anchored" data-anchor-id="les-émissions-carbone-scope-1-2-et-3">Les émissions carbone (Scope 1, 2 et 3)</h3>
+<p>Un volet central de la notation ESG concerne les <strong>émissions de gaz à effet de serre</strong>, mesurées ou estimées selon trois périmètres (<em>scopes</em>) :</p>
+<ul>
+<li><strong>Scope 1</strong> : émissions directes produites par l’entreprise (ex. : chaudières, véhicules de flotte)</li>
+<li><strong>Scope 2</strong> : émissions indirectes liées à l’énergie consommée (ex. : électricité achetée)</li>
+<li><strong>Scope 3</strong> : toutes les autres émissions indirectes, en amont (fournisseurs) et en aval (utilisation des produits par les clients)</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour un constructeur automobile, le Scope 3 est de loin le plus important : les émissions des voitures en circulation chez les clients sont bien supérieures aux émissions de ses usines. Ignorer le Scope 3 conduirait à une vision très incomplète de l’impact climatique réel de l’entreprise.</p>
+</div>
+</div>
+</section>
+<section id="la-modélisation-du-futur-le-score-itr" class="level3">
+<h3 class="anchored" data-anchor-id="la-modélisation-du-futur-le-score-itr">La modélisation du futur : le score ITR</h3>
+<p>Le <strong>score ITR</strong> (<em>Implied Temperature Rise</em> — Hausse de température implicite), développé notamment par MSCI, tente de modéliser la <strong>trajectoire climatique future</strong> d’une entreprise ou d’un portefeuille.</p>
+<ul>
+<li>Il exprime, en degrés Celsius, le réchauffement global auquel conduirait un monde où toutes les entreprises adoptent le même comportement que celle analysée.</li>
+<li>Un ITR de 1,5°C est aligné avec l’Accord de Paris ; un ITR de 3°C ou 4°C est très préoccupant.</li>
+</ul>
+<p>Ce type d’indicateur permet de comparer les engagements climatiques des entreprises à des trajectoires scientifiquement définies.</p>
+</section>
+<section id="égalité-de-genre" class="level3">
+<h3 class="anchored" data-anchor-id="égalité-de-genre">Égalité de genre</h3>
+<p>La <strong>parité hommes-femmes</strong> est un indicateur social de plus en plus suivi. Les entreprises sont tenues de le déclarer et, dans de nombreuses juridictions, un minimum légal sera bientôt obligatoire (notamment en Europe avec la directive sur la parité dans les conseils d’administration).</p>
+</section>
+<section id="les-objectifs-de-développement-durable-odd" class="level3">
+<h3 class="anchored" data-anchor-id="les-objectifs-de-développement-durable-odd">Les Objectifs de développement durable (ODD)</h3>
+<p>Les <strong>Objectifs de Développement Durable</strong> (<em>Sustainable Development Goals — SDGs</em>), adoptés par l’ONU en 2015, constituent un référentiel universel de 17 objectifs à atteindre d’ici 2030 :</p>
 <ol type="1">
-<li>Partir de <span class="math inline">\(y\)</span> très élevé (<span class="math inline">\(y = 100\)</span>)</li>
-<li>Résidu <span class="math inline">\(&gt; 0\)</span> → <span class="math inline">\(y \leftarrow y/2\)</span></li>
-<li>Résidu <span class="math inline">\(&lt; 0\)</span> → <span class="math inline">\(y \leftarrow (y_{\text{précédent}} + y)/2\)</span></li>
-<li>Répéter jusqu’à <span class="math inline">\(|\text{résidu}| &lt; 10^{-3}\)</span></li>
+<li>Pas de pauvreté</li>
+<li>Faim zéro</li>
+<li>Bonne santé et bien-être</li>
+<li>Éducation de qualité</li>
+<li>Égalité entre les sexes</li>
+<li>Eau propre et assainissement</li>
+<li>Énergie propre et d’un coût abordable</li>
+<li>Travail décent et croissance économique</li>
+<li>Industrie, innovation et infrastructure</li>
+<li>Inégalités réduites</li>
+<li>Villes et communautés durables</li>
+<li>Consommation et production responsables</li>
+<li>Mesures relatives à la lutte contre les changements climatiques</li>
+<li>Vie aquatique</li>
+<li>Vie terrestre</li>
+<li>Paix, justice et institutions efficaces</li>
+<li>Partenariats pour la réalisation des objectifs</li>
 </ol>
-<hr>
-</section>
-<section id="courbe-des-taux-zéro-coupon-bootstrap" class="level2">
-<h2 class="anchored" data-anchor-id="courbe-des-taux-zéro-coupon-bootstrap">Courbe des taux zéro-coupon (Bootstrap)</h2>
-<p><strong>Pourquoi ?</strong> Les rendements de coupons différents ne sont pas comparables → standard zéro-coupon.</p>
-<p><strong>Bootstrap — logique</strong> : extraire les taux zéro un par un, du plus court au plus long.</p>
-<section id="formules-par-cas" class="level3">
-<h3 class="anchored" data-anchor-id="formules-par-cas">Formules par cas</h3>
-<p><strong>Zéro-coupon court terme</strong> (0.25 an) :</p>
-<p><span class="math display">\[r_{0.25} = 4 \cdot \ln\!\left(1 + \frac{\text{gain trimestriel}}{4}\right)\]</span></p>
-<p><strong>Zéro-coupon 1 an</strong> :</p>
-<p><span class="math display">\[r_{1.0} = \ln\!\left(1 + \frac{P - B}{B}\right)\]</span></p>
-<p><strong>Avec coupons</strong> (1.5 an) : isoler <span class="math inline">\(r_{1.5}\)</span> dans :</p>
-<p><span class="math display">\[\sum_i c_i \cdot e^{-r_{t_i} \cdot t_i} + (P + c_{\text{last}}) \cdot e^{-r_{1.5} \cdot 1.5} = B\]</span></p>
-</section>
-<section id="résultat-exemple" class="level3">
-<h3 class="anchored" data-anchor-id="résultat-exemple">Résultat exemple</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Maturité (ans)</th>
-<th><span class="math inline">\(r\)</span> (%)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>0.25</td>
-<td>10.127</td>
-</tr>
-<tr class="even">
-<td>0.50</td>
-<td>10.469</td>
-</tr>
-<tr class="odd">
-<td>1.0</td>
-<td>10.536</td>
-</tr>
-<tr class="even">
-<td>1.5</td>
-<td>10.681</td>
-</tr>
-<tr class="odd">
-<td>2.0</td>
-<td>10.808</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-</section>
-<section id="types-dobligations" class="level2">
-<h2 class="anchored" data-anchor-id="types-dobligations">Types d’obligations</h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph TD
-    A[Obligations] --&gt; B[État / Souveraines\nGovies / Treasuries]
-    A --&gt; C[Entreprises\nCorporate Bonds]
-    B --&gt; D[Meilleure notation AAA\nRendement le plus bas]
-    C --&gt; E[Investment Grade BBB+\nSpread modéré]
-    C --&gt; F[High Yield / Junk BB-\nSpread élevé]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p><strong>Agences</strong> : S&amp;P (AAA → D) | Moody’s (Aaa → C) | Fitch (AAA → D)</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Formule clé">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Formule clé
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="math inline">\(y_{\text{corporate}} = y_{\text{souverain}} + \text{Credit Spread}\)</span></p>
-</div>
-</div>
-<hr>
-</section>
-<section id="risques-obligataires" class="level2">
-<h2 class="anchored" data-anchor-id="risques-obligataires">5 Risques obligataires</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 35%">
-<col style="width: 38%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Risque</th>
-<th>Mécanisme</th>
-<th>Protection</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Taux</strong> (Interest Rate)</td>
-<td><span class="math inline">\(y \uparrow \Rightarrow B \downarrow\)</span></td>
-<td>Duration courte</td>
-</tr>
-<tr class="even">
-<td><strong>Crédit</strong> (Credit)</td>
-<td>Défaut émetteur</td>
-<td>Notation élevée</td>
-</tr>
-<tr class="odd">
-<td><strong>Inflation</strong> (Inflation)</td>
-<td>Érosion pouvoir d’achat : <span class="math inline">\(r_{\text{réel}} = r_{\text{nom}} - \pi\)</span></td>
-<td>TIPS, or</td>
-</tr>
-<tr class="even">
-<td><strong>Liquidité</strong> (Liquidity)</td>
-<td>Vente à prix décotée</td>
-<td>Obligations liquides</td>
-</tr>
-<tr class="odd">
-<td><strong>Réinvestissement</strong> (Reinvestment)</td>
-<td>Coupons réinvestis à taux plus bas</td>
-<td>Éviter callables</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-warning callout-titled" title="Piège — Callable Bonds">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Piège — Callable Bonds
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Si les taux baissent → l’émetteur rappelle l’obligation → réinvestissement forcé à taux moindre.</p>
-</div>
-</div>
-<hr>
-</section>
-<section id="rôle-dans-un-portefeuille" class="level2">
-<h2 class="anchored" data-anchor-id="rôle-dans-un-portefeuille">Rôle dans un portefeuille</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 42%">
-<col style="width: 57%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Rôle</th>
-<th>Détail</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Diversification</strong></td>
-<td>Corrélation négative avec actions (sauf 2022 !)</td>
-</tr>
-<tr class="even">
-<td><strong>Revenus</strong></td>
-<td>Coupons réguliers et prévisibles</td>
-</tr>
-<tr class="odd">
-<td><strong>Préservation capital</strong></td>
-<td>Principal garanti à maturité (si pas de défaut)</td>
-</tr>
-<tr class="even">
-<td><strong>Allocation stratégique</strong></td>
-<td>Part croissante avec l’âge (life-cycle investing)</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-important callout-titled" title="Exception 2022">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Exception 2022
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Hausse brutale des taux → obligations <strong>et</strong> actions en baisse simultanément → corrélation <strong>positive</strong>.</p>
-</div>
-</div>
-<hr>
-</section>
-<section id="synthèse-des-relations-clés" class="level2">
-<h2 class="anchored" data-anchor-id="synthèse-des-relations-clés">Synthèse des relations clés</h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph LR
-    Y[Yield y ↑] --&gt;|inverse| B[Prix B ↓]
-    B --&gt;|bootstrap| ZC[Courbe zéro-coupon]
-    ZC --&gt;|référence| COMP[Comparaison obligations]
-    RISK[Risque émetteur ↑] --&gt;|+| CS[Credit Spread ↑]
-    CS --&gt;|+| Y
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<hr>
-</section>
-<section id="checklist-révision" class="level2">
-<h2 class="anchored" data-anchor-id="checklist-révision">Checklist révision</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Je sais calculer <span class="math inline">\(B(t)\)</span> à partir de <span class="math inline">\(y\)</span>, <span class="math inline">\(c_i\)</span>, <span class="math inline">\(P\)</span>, <span class="math inline">\(T\)</span></label></li>
-<li><label><input type="checkbox">Je sais interpréter prime / décote / au pair</label></li>
-<li><label><input type="checkbox">Je comprends l’algorithme Trial &amp; Error (sens de la recherche)</label></li>
-<li><label><input type="checkbox">Je sais appliquer le Bootstrap sur un exemple à coupons</label></li>
-<li><label><input type="checkbox">Je connais les 5 risques et leurs protections</label></li>
-<li><label><input type="checkbox">Je sais que <span class="math inline">\(y_{\text{corp}} = y_{\text{gouv}} + \text{spread}\)</span></label></li>
-<li><label><input type="checkbox">Je comprends pourquoi 2022 a cassé la diversification</label></li>
+<p>Ces objectifs sont désormais <strong>quantifiés</strong> par les fournisseurs de données et intégrés dans les analyses de portefeuille.</p>
+<section id="exemple-dutilisation-des-odd-shell-2022" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-dutilisation-des-odd-shell-2022">Exemple d’utilisation des ODD : Shell (2022)</h4>
+<p>Le rapport de durabilité 2022 de Shell illustre comment une grande entreprise pétrolière s’approprie le cadre des ODD. Shell y indique contribuer directement à 13 des 17 ODD via sa stratégie <em>Powering Progress</em> — incluant notamment :</p>
+<ul>
+<li>ODD 7 : Énergie propre</li>
+<li>ODD 13 : Lutte contre le changement climatique</li>
+<li>ODD 14 : Vie aquatique</li>
+<li>ODD 15 : Vie terrestre</li>
 </ul>
+<div class="callout callout-style-default callout-warning callout-titled" title="Point important">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Point important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Il convient d’apprécier ces déclarations d’entreprise avec un regard critique. Le fait qu’une entreprise pétrolière revendique une contribution aux ODD environnementaux soulève la question du <em>greenwashing</em> (écoblanchiment) : la communication sur le développement durable peut parfois surpasser les actions concrètes. Les outils de notation ESG tentent de dépasser les déclarations d’intention pour mesurer les impacts réels.</p>
+</div>
+</div>
+</section>
+<section id="exemple-dutilisation-des-odd-suisse-niveau-national" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-dutilisation-des-odd-suisse-niveau-national">Exemple d’utilisation des ODD : Suisse (niveau national)</h4>
+<p>Les ODD s’appliquent aussi aux <strong>États</strong>. Le tableau de bord des ODD pour la Suisse (source : <em>sdgindex.org</em>) présente, à titre d’exemple :</p>
+<ul>
+<li><strong>Rang SDG</strong> : 8e sur 163 pays</li>
+<li><strong>Score SDG</strong> : 80,8</li>
+<li><strong>Score de débordement</strong> (<em>Spillover Score</em>) : 52,1 — cet indicateur mesure les effets négatifs qu’un pays impose à d’autres via son commerce, ses chaînes d’approvisionnement et ses investissements</li>
+</ul>
+<p>La Suisse progresse dans de nombreux domaines mais présente encore des défis significatifs, notamment pour la vie marine (ODD 14) et les modes de consommation responsables (ODD 12).</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="les-stratégies-esg-possibles" class="level2">
+<h2 class="anchored" data-anchor-id="les-stratégies-esg-possibles">Les stratégies ESG possibles</h2>
+<section id="une-taxonomie-en-sept-catégories" class="level3">
+<h3 class="anchored" data-anchor-id="une-taxonomie-en-sept-catégories">Une taxonomie en sept catégories</h3>
+<p>La <strong>classification Eurosif (2019)</strong>, reprise par Thierry Roncalli, identifie sept grandes stratégies d’investissement ESG, allant du plus passif au plus actif :</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A[Stratégies ESG] --&gt; B[1. Exclusion]
+    A --&gt; C[2. Valeurs / Norms]
+    A --&gt; D[3. Sélection positive]
+    A --&gt; E[4. Thématique]
+    A --&gt; F[5. Intégration]
+    A --&gt; G[6. Engagement]
+    A --&gt; H[7. Impact]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="stratégie-1-exclusion-exclusion-policy-negative-worst-in-class-screening" class="level3">
+<h3 class="anchored" data-anchor-id="stratégie-1-exclusion-exclusion-policy-negative-worst-in-class-screening">Stratégie 1 : Exclusion (<em>Exclusion Policy &amp; Negative / Worst-in-class Screening</em>)</h3>
+<p><strong>Définition</strong> : Cette stratégie consiste à <strong>exclure</strong> de l’univers d’investissement certaines entreprises, secteurs ou pays qui ne satisfont pas à des critères minimaux.</p>
+<p><strong>Deux variantes principales</strong> :</p>
+<ul>
+<li><strong>Exclusion normative</strong> : on exclut les entreprises qui violent des conventions internationales (ex. : fabricants de mines antipersonnel, bombes à sous-munitions — interdits par les conventions d’Ottawa et d’Oslo).</li>
+<li><strong>Exclusion sectorielle</strong> : on exclut des industries entières jugées incompatibles avec les valeurs de l’investisseur (ex. : tabac, jeux d’argent, armement, charbon au-delà d’un certain seuil).</li>
+<li><strong>Worst-in-class</strong> : on exclut les entreprises les moins bien notées ESG dans chaque secteur.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>C’est la stratégie la plus simple à comprendre et à implémenter. Un fonds “éthique” qui refuse d’investir dans des producteurs de tabac applique une exclusion sectorielle. L’inconvénient est qu’il ne pousse pas ces entreprises à changer — il les ignore simplement.</p>
+</div>
+</div>
+<p><strong>Avantages</strong> : Facile à communiquer ; forte cohérence avec certaines valeurs éthiques.</p>
+<p><strong>Limites</strong> : Ne crée pas de dialogue avec l’entreprise ; peut générer un biais sectoriel important dans le portefeuille ; ne garantit pas un meilleur impact sur le monde.</p>
+</section>
+<section id="stratégie-2-valeurs-filtrage-normatif-norms-based-screening" class="level3">
+<h3 class="anchored" data-anchor-id="stratégie-2-valeurs-filtrage-normatif-norms-based-screening">Stratégie 2 : Valeurs / Filtrage normatif (<em>Norms-based Screening</em>)</h3>
+<p><strong>Définition</strong> : On filtre l’univers d’investissement en vérifiant le respect par les entreprises des <strong>standards et normes internationaux</strong>, tels que :</p>
+<ul>
+<li>Les principes directeurs de l’ONU relatifs aux entreprises et aux droits de l’homme</li>
+<li>Les conventions de l’OIT (Organisation Internationale du Travail)</li>
+<li>Le Pacte Mondial des Nations Unies (<em>UN Global Compact</em>)</li>
+<li>Les conventions de l’OCDE pour les entreprises multinationales</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La différence avec l’exclusion sectorielle est subtile mais importante : le filtrage normatif exclut des entreprises sur la base de <strong>comportements contraires à des normes universelles</strong> (ex. : recours au travail des enfants), indépendamment du secteur d’activité.</p>
+</div>
+</div>
+</section>
+<section id="stratégie-3-sélection-positive-best-in-class-positive-or-best-in-class-screening" class="level3">
+<h3 class="anchored" data-anchor-id="stratégie-3-sélection-positive-best-in-class-positive-or-best-in-class-screening">Stratégie 3 : Sélection positive / Best-in-class (<em>Positive or Best-in-class Screening</em>)</h3>
+<p><strong>Définition</strong> : On sélectionne <strong>activement</strong> les entreprises les mieux notées ESG au sein de chaque secteur d’activité.</p>
+<p><strong>Fonctionnement</strong> :</p>
+<ul>
+<li>On conserve la même exposition sectorielle que l’indice de référence,</li>
+<li>Mais dans chaque secteur, on surpondère les “leaders ESG” et sous-pondère les “retardataires ESG”.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Plutôt que d’exclure les secteurs polluants, on investit dans les entreprises pétrolières qui polluent <strong>le moins</strong> et qui font <strong>le plus d’efforts</strong> vers la transition. L’idée est d’inciter à une course vers le haut (<em>race to the top</em>) plutôt que d’abandonner les secteurs difficiles.</p>
+</div>
+</div>
+<p><strong>Avantage</strong> : Permet de maintenir une diversification sectorielle plus grande.</p>
+<p><strong>Limite</strong> : Une société peut être “meilleure de sa catégorie” tout en restant objectivement peu vertueuse sur le plan absolu.</p>
+</section>
+<section id="stratégie-4-investissement-thématique-sustainability-themed-investing" class="level3">
+<h3 class="anchored" data-anchor-id="stratégie-4-investissement-thématique-sustainability-themed-investing">Stratégie 4 : Investissement thématique (<em>Sustainability Themed Investing</em>)</h3>
+<p><strong>Définition</strong> : On concentre les investissements sur des <strong>thèmes de durabilité spécifiques</strong>, comme :</p>
+<ul>
+<li>Les <strong>obligations vertes</strong> (<em>Green Bonds</em>) : obligations dont les fonds sont fléchés vers des projets environnementaux</li>
+<li>Les fonds d’énergies renouvelables</li>
+<li>Les fonds d’eau potable</li>
+<li>Les fonds liés à l’agriculture durable</li>
+<li>Les fonds d’économie circulaire</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’investissement thématique est souvent associé à un fort potentiel de croissance, car ces secteurs bénéficient d’un soutien réglementaire croissant (taxonomie européenne, Green Deal). Cependant, il peut générer des risques de concentration et des problèmes de valorisation si les thèmes sont surévalués.</p>
+</div>
+</div>
+</section>
+<section id="stratégie-5-intégration-esg-esg-integration" class="level3">
+<h3 class="anchored" data-anchor-id="stratégie-5-intégration-esg-esg-integration">Stratégie 5 : Intégration ESG (<em>ESG Integration</em>)</h3>
+<p><strong>Définition</strong> : Les critères ESG sont <strong>intégralement intégrés</strong> dans le processus de gestion de portefeuille, au même titre que les critères financiers traditionnels (valorisation, rentabilité, risque).</p>
+<p><strong>Fonctionnement concret</strong> :</p>
+<ul>
+<li>Les scores ESG entrent dans les modèles de sélection d’actifs,</li>
+<li>Les analystes financiers intègrent les risques ESG dans leurs modèles de valorisation,</li>
+<li>Les benchmarks (indices de référence) sont construits avec des filtres ESG,</li>
+<li>Des tableaux de bord ESG permettent de suivre le profil extra-financier du portefeuille en temps réel.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’intégration part de l’hypothèse que les risques ESG sont des <strong>risques financiers réels à long terme</strong> : une entreprise très polluante s’expose à des réglementations plus strictes, à des taxes carbone, à des procès — tous ces risques se traduisent in fine par des risques pour la valeur de l’action.</p>
+</div>
+</div>
+</section>
+<section id="stratégie-6-engagement-et-droits-de-vote-voting-policy-shareholder-activism" class="level3">
+<h3 class="anchored" data-anchor-id="stratégie-6-engagement-et-droits-de-vote-voting-policy-shareholder-activism">Stratégie 6 : Engagement et droits de vote (<em>Voting Policy &amp; Shareholder Activism</em>)</h3>
+<p><strong>Définition</strong> : En tant qu’actionnaire, on <strong>exerce son influence</strong> sur les entreprises via :</p>
+<ul>
+<li>Le <strong>vote en assemblée générale</strong> (<em>General Meeting</em>) sur les résolutions soumises aux actionnaires</li>
+<li>Le <strong>dialogue direct</strong> (<em>engagement</em>) avec les directions et conseils d’administration</li>
+<li>La <strong>publication de rapports</strong> critiques ou de propositions d’actionnaires</li>
+</ul>
+<p><strong>Exemples de résolutions sur lesquelles un investisseur peut voter</strong> :</p>
+<ul>
+<li>Approbation des comptes annuels</li>
+<li>Rémunération des dirigeants (<em>Say on Pay</em>)</li>
+<li>Composition du conseil d’administration</li>
+<li>Stratégie climatique de l’entreprise</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled" title="Point important">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Point important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’engagement est une stratégie <strong>active et coûteuse en ressources humaines</strong> : elle requiert des équipes spécialisées, des connaissances juridiques et une capacité à dialoguer dans plusieurs langues avec des centaines d’entreprises. C’est pourquoi elle est souvent réalisée via des coalitions ou des prestataires spécialisés.</p>
+</div>
+</div>
+</section>
+<section id="stratégie-7-investissement-dimpact-impact-investing" class="level3">
+<h3 class="anchored" data-anchor-id="stratégie-7-investissement-dimpact-impact-investing">Stratégie 7 : Investissement d’impact (<em>Impact Investing</em>)</h3>
+<p><strong>Définition</strong> : On cherche à générer, au-delà du rendement financier, un <strong>impact social ou environnemental mesurable et intentionnel</strong>.</p>
+<p><strong>Caractéristiques distinctives</strong> :</p>
+<ul>
+<li><strong>Intentionnalité</strong> : l’impact est voulu, pas un sous-produit,</li>
+<li><strong>Mesurabilité</strong> : l’impact est quantifié (ex. : tonnes de CO₂ évitées, nombre de personnes sortis de la pauvreté),</li>
+<li><strong>Additionnalité</strong> : l’investissement crée un impact qui n’aurait pas eu lieu sans lui.</li>
+</ul>
+<p><strong>Exemples</strong> :</p>
+<ul>
+<li>Fonds de microfinance qui prêtent aux entrepreneurs des pays émergents sans accès au crédit bancaire,</li>
+<li>Obligations à impact social (<em>Social Impact Bonds</em>),</li>
+<li>Fonds d’infrastructures vertes dans des zones vulnérables au changement climatique.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’investissement d’impact représente l’expression la plus aboutie de la finance durable : on ne cherche pas simplement à éviter de nuire, mais à <strong>contribuer positivement</strong> de manière vérifiable. C’est aussi la stratégie la plus difficile à standardiser et à évaluer objectivement.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="exemple-pratique-compenswiss-de-la-théorie-à-la-pratique" class="level2">
+<h2 class="anchored" data-anchor-id="exemple-pratique-compenswiss-de-la-théorie-à-la-pratique">Exemple pratique : compenswiss, de la théorie à la pratique</h2>
+<section id="présentation-de-compenswiss" class="level3">
+<h3 class="anchored" data-anchor-id="présentation-de-compenswiss">Présentation de compenswiss</h3>
+<p><strong>Compenswiss</strong> est le gestionnaire du Fonds de compensation de l’AVS/AI/APG (assurance vieillesse et survivants, assurance invalidité et allocations pour perte de gain), la caisse de retraite nationale suisse. C’est l’un des grands investisseurs institutionnels en Suisse, gérant plusieurs dizaines de milliards de francs.</p>
+<p>Son approche ESG, présentée dans le cours (situation fin 2022), illustre comment les stratégies théoriques se déclinent concrètement dans la gestion d’un fonds de pension.</p>
+</section>
+<section id="les-quatre-piliers-de-lapproche-esg-de-compenswiss" class="level3">
+<h3 class="anchored" data-anchor-id="les-quatre-piliers-de-lapproche-esg-de-compenswiss">Les quatre piliers de l’approche ESG de compenswiss</h3>
+<p>L’approche de compenswiss s’articule autour de quatre axes pratiques :</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">quadrantChart
+    title Approche ESG compenswiss
+    x-axis Faible engagement --&gt; Fort engagement
+    y-axis Indirect --&gt; Direct
+    quadrant-1 Engagement actif
+    quadrant-2 Dialogue direct
+    quadrant-3 Mesure &amp; Suivi
+    quadrant-4 Droits formels
+    Intégration: [0.2, 0.2]
+    Exercice droits de vote: [0.7, 0.3]
+    Engagement via ASIR: [0.8, 0.8]
+    Exclusions: [0.3, 0.7]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<section id="axe-1-intégration" class="level4">
+<h4 class="anchored" data-anchor-id="axe-1-intégration">Axe 1 : Intégration</h4>
+<p>L’intégration ESG chez compenswiss passe par :</p>
+<ul>
+<li>L’utilisation de <strong>benchmarks ESG</strong> comme référence pour les mandats de gestion,</li>
+<li>Un <strong>tableau de bord ESG</strong> propriétaire permettant de suivre les indicateurs E, S et G du portefeuille en temps réel,</li>
+<li>Le suivi des <strong>Swiss Climate Scores</strong> — un référentiel développé en Suisse pour mesurer la compatibilité climatique des portefeuilles.</li>
+</ul>
+<p>L’outil de tableau de bord permet notamment de visualiser :</p>
+<ul>
+<li>Le score ESG global du portefeuille vs. le benchmark (ex. : AA pour les deux à fin 2022)</li>
+<li>La décomposition par pilier (E, S, G) avec scores et pondérations</li>
+<li>La distribution des notations ESG dans le portefeuille</li>
+<li>Le taux de couverture (<em>coverage</em>) — la proportion des actifs sous gestion pour lesquels une donnée ESG est disponible</li>
+</ul>
+</section>
+<section id="axe-2-exercice-des-droits-de-vote-en-suisse" class="level4">
+<h4 class="anchored" data-anchor-id="axe-2-exercice-des-droits-de-vote-en-suisse">Axe 2 : Exercice des droits de vote en Suisse</h4>
+<p>Compenswiss vote lors des <strong>assemblées générales</strong> (<em>General Meetings</em>) des sociétés suisses dans lesquelles elle est investie — environ <strong>100 AG par an</strong> en Suisse.</p>
+<p>Cette activité est confiée à un <strong>consultant externe spécialisé</strong>, car l’analyse de chaque résolution est chronophage et requiert une expertise spécifique. Des <strong>règles de vote</strong> préalablement définies guident les décisions.</p>
+<p>Les données historiques (2015–2022) montrent :</p>
+<ul>
+<li>Une <strong>augmentation de la part des “toutes motions acceptées”</strong> (<em>all motions accepted</em>), en lien avec le déploiement progressif de la loi suisse sur les rémunérations abusives,</li>
+<li>Une proportion stable des votes avec <strong>“une motion rejetée”</strong> (<em>one motion rejected</em>), principalement sur les questions de rémunération des dirigeants.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le droit de vote est une forme de pression douce mais réelle. Quand un grand investisseur institutionnel vote contre la rémunération d’un dirigeant, cela fait les gros titres et peut influencer la direction. Multiplié par des dizaines de grands fonds qui coordonnent leurs votes, cet effet devient significatif.</p>
+</div>
+</div>
+</section>
+<section id="axe-3-engagement-via-asir" class="level4">
+<h4 class="anchored" data-anchor-id="axe-3-engagement-via-asir">Axe 3 : Engagement via ASIR</h4>
+<p>L’engagement est réalisé à travers <strong>ASIR</strong> (<em>Association Suisse pour des Investissements Responsables</em>), dont compenswiss est cofondateur. Cette structure permet de mutualiser les ressources et d’amplifier la voix des investisseurs.</p>
+<p>L’engagement ASIR couvre :</p>
+<ul>
+<li>Un dialogue avec plus de <strong>150 émetteurs</strong> (entreprises dans lesquelles les membres sont investis)</li>
+<li>Des thèmes variés : éthique des affaires, environnement, droits de l’homme, droits des travailleurs</li>
+<li>Un sujet spécifique emblématique : le <strong>travail des enfants dans la filière cacao</strong></li>
+</ul>
+<p>L’évolution des engagements entre 2019 et 2022 montre :</p>
+<ul>
+<li>Une <strong>augmentation du nombre total de cas</strong>, notamment tirée par les engagements sur les droits de l’homme,</li>
+<li>Une <strong>distribution thématique relativement stable</strong> sur les autres dimensions (éthique des affaires, environnement, droits du travail).</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled" title="Point important">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Point important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’engagement est un processus de <strong>long terme</strong>. Un dialogue ouvert avec une entreprise sur ses pratiques sociales peut durer plusieurs années avant de produire des effets tangibles. La patience et la persistance sont des conditions nécessaires à l’efficacité de cette approche.</p>
+</div>
+</div>
+</section>
+<section id="axe-4-exclusions" class="level4">
+<h4 class="anchored" data-anchor-id="axe-4-exclusions">Axe 4 : Exclusions</h4>
+<p>Compenswiss applique des exclusions à <strong>environ 100 sociétés</strong>, sur deux bases :</p>
+<ul>
+<li><strong>Exclusions normatives</strong> : entreprises qui violent des conventions internationales fondamentales (ex. : fabricants d’armes prohibées)</li>
+<li><strong>Exclusions charbon</strong> : entreprises dont le chiffre d’affaires dépasse un seuil lié à l’extraction ou à l’utilisation du charbon (le seuil a été abaissé de 50 % à 30 %, illustrant un durcissement progressif de la politique)</li>
+</ul>
+</section>
+</section>
+<section id="analyse-de-lempreinte-carbone-du-portefeuille-compenswiss" class="level3">
+<h3 class="anchored" data-anchor-id="analyse-de-lempreinte-carbone-du-portefeuille-compenswiss">Analyse de l’empreinte carbone du portefeuille compenswiss</h3>
+<p>Un exemple d’analyse concrète concerne le <strong>suivi de l’empreinte carbone</strong> (<em>carbon footprint</em>) du portefeuille sur la période juin 2020 – décembre 2022, mesurée en <strong>tonnes de CO₂ équivalent par million de dollars investi</strong> (tCO₂e / M$ investi).</p>
+<p><strong>Observations clés</strong> :</p>
+<ul>
+<li>Le <strong>benchmark idéal</strong> (trajectoire cible) affiche une <strong>baisse régulière</strong> sur la période — cohérent avec une trajectoire de décarbonation,</li>
+<li>Le <strong>benchmark</strong> de marché suit également une tendance baissière, quoique moins prononcée,</li>
+<li>Le <strong>portefeuille de compenswiss</strong> présente une empreinte carbone <strong>plus élevée</strong> que le benchmark idéal, mais avec une <strong>tendance décroissante</strong>,</li>
+<li>Les seuils d’exclusion charbon (50 % puis 30 %) ont eu un impact visible sur la trajectoire du portefeuille.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cet exemple illustre l’utilité des <strong>données et des outils ESG</strong> : ils permettent de visualiser la progression, de détecter les écarts par rapport à la trajectoire cible, et de mettre en évidence des <strong>conséquences inattendues</strong> de certaines décisions d’investissement. Sans mesure, il n’y a pas de pilotage possible.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La gestion ESG est analogue à la gestion d’un régime alimentaire : sans mesure précise des apports caloriques (ici, des émissions carbone), on avance à l’aveugle. Les outils de données ESG jouent le rôle de ce tableau de suivi indispensable.</p>
+</div>
+</div>
+</section>
+<section id="les-données-et-outils-un-enjeu-central" class="level3">
+<h3 class="anchored" data-anchor-id="les-données-et-outils-un-enjeu-central">Les données et outils : un enjeu central</h3>
+<p>L’expérience de compenswiss souligne un point crucial : la mise en œuvre concrète de l’ESG repose sur la <strong>qualité et la richesse des données disponibles</strong>.</p>
+<p>Les sources de données utilisées comprennent :</p>
+<ul>
+<li><strong>MSCI</strong> : scores ESG et notations</li>
+<li><strong>ASIR</strong> : données d’engagement</li>
+<li><strong>Gestionnaires de fonds délégués</strong> : rapports ESG des mandats externalisés</li>
+</ul>
+<p>Le défi est double :</p>
+<ol type="1">
+<li><strong>La couverture</strong> : toutes les sociétés ne sont pas notées (notamment les PME, les émetteurs souverains, les actifs non cotés),</li>
+<li><strong>La traversée du temps</strong> : les données ESG évoluent, les méthodologies changent — il faut pouvoir analyser le portefeuille à différentes dates pour suivre la progression.</li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled" title="Point important">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Point important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La qualité des outils informatiques de gestion des données ESG est un <strong>avantage compétitif</strong> pour les investisseurs institutionnels. Traverser les données dans le temps (comparaisons historiques) et dans les structures (look-through des fonds délégués jusqu’aux actifs sous-jacents) est une compétence clé qui conditionne la fiabilité de l’analyse.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="principaux-enseignements" class="level2">
+<h2 class="anchored" data-anchor-id="principaux-enseignements">Principaux enseignements</h2>
+<section id="ce-que-linvestissement-durable-peut-et-ne-peut-pas-faire" class="level3">
+<h3 class="anchored" data-anchor-id="ce-que-linvestissement-durable-peut-et-ne-peut-pas-faire">Ce que l’investissement durable peut et ne peut pas faire</h3>
+<p>La finance durable est un domaine en pleine croissance, mais il convient d’en avoir une vision lucide et équilibrée.</p>
+<p><strong>Ce qu’elle peut faire</strong> :</p>
+<ul>
+<li>Orienter le capital vers des activités moins polluantes et plus responsables,</li>
+<li>Exercer une pression sur les entreprises via l’actionnariat,</li>
+<li>Contribuer à réduire le coût du capital pour les entreprises vertueuses et à l’augmenter pour les autres,</li>
+<li>Améliorer la conscience des risques non-financiers à long terme,</li>
+<li>Financer directement des projets à impact positif mesurable.</li>
+</ul>
+<p><strong>Ce qu’elle ne peut pas faire</strong> :</p>
+<ul>
+<li>Résoudre seule les crises environnementales et sociales,</li>
+<li>Remplacer les politiques publiques et la réglementation,</li>
+<li>Garantir un rendement supérieur à court terme,</li>
+<li>Éliminer les problèmes de données imparfaites et de greenwashing.</li>
+</ul>
+</section>
+<section id="résumé-des-concepts-clés" class="level3">
+<h3 class="anchored" data-anchor-id="résumé-des-concepts-clés">Résumé des concepts clés</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir — Les points essentiels du chapitre">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir — Les points essentiels du chapitre
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Sur le contexte</strong> : les activités humaines actuelles ne sont pas soutenables. Le changement climatique, l’effondrement de la biodiversité et les inégalités appellent une réponse systémique. La finance est un levier parmi d’autres.</p>
+<p><strong>Sur les indicateurs</strong> : de nombreux acronymes structurent le domaine — ESG (Environnemental, Social, Gouvernance), ODD / SDG (Objectifs de Développement Durable), ITR (Hausse de température implicite), émissions carbone Scope 1/2/3. Chacun répond à un besoin de mesure différent.</p>
+<p><strong>Sur les données</strong> : mesurer, analyser, prévoir et anticiper — tout cela requiert des données fiables. La gestion des données dans le temps et à travers les structures de portefeuille est un enjeu opérationnel majeur.</p>
+<p><strong>Sur les stratégies</strong> : toute une palette de stratégies ESG existe — Intégration, Engagement, Vote, Impact, Exclusion — et elles sont souvent combinées dans la pratique.</p>
+<p><strong>Sur la pratique</strong> : l’expérience de compenswiss montre qu’une approche ESG institutionnelle rigoureuse combine simultanément intégration dans les processus, exercice des droits de vote, engagement actionnarial et politique d’exclusion.</p>
+</div>
+</div>
+</section>
+<section id="la-finance-durable-un-domaine-jeune-et-en-mouvement" class="level3">
+<h3 class="anchored" data-anchor-id="la-finance-durable-un-domaine-jeune-et-en-mouvement">La finance durable : un domaine jeune et en mouvement</h3>
+<p>La finance durable est un champ <strong>relativement récent</strong> à l’échelle de l’histoire financière, mais il <strong>croît très rapidement</strong> :</p>
+<ul>
+<li>Les volumes d’actifs sous gestion avec critères ESG augmentent chaque année,</li>
+<li>La réglementation se densifie (SFDR en Europe, taxonomie verte européenne, loi PACTE en France, recommandations FINMA en Suisse),</li>
+<li>Les données s’améliorent progressivement (reporting obligatoire croissant),</li>
+<li>La recherche académique sur l’efficacité des stratégies ESG s’intensifie.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Investir en finance durable aujourd’hui ressemble à investir dans la gestion des risques au début des années 1990 : les outils sont imparfaits, la réglementation encore incomplète, mais la direction est irréversible. Les acteurs qui développent les compétences et les données ESG aujourd’hui auront un avantage durable.</p>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
