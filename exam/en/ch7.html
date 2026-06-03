@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Construction · MPT · Exam Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']], processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root{
+  --bg:#0d0b14;--bg-card:#161221;--bg-code:#1c1828;
+  --text:#e4dffa;--muted:#9089bf;--border:rgba(180,150,80,.18);--bstrong:rgba(180,150,80,.4);
+  --gold:#c9a84c;--glight:#e8c97a;--blue:#7eb8d4;--green:#7bc496;--red:#e07b7b;--violet:#a78bfa;
+  --ff:'EB Garamond',Georgia,serif;--fd:'Cormorant Garamond',Georgia,serif;--fm:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:18px;line-height:1.85;display:flex}
+
+/* SIDEBAR */
+.sb{width:270px;min-height:100vh;background:var(--bg-card);border-right:1px solid var(--border);
+  padding:2rem 1.4rem;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sb-logo{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--gold);margin-bottom:.3rem}
+.sb-sub{font-family:var(--fm);font-size:.73rem;color:var(--muted);margin-bottom:1.8rem;letter-spacing:.05em}
+.sb nav ul{list-style:none}
+.sb nav ul li{margin-bottom:.2rem}
+.sb nav ul li a{color:var(--muted);text-decoration:none;font-size:.88rem;display:block;
+  padding:.35rem .7rem;border-radius:4px;border-left:2px solid transparent;transition:all .18s}
+.sb nav ul li a:hover,.sb nav ul li a.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,168,76,.07)}
+.sb nav ul li a .n{font-family:var(--fm);font-size:.72rem;color:var(--gold);margin-right:.45rem;opacity:.75}
+.sb-section{font-family:var(--fm);font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--muted);padding:.5rem .7rem .3rem;opacity:.6}
+
+/* MAIN */
+.main{margin-left:270px;flex:1;padding:3rem 4rem;max-width:1020px}
+
+/* HERO */
+.hero{border-bottom:1px solid var(--border);padding-bottom:3rem;margin-bottom:4.5rem}
+.hero-tag{font-family:var(--fm);font-size:.75rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero h1{font-family:var(--fd);font-size:3.6rem;font-weight:700;line-height:1.1;margin-bottom:.8rem}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:620px;margin-bottom:1.5rem}
+.badges{display:flex;gap:.7rem;flex-wrap:wrap}
+.badge{font-family:var(--fm);font-size:.72rem;padding:.25rem .75rem;border:1px solid var(--bstrong);
+  border-radius:20px;color:var(--gold);letter-spacing:.04em}
+.badge.b{border-color:rgba(126,184,212,.35);color:var(--blue)}
+.badge.g{border-color:rgba(123,196,150,.35);color:var(--green)}
+.badge.v{border-color:rgba(167,139,250,.35);color:var(--violet)}
+
+/* SECTION */
+.sec{margin-bottom:5rem;scroll-margin-top:2rem}
+.sec-hd{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.sec-num{font-family:var(--fm);font-size:.85rem;color:var(--gold);opacity:.65;min-width:2.5rem}
+.sec-title{font-family:var(--fd);font-size:1.95rem;font-weight:700;color:var(--text)}
+h3{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--glight);margin:2rem 0 .8rem}
+h4{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--blue);margin:1.4rem 0 .5rem}
+p{margin-bottom:.9rem}
+strong{color:var(--glight);font-weight:600}
+em{color:var(--blue);font-style:italic}
+a{color:var(--gold);text-decoration:none}
+code{font-family:var(--fm);background:var(--bg-code);padding:.1em .4em;border-radius:3px;font-size:.82em;color:var(--gold)}
+ul,ol{padding-left:1.5rem;margin-bottom:.9rem}
+li{margin-bottom:.35rem}
+
+/* CALLOUT */
+.box{background:var(--bg-card);border-left:3px solid var(--gold);padding:1.1rem 1.4rem;border-radius:0 6px 6px 0;margin:1.4rem 0}
+.box.info{border-left-color:var(--blue)}.box.warn{border-left-color:var(--red)}.box.ok{border-left-color:var(--green)}.box.vio{border-left-color:var(--violet)}
+.box-title{font-family:var(--fm);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem}
+.box.info .box-title{color:var(--blue)}.box.warn .box-title{color:var(--red)}.box.ok .box-title{color:var(--green)}.box.vio .box-title{color:var(--violet)}
+
+/* MATH */
+.mblock{background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:1.3rem 1.8rem;
+  margin:1.4rem 0;overflow-x:auto;text-align:center}
+.mblock .mlabel{font-family:var(--fm);font-size:.7rem;color:var(--muted);text-align:left;margin-bottom:.7rem;
+  text-transform:uppercase;letter-spacing:.08em}
+
+/* TABLES */
+.twrap{overflow-x:auto;margin:1.4rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead{background:var(--bg-code)}
+th{padding:.8rem 1rem;text-align:left;font-family:var(--fm);font-size:.73rem;color:var(--gold);
+  text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--bstrong)}
+td{padding:.7rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(201,168,76,.03)}
+td.g{color:var(--green)}td.r{color:var(--red)}td.m{color:var(--muted)}
+
+/* FORMULA CARDS */
+.fcards{display:flex;flex-direction:column;gap:1.5rem;margin-top:1rem}
+.fc{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.fc-head{background:var(--bg-code);padding:.8rem 1.4rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between}
+.fc-name{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--gold)}
+.fc-tag{font-family:var(--fm);font-size:.7rem;color:var(--muted);padding:.2rem .6rem;
+  background:rgba(255,255,255,.04);border-radius:20px}
+.fc-body{padding:1.4rem}
+.fc-expr{text-align:center;padding:1.2rem;background:var(--bg-code);border-radius:6px;margin-bottom:1.1rem;overflow-x:auto}
+.fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;font-size:.88rem}
+.fc-item h5{font-family:var(--fm);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:.3rem}
+.fc-item p{color:var(--muted);margin:0;font-size:.88rem}
+
+/* QUIZ */
+.qlevel{display:inline-block;font-family:var(--fm);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.1em;padding:.2rem .7rem;border-radius:4px;margin-bottom:.8rem;margin-top:1.2rem}
+.qlevel.easy{background:rgba(123,196,150,.13);color:var(--green)}
+.qlevel.med{background:rgba(126,184,212,.13);color:var(--blue)}
+.qlevel.hard{background:rgba(224,123,123,.13);color:var(--red)}
+.qi{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.8rem;overflow:hidden}
+.qi-q{padding:.9rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;
+  gap:.8rem;transition:background .15s}
+.qi-q:hover{background:rgba(201,168,76,.05)}
+.qi-qtxt{flex:1;font-size:.93rem}
+.qi-arr{color:var(--gold);font-size:1.1rem;transition:transform .2s;min-width:1.2rem;text-align:center}
+.qi-a{padding:0 1.1rem;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .2s;
+  background:var(--bg-code);font-size:.88rem;color:var(--muted);border-top:0 solid var(--border)}
+.qi-a.open{max-height:800px;padding:1rem 1.1rem;border-top:1px solid var(--border)}
+
+/* PIEGE */
+.piege{display:flex;gap:.9rem;align-items:flex-start;margin-bottom:.9rem;
+  padding:.8rem 1rem;background:rgba(224,123,123,.06);border-radius:6px;border-left:3px solid var(--red)}
+.piege-icon{font-size:1.1rem;min-width:1.4rem}
+.piege-text{font-size:.93rem}
+.piege-text strong{color:var(--red)}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:2rem;margin:1.4rem 0}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold),transparent)}
+.tl-item{position:relative;margin-bottom:2rem;padding-left:1.4rem}
+.tl-item::before{content:'';position:absolute;left:-2.4rem;top:.6rem;width:8px;height:8px;
+  border-radius:50%;background:var(--gold);border:2px solid var(--bg)}
+.tl-year{font-family:var(--fm);font-size:.78rem;color:var(--gold);margin-bottom:.25rem}
+.tl-title{font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:.25rem}
+.tl-desc{font-size:.9rem;color:var(--muted)}
+
+/* FICHE */
+.fiche-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.4rem 0}
+.fc2{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.1rem}
+.fc2 h4{font-family:var(--fm);font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--gold);margin:0 0 .7rem 0}
+.fc2 ul{list-style:none;padding:0;font-size:.85rem}
+.fc2 ul li{padding:.22rem 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted)}
+.fc2 ul li:last-child{border:none}
+.fc2 ul li strong{color:var(--text)}
+
+/* ORAL BLOCK */
+.oral{background:var(--bg-card);border:1px solid var(--bstrong);border-radius:10px;
+  padding:2rem;margin:1rem 0;position:relative}
+.oral::before{content:'"';font-family:var(--fd);font-size:5rem;color:var(--gold);opacity:.15;
+  position:absolute;top:-.5rem;left:.8rem;line-height:1}
+.oral p{font-size:1rem;line-height:1.9;color:var(--text)}
+.oral p+p{margin-top:.8rem}
+
+/* DIAGRAM */
+.diag{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;
+  padding:1.5rem;margin:1.4rem 0;overflow-x:auto;text-align:center}
+.diag-caption{font-family:var(--fm);font-size:.72rem;color:var(--muted);text-align:center;margin-top:.8rem;letter-spacing:.05em}
+
+/* CONCEPT GRID */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin:1.4rem 0}
+.ccard{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.2rem;transition:border-color .18s}
+.ccard:hover{border-color:var(--bstrong)}
+.ccard .ctag{font-family:var(--fm);font-size:.68rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
+.ccard h4{font-family:var(--fd);font-size:1.15rem;color:var(--text);margin:0 0 .4rem 0}
+.ccard p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.6}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:3px}
+
+/* JOKE BOX */
+.joke{background:rgba(201,168,76,.05);border:1px dashed var(--bstrong);border-radius:10px;
+  padding:1.2rem 1.6rem;margin:1.4rem 0;font-size:.97rem;font-style:italic;color:var(--muted)}
+.joke::before{content:'😂  ';font-style:normal}
+
+/* SVG DIAGRAM STYLES */
+.svg-diagram{width:100%;max-width:700px;display:block;margin:0 auto}
+
+/* INTERACTIVE CHART */
+.chart-container{background:var(--bg-code);border-radius:8px;padding:1rem;margin:1.4rem 0;position:relative}
+.chart-container canvas{display:block;margin:0 auto}
+
+/* PIPELINE */
+.pipeline{display:flex;align-items:center;gap:0;margin:1.4rem 0;flex-wrap:wrap;justify-content:center}
+.pipe-step{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.8rem 1.1rem;
+  text-align:center;font-size:.82rem;min-width:110px;position:relative}
+.pipe-step .ps-num{font-family:var(--fm);font-size:.65rem;color:var(--gold);display:block;margin-bottom:.2rem}
+.pipe-step .ps-name{color:var(--text);font-weight:600;font-size:.85rem}
+.pipe-step .ps-desc{color:var(--muted);font-size:.73rem;margin-top:.2rem}
+.pipe-arrow{color:var(--gold);font-size:1.4rem;padding:0 .4rem;opacity:.6}
+
+/* CORRELATION TABLE special */
+.ctable td{text-align:center;font-family:var(--fm);font-size:.85rem}
+.ctable td.pos{color:var(--green)}.ctable td.neg{color:var(--red)}.ctable td.neu{color:var(--blue)}
+
+@media(max-width:900px){.sb{display:none}.main{margin-left:0;padding:2rem 1.4rem}.hero h1{font-size:2.4rem}.fiche-grid{grid-template-columns:1fr}.fc-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<<aside class="sb">
+  <div class="sb-logo">Portfolio · MPT</div>
+  <div class="sb-sub">Univ. Geneva · Computational Finance</div>
+  <nav>
+    <ul>
+      <div class="sb-section">Intro</div>
+      <li><a href="#s0"><span class="n">00</span> Setting the Scene 😂</a></li>
+      <li><a href="#s1"><span class="n">01</span> Executive Summary</a></li>
+      <li><a href="#s2"><span class="n">02</span> Oral Exam Answer</a></li>
+      <div class="sb-section">Theory</div>
+      <li><a href="#s3"><span class="n">03</span> Fundamental Concepts</a></li>
+      <li><a href="#s4"><span class="n">04</span> Diagrams & Visualizations</a></li>
+      <li><a href="#s5"><span class="n">05</span> Important Formulas</a></li>
+      <div class="sb-section">Methods</div>
+      <li><a href="#s6"><span class="n">06</span> Comparison of Approaches</a></li>
+      <li><a href="#s7"><span class="n">07</span> Conceptual Relationships</a></li>
+      <li><a href="#s8"><span class="n">08</span> Historical Perspective</a></li>
+      <div class="sb-section">Exam</div>
+      <li><a href="#s9"><span class="n">09</span> Modern Applications</a></li>
+      <li><a href="#s10"><span class="n">10</span> Exam Questions</a></li>
+      <li><a href="#s11"><span class="n">11</span> Classic Pitfalls</a></li>
+      <li><a href="#s12"><span class="n">12</span> Revision Sheet</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<!-- MAIN -->
+<<main class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Computational Finance · University of Geneva · v1.1</div>
+  <h1>Portfolio <em>Construction</em></h1>
+  <p class="hero-desc">Modern Portfolio Theory, Efficient Frontier, Capital Market Line — from Markowitz to numerical optimization.</p>
+  <div class="badges">
+    <span class="badge">MPT</span>
+    <span class="badge b">Efficient Frontier</span>
+    <span class="badge g">Optimization</span>
+    <span class="badge v">CML · Sharpe</span>
+    <span class="badge">Markowitz 1952</span>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 0 — SETTING THE SCENE
+     ============================================================ -->
+<section class="sec" id="s0">
+  <div class="sec-hd">
+    <span class="sec-num">00</span>
+    <span class="sec-title">Setting the Scene 😂</span>
+  </div>
+
+  <div class="joke">
+    Imagine you have 100 CHF. You can put everything on Tesla stock (maximum thrill!), everything in cash under your mattress (maximum safety and boredom), or think about a smart allocation. Spoiler: neither 100% Tesla nor the mattress will make Markowitz proud. But if you mix the two judiciously, you might sleep soundly AND get richer. That's exactly what this chapter will teach you.
+  </div>
+
+  <div class="joke">
+    "Diversification is the only free lunch in finance." — Harry Markowitz, Nobel Prize 1990, who clearly had a passion for all-you-can-eat buffets.
+  </div>
+
+  <p>This chapter addresses one of the fundamental problems in finance: <strong>how to intelligently allocate capital across different assets?</strong> The answer, surprisingly simple in its mathematical formulation, is that combining imperfectly correlated assets allows you to <em>reduce risk without sacrificing return</em> — or increase return without increasing risk. That's the magic of diversification, formalized by Markowitz in 1952.</p>
+</section>
+
+<!-- ============================================================
+     SECTION 1 — EXECUTIVE SUMMARY
+     ============================================================ -->
+<section class="sec" id="s1">
+  <div class="sec-hd">
+    <span class="sec-num">01</span>
+    <span class="sec-title">Executive Summary</span>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">⏱ 30 seconds flat</div>
+    <p>The <strong>Modern Portfolio Theory</strong> (<em>MPT</em>), proposed by Markowitz in 1952, formalizes how to combine assets to maximize expected return for a given level of risk (or minimize risk for a target return). The key is <strong>diversification</strong>: imperfectly correlated assets partially offset each other, reducing the overall portfolio variance. The set of optimal portfolios forms the <strong>Efficient Frontier</strong>. Adding a risk-free asset yields the <strong>Capital Market Line (CML)</strong>, which identifies the optimal tangency portfolio.</p>
+  </div>
+
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Problem</div>
+      <h4>Optimal Allocation</h4>
+      <p>How to allocate capital across $N$ assets to be efficient in the (risk, return) space?</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Central Tool</div>
+      <h4>Covariance Matrix</h4>
+      <p>Encodes all relationships between assets. Together with expected returns, it is sufficient for all calculations.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Key Concept</div>
+      <h4>Diversification</h4>
+      <p>If $\rho &lt; 1$, combining two assets reduces risk relative to the weighted average.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Result</div>
+      <h4>Efficient Frontier</h4>
+      <p>Curve of dominant portfolios — no one can do better in risk/return simultaneously.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 2 — ORAL EXAM ANSWER
+     ============================================================ -->
+<section class="sec" id="s2">
+  <div class="sec-hd">
+    <span class="sec-num">02</span>
+    <span class="sec-title">Model Oral Exam Answer</span>
+  </div>
+
+  <div class="oral">
+    <p>Portfolio construction aims to create an investment vehicle more robust than any single asset. The theoretical foundation is <strong>Modern Portfolio Theory</strong> by Markowitz, proposed in 1952 and awarded the Nobel Prize in Economics in 1990.</p>
+    <p>The central idea is <strong>diversification</strong>: by combining assets whose returns are not perfectly correlated, one can reduce overall risk without necessarily sacrificing return. Mathematically, a portfolio's variance depends not only on the individual variances of the assets, but also on the covariances between them. If two assets move in opposite directions, their fluctuations partially cancel out.</p>
+    <p>For a portfolio of $N$ assets with weights $\mathbf{w}$, the expected return is $\mathbf{w}^T \boldsymbol{\mu}$ and the variance is $\mathbf{w}^T \mathbf{C} \mathbf{w}$, where $\mathbf{C}$ is the covariance matrix. We then seek the weights that minimize risk for a target return, subject to the constraint $\sum w_i = 1$. The set of these optimal solutions forms the <strong>Efficient Frontier</strong> in the (volatility, return) space.</p>
+    <p>In practice, this frontier can be computed by three approaches: Monte Carlo (brute force, intuitive but costly), closed-form via Lagrange multipliers (analytical, but inflexible), or numerical optimization (the standard approach, flexible and efficient). Optimization easily accommodates realistic constraints such as bounds on weights.</p>
+    <p>Finally, by introducing a <strong>risk-free asset</strong> — typically a government bond — we can extend the efficient frontier into a straight line in the return/risk space: the <strong>Capital Market Line</strong>. The tangency point between the CML and the efficient frontier is the <strong>optimal market portfolio</strong>, and the return/risk ratio of the CML is the famous <strong>Sharpe Ratio</strong>.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 3 — FUNDAMENTAL CONCEPTS
+     ============================================================ -->
+<section class="sec" id="s3">
+  <div class="sec-hd">
+    <span class="sec-num">03</span>
+    <span class="sec-title">In-Depth Explanation</span>
+  </div>
+
+  <h3>3.1 What is a Portfolio?</h3>
+  <p>A <strong>portfolio</strong> is a collection of potentially different types of assets (stocks, bonds, real estate, commodities, etc.) characterized by a weight vector $\mathbf{w} = (w_1, \ldots, w_N)^T$ with $\sum_{i=1}^N w_i = 1$.</p>
+
+  <div class="box info">
+    <div class="box-title">💡 Intuition on Weights</div>
+    <p>A weight $w_i &gt; 0$ means a long position (you own the asset). A weight $w_i &lt; 0$ means a short position (<em>short selling</em> — you sell an asset you do not own). In a "long-only" portfolio, we impose $w_i \in [0,1]$. Unconstrained optimization may yield negative weights (leverage and short-selling).</p>
+  </div>
+
+  <h3>3.2 Return and Variance — The Essentials</h3>
+  <p>The <strong>robustness</strong> of the portfolio depends on the right choice of assets and their weightings. We seek to characterize each asset by its <em>expected return</em> $E[R_i]$ and its <em>variance</em> $\text{Var}(R_i) = \sigma_i^2$.</p>
+
+  <h4>Estimating Expected Return</h4>
+  <p>Practitioners often say that "expected returns are more an art than a science." Three approaches exist:</p>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Approach</th><th>Formula / Method</th><th>Horizon</th><th>Advantage</th><th>Limitation</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Historical (SMA)</strong></td>
+          <td>$E[R_i] = \frac{1}{T}\sum_{t=1}^T R_i(t)$</td>
+          <td>Medium</td>
+          <td class="g">Simple, objective</td>
+          <td class="r">Assumes the past repeats itself</td>
+        </tr>
+        <tr>
+          <td><strong>Fundamental</strong></td>
+          <td>Dividends, coupons, macro</td>
+          <td>Long term</td>
+          <td class="g">Anchored in the real economy</td>
+          <td class="r">Difficult to quantify</td>
+        </tr>
+        <tr>
+          <td><strong>Opportunistic</strong></td>
+          <td>Macro + market views</td>
+          <td>Short term</td>
+          <td class="g">Incorporates current information</td>
+          <td class="r">Subjective, risk of bias</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>3.3 Diversification — The Heart of the Matter</h3>
+  <p>The benefit of diversification stems directly from the portfolio variance formula:</p>
+  <div class="mblock">
+    <div class="mlabel">Variance of an N-Asset Portfolio</div>
+    $$\sigma_P^2 = \text{Var}(R_P) = \sum_{i=1}^N \sum_{j=1}^N w_i w_j \text{Cov}(R_i, R_j) = \mathbf{w}^T \mathbf{C} \mathbf{w}$$
+  </div>
+  <p>Expanding for 2 assets with $\text{Cov}(R_i, R_j) = \rho_{ij}\sigma_i\sigma_j$:</p>
+  <div class="mblock">
+    <div class="mlabel">Variance of a 2-Asset Portfolio</div>
+    $$\sigma_P^2 = w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1 w_2 \rho_{12} \sigma_1 \sigma_2$$
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚡ The Moment of Truth — Correlation Effect</div>
+    <p>The third term $2w_1 w_2 \rho_{12} \sigma_1 \sigma_2$ is the key:<br>
+    • If $\rho_{12} = 1$ → maximum variance (no diversification benefit)<br>
+    • If $\rho_{12} = 0$ → partial reduction (independent assets)<br>
+    • If $\rho_{12} = -1$ → maximum reduction (risk cancellation possible!)<<br>
+    Conclusion: <strong>the lower the correlation, the more effective the diversification.</strong></p>
+  </div>
+
+  <h3>3.4 The Efficient Frontier</h3>
+  <p>The <strong>Efficient Frontier</strong> is the set of portfolios that, for a given level of risk $\sigma_P$, maximize the expected return $E[R_P]$ — or equivalently, for a target return, minimize risk.</p>
+
+  <p><strong>Dominance:</strong> Portfolio A dominates Portfolio C if A offers the same return with less risk, or more return with the same risk. Any portfolio below the frontier is called <em>inefficient</em>.</p>
+
+  <div class="box vio">
+    <div class="box-title">📐 Mathematical Shape</div>
+    <p>The frontier is a <strong>hyperbola</strong> in the $(\sigma_P, E[R_P])$ space. It has a global minimum variance point (<em>Global Minimum Variance Portfolio</em>, GMVP) at its leftmost end. Only the upper portion (above the GMVP) constitutes the Markowitz <em>efficient frontier</em>.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 4 — DIAGRAMS & VISUALIZATIONS
+     ============================================================ -->
+<section class="sec" id="s4">
+  <div class="sec-hd">
+    <span class="sec-num">04</span>
+    <span class="sec-title">Diagrams & Visualizations</span>
+  </div>
+
+  <h3>4.1 MPT Pipeline — Overview</h3>
+  <div class="pipeline">
+    <div class="pipe-step">
+      <span class="ps-num">01</span>
+      <span class="ps-name">Asset Selection</span>
+      <div class="ps-desc">Stocks, bonds, real estate…</div>
+    </div>
+    <span class="pipe-arrow">→</span>
+    <div class="pipe-step">
+      <span class="ps-num">02</span>
+      <span class="ps-name">Estimate $E[R_i]$</span>
+      <div class="ps-desc">Historical, fundamental, model</div>
+    </div>
+    <span class="pipe-arrow">→</span>
+    <div class="pipe-step">
+      <span class="ps-num">03</span>
+      <span class="ps-name">Matrix $\mathbf{C}$</span>
+      <div class="ps-desc">Historical covariance</div>
+    </div>
+    <span class="pipe-arrow">→</span>
+    <div class="pipe-step">
+      <span class="ps-num">04</span>
+      <span class="ps-name">Optimization</span>
+      <div class="ps-desc">Monte Carlo / Lagrange / Numerical</div>
+    </div>
+    <span class="pipe-arrow">→</span>
+    <div class="pipe-step">
+      <span class="ps-num">05</span>
+      <span class="ps-name">Efficient Frontier</span>
+      <div class="ps-desc">+ real-world constraints</div>
+    </div>
+    <span class="pipe-arrow">→</span>
+    <div class="pipe-step">
+      <span class="ps-num">06</span>
+      <span class="ps-name">CML + Sharpe</span>
+      <div class="ps-desc">Choosing the optimal portfolio</div>
+    </div>
+  </div>
+
+  <h3>4.2 Effect of Correlation on Portfolio Risk</h3>
+  <div class="diag">
+    <svg class="svg-diagram" viewBox="0 0 680 400" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background -->
+      <rect width="680" height="400" fill="#1c1828" rx="8"/>
+      <!-- Axes -->
+      <line x1="80" y1="350" x2="640" y2="350" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="80" y1="30" x2="80" y2="350" stroke="#9089bf" stroke-width="1.5"/>
+      <!-- Arrow heads -->
+      <polygon points="640,345 650,350 640,355" fill="#9089bf"/>
+      <polygon points="75,30 80,18 85,30" fill="#9089bf"/>
+      <!-- Axis labels -->
+      <text x="655" y="355" fill="#9089bf" font-size="13" font-family="EB Garamond">σ_P</text>
+      <text x="55" y="20" fill="#9089bf" font-size="13" font-family="EB Garamond">E[R_P]</text>
+      <text x="300" y="390" fill="#9089bf" font-size="12" font-family="EB Garamond" text-anchor="middle">Portfolio Volatility</text>
+      <text x="18" y="200" fill="#9089bf" font-size="12" font-family="EB Garamond" text-anchor="middle" transform="rotate(-90,18,200)">Expected Return</text>
+
+      <!-- Asset 1 (low risk, low return) -->
+      <circle cx="160" cy="280" r="8" fill="#7bc496"/>
+      <text x="145" y="268" fill="#7bc496" font-size="13" font-family="EB Garamond">Asset 1</text>
+
+      <!-- Asset 2 (high risk, high return) -->
+      <circle cx="500" cy="120" r="8" fill="#7eb8d4"/>
+      <text x="510" y="120" fill="#7eb8d4" font-size="13" font-family="EB Garamond">Asset 2</text>
+
+      <!-- ρ = 1 : straight line -->
+      <line x1="160" y1="280" x2="500" y2="120" stroke="#e07b7b" stroke-width="2" stroke-dasharray="6,3"/>
+      <text x="350" y="185" fill="#e07b7b" font-size="11" font-family="JetBrains Mono" transform="rotate(-25,350,185)">ρ = 1 (straight)</text>
+
+      <!-- ρ = 0.5 : slight curve -->
+      <path d="M 160 280 Q 300 170 500 120" stroke="#c9a84c" stroke-width="2" fill="none"/>
+      <text x="295" y="155" fill="#c9a84c" font-size="11" font-family="JetBrains Mono">ρ = 0.5</text>
+
+      <!-- ρ = 0 : more pronounced curve -->
+      <path d="M 160 280 Q 260 155 500 120" stroke="#e8c97a" stroke-width="2.5" fill="none"/>
+      <text x="230" y="145" fill="#e8c97a" font-size="11" font-family="JetBrains Mono">ρ = 0</text>
+
+      <!-- ρ = -0.5 : even more curve -->
+      <path d="M 160 280 Q 210 130 500 120" stroke="#7eb8d4" stroke-width="2" fill="none"/>
+      <text x="190" y="130" fill="#7eb8d4" font-size="11" font-family="JetBrains Mono">ρ = -0.5</text>
+
+      <!-- ρ = -1 : goes down to the left -->
+      <path d="M 160 280 L 100 200 L 500 120" stroke="#a78bfa" stroke-width="2" fill="none"/>
+      <text x="88" y="195" fill="#a78bfa" font-size="11" font-family="JetBrains Mono">ρ=-1</text>
+
+      <!-- Shaded zone: feasible portfolios -->
+      <ellipse cx="360" cy="230" rx="180" ry="90" fill="rgba(126,184,212,0.06)" stroke="none"/>
+
+      <!-- Legend -->
+      <rect x="430" y="260" width="200" height="110" rx="5" fill="#161221" stroke="#2d2845"/>
+      <text x="440" y="278" fill="#9089bf" font-size="11" font-family="JetBrains Mono">EFFECT OF ρ ON σ_P</text>
+      <line x1="440" y1="290" x2="460" y2="290" stroke="#e07b7b" stroke-width="2" stroke-dasharray="4,2"/>
+      <text x="465" y="294" fill="#e07b7b" font-size="11" font-family="EB Garamond">ρ=1 → no gain</text>
+      <line x1="440" y1="308" x2="460" y2="308" stroke="#c9a84c" stroke-width="2"/>
+      <text x="465" y="312" fill="#c9a84c" font-size="11" font-family="EB Garamond">ρ=0.5 → moderate gain</text>
+      <line x1="440" y1="326" x2="460" y2="326" stroke="#e8c97a" stroke-width="2.5"/>
+      <text x="465" y="330" fill="#e8c97a" font-size="11" font-family="EB Garamond">ρ=0 → large gain</text>
+      <line x1="440" y1="344" x2="460" y2="344" stroke="#a78bfa" stroke-width="2"/>
+      <text x="465" y="348" fill="#a78bfa" font-size="11" font-family="EB Garamond">ρ=-1 → cancellation!</text>
+      
+      <!-- Diversification annotation arrow -->
+      <path d="M 100 330 Q 90 310 100 290" stroke="#7bc496" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+      <text x="40" y="340" fill="#7bc496" font-size="11" font-family="EB Garamond">Diversification</text>
+      <text x="42" y="353" fill="#7bc496" font-size="11" font-family="EB Garamond">increasing</text>
+    </svg>
+    <div class="diag-caption">FIG. 1 — Impact of correlation ρ₁₂ on the risk/return profile of a 2-asset portfolio. The lower ρ is, the more the curve shifts to the left (less risk for the same return).</div>
+  </div>
+
+  <h3>4.3 The Efficient Frontier and the CML</h3>
+  <div class="diag">
+    <svg class="svg-diagram" viewBox="0 0 680 440" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="efGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#7bc496" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#c9a84c" stop-opacity="0.8"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <rect width="680" height="440" fill="#1c1828" rx="8"/>
+      <!-- Axes -->
+      <line x1="80" y1="380" x2="620" y2="380" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="80" y1="40" x2="80" y2="380" stroke="#9089bf" stroke-width="1.5"/>
+      <polygon points="620,375 630,380 620,385" fill="#9089bf"/>
+      <polygon points="75,40 80,28 85,40" fill="#9089bf"/>
+      <text x="635" y="385" fill="#9089bf" font-size="13" font-family="EB Garamond">σ_P</text>
+      <text x="55" y="30" fill="#9089bf" font-size="13" font-family="EB Garamond">E[R_P]</text>
+
+      <!-- Feasible portfolios zone (cloud) -->
+      <ellipse cx="360" cy="260" rx="200" ry="110" fill="rgba(126,184,212,0.07)" stroke="rgba(126,184,212,0.15)" stroke-width="1"/>
+
+      <!-- Some "individual assets" points -->
+      <circle cx="200" cy="300" r="5" fill="#9089bf" opacity="0.6"/>
+      <circle cx="350" cy="230" r="5" fill="#9089bf" opacity="0.6"/>
+      <circle cx="480" cy="180" r="5" fill="#9089bf" opacity="0.6"/>
+      <circle cx="520" cy="260" r="5" fill="#9089bf" opacity="0.6"/>
+      <circle cx="280" cy="290" r="5" fill="#9089bf" opacity="0.6"/>
+      <circle cx="420" cy="210" r="5" fill="#9089bf" opacity="0.6"/>
+      <circle cx="300" cy="250" r="5" fill="#9089bf" opacity="0.5"/>
+      <circle cx="450" cy="195" r="5" fill="#9089bf" opacity="0.5"/>
+      <text x="380" y="265" fill="#9089bf" font-size="11" font-family="EB Garamond" opacity="0.5">Feasible</text>
+      <text x="388" y="278" fill="#9089bf" font-size="11" font-family="EB Garamond" opacity="0.5">portfolios</text>
+
+      <!-- Efficient frontier (hyperbola, upper part) -->
+      <path d="M 148 330 Q 170 280 220 220 Q 300 155 420 120 Q 500 100 560 95"
+            stroke="url(#efGrad)" stroke-width="3.5" fill="none" filter="url(#glow)"/>
+      <text x="460" y="90" fill="#e8c97a" font-size="13" font-family="EB Garamond" font-weight="600">Efficient Frontier</text>
+
+      <!-- GMVP -->
+      <circle cx="148" cy="330" r="7" fill="#7bc496" filter="url(#glow)"/>
+      <text x="100" y="325" fill="#7bc496" font-size="11" font-family="EB Garamond">GMVP</text>
+      <text x="82" y="338" fill="#7bc496" font-size="10" font-family="JetBrains Mono">min-variance</text>
+
+      <!-- Risk-free asset r_f -->
+      <circle cx="80" cy="360" r="6" fill="#a78bfa"/>
+      <text x="55" y="356" fill="#a78bfa" font-size="11" font-family="EB Garamond">r_f</text>
+
+      <!-- CML (tangent line from r_f) -->
+      <line x1="80" y1="360" x2="600" y2="55" stroke="#a78bfa" stroke-width="2" stroke-dasharray="8,4"/>
+      <text x="490" y="72" fill="#a78bfa" font-size="13" font-family="EB Garamond">CML</text>
+
+      <!-- Tangency portfolio -->
+      <circle cx="370" cy="175" r="9" fill="#c9a84c" filter="url(#glow)"/>
+      <line x1="370" y1="175" x2="370" y2="380" stroke="#c9a84c" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+      <line x1="80" y1="175" x2="370" y2="175" stroke="#c9a84c" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+      <text x="375" y="165" fill="#c9a84c" font-size="12" font-family="EB Garamond">Tangency</text>
+      <text x="375" y="178" fill="#c9a84c" font-size="12" font-family="EB Garamond">Portfolio (T)</text>
+
+      <!-- Points A, B, C for dominance illustration -->
+      <circle cx="280" cy="175" r="6" fill="#e8c97a"/>
+      <text x="265" y="165" fill="#e8c97a" font-size="13" font-family="EB Garamond">A</text>
+      <circle cx="410" cy="175" r="6" fill="#7eb8d4"/>
+      <text x="415" y="165" fill="#7eb8d4" font-size="13" font-family="EB Garamond">B</text>
+      <circle cx="410" cy="240" r="6" fill="#e07b7b"/>
+      <text x="415" y="250" fill="#e07b7b" font-size="13" font-family="EB Garamond">C</text>
+      <!-- dominance arrows -->
+      <line x1="405" y1="235" x2="280" y2="180" stroke="#7bc496" stroke-width="1" stroke-dasharray="3,2" opacity="0.6"/>
+      <line x1="405" y1="235" x2="405" y2="183" stroke="#7bc496" stroke-width="1" stroke-dasharray="3,2" opacity="0.6"/>
+      
+      <!-- Dominance annotations -->
+      <text x="300" y="215" fill="#7bc496" font-size="10" font-family="EB Garamond" opacity="0.8">A dominates C</text>
+      <text x="412" y="210" fill="#7bc496" font-size="10" font-family="EB Garamond" opacity="0.8">(same σ)</text>
+
+      <!-- Zone above CML -->
+      <text x="200" y="110" fill="#a78bfa" font-size="11" font-family="EB Garamond" opacity="0.7">Better with</text>
+      <text x="195" y="123" fill="#a78bfa" font-size="11" font-family="EB Garamond" opacity="0.7">leverage on r_f</text>
+
+      <!-- Legend -->
+      <rect x="25" y="40" width="170" height="100" rx="5" fill="#161221" stroke="#2d2845"/>
+      <text x="35" y="58" fill="#9089bf" font-size="10" font-family="JetBrains Mono">LEGEND</text>
+      <line x1="35" y1="70" x2="60" y2="70" stroke="#e8c97a" stroke-width="3"/>
+      <text x="65" y="74" fill="#e8c97a" font-size="11" font-family="EB Garamond">Efficient Frontier</text>
+      <line x1="35" y1="88" x2="60" y2="88" stroke="#a78bfa" stroke-width="2" stroke-dasharray="6,3"/>
+      <text x="65" y="92" fill="#a78bfa" font-size="11" font-family="EB Garamond">CML</text>
+      <circle cx="47" cy="106" r="5" fill="#c9a84c"/>
+      <text x="65" y="110" fill="#c9a84c" font-size="11" font-family="EB Garamond">Tangency Portfolio</text>
+      <circle cx="47" cy="124" r="5" fill="#7bc496"/>
+      <text x="65" y="128" fill="#7bc496" font-size="11" font-family="EB Garamond">GMVP</text>
+    </svg>
+    <div class="diag-caption">FIG. 2 — Efficient frontier, dominance points A/B/C, tangency portfolio, Capital Market Line (CML), and risk-free asset r_f.</div>
+  </div>
+
+  <h3>4.4 Structure of the Covariance Matrix</h3>
+  <div class="diag">
+    <svg class="svg-diagram" viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="300" fill="#1c1828" rx="8"/>
+      <!-- Title -->
+      <text x="340" y="30" fill="#c9a84c" font-size="16" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Covariance Matrix C (N×N)</text>
+
+      <!-- Visual matrix -->
+      <!-- Large left bracket -->
+      <text x="115" y="175" fill="#e4dffa" font-size="100" font-family="EB Garamond" opacity="0.4">[</text>
+      <!-- Large right bracket -->
+      <text x="500" y="175" fill="#e4dffa" font-size="100" font-family="EB Garamond" opacity="0.4">]</text>
+
+      <!-- Diagonal cells (variance) -->
+      <rect x="155" y="60" width="70" height="50" rx="5" fill="rgba(123,196,150,0.2)" stroke="#7bc496" stroke-width="1.5"/>
+      <text x="190" y="83" fill="#7bc496" font-size="13" font-family="JetBrains Mono" text-anchor="middle">σ₁²</text>
+      <text x="190" y="100" fill="#7bc496" font-size="10" font-family="EB Garamond" text-anchor="middle">(var. asset 1)</text>
+
+      <rect x="285" y="145" width="70" height="50" rx="5" fill="rgba(123,196,150,0.2)" stroke="#7bc496" stroke-width="1.5"/>
+      <text x="320" y="168" fill="#7bc496" font-size="13" font-family="JetBrains Mono" text-anchor="middle">σ₂²</text>
+      <text x="320" y="185" fill="#7bc496" font-size="10" font-family="EB Garamond" text-anchor="middle">(var. asset 2)</text>
+
+      <rect x="415" y="225" width="70" height="50" rx="5" fill="rgba(123,196,150,0.2)" stroke="#7bc496" stroke-width="1.5"/>
+      <text x="450" y="248" fill="#7bc496" font-size="13" font-family="JetBrains Mono" text-anchor="middle">σₙ²</text>
+      <text x="450" y="265" fill="#7bc496" font-size="10" font-family="EB Garamond" text-anchor="middle">(var. asset N)</text>
+
+      <!-- Off-diagonal cells (covariance) -->
+      <rect x="155" y="145" width="70" height="50" rx="5" fill="rgba(126,184,212,0.1)" stroke="#7eb8d4" stroke-width="1" stroke-dasharray="4,2"/>
+      <text x="190" y="168" fill="#7eb8d4" font-size="12" font-family="JetBrains Mono" text-anchor="middle">σ₁₂</text>
+      <text x="190" y="185" fill="#7eb8d4" font-size="10" font-family="EB Garamond" text-anchor="middle">= ρ₁₂σ₁σ₂</text>
+
+      <rect x="285" y="60" width="70" height="50" rx="5" fill="rgba(126,184,212,0.1)" stroke="#7eb8d4" stroke-width="1" stroke-dasharray="4,2"/>
+      <text x="320" y="83" fill="#7eb8d4" font-size="12" font-family="JetBrains Mono" text-anchor="middle">σ₁₂</text>
+      <text x="320" y="100" fill="#7eb8d4" font-size="10" font-family="EB Garamond" text-anchor="middle">= ρ₁₂σ₁σ₂</text>
+
+      <!-- Ellipsis -->
+      <text x="400" y="100" fill="#9089bf" font-size="18" font-family="EB Garamond">⋯</text>
+      <text x="245" y="250" fill="#9089bf" font-size="18" font-family="EB Garamond">⋮</text>
+      <text x="390" y="185" fill="#9089bf" font-size="14" font-family="EB Garamond">⋱</text>
+
+      <!-- Annotations -->
+      <text x="155" y="45" fill="#7bc496" font-size="11" font-family="JetBrains Mono">Diagonal = Variances σᵢ²</text>
+      <text x="350" y="225" fill="#7eb8d4" font-size="11" font-family="JetBrains Mono">Off-diag = Covariances σᵢⱼ = ρᵢⱼσᵢσⱼ</text>
+
+      <!-- Symmetry property -->
+      <path d="M 190 135 Q 255 110 318 135" stroke="#c9a84c" stroke-width="1.5" fill="none" stroke-dasharray="3,2"/>
+      <text x="240" y="125" fill="#c9a84c" font-size="10" font-family="EB Garamond">Symmetric matrix</text>
+    </svg>
+    <div class="diag-caption">FIG. 3 — Structure of the covariance matrix $C$. The diagonal contains the variances $\sigma_i^2$. The off-diagonal terms are the covariances $\sigma_{ij} = \rho_{ij}\sigma_i\sigma_j$. The matrix is symmetric ($C = C^T$) and positive definite.</div>
+  </div>
+
+  <h3>4.5 Visual Comparison of the 3 Numerical Approaches</h3>
+  <div class="diag">
+    <svg class="svg-diagram" viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="320" fill="#1c1828" rx="8"/>
+      <text x="340" y="28" fill="#c9a84c" font-size="15" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">3 approaches to compute the efficient frontier</text>
+
+      <!-- Monte Carlo -->
+      <rect x="30" y="50" width="190" height="230" rx="8" fill="#161221" stroke="rgba(224,123,123,0.4)" stroke-width="1.5"/>
+      <text x="125" y="75" fill="#e07b7b" font-size="13" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Monte Carlo</text>
+      <text x="125" y="95" fill="#9089bf" font-size="11" font-family="EB Garamond" text-anchor="middle">Brute force</text>
+      <!-- Random points to illustrate -->
+      <circle cx="80" cy="150" r="2.5" fill="#e07b7b" opacity="0.6"/>
+      <circle cx="100" cy="130" r="2.5" fill="#e07b7b" opacity="0.5"/>
+      <circle cx="90" cy="170" r="2.5" fill="#e07b7b" opacity="0.7"/>
+      <circle cx="120" cy="140" r="2.5" fill="#e07b7b" opacity="0.4"/>
+      <circle cx="140" cy="120" r="2.5" fill="#e07b7b" opacity="0.6"/>
+      <circle cx="160" cy="135" r="2.5" fill="#e07b7b" opacity="0.5"/>
+      <circle cx="110" cy="160" r="2.5" fill="#e07b7b" opacity="0.6"/>
+      <circle cx="150" cy="155" r="2.5" fill="#e07b7b" opacity="0.4"/>
+      <circle cx="130" cy="175" r="2.5" fill="#e07b7b" opacity="0.7"/>
+      <circle cx="170" cy="145" r="2.5" fill="#e07b7b" opacity="0.5"/>
+      <circle cx="95" cy="115" r="2.5" fill="#e07b7b" opacity="0.5"/>
+      <circle cx="145" cy="108" r="2.5" fill="#e07b7b" opacity="0.6"/>
+      <text x="125" y="215" fill="#7bc496" font-size="11" font-family="EB Garamond" text-anchor="middle">✓ Simple to implement</text>
+      <text x="125" y="232" fill="#7bc496" font-size="11" font-family="EB Garamond" text-anchor="middle">✓ Intuitive</text>
+      <text x="125" y="252" fill="#e07b7b" font-size="11" font-family="EB Garamond" text-anchor="middle">✗ Very costly (N×5M)</text>
+      <text x="125" y="269" fill="#e07b7b" font-size="11" font-family="EB Garamond" text-anchor="middle">✗ Inefficient</text>
+
+      <!-- Closed-form -->
+      <rect x="245" y="50" width="190" height="230" rx="8" fill="#161221" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+      <text x="340" y="75" fill="#c9a84c" font-size="13" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Closed-Form</text>
+      <text x="340" y="95" fill="#9089bf" font-size="11" font-family="EB Garamond" text-anchor="middle">Analytical Lagrange</text>
+      <path d="M 265 170 Q 280 130 310 115 Q 360 95 400 90" stroke="#c9a84c" stroke-width="2.5" fill="none"/>
+      <text x="340" y="140" fill="#c9a84c" font-size="10" font-family="JetBrains Mono" text-anchor="middle">w = C⁻¹(λ₁1+λ₂μ)</text>
+      <text x="340" y="215" fill="#7bc496" font-size="11" font-family="EB Garamond" text-anchor="middle">✓ Exact solution</text>
+      <text x="340" y="232" fill="#7bc496" font-size="11" font-family="EB Garamond" text-anchor="middle">✓ Fast</text>
+      <text x="340" y="252" fill="#e07b7b" font-size="11" font-family="EB Garamond" text-anchor="middle">✗ Constraints difficult</text>
+      <text x="340" y="269" fill="#e07b7b" font-size="11" font-family="EB Garamond" text-anchor="middle">✗ Weights &lt;0 possible</text>
+
+      <!-- Numerical optimization -->
+      <rect x="460" y="50" width="190" height="230" rx="8" fill="#161221" stroke="rgba(123,196,150,0.4)" stroke-width="1.5"/>
+      <text x="555" y="75" fill="#7bc496" font-size="13" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Optimization</text>
+      <text x="555" y="95" fill="#9089bf" font-size="11" font-family="EB Garamond" text-anchor="middle">Numerical (scipy)</text>
+      <!-- Stylized gradient descent representation -->
+      <path d="M 475 175 Q 490 145 510 130 Q 540 115 560 108 Q 590 100 630 98" stroke="#7bc496" stroke-width="2.5" fill="none"/>
+      <circle cx="560" cy="108" r="5" fill="#c9a84c"/>
+      <path d="M 550 125 L 563 112" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#arr2)" opacity="0.7"/>
+      <text x="555" y="215" fill="#7bc496" font-size="11" font-family="EB Garamond" text-anchor="middle">✓ Flexible</text>
+      <text x="555" y="232" fill="#7bc496" font-size="11" font-family="EB Garamond" text-anchor="middle">✓ Constraints easy</text>
+      <text x="555" y="249" fill="#7bc496" font-size="11" font-family="EB Garamond" text-anchor="middle">✓ Industry standard</text>
+      <text x="555" y="269" fill="#e07b7b" font-size="11" font-family="EB Garamond" text-anchor="middle">✗ Local min. possible</text>
+
+      <!-- Star on recommended approach -->
+      <text x="620" y="60" fill="#c9a84c" font-size="20">★</text>
+      <text x="605" y="52" fill="#c9a84c" font-size="10" font-family="JetBrains Mono">RECOMMENDED</text>
+    </svg>
+    <div class="diag-caption">FIG. 4 — Comparison of the 3 approaches to computing the efficient frontier. Numerical optimization is the standard method in practice.</div>
+  </div>
+
+  <h3>4.6 Capital Market Line — Anatomy</h3>
+  <div class="diag">
+    <svg class="svg-diagram" viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="300" fill="#1c1828" rx="8"/>
+      <!-- Axes -->
+      <line x1="80" y1="260" x2="620" y2="260" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="80" y1="40" x2="80" y2="260" stroke="#9089bf" stroke-width="1.5"/>
+      <polygon points="620,255 630,260 620,265" fill="#9089bf"/>
+      <polygon points="75,40 80,28 85,40" fill="#9089bf"/>
+      <text x="635" y="265" fill="#9089bf" font-size="12" font-family="EB Garamond">σ_P</text>
+      <text x="55" y="28" fill="#9089bf" font-size="12" font-family="EB Garamond">E[R]</text>
+
+      <!-- Efficient frontier -->
+      <path d="M 130 240 Q 160 200 210 170 Q 290 130 390 105 Q 480 85 550 80"
+            stroke="#e8c97a" stroke-width="2.5" fill="none"/>
+
+      <!-- Risk-free asset -->
+      <circle cx="80" cy="248" r="6" fill="#a78bfa"/>
+      <text x="56" y="244" fill="#a78bfa" font-size="12" font-family="EB Garamond">r_f</text>
+      <line x1="80" y1="248" x2="80" y2="260" stroke="#a78bfa" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+
+      <!-- CML -->
+      <line x1="80" y1="248" x2="600" y2="65" stroke="#a78bfa" stroke-width="2.5"/>
+      <text x="490" y="80" fill="#a78bfa" font-size="14" font-family="Cormorant Garamond" font-weight="700">CML</text>
+
+      <!-- Tangency point -->
+      <circle cx="310" cy="140" r="8" fill="#c9a84c"/>
+      <text x="318" y="133" fill="#c9a84c" font-size="12" font-family="EB Garamond">T = Tangency Portfolio</text>
+
+      <!-- Conservative zone (below T on CML) -->
+      <rect x="82" y="145" width="130" height="25" rx="4" fill="rgba(123,196,150,0.1)" stroke="rgba(123,196,150,0.3)" stroke-width="1"/>
+      <text x="100" y="162" fill="#7bc496" font-size="10" font-family="EB Garamond">Cash + Port. T (w_rf &gt; 0)</text>
+
+      <!-- Leveraged zone (beyond T on CML) -->
+      <rect x="315" y="105" width="145" height="25" rx="4" fill="rgba(167,139,250,0.1)" stroke="rgba(167,139,250,0.3)" stroke-width="1"/>
+      <text x="325" y="122" fill="#a78bfa" font-size="10" font-family="EB Garamond">Leverage on Port. T (w_rf &lt; 0)</text>
+
+      <!-- Slope = Sharpe Ratio -->
+      <!-- Triangle to illustrate slope -->
+      <line x1="200" y1="207" x2="310" y2="207" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <line x1="310" y1="207" x2="310" y2="140" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <text x="240" y="222" fill="#c9a84c" font-size="12" font-family="EB Garamond">Δσ</text>
+      <text x="315" y="178" fill="#c9a84c" font-size="12" font-family="EB Garamond">Δμ</text>
+      <text x="150" y="185" fill="#c9a84c" font-size="12" font-family="Cormorant Garamond" font-weight="700">Slope = Sharpe Ratio =</text>
+      <text x="150" y="200" fill="#c9a84c" font-size="12" font-family="JetBrains Mono">(E[R_T] - r_f) / σ_T</text>
+    </svg>
+    <div class="diag-caption">FIG. 5 — The Capital Market Line (CML) is the tangent line to the efficient frontier passing through the risk-free asset $r_f$. Its slope is the Sharpe Ratio of the tangency portfolio T.</div>
+  </div>
+
+  <h3>4.7 Impact of Constraints on the Frontier</h3>
+  <div class="diag">
+    <svg class="svg-diagram" viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="280" fill="#1c1828" rx="8"/>
+      <line x1="80" y1="240" x2="600" y2="240" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="80" y1="40" x2="80" y2="240" stroke="#9089bf" stroke-width="1.5"/>
+      <polygon points="600,235 610,240 600,245" fill="#9089bf"/>
+      <polygon points="75,40 80,28 85,40" fill="#9089bf"/>
+      <text x="615" y="245" fill="#9089bf" font-size="12" font-family="EB Garamond">σ_P</text>
+      <text x="55" y="28" fill="#9089bf" font-size="12" font-family="EB Garamond">E[R]</text>
+
+      <!-- Frontier without constraints -->
+      <path d="M 110 225 Q 140 190 190 160 Q 270 125 370 100 Q 460 80 530 75"
+            stroke="#7bc496" stroke-width="3" fill="none"/>
+      <text x="440" y="70" fill="#7bc496" font-size="12" font-family="EB Garamond">Unconstrained</text>
+
+      <!-- Frontier with constraints (lowered) -->
+      <path d="M 130 225 Q 160 200 210 180 Q 290 158 370 142 Q 430 132 470 130"
+            stroke="#e07b7b" stroke-width="3" fill="none" stroke-dasharray="8,4"/>
+      <text x="400" y="127" fill="#e07b7b" font-size="12" font-family="EB Garamond">With constraints</text>
+
+      <!-- Zone between the two -->
+      <path d="M 130 225 Q 160 200 210 180 Q 290 158 370 142 Q 430 132 470 130 L 470 130 Q 460 80 370 100 Q 270 125 190 160 Q 140 190 110 225 Z"
+            fill="rgba(126,184,212,0.07)" stroke="none"/>
+
+      <!-- Efficiency loss annotation -->
+      <line x1="370" y1="100" x2="370" y2="142" stroke="#c9a84c" stroke-width="2" stroke-dasharray="4,2"/>
+      <text x="375" y="122" fill="#c9a84c" font-size="11" font-family="EB Garamond">Efficiency loss</text>
+      <text x="375" y="135" fill="#c9a84c" font-size="11" font-family="EB Garamond">due to constraints</text>
+
+      <!-- Maximum risk accessible with constraints -->
+      <circle cx="470" cy="130" r="6" fill="#e07b7b"/>
+      <text x="475" y="145" fill="#e07b7b" font-size="10" font-family="JetBrains Mono">σ_max constrained</text>
+
+      <!-- Maximum risk without constraints -->
+      <circle cx="530" cy="75" r="6" fill="#7bc496"/>
+      <text x="535" y="75" fill="#7bc496" font-size="10" font-family="JetBrains Mono">σ_max free</text>
+
+      <!-- Example constraints legend -->
+      <rect x="90" y="50" width="185" height="90" rx="5" fill="rgba(22,18,33,0.95)" stroke="rgba(224,123,123,0.3)" stroke-width="1"/>
+      <text x="100" y="68" fill="#e07b7b" font-size="10" font-family="JetBrains Mono">EXAMPLE CONSTRAINTS</text>
+      <text x="100" y="84" fill="#9089bf" font-size="11" font-family="EB Garamond">• 10% ≤ w₁ ≤ 100%</text>
+      <text x="100" y="100" fill="#9089bf" font-size="11" font-family="EB Garamond">•  5% ≤ w₂ ≤ 100%</text>
+      <text x="100" y="116" fill="#9089bf" font-size="11" font-family="EB Garamond">•  0% ≤ w₃ ≤ 25%</text>
+      <text x="100" y="132" fill="#9089bf" font-size="11" font-family="EB Garamond">•  0% ≤ w₄ ≤ 90%</text>
+    </svg>
+    <div class="diag-caption">FIG. 6 — Impact of constraints on the efficient frontier. Constraints reduce the accessible portfolio space, lowering the frontier (less return for the same risk) and limiting the maximum attainable risk.</div>
+  </div>
+
+  <h3>4.8 Typical Allocation of a Swiss Pension Fund</h3>
+  <div class="diag">
+    <svg class="svg-diagram" viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="280" fill="#1c1828" rx="8"/>
+      <text x="340" y="28" fill="#c9a84c" font-size="15" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Simplified Allocation of a Swiss Pension Fund</text>
+
+      <!-- Data: CH bonds 10%, Foreign bonds 35%, Equity 25%, Real estate 15%, Commodities 10%, Alternatives 5% -->
+      <!-- Simplified pie chart as stacked horizontal bars -->
+      <!-- Total = 340px available width -->
+      <!-- CH bonds: 10% → 34px, blue color -->
+      <!-- Foreign bonds: 35% → 119px, green color -->
+      <!-- Equity: 25% → 85px, gold color -->
+      <!-- Real estate: 15% → 51px, violet color -->
+      <!-- Commodities: 10% → 34px, red color -->
+      <!-- Alternatives: 5% → 17px, gray color -->
+
+      <!-- Main allocation bar -->
+      <rect x="100" y="60" width="34" height="60" rx="0" fill="#7eb8d4"/>
+      <rect x="134" y="60" width="119" height="60" rx="0" fill="#7bc496"/>
+      <rect x="253" y="60" width="85" height="60" rx="0" fill="#c9a84c"/>
+      <rect x="338" y="60" width="51" height="60" rx="0" fill="#a78bfa"/>
+      <rect x="389" y="60" width="34" height="60" rx="0" fill="#e07b7b"/>
+      <rect x="423" y="60" width="17" height="60" rx="0" fill="#9089bf"/>
+      <!-- Outline -->
+      <rect x="100" y="60" width="340" height="60" rx="4" fill="none" stroke="#2d2845" stroke-width="1.5"/>
+
+      <!-- Labels on the bar -->
+      <text x="117" y="95" fill="#0d0b14" font-size="12" font-family="JetBrains Mono" text-anchor="middle" font-weight="700">10%</text>
+      <text x="193" y="88" fill="#0d0b14" font-size="13" font-family="JetBrains Mono" text-anchor="middle" font-weight="700">35%</text>
+      <text x="295" y="88" fill="#0d0b14" font-size="13" font-family="JetBrains Mono" text-anchor="middle" font-weight="700">25%</text>
+      <text x="363" y="95" fill="#0d0b14" font-size="12" font-family="JetBrains Mono" text-anchor="middle" font-weight="700">15%</text>
+      <text x="406" y="95" fill="#0d0b14" font-size="11" font-family="JetBrains Mono" text-anchor="middle" font-weight="700">10%</text>
+      <text x="431" y="95" fill="#0d0b14" font-size="9" font-family="JetBrains Mono" text-anchor="middle" font-weight="700">5%</text>
+
+      <!-- Legend -->
+      <rect x="100" y="140" width="16" height="12" rx="2" fill="#7eb8d4"/>
+      <text x="122" y="152" fill="#7eb8d4" font-size="12" font-family="EB Garamond">CH Bonds</text>
+      <rect x="100" y="160" width="16" height="12" rx="2" fill="#7bc496"/>
+      <text x="122" y="172" fill="#7bc496" font-size="12" font-family="EB Garamond">Foreign Bonds</text>
+      <rect x="100" y="180" width="16" height="12" rx="2" fill="#c9a84c"/>
+      <text x="122" y="192" fill="#c9a84c" font-size="12" font-family="EB Garamond">Equity</text>
+
+      <rect x="310" y="140" width="16" height="12" rx="2" fill="#a78bfa"/>
+      <text x="332" y="152" fill="#a78bfa" font-size="12" font-family="EB Garamond">Real Estate</text>
+      <rect x="310" y="160" width="16" height="12" rx="2" fill="#e07b7b"/>
+      <text x="332" y="172" fill="#e07b7b" font-size="12" font-family="EB Garamond">Commodities</text>
+      <rect x="310" y="180" width="16" height="12" rx="2" fill="#9089bf"/>
+      <text x="332" y="192" fill="#9089bf" font-size="12" font-family="EB Garamond">Alternatives</text>
+
+      <!-- Regulation annotation -->
+      <rect x="100" y="215" width="340" height="45" rx="5" fill="rgba(201,168,76,0.05)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+      <text x="270" y="233" fill="#c9a84c" font-size="11" font-family="JetBrains Mono" text-anchor="middle">⚖ Swiss regulation (OPP2) imposes limits per asset class</text>
+      <text x="270" y="250" fill="#9089bf" font-size="11" font-family="EB Garamond" text-anchor="middle">+ FX exposures managed separately (hedging)</text>
+    </svg>
+    <div class="diag-caption">FIG. 7 — Simplified typical allocation of a Swiss pension fund. Geographic allocations (e.g., CH/EU/US/EM equities) and FX exposures are then determined by portfolio optimization.</div>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     SECTION 5 — IMPORTANT FORMULAS
+     ============================================================ -->
+<section class="sec" id="s5">
+  <div class="sec-hd">
+    <span class="sec-num">05</span>
+    <span class="sec-title">Important Formulas</span>
+  </div>
+
+  <div class="fcards">
+
+    <!-- F1 : Portfolio Return -->
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Portfolio Return</span>
+        <span class="fc-tag">Linearity of expectation</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">
+          $$E[R_P] = \sum_{i=1}^N w_i E[R_i] = \mathbf{w}^T \boldsymbol{\mu}$$
+        </div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$w_i$ : weight of asset $i$<<br>$E[R_i]$ : expected return of asset $i$<<br>$\boldsymbol{\mu}$ : vector of expected returns</p></div>
+          <div class="fc-item"><h5>Intuition</h5><p>The portfolio return is a <strong>weighted average</strong> of the asset returns. This is a simple property of the linearity of expectation. No magic here — we do not create return by combining assets.</p></div>
+          <div class="fc-item"><h5>Numerical example</h5><p>$w = (0.5, 0.5)$, $E[R_1]=0.1$, $E[R_2]=0.2$<<br>→ $E[R_P] = 0.5 \times 0.1 + 0.5 \times 0.2 = 0.15$</p></div>
+          <div class="fc-item"><h5>Key pedagogical point</h5><p>Diversification <strong>does not create return</strong>. It reduces <em>risk</em>. This is the fundamental difference with variance.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F2 : Portfolio Variance -->
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Portfolio Variance</span>
+        <span class="fc-tag">Quadratic form</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">
+          $$\sigma_P^2 = \mathbf{w}^T \mathbf{C} \mathbf{w} = \sum_{i=1}^N \sum_{j=1}^N w_i w_j \sigma_{ij}$$
+        </div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$\mathbf{C}$ : covariance matrix ($N \times N$)<br>$\sigma_{ij} = \text{Cov}(R_i, R_j) = \rho_{ij}\sigma_i\sigma_j$<<br>$\sigma_{ii} = \sigma_i^2$ (own variance)</p></div>
+          <div class="fc-item"><h5>Magic intuition</h5><p>The cross term $2w_i w_j \rho_{ij} \sigma_i \sigma_j$ is what enables risk reduction. If $\rho_{ij} &lt; 1$, the portfolio variance is <strong>lower</strong> than the weighted average of individual variances!</p></div>
+          <div class="fc-item"><h5>2-asset case</h5><p>$$\sigma_P^2 = w_1^2\sigma_1^2 + 2w_1w_2\rho_{12}\sigma_1\sigma_2 + w_2^2\sigma_2^2$$</p></div>
+          <div class="fc-item"><h5>Data requirement</h5><p>To be statistically significant, one needs at least $N^2/2$ data points. For $N=50$ assets, this means $\geq 1250$ observations!</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F3 : Correlation -->
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Pearson Correlation</span>
+        <span class="fc-tag">Normalized</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">
+          $$\rho_{ij} = \frac{\text{Cov}(R_i, R_j)}{\sigma_i \sigma_j} \in [-1, 1]$$
+        </div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Special cases</h5><p>• $\rho_{ii} = 1$ always<br>• $\rho_{ij} = 1$ → straight line in (σ,E[R]) space<br>• $\rho_{ij} = -1$ → risk cancellable if $w_1\sigma_1 = w_2\sigma_2$<<br>• $\rho_{ij} = 0$ → independent assets</p></div>
+          <div class="fc-item"><h5>Problem in crisis</h5><p>During market crises (2008, COVID), correlations <strong>drastically increase</strong> (trend towards 1), reducing the effectiveness of diversification exactly when it is most needed.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F4 : Closed-form solution -->
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Markowitz Closed-Form Solution</span>
+        <span class="fc-tag">Lagrange multipliers</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">
+          $$a = \mathbf{1}^T \mathbf{C}^{-1} \mathbf{1}, \quad b = \mathbf{1}^T \mathbf{C}^{-1} \boldsymbol{\mu}, \quad c = \boldsymbol{\mu}^T \mathbf{C}^{-1} \boldsymbol{\mu}, \quad d = ac - b^2$$
+          $$\lambda_1 = \frac{c - b\mu_P}{d}, \quad \lambda_2 = \frac{a\mu_P - b}{d}$$
+          $$\mathbf{w}^* = \mathbf{C}^{-1}(\lambda_1 \mathbf{1} + \lambda_2 \boldsymbol{\mu}), \quad \sigma_P^{*2} = \lambda_1 + \lambda_2 \mu_P$$
+        </div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Single constraint</h5><p>This formula only constrains $\sum w_i = 1$. It can therefore yield negative weights (short selling) or weights above 1 (leverage). For additional constraints, numerical optimization is required.</p></div>
+          <div class="fc-item"><h5>Key operation</h5><p>Inverting $\mathbf{C}^{-1}$ is costly ($O(N^3)$) and can be numerically unstable if $\mathbf{C}$ is near-singular (highly correlated assets). Regularization techniques (shrinkage, Ledoit-Wolf) are often used in practice.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F5 : Numerical optimization -->
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Numerical Optimization Problem</span>
+        <span class="fc-tag">Standard method</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">
+          $$\min_{\mathbf{w}} \;\; \mathbf{w}^T \mathbf{C} \mathbf{w} - q \, \mathbf{w}^T \boldsymbol{\mu}$$
+          $$\text{s.t.} \;\; \mathbf{1}^T \mathbf{w} = 1, \quad 0 \leq w_i \leq 1 \;\; \forall i$$
+        </div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Parameter $q$</h5><p>$q \in [0, +\infty)$ is the <strong>risk tolerance parameter</strong>.<<br>• $q=0$ → minimum variance portfolio<br>• $q \to \infty$ → maximum return portfolio<br>By varying $q$, we trace the efficient frontier.</p></div>
+          <div class="fc-item"><h5>Nature of the problem</h5><p>This is a <strong>Quadratic Programming (QP)</strong> problem (quadratic objective, linear constraints). If $\mathbf{C}$ is positive definite, the problem is convex → guarantee of a global minimum. Solvers: <code>scipy.optimize</code>, <code>CVXPY</code>, <code>Gurobi</code>.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- F6 : CML and Sharpe -->
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Capital Market Line &amp; Sharpe Ratio</span>
+        <span class="fc-tag">Tangency portfolio</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">
+          $$E[R_{P1}] = w_{rf} r_f + (1 - w_{rf}) E[R_{P0}], \quad \sigma_{P1} = (1 - w_{rf}) \sigma_{P0}$$
+          $$\text{Sharpe Ratio} = SR = \frac{E[R_T] - r_f}{\sigma_T}$$
+        </div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Interpretation</h5><p>Combining the risk-free asset $r_f$ with a portfolio $P_0$ gives a <strong>linear relationship</strong> between risk and return of the combined portfolio. The risk-free asset is uncorrelated with any other asset ($\rho_{rf,P} = 0$ and $\sigma_{rf} = 0$).</p></div>
+          <div class="fc-item"><h5>Optimal portfolio</h5><p>The tangency portfolio T is the one that maximizes the Sharpe Ratio on the efficient frontier. Every rational investor (whatever their risk/return preferences) should hold T combined with the risk-free asset.</p></div>
+          <div class="fc-item"><h5>Leverage</h5><p>If $w_{rf} &lt; 0$, the investor borrows at rate $r_f$ to invest more in T (leverage). If $w_{rf} &gt; 1$, they invest more in the risk-free asset than in T (very conservative).</p></div>
+          <div class="fc-item"><h5>CAPM</h5><p>In the CAPM, all investors hold the same portfolio T = market portfolio. The CML then becomes the market line (<em>Capital Market Line</em> in its most general sense).</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 6 — COMPARISON OF APPROACHES
+     ============================================================ -->
+<section class="sec" id="s6">
+  <div class="sec-hd">
+    <span class="sec-num">06</span>
+    <span class="sec-title">Comparison of Approaches</span>
+  </div>
+
+  <div class="twrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Approach</th>
+          <th>Principle</th>
+          <th>Complexity</th>
+          <th>Constraints</th>
+          <th>Solution quality</th>
+          <th>Usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Monte Carlo</strong></td>
+          <td>Generates millions of random allocations (sum = 1), computes (σ, E[R]) for each</td>
+          <td class="r">$O(M \cdot N)$ with $M = 5\times10^6$. Explodes with $N$</td>
+          <td class="m">Difficult to integrate properly</td>
+          <td class="m">Approximation — does not guarantee the exact frontier</td>
+          <td>Visual exploration, pedagogy</td>
+        </tr>
+        <tr>
+          <td><strong>Closed-form</strong> (Lagrange)</td>
+          <td>Analytically solves $\min \mathbf{w}^T\mathbf{C}\mathbf{w}$ s.t. $\mathbf{1}^T\mathbf{w}=1$</td>
+          <td class="m">$O(N^3)$ for $\mathbf{C}^{-1}$. Fast for small $N$</td>
+          <td class="r">Only $\sum w_i = 1$. Negative weights possible</td>
+          <td class="g">Mathematically exact solution</td>
+          <td>Research, benchmarking, unconstrained cases</td>
+        </tr>
+        <tr>
+          <td><strong>Numerical optimization</strong> ★</td>
+          <td>Minimizes $\mathbf{w}^T\mathbf{C}\mathbf{w} - q\mathbf{w}^T\boldsymbol{\mu}$ via QP solver</td>
+          <td class="g">Efficient — $O(N^2)$ to $O(N^3)$ depending on solver</td>
+          <td class="g">Linear constraints and bounds easily added</td>
+          <td class="g">Optimal under constraints. Global guarantee if convex</td>
+          <td>Industry standard. Real funds, pension funds</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>6.2 Comparison of Correlation Regimes</h3>
+  <div class="twrap">
+    <table class="ctable">
+      <thead>
+        <tr><th>Correlation $\rho_{12}$</th><th>$\sigma_P$ (symmetric case)</th><th>Interpretation</th><th>Diversification benefit</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="pos">$\rho = +1$</td><td>$w_1\sigma_1 + w_2\sigma_2 = 0.10$</td><td>No benefit. Portfolios aligned.</td><td class="r">None</td></tr>
+        <tr><td class="pos">$\rho = +0.5$</td><td>$\approx 0.0866$</td><td>Weak benefit.</td><td class="m">Partial</td></tr>
+        <tr><td class="neu">$\rho = 0$</td><td>$\approx 0.0707$</td><td>Significant gain (factor $1/\sqrt{2}$ in equal-weighted).</td><td class="m">Good</td></tr>
+        <tr><td class="neg">$\rho = -0.5$</td><td>$= 0.05$</td><td>Large gain.</td><td class="g">Very good</td></tr>
+        <tr><td class="neg">$\rho = -1$</td><td>$= |w_1\sigma_1 - w_2\sigma_2|$</td><td>Cancellation possible if $w_1\sigma_1 = w_2\sigma_2$. Extremely rare!</td><td class="g">Maximum theoretical</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="m" style="font-size:.9rem;color:var(--muted)">Numerical cases with $E[R_1]=E[R_2]=20\%$, $\sigma_1=\sigma_2=10\%$, $w_1=w_2=0.5$ (slides p.176–177).</p>
+</section>
+
+<!-- ============================================================
+     SECTION 7 — RELATIONS BETWEEN CONCEPTS
+     ============================================================ -->
+<section class="sec" id="s7">
+  <div class="sec-hd">
+    <span class="sec-num">07</span>
+    <span class="sec-title">Relations Between Concepts</span>
+  </div>
+
+  <div class="diag">
+    <svg class="svg-diagram" viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="360" fill="#1c1828" rx="8"/>
+      <text x="340" y="28" fill="#c9a84c" font-size="14" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Concept Map — MPT &amp; Portfolio Construction</text>
+
+      <!-- Node : Individual assets -->
+      <rect x="20" y="60" width="130" height="50" rx="8" fill="#161221" stroke="#7eb8d4" stroke-width="1.5"/>
+      <text x="85" y="83" fill="#7eb8d4" font-size="12" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Individual assets</text>
+      <text x="85" y="100" fill="#9089bf" font-size="10" font-family="EB Garamond" text-anchor="middle">$E[R_i]$, $\sigma_i^2$</text>
+
+      <!-- Node : Covariance matrix -->
+      <rect x="260" y="60" width="150" height="50" rx="8" fill="#161221" stroke="#7bc496" stroke-width="1.5"/>
+      <text x="335" y="83" fill="#7bc496" font-size="12" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Covariance Matrix</text>
+      <text x="335" y="100" fill="#9089bf" font-size="10" font-family="EB Garamond" text-anchor="middle">$\mathbf{C} = \{\rho_{ij}\sigma_i\sigma_j\}$</text>
+
+      <!-- Node : Correlation -->
+      <rect x="500" y="60" width="160" height="50" rx="8" fill="#161221" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="580" y="83" fill="#a78bfa" font-size="12" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Correlation</text>
+      <text x="580" y="100" fill="#9089bf" font-size="10" font-family="EB Garamond" text-anchor="middle">$\rho_{ij} \in [-1, 1]$</text>
+
+      <!-- Node : Weight vector -->
+      <rect x="20" y="155" width="130" height="50" rx="8" fill="#161221" stroke="#c9a84c" stroke-width="1.5"/>
+      <text x="85" y="178" fill="#c9a84c" font-size="12" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Weight vector w</text>
+      <text x="85" y="195" fill="#9089bf" font-size="10" font-family="EB Garamond" text-anchor="middle">$\sum w_i = 1$</text>
+
+      <!-- Node : Optimization -->
+      <rect x="260" y="155" width="150" height="50" rx="8" fill="#161221" stroke="#e8c97a" stroke-width="2"/>
+      <text x="335" y="178" fill="#e8c97a" font-size="12" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Optimization</text>
+      <text x="335" y="195" fill="#9089bf" font-size="10" font-family="EB Garamond" text-anchor="middle">$\min_w \mathbf{w}^T\mathbf{C}\mathbf{w} - q\mathbf{w}^T\boldsymbol{\mu}$</text>
+
+      <!-- Node : Constraints -->
+      <rect x="500" y="155" width="160" height="50" rx="8" fill="#161221" stroke="#e07b7b" stroke-width="1.5"/>
+      <text x="580" y="178" fill="#e07b7b" font-size="12" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Constraints</text>
+      <text x="580" y="195" fill="#9089bf" font-size="10" font-family="EB Garamond" text-anchor="middle">$0 \le w_i \le 1$, regulation…</text>
+
+      <!-- Node : Efficient Frontier -->
+      <rect x="175" y="255" width="160" height="50" rx="8" fill="#161221" stroke="#c9a84c" stroke-width="2.5"/>
+      <text x="255" y="278" fill="#c9a84c" font-size="13" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Efficient Frontier</text>
+      <text x="255" y="295" fill="#9089bf" font-size="10" font-family="EB Garamond" text-anchor="middle">Optimal portfolios</text>
+
+      <!-- Node : Risk-free asset -->
+      <rect x="375" y="255" width="130" height="50" rx="8" fill="#161221" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="440" y="278" fill="#a78bfa" font-size="12" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">Risk-free asset</text>
+      <text x="440" y="295" fill="#9089bf" font-size="10" font-family="EB Garamond" text-anchor="middle">$r_f$, $\sigma_{rf}=0$</text>
+
+      <!-- Node : CML + Sharpe -->
+      <rect x="530" y="255" width="130" height="50" rx="8" fill="#161221" stroke="#7bc496" stroke-width="2"/>
+      <text x="595" y="278" fill="#7bc496" font-size="12" font-family="Cormorant Garamond" text-anchor="middle" font-weight="700">CML + Sharpe</text>
+      <text x="595" y="295" fill="#9089bf" font-size="10" font-family="EB Garamond" text-anchor="middle">Optimal portfolio</text>
+
+      <!-- ARROWS -->
+      <!-- Assets → Matrix -->
+      <line x1="150" y1="85" x2="258" y2="85" stroke="#9089bf" stroke-width="1.5" marker-end="url(#arraw)"/>
+      <text x="203" y="78" fill="#9089bf" font-size="9" font-family="JetBrains Mono" text-anchor="middle">feeds</text>
+      <!-- Correlation → Matrix -->
+      <line x1="498" y1="85" x2="412" y2="85" stroke="#9089bf" stroke-width="1.5" marker-end="url(#arraw)"/>
+      <!-- Assets → weights -->
+      <line x1="85" y1="110" x2="85" y2="153" stroke="#9089bf" stroke-width="1.5" marker-end="url(#arraw)"/>
+      <!-- Matrix → Optimization -->
+      <line x1="335" y1="110" x2="335" y2="153" stroke="#9089bf" stroke-width="1.5" marker-end="url(#arraw)"/>
+      <!-- Constraints → Optimization -->
+      <line x1="498" y1="180" x2="412" y2="180" stroke="#e07b7b" stroke-width="1.5" marker-end="url(#arraw)"/>
+      <!-- Weights → Optimization -->
+      <line x1="150" y1="180" x2="258" y2="180" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#arraw)"/>
+      <!-- Optimization → EF -->
+      <line x1="300" y1="205" x2="270" y2="253" stroke="#e8c97a" stroke-width="1.5" marker-end="url(#arraw)"/>
+      <!-- EF → CML -->
+      <line x1="337" y1="280" x2="373" y2="280" stroke="#9089bf" stroke-width="1.5" marker-end="url(#arraw)"/>
+      <!-- Risk-free → CML -->
+      <line x1="507" y1="280" x2="530" y2="280" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arraw)"/>
+
+      <defs>
+        <marker id="arraw" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#9089bf"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="diag-caption">FIG. 8 — Conceptual dependency map of all MPT elements. The red arrow indicates the contribution of practical constraints (regulatory, institutional).</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 8 — HISTORICAL PERSPECTIVE
+     ============================================================ -->
+<section class="sec" id="s8">
+  <div class="sec-hd">
+    <span class="sec-num">08</span>
+    <span class="sec-title">Historical Perspective</span>
+  </div>
+
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-year">1952</div>
+      <div class="tl-title">Harry Markowitz — Modern Portfolio Theory</div>
+      <div class="tl-desc">Publication of "Portfolio Selection" in the Journal of Finance. Mathematical formalization of diversification, introduction of the efficient frontier. Conceptual revolution: thinking in terms of (risk, return) rather than asset by asset.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1958</div>
+      <div class="tl-title">James Tobin — Separation Theorem</div>
+      <div class="tl-desc">Introduction of the risk-free asset and proof that the optimal portfolio is always a combination of the tangency portfolio and the risk-free asset (separation theorem).</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1964–1966</div>
+      <div class="tl-title">Sharpe, Lintner, Mossin — CAPM</div>
+      <div class="tl-desc">Capital Asset Pricing Model: extension of MPT to market equilibrium. The market portfolio is the tangency portfolio. Introduction of beta $\beta$ as a measure of systematic risk.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1990</div>
+      <div class="tl-title">Nobel Prize — Markowitz, Sharpe, Miller</div>
+      <div class="tl-desc">Official recognition of their fundamental contributions to the theory of finance.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2003</div>
+      <div class="tl-title">Ledoit &amp; Wolf — Shrinkage Estimator</div>
+      <div class="tl-desc">Improvement of covariance matrix estimation for large asset universes ($N$ large, $T$ limited). Systematic regularization towards a target to improve numerical stability.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2008–2009</div>
+      <div class="tl-title">Financial Crisis — Limits of MPT</div>
+      <div class="tl-desc">Correlations uniformize (all near 1) during crises, canceling the benefit of diversification. Development of robust methods: Risk Parity, Black-Litterman, CVaR.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Today</div>
+      <div class="tl-title">MPT + Machine Learning + Factors</div>
+      <div class="tl-desc">Expected return estimation by ML, robust optimization, factor portfolios (value, momentum, quality), advanced regularization techniques. MPT remains the reference framework, but its inputs are modernized.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 9 — MODERN APPLICATIONS
+     ============================================================ -->
+<section class="sec" id="s9">
+  <div class="sec-hd">
+    <span class="sec-num">09</span>
+    <span class="sec-title">Connections with Modern Practices</span>
+  </div>
+
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Risk management</div>
+      <h4>CVaR / Expected Shortfall</h4>
+      <p>Replacement of $\sigma_P^2$ by CVaR (<em>Conditional Value at Risk</em>) as the risk measure in optimization. Better captures non-Gaussian distribution tails. Regulated by Basel III / Solvency II.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Strategy</div>
+      <h4>Risk Parity</h4>
+      <p>Alternative to MPT: allocate so that each asset contributes equally to the total portfolio risk. Does not require estimating expected returns (less uncertain). Bridgewater All Weather Fund.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Bayesian</div>
+      <h4>Black-Litterman</h4>
+      <p>Combines CAPM-implied expected returns with investor "views" in a Bayesian manner. Reduces the extremity of allocations (Markowitz input sensitivity problem).</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">ML</div>
+      <h4>ML Estimation of Inputs</h4>
+      <p>Use of recurrent neural networks, penalized regression (LASSO/Ridge), or factor models to better estimate $E[R_i]$ and $\mathbf{C}$. The MPT optimization remains the same.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Pension Funds</div>
+      <h4>ALM — Asset Liability Management</h4>
+      <p>Extension of MPT where liabilities (future benefits) are also modeled. One minimizes funding risk, not just $\sigma_P^2$. Crucial for regulated pension funds (OPP2 in Switzerland).</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Robo-advisors</div>
+      <h4>Automation</h4>
+      <p>Wealthfront, Betterment, True Wealth (CH) all use MPT as the core of their allocation engine. Mass implementation of the Markowitz framework at low cost.</p>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠ Fundamental Limits of MPT</div>
+    <p>1. <strong>Input sensitivity</strong>: small changes in $E[R_i]$ or $\mathbf{C}$ can produce large changes in $\mathbf{w}^*$ ("garbage in, garbage out" problem).<<br>
+    2. <strong>Stationarity</strong>: assumes distributions remain constant over time — false in practice.<br>
+    3. <strong>Normality</strong>: variance is a complete risk measure only if returns are Gaussian — they are not (fat tails, skewness).<<br>
+    4. <strong>Unstable correlations</strong>: during crises, correlations converge to 1, erasing the benefit of diversification.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 10 — EXAM QUESTIONS
+     ============================================================ -->
+<section class="sec" id="s10">
+  <div class="sec-hd">
+    <span class="sec-num">10</span>
+    <span class="sec-title">Exam Questions</span>
+  </div>
+
+  <span class="qlevel easy">Easy Level</span>
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">What is diversification and why is it beneficial?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      Diversification consists of combining assets whose returns are not perfectly correlated ($\rho &lt; 1$). It is beneficial because the portfolio variance $\sigma_P^2 = \sum_i \sum_j w_i w_j \sigma_{ij}$ contains cross-covariance terms which, when $\rho_{ij} &lt; 1$, make $\sigma_P^2$ <em>lower</em> than the weighted average of individual variances. In other words: we reduce risk without necessarily sacrificing expected return (which is simply a weighted average of returns).
+    </div>
+  </div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">What does the covariance matrix $\mathbf{C}$ represent?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      $\mathbf{C}$ is an $N \times N$ symmetric positive definite matrix. Its diagonal contains the variances $\sigma_i^2$ of individual assets. Its off-diagonal elements $\sigma_{ij} = \rho_{ij}\sigma_i\sigma_j$ capture the covariances between pairs of assets. It completely encodes the linear dependence relationships between assets and is the central ingredient for computing the portfolio variance $\sigma_P^2 = \mathbf{w}^T\mathbf{C}\mathbf{w}$.
+    </div>
+  </div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">What does the efficient frontier represent?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      The efficient frontier is the set of portfolios that maximize the expected return $E[R_P]$ for a given level of volatility $\sigma_P$ (or equivalently, minimize $\sigma_P$ for a target $E[R_P]$). Any portfolio located below or to the right of this curve is called "inefficient" because it is dominated by at least one portfolio on the frontier (same return for less risk, or more return for the same risk). The frontier is a hyperbola in the $(\sigma_P, E[R_P])$ space.
+    </div>
+  </div>
+
+  <span class="qlevel med">Intermediate Level</span>
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Explain the effect of $\rho_{12} = -1$ vs $\rho_{12} = +1$ on a 2-asset portfolio.</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      For $\sigma_P^2 = w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1w_2\rho_{12}\sigma_1\sigma_2$:<br><br>
+      • <strong>$\rho = +1$</strong>: maximum positive cross term → $\sigma_P = w_1\sigma_1 + w_2\sigma_2$ (simple weighted average). Combining the two assets does not reduce risk. In the (σ,E[R]) space, portfolios align on a straight line connecting the two assets.<br><br>
+      • <strong>$\rho = -1$</strong>: maximum negative cross term → $\sigma_P = |w_1\sigma_1 - w_2\sigma_2|$. If $w_1\sigma_1 = w_2\sigma_2$ (i.e., $w_1 = \sigma_2/(\sigma_1+\sigma_2)$), then $\sigma_P = 0$: total risk cancellation! In practice, a correlation of $-1$ is extremely rare and even impossible to maintain over time.
+    </div>
+  </div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Why is numerical optimization used rather than the closed-form in practice?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      Numerical optimization (QP) offers several decisive advantages:<br><br>
+      1. <strong>Flexible constraints</strong>: bounds on weights ($l_i \le w_i \le u_i$), sector constraints, regulatory constraints (OPP2), FX exposure — impossible with the closed-form.<br>
+      2. <strong>Long-only</strong>: the closed-form can produce negative weights (short-selling), forbidden for many institutional investors.<br>
+      3. <strong>Stability</strong>: the closed-form requires $\mathbf{C}^{-1}$, which can be numerically unstable if assets are highly correlated. Modern QP solvers handle this better.<br>
+      4. <strong>Extensibility</strong>: turnover penalties, liquidity constraints — all naturally added within the optimization framework.
+    </div>
+  </div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">What is the Capital Market Line and how is it constructed?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      The CML is constructed by combining a <strong>risk-free asset</strong> $r_f$ (government bond) with the <strong>tangency portfolio T</strong> on the efficient frontier. Since $\sigma_{rf}=0$ and $\rho_{rf,P}=0$, the combination gives: $E[R_{P1}] = w_{rf}r_f + (1-w_{rf})E[R_T]$ and $\sigma_{P1} = (1-w_{rf})\sigma_T$. This is a linear relationship, so in the $(\sigma, E[R])$ space it is a straight line starting from $(0, r_f)$ and passing through $(σ_T, E[R_T])$. Its slope is the Sharpe Ratio = $(E[R_T] - r_f)/\sigma_T$. Every portfolio on the CML is superior (dominates) every portfolio on the efficient frontier alone (at identical $\sigma$).
+    </div>
+  </div>
+
+  <span class="qlevel hard">Hard Level</span>
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Why can the Markowitz closed-form produce weights above 1 or negative, and what are the implications?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      The solution $\mathbf{w}^* = \mathbf{C}^{-1}(\lambda_1\mathbf{1} + \lambda_2\boldsymbol{\mu})$ only constrains $\sum w_i = 1$ (a single Lagrange multiplier for this constraint). There is no constraint on the individual values of the weights. Thus:<br><br>
+      • $w_i &lt; 0$ means <strong>short selling</strong> of asset $i$ — illegal for many investors.<br>
+      • $w_i &gt; 1$ means <strong>leverage</strong> (borrowing to invest more than capital).<<br><br>
+      Graphical implications: the unconstrained frontier lies above the long-only frontier (higher in the E[R]/σ space), because it accesses portfolios unavailable with $w_i \in [0,1]$. By imposing capping (clipping to [0,1]), the frontier is reduced and cannot reach the high risk levels of a single asset. This is precisely why numerical optimization with bound constraints is preferable in practice.
+    </div>
+  </div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Explain why diversification fails during crises, and what alternatives exist.</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      During crises (2008, March 2020), a <strong>contagion</strong> phenomenon causes correlations of almost all assets to converge towards $\rho \approx 1$. This is explained by massive position liquidation (all investors sell everything at the same time), generalized panic, and margin effects. The diversification benefit (term $2w_iw_j\rho_{ij}\sigma_i\sigma_j$) disappears exactly when it is most needed — a systemic failure of MPT which assumes stable correlations.<br><br>
+      <strong>Alternatives and palliatives:</strong><br>
+      1. <strong>CVaR Optimization</strong>: uses the distribution tail as a risk measure — more robust to shocks.<br>
+      2. <strong>Risk Parity</strong>: allocates according to risk contributions rather than capital. More diversified in risk.<br>
+      3. <strong>Safe haven assets</strong>: gold, CHF, JGB maintain negative correlations even in crisis (partially).<<br>
+      4. <strong>Dynamic correlation models (DCC-GARCH)</strong>: estimate time-varying correlations rather than assuming them constant.<br>
+      5. <strong>Robust Optimization</strong>: seeks portfolios that perform well over a set of adverse scenarios.
+    </div>
+  </div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Derive the 2-asset portfolio variance formula from the definition of covariance.</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      $R_P = w_1 R_1 + w_2 R_2$. By definition: $\sigma_P^2 = \text{Var}(w_1R_1 + w_2R_2) = E[(w_1R_1 + w_2R_2 - E[w_1R_1+w_2R_2])^2]$<<br>
+      $= E[(w_1(R_1-\mu_1) + w_2(R_2-\mu_2))^2]$<<br>
+      $= E[w_1^2(R_1-\mu_1)^2 + 2w_1w_2(R_1-\mu_1)(R_2-\mu_2) + w_2^2(R_2-\mu_2)^2]$<<br>
+      $= w_1^2\text{Var}(R_1) + 2w_1w_2\text{Cov}(R_1,R_2) + w_2^2\text{Var}(R_2)$<<br>
+      $= w_1^2\sigma_1^2 + 2w_1w_2\rho_{12}\sigma_1\sigma_2 + w_2^2\sigma_2^2$<<br><br>
+      In matrix notation: $\sigma_P^2 = (w_1,w_2)\begin{pmatrix}\sigma_1^2 & \sigma_{12} \\ \sigma_{12} & \sigma_2^2\end{pmatrix}\begin{pmatrix}w_1\\w_2\end{pmatrix} = \mathbf{w}^T\mathbf{C}\mathbf{w}$
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 11 — CLASSIC PITFALLS
+     ============================================================ -->
+<section class="sec" id="s11">
+  <div class="sec-hd">
+    <span class="sec-num">11</span>
+    <span class="sec-title">Classic Pitfalls</span>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Confusing "diversification increases return".</strong> No! The expected return $E[R_P] = \mathbf{w}^T\boldsymbol{\mu}$ is a simple weighted average — diversification does not create return. It reduces <em>risk</em> at constant return (or increases return at constant risk).</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Believing that $\rho_{12} = -1$ always cancels risk.</strong> No! Cancellation is only possible if $w_1\sigma_1 = w_2\sigma_2$, i.e., $w_1 = \sigma_2/(\sigma_1+\sigma_2)$. If assets have different volatilities, a residual remains. And $\rho = -1$ is quasi-nonexistent in practice.</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Confusing efficient frontier with feasible set.</strong> The feasible set (Monte Carlo cloud of points) is <em>the set of all possible portfolios</em>. The efficient frontier is only its upper-left envelope. All portfolios below the frontier are "inefficient" but "feasible".</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Thinking that the CML is the efficient frontier.</strong> The efficient frontier is a <em>hyperbola</em> in (σ, E[R]). The CML is a <em>straight line</em> tangent to this hyperbola passing through $(0, r_f)$. The CML dominates the efficient frontier because it benefits from combination with the risk-free asset.</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Ignoring the instability of $\mathbf{C}^{-1}$.</strong> If assets are highly correlated, matrix $\mathbf{C}$ can be near-singular, making $\mathbf{C}^{-1}$ numerically unstable. In practice, regularization techniques (Ledoit-Wolf, ridge) are used or eigenvalues that are too small are truncated.</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Confusing the optimization parameter $q$ with the Sharpe Ratio.</strong> $q$ is a parameter controlling the risk/return balance in the objective function $\min \mathbf{w}^T\mathbf{C}\mathbf{w} - q\mathbf{w}^T\boldsymbol{\mu}$. By varying $q$ from 0 to $+\infty$, we trace the frontier. It is not directly the Sharpe Ratio, but they are conceptually linked.</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Underestimating the importance of expected returns.</strong> Practitioners say "expected returns are more an art than a science". Errors in $E[R_i]$ propagate directly into the optimal weights $\mathbf{w}^*$. An "optimal" portfolio with bad expected return estimates can be very suboptimal in reality.</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Forgetting that the unconstrained frontier passes ABOVE the Monte Carlo cloud.</strong> This is because it allows negative weights (short-selling) and weights above 1 (leverage), which are not generated by a random draw of weights in $[0,1]$.</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 12 — REVISION SHEET
+     ============================================================ -->
+<section class="sec" id="s12">
+  <div class="sec-hd">
+    <span class="sec-num">12</span>
+    <span class="sec-title">Final Revision Sheet</span>
+  </div>
+
+  <div class="fiche-grid">
+    <div class="fc2">
+      <h4>🧠 Key Concepts</h4>
+      <ul>
+        <li><strong>Portfolio</strong> : weight vector $\mathbf{w}$, $\sum w_i = 1$</li>
+        <li><strong>Diversification</strong> : risk reduction via decorrelated assets</li>
+        <li><strong>Matrix C</strong> : covariance, symmetric, positive definite</li>
+        <li><strong>Efficient Frontier</strong> : max $E[R_P]$ for given σ</li>
+        <li><strong>GMVP</strong> : Global Minimum Variance Portfolio</li>
+        <li><strong>Risk-free asset $r_f$</strong> : $\sigma_{rf}=0$, $\rho_{rf,P}=0$</li>
+        <li><strong>CML</strong> : tangent line EF ↔ $r_f$</li>
+        <li><strong>Tangency portfolio T</strong> : max Sharpe Ratio</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>📐 Formulas to Remember</h4>
+      <ul>
+        <li><strong>Return</strong> : $E[R_P] = \mathbf{w}^T\boldsymbol{\mu}$</li>
+        <li><strong>Variance</strong> : $\sigma_P^2 = \mathbf{w}^T\mathbf{C}\mathbf{w}$</li>
+        <li><strong>2 assets</strong> : $\sigma_P^2 = w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1w_2\rho_{12}\sigma_1\sigma_2$</li>
+        <li><strong>Correlation</strong> : $\rho_{ij} = \sigma_{ij}/(\sigma_i\sigma_j)$</li>
+        <li><strong>Sharpe</strong> : $SR = (E[R_T]-r_f)/\sigma_T$</li>
+        <li><strong>CML</strong> : $\sigma_{P1} = (1-w_{rf})\sigma_{P0}$</li>
+        <li><strong>Opt.</strong> : $\min_w \mathbf{w}^T\mathbf{C}\mathbf{w} - q\mathbf{w}^T\boldsymbol{\mu}$</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>⚡ Correlation Effects</h4>
+      <ul>
+        <li><strong>$\rho=+1$</strong> : $\sigma_P = w_1\sigma_1+w_2\sigma_2$ (straight line)</li>
+        <li><strong>$\rho=0.5$</strong> : $\sigma_P \approx 0.087$ (symmetric)</li>
+        <li><strong>$\rho=0$</strong> : $\sigma_P \approx 0.071$ (notable gain)</li>
+        <li><strong>$\rho=-0.5$</strong> : $\sigma_P = 0.05$</li>
+        <li><strong>$\rho=-1$</strong> : $\sigma_P = 0$ if $w_i\sigma_i = w_j\sigma_j$</li>
+        <li>The lower $\rho$, the more effective diversification</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>🔧 3 Calculation Approaches</h4>
+      <ul>
+        <li><strong>Monte Carlo</strong> : random, intuitive, slow</li>
+        <li><strong>Closed-form</strong> : exact, free weights, $C^{-1}$ required</li>
+        <li><strong>Optimization ★</strong> : flexible, constraints, industry standard</li>
+        <li><strong>Unconstrained</strong> : EF above MC cloud</li>
+        <li><strong>With constraints</strong> : EF lowered, σ_max reduced</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>🏦 Swiss Pension Fund</h4>
+      <ul>
+        <li><strong>CH Bonds</strong> : 10%</li>
+        <li><strong>Foreign Bonds</strong> : 35%</li>
+        <li><strong>Equity</strong> : 25% (CH/EU/US/EM)</li>
+        <li><strong>Real Estate</strong> : 15%</li>
+        <li><strong>Commodities</strong> : 10%</li>
+        <li><strong>Alternatives</strong> : 5%</li>
+        <li>OPP2 regulation + FX hedging</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>🚨 Watch Points</h4>
+      <ul>
+        <li>Diversification ≠ increase in return</li>
+        <li>$\rho=-1$ ≠ guaranteed risk cancellation</li>
+        <li>Unconstrained EF ≠ Constrained EF</li>
+        <li>CML ≠ Efficient frontier</li>
+        <li>Correlations unstable in crisis</li>
+        <li>$E[R_i]$ "more an art than a science"</li>
+        <li>$\mathbf{C}^{-1}$ can be unstable if $N$ large</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">✅ Final Message for the Oral Exam</div>
+    <p>Markowitz's MPT (1952) remains the reference framework for portfolio management, 70 years after its publication. Its three pillars are: <strong>(1)</strong> formalize the risk/return trade-off via variance and covariances, <strong>(2)</strong> identify the efficient frontier as the set of optimal allocations, and <strong>(3)</strong> introduce the risk-free asset to define the CML and the optimal tangency portfolio. In practice, constrained numerical optimization is the standard method, allowing incorporation of realistic regulatory and institutional constraints. The limits of MPT (input sensitivity, correlations unstable in crisis) have motivated many modern extensions — Risk Parity, Black-Litterman, CVaR — but all build upon this fundamental framework.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+function toggle(el){
+  const ans = el.nextElementSibling;
+  const arr = el.querySelector('.qi-arr');
+  ans.classList.toggle('open');
+  arr.style.transform = ans.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+
+// Active sidebar link on scroll
+const sections = document.querySelectorAll('.sec');
+const links = document.querySelectorAll('.sb nav a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      links.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.sb nav a[href="#${e.target.id}"]`);
+      if(active) active.classList.add('active');
+    }
+  });
+}, {threshold: 0.3});
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
