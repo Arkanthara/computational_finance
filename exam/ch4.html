@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CF · Data, Moving Average &amp; Intrinsic Time · Guide d'Examen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']], processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root{
+  --bg:#0d0b14;--bg-card:#161221;--bg-code:#1c1828;
+  --text:#e4dffa;--muted:#9089bf;--border:rgba(180,150,80,.18);--bstrong:rgba(180,150,80,.4);
+  --gold:#c9a84c;--glight:#e8c97a;--blue:#7eb8d4;--green:#7bc496;--red:#e07b7b;--violet:#a78bfa;
+  --ff:'EB Garamond',Georgia,serif;--fd:'Cormorant Garamond',Georgia,serif;--fm:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:18px;line-height:1.85;display:flex}
+.sb{width:270px;min-height:100vh;background:var(--bg-card);border-right:1px solid var(--border);
+  padding:2rem 1.4rem;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sb-logo{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--gold);margin-bottom:.3rem}
+.sb-sub{font-family:var(--fm);font-size:.73rem;color:var(--muted);margin-bottom:1.8rem;letter-spacing:.05em}
+.sb nav ul{list-style:none}
+.sb nav ul li{margin-bottom:.2rem}
+.sb nav ul li a{color:var(--muted);text-decoration:none;font-size:.88rem;display:block;
+  padding:.35rem .7rem;border-radius:4px;border-left:2px solid transparent;transition:all .18s}
+.sb nav ul li a:hover,.sb nav ul li a.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,168,76,.07)}
+.sb nav ul li a .n{font-family:var(--fm);font-size:.72rem;color:var(--gold);margin-right:.45rem;opacity:.75}
+.sb-section{font-family:var(--fm);font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--muted);padding:.5rem .7rem .3rem;opacity:.6}
+.main{margin-left:270px;flex:1;padding:3rem 4rem;max-width:1060px}
+.hero{border-bottom:1px solid var(--border);padding-bottom:3rem;margin-bottom:4.5rem}
+.hero-tag{font-family:var(--fm);font-size:.75rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero h1{font-family:var(--fd);font-size:3.4rem;font-weight:700;line-height:1.1;margin-bottom:.8rem}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:680px;margin-bottom:1.5rem}
+.badges{display:flex;gap:.7rem;flex-wrap:wrap}
+.badge{font-family:var(--fm);font-size:.72rem;padding:.25rem .75rem;border:1px solid var(--bstrong);
+  border-radius:20px;color:var(--gold);letter-spacing:.04em}
+.badge.b{border-color:rgba(126,184,212,.35);color:var(--blue)}
+.badge.g{border-color:rgba(123,196,150,.35);color:var(--green)}
+.badge.v{border-color:rgba(167,139,250,.35);color:var(--violet)}
+.sec{margin-bottom:5rem;scroll-margin-top:2rem}
+.sec-hd{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.sec-num{font-family:var(--fm);font-size:.85rem;color:var(--gold);opacity:.65;min-width:2.5rem}
+.sec-title{font-family:var(--fd);font-size:1.95rem;font-weight:700;color:var(--text)}
+h3{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--glight);margin:2rem 0 .8rem}
+h4{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--blue);margin:1.4rem 0 .5rem}
+p{margin-bottom:.9rem}
+strong{color:var(--glight);font-weight:600}
+em{color:var(--blue);font-style:italic}
+a{color:var(--gold);text-decoration:none}
+code{font-family:var(--fm);background:var(--bg-code);padding:.1em .4em;border-radius:3px;font-size:.82em;color:var(--gold)}
+ul,ol{padding-left:1.5rem;margin-bottom:.9rem}
+li{margin-bottom:.35rem}
+.box{background:var(--bg-card);border-left:3px solid var(--gold);padding:1.1rem 1.4rem;border-radius:0 6px 6px 0;margin:1.4rem 0}
+.box.info{border-left-color:var(--blue)}.box.warn{border-left-color:var(--red)}.box.ok{border-left-color:var(--green)}.box.vio{border-left-color:var(--violet)}
+.box-title{font-family:var(--fm);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem}
+.box.info .box-title{color:var(--blue)}.box.warn .box-title{color:var(--red)}.box.ok .box-title{color:var(--green)}.box.vio .box-title{color:var(--violet)}
+.mblock{background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:1.3rem 1.8rem;
+  margin:1.4rem 0;overflow-x:auto;text-align:center}
+.mblock .mlabel{font-family:var(--fm);font-size:.7rem;color:var(--muted);text-align:left;margin-bottom:.7rem;
+  text-transform:uppercase;letter-spacing:.08em}
+.twrap{overflow-x:auto;margin:1.4rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead{background:var(--bg-code)}
+th{padding:.8rem 1rem;text-align:left;font-family:var(--fm);font-size:.73rem;color:var(--gold);
+  text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--bstrong)}
+td{padding:.7rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(201,168,76,.03)}
+td.g{color:var(--green)}td.r{color:var(--red)}td.m{color:var(--muted)}
+.fcards{display:flex;flex-direction:column;gap:1.5rem;margin-top:1rem}
+.fc{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.fc-head{background:var(--bg-code);padding:.8rem 1.4rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between}
+.fc-name{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--gold)}
+.fc-tag{font-family:var(--fm);font-size:.7rem;color:var(--muted);padding:.2rem .6rem;
+  background:rgba(255,255,255,.04);border-radius:20px}
+.fc-body{padding:1.4rem}
+.fc-expr{text-align:center;padding:1.2rem;background:var(--bg-code);border-radius:6px;margin-bottom:1.1rem;overflow-x:auto}
+.fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;font-size:.88rem}
+.fc-item h5{font-family:var(--fm);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:.3rem}
+.fc-item p{color:var(--muted);margin:0;font-size:.88rem}
+.qlevel{display:inline-block;font-family:var(--fm);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.1em;padding:.2rem .7rem;border-radius:4px;margin-bottom:.8rem;margin-top:1.2rem}
+.qlevel.easy{background:rgba(123,196,150,.13);color:var(--green)}
+.qlevel.med{background:rgba(126,184,212,.13);color:var(--blue)}
+.qlevel.hard{background:rgba(224,123,123,.13);color:var(--red)}
+.qi{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.8rem;overflow:hidden}
+.qi-q{padding:.9rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;
+  gap:.8rem;transition:background .15s}
+.qi-q:hover{background:rgba(201,168,76,.05)}
+.qi-qtxt{flex:1;font-size:.93rem}
+.qi-arr{color:var(--gold);font-size:1.1rem;transition:transform .2s;min-width:1.2rem;text-align:center}
+.qi-a{padding:0 1.1rem;max-height:0;overflow:hidden;transition:max-height .5s ease,padding .2s;
+  background:var(--bg-code);font-size:.88rem;color:var(--muted);border-top:0 solid var(--border)}
+.qi-a.open{max-height:800px;padding:1rem 1.1rem;border-top:1px solid var(--border)}
+.piege{display:flex;gap:.9rem;align-items:flex-start;margin-bottom:.9rem;
+  padding:.8rem 1rem;background:rgba(224,123,123,.06);border-radius:6px;border-left:3px solid var(--red)}
+.piege-icon{font-size:1.1rem;min-width:1.4rem}
+.piege-text{font-size:.93rem}
+.piege-text strong{color:var(--red)}
+.fiche-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.4rem 0}
+.fc2{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.1rem}
+.fc2 h4{font-family:var(--fm);font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--gold);margin:0 0 .7rem 0}
+.fc2 ul{list-style:none;padding:0;font-size:.85rem}
+.fc2 ul li{padding:.22rem 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted)}
+.fc2 ul li:last-child{border:none}
+.fc2 ul li strong{color:var(--text)}
+.oral{background:var(--bg-card);border:1px solid var(--bstrong);border-radius:10px;
+  padding:2rem;margin:1rem 0;position:relative;overflow:hidden}
+.oral::before{content:'"';font-family:var(--fd);font-size:6rem;color:var(--gold);opacity:.12;
+  position:absolute;top:-.5rem;left:.8rem;line-height:1;pointer-events:none}
+.oral p{font-size:1rem;line-height:1.95;color:var(--text)}
+.oral p+p{margin-top:.8rem}
+.diag-cap{font-family:var(--fm);font-size:.73rem;color:var(--muted);text-align:center;margin-top:.6rem;letter-spacing:.04em}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin:1.4rem 0}
+.ccard{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.2rem;transition:border-color .18s}
+.ccard:hover{border-color:var(--bstrong)}
+.ccard .ctag{font-family:var(--fm);font-size:.68rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
+.ccard h4{font-family:var(--fd);font-size:1.15rem;color:var(--text);margin:0 0 .4rem 0}
+.ccard p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.6}
+.svgbox{background:var(--bg-code);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1rem;margin:1.4rem 0;overflow-x:auto}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:3px}
+@media(max-width:900px){.sb{display:none}.main{margin-left:0;padding:2rem 1.4rem}.hero h1{font-size:2.4rem}.fiche-grid{grid-template-columns:1fr}.fc-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ SIDEBAR ═══════════════════════════════ -->
+<aside class="sb">
+  <div class="sb-logo">Comp. Finance</div>
+  <div class="sb-sub">UNIGE · A. Dupuis · v1.1</div>
+  <nav>
+    <ul>
+      <div class="sb-section">Guide d'oral</div>
+      <li><a href="#resume"><span class="n">00</span>Résumé exécutif</a></li>
+      <li><a href="#oral-rep"><span class="n">01</span>Réponse modèle</a></li>
+      <div class="sb-section">Données &amp; Lissage</div>
+      <li><a href="#donnees"><span class="n">02</span>Données réelles</a></li>
+      <li><a href="#sma"><span class="n">03</span>SMA</a></li>
+      <li><a href="#wma"><span class="n">04</span>WMA</a></li>
+      <li><a href="#ema"><span class="n">05</span>EMA</a></li>
+      <li><a href="#ema-async"><span class="n">06</span>EMA Asynchrone</a></li>
+      <div class="sb-section">Temps Intrinsèque</div>
+      <li><a href="#it-motiv"><span class="n">07</span>Motivation</a></li>
+      <li><a href="#it-concept"><span class="n">08</span>DC &amp; Overshoot</a></li>
+      <li><a href="#it-algo"><span class="n">09</span>Algorithme</a></li>
+      <li><a href="#scaling"><span class="n">10</span>Lois d'échelle</a></li>
+      <div class="sb-section">Examen</div>
+      <li><a href="#formules"><span class="n">11</span>Formules clés</a></li>
+      <li><a href="#comparaison"><span class="n">12</span>Comparaison</a></li>
+      <li><a href="#questions"><span class="n">13</span>Questions</a></li>
+      <li><a href="#pieges"><span class="n">14</span>Pièges classiques</a></li>
+      <li><a href="#fiche"><span class="n">15</span>Fiche de révision</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<!-- ═══════════════════════════════ MAIN ═══════════════════════════════════ -->
+<main class="main">
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-tag">Computational Finance · Chapitre — Data &amp; Time</div>
+  <h1>Data, <em>Moving Average</em><br>&amp; Intrinsic Time</h1>
+  <p class="hero-desc">De la donnée tick bruyante aux lois d'échelle des marchés haute-fréquence : filtrage du signal, temps adaptatif, et une nouvelle façon de lire la dynamique de prix.</p>
+  <div class="badges">
+    <span class="badge">SMA · WMA · EMA</span>
+    <span class="badge b">Directional Change</span>
+    <span class="badge g">Scaling Laws</span>
+    <span class="badge v">High-Frequency Finance</span>
+    <span class="badge">Intrinsic Time</span>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 0 — RÉSUMÉ EXÉCUTIF
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="resume">
+  <div class="sec-hd"><span class="sec-num">00</span><h2 class="sec-title">Résumé exécutif</h2></div>
+
+  <div class="box">
+    <div class="box-title">30 secondes chrono</div>
+    <p>Les données financières réelles sont <strong>irrégulières, bruitées et non-continues</strong> — à l'opposé de ce qu'on modélise naïvement. Pour en extraire la tendance, on utilise des <strong>moyennes mobiles</strong> (SMA, WMA, EMA), qui lissent le signal au prix d'un <em>time lag</em> inévitable. L'EMA est la plus efficace en production (mise à jour en O(1)). Mais le temps physique lui-même est arbitraire : une alternative radicale, le <strong>temps intrinsèque</strong> (<em>intrinsic time</em>), mesure le temps par les <strong>changements de direction du prix</strong> (<em>directional changes</em>), capturant la dynamique réelle indépendamment de l'horloge. Des <strong>lois d'échelle</strong> (<em>scaling laws</em>) relient les deux paradigmes.</p>
+  </div>
+
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Problème central</div>
+      <h4>Données imparfaites</h4>
+      <p>Non-équidistantes, bruitées, avec spread bid/ask. La discrétisation et l'interpolation sont les deux réponses standard, chacune imparfaite.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Lissage</div>
+      <h4>Moving Averages</h4>
+      <p>SMA : simple, mémoire lourde. WMA : poids linéaires. EMA : poids exponentiels, O(1), paramètre α contrôle réactivité ↔ lissage.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Alternative</div>
+      <h4>Intrinsic Time</h4>
+      <p>Le temps avance seulement lors d'événements de marché (DC events). Capture la volatilité et la liquidité sans dépendre du temps physique.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Validation empirique</div>
+      <h4>Scaling Laws</h4>
+      <p>Relations en loi de puissance entre seuil δ et propriétés du marché. Robustes sur 13+ paires de devises FX.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 1 — RÉPONSE MODÈLE D'ORAL
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="oral-rep">
+  <div class="sec-hd"><span class="sec-num">01</span><h2 class="sec-title">Réponse modèle d'oral</h2></div>
+
+  <div class="oral">
+    <p>Ce chapitre traite de la réalité des données financières et des outils pour les analyser. En finance computationnelle, on a tendance à idéaliser les données — on les imagine lisses, équidistantes, continues. La réalité est très différente : les données de marché sont des <em>tick data</em> irréguliers, avec un spread bid/ask, et une activité qui varie considérablement selon l'heure ou le jour.</p>
+    <p>Pour lisser ce bruit, on dispose de trois grandes familles de <em>moving averages</em>. La <strong>Simple Moving Average (SMA)</strong> calcule une moyenne uniforme sur une fenêtre glissante de $n$ observations — simple, mais elle donne le même poids à une observation vieille d'un mois et à celle d'hier. La <strong>Weighted Moving Average (WMA)</strong> corrige cela en attribuant des poids linéaires croissants. Mais la plus utilisée en pratique est l'<strong>Exponential Moving Average (EMA)</strong>, qui peut se mettre à jour en O(1) via la récurrence $\text{EMA}(t) = \alpha X_t + (1-\alpha)\,\text{EMA}(t-1)$. Le paramètre $\alpha$ contrôle l'arbitrage entre réactivité et lissage. Un $\alpha$ grand = réactif mais bruité. Un $\alpha$ petit = lissé mais avec un fort <em>time lag</em>.</p>
+    <p>Toutes ces approches partagent un défaut fondamental : elles restent attachées au <strong>temps physique</strong>, qui est une mesure arbitraire pour les marchés. Les marchés ne "vivent" pas à la même vitesse la nuit et en pleine séance de trading. C'est là qu'intervient le concept de <strong>temps intrinsèque</strong>. L'idée est simple et élégante : on ne fait avancer le temps qu'au moment où le marché fait quelque chose de significatif — à savoir, un changement de direction du prix de plus de $\delta$. Ces événements s'appellent des <em>directional changes</em>. Entre deux DC, le prix continue dans la même direction — c'est l'<em>overshoot</em>. La somme DC + overshoot forme le <em>total move</em>.</p>
+    <p>Ce cadre n'est pas purement théorique. On peut mesurer des <strong>lois d'échelle</strong> empiriques très robustes qui relient le seuil $\delta$ à des quantités observables comme le nombre moyen de ticks, la durée des DC, ou la taille des overshoots. Ces lois sont vérifiées sur 13 paires de devises FX avec des exposants remarquablement stables. Elles permettent de calibrer des modèles et d'interpréter la microstructure des marchés.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 2 — DONNÉES RÉELLES
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="donnees">
+  <div class="sec-hd"><span class="sec-num">02</span><h2 class="sec-title">Données réelles en finance</h2></div>
+
+  <h3>Ce qu'on imagine vs. ce qui existe</h3>
+  <p>L'intuition naïve représente le prix comme une courbe lisse, continue, échantillonnée à intervalles réguliers. La réalité des marchés est radicalement différente : les données arrivent sous forme de <strong>ticks</strong> irréguliers, chacun représentant une transaction ou une cotation. On observe simultanément un <em>bid</em> (prix offert à l'achat), un <em>ask</em> (prix offert à la vente), et un <em>mid</em> (milieu des deux).</p>
+
+  <!-- SVG 1: Données idéales vs réelles -->
+  <div class="svgbox">
+    <svg viewBox="0 0 760 215" xmlns="http://www.w3.org/2000/svg" style="width:100%;font-family:'JetBrains Mono',monospace">
+      <!-- Panel divider -->
+      <line x1="380" y1="10" x2="380" y2="200" stroke="rgba(180,150,80,.2)" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+      <!-- ── LEFT PANEL: Idéal ── -->
+      <text x="190" y="24" fill="#c9a84c" font-size="12" text-anchor="middle" font-weight="bold">CE QU'ON IMAGINE</text>
+      <!-- Axes -->
+      <line x1="45" y1="40" x2="45" y2="180" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="45" y1="180" x2="360" y2="180" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="30" y="112" fill="#9089bf" font-size="11" text-anchor="middle" transform="rotate(-90,30,112)">prix</text>
+      <text x="202" y="200" fill="#9089bf" font-size="11" text-anchor="middle">temps</text>
+      <!-- Regular ticks on x-axis -->
+      <line x1="90" y1="177" x2="90" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="135" y1="177" x2="135" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="180" y1="177" x2="180" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="225" y1="177" x2="225" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="270" y1="177" x2="270" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="315" y1="177" x2="315" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <!-- Smooth price curve (sine-like) -->
+      <path d="M 55,145 C 90,140 110,80 150,70 C 190,60 230,100 260,115 C 290,130 320,120 355,105" stroke="#7eb8d4" stroke-width="2.5" fill="none"/>
+      <!-- Labels -->
+      <text x="90" y="190" fill="#9089bf" font-size="9" text-anchor="middle">Δt</text>
+      <text x="135" y="190" fill="#9089bf" font-size="9" text-anchor="middle">Δt</text>
+      <text x="180" y="190" fill="#9089bf" font-size="9" text-anchor="middle">Δt</text>
+      <!-- Annotations -->
+      <text x="120" y="55" fill="#7bc496" font-size="11">✓ Équidistant</text>
+      <text x="120" y="70" fill="#7bc496" font-size="11">✓ Continu</text>
+      <text x="120" y="85" fill="#7bc496" font-size="11">✓ Lisse</text>
+
+      <!-- ── RIGHT PANEL: Réel ── -->
+      <text x="570" y="24" fill="#c9a84c" font-size="12" text-anchor="middle" font-weight="bold">LA RÉALITÉ (TICK DATA)</text>
+      <!-- Axes -->
+      <line x1="395" y1="40" x2="395" y2="180" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="395" y1="180" x2="755" y2="180" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="380" y="112" fill="#9089bf" font-size="11" text-anchor="middle" transform="rotate(-90,380,112)">prix</text>
+      <text x="575" y="200" fill="#9089bf" font-size="11" text-anchor="middle">temps [secondes → jours]</text>
+
+      <!-- More activity zone background -->
+      <rect x="395" y="40" width="190" height="140" fill="rgba(126,184,212,.04)" rx="2"/>
+      <!-- Less activity zone background -->
+      <rect x="585" y="40" width="170" height="140" fill="rgba(144,137,191,.04)" rx="2"/>
+      <text x="487" y="55" fill="rgba(126,184,212,.6)" font-size="11" text-anchor="middle">↑ Forte activité</text>
+      <text x="668" y="55" fill="rgba(144,137,191,.5)" font-size="11" text-anchor="middle">↓ Faible activité</text>
+
+      <!-- Irregular ticks (dense left, sparse right) -->
+      <line x1="415" y1="177" x2="415" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="428" y1="177" x2="428" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="437" y1="177" x2="437" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="447" y1="177" x2="447" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="454" y1="177" x2="454" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="463" y1="177" x2="463" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="472" y1="177" x2="472" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="479" y1="177" x2="479" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="488" y1="177" x2="488" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="497" y1="177" x2="497" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="509" y1="177" x2="509" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="521" y1="177" x2="521" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="534" y1="177" x2="534" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <!-- Sparse -->
+      <line x1="565" y1="177" x2="565" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="610" y1="177" x2="610" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="660" y1="177" x2="660" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="720" y1="177" x2="720" y2="183" stroke="#9089bf" stroke-width="1.5"/>
+
+      <!-- Ask line (upper, noisy) -->
+      <polyline points="405,100 415,96 428,100 437,94 447,90 454,88 463,84 472,82 479,86 488,80 497,76 509,72 521,76 534,74 565,80 610,88 660,96 720,104 755,108" stroke="#e07b7b" stroke-width="1.5" fill="none" opacity="0.85"/>
+      <!-- Mid line -->
+      <polyline points="405,108 415,104 428,108 437,102 447,98 454,96 463,92 472,90 479,94 488,88 497,84 509,80 521,84 534,82 565,88 610,96 660,104 720,112 755,116" stroke="#e4dffa" stroke-width="2" fill="none"/>
+      <!-- Bid line (lower, noisy) -->
+      <polyline points="405,116 415,112 428,116 437,110 447,106 454,104 463,100 472,98 479,102 488,96 497,92 509,88 521,92 534,90 565,96 610,104 660,112 720,120 755,124" stroke="#7bc496" stroke-width="1.5" fill="none" opacity="0.85"/>
+
+      <!-- Labels -->
+      <text x="740" y="107" fill="#e07b7b" font-size="11">ask</text>
+      <text x="740" y="116" fill="#e4dffa" font-size="11">mid</text>
+      <text x="740" y="125" fill="#7bc496" font-size="11">bid</text>
+      <!-- Annotations -->
+      <text x="410" y="148" fill="#e07b7b" font-size="11">✗ Non-équidistant</text>
+      <text x="410" y="162" fill="#e07b7b" font-size="11">✗ Bruité</text>
+      <text x="410" y="176" fill="#e07b7b" font-size="11">✗ Spread bid/ask</text>
+    </svg>
+    <p class="diag-cap">Fig. 1 — L'hypothèse naïve vs. la réalité des tick data en finance de marché.</p>
+  </div>
+
+  <h3>Comment les traiter ?</h3>
+  <p>Face à ces données imparfaites, deux approches existent :</p>
+
+  <div class="box info">
+    <div class="box-title">Discrétisation (approche dominante — 99,9% des cas)</div>
+    <p>On fixe une grille temporelle (ex. : 1 min, 1 heure) et on ne garde que le prix instantané à ces moments. <strong>Avantage</strong> : simple, standard, compatible avec tous les modèles classiques. <strong>Inconvénient</strong> : l'information entre les ticks est perdue, les tendances intra-période passent inaperçues.</p>
+  </div>
+  <div class="box vio">
+    <div class="box-title">Interpolation (usage rare)</div>
+    <p>On utilise les observations passées pour inférer des valeurs entre les ticks. <strong>Avantage</strong> : plus d'information utilisée. <strong>Inconvénient</strong> : hypothèses fortes, et le temps physique reste une mesure rigide et arbitraire.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 3 — SMA
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="sma">
+  <div class="sec-hd"><span class="sec-num">03</span><h2 class="sec-title">Simple Moving Average (SMA)</h2></div>
+
+  <p>La <strong>moyenne mobile simple</strong> (<em>Simple Moving Average</em>) est la première réponse au problème du bruit : on remplace la valeur instantanée par la moyenne des $n$ dernières observations.</p>
+
+  <div class="mblock">
+    <div class="mlabel">Définition — SMA sur fenêtre n</div>
+    $$\text{SMA}(t) = \frac{X_{t-n+1} + X_{t-n+2} + \cdots + X_t}{n} = \frac{1}{n}\sum_{k=0}^{n-1} X_{t-k}$$
+  </div>
+
+  <h4>Mise à jour récursive</h4>
+  <p>L'astuce computationnelle du SMA est qu'on peut le mettre à jour incrémentalement en ajoutant la nouvelle observation et en soustrayant la plus ancienne :</p>
+
+  <div class="mblock">
+    $$\text{SMA}(t+1) = \text{SMA}(t) - \frac{X_{t-n+1}}{n} + \frac{X_{t+1}}{n}$$
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">Deux problèmes fondamentaux du SMA</div>
+    <p><strong>1. Équipondération de l'information :</strong> une observation vieille de $n$ pas a exactement le même poids ($1/n$) qu'une observation récente. C'est économiquement discutable — l'information récente devrait davantage compter.</p>
+    <p><strong>2. Time lag inévitable :</strong> plus $n$ est grand, plus la moyenne lisse, mais plus le retard par rapport au signal réel est important. Ce trade-off est fondamental et <strong>ne peut pas être éliminé</strong>.</p>
+  </div>
+
+  <!-- SVG: SMA Lag -->
+  <div class="svgbox">
+    <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+      <!-- Axes -->
+      <line x1="40" y1="20" x2="40" y2="175" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="40" y1="175" x2="740" y2="175" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="22" y="100" fill="#9089bf" font-size="12" text-anchor="middle" transform="rotate(-90,22,100)">prix</text>
+      <text x="390" y="197" fill="#9089bf" font-size="12" text-anchor="middle">temps</text>
+      <!-- Grid -->
+      <line x1="40" y1="60" x2="740" y2="60" stroke="#2a2440" stroke-width="1"/>
+      <line x1="40" y1="100" x2="740" y2="100" stroke="#2a2440" stroke-width="1"/>
+      <line x1="40" y1="140" x2="740" y2="140" stroke="#2a2440" stroke-width="1"/>
+
+      <!-- Noisy signal Xt (thin, textured) -->
+      <polyline points="55,120 65,116 72,122 78,115 86,110 93,113 100,108 107,105 113,108 120,102 127,98 134,101 140,96 148,91 154,94 160,89 167,84 173,87 180,82 187,78 193,81 200,76 207,70 213,74 220,68 227,64 233,67 240,62 246,57 252,60 258,65 264,60 270,68 277,74 283,70 289,78 296,84 302,80 308,88 315,94 321,90 327,98 333,104 340,100 347,108 353,104 360,112 367,108 374,116 380,120 387,116 394,124 400,120 407,128 413,124 420,132 427,128 433,136 440,140 447,136 454,144 460,140 467,148 473,152 480,148 487,155 493,150 500,145 507,150 513,145 520,140 527,144 533,139 540,135 547,140 553,136 560,130 567,135 573,129 580,124 587,128 593,122 600,118 607,122 613,118 620,112 627,116 633,111 640,107 647,111 653,106 660,102 667,106 673,100 680,96 687,100 693,96 700,91 707,95 713,90 720,87 727,91 733,86 740,82"
+        stroke="#9089bf" stroke-width="1.5" fill="none" opacity="0.7"/>
+
+      <!-- SMA(t) - smooth, lagging (in gold) -->
+      <path d="M 55,120 C 100,115 140,100 180,87 C 220,74 250,62 290,70 C 330,78 370,95 400,110 C 430,125 460,140 500,148 C 530,154 560,148 590,135 C 620,122 660,105 700,92" stroke="#c9a84c" stroke-width="3" fill="none"/>
+
+      <!-- Time lag arrow -->
+      <line x1="290" y1="68" x2="290" y2="50" stroke="#c9a84c" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/>
+      <line x1="330" y1="78" x2="330" y2="50" stroke="#c9a84c" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/>
+      <line x1="290" y1="50" x2="330" y2="50" stroke="#c9a84c" stroke-width="2"/>
+      <polygon points="290,46 290,54 282,50" fill="#c9a84c"/>
+      <polygon points="330,46 330,54 338,50" fill="#c9a84c"/>
+      <text x="310" y="43" fill="#c9a84c" font-size="12" text-anchor="middle" font-weight="bold">Lag</text>
+
+      <!-- Signal peak annotation -->
+      <circle cx="246" cy="57" r="4" fill="#7eb8d4"/>
+      <circle cx="290" cy="68" r="4" fill="#c9a84c"/>
+      <text x="246" y="40" fill="#7eb8d4" font-size="11" text-anchor="middle">Pic réel X_t</text>
+      <text x="290" y="88" fill="#c9a84c" font-size="11" text-anchor="middle">Pic SMA</text>
+
+      <!-- Legend -->
+      <rect x="550" y="20" width="185" height="55" rx="5" fill="#161221" stroke="rgba(180,150,80,.25)" stroke-width="1"/>
+      <line x1="562" y1="37" x2="592" y2="37" stroke="#9089bf" stroke-width="2" opacity="0.7"/>
+      <text x="600" y="41" fill="#e4dffa" font-size="12">Série brute $X_t$</text>
+      <line x1="562" y1="57" x2="592" y2="57" stroke="#c9a84c" stroke-width="3"/>
+      <text x="600" y="61" fill="#e4dffa" font-size="12">SMA(t)</text>
+    </svg>
+    <p class="diag-cap">Fig. 2 — Le SMA lisse efficacement, mais introduit un <em>time lag</em> inhérent : le pic de la moyenne mobile apparaît après le pic réel. Plus $n$ est grand, plus le lag est important.</p>
+  </div>
+
+  <div class="box">
+    <div class="box-title">Coût mémoire</div>
+    <p>Le SMA nécessite de conserver les $n$ dernières observations en mémoire. Pour un $n$ grand sur des données haute fréquence, cela peut représenter un coût significatif.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 4 — WMA
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="wma">
+  <div class="sec-hd"><span class="sec-num">04</span><h2 class="sec-title">Weighted Moving Average (WMA)</h2></div>
+
+  <p>Pour corriger l'équipondération du SMA, on attribue des <strong>poids croissants</strong> aux observations récentes : l'observation la plus récente reçoit le poids $n$, la plus ancienne reçoit le poids $1$.</p>
+
+  <div class="mblock">
+    <div class="mlabel">Définition — WMA</div>
+    $$\text{WMA}(t) = \frac{1 \cdot X_{t-n+1} + 2 \cdot X_{t-n+2} + \cdots + n \cdot X_t}{1 + 2 + \cdots + n} = \frac{\sum_{k=1}^{n} k \cdot X_{t-n+k}}{\dfrac{n(n+1)}{2}}$$
+  </div>
+
+  <h4>Mise à jour récursive (plus complexe)</h4>
+  <p>La mise à jour du WMA nécessite deux quantités auxiliaires :</p>
+
+  <div class="mblock">
+    $$\text{Total}(t) = \sum_{k=0}^{n-1} X_{t-k}$$
+    $$\text{Total}(t+1) = \text{Total}(t) - X_{t-n+1} + X_{t+1}$$
+    $$\text{WMA}(t+1) = \frac{\text{WMA}(t) \cdot \tfrac{n(n+1)}{2} + n \cdot X_{t+1} - \text{Total}(t)}{\tfrac{n(n+1)}{2}}$$
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">Inconvénient principal</div>
+    <p>La mise à jour est significativement plus complexe que pour le SMA. On doit maintenir une somme auxiliaire <code>Total(t)</code>. La structure algébrique est plus lourde à implémenter et à maintenir.</p>
+  </div>
+
+  <!-- SVG: Comparaison des schémas de pondération -->
+  <div class="svgbox">
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;font-family:'JetBrains Mono',monospace">
+      <!-- Dividers -->
+      <line x1="253" y1="5" x2="253" y2="185" stroke="rgba(180,150,80,.15)" stroke-width="1"/>
+      <line x1="507" y1="5" x2="507" y2="185" stroke="rgba(180,150,80,.15)" stroke-width="1"/>
+
+      <!-- ── PANEL 1: SMA ── -->
+      <text x="126" y="20" fill="#c9a84c" font-size="12" text-anchor="middle" font-weight="bold">SMA</text>
+      <text x="126" y="34" fill="#9089bf" font-size="10" text-anchor="middle">poids = 1/n (constant)</text>
+      <!-- Axis -->
+      <line x1="20" y1="165" x2="245" y2="165" stroke="#9089bf" stroke-width="1"/>
+      <line x1="20" y1="50" x2="20" y2="165" stroke="#9089bf" stroke-width="1"/>
+      <text x="20" y="178" fill="#9089bf" font-size="9" text-anchor="middle">t-5</text>
+      <text x="245" y="178" fill="#9089bf" font-size="9" text-anchor="middle">t</text>
+      <text x="6" y="80" fill="#9089bf" font-size="9" text-anchor="middle">w</text>
+      <!-- 6 equal bars -->
+      <rect x="27" y="80" width="28" height="85" fill="rgba(126,184,212,.5)" stroke="#7eb8d4" stroke-width="1"/>
+      <rect x="63" y="80" width="28" height="85" fill="rgba(126,184,212,.5)" stroke="#7eb8d4" stroke-width="1"/>
+      <rect x="99" y="80" width="28" height="85" fill="rgba(126,184,212,.5)" stroke="#7eb8d4" stroke-width="1"/>
+      <rect x="135" y="80" width="28" height="85" fill="rgba(126,184,212,.5)" stroke="#7eb8d4" stroke-width="1"/>
+      <rect x="171" y="80" width="28" height="85" fill="rgba(126,184,212,.5)" stroke="#7eb8d4" stroke-width="1"/>
+      <rect x="207" y="80" width="28" height="85" fill="rgba(126,184,212,.8)" stroke="#7eb8d4" stroke-width="2"/>
+      <!-- age labels -->
+      <text x="41" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-5</text>
+      <text x="77" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-4</text>
+      <text x="113" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-3</text>
+      <text x="149" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-2</text>
+      <text x="185" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-1</text>
+      <text x="221" y="178" fill="#7eb8d4" font-size="8" text-anchor="middle">t</text>
+      <text x="70" y="73" fill="#7eb8d4" font-size="10" text-anchor="middle">→ Équiponderé ←</text>
+
+      <!-- ── PANEL 2: WMA ── -->
+      <text x="380" y="20" fill="#c9a84c" font-size="12" text-anchor="middle" font-weight="bold">WMA</text>
+      <text x="380" y="34" fill="#9089bf" font-size="10" text-anchor="middle">poids croissant (1,2,...,n)</text>
+      <line x1="265" y1="165" x2="498" y2="165" stroke="#9089bf" stroke-width="1"/>
+      <line x1="265" y1="50" x2="265" y2="165" stroke="#9089bf" stroke-width="1"/>
+      <text x="270" y="178" fill="#9089bf" font-size="9">t-5</text>
+      <text x="495" y="178" fill="#9089bf" font-size="9" text-anchor="end">t</text>
+      <!-- 6 linearly increasing bars -->
+      <rect x="272" y="151" width="28" height="14" fill="rgba(123,196,150,.4)" stroke="#7bc496" stroke-width="1"/>
+      <rect x="308" y="137" width="28" height="28" fill="rgba(123,196,150,.45)" stroke="#7bc496" stroke-width="1"/>
+      <rect x="344" y="118" width="28" height="47" fill="rgba(123,196,150,.5)" stroke="#7bc496" stroke-width="1"/>
+      <rect x="380" y="95" width="28" height="70" fill="rgba(123,196,150,.6)" stroke="#7bc496" stroke-width="1"/>
+      <rect x="416" y="69" width="28" height="96" fill="rgba(123,196,150,.7)" stroke="#7bc496" stroke-width="1"/>
+      <rect x="452" y="51" width="28" height="114" fill="rgba(123,196,150,.9)" stroke="#7bc496" stroke-width="2"/>
+      <text x="272" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-5</text>
+      <text x="308" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-4</text>
+      <text x="344" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-3</text>
+      <text x="380" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-2</text>
+      <text x="416" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-1</text>
+      <text x="452" y="178" fill="#7bc496" font-size="8" text-anchor="middle">t</text>
+      <text x="390" y="46" fill="#7bc496" font-size="10" text-anchor="middle">→ Plus récent = plus lourd ←</text>
+
+      <!-- ── PANEL 3: EMA ── -->
+      <text x="633" y="20" fill="#c9a84c" font-size="12" text-anchor="middle" font-weight="bold">EMA</text>
+      <text x="633" y="34" fill="#9089bf" font-size="10" text-anchor="middle">poids exp. décroissant (1-α)^k</text>
+      <line x1="515" y1="165" x2="752" y2="165" stroke="#9089bf" stroke-width="1"/>
+      <line x1="515" y1="50" x2="515" y2="165" stroke="#9089bf" stroke-width="1"/>
+      <text x="520" y="178" fill="#9089bf" font-size="9">t-5</text>
+      <text x="750" y="178" fill="#9089bf" font-size="9" text-anchor="end">t</text>
+      <!-- 6 exponentially decreasing bars (from oldest to newest → newest is tallest) -->
+      <!-- (1-α)^5, (1-α)^4, (1-α)^3, (1-α)^2, (1-α)^1, 1 where α=0.4 -->
+      <!-- Heights proportional to: 0.08, 0.13, 0.22, 0.36, 0.6, 1.0 → scaled to max 114 -->
+      <rect x="522" y="156" width="28" height="9"  fill="rgba(201,168,76,.3)" stroke="#c9a84c" stroke-width="1"/>
+      <rect x="558" y="150" width="28" height="15" fill="rgba(201,168,76,.35)" stroke="#c9a84c" stroke-width="1"/>
+      <rect x="594" y="140" width="28" height="25" fill="rgba(201,168,76,.45)" stroke="#c9a84c" stroke-width="1"/>
+      <rect x="630" y="124" width="28" height="41" fill="rgba(201,168,76,.55)" stroke="#c9a84c" stroke-width="1"/>
+      <rect x="666" y="97"  width="28" height="68" fill="rgba(201,168,76,.7)" stroke="#c9a84c" stroke-width="1"/>
+      <rect x="702" y="51"  width="28" height="114" fill="rgba(201,168,76,.9)" stroke="#c9a84c" stroke-width="2"/>
+      <text x="522" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-5</text>
+      <text x="558" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-4</text>
+      <text x="594" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-3</text>
+      <text x="630" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-2</text>
+      <text x="666" y="178" fill="#9089bf" font-size="8" text-anchor="middle">t-1</text>
+      <text x="702" y="178" fill="#c9a84c" font-size="8" text-anchor="middle">t</text>
+      <text x="640" y="46" fill="#c9a84c" font-size="10" text-anchor="middle">→ Décroissance exponentielle ←</text>
+    </svg>
+    <p class="diag-cap">Fig. 3 — Schémas de pondération comparés : SMA (uniforme), WMA (linéaire), EMA (exponentiel). Dans les trois cas, la barre la plus à droite correspond à l'observation la plus récente $t$.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 5 — EMA
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="ema">
+  <div class="sec-hd"><span class="sec-num">05</span><h2 class="sec-title">Exponential Moving Average (EMA)</h2></div>
+
+  <p>L'EMA est la <strong>moyenne mobile la plus utilisée en pratique</strong>. Son atout majeur : elle combine un schéma de pondération exponentiel (plus proche de la réalité économique) avec une <strong>mise à jour en O(1)</strong> — sans mémoire des observations passées.</p>
+
+  <h4>Dérivation intuitive</h4>
+  <p>On définit d'abord la forme "infinie" de l'EMA avec des poids exponentiels :</p>
+
+  <div class="mblock">
+    <div class="mlabel">Forme développée</div>
+    $$\text{EMA}(t) = \frac{X_t + (1-\alpha)X_{t-1} + (1-\alpha)^2 X_{t-2} + \cdots}{1 + (1-\alpha) + (1-\alpha)^2 + \cdots}$$
+  </div>
+
+  <p>En utilisant la série géométrique $\sum_{i=0}^{\infty}(1-\alpha)^i = 1/\alpha$, on peut factoriser :</p>
+
+  <div class="mblock">
+    <div class="mlabel">Récurrence fondamentale de l'EMA</div>
+    $$\boxed{\text{EMA}(t) = \alpha \cdot X_t + (1-\alpha) \cdot \text{EMA}(t-1)}$$
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">Pourquoi c'est remarquable</div>
+    <p>Cette récurrence ne nécessite que <strong>deux valeurs</strong> : l'observation courante $X_t$ et l'EMA précédente. Pas besoin de stocker les $n$ observations passées. C'est un filtre à réponse impulsionnelle infinie (IIR) de premier ordre — élégant et efficace.</p>
+  </div>
+
+  <h4>Choix du paramètre α</h4>
+  <p>Il existe deux approches principales pour calibrer α :</p>
+
+  <div class="box info">
+    <div class="box-title">Méthode 1 — Équivalence d'âge moyen avec SMA(n)</div>
+    <p>On égalise l'âge moyen pondéré d'une EMA et d'un SMA de taille $n$ :</p>
+    $$\sum_{i=0}^{\infty} i \cdot (1-\alpha)^i \cdot \alpha = \frac{(1-\alpha)}{\alpha} \stackrel{!}{=} \frac{n-1}{2} \quad\Rightarrow\quad \boxed{\alpha = \frac{2}{n+1}}$$
+    <p><strong>Attention :</strong> cette équivalence porte sur l'âge moyen uniquement. SMA(n) ≠ EMA avec $\alpha = 2/(n+1)$ en général.</p>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">Méthode 2 — Impact résiduel après k étapes</div>
+    <p>On choisit α tel qu'une observation $X_{t-k}$ ait un impact résiduel $\epsilon_k$ :</p>
+    $$(1-\alpha)^k = \epsilon_k \quad\Rightarrow\quad \alpha = 1 - e^{\frac{\ln(\epsilon_k)}{k}}$$
+    <p><strong>Exemple :</strong> pour $k=100$ et $\epsilon_k = 1\%$ : $\alpha = 0.045$. Pour SMA(100) : $\alpha = 2/101 \approx 0.020$.</p>
+  </div>
+
+  <h4>Conditions initiales</h4>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Initialisation</th><th>Formule</th><th>Avantage</th><th>Inconvénient</th></tr></thead>
+      <tbody>
+        <tr><td>Cold start</td><td>$\text{EMA}(0) = 0$ ou $\text{EMA}(1) = X_1$</td><td class="g">Simple</td><td class="r">Instabilité initiale forte</td></tr>
+        <tr><td>Bootstrap SMA</td><td>$\text{EMA}(n) = \text{SMA}(n)$</td><td class="g">Période de chauffe réduite</td><td class="r">Nécessite $n$ observations</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Dans tous les cas, il faut <strong>attendre que l'EMA se "cale"</strong> — typiquement plusieurs multiples de $1/\alpha$ étapes avant d'utiliser la valeur.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 6 — EMA ASYNCHRONE
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="ema-async">
+  <div class="sec-hd"><span class="sec-num">06</span><h2 class="sec-title">EMA pour données asynchrones</h2></div>
+
+  <p>Le SMA et l'EMA classiques supposent des observations à intervalles réguliers. En <em>high-frequency finance</em>, les ticks arrivent de manière <strong>irrégulière</strong>. L'EMA standard appliqué naïvement traiterait un gap de 30 minutes comme un gap de 30 secondes. Il faut donc une extension qui <strong>tienne compte du temps réel entre les observations</strong>.</p>
+
+  <h4>Construction de Zumbach &amp; Müller (2001)</h4>
+  <p>On définit un opérateur EMA temporellement adaptatif via deux paramètres :</p>
+
+  <div class="mblock">
+    <div class="mlabel">Paramètres fondamentaux</div>
+    $$\alpha = \frac{t_n - t_{n-1}}{\tau} \qquad \mu = e^{-\alpha} \qquad \nu = \frac{1-\mu}{\alpha}$$
+  </div>
+
+  <div class="box">
+    <div class="box-title">Interprétation intuitive</div>
+    <ul>
+      <li>$\tau$ : constante de temps de référence (paramètre libre)</li>
+      <li>$\alpha$ : fraction de temps écoulé depuis la dernière observation (normalisé par $\tau$)</li>
+      <li>$\mu = e^{-\alpha}$ : facteur d'oubli — si $\alpha$ grand (long silence), $\mu \to 0$, l'EMA "oublie" davantage</li>
+      <li>$\nu$ : coefficient d'interpolation entre l'ancienne et la nouvelle observation</li>
+    </ul>
+  </div>
+
+  <div class="mblock">
+    <div class="mlabel">Opérateur EMA asynchrone</div>
+    $$\text{EMA}(\tau; x)(t_n) = \mu \cdot \text{EMA}(\tau; x)(t_{n-1}) + (\nu - \mu) \cdot x_{n-1} + (1-\nu) \cdot x_n$$
+  </div>
+
+  <!-- SVG: EMA asynchrone illustration -->
+  <div class="svgbox">
+    <svg viewBox="0 0 760 175" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+      <!-- Axis -->
+      <line x1="30" y1="130" x2="740" y2="130" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="390" y="150" fill="#9089bf" font-size="11" text-anchor="middle">temps physique t</text>
+
+      <!-- Irregular tick marks -->
+      <line x1="60"  y1="125" x2="60"  y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="90"  y1="125" x2="90"  y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="115" y1="125" x2="115" y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="120" y1="125" x2="120" y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="125" y1="125" x2="125" y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="240" y1="125" x2="240" y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="245" y1="125" x2="245" y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="400" y1="125" x2="400" y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="405" y1="125" x2="405" y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="410" y1="125" x2="410" y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="415" y1="125" x2="415" y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="680" y1="125" x2="680" y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="690" y1="125" x2="690" y2="135" stroke="#7eb8d4" stroke-width="2"/>
+      <line x1="700" y1="125" x2="700" y2="135" stroke="#7eb8d4" stroke-width="2"/>
+
+      <!-- Brace annotations for Δt_n -->
+      <!-- Short gap: t_{n-1}=60, t_n=90 -->
+      <line x1="60" y1="110" x2="90" y2="110" stroke="#c9a84c" stroke-width="1.5"/>
+      <line x1="60" y1="105" x2="60" y2="115" stroke="#c9a84c" stroke-width="1.5"/>
+      <line x1="90" y1="105" x2="90" y2="115" stroke="#c9a84c" stroke-width="1.5"/>
+      <text x="75" y="102" fill="#c9a84c" font-size="10" text-anchor="middle">Δt_small</text>
+      <text x="75" y="115" fill="#9089bf" font-size="9" text-anchor="middle">α small</text>
+      <text x="75" y="124" fill="#9089bf" font-size="9" text-anchor="middle">μ≈1</text>
+
+      <!-- Long gap: t_{n-1}=125, t_n=240 -->
+      <line x1="125" y1="110" x2="240" y2="110" stroke="#e07b7b" stroke-width="1.5"/>
+      <line x1="125" y1="105" x2="125" y2="115" stroke="#e07b7b" stroke-width="1.5"/>
+      <line x1="240" y1="105" x2="240" y2="115" stroke="#e07b7b" stroke-width="1.5"/>
+      <text x="182" y="102" fill="#e07b7b" font-size="10" text-anchor="middle">Δt_large (weekend?)</text>
+      <text x="182" y="115" fill="#9089bf" font-size="9" text-anchor="middle">α large → μ≈0</text>
+      <text x="182" y="124" fill="#9089bf" font-size="9" text-anchor="middle">EMA "oublie"</text>
+
+      <!-- Price points with stems -->
+      <line x1="60"  y1="90" x2="60"  y2="130" stroke="#7eb8d4" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="90"  y1="70" x2="90"  y2="130" stroke="#7eb8d4" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="125" y1="80" x2="125" y2="130" stroke="#7eb8d4" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="240" y1="60" x2="240" y2="130" stroke="#7eb8d4" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="405" y1="50" x2="405" y2="130" stroke="#7eb8d4" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="690" y1="65" x2="690" y2="130" stroke="#7eb8d4" stroke-width="1" stroke-dasharray="3,3"/>
+
+      <!-- Price dots -->
+      <circle cx="60"  cy="90" r="5" fill="#7eb8d4"/>
+      <circle cx="90"  cy="70" r="5" fill="#7eb8d4"/>
+      <circle cx="125" cy="80" r="5" fill="#7eb8d4"/>
+      <circle cx="240" cy="60" r="5" fill="#7eb8d4"/>
+      <circle cx="405" cy="50" r="5" fill="#7eb8d4"/>
+      <circle cx="690" cy="65" r="5" fill="#7eb8d4"/>
+
+      <!-- Interpolation between x_{n-1} and x_n for EMA computation (ν) -->
+      <line x1="125" y1="80" x2="240" y2="60" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <text x="185" y="64" fill="#a78bfa" font-size="10" text-anchor="middle">interpolation ν</text>
+
+      <!-- EMA continuous line -->
+      <path d="M 60,90 C 75,80 82,73 90,70 C 100,68 110,73 125,80 C 160,72 200,63 240,60 C 300,57 350,52 405,50 C 490,49 590,56 690,65"
+            stroke="#c9a84c" stroke-width="2.5" fill="none" stroke-dasharray="7,3"/>
+      <text x="500" y="45" fill="#c9a84c" font-size="11">EMA(τ;x)(t_n)</text>
+
+      <!-- Label for x_n, x_{n-1} -->
+      <text x="240" y="50" fill="#7eb8d4" font-size="10" text-anchor="middle">x_{n-1}</text>
+      <text x="405" y="40" fill="#7eb8d4" font-size="10" text-anchor="middle">x_n</text>
+    </svg>
+    <p class="diag-cap">Fig. 4 — L'EMA asynchrone adapte son "oubli" au temps réel écoulé. Un long silence entre deux ticks (weekend, fermeture de marché) donne un $\alpha$ grand → $\mu \approx 0$ → l'EMA ignore presque entièrement le passé.</p>
+  </div>
+
+  <h4>Opérateurs dérivés</h4>
+  <p>Ce cadre permet de construire des opérateurs plus sophistiqués :</p>
+
+  <div class="mblock">
+    <div class="mlabel">EMA itérée (lissage d'ordre n)</div>
+    $$\text{EMA}(\tau, n; x) = \text{EMA}(\tau; \text{EMA}(\tau, n-1; x))$$
+  </div>
+
+  <div class="mblock">
+    <div class="mlabel">SMA à partir d'EMAs</div>
+    $$\text{SMA}(\tau, n) = \frac{1}{n}\sum_{k=1}^{n} \text{EMA}\left(\tau'; k\right) \quad\text{avec}\quad \tau' = \frac{2\tau}{n+1}$$
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 7 — MOTIVATION TEMPS INTRINSÈQUE
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="it-motiv">
+  <div class="sec-hd"><span class="sec-num">07</span><h2 class="sec-title">Limites du temps physique</h2></div>
+
+  <p>Le temps physique est le cadre de référence implicite de toute analyse financière classique. Mais est-il vraiment la bonne mesure du temps des marchés ?</p>
+
+  <div class="box warn">
+    <div class="box-title">Problèmes fondamentaux du temps physique</div>
+    <ul>
+      <li><strong>Arbitraire :</strong> quand commence-t-on à observer ? À minuit ? À 5h PM ? Ce choix affecte les statistiques.</li>
+      <li><strong>Hétérogène :</strong> l'activité de marché varie énormément — nulle la nuit, forte en séance, quasi-nulle le week-end. Une heure "valide" autant la nuit qu'en plein trading.</li>
+      <li><strong>Événements manqués :</strong> si l'intervalle d'échantillonnage est plus grand que la durée d'un événement important, cet événement disparaît des données.</li>
+      <li><strong>Données asynchrones multi-marchés :</strong> les marchés à Tokyo, Londres et New York ont des activités décalées — les comparer en temps physique est problématique.</li>
+    </ul>
+  </div>
+
+  <h4>Quelles alternatives ?</h4>
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Idée 1</div>
+      <h4>Volume Time</h4>
+      <p>Le temps avance d'une unité pour chaque volume $V$ échangé. Problème : le volume exact n'est connu qu'a posteriori.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Idée 2</div>
+      <h4>Transaction Count</h4>
+      <p>Une unité de temps = un certain nombre de transactions. Même problème : connu après coup.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Idée 3 ✓</div>
+      <h4>Intrinsic Time</h4>
+      <p>Basé sur le <strong>prix uniquement</strong> — toujours disponible en temps réel. Le temps avance lors de changements de direction significatifs.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 8 — CONCEPT DC & OVERSHOOT
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="it-concept">
+  <div class="sec-hd"><span class="sec-num">08</span><h2 class="sec-title">Directional Change &amp; Overshoot</h2></div>
+
+  <p>Le <strong>temps intrinsèque</strong> (<em>intrinsic time</em>) est défini par les occurrences d'un type d'événement particulier : le <em>directional change</em> (DC). L'intuition est simple — le marché "parle" quand il change de direction de façon significative.</p>
+
+  <h4>Décomposition du mouvement de prix</h4>
+  <div class="box">
+    <div class="box-title">Définitions clés</div>
+    <ul>
+      <li><strong>Directional Change (DC) :</strong> renversement de tendance dépassant le seuil $\delta$ depuis le dernier extremum. C'est l'événement qui "confirme" un retournement.</li>
+      <li><strong>Overshoot (OS) :</strong> continuation du mouvement dans la nouvelle direction <em>après</em> le DC et jusqu'au prochain extremum. C'est le "dépassement" une fois la tendance confirmée.</li>
+      <li><strong>Total Move (TM) :</strong> $\text{TM} = \text{DC} + \text{OS}$. Le mouvement total entre deux extrema consécutifs.</li>
+      <li><strong>Extremum ($x_\text{ext}$) :</strong> prix maximal (ou minimal) atteint avant qu'un DC ne soit déclenché.</li>
+    </ul>
+  </div>
+
+  <!-- SVG: Intrinsic Time — Concept central -->
+  <div class="svgbox">
+    <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;font-family:'EB Garamond',serif">
+      <!-- Price axis -->
+      <line x1="45" y1="18" x2="45" y2="215" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="14" y="117" fill="#9089bf" font-size="12" text-anchor="middle" transform="rotate(-90,14,117)">prix</text>
+      <!-- Grid lines -->
+      <line x1="45" y1="55" x2="720" y2="55" stroke="#2a2440" stroke-width="1"/>
+      <line x1="45" y1="95" x2="720" y2="95" stroke="#2a2440" stroke-width="1"/>
+      <line x1="45" y1="135" x2="720" y2="135" stroke="#2a2440" stroke-width="1"/>
+      <line x1="45" y1="175" x2="720" y2="175" stroke="#2a2440" stroke-width="1"/>
+
+      <!-- ── Price path ── -->
+      <!-- Ascending trend to first peak -->
+      <path d="M 55,180 C 80,170 120,120 165,65" stroke="#9089bf" stroke-width="2.5" fill="none"/>
+      <!-- DC DOWN portion (solid, blue): peak(165,65) → DC event(210,95) -->
+      <path d="M 165,65 L 210,95" stroke="#7eb8d4" stroke-width="3.5" fill="none"/>
+      <!-- OS DOWN portion (dashed, blue): DC(210,95) → trough(365,185) -->
+      <path d="M 210,95 C 255,125 315,165 365,185" stroke="#7eb8d4" stroke-width="2.5" fill="none" stroke-dasharray="8,4"/>
+      <!-- DC UP portion (solid, green): trough(365,185) → DC event(410,155) -->
+      <path d="M 365,185 L 410,155" stroke="#7bc496" stroke-width="3.5" fill="none"/>
+      <!-- OS UP portion (dashed, green): DC(410,155) → peak(565,55) -->
+      <path d="M 410,155 C 450,120 510,80 565,55" stroke="#7bc496" stroke-width="2.5" fill="none" stroke-dasharray="8,4"/>
+      <!-- DC DOWN 2 (solid, blue): peak(565,55) → DC(615,88) -->
+      <path d="M 565,55 L 615,88" stroke="#7eb8d4" stroke-width="3.5" fill="none"/>
+      <!-- OS continues: DC(615,88) → end(710,155) -->
+      <path d="M 615,88 C 645,110 680,135 710,155" stroke="#7eb8d4" stroke-width="2.5" fill="none" stroke-dasharray="8,4"/>
+
+      <!-- ── Extremum bullets ── -->
+      <circle cx="165" cy="65"  r="6" fill="#c9a84c" stroke="#0d0b14" stroke-width="2"/>
+      <circle cx="365" cy="185" r="6" fill="#c9a84c" stroke="#0d0b14" stroke-width="2"/>
+      <circle cx="565" cy="55"  r="6" fill="#c9a84c" stroke="#0d0b14" stroke-width="2"/>
+      <text x="165" y="50" fill="#c9a84c" font-size="11" text-anchor="middle" font-style="italic">x_ext (pic)</text>
+      <text x="365" y="200" fill="#c9a84c" font-size="11" text-anchor="middle" font-style="italic">x_ext (creux)</text>
+
+      <!-- ── DC event diamonds ── -->
+      <polygon points="210,84 222,95 210,106 198,95" fill="#7eb8d4" stroke="#0d0b14" stroke-width="1.5"/>
+      <polygon points="410,144 422,155 410,166 398,155" fill="#7bc496" stroke="#0d0b14" stroke-width="1.5"/>
+      <polygon points="615,77 627,88 615,99 603,88" fill="#7eb8d4" stroke="#0d0b14" stroke-width="1.5"/>
+
+      <!-- ── Threshold lines ── -->
+      <!-- δ below first peak at y=65+δ. With δ≈3%, Δy≈30px: y=95 -->
+      <line x1="165" y1="95" x2="230" y2="95" stroke="#7eb8d4" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+      <!-- Vertical dashed from peak to threshold -->
+      <line x1="165" y1="65" x2="165" y2="215" stroke="rgba(201,168,76,.3)" stroke-width="1" stroke-dasharray="5,4"/>
+      <line x1="365" y1="185" x2="365" y2="215" stroke="rgba(201,168,76,.3)" stroke-width="1" stroke-dasharray="5,4"/>
+      <line x1="565" y1="55"  x2="565" y2="215" stroke="rgba(201,168,76,.3)" stroke-width="1" stroke-dasharray="5,4"/>
+
+      <!-- ── Annotation brackets (first TM: peak 165 to trough 365) ── -->
+      <!-- DC bracket: y=65 to y=95 at x=178 -->
+      <line x1="175" y1="65" x2="175" y2="95" stroke="#7eb8d4" stroke-width="1.5"/>
+      <line x1="170" y1="65" x2="175" y2="65" stroke="#7eb8d4" stroke-width="1.5"/>
+      <line x1="170" y1="95" x2="175" y2="95" stroke="#7eb8d4" stroke-width="1.5"/>
+      <text x="157" y="83" fill="#7eb8d4" font-size="11" text-anchor="middle">DC</text>
+      <text x="158" y="96" fill="#7eb8d4" font-size="10" text-anchor="middle">δ%</text>
+
+      <!-- OS bracket: y=95 to y=185 at x=178 -->
+      <line x1="175" y1="96" x2="175" y2="185" stroke="#9089bf" stroke-width="1.5" stroke-dasharray="5,2"/>
+      <line x1="170" y1="185" x2="175" y2="185" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="155" y="145" fill="#9089bf" font-size="11" text-anchor="middle">OS</text>
+
+      <!-- TM bracket: y=65 to y=185 at x=155 -->
+      <line x1="153" y1="65" x2="153" y2="185" stroke="#c9a84c" stroke-width="1.5"/>
+      <line x1="148" y1="65" x2="153" y2="65" stroke="#c9a84c" stroke-width="1.5"/>
+      <line x1="148" y1="185" x2="153" y2="185" stroke="#c9a84c" stroke-width="1.5"/>
+      <text x="131" y="132" fill="#c9a84c" font-size="11" text-anchor="middle">TM</text>
+      <text x="131" y="145" fill="#9089bf" font-size="9" text-anchor="middle">DC+OS</text>
+
+      <!-- DC labels with arrows -->
+      <text x="230" y="82" fill="#7eb8d4" font-size="11">DC ↓ event</text>
+      <text x="428" y="143" fill="#7bc496" font-size="11">DC ↑ event</text>
+      <text x="635" y="76" fill="#7eb8d4" font-size="11">DC ↓ event</text>
+
+      <!-- ── TIME AXES ── -->
+      <!-- Physical time -->
+      <text x="45" y="240" fill="#9089bf" font-size="11" font-family="'JetBrains Mono',monospace">Temps physique</text>
+      <line x1="165" y1="240" x2="720" y2="240" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="165" y1="235" x2="165" y2="245" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="245" y1="235" x2="245" y2="245" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="325" y1="235" x2="325" y2="245" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="405" y1="235" x2="405" y2="245" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="485" y1="235" x2="485" y2="245" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="565" y1="235" x2="565" y2="245" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="645" y1="235" x2="645" y2="245" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="720" y1="235" x2="720" y2="245" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="390" y="258" fill="#9089bf" font-size="10" text-anchor="middle">— avance régulièrement —</text>
+
+      <!-- Intrinsic time -->
+      <text x="45" y="285" fill="#c9a84c" font-size="11" font-family="'JetBrains Mono',monospace">Temps intrinsèque</text>
+      <line x1="165" y1="285" x2="720" y2="285" stroke="#c9a84c" stroke-width="1.5" opacity="0.7"/>
+      <!-- Only at DC events: 210, 410, 615 -->
+      <line x1="210" y1="278" x2="210" y2="292" stroke="#c9a84c" stroke-width="3"/>
+      <line x1="410" y1="278" x2="410" y2="292" stroke="#c9a84c" stroke-width="3"/>
+      <line x1="615" y1="278" x2="615" y2="292" stroke="#c9a84c" stroke-width="3"/>
+      <text x="210" y="305" fill="#c9a84c" font-size="10" text-anchor="middle">τ=1</text>
+      <text x="410" y="305" fill="#c9a84c" font-size="10" text-anchor="middle">τ=2</text>
+      <text x="615" y="305" fill="#c9a84c" font-size="10" text-anchor="middle">τ=3</text>
+      <text x="390" y="318" fill="#c9a84c" font-size="10" text-anchor="middle">— avance UNIQUEMENT lors d'un DC event —</text>
+
+      <!-- Connecting dashed lines from DC events to IT axis -->
+      <line x1="210" y1="106" x2="210" y2="278" stroke="#7eb8d4" stroke-width="0.8" stroke-dasharray="4,5" opacity="0.35"/>
+      <line x1="410" y1="166" x2="410" y2="278" stroke="#7bc496" stroke-width="0.8" stroke-dasharray="4,5" opacity="0.35"/>
+      <line x1="615" y1="99"  x2="615" y2="278" stroke="#7eb8d4" stroke-width="0.8" stroke-dasharray="4,5" opacity="0.35"/>
+
+      <!-- Legend box -->
+      <rect x="500" y="90" width="215" height="100" rx="5" fill="#161221" stroke="rgba(180,150,80,.3)" stroke-width="1"/>
+      <line x1="515" y1="110" x2="545" y2="110" stroke="#7eb8d4" stroke-width="3"/>
+      <text x="553" y="114" fill="#e4dffa" font-size="12" font-family="'EB Garamond',serif">Directional Change (DC)</text>
+      <line x1="515" y1="128" x2="545" y2="128" stroke="#7eb8d4" stroke-width="2.5" stroke-dasharray="7,4"/>
+      <text x="553" y="132" fill="#e4dffa" font-size="12" font-family="'EB Garamond',serif">Overshoot (OS)</text>
+      <circle cx="528" cy="148" r="5" fill="#c9a84c"/>
+      <text x="553" y="152" fill="#e4dffa" font-size="12" font-family="'EB Garamond',serif">Extremum (x_ext)</text>
+      <polygon points="528,160 536,168 528,176 520,168" fill="#7eb8d4" stroke-width="0"/>
+      <text x="553" y="172" fill="#e4dffa" font-size="12" font-family="'EB Garamond',serif">DC Event (diamant)</text>
+    </svg>
+    <p class="diag-cap">Fig. 5 — Architecture du temps intrinsèque. Le mouvement total (TM) entre deux extrema se décompose en DC (la portion "confirmant" le retournement) et OS (le dépassement suivant). Le temps intrinsèque (bas) n'avance qu'à chaque DC event, contrairement au temps physique (régulier).</p>
+  </div>
+
+  <h4>Propriétés fondamentales</h4>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Propriété</th><th>Relation</th><th>Interprétation</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Nombre de DC</strong></td>
+          <td>↑ quand δ ↓</td>
+          <td class="m">Plus δ est petit, plus on détecte de changements de direction</td>
+        </tr>
+        <tr>
+          <td><strong>DC ↔ Volatilité</strong></td>
+          <td>Nb DC / temps physique ↑ quand volatilité ↑</td>
+          <td class="m">Le temps intrinsèque "s'accélère" quand le marché est agité</td>
+        </tr>
+        <tr>
+          <td><strong>OS ↔ Liquidité</strong></td>
+          <td>OS long → faible liquidité</td>
+          <td class="m">Un grand overshoot suggère un manque de contre-parties pour stopper la tendance</td>
+        </tr>
+        <tr>
+          <td><strong>TM = DC + OS</strong></td>
+          <td>$\text{TM}^\text{up} + \text{TM}^\text{down} \approx 2\text{OS}$ (empirique)</td>
+          <td class="m">L'overshoot est en moyenne comparable au DC lui-même</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 9 — ALGORITHME DC
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="it-algo">
+  <div class="sec-hd"><span class="sec-num">09</span><h2 class="sec-title">Algorithme de détection des DC</h2></div>
+
+  <p>L'algorithme maintient un état (<code>mode</code> = UP ou DOWN) et un extremum courant (<code>x_ext</code>). À chaque nouveau prix, il vérifie si un DC a eu lieu.</p>
+
+  <!-- SVG: Algorithme flowchart -->
+  <div class="svgbox">
+    <svg viewBox="0 0 760 460" xmlns="http://www.w3.org/2000/svg" style="width:100%;font-family:'JetBrains Mono',monospace;font-size:12px">
+      <!-- Start -->
+      <ellipse cx="380" cy="28" rx="100" ry="22" fill="#161221" stroke="#c9a84c" stroke-width="2"/>
+      <text x="380" y="33" fill="#c9a84c" font-size="13" text-anchor="middle">Pour chaque tick x</text>
+
+      <!-- Arrow down -->
+      <line x1="380" y1="50" x2="380" y2="78" stroke="#9089bf" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- Decision: mode = UP? -->
+      <polygon points="380,80 500,110 380,140 260,110" fill="#161221" stroke="#7eb8d4" stroke-width="2"/>
+      <text x="380" y="107" fill="#7eb8d4" font-size="12" text-anchor="middle">mode = UP ?</text>
+      <text x="380" y="120" fill="#9089bf" font-size="10" text-anchor="middle">(état courant)</text>
+
+      <!-- YES branch (left) -->
+      <line x1="260" y1="110" x2="130" y2="110" stroke="#7bc496" stroke-width="1.5"/>
+      <text x="195" y="106" fill="#7bc496" font-size="11" text-anchor="middle">OUI</text>
+      <line x1="130" y1="110" x2="130" y2="168" stroke="#7bc496" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- NO branch (right) -->
+      <line x1="500" y1="110" x2="630" y2="110" stroke="#e07b7b" stroke-width="1.5"/>
+      <text x="565" y="106" fill="#e07b7b" font-size="11" text-anchor="middle">NON (DOWN)</text>
+      <line x1="630" y1="110" x2="630" y2="168" stroke="#e07b7b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- ── UP Branch ── -->
+      <!-- Sub-decision: x < x_ext? -->
+      <polygon points="130,170 220,195 130,220 40,195" fill="#161221" stroke="#7bc496" stroke-width="1.5"/>
+      <text x="130" y="191" fill="#7bc496" font-size="11" text-anchor="middle">x &lt; x_ext ?</text>
+      <text x="130" y="206" fill="#9089bf" font-size="9" text-anchor="middle">(nouveau creux)</text>
+
+      <!-- YES → update x_ext -->
+      <line x1="40" y1="195" x2="10" y2="195" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="10" y1="195" x2="10" y2="248" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="8" y="222" fill="#9089bf" font-size="9" text-anchor="middle" transform="rotate(0)">OUI</text>
+      <rect x="20" y="252" width="110" height="36" rx="5" fill="#1c1828" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="75" y="271" fill="#e4dffa" font-size="11" text-anchor="middle">x_ext = x</text>
+      <text x="75" y="284" fill="#9089bf" font-size="9" text-anchor="middle">(suivi extremum)</text>
+
+      <!-- NO → check DC condition -->
+      <line x1="130" y1="220" x2="130" y2="265" stroke="#9089bf" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="142" y="245" fill="#9089bf" font-size="9">NON</text>
+      <!-- DC condition diamond -->
+      <polygon points="130,268 238,295 130,322 22,295" fill="#161221" stroke="#c9a84c" stroke-width="2"/>
+      <text x="130" y="291" fill="#c9a84c" font-size="10" text-anchor="middle">(x_ext−x)/x_ext ≥ δ ?</text>
+      <text x="130" y="304" fill="#9089bf" font-size="9" text-anchor="middle">(chute de δ% depuis le pic)</text>
+
+      <!-- YES → DC UP event -->
+      <line x1="130" y1="322" x2="130" y2="365" stroke="#c9a84c" stroke-width="2" marker-end="url(#arr)"/>
+      <text x="142" y="347" fill="#c9a84c" font-size="9">OUI</text>
+      <rect x="45" y="368" width="170" height="58" rx="6" fill="#1c1828" stroke="#c9a84c" stroke-width="2"/>
+      <text x="130" y="388" fill="#c9a84c" font-size="11" text-anchor="middle" font-weight="bold">⟶ DC DOWN event !</text>
+      <text x="130" y="403" fill="#e4dffa" font-size="10" text-anchor="middle">x_ext = x</text>
+      <text x="130" y="416" fill="#e4dffa" font-size="10" text-anchor="middle">mode = DOWN</text>
+
+      <!-- NO (no DC) → continue -->
+      <line x1="238" y1="295" x2="295" y2="295" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="267" y="288" fill="#9089bf" font-size="9">NON</text>
+      <text x="267" y="310" fill="#9089bf" font-size="9">(OS continue)</text>
+
+      <!-- ── DOWN Branch ── -->
+      <polygon points="630,170 720,195 630,220 540,195" fill="#161221" stroke="#e07b7b" stroke-width="1.5"/>
+      <text x="630" y="191" fill="#e07b7b" font-size="11" text-anchor="middle">x &gt; x_ext ?</text>
+      <text x="630" y="206" fill="#9089bf" font-size="9" text-anchor="middle">(nouveau sommet)</text>
+
+      <!-- YES → update x_ext -->
+      <line x1="720" y1="195" x2="750" y2="195" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="750" y1="195" x2="750" y2="248" stroke="#9089bf" stroke-width="1.5"/>
+      <rect x="630" y="252" width="110" height="36" rx="5" fill="#1c1828" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="685" y="271" fill="#e4dffa" font-size="11" text-anchor="middle">x_ext = x</text>
+      <text x="685" y="284" fill="#9089bf" font-size="9" text-anchor="middle">(suivi extremum)</text>
+
+      <!-- NO → check DC condition -->
+      <line x1="630" y1="220" x2="630" y2="265" stroke="#9089bf" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="642" y="245" fill="#9089bf" font-size="9">NON</text>
+      <polygon points="630,268 738,295 630,322 522,295" fill="#161221" stroke="#c9a84c" stroke-width="2"/>
+      <text x="630" y="291" fill="#c9a84c" font-size="10" text-anchor="middle">(x−x_ext)/x_ext ≥ δ ?</text>
+      <text x="630" y="304" fill="#9089bf" font-size="9" text-anchor="middle">(hausse de δ% depuis le creux)</text>
+
+      <!-- YES → DC DOWN event -->
+      <line x1="630" y1="322" x2="630" y2="365" stroke="#c9a84c" stroke-width="2" marker-end="url(#arr)"/>
+      <text x="642" y="347" fill="#c9a84c" font-size="9">OUI</text>
+      <rect x="545" y="368" width="170" height="58" rx="6" fill="#1c1828" stroke="#c9a84c" stroke-width="2"/>
+      <text x="630" y="388" fill="#c9a84c" font-size="11" text-anchor="middle" font-weight="bold">⟶ DC UP event !</text>
+      <text x="630" y="403" fill="#e4dffa" font-size="10" text-anchor="middle">x_ext = x</text>
+      <text x="630" y="416" fill="#e4dffa" font-size="10" text-anchor="middle">mode = UP</text>
+
+      <!-- Arrow marker -->
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#9089bf"/>
+        </marker>
+      </defs>
+    </svg>
+    <p class="diag-cap">Fig. 6 — Algorithme de détection des Directional Change events. L'état (<em>mode</em>) alterne entre UP et DOWN à chaque DC détecté. Le seuil $\delta$ contrôle la sensibilité : δ petit → plus de DC (temps intrinsèque plus fin).</p>
+  </div>
+
+  <h4>Détails de l'algorithme</h4>
+  <p>Quelques points cruciaux à comprendre pour l'examen oral :</p>
+  <ul>
+    <li><strong>Initialisation :</strong> mode arbitraire (ex. "up"), $x_\text{ext}$ initialisé au premier prix.</li>
+    <li><strong>Symétrie :</strong> l'algorithme est symétrique — la condition pour un DC UP est $(x - x_\text{ext})/x_\text{ext} \geq \delta$ (hausse depuis le creux), et pour un DC DOWN : $(x_\text{ext} - x)/x_\text{ext} \geq \delta$ (baisse depuis le pic).</li>
+    <li><strong>O(1) par tick :</strong> l'algorithme ne regarde qu'un seul prix à la fois et ne conserve que l'état et l'extremum courant — très efficace en haute fréquence.</li>
+    <li><strong>Invariance du début :</strong> le mode initial "up" ou "down" n'a qu'un impact transitoire — après quelques DC, l'algorithme converge vers le même comportement quel que soit le point de départ.</li>
+  </ul>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 10 — SCALING LAWS
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="scaling">
+  <div class="sec-hd"><span class="sec-num">10</span><h2 class="sec-title">Lois d'échelle (Scaling Laws)</h2></div>
+
+  <p>Une fois les DC et OS définis, on peut étudier <strong>comment leurs propriétés statistiques varient avec le seuil δ</strong>. On découvre des relations empiriques remarquables : des <strong>lois de puissance</strong> robustes entre δ et diverses quantités de marché. Ces lois d'échelle forment le pont entre le temps intrinsèque et le temps physique.</p>
+
+  <h4>Exemples de lois d'échelle fondamentales</h4>
+  <div class="mblock">
+    <div class="mlabel">Loi 1 — Mouvement moyen de prix en fonction du temps</div>
+    $$\langle \Delta x \rangle \sim \Delta t^{\,\alpha} \quad \text{(loi de diffusion généralisée)}$$
+  </div>
+
+  <div class="mblock">
+    <div class="mlabel">Loi 2 — Temps moyen d'un DC en fonction de δ</div>
+    $$\langle \Delta t_\text{dc} \rangle \sim \left(\frac{\delta}{c}\right)^{\!\alpha}$$
+  </div>
+
+  <!-- SVG: Scaling law log-log -->
+  <div class="svgbox">
+    <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;font-family:'JetBrains Mono',monospace">
+      <!-- Title -->
+      <text x="380" y="20" fill="#c9a84c" font-size="13" text-anchor="middle" font-weight="bold">Loi d'échelle — Graphe log-log conceptuel</text>
+
+      <!-- Axes -->
+      <line x1="70" y1="240" x2="700" y2="240" stroke="#9089bf" stroke-width="2"/>
+      <line x1="70" y1="240" x2="70"  y2="30"  stroke="#9089bf" stroke-width="2"/>
+
+      <!-- Axis ticks X (log scale) -->
+      <line x1="140" y1="237" x2="140" y2="243" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="252" y1="237" x2="252" y2="243" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="364" y1="237" x2="364" y2="243" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="476" y1="237" x2="476" y2="243" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="588" y1="237" x2="588" y2="243" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="700" y1="237" x2="700" y2="243" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="140" y="256" fill="#9089bf" font-size="11" text-anchor="middle">10⁻²</text>
+      <text x="252" y="256" fill="#9089bf" font-size="11" text-anchor="middle">10⁻¹·⁵</text>
+      <text x="364" y="256" fill="#9089bf" font-size="11" text-anchor="middle">10⁻¹</text>
+      <text x="476" y="256" fill="#9089bf" font-size="11" text-anchor="middle">10⁻⁰·⁵</text>
+      <text x="588" y="256" fill="#9089bf" font-size="11" text-anchor="middle">10⁰</text>
+      <text x="700" y="256" fill="#9089bf" font-size="11" text-anchor="middle">10⁰·⁵</text>
+      <text x="390" y="272" fill="#9089bf" font-size="12" text-anchor="middle">Δx (%) = seuil δ</text>
+
+      <!-- Axis ticks Y (log scale) -->
+      <line x1="67" y1="195" x2="73" y2="195" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="67" y1="150" x2="73" y2="150" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="67" y1="105" x2="73" y2="105" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="67" y1="60"  x2="73" y2="60"  stroke="#9089bf" stroke-width="1.5"/>
+      <text x="58" y="199" fill="#9089bf" font-size="11" text-anchor="end">10¹</text>
+      <text x="58" y="154" fill="#9089bf" font-size="11" text-anchor="end">10²</text>
+      <text x="58" y="109" fill="#9089bf" font-size="11" text-anchor="end">10³</text>
+      <text x="58" y="64"  fill="#9089bf" font-size="11" text-anchor="end">10⁴</text>
+      <text x="25" y="140" fill="#9089bf" font-size="12" text-anchor="middle" transform="rotate(-90,25,140)">Nb moyen de ticks</text>
+
+      <!-- Grid -->
+      <line x1="70" y1="195" x2="700" y2="195" stroke="#2a2440" stroke-width="1"/>
+      <line x1="70" y1="150" x2="700" y2="150" stroke="#2a2440" stroke-width="1"/>
+      <line x1="70" y1="105" x2="700" y2="105" stroke="#2a2440" stroke-width="1"/>
+      <line x1="70" y1="60"  x2="700" y2="60"  stroke="#2a2440" stroke-width="1"/>
+
+      <!-- Power law line (slope ≈ 2) -->
+      <!-- From (140,195) to (700,48) — slope in log-log -->
+      <line x1="140" y1="210" x2="700" y2="50" stroke="#c9a84c" stroke-width="3"/>
+
+      <!-- Scattered data points around the line (different currency pairs) -->
+      <circle cx="155" cy="205" r="4" fill="#7eb8d4" opacity="0.85"/>
+      <circle cx="168" cy="200" r="4" fill="#7bc496" opacity="0.85"/>
+      <circle cx="175" cy="208" r="4" fill="#e07b7b" opacity="0.85"/>
+      <circle cx="180" cy="198" r="4" fill="#a78bfa" opacity="0.85"/>
+      <circle cx="190" cy="204" r="4" fill="#c9a84c" opacity="0.85"/>
+
+      <circle cx="220" cy="193" r="4" fill="#7eb8d4" opacity="0.85"/>
+      <circle cx="235" cy="185" r="4" fill="#7bc496" opacity="0.85"/>
+      <circle cx="248" cy="190" r="4" fill="#e07b7b" opacity="0.85"/>
+      <circle cx="258" cy="183" r="4" fill="#a78bfa" opacity="0.85"/>
+
+      <circle cx="300" cy="168" r="4" fill="#7eb8d4" opacity="0.85"/>
+      <circle cx="315" cy="162" r="4" fill="#7bc496" opacity="0.85"/>
+      <circle cx="328" cy="170" r="4" fill="#e07b7b" opacity="0.85"/>
+      <circle cx="338" cy="158" r="4" fill="#a78bfa" opacity="0.85"/>
+      <circle cx="350" cy="164" r="4" fill="#c9a84c" opacity="0.85"/>
+
+      <circle cx="390" cy="143" r="4" fill="#7eb8d4" opacity="0.85"/>
+      <circle cx="405" cy="138" r="4" fill="#7bc496" opacity="0.85"/>
+      <circle cx="418" cy="145" r="4" fill="#e07b7b" opacity="0.85"/>
+      <circle cx="428" cy="135" r="4" fill="#a78bfa" opacity="0.85"/>
+
+      <circle cx="470" cy="118" r="4" fill="#7eb8d4" opacity="0.85"/>
+      <circle cx="485" cy="112" r="4" fill="#7bc496" opacity="0.85"/>
+      <circle cx="498" cy="120" r="4" fill="#e07b7b" opacity="0.85"/>
+      <circle cx="508" cy="108" r="4" fill="#a78bfa" opacity="0.85"/>
+
+      <circle cx="555" cy="92" r="4" fill="#7eb8d4" opacity="0.85"/>
+      <circle cx="568" cy="85" r="4" fill="#7bc496" opacity="0.85"/>
+      <circle cx="578" cy="94" r="4" fill="#e07b7b" opacity="0.85"/>
+      <circle cx="590" cy="80" r="4" fill="#a78bfa" opacity="0.85"/>
+      <circle cx="600" cy="88" r="4" fill="#c9a84c" opacity="0.85"/>
+
+      <circle cx="638" cy="68" r="4" fill="#7eb8d4" opacity="0.85"/>
+      <circle cx="650" cy="62" r="4" fill="#7bc496" opacity="0.85"/>
+      <circle cx="660" cy="71" r="4" fill="#e07b7b" opacity="0.85"/>
+      <circle cx="672" cy="59" r="4" fill="#a78bfa" opacity="0.85"/>
+
+      <!-- Slope annotation -->
+      <!-- Draw a little right triangle -->
+      <line x1="430" y1="130" x2="540" y2="130" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.7"/>
+      <line x1="540" y1="130" x2="540" y2="97" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.7"/>
+      <text x="485" y="148" fill="#c9a84c" font-size="12" text-anchor="middle">Δlog(Δx)</text>
+      <text x="555" y="116" fill="#c9a84c" font-size="12">Δlog(N)</text>
+      <!-- Slope value -->
+      <rect x="450" y="68" width="135" height="30" rx="4" fill="#161221" stroke="#c9a84c" stroke-width="1.5"/>
+      <text x="517" y="87" fill="#c9a84c" font-size="13" text-anchor="middle" font-weight="bold">pente ≈ β (power law)</text>
+
+      <!-- Legend (colored dots for currency pairs) -->
+      <rect x="545" y="155" width="150" height="70" rx="4" fill="#161221" stroke="rgba(180,150,80,.25)" stroke-width="1"/>
+      <circle cx="560" cy="170" r="4" fill="#7eb8d4"/><text x="572" y="174" fill="#e4dffa" font-size="10">EUR-USD</text>
+      <circle cx="560" cy="185" r="4" fill="#7bc496"/><text x="572" y="189" fill="#e4dffa" font-size="10">GBP-USD</text>
+      <circle cx="630" cy="170" r="4" fill="#e07b7b"/><text x="642" y="174" fill="#e4dffa" font-size="10">USD-JPY</text>
+      <circle cx="630" cy="185" r="4" fill="#a78bfa"/><text x="642" y="189" fill="#e4dffa" font-size="10">GBP-JPY</text>
+      <text x="617" y="213" fill="#9089bf" font-size="9" text-anchor="middle">13 paires FX — alignées!</text>
+    </svg>
+    <p class="diag-cap">Fig. 7 — Loi d'échelle tick-count sur graphe log-log. Toutes les paires de devises FX s'alignent sur la même droite de puissance, indiquant un comportement universel du marché FX. La pente β mesure l'exposant de la loi de puissance.</p>
+  </div>
+
+  <h4>Catalogue des lois d'échelle empiriques (Glattfelder et al., 2011)</h4>
+  <p>L'article de référence [2] identifie pas moins de <strong>12 lois d'échelle distinctes</strong>, toutes vérifiées sur 13 paires de devises FX :</p>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Loi</th><th>Quantité observée</th><th>Variable indépendante</th><th>Relation</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Mouvement moyen de prix</td><td>Δt (temps physique)</td><td class="m">$\langle\Delta x\rangle \sim \Delta t^{\,\beta}$</td></tr>
+        <tr><td>2</td><td>Mouvement quadratique moyen</td><td>Δt (temps physique)</td><td class="m">$\langle\Delta x^2\rangle \sim \Delta t^{\,\beta}$</td></tr>
+        <tr><td>3</td><td>Nombre de DC</td><td>δ (seuil)</td><td class="m">$N_\text{dc} \sim (\delta/c)^{\,\beta}$</td></tr>
+        <tr><td>4</td><td>Mouvement de prix lors d'un DC</td><td>δ</td><td class="m">$\langle\Delta x^\text{dc}\rangle \sim \delta$</td></tr>
+        <tr><td>5</td><td>Temps durant un DC</td><td>δ</td><td class="m">$\langle\Delta t^\text{dc}\rangle \sim (\delta/c)^{\,\beta}$</td></tr>
+        <tr><td>6</td><td>Nombre de ticks dans un DC</td><td>δ</td><td class="m">$\langle N^\text{dc}_\text{tick}\rangle \sim (\delta/c)^{\,\beta}$</td></tr>
+        <tr><td>7–12</td><td>Même quantités pour OS et TM</td><td>δ</td><td class="m">Relations analogues</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">Pourquoi c'est remarquable</div>
+    <p>Ces lois ne sont pas triviales : elles s'appliquent à travers des <strong>ordres de grandeur</strong> différents de δ, sur des marchés différents (EUR/USD, GBP/JPY, etc.), et leurs exposants sont stables et reproductibles. Cela suggère une <strong>structure fractale</strong> sous-jacente dans la dynamique des prix FX — une caractéristique universelle de la microstructure du marché.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 11 — FORMULES IMPORTANTES
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="formules">
+  <div class="sec-hd"><span class="sec-num">11</span><h2 class="sec-title">Formules importantes</h2></div>
+
+  <div class="fcards">
+
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Simple Moving Average</span>
+        <span class="fc-tag">SMA</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">$$\text{SMA}(t) = \frac{1}{n}\sum_{k=0}^{n-1}X_{t-k} \qquad\text{Mise à jour : } \text{SMA}(t+1) = \text{SMA}(t) - \frac{X_{t-n+1}}{n} + \frac{X_{t+1}}{n}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$n$ = taille fenêtre · $X_t$ = série temporelle</p></div>
+          <div class="fc-item"><h5>Poids</h5><p>Uniforme : $w_k = 1/n$ pour tout $k$</p></div>
+          <div class="fc-item"><h5>Mémoire</h5><p>Stocke les $n$ dernières valeurs → $O(n)$</p></div>
+          <div class="fc-item"><h5>Lag moyen</h5><p>$(n-1)/2$ étapes. Exemple : SMA(100) → lag ≈ 50</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Exponential Moving Average</span>
+        <span class="fc-tag">EMA — clé !</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">$$\text{EMA}(t) = \alpha \cdot X_t + (1-\alpha)\cdot\text{EMA}(t-1) \qquad 0 < \alpha \leq 1$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Paramètre α</h5><p>Contrôle réactivité/lissage. Méthode 1 : $\alpha = \frac{2}{n+1}$. Méthode 2 : $\alpha = 1 - e^{\ln(\epsilon_k)/k}$</p></div>
+          <div class="fc-item"><h5>Poids</h5><p>Exponentiel : $w_k = \alpha(1-\alpha)^k$. Somme = 1 (série géométrique)</p></div>
+          <div class="fc-item"><h5>Mémoire</h5><p>$O(1)$ — seulement EMA(t-1) nécessaire !</p></div>
+          <div class="fc-item"><h5>Lag</h5><p>Âge moyen = $(1-\alpha)/\alpha$. Grand α = faible lag mais plus bruité</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">EMA Asynchrone</span>
+        <span class="fc-tag">Temps irrégulier</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">$$\text{EMA}(\tau;x)(t_n) = \mu \cdot \text{EMA}(t_{n-1}) + (\nu-\mu)\cdot x_{n-1} + (1-\nu)\cdot x_n$$
+$$\alpha = \frac{t_n - t_{n-1}}{\tau}, \quad \mu = e^{-\alpha}, \quad \nu = \frac{1-\mu}{\alpha}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>τ</h5><p>Constante de temps de référence (paramètre libre)</p></div>
+          <div class="fc-item"><h5>μ</h5><p>Facteur d'oubli temporel. Si long silence : μ→0, EMA oublie</p></div>
+          <div class="fc-item"><h5>ν</h5><p>Interpolation entre x_{n-1} et x_n selon le temps écoulé</p></div>
+          <div class="fc-item"><h5>Cas limite</h5><p>Si Δt → 0 (données très denses), μ → 1, ν → 1, → EMA classique</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Condition de DC</span>
+        <span class="fc-tag">Intrinsic Time</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">$$\text{DC DOWN si mode=UP : } \frac{x_\text{ext} - x}{x_\text{ext}} \geq \delta \qquad \text{DC UP si mode=DOWN : } \frac{x - x_\text{ext}}{x_\text{ext}} \geq \delta$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>δ</h5><p>Seuil de détection des DC. Petit δ = temps intrinsèque "fin", beaucoup de DC</p></div>
+          <div class="fc-item"><h5>x_ext</h5><p>Extremum courant (max si mode=UP, min si mode=DOWN)</p></div>
+          <div class="fc-item"><h5>TM = DC + OS</h5><p>Total Move = changement directionnel + dépassement</p></div>
+          <div class="fc-item"><h5>Loi d'échelle</h5><p>$\langle\Delta t_\text{dc}\rangle \sim (\delta/c)^\beta$ avec β ≈ 2 pour FX</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 12 — COMPARAISON DES APPROCHES
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="comparaison">
+  <div class="sec-hd"><span class="sec-num">12</span><h2 class="sec-title">Comparaison des approches</h2></div>
+
+  <h3>Moving Averages</h3>
+  <div class="twrap">
+    <table>
+      <thead>
+        <tr><th>Méthode</th><th>Formule clé</th><th>Poids</th><th>Complexité</th><th>Forces</th><th>Limites</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SMA</strong></td>
+          <td class="m">$\frac{1}{n}\sum X_{t-k}$</td>
+          <td class="m">Uniforme $1/n$</td>
+          <td class="m">O(n) mémoire, O(1) update</td>
+          <td class="g">Simple, interprétable</td>
+          <td class="r">Équipondéré, fort lag pour grand n</td>
+        </tr>
+        <tr>
+          <td><strong>WMA</strong></td>
+          <td class="m">$\frac{\sum k\cdot X_{t-n+k}}{n(n+1)/2}$</td>
+          <td class="m">Linéaire $k/[n(n+1)/2]$</td>
+          <td class="m">O(n) mémoire, update complexe</td>
+          <td class="g">Pondération plus sensée</td>
+          <td class="r">Update complexe, lag amélioré mais toujours présent</td>
+        </tr>
+        <tr>
+          <td><strong>EMA</strong></td>
+          <td class="m">$\alpha X_t + (1-\alpha)\text{EMA}(t-1)$</td>
+          <td class="m">Exponentiel $\alpha(1-\alpha)^k$</td>
+          <td class="m">O(1) mémoire, O(1) update ⭐</td>
+          <td class="g">Optimal en production, horizon infini, α réglable</td>
+          <td class="r">Initialisation, temps de chauffe, α à calibrer</td>
+        </tr>
+        <tr>
+          <td><strong>EMA async.</strong></td>
+          <td class="m">$\mu\cdot\text{EMA}(t-1)+\nu\cdot...$</td>
+          <td class="m">Exponentiel, adaptatif en temps</td>
+          <td class="m">O(1) mémoire ⭐</td>
+          <td class="g">Gère les données irrégulières, long silences gérés</td>
+          <td class="r">Plus complexe à implémenter, paramètre τ à choisir</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Paradigme temporel</h3>
+  <div class="twrap">
+    <table>
+      <thead>
+        <tr><th>Paradigme</th><th>Mesure du temps</th><th>Forces</th><th>Limites</th><th>Usage</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Temps physique</strong></td>
+          <td class="m">Horloge, calendrier</td>
+          <td class="g">Standard, compatible avec tous les modèles classiques</td>
+          <td class="r">Arbitraire, inactive la nuit/weekend, événements manquants</td>
+          <td class="m">Finance classique, option pricing, risk management</td>
+        </tr>
+        <tr>
+          <td><strong>Volume time</strong></td>
+          <td class="m">Unités de volume échangé</td>
+          <td class="g">Capture l'activité réelle du marché</td>
+          <td class="r">Connu a posteriori, difficile à utiliser en temps réel</td>
+          <td class="m">Backtesting, analyse post-hoc</td>
+        </tr>
+        <tr>
+          <td><strong>Intrinsic time</strong></td>
+          <td class="m">DC events (δ-dependent)</td>
+          <td class="g">En temps réel, prix uniquement, capture volatilité/liquidité, scaling laws universelles</td>
+          <td class="r">Paramètre δ à calibrer, moins intuitif, pas encore mainstream</td>
+          <td class="m">HFT, analyse microstructure, stratégies algorithmiques</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 13 — QUESTIONS D'EXAMEN
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="questions">
+  <div class="sec-hd"><span class="sec-num">13</span><h2 class="sec-title">Questions d'examen possibles</h2></div>
+
+  <div class="qlevel easy">Niveau facile</div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Quelle est la différence fondamentale entre SMA et EMA en termes de schéma de pondération ?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      <p>Le SMA attribue un <strong>poids uniforme</strong> $1/n$ à chacune des $n$ dernières observations — une observation vieille d'hier et une d'il y a un mois ont exactement le même poids. L'EMA attribue des <strong>poids exponentiellement décroissants</strong> $\alpha(1-\alpha)^k$ — l'observation la plus récente reçoit le poids $\alpha$, la précédente $(1-\alpha)\alpha$, etc. L'EMA reflète donc mieux l'intuition économique que l'information récente est plus pertinente. Bonus : l'EMA peut se mettre à jour en O(1) (un seul scalaire en mémoire), contrairement au SMA qui doit maintenir une fenêtre de $n$ observations.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Qu'est-ce qu'un time lag dans le contexte des moving averages ? Est-il évitable ?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      <p>Le <strong>time lag</strong> est le délai entre un événement dans la série brute et sa répercussion dans la moyenne mobile. Par exemple, si le prix atteint un pic à $t=100$, le SMA(20) n'atteindra son pic qu'environ 10 étapes plus tard. Ce lag est <strong>inévitable et fondamental</strong> pour toute moyenne mobile causale (utilisant uniquement le passé) : plus on lisse, plus on retarde. Il y a un trade-off irréductible entre <em>lissage</em> (bruit éliminé) et <em>réactivité</em> (lag faible). Pour l'EMA : $\alpha$ grand = peu de lag mais peu de lissage ; $\alpha$ petit = fort lissage mais fort lag. On choisit selon l'application.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Pourquoi les données financières réelles ne sont-elles pas lisses et équidistantes ?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      <p>Les données financières sont composées de <strong>ticks</strong> — chaque transaction ou mise à jour de cotation génère un enregistrement. Ces ticks arrivent de façon irrégulière car l'activité de marché n'est pas constante : intense en pleine séance (surtout aux heures de chevauchement entre zones géographiques), quasi-nulle la nuit ou le weekend. Par ailleurs, on observe un <strong>spread bid/ask</strong> : le prix "acheteur" (bid) et "vendeur" (ask) ne sont pas identiques, il n'y a donc pas un seul prix mais au moins deux. La série du mid (moyenne des deux) est une construction, pas une donnée directe. Le bruit vient des imperfections du marché (granularité des prix, impact du spread) et de la microstructure.</p>
+    </div>
+  </div>
+
+  <div class="qlevel med">Niveau intermédiaire</div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Expliquez la récurrence $\text{EMA}(t) = \alpha X_t + (1-\alpha)\text{EMA}(t-1)$. Comment la dérive-t-on ?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      <p>On part de la définition avec poids exponentiels : $\text{EMA}(t) = \frac{X_t + (1-\alpha)X_{t-1} + (1-\alpha)^2X_{t-2}+\cdots}{1 + (1-\alpha) + (1-\alpha)^2+\cdots}$. Le dénominateur est une série géométrique infinie $= 1/\alpha$. On peut réécrire le numérateur :</p>
+      <p>$X_t + (1-\alpha)[X_{t-1} + (1-\alpha)X_{t-2}+\cdots] = X_t + (1-\alpha) \cdot \frac{1}{\alpha}\cdot\text{EMA}(t-1)$</p>
+      <p>Donc : $\text{EMA}(t) = \frac{X_t + (1-\alpha)/\alpha \cdot \text{EMA}(t-1)}{1/\alpha} = \alpha X_t + (1-\alpha)\text{EMA}(t-1)$.</p>
+      <p>Cette récurrence simple dit : l'EMA courante est une interpolation linéaire pondérée entre la nouvelle observation et l'EMA précédente. Économiquement : on "oublie" une fraction $\alpha$ du passé et on incorpore $\alpha$ de la nouveauté.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Pourquoi le temps physique est-il "arbitraire" pour les marchés financiers ? Que propose le temps intrinsèque à la place ?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      <p>Le temps physique est arbitraire pour plusieurs raisons : (1) <strong>quand commencer à observer</strong> ? À minuit UTC ? Au début de la séance de New York ? Ce choix affecte les statistiques. (2) L'activité de marché est <strong>fortement hétérogène</strong> dans le temps : une heure la nuit représente presque zéro activité, une heure à 14h à Londres peut représenter des milliers de transactions. Traiter ces deux heures comme équivalentes est une hypothèse forte. (3) Des <strong>événements importants</strong> peuvent se produire entre deux instants d'échantillonnage et être invisibles.</p>
+      <p>Le <strong>temps intrinsèque</strong> propose que le temps avance seulement lors d'événements de marché significatifs : les <em>Directional Changes</em> (retournements de δ%). Le rythme du temps intrinsèque est donc dicté par le marché lui-même — il s'accélère quand le marché est volatil (beaucoup de DC), il ralentit quand le marché est calme. De plus, il utilise uniquement le prix, disponible en temps réel.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Que représente l'Overshoot (OS) en temps intrinsèque ? Quelle propriété de marché mesure-t-il ?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      <p>L'<strong>Overshoot</strong> est la continuation du mouvement de prix dans la direction d'un DC <em>après</em> que le DC a été confirmé, jusqu'à ce que le prochain retournement se produise. Concrètement : si le prix tombe de 2% (DC DOWN confirmé), puis continue à chuter de 3% avant de remonter — cet OS de 3% est le "dépassement". Le Total Move (TM) = DC + OS = 2% + 3% = 5%.</p>
+      <p>L'OS mesure la <strong>liquidité du marché</strong> : un OS long signifie qu'il y a peu de contre-parties prêtes à acheter (dans le cas d'une baisse) — le marché doit "chercher" des acheteurs plus bas. Un marché très liquide aura des OS courts car les ordres au sens opposé existent à chaque niveau. Inversement, la fréquence des DC (ou la durée des DC) mesure la <strong>volatilité</strong> : plus le marché retourne souvent, plus le temps intrinsèque est dense.</p>
+    </div>
+  </div>
+
+  <div class="qlevel hard">Niveau difficile</div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Pourquoi la formule $\alpha = 2/(n+1)$ ne rend-elle pas le SMA(n) égal à l'EMA avec ce α ? Qu'est-ce qui est égal ?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      <p>La formule $\alpha = 2/(n+1)$ est dérivée en égalisant <strong>l'âge moyen pondéré</strong> des observations dans les deux cas. Pour un SMA(n), l'âge moyen est $(n-1)/2$. Pour l'EMA, l'âge moyen est $\sum_{i=0}^{\infty} i \cdot \alpha(1-\alpha)^i = (1-\alpha)/\alpha$. En résolvant $(1-\alpha)/\alpha = (n-1)/2$, on obtient $\alpha = 2/(n+1)$.</p>
+      <p>Mais <strong>l'égalité des âges moyens ne suffit pas</strong> à rendre les deux filtres identiques : la distribution des poids est fondamentalement différente (uniforme vs. exponentielle). Le SMA a une coupure nette à $n$ observations (poids nuls au-delà), l'EMA a un déclin exponentiel infini. Leurs réponses fréquentielles sont donc différentes. La formule $\alpha = 2/(n+1)$ est une convention pratique de calibration, pas une équivalence exacte.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Expliquez l'opérateur EMA asynchrone : pourquoi a-t-on besoin de ν, et que représente-t-il mathématiquement ?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      <p>Dans le cas asynchrone, entre $t_{n-1}$ et $t_n$, on ne sait pas comment le prix a évolué. La formule $\text{EMA}(t_n) = \mu \cdot \text{EMA}(t_{n-1}) + (\nu-\mu)x_{n-1} + (1-\nu)x_n$ utilise <strong>deux coefficients</strong> :</p>
+      <p>$\mu = e^{-\alpha}$ est le facteur d'oubli — il traduit la dépréciation exponentielle de l'EMA pendant l'absence de données (comme si l'EMA "décroissait" naturellement entre les ticks). Pour un très long silence, $\mu \to 0$ : l'EMA perd toute mémoire.</p>
+      <p>$\nu = (1-\mu)/\alpha$ est le <strong>coefficient d'interpolation</strong>. Mathématiquement, il représente la contribution intégrée de $x_{n-1}$ entre $t_{n-1}$ et $t_n$, en supposant que le prix est resté constant à $x_{n-1}$ pendant la période de silence. Quand $\alpha \to 0$ (ticks très rapprochés), $\nu \to 1$ et $(1-\nu) \to 0$, donc on utilise surtout $x_{n-1}$. Quand $\alpha$ est grand, l'interpolation donne plus de poids à la nouvelle valeur $x_n$. C'est un schéma d'intégration rectangulaire de la réponse impulsionnelle exponentielle.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggle(this)">
+      <span class="qi-qtxt">Qu'est-ce qu'une loi d'échelle (scaling law) en temps intrinsèque, et pourquoi leur existence est-elle scientifiquement significative ?</span>
+      <span class="qi-arr">▾</span>
+    </div>
+    <div class="qi-a">
+      <p>Une <strong>loi d'échelle</strong> est une relation en loi de puissance $Y \sim X^\beta$ qui reste valide sur plusieurs ordres de grandeur. Dans le contexte du temps intrinsèque, on observe des relations comme $\langle N_\text{tick}\rangle \sim (\delta/c)^\beta$ entre le seuil δ et le nombre moyen de ticks dans un DC, avec β ≈ 2 pour les marchés FX.</p>
+      <p>Leur significance est multiple : (1) <strong>Universalité</strong> — les mêmes lois s'appliquent à 13 paires de devises différentes avec des exposants similaires, suggérant un mécanisme commun sous-jacent. (2) <strong>Structure fractale</strong> — les lois de puissance sur des ordres de grandeur indiquent une auto-similarité du processus de prix (comme dans des fractals), compatible avec la théorie des processus multi-fractals. (3) <strong>Utilité pratique</strong> — ces lois permettent de calibrer des modèles : connaissant β et c, on peut prédire des propriétés statistiques à différentes résolutions temporelles. (4) <strong>Distinction vs. marche aléatoire</strong> — une marche aléatoire gaussienne produit aussi des lois d'échelle, mais avec des exposants différents des marchés réels, ce qui révèle des propriétés de microstructure non-triviales.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 14 — PIÈGES CLASSIQUES
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="pieges">
+  <div class="sec-hd"><span class="sec-num">14</span><h2 class="sec-title">Pièges classiques</h2></div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Confondre "α petit" avec "forte réactivité"</strong>. C'est l'inverse ! Un α petit donne un fort lissage et un long lag. Un α grand (proche de 1) donne une EMA très réactive qui suit de près le signal. Retenir : α grand → court lag, α petit → long lag.</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Croire que SMA(n) = EMA avec α = 2/(n+1)</strong>. Non ! Cette formule égalise uniquement l'<em>âge moyen</em> des deux filtres. Leurs distributions de poids sont fondamentalement différentes (uniforme vs. exponentielle). Ils ne produisent pas les mêmes valeurs sur une même série.</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Penser que le time lag est un défaut qu'on peut éliminer</strong>. Non — c'est une conséquence inévitable de la causalité. Tout filtre causal (basé sur le passé) qui lisse introduit un lag. Le seul moyen d'éliminer le lag est d'utiliser le futur (filtres non-causaux), impossible en trading en temps réel.</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Confondre DC et le mouvement total (TM)</strong>. Le DC est uniquement la portion du mouvement qui "confirme" le changement de direction (exactement δ% depuis l'extremum). Le TM comprend DC <em>plus</em> l'Overshoot. TM ≠ DC, et l'OS peut être plusieurs fois plus grand que le DC.</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Oublier les conditions initiales de l'EMA</strong>. L'EMA a besoin d'une "période de chauffe" avant de produire des valeurs stables. Utiliser l'EMA dès le premier tick peut donner des résultats très biaisés. En pratique, on attend plusieurs fois $1/\alpha$ étapes, ou on initialise avec un SMA.</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Penser que le temps intrinsèque est indépendant de δ</strong>. En réalité, le temps intrinsèque est paramétrique en δ — différents δ donnent des "temps intrinsèques" différents. Un δ plus petit crée une résolution temporelle plus fine (plus de DC), un δ plus grand crée une résolution plus grossière. C'est une famille de représentations temporelles, pas une unique.</div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text"><strong>Croire que le temps intrinsèque prédit les prix</strong>. Non ! Le cadre du temps intrinsèque est <em>descriptif</em>, pas prédictif en soi. Les lois d'échelle décrivent les propriétés statistiques historiques du marché. Pour en faire un outil de trading, il faut une hypothèse additionnelle sur la stationnarité de ces lois.</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 15 — FICHE DE RÉVISION
+══════════════════════════════════════════════════════════ -->
+<section class="sec" id="fiche">
+  <div class="sec-hd"><span class="sec-num">15</span><h2 class="sec-title">Fiche de révision finale</h2></div>
+
+  <div class="fiche-grid">
+    <div class="fc2">
+      <h4>Données réelles</h4>
+      <ul>
+        <li><strong>Tick data :</strong> irrégulier, bruité, spread</li>
+        <li><strong>Bid/Ask/Mid :</strong> 3 séries, pas une</li>
+        <li><strong>Discrétisation :</strong> 99.9% des cas, perte d'info</li>
+        <li><strong>Interpolation :</strong> rare, hypothèses fortes</li>
+        <li><strong>Activité :</strong> très hétérogène dans le temps</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>SMA — clés</h4>
+      <ul>
+        <li><strong>Poids :</strong> uniforme $1/n$</li>
+        <li><strong>Update :</strong> $\text{SMA}(t+1) = \text{SMA}(t) - X_{t-n+1}/n + X_{t+1}/n$</li>
+        <li><strong>Mémoire :</strong> $n$ dernières valeurs</li>
+        <li><strong>Lag :</strong> $(n-1)/2$ — inévitable</li>
+        <li><strong>Défaut :</strong> équipondéré</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>WMA — clés</h4>
+      <ul>
+        <li><strong>Poids :</strong> linéaires $k/[n(n+1)/2]$</li>
+        <li><strong>Somme poids :</strong> $n(n+1)/2$</li>
+        <li><strong>Update :</strong> nécessite Total(t)</li>
+        <li><strong>Avantage :</strong> plus récent → plus lourd</li>
+        <li><strong>Défaut :</strong> update complexe, O(n) mémoire</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>EMA — clés ⭐</h4>
+      <ul>
+        <li><strong>Récurrence :</strong> $\alpha X_t + (1-\alpha)\text{EMA}(t-1)$</li>
+        <li><strong>α de SMA :</strong> $\alpha = 2/(n+1)$</li>
+        <li><strong>α d'impact :</strong> $\alpha = 1 - e^{\ln(\epsilon)/k}$</li>
+        <li><strong>Mémoire :</strong> O(1) ← atout majeur</li>
+        <li><strong>Poids :</strong> $\alpha(1-\alpha)^k$ exponentiel</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>EMA Asynchrone</h4>
+      <ul>
+        <li><strong>α :</strong> $(t_n-t_{n-1})/\tau$</li>
+        <li><strong>μ :</strong> $e^{-\alpha}$ (facteur d'oubli)</li>
+        <li><strong>ν :</strong> $(1-\mu)/\alpha$ (interpolation)</li>
+        <li><strong>Long silence :</strong> μ→0, EMA "oublie"</li>
+        <li><strong>Extension :</strong> EMA itérée, SMA d'EMAs</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Temps Intrinsèque — clés ⭐</h4>
+      <ul>
+        <li><strong>DC :</strong> retournement de δ% depuis l'extremum</li>
+        <li><strong>OS :</strong> continuation après DC jusqu'au prochain extremum</li>
+        <li><strong>TM = DC + OS :</strong> mouvement total</li>
+        <li><strong>IT avance :</strong> uniquement lors de DC events</li>
+        <li><strong>δ petit :</strong> temps fine, plus de DC (volatilité)</li>
+        <li><strong>OS long :</strong> faible liquidité</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Algorithme DC</h4>
+      <ul>
+        <li><strong>État :</strong> mode (UP/DOWN) + $x_\text{ext}$</li>
+        <li><strong>DC DOWN :</strong> $(x_\text{ext}-x)/x_\text{ext} \geq \delta$ si mode=UP</li>
+        <li><strong>DC UP :</strong> $(x-x_\text{ext})/x_\text{ext} \geq \delta$ si mode=DOWN</li>
+        <li><strong>Complexité :</strong> O(1) par tick</li>
+        <li><strong>Init :</strong> mode arbitraire, converge rapidement</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Lois d'échelle</h4>
+      <ul>
+        <li><strong>Forme :</strong> $Y \sim X^\beta$ (loi de puissance)</li>
+        <li><strong>$\langle\Delta t_\text{dc}\rangle$ :</strong> $\sim (\delta/c)^\beta$</li>
+        <li><strong>Tick count :</strong> $\langle N\rangle \sim (\delta/c)^\beta$</li>
+        <li><strong>12 lois :</strong> validées sur 13 paires FX</li>
+        <li><strong>Signifie :</strong> structure fractale du marché</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title">L'essentiel en une phrase</div>
+    <p>Les marchés réels produisent des données bruitées et irrégulières que l'on lisse avec des <em>moving averages</em> (SMA → WMA → EMA, chacun plus sophistiqué et réactif) ; pour aller plus loin, on peut abandonner le temps physique au profit du <strong>temps intrinsèque</strong>, défini par les <em>directional changes</em>, qui capture la dynamique naturelle du marché et obéit à des <strong>lois d'échelle universelles</strong> reliant volatilité, liquidité et microstructure.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+// Quiz toggle
+function toggle(el) {
+  const ans = el.nextElementSibling;
+  const arr = el.querySelector('.qi-arr');
+  const isOpen = ans.classList.contains('open');
+  ans.classList.toggle('open', !isOpen);
+  arr.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+// Active nav link on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.sb nav a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.sb nav a[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
