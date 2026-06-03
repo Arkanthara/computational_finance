@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algorithmic Execution · Computational Finance · UniGe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']], processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root{
+  --bg:#0d0b14;--bg-card:#161221;--bg-code:#1c1828;
+  --text:#e4dffa;--muted:#9089bf;--border:rgba(180,150,80,.18);--bstrong:rgba(180,150,80,.4);
+  --gold:#c9a84c;--glight:#e8c97a;--blue:#7eb8d4;--green:#7bc496;--red:#e07b7b;--violet:#a78bfa;--orange:#e8a87c;
+  --ff:'EB Garamond',Georgia,serif;--fd:'Cormorant Garamond',Georgia,serif;--fm:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:18px;line-height:1.85;display:flex}
+
+/* SIDEBAR */
+.sb{width:270px;min-height:100vh;background:var(--bg-card);border-right:1px solid var(--border);
+  padding:2rem 1.4rem;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sb-logo{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--gold);margin-bottom:.2rem}
+.sb-sub{font-family:var(--fm);font-size:.7rem;color:var(--muted);margin-bottom:1.6rem;letter-spacing:.05em;line-height:1.4}
+.sb nav ul{list-style:none}
+.sb nav ul li{margin-bottom:.15rem}
+.sb nav ul li a{color:var(--muted);text-decoration:none;font-size:.86rem;display:block;
+  padding:.32rem .7rem;border-radius:4px;border-left:2px solid transparent;transition:all .18s}
+.sb nav ul li a:hover,.sb nav ul li a.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,168,76,.07)}
+.sb nav ul li a .n{font-family:var(--fm);font-size:.7rem;color:var(--gold);margin-right:.4rem;opacity:.7}
+.sb-section{font-family:var(--fm);font-size:.63rem;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--muted);padding:.6rem .7rem .25rem;opacity:.55;display:block}
+
+/* MAIN */
+.main{margin-left:270px;flex:1;padding:3rem 4rem;max-width:1040px}
+
+/* HERO */
+.hero{border-bottom:1px solid var(--border);padding-bottom:3rem;margin-bottom:4rem}
+.hero-tag{font-family:var(--fm);font-size:.72rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.7rem}
+.hero h1{font-family:var(--fd);font-size:3.8rem;font-weight:700;line-height:1.08;margin-bottom:.7rem}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1rem;color:var(--muted);max-width:640px;margin-bottom:1.4rem;line-height:1.7}
+.badges{display:flex;gap:.6rem;flex-wrap:wrap}
+.badge{font-family:var(--fm);font-size:.7rem;padding:.22rem .7rem;border:1px solid var(--bstrong);
+  border-radius:20px;color:var(--gold);letter-spacing:.04em}
+.badge.b{border-color:rgba(126,184,212,.35);color:var(--blue)}
+.badge.g{border-color:rgba(123,196,150,.35);color:var(--green)}
+.badge.r{border-color:rgba(224,123,123,.35);color:var(--red)}
+.badge.v{border-color:rgba(167,139,250,.35);color:var(--violet)}
+
+/* SECTIONS */
+.sec{margin-bottom:4.5rem;scroll-margin-top:2rem}
+.sec-hd{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.8rem;padding-bottom:.7rem;border-bottom:1px solid var(--border)}
+.sec-num{font-family:var(--fm);font-size:.82rem;color:var(--gold);opacity:.6;min-width:2.4rem}
+.sec-title{font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--text)}
+h3{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--glight);margin:2rem 0 .7rem}
+h4{font-family:var(--fd);font-size:1.18rem;font-weight:600;color:var(--blue);margin:1.3rem 0 .45rem}
+p{margin-bottom:.85rem}
+strong{color:var(--glight);font-weight:600}
+em{color:var(--blue);font-style:italic}
+a{color:var(--gold);text-decoration:none}
+code{font-family:var(--fm);background:var(--bg-code);padding:.1em .4em;border-radius:3px;font-size:.8em;color:var(--gold)}
+ul,ol{padding-left:1.5rem;margin-bottom:.85rem}
+li{margin-bottom:.3rem}
+
+/* CALLOUT BOXES */
+.box{background:var(--bg-card);border-left:3px solid var(--gold);padding:1rem 1.4rem;border-radius:0 6px 6px 0;margin:1.3rem 0}
+.box.info{border-left-color:var(--blue)}.box.warn{border-left-color:var(--red)}.box.ok{border-left-color:var(--green)}.box.vio{border-left-color:var(--violet)}.box.or{border-left-color:var(--orange)}
+.box-title{font-family:var(--fm);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.35rem}
+.box.info .box-title{color:var(--blue)}.box.warn .box-title{color:var(--red)}.box.ok .box-title{color:var(--green)}.box.vio .box-title{color:var(--violet)}.box.or .box-title{color:var(--orange)}
+
+/* MATH */
+.mblock{background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.8rem;
+  margin:1.3rem 0;overflow-x:auto;text-align:center}
+.mblock .mlabel{font-family:var(--fm);font-size:.68rem;color:var(--muted);text-align:left;margin-bottom:.6rem;
+  text-transform:uppercase;letter-spacing:.08em}
+
+/* TABLES */
+.twrap{overflow-x:auto;margin:1.3rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead{background:var(--bg-code)}
+th{padding:.75rem 1rem;text-align:left;font-family:var(--fm);font-size:.7rem;color:var(--gold);
+  text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--bstrong)}
+td{padding:.65rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.55}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(201,168,76,.03)}
+td.g{color:var(--green)}td.r{color:var(--red)}td.m{color:var(--muted)}td.b{color:var(--blue)}td.v{color:var(--violet)}td.o{color:var(--orange)}
+
+/* FORMULA CARDS */
+.fcards{display:flex;flex-direction:column;gap:1.4rem;margin-top:1rem}
+.fc{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.fc-head{background:var(--bg-code);padding:.75rem 1.3rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between}
+.fc-name{font-family:var(--fd);font-size:1.1rem;font-weight:600;color:var(--gold)}
+.fc-tag{font-family:var(--fm);font-size:.68rem;color:var(--muted);padding:.18rem .55rem;
+  background:rgba(255,255,255,.04);border-radius:20px}
+.fc-body{padding:1.3rem}
+.fc-expr{text-align:center;padding:1.1rem;background:var(--bg-code);border-radius:6px;margin-bottom:1rem;overflow-x:auto}
+.fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;font-size:.87rem}
+.fc-item h5{font-family:var(--fm);font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:.25rem}
+.fc-item p{color:var(--muted);margin:0;font-size:.87rem}
+
+/* QUIZ */
+.qlevel{display:inline-block;font-family:var(--fm);font-size:.7rem;text-transform:uppercase;
+  letter-spacing:.1em;padding:.18rem .65rem;border-radius:4px;margin-bottom:.7rem;margin-top:1.1rem}
+.qlevel.easy{background:rgba(123,196,150,.13);color:var(--green)}
+.qlevel.med{background:rgba(126,184,212,.13);color:var(--blue)}
+.qlevel.hard{background:rgba(224,123,123,.13);color:var(--red)}
+.qi{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.7rem;overflow:hidden}
+.qi-q{padding:.85rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;
+  gap:.7rem;transition:background .15s}
+.qi-q:hover{background:rgba(201,168,76,.05)}
+.qi-qtxt{flex:1;font-size:.92rem}
+.qi-arr{color:var(--gold);font-size:1rem;transition:transform .2s;min-width:1.1rem;text-align:center;margin-top:.15rem}
+.qi-a{padding:0 1.1rem;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .2s;
+  background:var(--bg-code);font-size:.87rem;color:var(--muted);border-top:0 solid var(--border)}
+.qi-a.open{max-height:700px;padding:.9rem 1.1rem;border-top:1px solid var(--border)}
+
+/* PIEGE */
+.piege{display:flex;gap:.8rem;align-items:flex-start;margin-bottom:.85rem;
+  padding:.75rem 1rem;background:rgba(224,123,123,.06);border-radius:6px;border-left:3px solid var(--red)}
+.piege-icon{font-size:1rem;min-width:1.3rem}
+.piege-text{font-size:.9rem}
+.piege-text strong{color:var(--red)}
+
+/* ORAL BLOCK */
+.oral{background:var(--bg-card);border:1px solid var(--bstrong);border-radius:10px;
+  padding:2rem 2.2rem;margin:1rem 0;position:relative}
+.oral::before{content:'"';font-family:var(--fd);font-size:5rem;color:var(--gold);opacity:.12;
+  position:absolute;top:-.5rem;left:.8rem;line-height:1}
+.oral p{font-size:1rem;line-height:1.9;color:var(--text)}
+.oral p+p{margin-top:.7rem}
+
+/* DIAGRAM CONTAINER */
+.diag{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;
+  padding:1.4rem;margin:1.3rem 0;overflow-x:auto}
+.diag-title{font-family:var(--fm);font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.9rem}
+
+/* ALGO CARDS GRID */
+.algo-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.3rem 0}
+.algo-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.1rem;transition:border-color .18s}
+.algo-card:hover{border-color:var(--bstrong)}
+.algo-card .act{font-family:var(--fm);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.3rem}
+.algo-card h4{font-family:var(--fd);font-size:1.12rem;margin:0 0 .3rem 0;color:var(--text)}
+.algo-card p{font-size:.86rem;color:var(--muted);margin:0;line-height:1.55}
+
+/* FICHE */
+.fiche-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.3rem 0}
+.fc2{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem}
+.fc2 h4{font-family:var(--fm);font-size:.7rem;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--gold);margin:0 0 .65rem 0}
+.fc2 ul{list-style:none;padding:0;font-size:.84rem}
+.fc2 ul li{padding:.2rem 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted)}
+.fc2 ul li:last-child{border:none}
+.fc2 ul li strong{color:var(--text)}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:3px}
+
+/* ALGO SECTION BLOCK */
+.algo-sec{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin:1.3rem 0}
+.algo-sec-head{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
+.algo-badge{font-family:var(--fm);font-size:.78rem;font-weight:500;padding:.3rem .85rem;border-radius:6px;background:rgba(201,168,76,.1);color:var(--gold);border:1px solid var(--bstrong)}
+.algo-sec-head h3{font-family:var(--fd);font-size:1.4rem;color:var(--text);margin:0}
+.algo-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:.8rem}
+.algo-info h5{font-family:var(--fm);font-size:.66rem;text-transform:uppercase;letter-spacing:.09em;color:var(--blue);margin-bottom:.3rem}
+.algo-info p{font-size:.87rem;color:var(--muted);margin:0 0 .7rem 0;line-height:1.55}
+.algo-info ul{font-size:.86rem;color:var(--muted);padding-left:1.2rem}
+.algo-info ul li{margin-bottom:.2rem}
+.green-tag{color:var(--green)}
+.red-tag{color:var(--red)}
+
+@media(max-width:900px){
+  .sb{display:none}
+  .main{margin-left:0;padding:2rem 1.3rem}
+  .hero h1{font-size:2.4rem}
+  .fiche-grid,.algo-grid,.fc-grid{grid-template-columns:1fr}
+  .algo-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ======================== SIDEBAR ======================== -->
+<<aside class="sb">
+  <div class="sb-logo">AlgoExec</div>
+  <div class="sb-sub">Computational Finance<br>UniGe · A. Dupuis · v1.1</div>
+  <nav>
+    <ul>
+      <span class="sb-section">Introduction</span>
+      <li><a href="#s1"><span class="n">01</span>Executive Summary</a></li>
+      <li><a href="#s2"><span class="n">02</span>Oral Response</a></li>
+      <li><a href="#s3"><span class="n">03</span>Players &amp; Market Impact</a></li>
+      <span class="sb-section">Algorithms</span>
+      <li><a href="#s4"><span class="n">04</span>Overview</a></li>
+      <li><a href="#s5"><span class="n">05</span>TWAP</a></li>
+      <li><a href="#s6"><span class="n">06</span>VWAP</a></li>
+      <li><a href="#s7"><span class="n">07</span>POV</a></li>
+      <li><a href="#s8"><span class="n">08</span>MI / IS / AS</a></li>
+      <li><a href="#s9"><span class="n">09</span>MC / PI / LIQ</a></li>
+      <span class="sb-section">Analysis</span>
+      <li><a href="#s10"><span class="n">10</span>Transaction Costs</a></li>
+      <li><a href="#s11"><span class="n">11</span>Efficient Frontier</a></li>
+      <li><a href="#s12"><span class="n">12</span>Risk Aversion</a></li>
+      <li><a href="#s13"><span class="n">13</span>Global Comparison</a></li>
+      <span class="sb-section">Exam</span>
+      <li><a href="#s14"><span class="n">14</span>Oral Questions</a></li>
+      <li><a href="#s15"><span class="n">15</span>Classic Pitfalls</a></li>
+      <li><a href="#s16"><span class="n">16</span>Revision Sheet</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<!-- ======================== MAIN ======================== -->
+<<main class="main">
+
+<!-- HERO -->
+<<header class="hero" id="top">
+  <div class="hero-tag">Computational Finance · Chap. Execution</div>
+  <h1><em>Algorithmic</em><br>Execution</h1>
+  <p class="hero-desc">
+    Imagine: you have a brilliant conviction — buy 10,000 XYZ shares. You submit 
+    the entire order at once. The market sees a monster coming. Sellers pull back. 
+    The price skyrockets. You pay 4% more. Your "excellent trade" just scuttled 
+    itself before even being executed. <strong>Welcome to Market Impact</strong> — 
+    where your worst enemy is yourself.
+  </p>
+  <div class="badges">
+    <span class="badge">TWAP</span>
+    <span class="badge">VWAP</span>
+    <span class="badge b">POV</span>
+    <span class="badge g">IS / AS</span>
+    <span class="badge">MI</span>
+    <span class="badge r">MC</span>
+    <span class="badge v">Efficient Frontier</span>
+  </div>
+</header>
+
+<!-- ======================================================= -->
+<!-- SECTION 1 : EXECUTIVE SUMMARY -->
+<!-- ======================================================= -->
+<section class="sec" id="s1">
+  <div class="sec-hd">
+    <span class="sec-num">01</span>
+    <h2 class="sec-title">Executive Summary <span style="font-size:1rem;opacity:.5;font-weight:400">(30 seconds)</span></h2>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">&#9654; The Essentials</div>
+    <p>
+      <strong>Algorithmic execution</strong> consists of breaking a large order into slices, in order to 
+      <strong>minimize transaction costs</strong>, particularly <strong>market impact</strong>. 
+      Different algorithms (TWAP, VWAP, POV, IS, AS, MC, PI, LIQ, MI) target different objectives (time, volume, price, liquidity). 
+      The choice is made on the <strong>efficient frontier</strong> of cost/risk, guided by the 
+      <strong>risk aversion</strong> parameter $\lambda = \frac{\text{cost}}{\text{risk}}$.
+    </p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 2 : MODEL ORAL RESPONSE -->
+<!-- ======================================================= -->
+<section class="sec" id="s2">
+  <div class="sec-hd">
+    <span class="sec-num">02</span>
+    <h2 class="sec-title">Model Oral Response</h2>
+  </div>
+
+  <div class="oral">
+    <p>
+      Algorithmic execution addresses a fundamental problem in market finance: 
+      how to buy or sell a large quantity of assets without <em>moving the market against oneself</em>?
+      This phenomenon is called <strong>market impact</strong> — it is the price change caused by 
+      one's own trading activity. It decomposes into a <strong>temporary impact</strong>, which reverts after 
+      the transaction, and a <strong>permanent impact</strong>, which reflects durable information incorporated 
+      by the market.
+    </p>
+    <p>
+      To minimize this impact, the order is split into slices and executed according to 
+      different strategies. The simplest algorithm is <strong>TWAP</strong> 
+      (<em>Time Weighted Average Price</em>): the order is divided into equal slices over a fixed time horizon, 
+      regardless of the market. It is simple, but predictable and insensitive to market conditions.
+    </p>
+    <p>
+      <strong>VWAP</strong> (<em>Volume Weighted Average Price</em>) improves on this by proportioning 
+      slices to intraday historical volume — we trade more when the market is active.
+      <strong>POV</strong> (<em>Percentage Of Volume</em>) goes further by reacting to <em>real-time</em> 
+      volume: $w_i = \alpha \cdot v_i$.
+    </p>
+    <p>
+      More sophisticated algorithms like <strong>IS</strong> (<em>Implementation Shortfall</em>) 
+      seek to minimize the gap between the decision price and the execution price, dynamically balancing 
+      market impact and timing risk. <strong>AS</strong> (<em>Adaptive Shortfall</em>) 
+      adds price trend reactivity via two behaviors: AIM (more aggressive when favorable) 
+      and PIM (more aggressive against an adverse trend).
+    </p>
+    <p>
+      All these algorithms can be positioned on an <strong>efficient frontier</strong> in the 
+      cost/risk space. For a given risk level, the optimal algorithm is the one on the frontier. 
+      The right algorithm is chosen via the risk aversion parameter $\lambda$ which geometrically corresponds 
+      to the slope of the tangent line to the frontier from the origin.
+    </p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 3 : MARKET PLAYERS & MARKET IMPACT -->
+<!-- ======================================================= -->
+<section class="sec" id="s3">
+  <div class="sec-hd">
+    <span class="sec-num">03</span>
+    <h2 class="sec-title">Market Players &amp; Market Impact</h2>
+  </div>
+
+  <h3>Market Ecosystem</h3>
+  <p>
+    Orders in financial markets pass through a chain of actors. 
+    The <strong>buy-side</strong> (fund managers, institutional investors) 
+    generates decisions; the <strong>sell-side</strong> (brokers) facilitates execution.
+  </p>
+
+  <div class="diag">
+    <div class="diag-title">Order Flow — Buy-side → Market (from B. Johnson [8])</div>
+    <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:720px;display:block;margin:auto">
+      <!-- BUY-SIDE -->
+      <rect x="250" y="8" width="200" height="50" rx="8" fill="rgba(123,196,150,.12)" stroke="rgba(123,196,150,.4)" stroke-width="1.2"/>
+      <text x="350" y="26" text-anchor="middle" font-family="EB Garamond,serif" font-size="13" fill="#7bc496">BUY-SIDE</text>
+      <rect x="260" y="32" width="80" height="22" rx="4" fill="rgba(123,196,150,.1)" stroke="none"/>
+      <text x="300" y="47" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#9089bf">Portfolio Mgr</text>
+      <rect x="360" y="32" width="80" height="22" rx="4" fill="rgba(123,196,150,.1)" stroke="none"/>
+      <text x="400" y="47" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#9089bf">In-house Trader</text>
+
+      <!-- SELL-SIDE -->
+      <rect x="50" y="80" width="140" height="42" rx="8" fill="rgba(126,184,212,.1)" stroke="rgba(126,184,212,.35)" stroke-width="1.2"/>
+      <text x="120" y="98" text-anchor="middle" font-family="EB Garamond,serif" font-size="13" fill="#7eb8d4">SELL-SIDE</text>
+      <text x="120" y="115" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#9089bf">Salesperson/Broker</text>
+
+      <!-- Arrow buy-side → sell-side -->
+      <line x1="250" y1="55" x2="190" y2="95" stroke="rgba(201,168,76,.5)" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="200" y="74" font-family="JetBrains Mono,monospace" font-size="8.5" fill="#c9a84c">Orders (C)</text>
+
+      <!-- Arrow buy-side → direct channels -->
+      <line x1="350" y1="58" x2="350" y2="148" stroke="rgba(201,168,76,.4)" stroke-width="1.2" stroke-dasharray="4,3"/>
+
+      <!-- EXECUTION CHANNELS -->
+      <!-- A: Manual Trader -->
+      <rect x="30" y="155" width="108" height="40" rx="7" fill="rgba(201,168,76,.08)" stroke="rgba(201,168,76,.3)" stroke-width="1"/>
+      <text x="84" y="171" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#c9a84c">A — Trader</text>
+      <text x="84" y="186" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">Manual</text>
+
+      <!-- B: DMA -->
+      <rect x="154" y="155" width="108" height="40" rx="7" fill="rgba(126,184,212,.08)" stroke="rgba(126,184,212,.3)" stroke-width="1"/>
+      <text x="208" y="171" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7eb8d4">B — DMA</text>
+      <text x="208" y="186" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">Direct Access</text>
+
+      <!-- C/D: Algorithmic Trading -->
+      <rect x="278" y="155" width="148" height="40" rx="7" fill="rgba(167,139,250,.1)" stroke="rgba(167,139,250,.4)" stroke-width="1.5"/>
+      <text x="352" y="171" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#a78bfa">C/D — Algo Trading</text>
+      <text x="352" y="186" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">via Sell/Buy-side</text>
+
+      <!-- E: Sponsored Access -->
+      <rect x="442" y="155" width="118" height="40" rx="7" fill="rgba(232,168,124,.08)" stroke="rgba(232,168,124,.3)" stroke-width="1"/>
+      <text x="501" y="171" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#e8a87c">E — Sponsored</text>
+      <text x="501" y="186" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">Access</text>
+
+      <!-- Arrow sell-side → A -->
+      <line x1="120" y1="122" x2="84" y2="155" stroke="rgba(201,168,76,.4)" stroke-width="1" stroke-dasharray="3,3"/>
+
+      <!-- All arrows to market -->
+      <line x1="84"  y1="195" x2="84"  y2="258" stroke="rgba(201,168,76,.35)" stroke-width="1"/>
+      <line x1="208" y1="195" x2="208" y2="258" stroke="rgba(126,184,212,.35)" stroke-width="1"/>
+      <line x1="352" y1="195" x2="352" y2="258" stroke="rgba(167,139,250,.45)" stroke-width="1.5"/>
+      <line x1="501" y1="195" x2="501" y2="258" stroke="rgba(232,168,124,.35)" stroke-width="1"/>
+
+      <!-- MARKET -->
+      <rect x="20" y="258" width="640" height="48" rx="8" fill="rgba(228,223,250,.06)" stroke="rgba(228,223,250,.2)" stroke-width="1.5"/>
+      <text x="340" y="286" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="16" font-weight="700" fill="#e4dffa">MARKET (Execution Venue)</text>
+
+      <!-- Star annotation for algo -->
+      <circle cx="352" cy="137" r="6" fill="rgba(167,139,250,.2)" stroke="#a78bfa" stroke-width="1"/>
+      <text x="352" y="141" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#a78bfa">★</text>
+      <text x="400" y="140" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">→ focus of this chapter</text>
+    </svg>
+  </div>
+
+  <h3>Market Impact: Decomposition</h3>
+  <p>
+    <strong>Market impact</strong> is the price modification induced by the mere presence of the order. 
+    It is the central problem of execution: <em>one must not disturb the market with one's own activity</em>.
+  </p>
+
+  <div class="box warn">
+    <div class="box-title">⚠ Execution Paradox</div>
+    <p>The faster we execute → the greater the price impact (high cost, low timing risk).<<br>
+    The slower we execute → the smaller the impact, but the greater the timing risk (the price moves against us in the meantime).</p>
+  </div>
+
+  <div class="diag">
+    <div class="diag-title">Market Impact Decomposition — Temporary vs Permanent Impact</div>
+    <svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:640px;display:block;margin:auto">
+      <!-- Grid -->
+      <line x1="60" y1="20" x2="60" y2="200" stroke="rgba(228,223,250,.15)" stroke-width="1"/>
+      <line x1="60" y1="200" x2="610" y2="200" stroke="rgba(228,223,250,.15)" stroke-width="1"/>
+      <!-- Labels -->
+      <text x="335" y="225" text-anchor="middle" font-family="EB Garamond,serif" font-size="12" fill="#9089bf">Time</text>
+      <text x="30" y="112" text-anchor="middle" font-family="EB Garamond,serif" font-size="12" fill="#9089bf" transform="rotate(-90,30,112)">Price</text>
+
+      <!-- Pre-trade baseline -->
+      <line x1="60" y1="140" x2="180" y2="140" stroke="#7bc496" stroke-width="2" stroke-dasharray="5,3"/>
+      <text x="65" y="133" font-family="JetBrains Mono,monospace" font-size="9" fill="#7bc496">P₀ (no trade)</text>
+
+      <!-- Impact zone markers -->
+      <line x1="180" y1="20" x2="180" y2="200" stroke="rgba(201,168,76,.3)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="360" y1="20" x2="360" y2="200" stroke="rgba(201,168,76,.3)" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="180" y="215" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#c9a84c">t_start</text>
+      <text x="360" y="215" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#c9a84c">t_end</text>
+
+      <!-- Price with impact (cubic bezier rising then partial revert) -->
+      <!-- Rising during execution -->
+      <path d="M 60,140 L 180,140 C 220,140 260,55 360,68 C 420,75 480,95 610,95"
+            stroke="#e07b7b" stroke-width="2.5" fill="none"/>
+
+      <!-- Baseline after trade (permanent impact level) -->
+      <line x1="360" y1="95" x2="610" y2="95" stroke="rgba(123,196,150,.6)" stroke-width="1.5" stroke-dasharray="6,3"/>
+
+      <!-- Shading for temporary impact (between peak and permanent) -->
+      <path d="M 180,140 C 220,140 260,55 360,68 L 360,95 C 300,95 240,100 180,140 Z"
+            fill="rgba(126,184,212,.1)" stroke="none"/>
+      <!-- Shading for permanent impact (between old baseline and new permanent) -->
+      <rect x="360" y="95" width="250" height="45" fill="rgba(123,196,150,.07)"/>
+
+      <!-- Annotations -->
+      <!-- Temporary impact brace -->
+      <line x1="385" y1="68" x2="385" y2="95" stroke="#7eb8d4" stroke-width="1.2"/>
+      <line x1="382" y1="68" x2="388" y2="68" stroke="#7eb8d4" stroke-width="1.2"/>
+      <line x1="382" y1="95" x2="388" y2="95" stroke="#7eb8d4" stroke-width="1.2"/>
+      <text x="395" y="82" font-family="EB Garamond,serif" font-size="11" fill="#7eb8d4">Temporary Impact</text>
+      <text x="395" y="95" font-family="JetBrains Mono,monospace" font-size="8.5" fill="#7eb8d4">(reverts after trade)</text>
+
+      <!-- Permanent impact brace -->
+      <line x1="530" y1="95" x2="530" y2="140" stroke="#7bc496" stroke-width="1.2"/>
+      <line x1="527" y1="95" x2="533" y2="95" stroke="#7bc496" stroke-width="1.2"/>
+      <line x1="527" y1="140" x2="533" y2="140" stroke="#7bc496" stroke-width="1.2"/>
+      <text x="538" y="118" font-family="EB Garamond,serif" font-size="11" fill="#7bc496">Permanent Impact</text>
+      <text x="538" y="131" font-family="JetBrains Mono,monospace" font-size="8.5" fill="#7bc496">(info. incorporated)</text>
+
+      <!-- Execution zone label -->
+      <text x="270" y="38" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#c9a84c">▲ Execution in progress</text>
+
+      <!-- Total market impact label -->
+      <line x1="510" y1="50" x2="420" y2="80" stroke="rgba(224,123,123,.5)" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="520" y="46" font-family="EB Garamond,serif" font-size="11" fill="#e07b7b">= Total Impact</text>
+    </svg>
+  </div>
+
+  <div class="mblock">
+    <div class="mlabel">Fundamental Decomposition</div>
+    $$\text{Market Impact} = \underbrace{\text{Temporary Impact}}_{\text{reverts}} + \underbrace{\text{Permanent Impact}}_{\text{persists}}$$
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 4 : ALGORITHM OVERVIEW -->
+<!-- ======================================================= -->
+<section class="sec" id="s4">
+  <div class="sec-hd">
+    <span class="sec-num">04</span>
+    <h2 class="sec-title">Algorithm Overview</h2>
+  </div>
+
+  <p>
+    Every broker offers their own variants, but the concepts are universal and <em>mix &amp; matchable</em>. 
+    The objective always remains to minimize temporary and permanent impact.
+  </p>
+
+  <div class="twrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th><th>Primary Objective</th><th>Algorithm</th><th>Key Variable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="3" style="border-right:1px solid rgba(180,150,80,.2);vertical-align:middle">
+            <strong style="color:var(--blue)">Time Impact</strong></td>
+          <td>Pure Time</td>
+          <td><strong>TWAP</strong> <span class="m">Time Weighted Average Price</span></td>
+          <td class="m">$\Delta t$</td>
+        </tr>
+        <tr>
+          <td>Historical Volume</td>
+          <td><strong>VWAP</strong> <span class="m">Volume Weighted Average Price</span></td>
+          <td class="m">$v_i / H$</td>
+        </tr>
+        <tr>
+          <td>Real-time Volume</td>
+          <td><strong>POV</strong> <span class="m">Percentage Of Volume</span></td>
+          <td class="m">$\alpha \cdot v_i$</td>
+        </tr>
+        <tr>
+          <td style="border-right:1px solid rgba(180,150,80,.2)"><strong style="color:var(--violet)">Pure Impact</strong></td>
+          <td>Minimize Impact</td>
+          <td><strong>MI</strong> <span class="m">Minimal Impact</span></td>
+          <td class="m">Dark pools</td>
+        </tr>
+        <tr>
+          <td rowspan="2" style="border-right:1px solid rgba(180,150,80,.2);vertical-align:middle">
+            <strong style="color:var(--green)">Cost / Price</strong></td>
+          <td>Decision/Exec. Gap</td>
+          <td><strong>IS</strong> <span class="m">Implementation Shortfall</span></td>
+          <td class="m">Volatility, timing</td>
+        </tr>
+        <tr>
+          <td>Adaptive</td>
+          <td><strong>AS</strong> <span class="m">Adaptive Shortfall (AIM/PIM)</span></td>
+          <td class="m">Market price</td>
+        </tr>
+        <tr>
+          <td rowspan="3" style="border-right:1px solid rgba(180,150,80,.2);vertical-align:middle">
+            <strong style="color:var(--orange)">Opportunistic</strong></td>
+          <td>Close</td>
+          <td><strong>MC</strong> <span class="m">Market Close</span></td>
+          <td class="m">Volatility, timing</td>
+        </tr>
+        <tr>
+          <td>Relative Price</td>
+          <td><strong>PI</strong> <span class="m">Price Inline</span></td>
+          <td class="m">Price benchmark</td>
+        </tr>
+        <tr>
+          <td>Liquidity</td>
+          <td><strong>LIQ</strong> <span class="m">Liquidity Driven</span></td>
+          <td class="m">Spread, LOB</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 5 : TWAP -->
+<!-- ======================================================= -->
+<section class="sec" id="s5">
+  <div class="sec-hd">
+    <span class="sec-num">05</span>
+    <h2 class="sec-title">TWAP — Time Weighted Average Price</h2>
+  </div>
+
+  <div class="algo-sec">
+    <div class="algo-sec-head">
+      <span class="algo-badge">TWAP</span>
+      <h3>Fundamental Principle</h3>
+    </div>
+    <p>
+      <strong>TWAP</strong> uniformly divides the total order $w$ into equal slices over a 
+      time horizon $[t_0, t_1]$ with step $\Delta t$. 
+      The algorithm is <em>entirely independent of price and volume</em> — it trades on the clock.
+    </p>
+    <p>
+      Number of slices: $n = \frac{t_1 - t_0}{\Delta t} + 1$, each slice of size $\frac{w}{n}$.
+    </p>
+  </div>
+
+  <div class="mblock">
+    <div class="mlabel">Size of each TWAP Slice</div>
+    $$w_i = \frac{w}{n} = \frac{w}{\frac{t_1 - t_0}{\Delta t} + 1}$$
+  </div>
+
+  <div class="box info">
+    <div class="box-title">Numerical Example</div>
+    $w = 10\,000$ shares, $t_0 = \text{now}$, $t_1 = t_0 + 1\text{h}$, $\Delta t = 15\text{min}$
+    → $n = 4 + 1 = 5$ slices of <strong>2,000 shares each</strong>, executed at $t_0, t_0+15', t_0+30', t_0+45', t_0+60'$.
+  </div>
+
+  <div class="algo-row">
+    <div>
+      <h4>TWAP Variants</h4>
+      <ul>
+        <li><strong>Aggressive:</strong> trade more at the beginning of the period (front-loaded) — assumes mean reversion</li>
+        <li><strong>Passive:</strong> trade more at the end of the period (back-loaded) — lets time pass</li>
+        <li><strong>Randomization:</strong> add noise to sizes ($w_i + \epsilon$) and times ($t_i + \delta$) to reduce predictability</li>
+        <li><strong>Price-adaptive:</strong> dynamic adjustment according to price (then approaches PI)</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Strengths &amp; Limits</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.5rem">
+        <div>
+          <p style="font-family:var(--fm);font-size:.65rem;color:var(--green);margin-bottom:.3rem">✓ STRENGTHS</p>
+          <ul style="font-size:.85rem;color:var(--muted);padding-left:1rem">
+            <li>Very simple to implement</li>
+            <li>Easy to explain to clients</li>
+            <li>Guarantees 100% execution</li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-family:var(--fm);font-size:.65rem;color:var(--red);margin-bottom:.3rem">✗ LIMITS</p>
+          <ul style="font-size:.85rem;color:var(--muted);padding-left:1rem">
+            <li>Highly predictable</li>
+            <li>Ignores price and volume</li>
+            <li>Not on the efficient frontier</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diag">
+    <div class="diag-title">TWAP Completion Curves — Neutral, Aggressive, Passive</div>
+    <svg viewBox="0 0 560 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:auto">
+      <!-- Axes -->
+      <line x1="55" y1="15" x2="55" y2="190" stroke="rgba(228,223,250,.2)" stroke-width="1"/>
+      <line x1="55" y1="190" x2="530" y2="190" stroke="rgba(228,223,250,.2)" stroke-width="1"/>
+      <!-- Labels -->
+      <text x="290" y="210" text-anchor="middle" font-family="EB Garamond,serif" font-size="12" fill="#9089bf">Time →  t₀ ... t₁</text>
+      <text x="20" y="103" text-anchor="middle" font-family="EB Garamond,serif" font-size="12" fill="#9089bf" transform="rotate(-90,20,103)">Completion %</text>
+      <!-- Y-axis labels -->
+      <text x="48" y="193" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="#9089bf">0%</text>
+      <text x="48" y="105" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="#9089bf">50%</text>
+      <text x="48" y="20"  text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="#9089bf">100%</text>
+      <!-- X-axis markers -->
+      <line x1="55"  y1="190" x2="55"  y2="195" stroke="rgba(228,223,250,.2)" stroke-width="1"/>
+      <line x1="530" y1="190" x2="530" y2="195" stroke="rgba(228,223,250,.2)" stroke-width="1"/>
+      <text x="55"  y="205" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#9089bf">t₀</text>
+      <text x="530" y="205" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#9089bf">t₁</text>
+      <!-- Grid lines -->
+      <line x1="55" y1="105" x2="530" y2="105" stroke="rgba(228,223,250,.07)" stroke-width="1" stroke-dasharray="4,4"/>
+      <line x1="55" y1="18"  x2="530" y2="18"  stroke="rgba(228,223,250,.07)" stroke-width="1" stroke-dasharray="4,4"/>
+
+      <!-- TWAP Linear (neutral) -->
+      <line x1="55" y1="190" x2="530" y2="18" stroke="#c9a84c" stroke-width="2.5"/>
+      <!-- TWAP Aggressive (front-loaded, concave down: rises fast then slow) -->
+      <path d="M 55,190 Q 130,18 530,18" stroke="#7bc496" stroke-width="2" fill="none" stroke-dasharray="6,3"/>
+      <!-- TWAP Passive (back-loaded, concave up: rises slow then fast) -->
+      <path d="M 55,190 Q 455,190 530,18" stroke="#e07b7b" stroke-width="2" fill="none" stroke-dasharray="3,3"/>
+
+      <!-- TWAP steps (dots at equal intervals) -->
+      <circle cx="55"  cy="190" r="3.5" fill="#c9a84c"/>
+      <circle cx="172" cy="149" r="3.5" fill="#c9a84c"/>
+      <circle cx="289" cy="105" r="3.5" fill="#c9a84c"/>
+      <circle cx="407" cy="62"  r="3.5" fill="#c9a84c"/>
+      <circle cx="530" cy="18"  r="3.5" fill="#c9a84c"/>
+
+      <!-- Legend -->
+      <line x1="70" y1="40" x2="100" y2="40" stroke="#c9a84c" stroke-width="2.5"/>
+      <text x="108" y="44" font-family="EB Garamond,serif" font-size="12" fill="#c9a84c">Neutral (Standard TWAP)</text>
+      <line x1="70" y1="57" x2="100" y2="57" stroke="#7bc496" stroke-width="2" stroke-dasharray="6,3"/>
+      <text x="108" y="61" font-family="EB Garamond,serif" font-size="12" fill="#7bc496">Aggressive (front-loaded)</text>
+      <line x1="70" y1="74" x2="100" y2="74" stroke="#e07b7b" stroke-width="2" stroke-dasharray="3,3"/>
+      <text x="108" y="78" font-family="EB Garamond,serif" font-size="12" fill="#e07b7b">Passive (back-loaded)</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 6 : VWAP -->
+<!-- ======================================================= -->
+<section class="sec" id="s6">
+  <div class="sec-hd">
+    <span class="sec-num">06</span>
+    <h2 class="sec-title">VWAP — Volume Weighted Average Price</h2>
+  </div>
+
+  <div class="algo-sec">
+    <div class="algo-sec-head">
+      <span class="algo-badge">VWAP</span>
+      <h3>VWAP Benchmark</h3>
+    </div>
+    <p>
+      <strong>VWAP</strong> is both a <em>benchmark</em> and an <em>execution algorithm</em>.
+      As a benchmark, it is the volume-weighted average price over a period — a simple and standard 
+      measure of execution quality.
+      <strong>Buying below VWAP = good trade. Selling above = good trade.</strong>
+    </p>
+  </div>
+
+  <div class="fcards">
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">VWAP Benchmark Formula</span>
+        <span class="fc-tag">Benchmark</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">
+          $$\text{VWAP} = \frac{\sum_i p_i \, v_i}{\sum_i v_i}$$
+        </div>
+        <div class="fc-grid">
+          <div class="fc-item">
+            <h5>Variables</h5>
+            <p>$i$ = index of each transaction between $t_0$ and $t_1$<<br>
+            $p_i$ = price of transaction $i$<<br>
+            $v_i$ = volume of transaction $i$</p>
+          </div>
+          <div class="fc-item">
+            <h5>Intuition</h5>
+            <p>VWAP gives more <em>weight to large-volume transactions</em>. 
+            It reflects the actual market conditions of the day. Problem: 
+            $\sum_i v_i$ is unknown before the end of the period!</p>
+          </div>
+          <div class="fc-item">
+            <h5>Practical Problem</h5>
+            <p>We only know $\sum_i v_i$ at the end of the day. Solution: use 
+            <strong>historical data</strong> to estimate the volume profile.</p>
+          </div>
+          <div class="fc-item">
+            <h5>Numerical Example</h5>
+            <p>$w = 10\,000$, $H = 50\,000$ (historical daily volume)<br>
+            At 8:00 : $h_i / H = 5.2\%$ → trade $520$ shares<br>
+            At 8:15 : $h_i / H = 5.0\%$ → trade $500$ shares</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diag">
+    <div class="diag-title">Typical Intraday Volume Profile (VWAP Seasonality)</div>
+    <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;display:block;margin:auto">
+      <!-- Axes -->
+      <line x1="55" y1="15" x2="55" y2="175" stroke="rgba(228,223,250,.2)" stroke-width="1"/>
+      <line x1="55" y1="175" x2="570" y2="175" stroke="rgba(228,223,250,.2)" stroke-width="1"/>
+      <text x="312" y="198" text-anchor="middle" font-family="EB Garamond,serif" font-size="11" fill="#9089bf">Trading Hour</text>
+      <text x="20" y="95" text-anchor="middle" font-family="EB Garamond,serif" font-size="11" fill="#9089bf" transform="rotate(-90,20,95)">Volume (%)</text>
+
+      <!-- Time labels -->
+      <text x="55"  y="188" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">8:00</text>
+      <text x="140" y="188" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">10:00</text>
+      <text x="220" y="188" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">12:00</text>
+      <text x="312" y="188" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">14:00</text>
+      <text x="400" y="188" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">16:00</text>
+      <text x="480" y="188" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">17:00</text>
+      <text x="540" y="188" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">17:30</text>
+
+      <!-- Volume distribution bars (simulated) -->
+      <!-- High at open, low midday, high at close -->
+      <rect x="60"  y="30"  width="22" height="145" rx="2" fill="rgba(126,184,212,.25)" stroke="rgba(126,184,212,.4)" stroke-width="1"/>
+      <rect x="84"  y="52"  width="22" height="123" rx="2" fill="rgba(126,184,212,.2)"  stroke="rgba(126,184,212,.35)" stroke-width="1"/>
+      <rect x="108" y="75"  width="22" height="100" rx="2" fill="rgba(126,184,212,.18)" stroke="rgba(126,184,212,.3)" stroke-width="1"/>
+      <rect x="132" y="95"  width="22" height="80"  rx="2" fill="rgba(126,184,212,.15)" stroke="rgba(126,184,212,.25)" stroke-width="1"/>
+      <rect x="156" y="108" width="22" height="67"  rx="2" fill="rgba(126,184,212,.13)" stroke="rgba(126,184,212,.22)" stroke-width="1"/>
+      <rect x="180" y="115" width="22" height="60"  rx="2" fill="rgba(126,184,212,.12)" stroke="rgba(126,184,212,.2)" stroke-width="1"/>
+      <rect x="204" y="118" width="22" height="57"  rx="2" fill="rgba(126,184,212,.12)" stroke="rgba(126,184,212,.2)" stroke-width="1"/>
+      <rect x="228" y="120" width="22" height="55"  rx="2" fill="rgba(126,184,212,.11)" stroke="rgba(126,184,212,.18)" stroke-width="1"/>
+      <rect x="252" y="120" width="22" height="55"  rx="2" fill="rgba(126,184,212,.11)" stroke="rgba(126,184,212,.18)" stroke-width="1"/>
+      <rect x="276" y="118" width="22" height="57"  rx="2" fill="rgba(126,184,212,.12)" stroke="rgba(126,184,212,.2)" stroke-width="1"/>
+      <rect x="300" y="116" width="22" height="59"  rx="2" fill="rgba(126,184,212,.12)" stroke="rgba(126,184,212,.2)" stroke-width="1"/>
+      <rect x="324" y="110" width="22" height="65"  rx="2" fill="rgba(126,184,212,.13)" stroke="rgba(126,184,212,.22)" stroke-width="1"/>
+      <rect x="348" y="100" width="22" height="75"  rx="2" fill="rgba(126,184,212,.15)" stroke="rgba(126,184,212,.25)" stroke-width="1"/>
+      <rect x="372" y="85"  width="22" height="90"  rx="2" fill="rgba(126,184,212,.17)" stroke="rgba(126,184,212,.28)" stroke-width="1"/>
+      <rect x="396" y="65"  width="22" height="110" rx="2" fill="rgba(126,184,212,.2)"  stroke="rgba(126,184,212,.35)" stroke-width="1"/>
+      <rect x="420" y="45"  width="22" height="130" rx="2" fill="rgba(126,184,212,.23)" stroke="rgba(126,184,212,.4)" stroke-width="1"/>
+      <rect x="444" y="25"  width="22" height="150" rx="2" fill="rgba(126,184,212,.28)" stroke="rgba(126,184,212,.5)" stroke-width="1"/>
+      <rect x="468" y="18"  width="22" height="157" rx="2" fill="rgba(167,139,250,.3)"  stroke="rgba(167,139,250,.5)" stroke-width="1.5"/>
+      <rect x="492" y="22"  width="22" height="153" rx="2" fill="rgba(167,139,250,.28)" stroke="rgba(167,139,250,.45)" stroke-width="1.5"/>
+      <rect x="516" y="35"  width="22" height="140" rx="2" fill="rgba(167,139,250,.25)" stroke="rgba(167,139,250,.4)" stroke-width="1.5"/>
+
+      <!-- U-shape smoothed overlay -->
+      <path d="M 71,30 C 130,75 200,118 312,120 C 420,122 460,50 538,40"
+            stroke="#c9a84c" stroke-width="2" fill="none" stroke-dasharray="6,3"/>
+
+      <!-- Annotations -->
+      <text x="80"  y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7eb8d4">↑ Open</text>
+      <text x="480" y="11" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#a78bfa">↑ Close</text>
+
+      <!-- Legend -->
+      <rect x="150" y="27" width="14" height="10" rx="2" fill="rgba(126,184,212,.25)" stroke="rgba(126,184,212,.5)" stroke-width="1"/>
+      <text x="170" y="37" font-family="EB Garamond,serif" font-size="11" fill="#9089bf">Observed Volume</text>
+      <line x1="245" y1="32" x2="265" y2="32" stroke="#c9a84c" stroke-width="2" stroke-dasharray="6,3"/>
+      <text x="272" y="37" font-family="EB Garamond,serif" font-size="11" fill="#c9a84c">Typical Profile (U-shape)</text>
+    </svg>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">Key Insight: The VWAP Paradox</div>
+    <p>The denominator $\sum_i v_i$ is only known at the <em>end of the day</em>. To execute a VWAP order 
+    <em>during</em> the day, we must rely on <strong>historical data</strong>. 
+    If the day's volume deviates significantly from the historical pattern, the algorithm will drift from the actual VWAP.
+    Variations include adjustments based on current market conditions to reduce this dependence.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 7 : POV -->
+<!-- ======================================================= -->
+<section class="sec" id="s7">
+  <div class="sec-hd">
+    <span class="sec-num">07</span>
+    <h2 class="sec-title">POV — Percentage Of Volume</h2>
+  </div>
+
+  <div class="algo-sec">
+    <div class="algo-sec-head">
+      <span class="algo-badge">POV</span>
+      <h3>Trading Proportional to Real-time Volume</h3>
+    </div>
+    <p>
+      <strong>POV</strong> improves on VWAP by using <em>observed real-time volume</em> 
+      (rather than historical). For each interval $i$ of duration $\Delta t$, the traded slice is 
+      proportional to the observed volume $v_i$.
+    </p>
+  </div>
+
+  <div class="fcards">
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">POV Formulas</span>
+        <span class="fc-tag">Real-time Volume</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">
+          $$w_i = \alpha \cdot v_i$$
+        </div>
+        <div class="fc-expr" style="margin-top:.7rem">
+          $$\tilde{\alpha} = \frac{\alpha}{1 - \alpha} \quad \text{(adjustment if excluding own orders)}$$
+        </div>
+        <div class="fc-grid">
+          <div class="fc-item">
+            <h5>Parameter $\alpha$</h5>
+            <p>Participation rate in total volume.<br>
+            $1\%$ → discreet participation<br>
+            $10\%$ → average participation<br>
+            $20\%$ → significant participation</p>
+          </div>
+          <div class="fc-item">
+            <h5>Correction $\tilde{\alpha}$</h5>
+            <p>If $\alpha = 5\%$:<br>
+            $\tilde{\alpha} = \frac{0.05}{1-0.05} = 5.26\%$<<br><br>
+            We exclude our own trades from volume $v_i$ because we must not count twice.</p>
+          </div>
+          <div class="fc-item">
+            <h5>Example</h5>
+            <p>$w = 10\,000$, $\alpha = 5\%$<<br>
+            8:15 : $v_i = 3000$ → $w_i = 150$<<br>
+            8:30 : $v_i = 2700$ → $w_i = 135$<<br>
+            → The order finishes when $\sum w_i = 10\,000$ or at $t_1$.</p>
+          </div>
+          <div class="fc-item">
+            <h5>VWAP vs POV Difference</h5>
+            <p>VWAP: planning based on <em>historical volume</em>, executes 100% of $w$.<br>
+            POV: planning based on <em>real-time volume</em>, may not execute 100% of $w$ if $t_1$ is unspecified.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">Warning: POV Predictability</div>
+    <p>Like TWAP, POV is <strong>predictable</strong> — market makers can anticipate your orders.
+    Solution: randomize time intervals $\Delta t$ and integrate volume forecasts 
+    (<em>volume forecasting</em>) to anticipate deviations. 
+    A <em>price-adaptive</em> version adjusts $\alpha$ according to the current price vs benchmark.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 8 : MI / IS / AS -->
+<!-- ======================================================= -->
+<section class="sec" id="s8">
+  <div class="sec-hd">
+    <span class="sec-num">08</span>
+    <h2 class="sec-title">MI, IS, AS — Sophisticated Algorithms</h2>
+  </div>
+
+  <!-- MI -->
+  <div class="algo-sec">
+    <div class="algo-sec-head">
+      <span class="algo-badge" style="background:rgba(167,139,250,.1);color:var(--violet);border-color:rgba(167,139,250,.4)">MI</span>
+      <h3>MI — Minimal Impact</h3>
+    </div>
+    <div class="algo-row">
+      <div class="algo-info">
+        <h5>Principle</h5>
+        <p>Logical progression from VWAP/POV — exclusive focus on minimizing market impact. 
+        Uses <strong>dark pools</strong> and hidden order types (<em>hidden orders</em>) 
+        to reduce impact risk. Dark pools allow execution at the midprice without transparency.</p>
+        <h5>Completion Risk</h5>
+        <p>A dark pool may fail to execute the order if liquidity is insufficient. MI is therefore coupled with 
+        a passive VWAP/POV algorithm (e.g. 20% of the remainder) to guarantee a minimum execution.</p>
+      </div>
+      <div class="algo-info">
+        <h5>Variations</h5>
+        <ul>
+          <li>Execution probability estimation in the dark pool</li>
+          <li>Impact cost model for benchmarking</li>
+        </ul>
+        <h5>Position on the Efficient Frontier</h5>
+        <p><span class="red-tag">High risk</span> of execution price variation, 
+        <span class="green-tag">low costs</span> of impact. Located at the bottom right of the frontier.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- IS -->
+  <div class="algo-sec" style="margin-top:1.2rem">
+    <div class="algo-sec-head">
+      <span class="algo-badge" style="background:rgba(123,196,150,.1);color:var(--green);border-color:rgba(123,196,150,.4)">IS</span>
+      <h3>IS — Implementation Shortfall</h3>
+    </div>
+    <div class="algo-row">
+      <div class="algo-info">
+        <h5>Objective</h5>
+        <p>Minimize the <strong>gap between the decision price and the execution price</strong>.
+        This is the real cost of execution — "what we pay extra compared to if we could have traded instantly 
+        at the decision price".</p>
+        <h5>Shortfall Formula</h5>
+        <p>IS = (Average Execution Price − Decision Price) × Quantity<br>
+        The objective is to find the <strong>optimal time horizon</strong> and the <strong>optimal participation rate</strong>.</p>
+      </div>
+      <div>
+        <div class="diag" style="margin:0">
+          <div class="diag-title">IS Tradeoff: Impact vs Timing Risk</div>
+          <svg viewBox="0 0 320 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
+            <line x1="35" y1="10" x2="35" y2="145" stroke="rgba(228,223,250,.2)" stroke-width="1"/>
+            <line x1="35" y1="145" x2="305" y2="145" stroke="rgba(228,223,250,.2)" stroke-width="1"/>
+            <text x="170" y="162" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" fill="#9089bf">Time Horizon</text>
+            <text x="18" y="78" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" fill="#9089bf" transform="rotate(-90,18,78)">Cost</text>
+            <!-- Market impact (decreasing) -->
+            <path d="M 40,22 C 90,22 150,100 290,135" stroke="#7bc496" stroke-width="2" fill="none"/>
+            <text x="295" y="132" font-family="JetBrains Mono,monospace" font-size="8" fill="#7bc496">Impact ↓</text>
+            <!-- Timing risk (increasing) -->
+            <path d="M 40,135 C 150,130 220,60 285,22" stroke="#e07b7b" stroke-width="2" fill="none"/>
+            <text x="288" y="20" font-family="JetBrains Mono,monospace" font-size="8" fill="#e07b7b">Timing ↑</text>
+            <!-- Total cost (U-shape) -->
+            <path d="M 40,80 C 90,60 130,55 165,57 C 200,59 240,80 285,110" stroke="#c9a84c" stroke-width="2.2" fill="none"/>
+            <text x="42" y="76" font-family="JetBrains Mono,monospace" font-size="8" fill="#c9a84c">Total</text>
+            <!-- Optimal point -->
+            <line x1="165" y1="57" x2="165" y2="145" stroke="rgba(201,168,76,.5)" stroke-width="1" stroke-dasharray="3,2"/>
+            <circle cx="165" cy="57" r="4.5" fill="var(--gold)" stroke="none"/>
+            <text x="170" y="48" font-family="JetBrains Mono,monospace" font-size="8" fill="#c9a84c">Optimal</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="box info" style="margin-top:.8rem">
+      <div class="box-title">Typical IS Inputs</div>
+      Short-term volatility · Implied volatility (options) · Asset type · Investor risk aversion · Liquidity conditions
+    </div>
+  </div>
+
+  <!-- AS -->
+  <div class="algo-sec" style="margin-top:1.2rem">
+    <div class="algo-sec-head">
+      <span class="algo-badge" style="background:rgba(232,168,124,.1);color:var(--orange);border-color:rgba(232,168,124,.4)">AS</span>
+      <h3>AS — Adaptive Shortfall</h3>
+    </div>
+    <p>Derived from IS with <strong>adaptive behavior to price movements</strong>. 
+    Two opposite behaviors depending on the assumption about trends:</p>
+    <div class="algo-row">
+      <div style="background:rgba(123,196,150,.06);border:1px solid rgba(123,196,150,.25);border-radius:8px;padding:1rem">
+        <h4 style="color:var(--green);margin-top:0">AIM — Aggressive In-the-Money</h4>
+        <p style="font-size:.9rem;color:var(--muted)">
+          <strong style="color:var(--text)">Strategy:</strong> more aggressive when the price is favorable, less when unfavorable.<br>
+          <strong style="color:var(--text)">Hypothesis:</strong> trends are <em>short-lived</em> and will reverse.
+          So we take advantage of the good price now before it disappears.
+        </p>
+        <p style="font-family:var(--fm);font-size:.78rem;color:var(--green)">→ Counter-trend trading</p>
+      </div>
+      <div style="background:rgba(224,123,123,.06);border:1px solid rgba(224,123,123,.25);border-radius:8px;padding:1rem">
+        <h4 style="color:var(--red);margin-top:0">PIM — Passive In-the-Money</h4>
+        <p style="font-size:.9rem;color:var(--muted)">
+          <strong style="color:var(--text)">Strategy:</strong> more passive when favorable, more aggressive when unfavorable.<br>
+          <strong style="color:var(--text)">Hypothesis:</strong> trends <em>persist</em>. If the price moves in the wrong direction, 
+          trade aggressively now to avoid future losses.
+        </p>
+        <p style="font-family:var(--fm);font-size:.78rem;color:var(--red)">→ Trend-following</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 9 : MC / PI / LIQ -->
+<!-- ======================================================= -->
+<section class="sec" id="s9">
+  <div class="sec-hd">
+    <span class="sec-num">09</span>
+    <h2 class="sec-title">MC, PI, LIQ — Opportunistic Algorithms</h2>
+  </div>
+
+  <div class="algo-grid">
+    <div class="algo-card">
+      <div class="act">MC</div>
+      <h4>Market Close</h4>
+      <p>Targets the <strong>closing price</strong>, widely used as a benchmark. 
+      Starting too early → significant timing risk. Too late → high market impact. 
+      The optimal horizon is estimated from the <em>asset volatility</em> and closing volume.
+      Can be adapted to target any time (e.g. noon).
+      <span style="display:block;margin-top:.4rem;font-family:var(--fm);font-size:.76rem;color:var(--red)">Frontier position: top-left (low risk, high cost)</span></p>
+    </div>
+
+    <div class="algo-card">
+      <div class="act">PI</div>
+      <h4>Price Inline</h4>
+      <p>Adapts trading activity to the <strong>market price relative to a benchmark</strong>.
+      Two modes analogous to AS:<br>
+      <em>A</em>: more aggressive when the price is favorable (counter-trend) — the price will reverse.<br>
+      <em>P</em>: less aggressive when favorable (trend-following) — the trend will continue.
+      <span style="display:block;margin-top:.4rem;font-family:var(--fm);font-size:.76rem;color:var(--blue)">Extension: use prices of correlated assets</span></p>
+    </div>
+
+    <div class="algo-card">
+      <div class="act">LIQ</div>
+      <h4>Liquidity Driven</h4>
+      <p>Trades only when <strong>liquidity is available</strong> AND the price is favorable.
+      Low spread = cheaper transaction. 
+      Difficulty: markets are <em>fragmented</em> (multiple venues), 
+      hidden orders make evaluation complex.
+      <em>Stylised facts</em> and historical data feed liquidity models.
+      <span style="display:block;margin-top:.4rem;font-family:var(--fm);font-size:.76rem;color:var(--orange)">Beware of illiquid assets: a small order can move the price</span></p>
+    </div>
+
+    <div class="algo-card" style="border-color:rgba(201,168,76,.3)">
+      <div class="act" style="color:var(--violet)">PORTFOLIO</div>
+      <h4>Portfolio Trading</h4>
+      <p>We rarely trade a single asset. We must execute <strong>simultaneously</strong> 
+      numerous orders to maintain diversification and alignment with the benchmark.
+      <em>Portfolio risk measures</em> can be integrated into the execution algorithm.
+      Alternative: hand the entire portfolio to a broker (but this reveals your positions!).
+      <span style="display:block;margin-top:.4rem;font-family:var(--fm);font-size:.76rem;color:var(--muted)">"Algos of algos" may be necessary</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 10 : TRANSACTION COSTS -->
+<!-- ======================================================= -->
+<section class="sec" id="s10">
+  <div class="sec-hd">
+    <span class="sec-num">10</span>
+    <h2 class="sec-title">Transaction Costs</h2>
+  </div>
+
+  <p>
+    Pre-trade analysis (<em>pre-trade analysis</em>) allows us to <strong>estimate costs before executing</strong> 
+    and to define cost and risk objectives. Cost classification is fundamental.
+  </p>
+
+  <div class="twrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Cost Type</th><th>Explicit</th><th>Implicit</th><th>Fixed</th><th>Variable</th><th>Typical %</th><th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="7" style="background:rgba(126,184,212,.05);font-family:var(--fm);font-size:.7rem;color:var(--blue);padding:.4rem 1rem">
+            Investment Costs
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Taxes</strong></td>
+          <td class="g">✓</td><td></td><td class="g">✓</td><td></td>
+          <td class="m">0%</td><td class="m">Depends on jurisdiction</td>
+        </tr>
+        <tr>
+          <td><strong>Delay cost</strong></td>
+          <td></td><td class="g">✓</td><td></td><td class="g">✓</td>
+          <td class="b">24%</td><td class="m">Price changes between decision and broker receipt</td>
+        </tr>
+        <tr>
+          <td colspan="7" style="background:rgba(123,196,150,.05);font-family:var(--fm);font-size:.7rem;color:var(--green);padding:.4rem 1rem">
+            Trading Costs
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Commission</strong></td>
+          <td class="g">✓</td><td></td><td></td><td class="g">✓</td>
+          <td class="m">1%</td><td class="m">Broker fees</td>
+        </tr>
+        <tr>
+          <td><strong>Fees</strong></td>
+          <td class="g">✓</td><td></td><td class="g">✓</td><td></td>
+          <td class="m">2%</td><td class="m">Exchange fees</td>
+        </tr>
+        <tr>
+          <td><strong>Spreads</strong></td>
+          <td></td><td class="g">✓</td><td></td><td class="g">✓</td>
+          <td class="m">4%</td><td class="m">Bid-ask spread</td>
+        </tr>
+        <tr>
+          <td><strong>Market impact</strong></td>
+          <td></td><td class="g">✓</td><td></td><td class="g">✓</td>
+          <td class="m">6%</td><td class="m">Temporary + permanent impact</td>
+        </tr>
+        <tr>
+          <td><strong>Price trend</strong></td>
+          <td></td><td class="g">✓</td><td></td><td class="g">✓</td>
+          <td class="b">14%</td><td class="m">Price movement during execution</td>
+        </tr>
+        <tr>
+          <td><strong>Timing risk</strong></td>
+          <td></td><td class="g">✓</td><td></td><td class="g">✓</td>
+          <td class="r">40%</td><td class="m">Cost variability linked to volatility — <strong>dominant!</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Opportunity cost</strong></td>
+          <td></td><td class="g">✓</td><td></td><td class="g">✓</td>
+          <td class="m">9%</td><td class="m">Unexecuted orders (completion risk)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="diag">
+    <div class="diag-title">Typical Cost Breakdown — source: B. Johnson [8]</div>
+    <svg viewBox="0 0 600 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:600px;display:block;margin:auto">
+      <!-- Background track -->
+      <rect x="120" y="20" width="440" height="14" rx="3" fill="rgba(228,223,250,.07)"/>
+      <!-- Bars stacked horizontally with proportional widths (total 100 = 440px) -->
+      <!-- Delay: 24% = 105.6px -->
+      <rect x="120" y="20" width="105" height="14" rx="0" fill="#7eb8d4"/>
+      <!-- Commission: 1% = 4.4px -->
+      <rect x="225" y="20" width="5" height="14" fill="#7bc496"/>
+      <!-- Fees: 2% = 8.8px -->
+      <rect x="230" y="20" width="9" height="14" fill="rgba(123,196,150,.6)"/>
+      <!-- Spreads: 4% = 17.6px -->
+      <rect x="239" y="20" width="17" height="14" fill="#c9a84c"/>
+      <!-- Market impact: 6% = 26.4px -->
+      <rect x="256" y="20" width="26" height="14" fill="rgba(201,168,76,.7)"/>
+      <!-- Price trend: 14% = 61.6px -->
+      <rect x="282" y="20" width="62" height="14" fill="#a78bfa"/>
+      <!-- Timing risk: 40% = 176px -->
+      <rect x="344" y="20" width="176" height="14" fill="#e07b7b"/>
+      <!-- Opportunity: 9% = 39.6px -->
+      <rect x="520" y="20" width="40" height="14" rx="0" fill="#e8a87c" style="border-radius:0 3px 3px 0"/>
+
+      <!-- Labels above -->
+      <text x="172" y="15" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" fill="#7eb8d4">Delay 24%</text>
+      <text x="313" y="15" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" fill="#a78bfa">Trend 14%</text>
+      <text x="432" y="15" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" fill="#e07b7b">Timing Risk 40%</text>
+      <text x="540" y="15" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" fill="#e8a87c">Opp. 9%</text>
+
+      <!-- Labels below -->
+      <text x="120" y="48" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#9089bf">120↑ cost = 0</text>
+      <text x="254" y="48" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="#c9a84c">Spreads 4%</text>
+      <text x="269" y="48" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(201,168,76,.7)">  MI 6%</text>
+
+      <!-- Title -->
+      <text x="340" y="90" text-anchor="middle" font-family="EB Garamond,serif" font-size="13" fill="#e4dffa">
+        <tspan font-weight="700" fill="#e07b7b">Timing Risk (40%)</tspan> is the dominant cost — 
+        liquidity &amp; volatility are the critical variables
+      </text>
+    </svg>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">Critical Insight: Delay Cost</div>
+    <p>With <strong>24% of costs</strong>, delay cost (price change between decision and broker receipt) 
+    is often underestimated. This justifies the importance of the <strong>IS</strong> algorithm which 
+    precisely measures this decision/execution gap.</p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 11 : EFFICIENT FRONTIER -->
+<!-- ======================================================= -->
+<section class="sec" id="s11">
+  <div class="sec-hd">
+    <span class="sec-num">11</span>
+    <h2 class="sec-title">Efficient Frontier</h2>
+  </div>
+
+  <p>
+    Just as <em>Modern Portfolio Theory</em> (Markowitz) defines an efficient frontier 
+    in the return/risk space, we can define an <strong>efficient frontier of execution algorithms</strong> 
+    in the <em>cost/risk</em> space.
+  </p>
+
+  <div class="box">
+    <div class="box-title">Definition</div>
+    <p>
+      An algorithm is on the <strong>efficient frontier</strong> (<em>efficient frontier</em>) 
+      if there exists no algorithm with the same risk but lower cost, 
+      or the same cost but lower risk.
+      For a given risk, we select the algorithm with minimal cost.
+    </p>
+  </div>
+
+  <div class="diag">
+    <div class="diag-title">Efficient Frontier of Execution Algorithms</div>
+    <svg viewBox="0 0 660 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:660px;display:block;margin:auto">
+      <!-- Space background shading -->
+      <defs>
+        <radialGradient id="spaceGrad" cx="60%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="rgba(167,139,250,.06)"/>
+          <stop offset="100%" stop-color="rgba(22,18,33,0)"/>
+        </radialGradient>
+      </defs>
+      <!-- Feasible region (above and to the right of frontier) -->
+      <path d="M 80,50 C 130,50 230,120 320,175 C 410,228 500,260 610,278 L 610,330 L 80,330 Z"
+            fill="rgba(126,184,212,.05)" stroke="none"/>
+
+      <!-- Axes -->
+      <line x1="70" y1="30" x2="70" y2="320" stroke="rgba(228,223,250,.25)" stroke-width="1.5"/>
+      <line x1="70" y1="320" x2="640" y2="320" stroke="rgba(228,223,250,.25)" stroke-width="1.5"/>
+      <!-- Arrow tips -->
+      <polygon points="70,24 66,34 74,34" fill="rgba(228,223,250,.25)"/>
+      <polygon points="646,320 636,316 636,324" fill="rgba(228,223,250,.25)"/>
+      <!-- Axis labels -->
+      <text x="355" y="348" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="15" fill="#9089bf">Risk (cost variation)</text>
+      <text x="30" y="175" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="15" fill="#9089bf" transform="rotate(-90,30,175)">Execution Cost</text>
+
+      <!-- Efficient Frontier Curve -->
+      <path d="M 82,48 C 140,48 240,120 320,175 C 400,228 490,262 615,280"
+            stroke="#c9a84c" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+      <!-- Inefficient region label -->
+      <text x="440" y="170" font-family="EB Garamond,serif" font-size="12" fill="rgba(228,223,250,.2)" text-anchor="middle">Space of</text>
+      <text x="440" y="185" font-family="EB Garamond,serif" font-size="12" fill="rgba(228,223,250,.2)" text-anchor="middle">possible algorithms</text>
+      <text x="440" y="200" font-family="EB Garamond,serif" font-size="12" fill="rgba(228,223,250,.2)" text-anchor="middle">(dominated)</text>
+
+      <!-- Algorithm points ON the frontier -->
+      <!-- MC : (100, 60) -->
+      <circle cx="100" cy="60" r="6" fill="#e07b7b" stroke="rgba(22,18,33,.5)" stroke-width="1.5"/>
+      <text x="110" cy="65" x="110" y="58" font-family="JetBrains Mono,monospace" font-size="10.5" font-weight="500" fill="#e07b7b">MC</text>
+      <text x="110" y="71" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">low risk</text>
+      <text x="110" y="82" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">high cost</text>
+
+      <!-- IS : (160, 100) -->
+      <circle cx="162" cy="100" r="6" fill="#7bc496" stroke="rgba(22,18,33,.5)" stroke-width="1.5"/>
+      <text x="172" y="98" font-family="JetBrains Mono,monospace" font-size="10.5" font-weight="500" fill="#7bc496">IS</text>
+
+      <!-- AS : (220, 132) -->
+      <circle cx="222" cy="132" r="6" fill="#e8a87c" stroke="rgba(22,18,33,.5)" stroke-width="1.5"/>
+      <text x="232" y="130" font-family="JetBrains Mono,monospace" font-size="10.5" font-weight="500" fill="#e8a87c">AS</text>
+
+      <!-- POV : (280, 158) -->
+      <circle cx="282" cy="158" r="6" fill="#7eb8d4" stroke="rgba(22,18,33,.5)" stroke-width="1.5"/>
+      <text x="292" y="156" font-family="JetBrains Mono,monospace" font-size="10.5" font-weight="500" fill="#7eb8d4">POV</text>
+
+      <!-- PI : (340, 178) -->
+      <circle cx="342" cy="178" r="6" fill="#a78bfa" stroke="rgba(22,18,33,.5)" stroke-width="1.5"/>
+      <text x="352" y="176" font-family="JetBrains Mono,monospace" font-size="10.5" font-weight="500" fill="#a78bfa">PI</text>
+
+      <!-- VWAP : (405, 198) -->
+      <circle cx="405" cy="198" r="6" fill="#c9a84c" stroke="rgba(22,18,33,.5)" stroke-width="1.5"/>
+      <text x="415" y="196" font-family="JetBrains Mono,monospace" font-size="10.5" font-weight="500" fill="#c9a84c">VWAP</text>
+
+      <!-- LIQ : (475, 222) -->
+      <circle cx="475" cy="222" r="6" fill="#7eb8d4" stroke="rgba(22,18,33,.5)" stroke-width="1.5"/>
+      <text x="485" y="220" font-family="JetBrains Mono,monospace" font-size="10.5" font-weight="500" fill="#7eb8d4">LIQ</text>
+
+      <!-- MI : (545, 245) -->
+      <circle cx="545" cy="245" r="6" fill="#a78bfa" stroke="rgba(22,18,33,.5)" stroke-width="1.5"/>
+      <text x="555" y="243" font-family="JetBrains Mono,monospace" font-size="10.5" font-weight="500" fill="#a78bfa">MI</text>
+      <text x="555" y="256" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">low cost</text>
+      <text x="555" y="267" font-family="JetBrains Mono,monospace" font-size="8" fill="#9089bf">high risk</text>
+
+      <!-- TWAP : NOT on frontier (above/right) -->
+      <circle cx="365" cy="228" r="6" fill="none" stroke="#e07b7b" stroke-width="2" stroke-dasharray="3,2"/>
+      <text x="375" y="226" font-family="JetBrains Mono,monospace" font-size="10.5" fill="#e07b7b">TWAP</text>
+      <text x="375" y="238" font-family="JetBrains Mono,monospace" font-size="8" fill="#e07b7b">⚠ off frontier</text>
+      <!-- Arrow pointing to frontier -->
+      <line x1="363" y1="222" x2="345" y2="195" stroke="#e07b7b" stroke-width="1" stroke-dasharray="3,2"/>
+
+      <!-- Annotation: "For a given risk, minimize cost" -->
+      <line x1="160" y1="240" x2="280" y2="190" stroke="rgba(201,168,76,.4)" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="100" y="252" font-family="EB Garamond,serif" font-size="11.5" fill="#c9a84c">For a given risk →</text>
+      <text x="100" y="266" font-family="EB Garamond,serif" font-size="11.5" fill="#c9a84c">choose minimal cost</text>
+
+      <!-- Frontier label -->
+      <text x="510" y="290" font-family="Cormorant Garamond,serif" font-size="13" fill="#c9a84c" font-style="italic">Efficient Frontier</text>
+    </svg>
+  </div>
+
+  <h3>Interpretation of Positions</h3>
+  <div class="twrap" style="margin-top:0">
+    <table>
+      <thead>
+        <tr><th>Algo</th><th>Risk</th><th>Cost</th><th>Justification</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--red)">MC</strong></td>
+          <td class="g">Very low</td><td class="r">Very high</td>
+          <td class="m">The closing price is known (low variability) but reaching it is costly</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--green)">IS</strong></td>
+          <td class="b">Low</td><td class="b">High</td>
+          <td class="m">Seeks to execute quickly → reduces timing risk but increases impact</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--blue)">VWAP/POV</strong></td>
+          <td class="m">Medium</td><td class="m">Medium</td>
+          <td class="m">Follows the market, balanced compromise</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--violet)">MI</strong></td>
+          <td class="r">Very high</td><td class="g">Very low</td>
+          <td class="m">Dark pools → low impact but high uncertainty on obtained price</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--red)">TWAP</strong></td>
+          <td colspan="2" style="color:var(--red)">⚠ NOT on the efficient frontier</td>
+          <td class="m">Dominated algorithm: there is always a more efficient algo for the same risk</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 12 : RISK AVERSION -->
+<!-- ======================================================= -->
+<section class="sec" id="s12">
+  <div class="sec-hd">
+    <span class="sec-num">12</span>
+    <h2 class="sec-title">Risk Aversion $\lambda$</h2>
+  </div>
+
+  <p>
+    Once on the efficient frontier, <em>how to choose the optimal algorithm?</em> 
+    The answer: via the <strong>risk aversion</strong> (<em>risk aversion</em>) parameter $\lambda$.
+  </p>
+
+  <div class="fcards">
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Risk Aversion λ</span>
+        <span class="fc-tag">Selection Criterion</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">
+          $$\lambda = \frac{\text{cost}}{\text{risk}}$$
+        </div>
+        <div class="fc-grid">
+          <div class="fc-item">
+            <h5>High λ (risk-averse)</h5>
+            <p>The investor is very sensitive to risk. They accept to pay <em>more</em> 
+            to <em>reduce risk</em>. Optimal algo: towards MC, IS (top-left of frontier).</p>
+          </div>
+          <div class="fc-item">
+            <h5>Low λ (risk-tolerant)</h5>
+            <p>The investor tolerates high risk to <em>minimize costs</em>. 
+            Optimal algo: towards MI, LIQ (bottom-right of frontier).</p>
+          </div>
+          <div class="fc-item">
+            <h5>Geometric Interpretation</h5>
+            <p>$\lambda$ is the <em>slope of the tangent line</em> to the frontier from the origin. 
+            The tangency point is the optimal algorithm. 
+            $\lambda \uparrow$ → steeper tangent → algo towards top-left.</p>
+          </div>
+          <div class="fc-item">
+            <h5>Portfolio Analogy</h5>
+            <p>Exactly analogous to Markowitz: the Sharpe ratio = return/risk. 
+            Here λ = cost/risk, and the λ line plays the role of the <em>capital market line</em>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diag">
+    <div class="diag-title">Algorithm Selection via λ — Geometry of the Efficient Frontier</div>
+    <svg viewBox="0 0 580 310" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:580px;display:block;margin:auto">
+      <!-- Axes -->
+      <line x1="55" y1="20" x2="55" y2="275" stroke="rgba(228,223,250,.22)" stroke-width="1.5"/>
+      <line x1="55" y1="275" x2="560" y2="275" stroke="rgba(228,223,250,.22)" stroke-width="1.5"/>
+      <polygon points="55,14 51,24 59,24" fill="rgba(228,223,250,.22)"/>
+      <polygon points="566,275 556,271 556,279" fill="rgba(228,223,250,.22)"/>
+      <text x="310" y="298" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" fill="#9089bf">Risk →</text>
+      <text x="25" y="148" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" fill="#9089bf" transform="rotate(-90,25,148)">Cost →</text>
+
+      <!-- Feasible region shading -->
+      <path d="M 60,38 C 110,38 200,100 290,148 C 370,190 460,225 545,245 L 545,275 L 60,275 Z"
+            fill="rgba(126,184,212,.04)" stroke="none"/>
+
+      <!-- Efficient Frontier -->
+      <path d="M 62,36 C 112,36 202,100 292,148 C 372,190 462,225 548,245"
+            stroke="#c9a84c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+      <!-- Algorithm dots -->
+      <circle cx="80"  cy="44"  r="5" fill="#e07b7b"/><text x="88"  y="42"  font-family="JetBrains Mono,monospace" font-size="9.5" fill="#e07b7b">MC</text>
+      <circle cx="140" cy="78"  r="5" fill="#7bc496"/><text x="148" y="76"  font-family="JetBrains Mono,monospace" font-size="9.5" fill="#7bc496">IS</text>
+      <circle cx="195" cy="105" r="5" fill="#e8a87c"/><text x="203" y="103" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#e8a87c">AS</text>
+      <circle cx="255" cy="132" r="5" fill="#7eb8d4"/><text x="263" y="130" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#7eb8d4">POV</text>
+      <circle cx="330" cy="162" r="5" fill="#c9a84c"/><text x="338" y="160" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#c9a84c">VWAP</text>
+      <circle cx="420" cy="195" r="5" fill="#7eb8d4"/><text x="428" y="193" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#7eb8d4">LIQ</text>
+      <circle cx="505" cy="228" r="5" fill="#a78bfa"/><text x="513" y="226" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#a78bfa">MI</text>
+
+      <!-- Lambda line 1: High λ (steep, touches near MC) -->
+      <line x1="55" y1="275" x2="140" y2="44" stroke="rgba(224,123,123,.5)" stroke-width="1.5" stroke-dasharray="8,4"/>
+      <text x="115" y="36" font-family="JetBrains Mono,monospace" font-size="9" fill="#e07b7b">High λ</text>
+      <text x="115" y="48" font-family="JetBrains Mono,monospace" font-size="9" fill="#e07b7b">(risk-averse)</text>
+      <circle cx="80" cy="44" r="7" fill="none" stroke="#e07b7b" stroke-width="2"/>
+
+      <!-- Lambda line 2: Medium λ (touches near POV) -->
+      <line x1="55" y1="275" x2="310" y2="44" stroke="rgba(201,168,76,.6)" stroke-width="2" stroke-dasharray="8,4"/>
+      <text x="315" y="40" font-family="JetBrains Mono,monospace" font-size="9" fill="#c9a84c">Moderate λ</text>
+      <!-- Optimal point circle -->
+      <circle cx="255" cy="132" r="8" fill="none" stroke="#c9a84c" stroke-width="2.5"/>
+      <circle cx="255" cy="132" r="3.5" fill="#c9a84c"/>
+      <!-- Lambda label on line -->
+      <text x="190" y="178" font-family="Cormorant Garamond,serif" font-size="14" fill="#c9a84c" font-style="italic">λ</text>
+
+      <!-- Lambda line 3: Low λ (flat, touches near MI) -->
+      <line x1="55" y1="275" x2="555" y2="140" stroke="rgba(123,196,150,.45)" stroke-width="1.5" stroke-dasharray="8,4"/>
+      <text x="470" y="155" font-family="JetBrains Mono,monospace" font-size="9" fill="#7bc496">Low λ</text>
+      <text x="470" y="167" font-family="JetBrains Mono,monospace" font-size="9" fill="#7bc496">(risk-tolerant)</text>
+      <circle cx="505" cy="228" r="7" fill="none" stroke="#7bc496" stroke-width="2"/>
+
+      <!-- Caption -->
+      <text x="55" y="178" font-family="EB Garamond,serif" font-size="11" fill="#9089bf">Origin (0,0)</text>
+    </svg>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">Key Geometric Insight</div>
+    <p>
+      $\lambda$ is the <strong>slope of the line from the origin</strong> (0, 0) tangent to the frontier. 
+      For a given $\lambda$, the algorithm to select is the <em>point of tangency</em> between this line and the efficient frontier.
+      The larger $\lambda$ (steep slope) → algorithm towards MC (low risk, high cost).
+      The smaller $\lambda$ (gentle slope) → algorithm towards MI (high risk, low cost).
+    </p>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 13 : GLOBAL COMPARISON -->
+<!-- ======================================================= -->
+<section class="sec" id="s13">
+  <div class="sec-hd">
+    <span class="sec-num">13</span>
+    <h2 class="sec-title">Global Algorithm Comparison</h2>
+  </div>
+
+  <div class="twrap">
+    <table>
+      <thead>
+        <tr><th>Algo</th><th>Key Variable</th><th>Strengths</th><th>Limits</th><th>Risk</th><th>Cost</th><th>Typical Use</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>TWAP</strong></td>
+          <td class="m">Time $\Delta t$</td>
+          <td class="g">Simple, predictable, 100% completion</td>
+          <td class="r">Predictable, ignores market, <em>off frontier</em></td>
+          <td class="m">Medium</td><td class="b">High</td>
+          <td class="m">Low-urgency orders, illiquid markets</td>
+        </tr>
+        <tr>
+          <td><strong>VWAP</strong></td>
+          <td class="m">$h_i/H$ historical</td>
+          <td class="g">Follows market, 100% completion, simple</td>
+          <td class="r">Depends on historical data, not adaptive</td>
+          <td class="m">Medium</td><td class="m">Medium</td>
+          <td class="m">Standard benchmark, institutional orders</td>
+        </tr>
+        <tr>
+          <td><strong>POV</strong></td>
+          <td class="m">$\alpha \cdot v_i$ real-time</td>
+          <td class="g">Dynamic, adapts to current volume</td>
+          <td class="r">Predictable, completion not guaranteed, depends on volume</td>
+          <td class="m">Medium</td><td class="m">Medium</td>
+          <td class="m">Active markets, flexible orders</td>
+        </tr>
+        <tr>
+          <td><strong>MI</strong></td>
+          <td class="m">Dark pools</td>
+          <td class="g">Minimal impact, very low costs</td>
+          <td class="r">Uncertain completion, price not guaranteed</td>
+          <td class="r">Very high</td><td class="g">Very low</td>
+          <td class="m">Large orders, long horizons</td>
+        </tr>
+        <tr>
+          <td><strong>IS</strong></td>
+          <td class="m">Decision vs exec. price</td>
+          <td class="g">Precise measure of true cost, optimal if calibrated</td>
+          <td class="r">Complex, sensitive to inputs (vol., asset type)</td>
+          <td class="b">Low</td><td class="r">High</td>
+          <td class="m">Alpha-seeking strategies, HF</td>
+        </tr>
+        <tr>
+          <td><strong>AS</strong></td>
+          <td class="m">Price + AIM/PIM</td>
+          <td class="g">Reactive to trends, opportunistic</td>
+          <td class="r">Requires good trend forecasting</td>
+          <td class="m">Medium-low</td><td class="m">Medium</td>
+          <td class="m">Trending markets, active strategies</td>
+        </tr>
+        <tr>
+          <td><strong>MC</strong></td>
+          <td class="m">Closing price</td>
+          <td class="g">Precise target, low cost variability</td>
+          <td class="r">Costly, timing critical</td>
+          <td class="g">Very low</td><td class="r">Very high</td>
+          <td class="m">Index-tracking, end-of-day rebalancing</td>
+        </tr>
+        <tr>
+          <td><strong>PI</strong></td>
+          <td class="m">Price benchmark</td>
+          <td class="g">Adaptive, counter-trend or trend-following</td>
+          <td class="r">Requires appropriate benchmark choice</td>
+          <td class="m">Medium</td><td class="m">Medium</td>
+          <td class="m">Quantitative strategies</td>
+        </tr>
+        <tr>
+          <td><strong>LIQ</strong></td>
+          <td class="m">Spread, liquidity</td>
+          <td class="g">Maximizes execution quality, low spreads</td>
+          <td class="r">Fragmented markets, hidden orders, illiquidity</td>
+          <td class="r">High</td><td class="g">Low</td>
+          <td class="m">Bonds, small-caps, illiquid assets</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 14 : EXAM QUESTIONS -->
+<!-- ======================================================= -->
+<section class="sec" id="s14">
+  <div class="sec-hd">
+    <span class="sec-num">14</span>
+    <h2 class="sec-title">Possible Exam Questions</h2>
+  </div>
+
+  <div class="qlevel easy">&#9654; Easy Level</div>
+
+  <div class="qi">
+    <div class="qi-q">
+      <span class="qi-qtxt">What is market impact and why is it a problem for executing large orders?</span>
+      <span class="qi-arr">&#9654;</span>
+    </div>
+    <div class="qi-a">
+      <p><strong>Market impact</strong> is the price change caused by one's own trading activity. When buying 
+      a large number of shares at once, sellers see a major buyer coming and pull their offers or 
+      raise their prices. Result: we pay more than the initial price.</p>
+      <p>It decomposes into <strong>temporary impact</strong> (the market returns to its level once the order is done — 
+      rebound phenomenon) and <strong>permanent impact</strong> (the market incorporates the underlying information of the order 
+      — e.g. if the order is informative, the price does not revert).</p>
+      <p>Solution: split the order into small slices executed progressively → this is the objective of algorithmic execution.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q">
+      <span class="qi-qtxt">Explain TWAP. What are its advantages and disadvantages? Why is it not on the efficient frontier?</span>
+      <span class="qi-arr">&#9654;</span>
+    </div>
+    <div class="qi-a">
+      <p>TWAP divides the total order $w$ into $n = (t_1-t_0)/\Delta t + 1$ equal slices of size $w/n$, executed at regular intervals. 
+      It is entirely independent of price and volume.</p>
+      <p><strong>Advantages:</strong> extremely simple, guaranteed to execute 100% of the order, easy to explain and audit.<br>
+      <strong>Disadvantages:</strong> highly predictable (exploitable by adversarial traders), ignores market information 
+      (volume, price), may trade at times of low or high liquidity without adapting.</p>
+      <p><strong>Not on the efficient frontier:</strong> for a risk level equivalent to TWAP, algorithms like VWAP or POV 
+      obtain a better execution price by adapting to volume. TWAP is therefore dominated — there is always a better algorithm 
+      for the same risk.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q">
+      <span class="qi-qtxt">What is the VWAP benchmark formula and why can't we use it directly in real time?</span>
+      <span class="qi-arr">&#9654;</span>
+    </div>
+    <div class="qi-a">
+      <p>$\text{VWAP} = \frac{\sum_i p_i v_i}{\sum_i v_i}$ where $i$ indexes transactions in $[t_0, t_1]$, $p_i$ the price and $v_i$ the volume.</p>
+      <p>The problem is that $\sum_i v_i$ (total daily volume) is <strong>only known at the end of the day</strong>. 
+      We cannot therefore calculate the exact VWAP in real time. Solution: use the historical volume profile 
+      to estimate the intraday volume distribution. If actual volume deviates from the historical profile, 
+      the VWAP algorithm will drift from the actual VWAP.</p>
+    </div>
+  </div>
+
+  <div class="qlevel med">&#9654; Intermediate Level</div>
+
+  <div class="qi">
+    <div class="qi-q">
+      <span class="qi-qtxt">Explain the difference between AIM and PIM in the AS algorithm. When to use one rather than the other?</span>
+      <span class="qi-arr">&#9654;</span>
+    </div>
+    <div class="qi-a">
+      <p>AS is an adaptive variant of IS that reacts to price movements. Two opposite philosophies:</p>
+      <p><strong>AIM (Aggressive In-the-Money):</strong> we trade more aggressively when the price is favorable (low for a buy, high for a sell) 
+      and less when it is unfavorable. Underlying hypothesis: trends are <em>short-lived and will reverse</em> (mean-reversion). 
+      So we take advantage of the good price quickly before it disappears.</p>
+      <p><strong>PIM (Passive In-the-Money):</strong> the opposite — we are passive when the price is favorable and aggressive when unfavorable. 
+      Hypothesis: the trend <em>will persist</em>. If the price moves in the wrong direction, better to trade aggressively now 
+      before it gets worse.</p>
+      <p><strong>When to use which?</strong> AIM in markets with strong mean-reversion (e.g. intraday). 
+      PIM in trending markets (e.g. momentum). The choice depends on the market regime analysis.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q">
+      <span class="qi-qtxt">Describe the efficient frontier of execution algorithms. How are MC and MI positioned on this frontier? What is λ?</span>
+      <span class="qi-arr">&#9654;</span>
+    </div>
+    <div class="qi-a">
+      <p>The efficient frontier in the (risk, cost) space identifies, for each risk level, the algorithm with minimal cost. 
+      We must never choose an algorithm <em>off</em> the frontier (dominated).</p>
+      <p><strong>MC (Market Close)</strong>: located at the top-left — <em>very low risk</em> (we target a known price: the close) 
+      but <em>very high cost</em> (reaching that price precisely is costly, and arriving too early exposes to timing risk).</p>
+      <p><strong>MI (Minimal Impact)</strong>: at the bottom-right — <em>very low impact costs</em> (dark pools, passive orders) 
+      but <em>very high risk</em> (we do not control the obtained price nor the execution time).</p>
+      <p>$\lambda = \text{cost}/\text{risk}$ is the investor's risk aversion parameter. 
+      Geometrically, $\lambda$ is the slope of the line from the origin tangent to the frontier. 
+      The tangency point is the optimal algorithm. A high $\lambda$ → very risk-averse investor → algorithm towards MC.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q">
+      <span class="qi-qtxt">Why does POV include a correction $\tilde{\alpha} = \alpha/(1-\alpha)$? Give a numerical example.</span>
+      <span class="qi-arr">&#9654;</span>
+    </div>
+    <div class="qi-a">
+      <p>In POV, $\alpha$ represents the fraction of observed volume $v_i$ that we wish to trade. 
+      However, if we have already executed a fraction $\alpha$ of volume $v_i$, this volume $v_i$ includes <em>our own trades</em>. 
+      To avoid "counting twice", we calculate the volume <em>excluding our own orders</em>: 
+      $v_i^{\text{market}} = v_i - w_i = v_i(1-\alpha)$. 
+      The <em>corrected</em> participation rate relative to market volume is therefore:</p>
+      <p>$$\tilde{\alpha} = \frac{w_i}{v_i^{\text{market}}} = \frac{\alpha \cdot v_i}{v_i(1-\alpha)} = \frac{\alpha}{1-\alpha}$$</p>
+      <p><strong>Example:</strong> $\alpha = 5\%$ → $\tilde{\alpha} = 0.05/0.95 \approx 5.26\%$. 
+      $\alpha = 20\%$ → $\tilde{\alpha} = 0.20/0.80 = 25\%$ — the correction becomes significant for high $\alpha$.</p>
+    </div>
+  </div>
+
+  <div class="qlevel hard">&#9654; Hard Level</div>
+
+  <div class="qi">
+    <div class="qi-q">
+      <span class="qi-qtxt">Compare VWAP and POV on their logic, assumptions, and behaviors in case of an intraday liquidity shock.</span>
+      <span class="qi-arr">&#9654;</span>
+    </div>
+    <div class="qi-a">
+      <p><strong>VWAP:</strong> <em>a priori</em> planning based on <em>historical</em> volume profile. 
+      Executes a fixed plan from the start: at 8:00 we know we will trade 5.2% of the total, at 8:15: 5.0%, etc. 
+      The plan is deterministic. Assumption: the day's volume will follow the historical pattern.</p>
+      <p><strong>POV:</strong> <em>a posteriori</em> decision at each interval: we observe $v_i$ and trade $\alpha \cdot v_i$. 
+      Purely reactive. Assumption: future volume is unknown, we react to what happens.</p>
+      <p><strong>Liquidity shock:</strong></p>
+      <ul>
+        <li>VWAP: if actual volume deviates massively from the historical profile (e.g. surprise announcement), the algorithm does not adapt 
+        → potentially large gap between actual and target VWAP. It must be corrected manually or integrate real-time adjustments.</li>
+        <li>POV: adapts automatically — if volume drops, $w_i$ drops too. 
+        Drawback: the total order may not be executed on time if overall volume is low.</li>
+      </ul>
+      <p>In practice: VWAP is preferred for stable markets with good volume profile predictability. 
+      POV is preferred for more volatile markets or atypical assets.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q">
+      <span class="qi-qtxt">Discuss the portfolio trading problem and how it differs from executing a single order.</span>
+      <span class="qi-arr">&#9654;</span>
+    </div>
+    <div class="qi-a">
+      <p><strong>Single order:</strong> we optimize the execution of a single asset → well-defined impact/timing tradeoff.</p>
+      <p><strong>Portfolio trading:</strong> we must execute simultaneously $N$ orders to maintain diversification and 
+      alignment with the benchmark. The additional problems are:</p>
+      <ul>
+        <li><strong>Cross-asset correlations:</strong> executing one asset affects the others (cross-impact effects). 
+        Portfolio risk measures must be integrated into the execution algorithm.</li>
+        <li><strong>Progressive misalignment:</strong> if we execute sequentially, the portfolio is temporarily off-benchmark.</li>
+        <li><strong>Information problem:</strong> if we hand the entire portfolio to a broker, we reveal our positions — 
+        risk of front-running.</li>
+        <li><strong>Algorithmic complexity:</strong> "algos of algos" are necessary — each asset has its own execution 
+        algorithm, coordinated by a higher-level algorithm.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 15 : CLASSIC PITFALLS -->
+<!-- ======================================================= -->
+<section class="sec" id="s15">
+  <div class="sec-hd">
+    <span class="sec-num">15</span>
+    <h2 class="sec-title">Classic Pitfalls</h2>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text">
+      <strong>Confusing VWAP as benchmark and VWAP as algorithm.</strong>
+      VWAP is first a <em>reference price</em> $\sum p_i v_i / \sum v_i$. The VWAP algorithm seeks 
+      to <em>execute near this benchmark</em> using historical data. These are two distinct things.
+    </div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text">
+      <strong>Thinking TWAP is "good" because it is simple.</strong>
+      TWAP is technically <em>off the efficient frontier</em> — it is dominated. 
+      For an equivalent risk level, VWAP or POV offer better results. 
+      Its only virtue is operational simplicity.
+    </div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text">
+      <strong>Forgetting that $\sum_i v_i$ is unknown in real time for VWAP.</strong>
+      A classic trap is to describe the VWAP algorithm as if it used the day's actual volume. 
+      No — it uses <em>historical</em> volume. Knowledge of the total volume only arrives at the end of the day.
+    </div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text">
+      <strong>Confusing AIM and PIM (difficult to memorize).</strong>
+      AIM = <em>Aggressive In-the-Money</em> = aggressive when favorable → presupposes <em>mean reversion</em>.
+      PIM = <em>Passive In-the-Money</em> = passive when favorable → presupposes <em>trend persistence</em>.
+      Mnemonic trick: "AIM" aims (at an opportunity that will disappear); "PIM" patiently waits (the trend continues).
+    </div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text">
+      <strong>Misinterpreting λ on the efficient frontier.</strong>
+      High λ means <em>strong risk aversion</em> → we <em>pay more</em> (high cost) to <em>risk less</em>. 
+      This is counter-intuitive compared to a risk premium: here "risk-averse" costs more, 
+      because we execute faster and more surely (e.g. MC).
+    </div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text">
+      <strong>Neglecting delay cost (24%!).</strong>
+      Many focus on market impact (6%) and forget that delay cost (24%) is far more important. 
+      The time between the investment decision and broker receipt can represent a large fraction of total cost.
+    </div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠</span>
+    <div class="piege-text">
+      <strong>Confusing temporary and permanent impact.</strong>
+      Temporary impact reverts once the order is executed (mechanical price rebound). 
+      Permanent impact reflects information incorporated by the market and does not revert. 
+      The decomposition is fundamental for modeling execution costs.
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!-- SECTION 16 : FINAL REVISION SHEET -->
+<!-- ======================================================= -->
+<section class="sec" id="s16">
+  <div class="sec-hd">
+    <span class="sec-num">16</span>
+    <h2 class="sec-title">Final Revision Sheet</h2>
+  </div>
+
+  <div class="fiche-grid">
+    <div class="fc2">
+      <h4>Fundamental Concepts</h4>
+      <ul>
+        <li><strong>Market Impact</strong> = price changes because of one's own order</li>
+        <li><strong>Temporary</strong> = rebound after trade (mechanical)</li>
+        <li><strong>Permanent</strong> = info incorporated, persists</li>
+        <li><strong>Delay cost</strong> = between decision and broker (24%!)</li>
+        <li><strong>Timing risk</strong> = cost variability (40%!)</li>
+        <li><strong>Opportunity cost</strong> = unexecuted order</li>
+      </ul>
+    </div>
+
+    <div class="fc2">
+      <h4>Key Formulas</h4>
+      <ul>
+        <li><strong>VWAP</strong> $= \sum p_i v_i / \sum v_i$</li>
+        <li><strong>TWAP</strong> $w_i = w/n$, $n=(t_1-t_0)/\Delta t + 1$</li>
+        <li><strong>POV</strong> $w_i = \alpha \cdot v_i$</li>
+        <li><strong>POV corrected</strong> $\tilde{\alpha} = \alpha/(1-\alpha)$</li>
+        <li><strong>Aversion</strong> $\lambda = \text{cost}/\text{risk}$</li>
+        <li><strong>IS</strong> = Exec Price − Decision Price (shortfall)</li>
+      </ul>
+    </div>
+
+    <div class="fc2">
+      <h4>Algorithms — Order of Sophistication</h4>
+      <ul>
+        <li><strong>TWAP</strong> → time, simple, off frontier</li>
+        <li><strong>VWAP</strong> → historical vol., standard benchmark</li>
+        <li><strong>POV</strong> → $\alpha$% of real-time volume</li>
+        <li><strong>MI</strong> → dark pools, minimal impact</li>
+        <li><strong>IS</strong> → decision/exec shortfall</li>
+        <li><strong>AS</strong> → IS + adaptive (AIM/PIM)</li>
+        <li><strong>MC</strong> → target close, low risk</li>
+        <li><strong>PI</strong> → adaptive to price benchmark</li>
+        <li><strong>LIQ</strong> → opportunistic on liquidity</li>
+      </ul>
+    </div>
+
+    <div class="fc2">
+      <h4>Efficient Frontier</h4>
+      <ul>
+        <li><strong>MC</strong> = top-left (low risk, high cost)</li>
+        <li><strong>MI</strong> = bottom-right (high risk, low cost)</li>
+        <li><strong>TWAP</strong> = off frontier (dominated)</li>
+        <li>$\lambda\uparrow$ → risk-averse → algo towards MC</li>
+        <li>$\lambda\downarrow$ → tolerant → algo towards MI</li>
+        <li>$\lambda$ = tangent slope from (0,0)</li>
+      </ul>
+    </div>
+
+    <div class="fc2">
+      <h4>AIM vs PIM (AS)</h4>
+      <ul>
+        <li><strong>AIM</strong> = aggressive if favorable</li>
+        <li><strong>AIM</strong> hypothesis: mean-reversion</li>
+        <li><strong>PIM</strong> = passive if favorable</li>
+        <li><strong>PIM</strong> hypothesis: trend persists</li>
+        <li>AS = derived IS + adaptive</li>
+        <li>Both react to market price</li>
+      </ul>
+    </div>
+
+    <div class="fc2">
+      <h4>Costs: Classification</h4>
+      <ul>
+        <li><strong>Explicit</strong> : taxes, commissions, fees</li>
+        <li><strong>Implicit</strong> : spread, impact, trend, timing</li>
+        <li><strong>Fixed</strong> : taxes, fees</li>
+        <li><strong>Variable</strong> : delay, spreads, impact, timing</li>
+        <li>Dominant: <strong>Timing Risk (40%)</strong></li>
+        <li>Liquidity &amp; volatility = critical variables</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box ok" style="margin-top:1.5rem">
+    <div class="box-title">✓ Pre-Oral Checklist</div>
+    <p>
+      ☑ I can decompose market impact into temporary + permanent<br>
+      ☑ I know the formulas for VWAP, TWAP, POV (and the correction $\tilde{\alpha}$)<br>
+      ☑ I understand why TWAP is off the frontier<br>
+      ☑ I can explain AIM vs PIM and their underlying hypotheses<br>
+      ☑ I can interpret $\lambda$ geometrically on the efficient frontier<br>
+      ☑ I know the cost proportions (timing 40%, delay 24%)<<br>
+      ☑ I can compare VWAP and POV in case of a liquidity shock<br>
+      ☑ I understand the specific problem of portfolio trading
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- ======================== SCRIPTS ======================== -->
+<script>
+// Quiz accordion
+document.querySelectorAll('.qi-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const ans = btn.nextElementSibling;
+    const arr = btn.querySelector('.qi-arr');
+    const isOpen = ans.classList.contains('open');
+    // Close all others
+    document.querySelectorAll('.qi-a.open').forEach(a => {
+      a.classList.remove('open');
+      a.previousElementSibling.querySelector('.qi-arr').style.transform = '';
+    });
+    if (!isOpen) {
+      ans.classList.add('open');
+      arr.style.transform = 'rotate(90deg)';
+    }
+  });
+});
+
+// Active navigation on scroll
+const sections = document.querySelectorAll('.sec, header.hero');
+const navLinks = document.querySelectorAll('.sb nav a');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === `#${id}`) {
+          l.classList.add('active');
+        }
+      });
+    }
+  });
+}, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+document.querySelectorAll('.sec').forEach(s => observer.observe(s));
+
+// Set first nav link as active on load
+if (navLinks.length > 0) navLinks[0].classList.add('active');
+</script>
+</body>
+</html>
