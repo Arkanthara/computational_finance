@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CF — Obligations (Bonds) · Guide d'Examen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']], processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root{
+  --bg:#0d0b14;--bg-card:#161221;--bg-code:#1c1828;
+  --text:#e4dffa;--muted:#9089bf;--border:rgba(180,150,80,.18);--bstrong:rgba(180,150,80,.4);
+  --gold:#c9a84c;--glight:#e8c97a;--blue:#7eb8d4;--green:#7bc496;--red:#e07b7b;--violet:#a78bfa;
+  --ff:'EB Garamond',Georgia,serif;--fd:'Cormorant Garamond',Georgia,serif;--fm:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:18px;line-height:1.85;display:flex}
+.sb{width:270px;min-height:100vh;background:var(--bg-card);border-right:1px solid var(--border);
+  padding:2rem 1.4rem;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sb-logo{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--gold);margin-bottom:.3rem}
+.sb-sub{font-family:var(--fm);font-size:.73rem;color:var(--muted);margin-bottom:1.8rem;letter-spacing:.05em}
+.sb nav ul{list-style:none}
+.sb nav ul li{margin-bottom:.2rem}
+.sb nav ul li a{color:var(--muted);text-decoration:none;font-size:.88rem;display:block;
+  padding:.35rem .7rem;border-radius:4px;border-left:2px solid transparent;transition:all .18s}
+.sb nav ul li a:hover,.sb nav ul li a.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,168,76,.07)}
+.sb nav ul li a .n{font-family:var(--fm);font-size:.72rem;color:var(--gold);margin-right:.45rem;opacity:.75}
+.sb-section{font-family:var(--fm);font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--muted);padding:.5rem .7rem .3rem;opacity:.6}
+.main{margin-left:270px;flex:1;padding:3rem 4rem;max-width:1020px}
+.hero{border-bottom:1px solid var(--border);padding-bottom:3rem;margin-bottom:4.5rem}
+.hero-tag{font-family:var(--fm);font-size:.75rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero h1{font-family:var(--fd);font-size:3.6rem;font-weight:700;line-height:1.1;margin-bottom:.8rem}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:680px;margin-bottom:1.5rem}
+.fun-box{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(126,184,212,.06));
+  border:1px solid var(--bstrong);border-radius:12px;padding:1.5rem 2rem;margin:1.5rem 0;
+  font-size:.97rem;line-height:1.8}
+.fun-box .emoji{font-size:2rem;margin-bottom:.5rem;display:block}
+.badges{display:flex;gap:.7rem;flex-wrap:wrap}
+.badge{font-family:var(--fm);font-size:.72rem;padding:.25rem .75rem;border:1px solid var(--bstrong);
+  border-radius:20px;color:var(--gold);letter-spacing:.04em}
+.badge.b{border-color:rgba(126,184,212,.35);color:var(--blue)}
+.badge.g{border-color:rgba(123,196,150,.35);color:var(--green)}
+.sec{margin-bottom:5rem;scroll-margin-top:2rem}
+.sec-hd{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.sec-num{font-family:var(--fm);font-size:.85rem;color:var(--gold);opacity:.65;min-width:2.5rem}
+.sec-title{font-family:var(--fd);font-size:1.95rem;font-weight:700;color:var(--text)}
+h3{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--glight);margin:2rem 0 .8rem}
+h4{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--blue);margin:1.4rem 0 .5rem}
+p{margin-bottom:.9rem}
+strong{color:var(--glight);font-weight:600}
+em{color:var(--blue);font-style:italic}
+a{color:var(--gold);text-decoration:none}
+code{font-family:var(--fm);background:var(--bg-code);padding:.1em .4em;border-radius:3px;font-size:.82em;color:var(--gold)}
+ul,ol{padding-left:1.5rem;margin-bottom:.9rem}
+li{margin-bottom:.35rem}
+.box{background:var(--bg-card);border-left:3px solid var(--gold);padding:1.1rem 1.4rem;border-radius:0 6px 6px 0;margin:1.4rem 0}
+.box.info{border-left-color:var(--blue)}.box.warn{border-left-color:var(--red)}.box.ok{border-left-color:var(--green)}.box.vio{border-left-color:var(--violet)}
+.box-title{font-family:var(--fm);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem}
+.box.info .box-title{color:var(--blue)}.box.warn .box-title{color:var(--red)}.box.ok .box-title{color:var(--green)}.box.vio .box-title{color:var(--violet)}
+.mblock{background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:1.3rem 1.8rem;
+  margin:1.4rem 0;overflow-x:auto;text-align:center}
+.mblock .mlabel{font-family:var(--fm);font-size:.7rem;color:var(--muted);text-align:left;margin-bottom:.7rem;
+  text-transform:uppercase;letter-spacing:.08em}
+.twrap{overflow-x:auto;margin:1.4rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead{background:var(--bg-code)}
+th{padding:.8rem 1rem;text-align:left;font-family:var(--fm);font-size:.73rem;color:var(--gold);
+  text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--bstrong)}
+td{padding:.7rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(201,168,76,.03)}
+td.g{color:var(--green)}td.r{color:var(--red)}td.m{color:var(--muted)}
+.fcards{display:flex;flex-direction:column;gap:1.5rem;margin-top:1rem}
+.fc{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.fc-head{background:var(--bg-code);padding:.8rem 1.4rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between}
+.fc-name{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--gold)}
+.fc-tag{font-family:var(--fm);font-size:.7rem;color:var(--muted);padding:.2rem .6rem;
+  background:rgba(255,255,255,.04);border-radius:20px}
+.fc-body{padding:1.4rem}
+.fc-expr{text-align:center;padding:1.2rem;background:var(--bg-code);border-radius:6px;margin-bottom:1.1rem;overflow-x:auto}
+.fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;font-size:.88rem}
+.fc-item h5{font-family:var(--fm);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:.3rem}
+.fc-item p{color:var(--muted);margin:0;font-size:.88rem}
+.qlevel{display:inline-block;font-family:var(--fm);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.1em;padding:.2rem .7rem;border-radius:4px;margin-bottom:.8rem;margin-top:1.2rem}
+.qlevel.easy{background:rgba(123,196,150,.13);color:var(--green)}
+.qlevel.med{background:rgba(126,184,212,.13);color:var(--blue)}
+.qlevel.hard{background:rgba(224,123,123,.13);color:var(--red)}
+.qi{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.8rem;overflow:hidden}
+.qi-q{padding:.9rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;
+  gap:.8rem;transition:background .15s}
+.qi-q:hover{background:rgba(201,168,76,.05)}
+.qi-qtxt{flex:1;font-size:.93rem}
+.qi-arr{color:var(--gold);font-size:1.1rem;transition:transform .2s;min-width:1.2rem;text-align:center}
+.qi-a{padding:0 1.1rem;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .2s;
+  background:var(--bg-code);font-size:.88rem;color:var(--muted);border-top:0 solid var(--border)}
+.qi-a.open{max-height:800px;padding:1rem 1.1rem;border-top:1px solid var(--border)}
+.piege{display:flex;gap:.9rem;align-items:flex-start;margin-bottom:.9rem;
+  padding:.8rem 1rem;background:rgba(224,123,123,.06);border-radius:6px;border-left:3px solid var(--red)}
+.piege-icon{font-size:1.1rem;min-width:1.4rem}
+.piege-text{font-size:.93rem}
+.piege-text strong{color:var(--red)}
+.tl{position:relative;padding-left:2rem;margin:1.4rem 0}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold),transparent)}
+.tl-item{position:relative;margin-bottom:2rem;padding-left:1.4rem}
+.tl-item::before{content:'';position:absolute;left:-2.4rem;top:.6rem;width:8px;height:8px;
+  border-radius:50%;background:var(--gold);border:2px solid var(--bg)}
+.tl-year{font-family:var(--fm);font-size:.78rem;color:var(--gold);margin-bottom:.25rem}
+.tl-title{font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:.25rem}
+.tl-desc{font-size:.9rem;color:var(--muted)}
+.fiche-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.4rem 0}
+.fc2{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.1rem}
+.fc2 h4{font-family:var(--fm);font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--gold);margin:0 0 .7rem 0}
+.fc2 ul{list-style:none;padding:0;font-size:.85rem}
+.fc2 ul li{padding:.22rem 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted)}
+.fc2 ul li:last-child{border:none}
+.fc2 ul li strong{color:var(--text)}
+.oral{background:var(--bg-card);border:1px solid var(--bstrong);border-radius:10px;
+  padding:2rem;margin:1rem 0;position:relative}
+.oral::before{content:'"';font-family:var(--fd);font-size:5rem;color:var(--gold);opacity:.15;
+  position:absolute;top:-.5rem;left:.8rem;line-height:1}
+.oral p{font-size:1rem;line-height:1.9;color:var(--text)}
+.oral p+p{margin-top:.8rem}
+.diag{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;
+  padding:1.5rem;margin:1.4rem 0;overflow-x:auto;text-align:center}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin:1.4rem 0}
+.ccard{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.2rem;transition:border-color .18s}
+.ccard:hover{border-color:var(--bstrong)}
+.ccard .ctag{font-family:var(--fm);font-size:.68rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
+.ccard h4{font-family:var(--fd);font-size:1.15rem;color:var(--text);margin:0 0 .4rem 0}
+.ccard p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.6}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:3px}
+@media(max-width:900px){.sb{display:none}.main{margin-left:0;padding:2rem 1.4rem}.hero h1{font-size:2.4rem}.fiche-grid,.fc-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<aside class="sb">
+  <div class="sb-logo">Computational Finance</div>
+  <div class="sb-sub">UNIVERSITY OF GENEVA · A. DUPUIS</div>
+  <nav>
+    <div class="sb-section">Fondamentaux</div>
+    <ul>
+      <li><a href="#s01"><span class="n">§01</span>Résumé Express</a></li>
+      <li><a href="#s02"><span class="n">§02</span>Réponse d'Oral</a></li>
+      <li><a href="#s03"><span class="n">§03</span>Structure d'un Bond</a></li>
+      <li><a href="#s04"><span class="n">§04</span>Valorisation</a></li>
+    </ul>
+    <div class="sb-section">Algorithmes</div>
+    <ul>
+      <li><a href="#s05"><span class="n">§05</span>Trial &amp; Error</a></li>
+      <li><a href="#s06"><span class="n">§06</span>Relation Prix–Yield</a></li>
+      <li><a href="#s07"><span class="n">§07</span>Bootstrap Algorithm</a></li>
+    </ul>
+    <div class="sb-section">Marchés &amp; Risques</div>
+    <ul>
+      <li><a href="#s08"><span class="n">§08</span>Types d'Obligations</a></li>
+      <li><a href="#s09"><span class="n">§09</span>Risques Associés</a></li>
+      <li><a href="#s10"><span class="n">§10</span>Rôle dans le Portfolio</a></li>
+    </ul>
+    <div class="sb-section">Examen</div>
+    <ul>
+      <li><a href="#s11"><span class="n">§11</span>Formules Clés</a></li>
+      <li><a href="#s12"><span class="n">§12</span>Comparaisons</a></li>
+      <li><a href="#s13"><span class="n">§13</span>Perspective Historique</a></li>
+      <li><a href="#s14"><span class="n">§14</span>Questions d'Examen</a></li>
+      <li><a href="#s15"><span class="n">§15</span>Pièges Classiques</a></li>
+      <li><a href="#s16"><span class="n">§16</span>Fiche de Révision</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<main class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Computational Finance · Chapitre Bonds</div>
+  <h1>Les Obligations<br><em>(Bonds)</em></h1>
+  <div class="hero-desc">De l'IOU d'un ami aux marchés financiers mondiaux : tout ce qu'il faut savoir sur les instruments de dette et leur valorisation computationnelle.</div>
+
+  <div class="fun-box">
+    <span class="emoji">🎪</span>
+    <strong style="color:var(--gold)">Mise en contexte amusante :</strong> Imaginez que votre ami Élon vous demande CHF 100 en vous promettant de vous rembourser CHF 5 tous les 6 mois pendant 2 ans, puis de vous rendre vos CHF 100. Vous sortez un contrat, vous notez tout, vous signez. <strong>Félicitations, vous venez d'acheter une obligation !</strong> Maintenant imaginez que vous revendez cet "IOU" à un tiers — le prix qu'il accepte de payer dépendra des taux du marché. Si les taux ont monté depuis, il paiera moins que CHF 100. C'est exactement l'essence du marché obligataire : un <em>contrat fixe</em> dont le <em>prix fluctue</em> selon l'environnement de taux.
+  </div>
+
+  <div class="badges">
+    <span class="badge">Master / Graduate</span>
+    <span class="badge b">Fixed Income</span>
+    <span class="badge g">Valuation</span>
+    <span class="badge b">Bootstrap</span>
+    <span class="badge">Risk Management</span>
+  </div>
+</div>
+
+<!-- §01 RÉSUMÉ EXÉCUTIF -->
+<section class="sec" id="s01">
+  <div class="sec-hd"><span class="sec-num">§01</span><h2 class="sec-title">Résumé Exécutif — 30 secondes</h2></div>
+
+  <div class="box ok">
+    <div class="box-title">⚡ L'essentiel</div>
+    Une <strong>obligation (Bond)</strong> est un instrument de dette : l'émetteur emprunte de l'argent et s'engage contractuellement à verser des <em>coupons</em> réguliers puis à rembourser le <em>principal</em> à maturité. La <strong>structure des cash flows est fixe</strong> ; seul le <strong>prix varie</strong> selon les taux de marché. Le prix est la valeur actualisée de tous les flux futurs, et il existe une <strong>relation inverse et convexe</strong> entre prix et rendement (<em>yield</em>). Pour comparer les obligations, on utilise le <strong>taux zéro coupon</strong> extrait via l'<strong>algorithme Bootstrap</strong>.
+  </div>
+</section>
+
+<!-- §02 RÉPONSE D'ORAL -->
+<section class="sec" id="s02">
+  <div class="sec-hd"><span class="sec-num">§02</span><h2 class="sec-title">Réponse Modèle d'Oral</h2></div>
+
+  <div class="oral">
+    <p>Une obligation est un véhicule de financement par la dette. L'émetteur, typiquement une entreprise ou un État, émet un bond pour lever des fonds ; en échange, il s'engage à verser des coupons périodiques et à rembourser le principal à échéance. Le contrat est figé dès l'émission — seul le <em>prix de marché</em> du bond va évoluer.</p>
+    <p>Pour valoriser un bond, on calcule la <strong>valeur présente</strong> de l'ensemble des cash flows futurs, actualisés au taux de rendement requis $y$ — le <em>yield</em>. On obtient la formule $B(t) = \sum_i c_i e^{-y(t_i-t)} + P e^{-y(T-t)}$. Si le yield requis par le marché monte, le prix du bond baisse — c'est la <strong>relation inverse</strong>. Cette relation est également <strong>convexe</strong> : la sensibilité du prix au yield dépend du niveau de ce dernier.</p>
+    <p>Pour comparer des bonds aux structures différentes, on a besoin d'une base commune : les <strong>taux zéro coupon</strong>. Ces taux, applicables à des obligations sans coupon intermédiaire, sont extraits des prix de marché via l'<strong>algorithme Bootstrap</strong> : on commence par les maturités courtes — où le calcul est direct — puis on remonte progressivement en utilisant les taux déjà calculés pour extraire les taux suivants.</p>
+    <p>Sur le marché, les bonds se distinguent entre souverains (<em>Govies</em>) et corporates. La différence de yield entre les deux s'appelle le <strong>credit spread</strong> : il reflète le risque de défaut de l'émetteur, évalué par les agences de notation (S&P, Moody's). Enfin, les bonds exposent l'investisseur à plusieurs risques : risque de taux, crédit, inflation, liquidité, et réinvestissement.</p>
+  </div>
+</section>
+
+<!-- §03 STRUCTURE D'UN BOND -->
+<section class="sec" id="s03">
+  <div class="sec-hd"><span class="sec-num">§03</span><h2 class="sec-title">Structure d'une Obligation</h2></div>
+
+  <h3>Définition et anatomie</h3>
+  <p>Une <strong>obligation (Bond)</strong> est un contrat de dette bilatéral entre un <em>émetteur</em> (borrower) et un <em>porteur</em> (lender/investor). Le contrat spécifie précisément :</p>
+
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Principal</div>
+      <h4>Face Value / Par Value $P$</h4>
+      <p>Le montant nominal remboursé à maturité. Typiquement CHF/USD 100. Sert de base au calcul du coupon.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Rémunération</div>
+      <h4>Coupon $c_i$</h4>
+      <p>Paiement périodique fixe versé au porteur. Exprimé en % du nominal. Fréquence : annuelle, semi-annuelle, trimestrielle.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Durée</div>
+      <h4>Maturity / Échéance $T$</h4>
+      <p>Date à laquelle l'émetteur rembourse le principal. Peut aller de quelques mois à 30+ ans.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Prix</div>
+      <h4>Bond Price $B(t)$</h4>
+      <p>L'unique <em>degré de liberté</em>. Évolue avec les conditions de marché, contrairement aux cash flows qui sont fixes.</p>
+    </div>
+  </div>
+
+  <h3>Diagramme des flux de trésorerie (Cash Flow Timeline)</h3>
+  <div class="diag">
+    <svg viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:'EB Garamond',serif;">
+      <defs>
+        <marker id="ag" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#c9a84c"/></marker>
+        <marker id="ag2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#c9a84c"/></marker>
+        <marker id="agreen" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#7bc496"/></marker>
+        <marker id="ablue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#7eb8d4"/></marker>
+        <marker id="ared" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#e07b7b"/></marker>
+      </defs>
+      <!-- Axe temporel -->
+      <line x1="50" y1="120" x2="690" y2="120" stroke="#c9a84c" stroke-width="2" marker-end="url(#ag)"/>
+      <text x="695" y="125" fill="#9089bf" font-size="12">t</text>
+      <!-- t0 -->
+      <line x1="90" y1="113" x2="90" y2="127" stroke="#c9a84c" stroke-width="2"/>
+      <text x="90" y="145" text-anchor="middle" fill="#9089bf" font-size="13">t₀</text>
+      <text x="90" y="158" text-anchor="middle" fill="#9089bf" font-size="11">Aujourd'hui</text>
+      <!-- Flèche prix vers le bas -->
+      <line x1="90" y1="120" x2="90" y2="175" stroke="#e07b7b" stroke-width="3" marker-end="url(#ared)"/>
+      <text x="90" y="192" text-anchor="middle" fill="#e07b7b" font-size="13" font-weight="bold">−B(t₀)</text>
+      <!-- t1 -->
+      <line x1="230" y1="113" x2="230" y2="127" stroke="#c9a84c" stroke-width="2"/>
+      <text x="230" y="145" text-anchor="middle" fill="#9089bf" font-size="13">t₁</text>
+      <line x1="230" y1="120" x2="230" y2="55" stroke="#7bc496" stroke-width="2.5" marker-end="url(#agreen)"/>
+      <text x="230" y="44" text-anchor="middle" fill="#7bc496" font-size="14" font-weight="bold">c₁</text>
+      <!-- t2 -->
+      <line x1="350" y1="113" x2="350" y2="127" stroke="#c9a84c" stroke-width="2"/>
+      <text x="350" y="145" text-anchor="middle" fill="#9089bf" font-size="13">t₂</text>
+      <line x1="350" y1="120" x2="350" y2="55" stroke="#7bc496" stroke-width="2.5" marker-end="url(#agreen)"/>
+      <text x="350" y="44" text-anchor="middle" fill="#7bc496" font-size="14" font-weight="bold">c₂</text>
+      <!-- t3 -->
+      <line x1="470" y1="113" x2="470" y2="127" stroke="#c9a84c" stroke-width="2"/>
+      <text x="470" y="145" text-anchor="middle" fill="#9089bf" font-size="13">t₃</text>
+      <line x1="470" y1="120" x2="470" y2="55" stroke="#7bc496" stroke-width="2.5" marker-end="url(#agreen)"/>
+      <text x="470" y="44" text-anchor="middle" fill="#7bc496" font-size="14" font-weight="bold">c₃</text>
+      <!-- T = t4 : coupon + principal -->
+      <line x1="610" y1="113" x2="610" y2="127" stroke="#c9a84c" stroke-width="2.5"/>
+      <text x="610" y="145" text-anchor="middle" fill="#c9a84c" font-size="13">T = t₄</text>
+      <text x="610" y="158" text-anchor="middle" fill="#9089bf" font-size="11">Maturité</text>
+      <line x1="610" y1="120" x2="610" y2="30" stroke="#7eb8d4" stroke-width="4" marker-end="url(#ablue)"/>
+      <text x="610" y="18" text-anchor="middle" fill="#7eb8d4" font-size="13" font-weight="bold">c₄ + P</text>
+      <!-- Légende -->
+      <rect x="50" y="4" width="10" height="10" fill="#7bc496" rx="2"/>
+      <text x="65" y="14" fill="#9089bf" font-size="11">Coupons</text>
+      <rect x="135" y="4" width="10" height="10" fill="#7eb8d4" rx="2"/>
+      <text x="150" y="14" fill="#9089bf" font-size="11">Principal + dernier coupon</text>
+      <rect x="310" y="4" width="10" height="10" fill="#e07b7b" rx="2"/>
+      <text x="325" y="14" fill="#9089bf" font-size="11">Prix payé (sortie de cash)</text>
+    </svg>
+    <p style="color:var(--muted);font-size:.82rem;margin-top:.8rem">Exemple : bond avec 4 coupons semi-annuels de CHF 5, principal CHF 100, maturité 2 ans.</p>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">💡 Intuition clé</div>
+    La <strong>structure des cash flows est figée</strong> dès l'émission. Ce qui change, c'est le <strong>prix de marché</strong> $B(t)$. C'est le seul degré de liberté : le marché ajuste le prix jusqu'à ce que le <em>yield implicite</em> reflète le risque perçu de l'émetteur.
+  </div>
+
+  <h3>Terminologie : au pair, prime, décote</h3>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Prix vs Nominal</th><th>Dénomination</th><th>Signification économique</th></tr></thead>
+      <tbody>
+        <tr><td class="g">B > 100 (par)</td><td class="g">At a Premium (Prime)</td><td>Le yield du marché est inférieur au taux du coupon</td></tr>
+        <tr><td>B = 100 (par)</td><td>At Par (Au pair)</td><td>Le yield du marché = taux du coupon</td></tr>
+        <tr><td class="r">B &lt; 100 (par)</td><td class="r">At a Discount (Décote)</td><td>Le yield du marché est supérieur au taux du coupon</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- §04 VALORISATION -->
+<section class="sec" id="s04">
+  <div class="sec-hd"><span class="sec-num">§04</span><h2 class="sec-title">Valorisation d'un Bond</h2></div>
+
+  <h3>Principe : Valeur Présente des Cash Flows</h3>
+  <p>La valeur d'un bond à l'instant $t$ est la somme des <strong>valeurs actualisées</strong> de tous ses flux futurs, escomptés au taux de rendement requis $y$ (le <em>required yield</em>).</p>
+
+  <div class="mblock">
+    <div class="mlabel">Formule de valorisation d'un bond</div>
+    $$B(t) = \underbrace{\sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)}}_{\text{Valeur actuelle des coupons}} + \underbrace{P \cdot e^{-y(T-t)}}_{\text{Valeur actuelle du principal}}$$
+  </div>
+
+  <div class="fc-grid" style="margin:1.4rem 0">
+    <div class="fc-item"><h5>$B(t)$</h5><p>Prix du bond à l'instant $t$</p></div>
+    <div class="fc-item"><h5>$c_i$</h5><p>Coupon versé à $t_i$</p></div>
+    <div class="fc-item"><h5>$y$</h5><p>Yield requis (annualisé, continu)</p></div>
+    <div class="fc-item"><h5>$P$</h5><p>Principal (face value), typiquement 100</p></div>
+    <div class="fc-item"><h5>$T$</h5><p>Date de maturité</p></div>
+    <div class="fc-item"><h5>$e^{-y \Delta t}$</h5><p>Facteur d'actualisation continu</p></div>
+  </div>
+
+  <h3>Exemple numérique complet</h3>
+  <p>Bond : 4 coupons de CHF 5 (semi-annuels), principal CHF 100, yield requis $y = 5\%$.</p>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Cash Flow</th><th>Temps $t_i$</th><th>Calcul</th><th>Valeur Présente</th></tr></thead>
+      <tbody>
+        <tr><td>$c_1 = 5$</td><td>$t_1 = 0.5$</td><td>$5 \cdot e^{-0.05 \times 0.5}$</td><td class="g">CHF 4.88</td></tr>
+        <tr><td>$c_2 = 5$</td><td>$t_2 = 1.0$</td><td>$5 \cdot e^{-0.05 \times 1.0}$</td><td class="g">CHF 4.76</td></tr>
+        <tr><td>$c_3 = 5$</td><td>$t_3 = 1.5$</td><td>$5 \cdot e^{-0.05 \times 1.5}$</td><td class="g">CHF 4.64</td></tr>
+        <tr><td>$c_4 = 5$</td><td>$t_4 = 2.0$</td><td>$5 \cdot e^{-0.05 \times 2.0}$</td><td class="g">CHF 4.52</td></tr>
+        <tr><td>$P = 100$</td><td>$T = 2.0$</td><td>$100 \cdot e^{-0.05 \times 2.0}$</td><td class="g">CHF 90.48</td></tr>
+        <tr style="border-top:2px solid var(--bstrong)"><td colspan="3"><strong>TOTAL $B(t_0)$</strong></td><td class="g"><strong>CHF 109.28</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Puisque $B = 109.28 > 100$, ce bond se vend <strong>à prime (at a premium)</strong> — le taux du coupon implicite (5%/100 = 5%) est supérieur au yield requis de 5%... qui correspond exactement au coupon ici. La prime s'explique par la convention d'actualisation continue vs. la fréquence semi-annuelle du coupon.</p>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Taux continu vs. discret</div>
+    Ce cours utilise l'<strong>actualisation en temps continu</strong> $e^{-y \Delta t}$, contrairement à la convention $(1+y)^{-n}$ parfois utilisée. Les formules sont différentes mais la logique économique est identique.
+  </div>
+</section>
+
+<!-- §05 TRIAL AND ERROR -->
+<section class="sec" id="s05">
+  <div class="sec-hd"><span class="sec-num">§05</span><h2 class="sec-title">Procédure Itérative — Trial &amp; Error</h2></div>
+
+  <h3>Le problème inverse : trouver y à partir de B</h3>
+  <p>La formule de valorisation donne $B$ en fonction de $y$. En pratique, on observe le <strong>prix de marché</strong> $B$ et on cherche le <strong>yield implicite</strong> $y$ — c'est le problème inverse. Comme $B(y)$ est une fonction non-linéaire, il n'existe pas de solution analytique : on utilise une <strong>procédure numérique itérative</strong> (méthode de bisection ou dichotomie).</p>
+
+  <h3>Algorithme de bisection (dichotomie)</h3>
+  <div class="diag">
+    <svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:'EB Garamond',serif;">
+      <defs>
+        <marker id="af1" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#c9a84c"/></marker>
+        <marker id="af2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#7bc496"/></marker>
+        <marker id="af3" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#e07b7b"/></marker>
+        <marker id="af4" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#a78bfa"/></marker>
+      </defs>
+      <!-- Boîte Entrée -->
+      <rect x="230" y="20" width="240" height="48" rx="8" fill="#1c1828" stroke="#c9a84c" stroke-width="1.5"/>
+      <text x="350" y="40" text-anchor="middle" fill="#c9a84c" font-size="13" font-weight="bold">INPUT : prix de marché B</text>
+      <text x="350" y="58" text-anchor="middle" fill="#9089bf" font-size="11">Initialiser y = y_high (grande valeur)</text>
+      <line x1="350" y1="68" x2="350" y2="95" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#af1)"/>
+      <!-- Calcul résidu -->
+      <rect x="215" y="95" width="270" height="40" rx="8" fill="#1c1828" stroke="#9089bf" stroke-width="1.5"/>
+      <text x="350" y="112" text-anchor="middle" fill="#e4dffa" font-size="12">Calculer résidu = B − B(y)</text>
+      <text x="350" y="127" text-anchor="middle" fill="#9089bf" font-size="11">= B − [Σcᵢe^(−y·tᵢ) + P·e^(−y·T)]</text>
+      <line x1="350" y1="135" x2="350" y2="162" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#af1)"/>
+      <!-- Diamant : |résidu| < ε ? -->
+      <polygon points="350,162 450,192 350,222 250,192" fill="#161221" stroke="#7eb8d4" stroke-width="1.5"/>
+      <text x="350" y="188" text-anchor="middle" fill="#7eb8d4" font-size="12">|résidu| &lt; ε ?</text>
+      <text x="350" y="203" text-anchor="middle" fill="#7eb8d4" font-size="11">(convergé ?)</text>
+      <!-- Oui : solution -->
+      <line x1="450" y1="192" x2="560" y2="192" stroke="#7bc496" stroke-width="1.5" marker-end="url(#af2)"/>
+      <text x="505" y="185" text-anchor="middle" fill="#7bc496" font-size="11">OUI</text>
+      <rect x="560" y="170" width="120" height="44" rx="8" fill="#1c1828" stroke="#7bc496" stroke-width="1.5"/>
+      <text x="620" y="188" text-anchor="middle" fill="#7bc496" font-size="12" font-weight="bold">SOLUTION</text>
+      <text x="620" y="205" text-anchor="middle" fill="#7bc496" font-size="11">retourner y</text>
+      <!-- Non : résidu > 0 ? -->
+      <line x1="350" y1="222" x2="350" y2="252" stroke="#e07b7b" stroke-width="1.5" marker-end="url(#af3)"/>
+      <text x="363" y="242" fill="#e07b7b" font-size="11">NON</text>
+      <polygon points="350,252 430,278 350,304 270,278" fill="#161221" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="350" y="274" text-anchor="middle" fill="#a78bfa" font-size="12">résidu &gt; 0 ?</text>
+      <text x="350" y="289" text-anchor="middle" fill="#a78bfa" font-size="11">(y trop haut ?)</text>
+      <!-- Oui (y trop haut) : diviser y -->
+      <line x1="270" y1="278" x2="150" y2="278" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#af4)"/>
+      <text x="210" y="270" text-anchor="middle" fill="#a78bfa" font-size="11">OUI</text>
+      <rect x="50" y="258" width="100" height="40" rx="8" fill="#1c1828" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="100" y="277" text-anchor="middle" fill="#a78bfa" font-size="11">y ← y / 2</text>
+      <text x="100" y="292" text-anchor="middle" fill="#9089bf" font-size="10">(réduire y)</text>
+      <!-- Retour vers calcul résidu -->
+      <path d="M 100 298 L 100 355 L 215 355" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="4,3" fill="none"/>
+      <!-- Non (y trop bas) -->
+      <line x1="430" y1="278" x2="550" y2="278" stroke="#e07b7b" stroke-width="1.5" marker-end="url(#af3)"/>
+      <text x="490" y="270" text-anchor="middle" fill="#e07b7b" font-size="11">NON</text>
+      <rect x="550" y="258" width="130" height="40" rx="8" fill="#1c1828" stroke="#e07b7b" stroke-width="1.5"/>
+      <text x="615" y="277" text-anchor="middle" fill="#e07b7b" font-size="11">y ← avg(y, y_last)</text>
+      <text x="615" y="292" text-anchor="middle" fill="#9089bf" font-size="10">(augmenter y)</text>
+      <!-- Retour vers calcul résidu -->
+      <path d="M 615 298 L 615 355 L 480 355" stroke="#e07b7b" stroke-width="1.5" stroke-dasharray="4,3" fill="none"/>
+      <!-- Flèche de retour vers le calcul -->
+      <line x1="480" y1="355" x2="215" y2="355" stroke="#9089bf" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="350" y1="355" x2="350" y2="340" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#af1)"/>
+      <rect x="225" y="340" width="250" height="22" rx="4" fill="#161221"/>
+      <text x="350" y="355" text-anchor="middle" fill="#9089bf" font-size="10">Recalculer le résidu avec le nouveau y</text>
+    </svg>
+  </div>
+
+  <div class="box vio">
+    <div class="box-title">💻 Implémentation Python (cours)</div>
+    Le cours implémente cet algorithme via une fonction <code>trial_and_error(B)</code> qui :
+    (1) démarre avec $y$ élevé, (2) divise $y$ par 2 si le résidu est positif (prix calculé trop bas), (3) moyenne $y$ avec l'itération précédente si le résidu est négatif. Convergence garantie pour une tolérance $|résidu| &lt; 10^{-3}$.
+    Vérification sur l'exemple : pour $B = 109.28$, l'algorithme converge bien vers $y = 5.00\%$.
+  </div>
+</section>
+
+<!-- §06 RELATION PRIX–YIELD -->
+<section class="sec" id="s06">
+  <div class="sec-hd"><span class="sec-num">§06</span><h2 class="sec-title">Relation Prix–Rendement et Convexité</h2></div>
+
+  <h3>Relation inverse et convexe</h3>
+  <p>La relation entre le prix d'un bond et son yield est <strong>inverse</strong> (quand l'un monte, l'autre baisse) et présente une <strong>courbure (convexité)</strong>. Cette convexité est une propriété fondamentale des obligations.</p>
+
+  <div class="diag">
+    <svg viewBox="0 0 600 340" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:'EB Garamond',serif;">
+      <!-- Axes -->
+      <line x1="70" y1="300" x2="560" y2="300" stroke="#9089bf" stroke-width="1.5" marker-end="url(#af1)"/>
+      <line x1="70" y1="300" x2="70" y2="20" stroke="#9089bf" stroke-width="1.5" marker-end="url(#af1)"/>
+      <text x="565" y="305" fill="#9089bf" font-size="13">B (Prix)</text>
+      <text x="30" y="20" fill="#9089bf" font-size="13">y (%)</text>
+      <!-- Graduation x (prix de 80 à 125) -->
+      <line x1="120" y1="297" x2="120" y2="303" stroke="#9089bf" stroke-width="1"/>
+      <text x="120" y="315" text-anchor="middle" fill="#9089bf" font-size="11">85</text>
+      <line x1="220" y1="297" x2="220" y2="303" stroke="#9089bf" stroke-width="1"/>
+      <text x="220" y="315" text-anchor="middle" fill="#9089bf" font-size="11">95</text>
+      <line x1="320" y1="297" x2="320" y2="303" stroke="#9089bf" stroke-width="1"/>
+      <text x="320" y="315" text-anchor="middle" fill="#9089bf" font-size="11">105</text>
+      <text x="330" y="315" fill="none" font-size="1"></text>
+      <line x1="420" y1="297" x2="420" y2="303" stroke="#9089bf" stroke-width="1"/>
+      <text x="420" y="315" text-anchor="middle" fill="#9089bf" font-size="11">115</text>
+      <line x1="500" y1="297" x2="500" y2="303" stroke="#9089bf" stroke-width="1"/>
+      <text x="500" y="315" text-anchor="middle" fill="#9089bf" font-size="11">122</text>
+      <!-- Graduation y (yield de 0% à 18%) -->
+      <line x1="67" y1="270" x2="73" y2="270" stroke="#9089bf" stroke-width="1"/>
+      <text x="60" y="275" text-anchor="end" fill="#9089bf" font-size="11">2</text>
+      <line x1="67" y1="220" x2="73" y2="220" stroke="#9089bf" stroke-width="1"/>
+      <text x="60" y="225" text-anchor="end" fill="#9089bf" font-size="11">5</text>
+      <line x1="67" y1="170" x2="73" y2="170" stroke="#9089bf" stroke-width="1"/>
+      <text x="60" y="175" text-anchor="end" fill="#9089bf" font-size="11">8</text>
+      <line x1="67" y1="120" x2="73" y2="120" stroke="#9089bf" stroke-width="1"/>
+      <text x="60" y="125" text-anchor="end" fill="#9089bf" font-size="11">12</text>
+      <line x1="67" y1="70" x2="73" y2="70" stroke="#9089bf" stroke-width="1"/>
+      <text x="60" y="75" text-anchor="end" fill="#9089bf" font-size="11">16</text>
+      <!-- Grille légère -->
+      <line x1="70" y1="220" x2="560" y2="220" stroke="rgba(144,137,191,0.1)" stroke-width="1"/>
+      <line x1="70" y1="170" x2="560" y2="170" stroke="rgba(144,137,191,0.1)" stroke-width="1"/>
+      <line x1="320" y1="20" x2="320" y2="300" stroke="rgba(144,137,191,0.1)" stroke-width="1"/>
+      <!-- Ligne linéaire (pointillés) -->
+      <line x1="120" y1="60" x2="500" y2="280" stroke="#9089bf" stroke-width="1.5" stroke-dasharray="6,4"/>
+      <!-- Courbe convexe réelle : approximation avec des points (B,y) → (x_svg, y_svg)
+           Mapping: x_svg = 70 + (B-82)/(125-82)*480 = 70 + (B-82)*11.16
+                    y_svg = 300 - (y-0)/18*280 = 300 - y*15.6
+           Points (B, y%): (85,17.5), (90,15), (95,12.5), (99.5,10), (105,7.5), (109.3,5), (116,2.5), (120,1.5)
+           x_svg: 85→103, 90→159, 95→214, 99.5→264, 105→327, 109.3→375, 116→452, 120→497
+           y_svg: 17.5→27, 15→66, 12.5→105, 10→144, 7.5→183, 5→222, 2.5→261, 1.5→277
+      -->
+      <path d="M 103,27 C 130,50 155,80 159,66 S 200,100 214,105 S 250,130 264,144 S 305,168 327,183 S 355,205 375,222 S 425,248 452,261 S 480,272 497,277" fill="none" stroke="#7eb8d4" stroke-width="3.5" stroke-linejoin="round"/>
+      <!-- Point at y=5%, B=109.28 -->
+      <circle cx="375" cy="222" r="6" fill="#c9a84c" stroke="#0d0b14" stroke-width="2"/>
+      <text x="390" y="215" fill="#c9a84c" font-size="11">y=5%, B=109.3</text>
+      <!-- Annotation convexité -->
+      <path d="M 200 140 Q 250 90 310 140" fill="none" stroke="rgba(167,139,250,0.5)" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="245" y="85" text-anchor="middle" fill="#a78bfa" font-size="11">Convexité</text>
+      <text x="245" y="98" text-anchor="middle" fill="#a78bfa" font-size="10">(écart vs. linéaire)</text>
+      <!-- Légende -->
+      <line x1="370" y1="50" x2="400" y2="50" stroke="#7eb8d4" stroke-width="3"/>
+      <text x="408" y="55" fill="#7eb8d4" font-size="11">Prix réel (courbe)</text>
+      <line x1="370" y1="70" x2="400" y2="70" stroke="#9089bf" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="408" y="75" fill="#9089bf" font-size="11">Approximation linéaire</text>
+    </svg>
+  </div>
+
+  <h3>Implications pratiques de la convexité</h3>
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Hausse des taux</div>
+      <h4>⬆️ y → ⬇️ B</h4>
+      <p>Une hausse des taux entraîne une <strong>baisse du prix</strong> : perte en capital pour l'investisseur. Compensée si l'obligation est conservée jusqu'à maturité, ou par les nouveaux coupons plus élevés.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Baisse des taux</div>
+      <h4>⬇️ y → ⬆️ B</h4>
+      <p>Une baisse des taux entraîne une <strong>hausse du prix</strong> : gain en capital. Stratégie "long duration" en anticipation de baisses de taux.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Convexité</div>
+      <h4>Asymétrie favorable</h4>
+      <p>Grâce à la convexité, le gain lors d'une baisse de taux est <strong>plus grand</strong> que la perte lors d'une hausse équivalente. Propriété avantageuse pour l'investisseur.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Duration</div>
+      <h4>Sensibilité (next lecture)</h4>
+      <p>La <em>duration</em> mesure la sensibilité du prix au yield. Les bonds à longue maturité ont une duration plus élevée → plus sensibles aux variations de taux.</p>
+    </div>
+  </div>
+</section>
+
+<!-- §07 BOOTSTRAP ALGORITHM -->
+<section class="sec" id="s07">
+  <div class="sec-hd"><span class="sec-num">§07</span><h2 class="sec-title">Taux Zéro Coupon &amp; Bootstrap Algorithm</h2></div>
+
+  <h3>Pourquoi les taux zéro coupon ?</h3>
+  <p>Le yield d'un bond <em>avec coupons</em> dépend de sa structure de paiement. Pour <strong>comparer équitablement</strong> différents bonds, on utilise le <strong>taux zéro coupon (zero-coupon rate)</strong> $r_T$ : c'est le taux d'actualisation qui s'applique à un paiement unique à une date $T$, sans aucun coupon intermédiaire.</p>
+
+  <div class="box">
+    <div class="box-title">🎯 Définition</div>
+    Un <strong>bond zéro coupon (zero-coupon bond)</strong> ne verse aucun coupon ; il est simplement acheté à escompte et remboursé au pair à maturité. Son prix est : $B_{ZC}(t) = P \cdot e^{-r_T (T-t)}$. Les taux zéro coupon forment la <strong>courbe des taux zéro coupon</strong> — la base de tout le pricing de produits à revenu fixe.
+  </div>
+
+  <h3>Algorithme Bootstrap — Principe</h3>
+  <p>En pratique, tous les maturités n'ont pas de bonds zéro coupon cotés. On <strong>extrait les taux zéro coupon</strong> à partir des prix de bonds à coupons cotés sur le marché, en procédant de façon itérative par <strong>maturité croissante</strong>.</p>
+
+  <div class="diag">
+    <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:'EB Garamond',serif;">
+      <defs>
+        <marker id="baf1" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#c9a84c"/></marker>
+        <marker id="baf2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#7bc496"/></marker>
+        <marker id="baf3" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#a78bfa"/></marker>
+      </defs>
+      <!-- Étape 0 -->
+      <rect x="240" y="10" width="220" height="42" rx="8" fill="#1c1828" stroke="#c9a84c" stroke-width="1.5"/>
+      <text x="350" y="28" text-anchor="middle" fill="#c9a84c" font-size="13" font-weight="bold">Données de marché</text>
+      <text x="350" y="44" text-anchor="middle" fill="#9089bf" font-size="11">Prix des Treasury bonds observés</text>
+      <line x1="350" y1="52" x2="350" y2="74" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#baf1)"/>
+      <!-- Étape 1 : ZC direct -->
+      <rect x="180" y="74" width="340" height="52" rx="8" fill="#1c1828" stroke="#7bc496" stroke-width="2"/>
+      <text x="350" y="93" text-anchor="middle" fill="#7bc496" font-size="13" font-weight="bold">Maturités courtes (ZC disponibles)</text>
+      <text x="350" y="110" text-anchor="middle" fill="#9089bf" font-size="11">r_T = annualiser( gain_brut ) directement depuis le prix</text>
+      <line x1="350" y1="126" x2="350" y2="148" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#baf1)"/>
+      <!-- Étape 2 : Avec coupons -->
+      <rect x="150" y="148" width="400" height="66" rx="8" fill="#1c1828" stroke="#a78bfa" stroke-width="2"/>
+      <text x="350" y="168" text-anchor="middle" fill="#a78bfa" font-size="13" font-weight="bold">Maturités suivantes (bonds avec coupons)</text>
+      <text x="350" y="186" text-anchor="middle" fill="#9089bf" font-size="11">Utiliser r déjà connus pour actualiser les coupons intermédiaires</text>
+      <text x="350" y="202" text-anchor="middle" fill="#9089bf" font-size="11">Résoudre : Σ CFᵢ·e^(−rᵢ·tᵢ) + CF_T·e^(−r_T·T) = B_marché</text>
+      <line x1="350" y1="214" x2="350" y2="236" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#baf1)"/>
+      <!-- Étape 3 : Itérer -->
+      <rect x="215" y="236" width="270" height="40" rx="8" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.5"/>
+      <text x="350" y="255" text-anchor="middle" fill="#7eb8d4" font-size="12">Stocker r_T et passer à la maturité suivante</text>
+      <text x="350" y="270" text-anchor="middle" fill="#9089bf" font-size="10">(itérer jusqu'à couvrir toute la courbe)</text>
+      <!-- Flèche retour -->
+      <path d="M 215 256 L 130 256 L 130 100 L 180 100" stroke="#7eb8d4" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#baf2)"/>
+      <text x="100" y="175" fill="#7eb8d4" font-size="11" text-anchor="middle">SUIVANT</text>
+      <line x1="350" y1="276" x2="350" y2="298" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#baf1)"/>
+      <!-- Output -->
+      <rect x="200" y="298" width="300" height="16" rx="4" fill="#161221" stroke="var(--border)" stroke-width="1"/>
+      <text x="350" y="311" text-anchor="middle" fill="#c9a84c" font-size="11" font-weight="bold">→ Courbe des taux zéro coupon complète</text>
+    </svg>
+  </div>
+
+  <h3>Exemple numérique complet (données du cours)</h3>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Maturité</th><th>Principal</th><th>Coupon annuel</th><th>Prix</th><th>Taux ZC calculé</th></tr></thead>
+      <tbody>
+        <tr><td>0.25 an</td><td>100</td><td>0 (ZC)</td><td>97.5</td><td class="g">10.127%</td></tr>
+        <tr><td>0.50 an</td><td>100</td><td>0 (ZC)</td><td>94.9</td><td class="g">10.469%</td></tr>
+        <tr><td>1.0 an</td><td>100</td><td>0 (ZC)</td><td>90.0</td><td class="g">10.536%</td></tr>
+        <tr><td>1.5 ans</td><td>100</td><td>8 (semi-annuel)</td><td>96.0</td><td class="g">10.681%</td></tr>
+        <tr><td>2.0 ans</td><td>100</td><td>12 (semi-annuel)</td><td>101.6</td><td class="g">10.808%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>Détail des calculs étape par étape</h4>
+
+  <div class="box ok">
+    <div class="box-title">3 mois (ZC direct)</div>
+    Gain brut sur 3 mois : $\frac{2.5}{97.5} = 10.256\%$ sur 3 mois.<br>
+    Annualisation en taux continu : $r_{0.25} = 4 \cdot \ln\!\left(1 + \frac{0.10256}{4}\right) = \mathbf{10.127\%}$
+  </div>
+  <div class="box ok">
+    <div class="box-title">6 mois (ZC direct)</div>
+    $r_{0.5} = 2 \cdot \ln\!\left(1 + \frac{5.1/94.9 \cdot 2}{2}\right)$... simplification : $r_{0.5} = 2 \cdot \ln\!\left(1 + \frac{0.10748}{2}\right) = \mathbf{10.469\%}$
+  </div>
+  <div class="box ok">
+    <div class="box-title">1 an (ZC direct)</div>
+    $r_{1.0} = \ln\!\left(1 + \frac{10}{90}\right) = \mathbf{10.536\%}$
+  </div>
+  <div class="box vio">
+    <div class="box-title">1.5 ans (Bootstrap avec coupon)</div>
+    Flux : USD 4 à 6 mois, USD 4 à 1 an, USD 104 à 1.5 ans. Prix de marché = 96.
+    $$4 \cdot e^{-0.10469 \times 0.5} + 4 \cdot e^{-0.10536 \times 1.0} + 104 \cdot e^{-r_{1.5} \times 1.5} = 96$$
+    $$\Rightarrow e^{-r_{1.5} \times 1.5} = 0.85196 \Rightarrow r_{1.5} = \mathbf{10.681\%}$$
+  </div>
+
+  <h3>Courbe des taux zéro coupon résultante</h3>
+  <div class="diag">
+    <svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:'EB Garamond',serif;">
+      <!-- Axes -->
+      <line x1="70" y1="200" x2="520" y2="200" stroke="#9089bf" stroke-width="1.5" marker-end="url(#baf1)"/>
+      <line x1="70" y1="200" x2="70" y2="20" stroke="#9089bf" stroke-width="1.5" marker-end="url(#baf1)"/>
+      <text x="525" y="205" fill="#9089bf" font-size="12">Maturité</text>
+      <text x="20" y="20" fill="#9089bf" font-size="12">r (%)</text>
+      <!-- Graduation x -->
+      <line x1="130" y1="197" x2="130" y2="203" stroke="#9089bf" stroke-width="1"/>
+      <text x="130" y="215" text-anchor="middle" fill="#9089bf" font-size="11">0.25</text>
+      <line x1="210" y1="197" x2="210" y2="203" stroke="#9089bf" stroke-width="1"/>
+      <text x="210" y="215" text-anchor="middle" fill="#9089bf" font-size="11">0.50</text>
+      <line x1="290" y1="197" x2="290" y2="203" stroke="#9089bf" stroke-width="1"/>
+      <text x="290" y="215" text-anchor="middle" fill="#9089bf" font-size="11">1.00</text>
+      <line x1="370" y1="197" x2="370" y2="203" stroke="#9089bf" stroke-width="1"/>
+      <text x="370" y="215" text-anchor="middle" fill="#9089bf" font-size="11">1.50</text>
+      <line x1="450" y1="197" x2="450" y2="203" stroke="#9089bf" stroke-width="1"/>
+      <text x="450" y="215" text-anchor="middle" fill="#9089bf" font-size="11">2.00</text>
+      <!-- Graduation y (10.1 → 10.9) -->
+      <line x1="67" y1="175" x2="73" y2="175" stroke="#9089bf" stroke-width="1"/>
+      <text x="60" y="179" text-anchor="end" fill="#9089bf" font-size="10">10.2</text>
+      <line x1="67" y1="130" x2="73" y2="130" stroke="#9089bf" stroke-width="1"/>
+      <text x="60" y="134" text-anchor="end" fill="#9089bf" font-size="10">10.5</text>
+      <line x1="67" y1="90" x2="73" y2="90" stroke="#9089bf" stroke-width="1"/>
+      <text x="60" y="94" text-anchor="end" fill="#9089bf" font-size="10">10.7</text>
+      <line x1="67" y1="55" x2="73" y2="55" stroke="#9089bf" stroke-width="1"/>
+      <text x="60" y="59" text-anchor="end" fill="#9089bf" font-size="10">10.9</text>
+      <!-- Mapping: y_svg = 200 - (r - 10.0)/(11.0 - 10.0)*180
+                   x_svg = 70 + (mat/2)*480
+         Points: (0.25, 10.127), (0.50, 10.469), (1.0, 10.536), (1.5, 10.681), (2.0, 10.808)
+         x: 130, 210, 290, 370, 450
+         y_svg: 200 - (0.127/1)*180 = 177; 200-0.469*180=116; 200-0.536*180=103; 200-0.681*180=77; 200-0.808*180=55
+      -->
+      <!-- Grille légère -->
+      <line x1="70" y1="130" x2="520" y2="130" stroke="rgba(144,137,191,0.1)" stroke-width="1"/>
+      <line x1="70" y1="90" x2="520" y2="90" stroke="rgba(144,137,191,0.1)" stroke-width="1"/>
+      <!-- Courbe -->
+      <path d="M 130,177 C 160,150 185,120 210,116 S 260,105 290,103 S 330,85 370,77 S 410,62 450,55" fill="none" stroke="#c9a84c" stroke-width="3.5" stroke-linejoin="round"/>
+      <!-- Points -->
+      <circle cx="130" cy="177" r="5" fill="#c9a84c" stroke="#0d0b14" stroke-width="2"/>
+      <circle cx="210" cy="116" r="5" fill="#c9a84c" stroke="#0d0b14" stroke-width="2"/>
+      <circle cx="290" cy="103" r="5" fill="#c9a84c" stroke="#0d0b14" stroke-width="2"/>
+      <circle cx="370" cy="77" r="5" fill="#c9a84c" stroke="#0d0b14" stroke-width="2"/>
+      <circle cx="450" cy="55" r="5" fill="#c9a84c" stroke="#0d0b14" stroke-width="2"/>
+      <!-- Labels -->
+      <text x="130" y="165" text-anchor="middle" fill="#9089bf" font-size="10">10.13%</text>
+      <text x="210" y="104" text-anchor="middle" fill="#9089bf" font-size="10">10.47%</text>
+      <text x="290" y="91" text-anchor="middle" fill="#9089bf" font-size="10">10.54%</text>
+      <text x="370" y="65" text-anchor="middle" fill="#9089bf" font-size="10">10.68%</text>
+      <text x="450" y="43" text-anchor="middle" fill="#9089bf" font-size="10">10.81%</text>
+      <!-- Title -->
+      <text x="290" y="15" text-anchor="middle" fill="#c9a84c" font-size="13" font-weight="bold">Courbe des taux zéro coupon (Bootstrap)</text>
+    </svg>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">📐 Forme de la courbe</div>
+    En théorie, les taux croissent avec la maturité (investisseurs exigent une prime pour les durées plus longues). En pratique, la courbe peut être <strong>inversée</strong> (court terme > long terme, souvent avant une récession), <strong>plate</strong>, ou <strong>humped</strong> (bosse au milieu). La courbe doit être <strong>recalculée régulièrement</strong> à mesure que les prix de marché évoluent.
+  </div>
+</section>
+
+<!-- §08 TYPES DE BONDS -->
+<section class="sec" id="s08">
+  <div class="sec-hd"><span class="sec-num">§08</span><h2 class="sec-title">Types d'Obligations et Credit Spread</h2></div>
+
+  <h3>Gouvernementaux vs. Corporates</h3>
+  <p>La distinction principale se fait entre les <strong>obligations souveraines (Govies / Treasuries)</strong>, émises par les États, et les <strong>obligations d'entreprises (Corporate Bonds)</strong>. La différence de yield entre les deux pour une même maturité est le <strong>credit spread</strong>.</p>
+
+  <div class="diag">
+    <svg viewBox="0 0 620 290" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:'EB Garamond',serif;">
+      <defs>
+        <marker id="csarr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#c9a84c"/></marker>
+      </defs>
+      <!-- Axes -->
+      <line x1="60" y1="240" x2="580" y2="240" stroke="#9089bf" stroke-width="1.5" marker-end="url(#csarr)"/>
+      <line x1="60" y1="240" x2="60" y2="20" stroke="#9089bf" stroke-width="1.5" marker-end="url(#csarr)"/>
+      <text x="585" y="245" fill="#9089bf" font-size="12">Maturité</text>
+      <text x="15" y="20" fill="#9089bf" font-size="12">Yield</text>
+      <!-- Aire credit spread BB -->
+      <path d="M 60,200 C 150,160 300,110 560,70 L 560,50 C 300,85 150,135 60,175 Z" fill="rgba(224,123,123,0.12)" stroke="none"/>
+      <!-- Aire credit spread AA -->
+      <path d="M 60,175 C 150,135 300,85 560,50 L 560,35 C 300,68 150,118 60,160 Z" fill="rgba(167,139,250,0.08)" stroke="none"/>
+      <!-- Courbe gouvernementale (AAA = base) -->
+      <path d="M 60,200 C 150,160 300,110 560,70" fill="none" stroke="#7eb8d4" stroke-width="3"/>
+      <!-- Courbe AAA corporate -->
+      <path d="M 60,175 C 150,135 300,85 560,50" fill="none" stroke="#7bc496" stroke-width="2.5" stroke-dasharray="8,3"/>
+      <!-- Courbe AA corporate -->
+      <path d="M 60,160 C 150,118 300,68 560,35" fill="none" stroke="#a78bfa" stroke-width="2" stroke-dasharray="6,4"/>
+      <!-- Courbe BB (high yield) -->
+      <path d="M 60,225 C 150,195 300,160 560,120" fill="none" stroke="#e07b7b" stroke-width="2.5" stroke-dasharray="4,3"/>
+      <!-- Credit spread annotation -->
+      <line x1="400" y1="93" x2="400" y2="60" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <line x1="395" y1="93" x2="405" y2="93" stroke="#c9a84c" stroke-width="1.5"/>
+      <line x1="395" y1="60" x2="405" y2="60" stroke="#c9a84c" stroke-width="1.5"/>
+      <text x="420" y="78" fill="#c9a84c" font-size="11" font-weight="bold">Credit</text>
+      <text x="420" y="90" fill="#c9a84c" font-size="11" font-weight="bold">Spread</text>
+      <!-- Légende -->
+      <line x1="80" y1="15" x2="110" y2="15" stroke="#7eb8d4" stroke-width="3"/>
+      <text x="118" y="20" fill="#7eb8d4" font-size="11">Souverain (AAA/Gov)</text>
+      <line x1="240" y1="15" x2="270" y2="15" stroke="#7bc496" stroke-width="2.5" stroke-dasharray="6,3"/>
+      <text x="278" y="20" fill="#7bc496" font-size="11">AAA Corporate</text>
+      <line x1="400" y1="15" x2="430" y2="15" stroke="#a78bfa" stroke-width="2" stroke-dasharray="4,3"/>
+      <text x="438" y="20" fill="#a78bfa" font-size="11">AA Corporate</text>
+      <line x1="80" y1="35" x2="110" y2="35" stroke="#e07b7b" stroke-width="2.5" stroke-dasharray="3,3"/>
+      <text x="118" y="40" fill="#e07b7b" font-size="11">BB / High Yield ("Junk")</text>
+      <!-- Labels flottants -->
+      <text x="565" y="68" fill="#7eb8d4" font-size="10">Gov</text>
+      <text x="565" y="48" fill="#7bc496" font-size="10">AAA</text>
+      <text x="565" y="33" fill="#a78bfa" font-size="10">AA</text>
+      <text x="565" y="118" fill="#e07b7b" font-size="10">BB</text>
+    </svg>
+  </div>
+
+  <h3>Agences de notation (Credit Rating Agencies)</h3>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Catégorie</th><th>S&P</th><th>Moody's</th><th>Interprétation</th><th>Credit Spread typique</th></tr></thead>
+      <tbody>
+        <tr><td class="g">Investment Grade</td><td class="g">AAA → BBB−</td><td class="g">Aaa → Baa3</td><td class="g">Faible risque de défaut, accès aux marchés institutionnels</td><td class="g">+10 à +200 bps</td></tr>
+        <tr><td class="r">High Yield / Junk</td><td class="r">BB+ → D</td><td class="r">Ba1 → C</td><td class="r">Risque élevé, rendement plus attractif, accès limité</td><td class="r">+200 à +1000+ bps</td></tr>
+        <tr><td>Souverain (meilleur)</td><td>AAA (ex: USA, CH)</td><td>Aaa</td><td>Risque de défaut quasi nul — base de la courbe</td><td class="m">0 bps (référence)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Limites des notations</div>
+    Les notations peuvent changer au cours de vie du bond (<em>upgrade/downgrade</em>), modifiant le credit spread. Elles n'intègrent pas les critères ESG (cf. cours dédié). La crise de 2008 a révélé les limites des agences de notation sur les produits structurés (ABS/CDO).
+  </div>
+</section>
+
+<!-- §09 RISQUES -->
+<section class="sec" id="s09">
+  <div class="sec-hd"><span class="sec-num">§09</span><h2 class="sec-title">Risques Associés aux Obligations</h2></div>
+
+  <div class="diag">
+    <svg viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:'EB Garamond',serif;">
+      <!-- Centre -->
+      <ellipse cx="340" cy="185" rx="65" ry="38" fill="#1c1828" stroke="#c9a84c" stroke-width="2"/>
+      <text x="340" y="181" text-anchor="middle" fill="#c9a84c" font-size="14" font-weight="bold">Bond</text>
+      <text x="340" y="197" text-anchor="middle" fill="#9089bf" font-size="11">Risques</text>
+      <!-- Risque taux (haut gauche) -->
+      <line x1="285" y1="163" x2="180" y2="80" stroke="rgba(224,123,123,0.5)" stroke-width="1.5"/>
+      <rect x="60" y="42" width="200" height="76" rx="8" fill="#1c1828" stroke="#e07b7b" stroke-width="1.5"/>
+      <text x="160" y="62" text-anchor="middle" fill="#e07b7b" font-size="12" font-weight="bold">Interest Rate Risk</text>
+      <text x="160" y="78" text-anchor="middle" fill="#9089bf" font-size="10">⬆️ taux ⇒ ⬇️ prix du bond</text>
+      <text x="160" y="93" text-anchor="middle" fill="#9089bf" font-size="10">Atténué par la durée (duration)</text>
+      <text x="160" y="108" text-anchor="middle" fill="#9089bf" font-size="10">Long maturity → plus sensible</text>
+      <!-- Risque crédit (haut droit) -->
+      <line x1="395" y1="163" x2="490" y2="80" stroke="rgba(126,184,212,0.5)" stroke-width="1.5"/>
+      <rect x="415" y="42" width="210" height="76" rx="8" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.5"/>
+      <text x="520" y="62" text-anchor="middle" fill="#7eb8d4" font-size="12" font-weight="bold">Credit Risk</text>
+      <text x="520" y="78" text-anchor="middle" fill="#9089bf" font-size="10">Défaut partiel ou total de l'émetteur</text>
+      <text x="520" y="93" text-anchor="middle" fill="#9089bf" font-size="10">Mesuré par les credit ratings</text>
+      <text x="520" y="108" text-anchor="middle" fill="#9089bf" font-size="10">Compensé par le credit spread</text>
+      <!-- Risque inflation (bas gauche) -->
+      <line x1="285" y1="207" x2="180" y2="300" stroke="rgba(167,139,250,0.5)" stroke-width="1.5"/>
+      <rect x="50" y="265" width="210" height="76" rx="8" fill="#1c1828" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="155" y="285" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="bold">Inflation Risk</text>
+      <text x="155" y="301" text-anchor="middle" fill="#9089bf" font-size="10">Érosion du pouvoir d'achat</text>
+      <text x="155" y="316" text-anchor="middle" fill="#9089bf" font-size="10">Retour réel = nominal − inflation</text>
+      <text x="155" y="331" text-anchor="middle" fill="#9089bf" font-size="10">Couvert par TIPS / obligations indexées</text>
+      <!-- Risque liquidité (bas milieu droit) -->
+      <line x1="340" y1="223" x2="340" y2="305" stroke="rgba(123,196,150,0.5)" stroke-width="1.5"/>
+      <rect x="240" y="305" width="200" height="66" rx="8" fill="#1c1828" stroke="#7bc496" stroke-width="1.5"/>
+      <text x="340" y="325" text-anchor="middle" fill="#7bc496" font-size="12" font-weight="bold">Liquidity Risk</text>
+      <text x="340" y="341" text-anchor="middle" fill="#9089bf" font-size="10">Incapacité à vendre au juste prix</text>
+      <text x="340" y="356" text-anchor="middle" fill="#9089bf" font-size="10">Marchés secondaires parfois illiquides</text>
+      <!-- Risque réinvestissement (bas droit) -->
+      <line x1="395" y1="207" x2="510" y2="290" stroke="rgba(232,201,122,0.5)" stroke-width="1.5"/>
+      <rect x="430" y="258" width="220" height="76" rx="8" fill="#1c1828" stroke="#glight" stroke-width="1.5"/>
+      <rect x="430" y="258" width="220" height="76" rx="8" fill="#1c1828" stroke="#e8c97a" stroke-width="1.5"/>
+      <text x="540" y="278" text-anchor="middle" fill="#e8c97a" font-size="12" font-weight="bold">Reinvestment Risk</text>
+      <text x="540" y="294" text-anchor="middle" fill="#9089bf" font-size="10">Coupons réinvestis à taux plus bas</text>
+      <text x="540" y="309" text-anchor="middle" fill="#9089bf" font-size="10">Callable bonds : émetteur rembourse si</text>
+      <text x="540" y="324" text-anchor="middle" fill="#9089bf" font-size="10">taux baissent (ex: Apple callable bond)</text>
+    </svg>
+  </div>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Risque</th><th>Définition</th><th>Mécanisme</th><th>Couverture / Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--red)"><strong>Interest Rate</strong></td><td>Sensibilité du prix aux variations de taux</td><td>⬆️ taux ⇒ ⬇️ prix (relation inverse)</td><td>Duration courte, obligations à taux variable (FRN)</td></tr>
+        <tr><td style="color:var(--blue)"><strong>Credit</strong></td><td>Défaut partiel ou total de l'émetteur</td><td>Dégradation de notation → spread s'élargit</td><td>Diversification, CDS (credit default swaps)</td></tr>
+        <tr><td style="color:var(--violet)"><strong>Inflation</strong></td><td>Érosion du pouvoir d'achat des flux</td><td>Retour réel = nominal − inflation</td><td>TIPS, obligations indexées sur l'inflation</td></tr>
+        <tr><td style="color:var(--green)"><strong>Liquidity</strong></td><td>Incapacité à vendre rapidement à juste prix</td><td>Bid-ask spread important, marché étroit</td><td>Préférer bonds liquides, horizon long terme</td></tr>
+        <tr><td style="color:var(--glight)"><strong>Reinvestment</strong></td><td>Coupons réinvestis à des taux inférieurs</td><td>Si taux baissent, rendement total diminue</td><td>Bonds zéro coupon éliminent ce risque</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- §10 RÔLE DANS LE PORTFOLIO -->
+<section class="sec" id="s10">
+  <div class="sec-hd"><span class="sec-num">§10</span><h2 class="sec-title">Rôle des Obligations dans un Portfolio</h2></div>
+
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Diversification</div>
+      <h4>📉 Corrélation négative</h4>
+      <p>Les bonds ont historiquement une <strong>corrélation négative ou faible</strong> avec les actions. Quand les marchés actions chutent (aversion au risque), les investisseurs fuient vers les bonds souverains (<em>flight to quality</em>). Exception notable : 2022, où la hausse brutale des taux a fait chuter <em>à la fois</em> actions et bonds.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Revenu</div>
+      <h4>💰 Cash flows réguliers</h4>
+      <p>Les coupons fournissent un <strong>revenu prévisible et régulier</strong>. Attractif pour les investisseurs avec des besoins de cash flows définis (fonds de pension, assureurs, retraités).</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Préservation</div>
+      <h4>🛡️ Capital protection</h4>
+      <p>Les <strong>obligations souveraines de haute qualité</strong> (AAA) préservent le capital. Le remboursement du principal à maturité est pratiquement garanti — fondamental pour les <em>liability-driven investments</em>.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Allocation</div>
+      <h4>⚖️ Life-cycle investing</h4>
+      <p>La règle classique : allouer <strong>(100 − âge)% en actions</strong> et le reste en bonds. Les jeunes supportent plus de risque ; à l'approche de la retraite, le portefeuille migre vers plus d'obligations pour réduire la volatilité.</p>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Exception 2022 — Corrélation positive action/bond</div>
+    En 2022, la Fed et la BCE ont relevé leurs taux à un rythme historique pour combattre l'inflation. Résultat : les prix des bonds ont chuté simultanément avec les marchés actions. La <strong>diversification bonds/actions a temporairement échoué</strong>, rappelant que le régime de corrélation peut changer en période de stress inflationniste.
+  </div>
+</section>
+
+<!-- §11 FORMULES CLÉS -->
+<section class="sec" id="s11">
+  <div class="sec-hd"><span class="sec-num">§11</span><h2 class="sec-title">Formules Importantes</h2></div>
+  <div class="fcards">
+
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Valorisation d'un bond à coupons</span>
+        <span class="fc-tag">Bond Pricing</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">$$B(t) = \sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)} + P \cdot e^{-y(T-t)}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$c_i$ : coupon à $t_i$ ; $P$ : principal ; $y$ : yield continu ; $T$ : maturité</p></div>
+          <div class="fc-item"><h5>Intuition</h5><p>Le prix est la somme des valeurs actuelles des flux futurs, escomptés à $y$.</p></div>
+          <div class="fc-item"><h5>Exemple</h5><p>4 coupons de 5, principal 100, $y=5\%$ → $B = 109.28$</p></div>
+          <div class="fc-item"><h5>Interprétation</h5><p>Quand $y$ augmente, tous les facteurs $e^{-y \cdot t}$ diminuent → $B$ diminue.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Bond zéro coupon</span>
+        <span class="fc-tag">Zero Coupon</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">$$B_{ZC}(t) = P \cdot e^{-r_T (T-t)}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$r_T$ : taux zéro coupon pour la maturité $T$ ; pas de coupons intermédiaires</p></div>
+          <div class="fc-item"><h5>Intuition</h5><p>Un seul flux à maturité. C'est le "bloc de base" pour construire n'importe quel instrument.</p></div>
+          <div class="fc-item"><h5>Extraction</h5><p>$r_T = -\frac{1}{T-t} \ln\!\left(\frac{B_{ZC}}{P}\right)$</p></div>
+          <div class="fc-item"><h5>Usage</h5><p>Brique fondamentale du pricing : tout cash flow futur s'actualise avec le $r_T$ correspondant.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Bootstrap — équation de résolution</span>
+        <span class="fc-tag">Bootstrap</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">$$\sum_{i=1}^{n-1} CF_i \cdot e^{-r_{t_i} \cdot t_i} + CF_T \cdot e^{-r_T \cdot T} = B_{\text{marché}}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Inconnu</h5><p>$r_T$ : le taux zéro coupon à la maturité $T$ à trouver</p></div>
+          <div class="fc-item"><h5>Connu</h5><p>$r_{t_i}$ pour $i < T$ : déjà calculés aux étapes précédentes</p></div>
+          <div class="fc-item"><h5>Résolution</h5><p>$e^{-r_T \cdot T} = \frac{B_{\text{marché}} - \sum_{i<T} CF_i \cdot e^{-r_{t_i} \cdot t_i}}{CF_T}$</p></div>
+          <div class="fc-item"><h5>Interprétation</h5><p>On isole le facteur d'actualisation de la maturité inconnue en soustrayant la contribution des maturités connues.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Credit Spread decomposition</span>
+        <span class="fc-tag">Credit</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">$$y_{\text{corporate}} = y_{\text{sovereign}} + \text{CS}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$\text{CS}$ : credit spread en bps (basis points, 1bp = 0.01%)</p></div>
+          <div class="fc-item"><h5>Intuition</h5><p>Le yield corporatif = taux sans risque (souverain) + prime de risque de crédit</p></div>
+          <div class="fc-item"><h5>Exemple</h5><p>Souverain: 4.0%, CS Apple AA: +80bps → $y_{Apple} = 4.80\%$</p></div>
+          <div class="fc-item"><h5>Impact</h5><p>Toute hausse des taux souverains (décision BCE/Fed) se répercute mécaniquement sur les taux corporatifs.</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- §12 COMPARAISONS -->
+<section class="sec" id="s12">
+  <div class="sec-hd"><span class="sec-num">§12</span><h2 class="sec-title">Tableaux de Comparaison</h2></div>
+
+  <h3>Souverain vs. Corporate vs. Zéro Coupon</h3>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Critère</th><th>Souverain (Govie)</th><th>Corporate</th><th>Zéro Coupon</th></tr></thead>
+      <tbody>
+        <tr><td>Émetteur</td><td>État souverain</td><td>Entreprise privée</td><td>État ou entreprise</td></tr>
+        <tr><td>Coupons</td><td>Semi-annuels généralement</td><td>Semi-annuels généralement</td><td class="g">Aucun</td></tr>
+        <tr><td>Risque de défaut</td><td class="g">Très faible (AAA)</td><td class="r">Variable selon rating</td><td>Selon émetteur</td></tr>
+        <tr><td>Yield</td><td class="g">Le plus bas (référence)</td><td class="r">= Souverain + Credit Spread</td><td>Standardisé</td></tr>
+        <tr><td>Reinvestment Risk</td><td class="r">Oui (coupons)</td><td class="r">Oui (coupons)</td><td class="g">Aucun !</td></tr>
+        <tr><td>Usage principal</td><td>Benchmark, diversification</td><td>Rendement supérieur</td><td class="g">Bootstrap, pricing</td></tr>
+        <tr><td>Comparabilité</td><td>Difficile entre émetteurs</td><td>Difficile</td><td class="g">Standard universel</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Comparaison des risques</h3>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Risque</th><th>Horizon</th><th>Bonds Souverains Longs</th><th>Bonds Corp. Courts</th><th>Bonds Corp. HY</th></tr></thead>
+      <tbody>
+        <tr><td>Taux</td><td>Court terme</td><td class="r">Très élevé (duration longue)</td><td class="g">Faible</td><td class="m">Modéré</td></tr>
+        <tr><td>Crédit</td><td>Tout horizon</td><td class="g">Quasi nul</td><td class="m">Modéré</td><td class="r">Élevé</td></tr>
+        <tr><td>Inflation</td><td>Long terme</td><td class="r">Élevé</td><td class="g">Faible</td><td class="m">Modéré</td></tr>
+        <tr><td>Liquidité</td><td>Immédiat</td><td class="g">Faible (marché liquide)</td><td class="m">Modéré</td><td class="r">Élevé</td></tr>
+        <tr><td>Réinvestissement</td><td>Long terme</td><td class="r">Élevé</td><td class="m">Modéré</td><td class="m">Modéré</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- §13 PERSPECTIVE HISTORIQUE -->
+<section class="sec" id="s13">
+  <div class="sec-hd"><span class="sec-num">§13</span><h2 class="sec-title">Perspective Historique</h2></div>
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-year">XIIe–XVIIe siècles</div>
+      <div class="tl-title">Origines médiévales</div>
+      <div class="tl-desc">Les républiques italiennes (Venise, Gênes) émettent les premiers <em>prestiti</em> — emprunts d'État avec coupons. La Banque d'Amsterdam (1609) et la Banque d'Angleterre (1694) modernisent le financement public par obligations.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">XIXe siècle</div>
+      <div class="tl-title">Marchés obligataires modernes</div>
+      <div class="tl-desc">Financement des guerres napoléoniennes et de la révolution industrielle via des bonds souverains et corporates. Les Rothschild dominent le marché international des emprunts d'État.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1973–1980</div>
+      <div class="tl-title">Choc pétrolier & révolution des taux</div>
+      <div class="tl-desc">L'inflation galopante pousse les rendements obligataires à des niveaux historiques. La gestion du risque de taux devient critique. Naissance de la gestion active des obligations.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1997</div>
+      <div class="tl-title">Publication de "Options, Futures & Other Derivatives" — Hull</div>
+      <div class="tl-desc">Formalisation du pricing des obligations et de la courbe des taux. L'algorithme Bootstrap entre dans le mainstream académique et pratique.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2008–2009</div>
+      <div class="tl-title">Crise financière mondiale</div>
+      <div class="tl-desc">Les credit spreads explosent. La faillite de Lehman Brothers démontre la réalité du credit risk. Les QE (Quantitative Easing) des banques centrales font plonger les rendements souverains vers zéro.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2022</div>
+      <div class="tl-title">Grande rotation de taux</div>
+      <div class="tl-desc">La Fed relève ses taux de 0% à 5.5% en 18 mois. Pire performance des bonds en 40 ans. Effondrement simultané actions/bonds — remise en question de la corrélation négative traditionnelle.</div>
+    </div>
+  </div>
+</section>
+
+<!-- §14 QUESTIONS D'EXAMEN -->
+<section class="sec" id="s14">
+  <div class="sec-hd"><span class="sec-num">§14</span><h2 class="sec-title">Questions d'Examen Possibles</h2></div>
+
+  <div class="qlevel easy">● Faciles</div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Qu'est-ce qu'un bond et quels sont ses composants fondamentaux ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Un bond est un instrument de dette : l'émetteur emprunte de l'argent et s'engage contractuellement à verser des <strong>coupons</strong> périodiques et à rembourser le <strong>principal</strong> à maturité. Les composants clés : (1) coupon $c_i$ — récompense pour prêter, (2) principal $P$ — montant remboursé à maturité $T$, (3) prix $B(t)$ — unique degré de liberté, (4) yield $y$ — taux de rendement implicite. La structure des cash flows est fixe contractuellement.</p></div>
+  </div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Qu'est-ce que le credit spread et comment est-il interprété ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Le credit spread est la différence de yield entre un bond corporatif et un bond souverain de même maturité : $\text{CS} = y_{\text{corp}} - y_{\text{souverain}}$. Il représente la <strong>prime de risque</strong> exigée par les investisseurs pour compenser le risque de défaut de l'émetteur. Plus le rating est bas (BB, B), plus le spread est élevé. Les variations du spread reflètent les changements de perception du risque de crédit.</p></div>
+  </div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Quelle est la relation entre le prix d'un bond et son yield ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>La relation est <strong>inverse et convexe</strong>. Inverse : si le yield augmente, le prix baisse, et vice versa (intuition : les flux futurs sont actualisés à un taux plus élevé, donc valent moins aujourd'hui). Convexe : la courbe présente une courbure positive — la sensibilité du prix n'est pas constante. La duration mesure la sensibilité linéaire (tangente), la convexité mesure la courbure (terme du second ordre).</p></div>
+  </div>
+
+  <div class="qlevel med">●● Intermédiaires</div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Expliquez l'algorithme Bootstrap pas à pas avec un exemple chiffré.</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p><strong>Objectif :</strong> extraire les taux zéro coupon $r_T$ depuis des prix de marché de bonds à coupons.<br><br><strong>Étape 1 (maturités courtes, ZC disponibles) :</strong> Si un ZC de 6 mois vaut 94.9 pour 100 nominal, son taux est $r_{0.5} = 2\ln(1 + 5.1/94.9 \times 2/2) = 10.469\%$.<br><br><strong>Étape 2 (maturité 1.5 ans avec coupon) :</strong> Les flux sont 4 à 0.5 an, 4 à 1 an, 104 à 1.5 an. Prix = 96. On connaît déjà $r_{0.5}$ et $r_{1.0}$. On écrit : $4 e^{-r_{0.5} \times 0.5} + 4 e^{-r_{1.0} \times 1} + 104 e^{-r_{1.5} \times 1.5} = 96$ et on résout pour $r_{1.5}$. On obtient $r_{1.5} = 10.681\%$.<br><br><strong>Clé :</strong> on "bootstrap" depuis les maturités courtes vers les longues, utilisant les taux déjà calculés.</p></div>
+  </div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Un bond à 10 ans vs. un bond à 2 ans : lequel est plus risqué en cas de hausse des taux ? Pourquoi ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Le bond à <strong>10 ans est beaucoup plus risqué</strong>. La raison est la <strong>duration</strong> (vue au cours suivant) : un bond à longue maturité a plus de flux futurs lointains qui sont fortement impactés par l'actualisation. Intuition directe depuis la formule de pricing : les termes $e^{-y \times T}$ avec $T$ grand sont très sensibles à $y$. Une hausse de 1% du yield fait chuter le prix d'un bond 10 ans environ ~8-9% (duration ≈ 8-9 ans) contre ~1.9% pour un 2 ans (duration ≈ 1.9 ans).</p></div>
+  </div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Pourquoi utilise-t-on les taux zéro coupon comme standard de comparaison ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Les yields des bonds à coupons <strong>dépendent de leur structure de paiement</strong> : un bond avec beaucoup de coupons précoces a une duration effective plus courte, ce qui modifie son yield même pour un risque équivalent. Le taux zéro coupon $r_T$ est pur : il représente le taux d'actualisation pour <strong>un unique paiement à la date $T$</strong>, sans ambiguïté sur les flux intermédiaires. C'est la brique de base universelle pour comparer des instruments aux structures différentes et pour construire des courbes de taux cohérentes.</p></div>
+  </div>
+
+  <div class="qlevel hard">●●● Difficiles</div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Pourquoi la convexité est-elle une propriété avantageuse pour l'investisseur et comment en tire-t-on profit ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>La convexité implique que <strong>les gains lors d'une baisse de taux sont plus importants que les pertes lors d'une hausse équivalente</strong>. Mathématiquement, c'est parce que $B(y)$ est une fonction convexe : la tangente (duration) sous-estime toujours le prix réel.<br><br>Pour en tirer profit : les stratégies de <em>"barbell"</em> (bonds très courts + très longs) ont plus de convexité qu'un <em>"bullet"</em> (bonds à maturité intermédiaire), à duration égale. En période de forte volatilité des taux, la convexité vaut quelque chose — on peut quantifier sa valeur et l'intégrer dans le pricing d'options sur bonds. Les traders "long convexity" bénéficient des grandes fluctuations de taux quelle que soit leur direction.</p></div>
+  </div>
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">En 2022, les corrélations actions/bonds sont devenues positives. Quelles en sont les implications pour la construction de portefeuille ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>La corrélation positive actions/bonds brise l'hypothèse fondamentale du portefeuille <em>60/40</em> (60% actions, 40% bonds). Elle survient quand le moteur commun de baisse est l'<strong>inflation</strong> : les taux montent pour la combattre, ce qui fait baisser les bonds (hausse du yield) et les actions (actualisation des dividendes futurs plus élevée).<br><br>Implications : (1) la diversification bonds/actions ne fonctionne plus comme couverture ; (2) les investisseurs doivent chercher des alternatives décorrélées : commodités, gold, infrastructure, TIPS ; (3) la gestion obligataire doit intégrer explicitement le risque d'inflation dans les modèles d'allocation ; (4) l'optimisation de la frontière efficiente est significativement modifiée par ce changement de régime.</p></div>
+  </div>
+</section>
+
+<!-- §15 PIÈGES CLASSIQUES -->
+<section class="sec" id="s15">
+  <div class="sec-hd"><span class="sec-num">§15</span><h2 class="sec-title">Pièges Classiques à l'Examen</h2></div>
+
+  <div class="piege">
+    <span class="piege-icon">⚡</span>
+    <div class="piege-text"><strong>Confondre yield et coupon rate :</strong> Le taux du coupon est fixé à l'émission et ne change jamais. Le yield est le taux de rendement implicite du prix de marché courant — il fluctue en permanence. Un bond "à 5% de coupon" peut avoir un yield de 8% si son prix a baissé.</div>
+  </div>
+  <div class="piege">
+    <span class="piege-icon">⚡</span>
+    <div class="piege-text"><strong>Oublier la convexité :</strong> La relation prix-yield n'est PAS linéaire. L'approximation linéaire (duration seule) sous-estime systématiquement le prix réel — l'erreur d'approximation est le terme de convexité. Citer uniquement la duration sans mentionner la convexité est incomplet.</div>
+  </div>
+  <div class="piege">
+    <span class="piege-icon">⚡</span>
+    <div class="piege-text"><strong>Confondre "at a premium" et "sur-évalué" :</strong> Un bond se vendant au-dessus du pair (at a premium, B > 100) n'est pas sur-évalué — c'est simplement que son taux de coupon est supérieur au yield de marché. C'est une situation tout à fait normale.</div>
+  </div>
+  <div class="piege">
+    <span class="piege-icon">⚡</span>
+    <div class="piege-text"><strong>Croire que le Bootstrap ne s'applique qu'aux ZC :</strong> L'algorithme Bootstrap s'applique précisément quand les bonds ont des coupons. Pour les bonds ZC purs, le calcul est direct. La valeur ajoutée du Bootstrap est de traiter les bonds À COUPONS pour en extraire les taux ZC.</div>
+  </div>
+  <div class="piege">
+    <span class="piege-icon">⚡</span>
+    <div class="piege-text"><strong>Négliger l'ordre d'application du Bootstrap :</strong> On doit impérativement procéder par maturité croissante. On ne peut pas calculer $r_{1.5}$ sans connaître $r_{0.5}$ et $r_{1.0}$ — c'est la nature récursive de l'algorithme.</div>
+  </div>
+  <div class="piege">
+    <span class="piege-icon">⚡</span>
+    <div class="piege-text"><strong>Confondre risque de taux et risque de crédit :</strong> Ce sont deux risques distincts. Une hausse des taux souverains impacte tous les bonds (y compris souverains). Le risque de crédit est spécifique à l'émetteur. Les deux peuvent se produire simultanément et s'amplifient mutuellement dans les crises.</div>
+  </div>
+  <div class="piege">
+    <span class="piege-icon">⚡</span>
+    <div class="piege-text"><strong>Supposer que la courbe des taux est toujours ascendante :</strong> En pratique, la courbe peut être inversée (2007, 2022), plate, ou humped. Une courbe inversée est souvent interprétée comme un signal de récession à venir.</div>
+  </div>
+</section>
+
+<!-- §16 FICHE DE RÉVISION -->
+<section class="sec" id="s16">
+  <div class="sec-hd"><span class="sec-num">§16</span><h2 class="sec-title">Fiche de Révision Finale</h2></div>
+
+  <div class="fiche-grid">
+    <div class="fc2">
+      <h4>🔑 Définitions essentielles</h4>
+      <ul>
+        <li><strong>Bond</strong> — Contrat de dette : coupons fixes + principal à maturité</li>
+        <li><strong>Coupon $c_i$</strong> — Paiement périodique fixé à l'émission</li>
+        <li><strong>Yield $y$</strong> — Taux de rendement implicite du prix de marché</li>
+        <li><strong>Zero coupon rate $r_T$</strong> — Taux pour un paiement unique à $T$</li>
+        <li><strong>Credit spread CS</strong> — $y_{\text{corp}} - y_{\text{souverain}}$</li>
+        <li><strong>At premium/par/discount</strong> — $B > = <$ 100</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>📐 Formules clés</h4>
+      <ul>
+        <li><strong>Prix</strong> — $B(t) = \sum c_i e^{-y(t_i-t)} + Pe^{-y(T-t)}$</li>
+        <li><strong>ZC prix</strong> — $B_{ZC} = Pe^{-r_T(T-t)}$</li>
+        <li><strong>ZC rate</strong> — $r_T = -\frac{1}{T}\ln(B_{ZC}/P)$</li>
+        <li><strong>Bootstrap</strong> — Résoudre pour $r_T$ après avoir soustrait CF connus</li>
+        <li><strong>Yield décomposé</strong> — $y = y_{souv} + CS$</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>🔄 Algorithme Bootstrap</h4>
+      <ul>
+        <li><strong>1.</strong> Trier les bonds par maturité croissante</li>
+        <li><strong>2.</strong> Si ZC : calculer $r_T$ directement</li>
+        <li><strong>3.</strong> Si coupon : utiliser $r$ connus pour les CF intermédiaires</li>
+        <li><strong>4.</strong> Isoler $e^{-r_T T}$ et en déduire $r_T$</li>
+        <li><strong>5.</strong> Répéter pour la maturité suivante</li>
+        <li><strong>⚠️</strong> Ordre croissant obligatoire (récursif)</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>⚖️ Relations clés</h4>
+      <ul>
+        <li><strong>⬆️ Yield</strong> ⇒ <strong>⬇️ Prix</strong> (inverse)</li>
+        <li><strong>Convexité</strong> = courbure de B(y), favorable à l'investisseur</li>
+        <li><strong>Longue duration</strong> = forte sensibilité aux taux</li>
+        <li><strong>Rating bas</strong> = credit spread élevé = yield élevé</li>
+        <li><strong>ZC bond</strong> = pas de risque de réinvestissement</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>⚠️ 5 Risques à retenir</h4>
+      <ul>
+        <li><strong>Taux</strong> — Hausse taux → baisse prix</li>
+        <li><strong>Crédit</strong> — Défaut émetteur → perte capital</li>
+        <li><strong>Inflation</strong> — Érosion pouvoir d'achat</li>
+        <li><strong>Liquidité</strong> — Marché secondaire étroit</li>
+        <li><strong>Réinvestissement</strong> — Coupons réinvestis à taux bas</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>📊 Rôle dans le portfolio</h4>
+      <ul>
+        <li><strong>Diversification</strong> — Corrélation négative avec actions (habituellement)</li>
+        <li><strong>Revenu</strong> — Cash flows réguliers et prévisibles</li>
+        <li><strong>Préservation</strong> — Capital remboursé à maturité</li>
+        <li><strong>Life-cycle</strong> — Proportion bonds croît avec l'âge</li>
+        <li><strong>⚠️ 2022</strong> — Corrélation positive exception notable</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box ok" style="margin-top:2rem">
+    <div class="box-title">🎯 Message central à retenir pour l'oral</div>
+    Un bond est un <strong>contrat de cash flows fixes</strong> dont la <strong>valorisation repose sur l'actualisation</strong>. Le prix et le yield entretiennent une <strong>relation inverse et convexe</strong>. Pour comparer des bonds hétérogènes, on utilise les <strong>taux zéro coupon</strong> extraits via l'<strong>algorithme Bootstrap</strong>. Le yield se décompose en <strong>taux souverain + credit spread</strong>. Les bonds jouent un rôle essentiel de <strong>diversification et de génération de revenus</strong> dans un portfolio, sous réserve de gérer activement les cinq risques associés.
+  </div>
+</section>
+
+</main>
+
+<script>
+function toggleQ(el) {
+  const ans = el.nextElementSibling;
+  const arr = el.querySelector('.qi-arr');
+  ans.classList.toggle('open');
+  arr.style.transform = ans.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+
+// Active sidebar link on scroll
+const sections = document.querySelectorAll('.sec');
+const navLinks = document.querySelectorAll('.sb nav a');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => link.classList.remove('active'));
+      const active = document.querySelector(`.sb nav a[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
