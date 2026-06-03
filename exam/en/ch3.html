@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Markets & Behaviors — Oral Exam Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']], processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root{
+  --bg:#0d0b14;--bg-card:#161221;--bg-code:#1c1828;
+  --text:#e4dffa;--muted:#9089bf;--border:rgba(180,150,80,.18);--bstrong:rgba(180,150,80,.4);
+  --gold:#c9a84c;--glight:#e8c97a;--blue:#7eb8d4;--green:#7bc496;--red:#e07b7b;--violet:#a78bfa;
+  --orange:#e8a47a;
+  --ff:'EB Garamond',Georgia,serif;--fd:'Cormorant Garamond',Georgia,serif;--fm:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:18px;line-height:1.85;display:flex}
+
+/* SIDEBAR */
+.sb{width:270px;min-height:100vh;background:var(--bg-card);border-right:1px solid var(--border);
+  padding:2rem 1.4rem;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sb-logo{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--gold);margin-bottom:.3rem}
+.sb-sub{font-family:var(--fm);font-size:.73rem;color:var(--muted);margin-bottom:1.8rem;letter-spacing:.05em}
+.sb nav ul{list-style:none}
+.sb nav ul li{margin-bottom:.2rem}
+.sb nav ul li a{color:var(--muted);text-decoration:none;font-size:.88rem;display:block;
+  padding:.35rem .7rem;border-radius:4px;border-left:2px solid transparent;transition:all .18s}
+.sb nav ul li a:hover,.sb nav ul li a.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,168,76,.07)}
+.sb nav ul li a .n{font-family:var(--fm);font-size:.72rem;color:var(--gold);margin-right:.45rem;opacity:.75}
+.sb-section{font-family:var(--fm);font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--muted);padding:.5rem .7rem .3rem;opacity:.6}
+
+/* MAIN */
+.main{margin-left:270px;flex:1;padding:3rem 4rem;max-width:1020px}
+
+/* HERO */
+.hero{border-bottom:1px solid var(--border);padding-bottom:3rem;margin-bottom:4.5rem}
+.hero-tag{font-family:var(--fm);font-size:.75rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero h1{font-family:var(--fd);font-size:3.6rem;font-weight:700;line-height:1.1;margin-bottom:.8rem}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:620px;margin-bottom:1.5rem}
+.badges{display:flex;gap:.7rem;flex-wrap:wrap}
+.badge{font-family:var(--fm);font-size:.72rem;padding:.25rem .75rem;border:1px solid var(--bstrong);
+  border-radius:20px;color:var(--gold);letter-spacing:.04em}
+.badge.b{border-color:rgba(126,184,212,.35);color:var(--blue)}
+.badge.g{border-color:rgba(123,196,150,.35);color:var(--green)}
+.badge.r{border-color:rgba(224,123,123,.35);color:var(--red)}
+
+/* SECTION */
+.sec{margin-bottom:5rem;scroll-margin-top:2rem}
+.sec-hd{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.sec-num{font-family:var(--fm);font-size:.85rem;color:var(--gold);opacity:.65;min-width:2.5rem}
+.sec-title{font-family:var(--fd);font-size:1.95rem;font-weight:700;color:var(--text)}
+h3{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--glight);margin:2rem 0 .8rem}
+h4{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--blue);margin:1.4rem 0 .5rem}
+p{margin-bottom:.9rem}
+strong{color:var(--glight);font-weight:600}
+em{color:var(--blue);font-style:italic}
+a{color:var(--gold);text-decoration:none}
+code{font-family:var(--fm);background:var(--bg-code);padding:.1em .4em;border-radius:3px;font-size:.82em;color:var(--gold)}
+ul,ol{padding-left:1.5rem;margin-bottom:.9rem}
+li{margin-bottom:.35rem}
+
+/* CALLOUT */
+.box{background:var(--bg-card);border-left:3px solid var(--gold);padding:1.1rem 1.4rem;border-radius:0 6px 6px 0;margin:1.4rem 0}
+.box.info{border-left-color:var(--blue)}.box.warn{border-left-color:var(--red)}.box.ok{border-left-color:var(--green)}.box.vio{border-left-color:var(--violet)}
+.box-title{font-family:var(--fm);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem}
+.box.info .box-title{color:var(--blue)}.box.warn .box-title{color:var(--red)}.box.ok .box-title{color:var(--green)}.box.vio .box-title{color:var(--violet)}
+
+/* MATH */
+.mblock{background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:1.3rem 1.8rem;
+  margin:1.4rem 0;overflow-x:auto;text-align:center}
+.mblock .mlabel{font-family:var(--fm);font-size:.7rem;color:var(--muted);text-align:left;margin-bottom:.7rem;
+  text-transform:uppercase;letter-spacing:.08em}
+
+/* TABLES */
+.twrap{overflow-x:auto;margin:1.4rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead{background:var(--bg-code)}
+th{padding:.8rem 1rem;text-align:left;font-family:var(--fm);font-size:.73rem;color:var(--gold);
+  text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--bstrong)}
+td{padding:.7rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(201,168,76,.03)}
+td.g{color:var(--green)}td.r{color:var(--red)}td.m{color:var(--muted)}td.o{color:var(--orange)}
+
+/* ORAL BLOCK */
+.oral{background:var(--bg-card);border:1px solid var(--bstrong);border-radius:10px;
+  padding:2rem;margin:1rem 0;position:relative}
+.oral::before{content:'"';font-family:var(--fd);font-size:5rem;color:var(--gold);opacity:.15;
+  position:absolute;top:-.5rem;left:.8rem;line-height:1}
+.oral p{font-size:1rem;line-height:1.9;color:var(--text)}
+.oral p+p{margin-top:.8rem}
+
+/* STORY BLOCK */
+.story{background:linear-gradient(135deg,rgba(199,130,50,.08),rgba(126,184,212,.06));
+  border:1px solid rgba(199,130,50,.25);border-radius:12px;padding:2rem;margin:1.4rem 0;
+  position:relative;overflow:hidden}
+.story::before{content:'📖';font-size:3rem;position:absolute;right:1.5rem;top:1rem;opacity:.15}
+.story-title{font-family:var(--fd);font-size:1.1rem;font-weight:700;color:var(--gold);
+  margin-bottom:1rem;font-style:italic}
+.story p{font-size:.95rem;line-height:1.9;color:var(--text)}
+
+/* DIAGRAM SVG WRAPPER */
+.diag{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;
+  padding:1.5rem;margin:1.4rem 0;overflow-x:auto;text-align:center}
+.diag-title{font-family:var(--fm);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--muted);margin-bottom:1rem}
+
+/* QUIZ */
+.qlevel{display:inline-block;font-family:var(--fm);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.1em;padding:.2rem .7rem;border-radius:4px;margin-bottom:.8rem;margin-top:1.2rem}
+.qlevel.easy{background:rgba(123,196,150,.13);color:var(--green)}
+.qlevel.med{background:rgba(126,184,212,.13);color:var(--blue)}
+.qlevel.hard{background:rgba(224,123,123,.13);color:var(--red)}
+.qi{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.8rem;overflow:hidden}
+.qi-q{padding:.9rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;transition:background .15s}
+.qi-q:hover{background:rgba(201,168,76,.05)}
+.qi-qtxt{flex:1;font-size:.93rem}
+.qi-arr{color:var(--gold);font-size:1.1rem;transition:transform .2s;min-width:1.2rem;text-align:center}
+.qi-a{padding:0 1.1rem;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .2s;
+  background:var(--bg-code);font-size:.88rem;color:var(--muted);border-top:0 solid var(--border)}
+.qi-a.open{max-height:600px;padding:1rem 1.1rem;border-top:1px solid var(--border)}
+
+/* PIEGE */
+.piege{display:flex;gap:.9rem;align-items:flex-start;margin-bottom:.9rem;
+  padding:.8rem 1rem;background:rgba(224,123,123,.06);border-radius:6px;border-left:3px solid var(--red)}
+.piege-icon{font-size:1.1rem;min-width:1.4rem}
+.piege-text{font-size:.93rem}
+.piege-text strong{color:var(--red)}
+
+/* FICHE */
+.fiche-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.4rem 0}
+.fc2{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.1rem}
+.fc2 h4{font-family:var(--fm);font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--gold);margin:0 0 .7rem 0}
+.fc2 ul{list-style:none;padding:0;font-size:.85rem}
+.fc2 ul li{padding:.22rem 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted)}
+.fc2 ul li:last-child{border:none}
+.fc2 ul li strong{color:var(--text)}
+
+/* STAT CARDS */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.4rem 0}
+.stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;
+  padding:1.2rem;text-align:center}
+.stat-num{font-family:var(--fd);font-size:2.2rem;font-weight:700;color:var(--gold);line-height:1}
+.stat-unit{font-family:var(--fm);font-size:.72rem;color:var(--muted);margin:.3rem 0 .5rem}
+.stat-label{font-size:.85rem;color:var(--muted)}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:2rem;margin:1.4rem 0}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold),transparent)}
+.tl-item{position:relative;margin-bottom:2rem;padding-left:1.4rem}
+.tl-item::before{content:'';position:absolute;left:-2.4rem;top:.6rem;width:8px;height:8px;
+  border-radius:50%;background:var(--gold);border:2px solid var(--bg)}
+.tl-year{font-family:var(--fm);font-size:.78rem;color:var(--gold);margin-bottom:.25rem}
+.tl-title{font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:.25rem}
+.tl-desc{font-size:.9rem;color:var(--muted)}
+
+/* CONCEPT GRID */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin:1.4rem 0}
+.ccard{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.2rem;transition:border-color .18s}
+.ccard:hover{border-color:var(--bstrong)}
+.ccard .ctag{font-family:var(--fm);font-size:.68rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
+.ccard h4{font-family:var(--fd);font-size:1.15rem;color:var(--text);margin:0 0 .4rem 0}
+.ccard p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.6}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:3px}
+
+@media(max-width:900px){.sb{display:none}.main{margin-left:0;padding:2rem 1.4rem}.stat-row{grid-template-columns:1fr 1fr}.fiche-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ SIDEBAR ═══════════════════════════════ -->
+<<nav class="sb">
+  <div class="sb-logo">CF · Markets</div>
+  <div class="sb-sub">Univ. Geneva · A. Dupuis · v1.1</div>
+  <nav>
+    <ul>
+      <div class="sb-section">Intro</div>
+      <li><a href="#histoire"><span class="n">◈</span>The Trader's Story</a></li>
+      <li><a href="#contexte"><span class="n">0</span>Context</a></li>
+      <div class="sb-section">Theory</div>
+      <li><a href="#emh"><span class="n">1</span>EMH — Efficient Markets</a></li>
+      <li><a href="#lieux"><span class="n">2</span>Where Do We Trade?</a></li>
+      <li><a href="#actifs"><span class="n">3</span>Which Assets?</a></li>
+      <li><a href="#volumes"><span class="n">4</span>Volumes & Sizes</a></li>
+      <li><a href="#instruments"><span class="n">5</span>Main Instruments</a></li>
+      <div class="sb-section">Empirical</div>
+      <li><a href="#stylised"><span class="n">6</span>Stylised Facts</a></li>
+      <li><a href="#seasonality"><span class="n">7</span>Seasonality</a></li>
+      <li><a href="#events"><span class="n">8</span>Market Events</a></li>
+      <div class="sb-section">Exam</div>
+      <li><a href="#quiz"><span class="n">9</span>Exam Questions</a></li>
+      <li><a href="#pieges"><span class="n">!</span>Classic Pitfalls</a></li>
+      <li><a href="#fiche"><span class="n">★</span>Revision Sheet</a></li>
+    </ul>
+  </nav>
+</nav>
+
+<!-- ═══════════════════════════════ MAIN ═══════════════════════════════ -->
+<<main class="main">
+
+<!-- ─────── HERO ─────── -->
+<div class="hero">
+  <div class="hero-tag">Computational Finance · Chapter 3</div>
+  <h1><em>Markets</em> &amp;<br>Behaviors</h1>
+  <p class="hero-desc">Are markets rational? What is really traded there? And why don't prices follow a simple random walk?</p>
+  <div class="badges">
+    <span class="badge">EMH</span>
+    <span class="badge">Stylised Facts</span>
+    <span class="badge b">Fat Tails</span>
+    <span class="badge b">Volatility Clustering</span>
+    <span class="badge g">Instruments</span>
+    <span class="badge r">Flash Crash</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     INTRODUCTION STORY
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="histoire">
+  <div class="sec-hd">
+    <span class="sec-num">◈</span>
+    <h2 class="sec-title">The Story of the Blind Trader</h2>
+  </div>
+
+  <div class="story">
+    <div class="story-title">📖 New York, May 2010 — 2:42 PM</div>
+    <p>Thomas is an algorithmic trader at a Manhattan hedge fund. For 8 years, his quantitative model has performed regularly. He calibrated his algorithm on a simple assumption: <strong>prices follow a Gaussian random walk</strong>. Volatility is constant, distribution tails are negligible.</p>
+    <p>This Monday afternoon, his screen displays something impossible. The Dow Jones just lost <strong>998 points in 5 minutes</strong>. Not an hour. Five minutes. A 9.2% instantaneous drop. His algorithm, which had never modeled such an event — because the Gaussian told him it was <em>statistically impossible</em> — keeps buying. It accumulates losing positions at a terrifying speed.</p>
+    <p>In 20 minutes, the markets recover. But Thomas has lost millions. Not because he was stupid. Because he ignored three fundamental things: markets have <strong>fat tails</strong>, <strong>volatility clusters</strong>, and <strong>endogenous events</strong> that no Gaussian model can capture.</p>
+    <p style="color:var(--gold);font-style:italic">This chapter gives you the tools to not be Thomas.</p>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 0 — CONTEXT
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="contexte">
+  <div class="sec-hd">
+    <span class="sec-num">00</span>
+    <h2 class="sec-title">Context</h2>
+  </div>
+
+  <p>This chapter addresses financial markets from the <strong>empirical and behavioral</strong> angle — two dimensions often neglected by purely theoretical models. The central issue: understanding to what extent real markets deviate from an ideal <em>random walk</em>, and what regular structures (<em>stylised facts</em>) can be extracted from them.</p>
+
+  <!-- Schema Vue d'ensemble -->
+  <div class="diag">
+    <div class="diag-title">Chapter Overview</div>
+    <svg viewBox="0 0 760 200" width="100%" xmlns="http://www.w3.org/2000/svg" style="font-family:'EB Garamond',serif">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#c9a84c" opacity=".7"/>
+        </marker>
+      </defs>
+      <!-- Node 1 -->
+      <rect x="10" y="70" width="130" height="60" rx="8" fill="#1c1828" stroke="#c9a84c" stroke-width="1.5"/>
+      <text x="75" y="95" text-anchor="middle" fill="#e8c97a" font-size="13" font-weight="600">EMH</text>
+      <text x="75" y="114" text-anchor="middle" fill="#9089bf" font-size="11">Efficient markets?</text>
+      <!-- Arrow -->
+      <line x1="140" y1="100" x2="170" y2="100" stroke="#c9a84c" stroke-width="1.2" opacity=".6" marker-end="url(#arr)"/>
+      <!-- Node 2 -->
+      <rect x="170" y="70" width="130" height="60" rx="8" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.5"/>
+      <text x="235" y="95" text-anchor="middle" fill="#7eb8d4" font-size="13" font-weight="600">Structure</text>
+      <text x="235" y="114" text-anchor="middle" fill="#9089bf" font-size="11">Places & Assets</text>
+      <!-- Arrow -->
+      <line x1="300" y1="100" x2="330" y2="100" stroke="#c9a84c" stroke-width="1.2" opacity=".6" marker-end="url(#arr)"/>
+      <!-- Node 3 -->
+      <rect x="330" y="70" width="130" height="60" rx="8" fill="#1c1828" stroke="#7bc496" stroke-width="1.5"/>
+      <text x="395" y="95" text-anchor="middle" fill="#7bc496" font-size="13" font-weight="600">Instruments</text>
+      <text x="395" y="114" text-anchor="middle" fill="#9089bf" font-size="11">Spot, Futures…</text>
+      <!-- Arrow -->
+      <line x1="460" y1="100" x2="490" y2="100" stroke="#c9a84c" stroke-width="1.2" opacity=".6" marker-end="url(#arr)"/>
+      <!-- Node 4 -->
+      <rect x="490" y="70" width="130" height="60" rx="8" fill="#1c1828" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="555" y="95" text-anchor="middle" fill="#a78bfa" font-size="13" font-weight="600">Stylised Facts</text>
+      <text x="555" y="114" text-anchor="middle" fill="#9089bf" font-size="11">Empirical patterns</text>
+      <!-- Arrow -->
+      <line x1="620" y1="100" x2="650" y2="100" stroke="#c9a84c" stroke-width="1.2" opacity=".6" marker-end="url(#arr)"/>
+      <!-- Node 5 -->
+      <rect x="650" y="70" width="100" height="60" rx="8" fill="#1c1828" stroke="#e07b7b" stroke-width="1.5"/>
+      <text x="700" y="95" text-anchor="middle" fill="#e07b7b" font-size="13" font-weight="600">Events</text>
+      <text x="700" y="114" text-anchor="middle" fill="#9089bf" font-size="11">News & Shocks</text>
+    </svg>
+  </div>
+
+  <div class="oral">
+    <p><strong>Executive Summary (30 seconds):</strong> This chapter examines the Efficient Market Hypothesis (<em>Efficient Market Hypothesis</em>), the structure of trading venues, asset classes and instruments, and <em>stylised facts</em> — that is, robust empirical statistical properties that distinguish a real financial series from a simple random walk. The main conclusion: <strong>markets are not Gaussian random walks</strong>.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 1 — EMH
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="emh">
+  <div class="sec-hd">
+    <span class="sec-num">01</span>
+    <h2 class="sec-title">Efficient Market Hypothesis (EMH)</h2>
+  </div>
+
+  <h3>Definition & Intuition</h3>
+  <p>The <strong>Efficient Market Hypothesis</strong> (<em>Efficient Market Hypothesis, EMH</em>) was proposed by <strong>Eugene Fama</strong> in 1960 (Nobel Prize 2013). It rests on a fundamentally simple idea: if agents are rational and if information circulates freely, then the price of an asset <em>always</em> reflects all available information.</p>
+
+  <div class="box info">
+    <div class="box-title">Central Implication</div>
+    It is <strong>impossible to beat the market</strong> systematically. Every asset is always at its fair value. Impossible to buy undervalued or sell overvalued.
+  </div>
+
+  <h3>The 3 Forms of EMH</h3>
+
+  <!-- PYRAMID DIAGRAM -->
+  <div class="diag">
+    <div class="diag-title">Pyramid of the 3 Forms of EMH</div>
+    <svg viewBox="0 0 680 340" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background glow -->
+      <defs>
+        <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- STRONG form - top -->
+      <polygon points="340,30 460,130 220,130" fill="rgba(224,123,123,0.18)" stroke="#e07b7b" stroke-width="1.5"/>
+      <text x="340" y="95" text-anchor="middle" fill="#e07b7b" font-size="16" font-weight="700">STRONG</text>
+      <text x="340" y="118" text-anchor="middle" fill="#e07b7b" font-size="11">Public + private info</text>
+
+      <!-- SEMI-STRONG form - middle -->
+      <polygon points="220,130 460,130 510,220 170,220" fill="rgba(126,184,212,0.14)" stroke="#7eb8d4" stroke-width="1.5"/>
+      <text x="340" y="170" text-anchor="middle" fill="#7eb8d4" font-size="16" font-weight="700">SEMI-STRONG</text>
+      <text x="340" y="192" text-anchor="middle" fill="#7eb8d4" font-size="11">All public info immediately incorporated</text>
+      <text x="340" y="210" text-anchor="middle" fill="#7eb8d4" font-size="11">Fundamental analysis is ineffective</text>
+
+      <!-- WEAK form - bottom -->
+      <polygon points="170,220 510,220 570,310 110,310" fill="rgba(123,196,150,0.14)" stroke="#7bc496" stroke-width="1.5"/>
+      <text x="340" y="255" text-anchor="middle" fill="#7bc496" font-size="16" font-weight="700">WEAK</text>
+      <text x="340" y="276" text-anchor="middle" fill="#7bc496" font-size="11">Past prices cannot predict future prices</text>
+      <text x="340" y="296" text-anchor="middle" fill="#7bc496" font-size="11">Technical analysis is ineffective · Price = random walk</text>
+
+      <!-- Annotation right side -->
+      <text x="600" y="80" fill="#9089bf" font-size="10" font-family="'JetBrains Mono',monospace">VERY STRONG</text>
+      <text x="600" y="175" fill="#9089bf" font-size="10" font-family="'JetBrains Mono',monospace">STRONG</text>
+      <text x="600" y="265" fill="#9089bf" font-size="10" font-family="'JetBrains Mono',monospace">WEAK</text>
+
+      <!-- Legend left -->
+      <text x="20" y="95" fill="#9089bf" font-size="10" font-family="'JetBrains Mono',monospace">↑ + restrictive</text>
+      <text x="20" y="290" fill="#9089bf" font-size="10" font-family="'JetBrains Mono',monospace">↓ - restrictive</text>
+    </svg>
+  </div>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Form</th><th>Information Incorporated</th><th>Consequence</th><th>Validated?</th></tr></thead>
+      <tbody>
+        <tr><td><strong style="color:var(--green)">Weak</strong></td><td>Past prices only</td><td>Technical analysis useless · Price = random walk</td><td class="r">Contested</td></tr>
+        <tr><td><strong style="color:var(--blue)">Semi-strong</strong></td><td>All public info (announcements, reports…)</td><td>Fundamental analysis useless</td><td class="r">Very contested</td></tr>
+        <tr><td><strong style="color:var(--red)">Strong</strong></td><td>Public + private info (insider trading)</td><td>Even insiders cannot beat the market</td><td class="r">Refuted</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Critiques of EMH</h3>
+  <p>The theory is <strong>widely criticized</strong>, even in its weak form. Several empirical phenomena challenge it:</p>
+
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Behavior</div>
+      <h4>Herding</h4>
+      <p>Agents imitate the crowd rather than acting on their own information. Creates irrational trends.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Anomaly</div>
+      <h4>Speculative Bubbles</h4>
+      <p>Bitcoin 2013, dot-com 2000: prices durably deviate from fundamental value.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Technology</div>
+      <h4>Algorithmic Trading</h4>
+      <p>Algos create feedback loops that amplify movements — Flash Crash of May 6, 2010.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Managers</div>
+      <h4>Soros & Buffett</h4>
+      <p>Beating the market for 50 years is not just luck. The probability of that is astronomically low.</p>
+    </div>
+  </div>
+
+  <!-- FLASH CRASH DIAGRAM -->
+  <h3>Case Study: Flash Crash (May 6, 2010)</h3>
+  <div class="diag">
+    <div class="diag-title">Flash Crash · DOW Jones · May 6, 2010 · Shock Simulation</div>
+    <svg viewBox="0 0 680 250" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- Grid -->
+      <line x1="60" y1="20" x2="60" y2="210" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <line x1="60" y1="210" x2="650" y2="210" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <!-- Y axis labels -->
+      <text x="50" y="30" text-anchor="end" fill="#9089bf" font-size="10">11000</text>
+      <text x="50" y="80" text-anchor="end" fill="#9089bf" font-size="10">10800</text>
+      <text x="50" y="130" text-anchor="end" fill="#9089bf" font-size="10">10600</text>
+      <text x="50" y="180" text-anchor="end" fill="#9089bf" font-size="10">10200</text>
+      <text x="50" y="210" text-anchor="end" fill="#9089bf" font-size="10">10000</text>
+      <!-- X axis labels -->
+      <text x="100" y="225" text-anchor="middle" fill="#9089bf" font-size="10">9:00</text>
+      <text x="230" y="225" text-anchor="middle" fill="#9089bf" font-size="10">11:00</text>
+      <text x="370" y="225" text-anchor="middle" fill="#9089bf" font-size="10">1:00 PM</text>
+      <text x="500" y="225" text-anchor="middle" fill="#9089bf" font-size="10">2:30 PM</text>
+      <text x="620" y="225" text-anchor="middle" fill="#9089bf" font-size="10">4:00 PM</text>
+      <!-- Grid lines horizontal -->
+      <line x1="60" y1="80" x2="650" y2="80" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="60" y1="130" x2="650" y2="130" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="60" y1="180" x2="650" y2="180" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="3,3"/>
+      <!-- DOW curve - stable then crash then recover -->
+      <polyline points="80,38 130,42 180,38 230,45 280,50 330,55 370,62 400,70 430,80 450,85 460,88 470,100 475,115 478,140 479,195 480,205 481,185 482,165 484,145 490,130 500,125 520,118 550,122 580,125 610,128 640,130" fill="none" stroke="#e07b7b" stroke-width="2.2"/>
+      <!-- Fill area under crash -->
+      <polygon points="460,88 470,100 475,115 478,140 479,195 480,205 481,185 482,165 484,145 490,130 500,125 460,88" fill="rgba(224,123,123,0.08)"/>
+      <!-- Vertical line at crash moment -->
+      <line x1="480" y1="20" x2="480" y2="210" stroke="#e07b7b" stroke-width="1.5" stroke-dasharray="4,3" opacity=".6"/>
+      <!-- Annotation -->
+      <rect x="490" y="45" width="150" height="50" rx="5" fill="rgba(224,123,123,0.12)" stroke="#e07b7b" stroke-width="1" opacity=".9"/>
+      <text x="565" y="65" text-anchor="middle" fill="#e07b7b" font-size="11" font-weight="600">▼ 998.5 pts</text>
+      <text x="565" y="82" text-anchor="middle" fill="#e07b7b" font-size="11">−9.2% in 5 min</text>
+      <!-- Arrow pointing to crash -->
+      <line x1="490" y1="70" x2="484" y2="160" stroke="#e07b7b" stroke-width="1" opacity=".5" marker-end="url(#arr)"/>
+      <!-- Recovery annotation -->
+      <text x="580" y="140" fill="#7bc496" font-size="10">Near-total</text>
+      <text x="580" y="155" fill="#7bc496" font-size="10">recovery</text>
+      <!-- Title label -->
+      <text x="120" y="30" fill="#9089bf" font-size="10">DOW Jones Index</text>
+    </svg>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">Nobel Paradox 2013</div>
+    Eugene Fama (EMH) and Robert Shiller (irrational markets) shared the same Nobel Prize. Economics is the only discipline where two <strong>diametrically opposed</strong> theories can be rewarded simultaneously. This illustrates the lack of consensus on efficiency.
+  </div>
+
+  <!-- ORAL MODEL -->
+  <div class="oral">
+    <p><strong>Model oral answer:</strong> "The EMH, proposed by Fama in 1960, states that prices reflect at every instant all available information. It exists in three forms: weak — only past prices are incorporated —, semi-strong — all public information is incorporated immediately —, and strong — even private information. The theoretical consequence is the impossibility of beating the market systematically.</p>
+    <p>However, this hypothesis is strongly criticized. Phenomena such as the Flash Crash of 2010 — where the Dow Jones fell 9.2% in five minutes before recovering — or speculative bubbles on Bitcoin illustrate that markets can adopt deeply irrational behaviors. Herd behavior, algorithmic trading, and fat tails of return distributions fundamentally challenge the Gaussian paradigm on which EMH rests."</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 2 — TRADING VENUES
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="lieux">
+  <div class="sec-hd">
+    <span class="sec-num">02</span>
+    <h2 class="sec-title">Where Do We Trade?</h2>
+  </div>
+
+  <div class="diag">
+    <div class="diag-title">Architecture of Financial Markets</div>
+    <svg viewBox="0 0 720 260" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- Central node -->
+      <ellipse cx="360" cy="130" rx="70" ry="40" fill="rgba(201,168,76,0.12)" stroke="#c9a84c" stroke-width="2"/>
+      <text x="360" y="125" text-anchor="middle" fill="#e8c97a" font-size="14" font-weight="700">Financial</text>
+      <text x="360" y="145" text-anchor="middle" fill="#9089bf" font-size="11">Markets</text>
+
+      <!-- Left: Regulated -->
+      <rect x="30" y="80" width="200" height="100" rx="10" fill="rgba(123,196,150,0.1)" stroke="#7bc496" stroke-width="1.8"/>
+      <text x="130" y="104" text-anchor="middle" fill="#7bc496" font-size="14" font-weight="700">Regulated Markets</text>
+      <text x="130" y="122" text-anchor="middle" fill="#9089bf" font-size="11">NYSE, LSE, CME, SIX</text>
+      <text x="130" y="139" text-anchor="middle" fill="#9089bf" font-size="10">• Physical/electronic venue</text>
+      <text x="130" y="155" text-anchor="middle" fill="#9089bf" font-size="10">• Strict regulation</text>
+      <text x="130" y="170" text-anchor="middle" fill="#9089bf" font-size="10">• Clearing process</text>
+      <!-- Arrow -->
+      <line x1="230" y1="130" x2="290" y2="130" stroke="#7bc496" stroke-width="1.5" opacity=".5" marker-end="url(#arr)"/>
+
+      <!-- Right: OTC -->
+      <rect x="490" y="80" width="200" height="100" rx="10" fill="rgba(232,164,122,0.1)" stroke="#e8a47a" stroke-width="1.8"/>
+      <text x="590" y="104" text-anchor="middle" fill="#e8a47a" font-size="14" font-weight="700">OTC Markets</text>
+      <text x="590" y="122" text-anchor="middle" fill="#9089bf" font-size="11">Over The Counter</text>
+      <text x="590" y="139" text-anchor="middle" fill="#9089bf" font-size="10">• Oanda, interbanking</text>
+      <text x="590" y="155" text-anchor="middle" fill="#9089bf" font-size="10">• Market makers / quotes</text>
+      <text x="590" y="170" text-anchor="middle" fill="#9089bf" font-size="10">• Less transparent, + risky</text>
+      <!-- Arrow -->
+      <line x1="430" y1="130" x2="490" y2="130" stroke="#e8a47a" stroke-width="1.5" opacity=".5" marker-end="url(#arr)"/>
+
+      <!-- Bottom: Intermediaries -->
+      <rect x="210" y="215" width="300" height="38" rx="8" fill="rgba(167,139,250,0.1)" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="360" y="232" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="600">Intermediaries</text>
+      <text x="360" y="248" text-anchor="middle" fill="#9089bf" font-size="10">Brokers (e.g., Dukascopy) · Market Makers (e.g., Oanda)</text>
+      <!-- Arrow up -->
+      <line x1="360" y1="215" x2="360" y2="170" stroke="#a78bfa" stroke-width="1.2" opacity=".5" marker-end="url(#arr)"/>
+    </svg>
+  </div>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Type</th><th>Example</th><th>Regulation</th><th>Transparency</th><th>Risk</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--green)">Regulated</strong></td>
+          <td>NYSE, LSE, SIX, CME</td>
+          <td class="g">Strict · Clearing</td>
+          <td class="g">High</td>
+          <td class="g">Low</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--orange)">OTC</strong></td>
+          <td>Oanda (FX), bond markets</td>
+          <td class="r">Low · Bilateral</td>
+          <td class="r">Low</td>
+          <td class="r">Higher</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">Market Maker vs Broker — key distinction for the exam</div>
+    <ul>
+      <li><strong>Market Maker</strong> (e.g., Oanda): proposes bid/ask prices, takes risk by holding inventory. It is remunerated for this risk via the <em>spread</em>.</li>
+      <li><strong>Broker</strong> (e.g., Dukascopy, Interactive Brokers): takes no risk, holds no inventory. Transmits orders and earns a commission.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 3 — ASSETS
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="actifs">
+  <div class="sec-hd">
+    <span class="sec-num">03</span>
+    <h2 class="sec-title">Which Assets?</h2>
+  </div>
+
+  <div class="diag">
+    <div class="diag-title">The 4 Major Asset Classes</div>
+    <svg viewBox="0 0 720 220" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- Equity -->
+      <rect x="15" y="30" width="160" height="160" rx="10" fill="rgba(123,196,150,0.09)" stroke="#7bc496" stroke-width="1.8"/>
+      <text x="95" y="58" text-anchor="middle" fill="#7bc496" font-size="18">📈</text>
+      <text x="95" y="82" text-anchor="middle" fill="#7bc496" font-size="15" font-weight="700">Equity</text>
+      <text x="95" y="100" text-anchor="middle" fill="#9089bf" font-size="10">Company shares</text>
+      <text x="95" y="118" text-anchor="middle" fill="#9089bf" font-size="10">Periodic dividends</text>
+      <text x="95" y="136" text-anchor="middle" fill="#9089bf" font-size="10">High risk</text>
+      <text x="95" y="154" text-anchor="middle" fill="#9089bf" font-size="10">Asymmetry (fat left tail)</text>
+      <text x="95" y="175" text-anchor="middle" fill="#7bc496" font-size="10" font-style="italic">NYSE, NASDAQ, SIX</text>
+
+      <!-- Bonds -->
+      <rect x="190" y="30" width="160" height="160" rx="10" fill="rgba(126,184,212,0.09)" stroke="#7eb8d4" stroke-width="1.8"/>
+      <text x="270" y="58" text-anchor="middle" fill="#7eb8d4" font-size="18">🏛️</text>
+      <text x="270" y="82" text-anchor="middle" fill="#7eb8d4" font-size="15" font-weight="700">Bonds</text>
+      <text x="270" y="100" text-anchor="middle" fill="#9089bf" font-size="10">Loan to State or company</text>
+      <text x="270" y="118" text-anchor="middle" fill="#9089bf" font-size="10">Coupons + repayment</text>
+      <text x="270" y="136" text-anchor="middle" fill="#9089bf" font-size="10">f(maturity, schedule)</text>
+      <text x="270" y="154" text-anchor="middle" fill="#9089bf" font-size="10">Credit risk</text>
+      <text x="270" y="175" text-anchor="middle" fill="#7eb8d4" font-size="10" font-style="italic">OTC / Bloomberg</text>
+
+      <!-- Commodities -->
+      <rect x="365" y="30" width="160" height="160" rx="10" fill="rgba(232,164,122,0.09)" stroke="#e8a47a" stroke-width="1.8"/>
+      <text x="445" y="58" text-anchor="middle" fill="#e8a47a" font-size="18">🌾</text>
+      <text x="445" y="82" text-anchor="middle" fill="#e8a47a" font-size="15" font-weight="700">Commodities</text>
+      <text x="445" y="100" text-anchor="middle" fill="#9089bf" font-size="10">Wheat, corn, oil…</text>
+      <text x="445" y="118" text-anchor="middle" fill="#9089bf" font-size="10">Via Futures (standardized)</text>
+      <text x="445" y="136" text-anchor="middle" fill="#9089bf" font-size="10">Roll-over before maturity</text>
+      <text x="445" y="154" text-anchor="middle" fill="#9089bf" font-size="10">Physical delivery possible</text>
+      <text x="445" y="175" text-anchor="middle" fill="#e8a47a" font-size="10" font-style="italic">CME, ICE</text>
+
+      <!-- Currencies -->
+      <rect x="540" y="30" width="165" height="160" rx="10" fill="rgba(201,168,76,0.09)" stroke="#c9a84c" stroke-width="2.2"/>
+      <text x="622" y="58" text-anchor="middle" fill="#c9a84c" font-size="18">💱</text>
+      <text x="622" y="82" text-anchor="middle" fill="#e8c97a" font-size="15" font-weight="700">Currencies (FX)</text>
+      <text x="622" y="100" text-anchor="middle" fill="#9089bf" font-size="10">Always in pairs</text>
+      <text x="622" y="118" text-anchor="middle" fill="#9089bf" font-size="10">Interest rate differential</text>
+      <text x="622" y="136" text-anchor="middle" fill="#9089bf" font-size="10">Most liquid market</text>
+      <text x="622" y="154" text-anchor="middle" fill="#9089bf" font-size="10">~5 trillion $/day</text>
+      <text x="622" y="175" text-anchor="middle" fill="#e8c97a" font-size="10" font-style="italic">★ Backbone of markets</text>
+    </svg>
+  </div>
+
+  <div class="box">
+    <div class="box-title">Key point to remember</div>
+    <strong>Currencies (FX)</strong> are described as the "<em>backbone of financial markets</em>" — they constitute the largest market (~5 trillion dollars per day), operate 24/7, and their liquidity influences the entire global financial ecosystem.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 4 — VOLUMES
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="volumes">
+  <div class="sec-hd">
+    <span class="sec-num">04</span>
+    <h2 class="sec-title">Volumes & Key Figures</h2>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">~5 T$</div>
+      <div class="stat-unit">per day</div>
+      <div class="stat-label">Global daily FX volume (BIS 2013)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">25%</div>
+      <div class="stat-unit">of FX volume</div>
+      <div class="stat-label">EUR/USD pair · The most liquid</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">3.6 M$</div>
+      <div class="stat-unit">per second</div>
+      <div class="stat-label">Average volume on EUR/USD (long or short)</div>
+    </div>
+  </div>
+
+  <!-- Bar chart simulé des bourses -->
+  <div class="diag">
+    <div class="diag-title">Main World Exchanges by Volume (2013, billions USD)</div>
+    <svg viewBox="0 0 680 280" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- Bars -->
+      <g>
+        <!-- NYSE -->
+        <rect x="50" y="20" width="420" height="26" rx="4" fill="rgba(201,168,76,0.7)"/>
+        <text x="480" y="38" fill="#e8c97a" font-size="12" font-family="'JetBrains Mono',monospace">6,920</text>
+        <text x="44" y="38" text-anchor="end" fill="#9089bf" font-size="11">NYSE Euronext US</text>
+        <!-- NASDAQ -->
+        <rect x="50" y="54" width="288" height="26" rx="4" fill="rgba(126,184,212,0.7)"/>
+        <text x="348" y="72" fill="#7eb8d4" font-size="12" font-family="'JetBrains Mono',monospace">4,748</text>
+        <text x="44" y="72" text-anchor="end" fill="#9089bf" font-size="11">NASDAQ OMX US</text>
+        <!-- Tokyo -->
+        <rect x="50" y="88" width="208" height="26" rx="4" fill="rgba(167,139,250,0.6)"/>
+        <text x="268" y="106" fill="#a78bfa" font-size="12" font-family="'JetBrains Mono',monospace">3,429</text>
+        <text x="44" y="106" text-anchor="end" fill="#9089bf" font-size="11">Tokyo Stock Exch.</text>
+        <!-- Shanghai -->
+        <rect x="50" y="122" width="104" height="26" rx="4" fill="rgba(232,164,122,0.6)"/>
+        <text x="164" y="140" fill="#e8a47a" font-size="12" font-family="'JetBrains Mono',monospace">1,720</text>
+        <text x="44" y="140" text-anchor="end" fill="#9089bf" font-size="11">Shanghai SE</text>
+        <!-- Shenzhen -->
+        <rect x="50" y="156" width="102" height="26" rx="4" fill="rgba(232,164,122,0.5)"/>
+        <text x="162" y="174" fill="#e8a47a" font-size="12" font-family="'JetBrains Mono',monospace">1,684</text>
+        <text x="44" y="174" text-anchor="end" fill="#9089bf" font-size="11">Shenzhen SE</text>
+        <!-- LSE -->
+        <rect x="50" y="190" width="69" height="26" rx="4" fill="rgba(123,196,150,0.6)"/>
+        <text x="129" y="208" fill="#7bc496" font-size="12" font-family="'JetBrains Mono',monospace">1,142</text>
+        <text x="44" y="208" text-anchor="end" fill="#9089bf" font-size="11">London SE</text>
+        <!-- Others -->
+        <rect x="50" y="224" width="50" height="26" rx="4" fill="rgba(144,137,191,0.5)"/>
+        <text x="110" y="242" fill="#9089bf" font-size="12" font-family="'JetBrains Mono',monospace">833</text>
+        <text x="44" y="242" text-anchor="end" fill="#9089bf" font-size="11">NYSE Europe</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">EUR/USD volume per second calculation</div>
+    <p>From BIS 2013 data:</p>
+    <p>$ \frac{5 \times 10^{12} \times 0.25 \times 0.5}{86400 \times 2} \approx \mathbf{3.6 \text{ million USD/second}} $</p>
+    <p>Where: 25% = EUR/USD share, 50% = swaps share, ÷86400 = seconds/day, ÷2 = we keep one direction (long or short).</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 5 — INSTRUMENTS
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="instruments">
+  <div class="sec-hd">
+    <span class="sec-num">05</span>
+    <h2 class="sec-title">Main Instruments</h2>
+  </div>
+
+  <div class="diag">
+    <div class="diag-title">Hierarchy of Financial Instruments</div>
+    <svg viewBox="0 0 720 290" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- SPOT -->
+      <rect x="290" y="10" width="140" height="50" rx="8" fill="rgba(201,168,76,0.15)" stroke="#c9a84c" stroke-width="2"/>
+      <text x="360" y="32" text-anchor="middle" fill="#e8c97a" font-size="13" font-weight="700">SPOT</text>
+      <text x="360" y="50" text-anchor="middle" fill="#9089bf" font-size="10">Physical asset · Immediate price</text>
+      <!-- Line down -->
+      <line x1="360" y1="60" x2="360" y2="80" stroke="#9089bf" stroke-width="1" opacity=".4"/>
+      <!-- Horizontal -->
+      <line x1="100" y1="80" x2="620" y2="80" stroke="#9089bf" stroke-width="1" opacity=".3"/>
+
+      <!-- FORWARD -->
+      <line x1="100" y1="80" x2="100" y2="100" stroke="#9089bf" stroke-width="1" opacity=".4"/>
+      <rect x="20" y="100" width="160" height="70" rx="8" fill="rgba(126,184,212,0.12)" stroke="#7eb8d4" stroke-width="1.8"/>
+      <text x="100" y="122" text-anchor="middle" fill="#7eb8d4" font-size="13" font-weight="700">FORWARD</text>
+      <text x="100" y="140" text-anchor="middle" fill="#9089bf" font-size="10">Bilateral agreement</text>
+      <text x="100" y="156" text-anchor="middle" fill="#9089bf" font-size="10">Fixed price for future date</text>
+      <text x="100" y="170" text-anchor="middle" fill="#e07b7b" font-size="10">Non-standardized · OTC</text>
+
+      <!-- FUTURES -->
+      <line x1="280" y1="80" x2="280" y2="100" stroke="#9089bf" stroke-width="1" opacity=".4"/>
+      <rect x="200" y="100" width="160" height="70" rx="8" fill="rgba(123,196,150,0.12)" stroke="#7bc496" stroke-width="1.8"/>
+      <text x="280" y="122" text-anchor="middle" fill="#7bc496" font-size="13" font-weight="700">FUTURES</text>
+      <text x="280" y="140" text-anchor="middle" fill="#9089bf" font-size="10">Standardized forward</text>
+      <text x="280" y="156" text-anchor="middle" fill="#9089bf" font-size="10">Clearing process</text>
+      <text x="280" y="170" text-anchor="middle" fill="#7bc496" font-size="10">Exchange · Roll-over</text>
+
+      <!-- OPTION -->
+      <line x1="450" y1="80" x2="450" y2="100" stroke="#9089bf" stroke-width="1" opacity=".4"/>
+      <rect x="370" y="100" width="160" height="70" rx="8" fill="rgba(167,139,250,0.12)" stroke="#a78bfa" stroke-width="1.8"/>
+      <text x="450" y="122" text-anchor="middle" fill="#a78bfa" font-size="13" font-weight="700">OPTION</text>
+      <text x="450" y="140" text-anchor="middle" fill="#9089bf" font-size="10">Right (not obligation)</text>
+      <text x="450" y="156" text-anchor="middle" fill="#9089bf" font-size="10">to buy / sell</text>
+      <text x="450" y="170" text-anchor="middle" fill="#a78bfa" font-size="10">Call / Put · Strike price</text>
+
+      <!-- INDEX -->
+      <line x1="620" y1="80" x2="620" y2="100" stroke="#9089bf" stroke-width="1" opacity=".4"/>
+      <rect x="540" y="100" width="160" height="70" rx="8" fill="rgba(232,164,122,0.12)" stroke="#e8a47a" stroke-width="1.8"/>
+      <text x="620" y="122" text-anchor="middle" fill="#e8a47a" font-size="13" font-weight="700">INDEX</text>
+      <text x="620" y="140" text-anchor="middle" fill="#9089bf" font-size="10">Basket of assets</text>
+      <text x="620" y="156" text-anchor="middle" fill="#9089bf" font-size="10">SP500, DAX…</text>
+      <text x="620" y="170" text-anchor="middle" fill="#e8a47a" font-size="10">Passive diversification</text>
+
+      <!-- Risk arrow -->
+      <line x1="20" y1="250" x2="700" y2="250" stroke="#c9a84c" stroke-width="1.5" opacity=".3" marker-end="url(#arr)"/>
+      <text x="360" y="270" text-anchor="middle" fill="#9089bf" font-size="10" font-family="'JetBrains Mono',monospace">Complexity / Leverage →</text>
+    </svg>
+  </div>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Instrument</th><th>Definition</th><th>Standardized?</th><th>Typical Usage</th></tr></thead>
+      <tbody>
+        <tr><td><strong style="color:var(--gold)">Spot</strong></td><td>Immediate purchase/sale of the asset itself</td><td class="m">—</td><td>Direct trading, equities</td></tr>
+        <tr><td><strong style="color:var(--blue)">Forward</strong></td><td>Bilateral contract: buy/sell at fixed price, future date</td><td class="r">No (OTC)</td><td>FX hedging</td></tr>
+        <tr><td><strong style="color:var(--green)">Futures</strong></td><td>Standardized forward on an exchange with clearing</td><td class="g">Yes</td><td>Commodities, indices, FX</td></tr>
+        <tr><td><strong style="color:var(--violet)">Option</strong></td><td>Right (not obligation) to buy (Call) or sell (Put) at a fixed price</td><td class="g">Yes</td><td>Hedging, directional strategies</td></tr>
+        <tr><td><strong style="color:var(--orange)">Index</strong></td><td>Aggregated basket of assets (SP500, CAC40…)</td><td class="g">Yes</td><td>Benchmark, ETFs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">Roll-over (Futures)</div>
+    For commodity futures, one sells/buys the contract <strong>just before maturity</strong> to reposition on the next contract. Reason: we don't want to <em>physically receive</em> a ton of wheat!
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 6 — STYLISED FACTS
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="stylised">
+  <div class="sec-hd">
+    <span class="sec-num">06</span>
+    <h2 class="sec-title">Stylised Facts</h2>
+  </div>
+
+  <p><strong>Stylised Facts</strong> designate a set of <em>robust</em> and <em>universal</em> empirical statistical properties of financial series. They are observed in virtually all markets, across all time scales. These are the fundamental differences between real prices and a simple <em>random walk</em>.</p>
+
+  <div class="box vio">
+    <div class="box-title">Central Academic Reference</div>
+    R. Cont, "Empirical properties of asset returns: stylized facts and statistical issues", <em>Quantitative Finance</em>, 2001.
+  </div>
+
+  <!-- ── Fact 1 : Volatility Clustering ── -->
+  <h3>① Volatility Clustering (Heteroskedasticity)</h3>
+  <p><strong>Intuition:</strong> Large price variations are followed by large variations, and small variations by small variations. Volatility is not constant over time — it <em>clusters</em>.</p>
+
+  <div class="diag">
+    <div class="diag-title">Simulation: Volatility Clustering vs Gaussian Random Walk</div>
+    <svg viewBox="0 0 700 300" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- Labels -->
+      <text x="175" y="15" text-anchor="middle" fill="#9089bf" font-size="11" font-family="'JetBrains Mono',monospace">Random Walk (constant σ)</text>
+      <text x="525" y="15" text-anchor="middle" fill="#9089bf" font-size="11" font-family="'JetBrains Mono',monospace">Real markets (variable σ)</text>
+
+      <!-- Left panel border -->
+      <rect x="10" y="20" width="330" height="265" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)"/>
+      <!-- Right panel border -->
+      <rect x="360" y="20" width="330" height="265" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)"/>
+
+      <!-- Center line left -->
+      <line x1="10" y1="155" x2="340" y2="155" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <!-- Center line right -->
+      <line x1="360" y1="155" x2="690" y2="155" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+      <!-- LEFT: Random walk - uniform noise -->
+      <polyline points="
+        20,152 30,148 40,158 50,151 60,155 70,149 80,157 90,152 100,148 110,156 120,150 130,154 140,149 150,157 160,151 170,153 180,148 190,156 200,149 210,154 220,151 230,157 240,149 250,154 260,151 270,156 280,149 290,153 300,157 310,150 320,154 330,150" 
+        fill="none" stroke="#7eb8d4" stroke-width="1.8" opacity=".8"/>
+
+      <!-- RIGHT: Volatility clustering - calm periods then storms -->
+      <!-- Calm period 1 -->
+      <polyline points="
+        370,155 380,153 390,157 400,154 410,152 420,156 430,153 440,157 450,154" 
+        fill="none" stroke="#7bc496" stroke-width="1.8"/>
+      <!-- Storm period -->
+      <polyline points="
+        450,154 455,162 460,143 465,170 468,130 472,175 475,125 478,172 481,128 484,165 487,135 490,168 493,130 496,160 499,137 502,162 505,140 508,158 511,145" 
+        fill="none" stroke="#e07b7b" stroke-width="2"/>
+      <!-- Calm period 2 -->
+      <polyline points="
+        511,145 520,150 530,153 540,157 550,151 560,154 570,152 580,156 590,153" 
+        fill="none" stroke="#7bc496" stroke-width="1.8"/>
+      <!-- Storm period 2 -->
+      <polyline points="
+        590,153 594,145 598,165 602,138 606,170 609,132 612,168 615,136 618,163 622,140 625,165 628,142 631,160 634,145 637,162 640,148 643,158 646,145" 
+        fill="none" stroke="#e07b7b" stroke-width="2"/>
+      <!-- Calm period 3 -->
+      <polyline points="
+        646,148 655,152 665,155 675,151 685,154" 
+        fill="none" stroke="#7bc496" stroke-width="1.8"/>
+
+      <!-- Annotations right panel -->
+      <rect x="455" y="30" width="80" height="22" rx="4" fill="rgba(123,196,150,0.15)" stroke="#7bc496" stroke-width="1"/>
+      <text x="495" y="45" text-anchor="middle" fill="#7bc496" font-size="10">Calm</text>
+      <rect x="555" y="30" width="80" height="22" rx="4" fill="rgba(224,123,123,0.15)" stroke="#e07b7b" stroke-width="1"/>
+      <text x="595" y="45" text-anchor="middle" fill="#e07b7b" font-size="10">Turbulence</text>
+
+      <!-- GARCH label -->
+      <text x="525" y="275" text-anchor="middle" fill="#9089bf" font-size="10" font-style="italic">→ Modeled by GARCH · H = Heteroskedastic</text>
+    </svg>
+  </div>
+
+  <div class="mblock">
+    <div class="mlabel">GARCH(1,1) Model — capturing clustering</div>
+    $$\sigma_t^2 = \omega + \alpha \epsilon_{t-1}^2 + \beta \sigma_{t-1}^2$$
+    <p style="color:var(--muted);font-size:.85rem;margin-top:.6rem">Where $\epsilon_{t-1}^2$ is the past shock, $\sigma_{t-1}^2$ the past variance. The term $\beta$ captures the <em>persistence</em> of volatility.</p>
+  </div>
+
+  <!-- ── Fact 2 : Fat Tails ── -->
+  <h3>② Fat Tails — Leptokurtosis</h3>
+  <p><strong>Intuition:</strong> "Extreme" events (brutal drops, sudden rises) are <em>much more frequent</em> than predicted by a Gaussian distribution. The normal model dramatically underestimates the probability of crashes.</p>
+
+  <div class="diag">
+    <div class="diag-title">Fat Tails vs Gaussian Distribution</div>
+    <svg viewBox="0 0 680 280" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- Axes -->
+      <line x1="40" y1="240" x2="640" y2="240" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+      <line x1="340" y1="30" x2="340" y2="240" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="4,3"/>
+      <!-- X labels -->
+      <text x="140" y="258" text-anchor="middle" fill="#9089bf" font-size="11">-3σ</text>
+      <text x="240" y="258" text-anchor="middle" fill="#9089bf" font-size="11">-2σ</text>
+      <text x="340" y="258" text-anchor="middle" fill="#9089bf" font-size="11">0</text>
+      <text x="440" y="258" text-anchor="middle" fill="#9089bf" font-size="11">+2σ</text>
+      <text x="540" y="258" text-anchor="middle" fill="#9089bf" font-size="11">+3σ</text>
+
+      <!-- GAUSSIAN: smooth bell curve - blue -->
+      <path d="M 40,238 C 80,238 120,235 160,220 C 200,200 230,160 260,120 C 290,80 320,50 340,44 C 360,50 390,80 420,120 C 450,160 480,200 520,220 C 560,235 600,238 640,238" fill="rgba(126,184,212,0.08)" stroke="#7eb8d4" stroke-width="2.5"/>
+
+      <!-- FAT TAIL: taller center, fatter tails - red -->
+      <path d="M 40,237 C 70,237 110,235 140,230 C 170,222 200,210 230,190 C 260,160 300,100 320,65 C 330,48 336,38 340,36 C 344,38 350,48 360,65 C 380,100 420,160 450,190 C 480,210 510,222 540,230 C 570,235 610,237 640,237" fill="rgba(224,123,123,0.08)" stroke="#e07b7b" stroke-width="2.5"/>
+
+      <!-- Fat tail areas highlighted -->
+      <path d="M 40,237 C 70,237 100,236 120,234 C 140,232 160,228 170,232 L 170,238 L 40,238 Z" fill="rgba(224,123,123,0.2)"/>
+      <path d="M 510,232 C 540,228 570,232 600,234 C 620,236 640,237 640,237 L 640,238 L 510,238 Z" fill="rgba(224,123,123,0.2)"/>
+
+      <!-- Annotations -->
+      <text x="85" y="218" text-anchor="middle" fill="#e07b7b" font-size="11">Fat Tail</text>
+      <text x="585" y="218" text-anchor="middle" fill="#e07b7b" font-size="11">Fat Tail</text>
+      <text x="85" y="232" text-anchor="middle" fill="#e07b7b" font-size="10">⚠️ More frequent</text>
+      <text x="585" y="232" text-anchor="middle" fill="#e07b7b" font-size="10">⚠️ More frequent</text>
+
+      <!-- Legend -->
+      <line x1="430" y1="55" x2="460" y2="55" stroke="#7eb8d4" stroke-width="2.5"/>
+      <text x="465" y="59" fill="#7eb8d4" font-size="11">Gaussian</text>
+      <line x1="430" y1="75" x2="460" y2="75" stroke="#e07b7b" stroke-width="2.5"/>
+      <text x="465" y="79" fill="#e07b7b" font-size="11">Real markets</text>
+
+      <!-- Kurtosis annotation -->
+      <text x="340" y="24" text-anchor="middle" fill="#9089bf" font-size="10" font-style="italic">Real kurtosis &gt; 3 (leptokurtic)</text>
+    </svg>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">Critical Implication — Underestimated Value at Risk</div>
+    If we model returns with a Gaussian, we dramatically underestimate the probability of a -10% or greater crash. Thomas's model (the story at the beginning) made exactly this error. <strong>Lévy or Student-t distributions</strong> are more appropriate for capturing fat tails.
+  </div>
+
+  <!-- ── Fact 3 : Autocorrélation négative ── -->
+  <h3>③ Negative Auto-correlation in the Short Term</h3>
+  <p>At high frequency (tick data), we observe a <strong>negative short-term auto-correlation</strong> in price changes. Intuition: if a price jumps up (buyer shock), there is a tendency for a slight correction in the following ticks. This phenomenon is linked to the <em>bid-ask bounce</em> — transactions alternate between ask and bid.</p>
+
+  <div class="diag">
+    <div class="diag-title">Price change auto-correlation — high frequency</div>
+    <svg viewBox="0 0 680 220" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- Axes -->
+      <line x1="60" y1="20" x2="60" y2="185" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+      <line x1="60" y1="110" x2="640" y2="110" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+      <!-- Y labels -->
+      <text x="52" y="35" text-anchor="end" fill="#9089bf" font-size="10">+0.2</text>
+      <text x="52" y="72" text-anchor="end" fill="#9089bf" font-size="10">+0.1</text>
+      <text x="52" y="112" text-anchor="end" fill="#9089bf" font-size="10">0.0</text>
+      <text x="52" y="150" text-anchor="end" fill="#9089bf" font-size="10">-0.1</text>
+      <text x="52" y="185" text-anchor="end" fill="#9089bf" font-size="10">-0.2</text>
+      <!-- X labels -->
+      <text x="60" y="200" text-anchor="middle" fill="#9089bf" font-size="10">0</text>
+      <text x="185" y="200" text-anchor="middle" fill="#9089bf" font-size="10">10</text>
+      <text x="310" y="200" text-anchor="middle" fill="#9089bf" font-size="10">20</text>
+      <text x="435" y="200" text-anchor="middle" fill="#9089bf" font-size="10">30</text>
+      <text x="560" y="200" text-anchor="middle" fill="#9089bf" font-size="10">40</text>
+      <text x="540" y="198" text-anchor="start" fill="#9089bf" font-size="9">Number of ticks</text>
+
+      <!-- Autocorr bars: lag 0 high positive, lag 1 negative, then near 0 -->
+      <rect x="65" y="30" width="18" height="80" fill="rgba(201,168,76,0.7)"/>
+      <!-- Lag 1: negative -->
+      <rect x="88" y="110" width="18" height="68" fill="rgba(224,123,123,0.75)"/>
+      <!-- Remaining lags near zero with slight positive -->
+      <rect x="111" y="104" width="14" height="6" fill="rgba(126,184,212,0.5)"/>
+      <rect x="130" y="106" width="14" height="4" fill="rgba(126,184,212,0.5)"/>
+      <rect x="149" y="107" width="14" height="3" fill="rgba(126,184,212,0.5)"/>
+      <rect x="168" y="108" width="14" height="5" fill="rgba(126,184,212,0.5)"/>
+      <rect x="187" y="106" width="14" height="4" fill="rgba(126,184,212,0.5)"/>
+      <rect x="206" y="107" width="14" height="3" fill="rgba(126,184,212,0.5)"/>
+      <rect x="225" y="108" width="14" height="2" fill="rgba(126,184,212,0.5)"/>
+      <rect x="244" y="106" width="14" height="4" fill="rgba(126,184,212,0.5)"/>
+      <rect x="263" y="107" width="14" height="3" fill="rgba(126,184,212,0.5)"/>
+      <rect x="282" y="108" width="14" height="2" fill="rgba(126,184,212,0.5)"/>
+      <rect x="301" y="107" width="14" height="3" fill="rgba(126,184,212,0.5)"/>
+      <rect x="320" y="108" width="14" height="2" fill="rgba(126,184,212,0.5)"/>
+
+      <!-- Annotations -->
+      <text x="74" y="27" text-anchor="middle" fill="#e8c97a" font-size="10">Lag 0</text>
+      <text x="97" y="182" text-anchor="middle" fill="#e07b7b" font-size="10">Lag 1</text>
+      <text x="97" y="194" text-anchor="middle" fill="#e07b7b" font-size="10">negative!</text>
+
+      <!-- Confidence bands -->
+      <line x1="60" y1="100" x2="640" y2="100" stroke="rgba(126,184,212,0.25)" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="60" y1="120" x2="640" y2="120" stroke="rgba(126,184,212,0.25)" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="645" y="103" fill="#9089bf" font-size="9">+CI</text>
+      <text x="645" y="123" fill="#9089bf" font-size="9">−CI</text>
+    </svg>
+  </div>
+
+  <!-- ── Fact 4 : Scaling Laws ── -->
+  <h3>④ Scaling Laws</h3>
+  <p>Markets exhibit <strong>similarities at different time scales</strong>. The expected absolute return follows a power law as a function of the time interval $\Delta t$:</p>
+
+  <div class="mblock">
+    <div class="mlabel">Empirical scaling law</div>
+    $$\mathbb{E}\left[|r|\right] \sim \Delta t^{\alpha}$$
+    <p style="color:var(--muted);font-size:.85rem;margin-top:.6rem">
+      $r$ : return over interval $\Delta t$ · $\alpha$ : scaling exponent (≈ 0.5 for Brownian motion, but different in practice) · This relationship is linear on a log-log plot.
+    </p>
+  </div>
+
+  <p>For standard Brownian motion, $\alpha = 0.5$ (since volatility scales as $\sqrt{\Delta t}$). Deviations from this behavior reveal <em>long memory</em> or non-linear effects in real markets.</p>
+
+  <!-- ── Fact 5 : Autres ── -->
+  <h3>⑤ Other Stylised Facts</h3>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Stylised Fact</th><th>Description</th><th>Modeling implication</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--orange)">Volatility Clustering</strong></td>
+          <td>Large/small variations cluster in time · Heteroskedasticity</td>
+          <td class="m">→ Use GARCH, EGARCH</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--red)">Fat Tails</strong></td>
+          <td>Thick tails · Excess kurtosis · Leptokurtosis</td>
+          <td class="m">→ Lévy, Student-t distributions</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--blue)">Negative autocorrelation</strong></td>
+          <td>Negative correlation at short term (high frequency)</td>
+          <td class="m">→ Microstructure, bid-ask bounce</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--violet)">Scaling Laws</strong></td>
+          <td>$\mathbb{E}[|r|] \sim \Delta t^\alpha$</td>
+          <td class="m">→ Multifractal models</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--green)">Asymmetry (equity)</strong></td>
+          <td>Drops are stronger than rises (leverage effect)</td>
+          <td class="m">→ Volatility negatively correlated with returns</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--gold)">Spread/volume correlation</strong></td>
+          <td>The tighter the spread, the higher the volume</td>
+          <td class="m">→ Microstructure models</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--gold)">Volume/volatility correlation</strong></td>
+          <td>Strong positive correlation between volume and volatility</td>
+          <td class="m">→ Liquidity models</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">Central message to remember for the oral exam</div>
+    The set of these stylised facts converges toward one conclusion: <strong>financial markets are not Gaussian random walks</strong>. They have memory, fat-tailed distributions, time-varying volatility, and recurrent structures. Any model that ignores these properties (like Black-Scholes with constant σ) will be structurally biased.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 7 — SEASONALITY
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="seasonality">
+  <div class="sec-hd">
+    <span class="sec-num">07</span>
+    <h2 class="sec-title">Market Seasonality</h2>
+  </div>
+
+  <p><strong>Seasonality</strong> (<em>seasonality</em>) designates recurrent patterns in market activity according to the hour, day, week, month, or year. It is a deterministic component of price dynamics, superimposed on stochastic components.</p>
+
+  <h3>Equity: Intraday Seasonality (U-shaped profile)</h3>
+  <div class="diag">
+    <div class="diag-title">Intraday activity — Equity markets (characteristic U-shaped profile)</div>
+    <svg viewBox="0 0 680 230" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- Axes -->
+      <line x1="60" y1="20" x2="60" y2="190" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+      <line x1="60" y1="190" x2="640" y2="190" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+      <!-- Y label -->
+      <text x="15" y="110" text-anchor="middle" fill="#9089bf" font-size="10" transform="rotate(-90,15,110)">Relative activity</text>
+      <!-- X labels -->
+      <text x="85" y="207" text-anchor="middle" fill="#9089bf" font-size="10">9:30</text>
+      <text x="200" y="207" text-anchor="middle" fill="#9089bf" font-size="10">11:00</text>
+      <text x="340" y="207" text-anchor="middle" fill="#9089bf" font-size="10">1:00 PM</text>
+      <text x="480" y="207" text-anchor="middle" fill="#9089bf" font-size="10">3:00 PM</text>
+      <text x="610" y="207" text-anchor="middle" fill="#9089bf" font-size="10">4:30 PM</text>
+
+      <!-- U-shape curve -->
+      <path d="M 75,35 C 95,55 130,130 170,165 C 210,190 260,192 290,192 C 320,192 360,192 390,190 C 420,185 460,165 500,145 C 540,120 570,70 600,38 C 610,28 615,24 620,22" fill="rgba(201,168,76,0.08)" stroke="#c9a84c" stroke-width="2.5"/>
+
+      <!-- Fill zone under U -->
+      <path d="M 75,35 C 95,55 130,130 170,165 C 210,190 260,192 290,192 C 320,192 360,192 390,190 C 420,185 460,165 500,145 C 540,120 570,70 600,38 C 610,28 615,24 620,22 L 620,190 L 75,190 Z" fill="rgba(201,168,76,0.05)"/>
+
+      <!-- Annotations -->
+      <rect x="65" y="25" width="95" height="32" rx="4" fill="rgba(201,168,76,0.12)" stroke="#c9a84c" stroke-width="1"/>
+      <text x="112" y="38" text-anchor="middle" fill="#e8c97a" font-size="11">Opening</text>
+      <text x="112" y="53" text-anchor="middle" fill="#9089bf" font-size="10">Max activity</text>
+
+      <rect x="540" y="25" width="90" height="32" rx="4" fill="rgba(201,168,76,0.12)" stroke="#c9a84c" stroke-width="1"/>
+      <text x="585" y="38" text-anchor="middle" fill="#e8c97a" font-size="11">Closing</text>
+      <text x="585" y="53" text-anchor="middle" fill="#9089bf" font-size="10">Max activity</text>
+
+      <text x="340" y="180" text-anchor="middle" fill="#9089bf" font-size="10" font-style="italic">Midday lull</text>
+      <text x="340" y="168" text-anchor="middle" fill="#9089bf" font-size="12">↑</text>
+
+      <!-- U-shape label -->
+      <text x="340" y="220" text-anchor="middle" fill="#9089bf" font-size="10" font-style="italic">Universal "U" profile — NYSE, NASDAQ, Paris Bourse (Frijns, 2006)</text>
+    </svg>
+  </div>
+
+  <h3>FX: Seasonality Driven by Trading Sessions</h3>
+  <div class="diag">
+    <div class="diag-title">FX intraday seasonality — Overlap of global trading sessions</div>
+    <svg viewBox="0 0 720 260" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- Axes -->
+      <line x1="60" y1="20" x2="60" y2="200" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+      <line x1="60" y1="200" x2="700" y2="200" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+      <!-- X labels (0-24h GMT) -->
+      <text x="60" y="218" text-anchor="middle" fill="#9089bf" font-size="10">0h</text>
+      <text x="120" y="218" text-anchor="middle" fill="#9089bf" font-size="10">3h</text>
+      <text x="180" y="218" text-anchor="middle" fill="#9089bf" font-size="10">6h</text>
+      <text x="240" y="218" text-anchor="middle" fill="#9089bf" font-size="10">9h</text>
+      <text x="300" y="218" text-anchor="middle" fill="#9089bf" font-size="10">12h</text>
+      <text x="360" y="218" text-anchor="middle" fill="#9089bf" font-size="10">15h</text>
+      <text x="420" y="218" text-anchor="middle" fill="#9089bf" font-size="10">18h</text>
+      <text x="480" y="218" text-anchor="middle" fill="#9089bf" font-size="10">21h</text>
+      <text x="540" y="218" text-anchor="middle" fill="#9089bf" font-size="10">24h</text>
+      <text x="400" y="235" text-anchor="middle" fill="#9089bf" font-size="9" font-style="italic">GMT Hours</text>
+
+      <!-- Session bands -->
+      <!-- Sydney (0h-9h GMT) -->
+      <rect x="60" y="20" width="180" height="180" fill="rgba(167,139,250,0.07)" stroke="none"/>
+      <text x="150" y="35" text-anchor="middle" fill="#a78bfa" font-size="11" font-weight="700">SYDNEY</text>
+      <!-- Tokyo (0h-9h GMT) -->
+      <rect x="60" y="20" width="240" height="180" fill="rgba(126,184,212,0.07)" stroke="none"/>
+      <text x="180" y="52" text-anchor="middle" fill="#7eb8d4" font-size="11" font-weight="700">TOKYO</text>
+      <!-- London (8h-17h GMT) -->
+      <rect x="220" y="20" width="240" height="180" fill="rgba(201,168,76,0.07)" stroke="none"/>
+      <text x="340" y="35" text-anchor="middle" fill="#e8c97a" font-size="11" font-weight="700">LONDON</text>
+      <!-- New York (13h-22h GMT) -->
+      <rect x="360" y="20" width="240" height="180" fill="rgba(123,196,150,0.07)" stroke="none"/>
+      <text x="480" y="52" text-anchor="middle" fill="#7bc496" font-size="11" font-weight="700">NEW YORK</text>
+
+      <!-- Volume curve -->
+      <!-- Low at night (Asian hours) -->
+      <path d="M 60,175 C 80,173 100,170 120,166 C 140,162 160,155 180,148 C 200,141 215,136 225,130" fill="none" stroke="#c9a84c" stroke-width="2.5"/>
+      <!-- London opens: first peak -->
+      <path d="M 225,130 C 235,118 245,108 260,98 C 275,88 290,82 305,80" fill="none" stroke="#c9a84c" stroke-width="2.5"/>
+      <!-- Brief dip before NY -->
+      <path d="M 305,80 C 315,85 325,92 335,98 C 345,104 352,108 360,110" fill="none" stroke="#c9a84c" stroke-width="2.5"/>
+      <!-- NY opens: bigger peak (London + NY overlap) -->
+      <path d="M 360,110 C 368,95 375,78 385,65 C 395,52 408,42 420,38 C 432,35 438,34 445,35" fill="none" stroke="#c9a84c" stroke-width="2.5"/>
+      <!-- Decline after NY peak -->
+      <path d="M 445,35 C 460,42 475,55 490,72 C 510,92 530,120 555,145 C 575,163 595,173 620,178 C 635,180 650,182 680,184" fill="none" stroke="#c9a84c" stroke-width="2.5"/>
+
+      <!-- Fill -->
+      <path d="M 60,175 C 80,173 100,170 120,166 C 140,162 160,155 180,148 C 200,141 215,136 225,130 C 235,118 245,108 260,98 C 275,88 290,82 305,80 C 315,85 325,92 335,98 C 345,104 352,108 360,110 C 368,95 375,78 385,65 C 395,52 408,42 420,38 C 432,35 438,34 445,35 C 460,42 475,55 490,72 C 510,92 530,120 555,145 C 575,163 595,173 620,178 C 635,180 650,182 680,184 L 680,200 L 60,200 Z" fill="rgba(201,168,76,0.07)"/>
+
+      <!-- Peak annotations -->
+      <line x1="285" y1="80" x2="285" y2="200" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="285" y="75" text-anchor="middle" fill="#e8c97a" font-size="10">Peak 1</text>
+      <text x="285" y="65" text-anchor="middle" fill="#9089bf" font-size="9">London open</text>
+
+      <line x1="428" y1="34" x2="428" y2="200" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="428" y="28" text-anchor="middle" fill="#e8c97a" font-size="10">Peak 2 (max)</text>
+      <text x="428" y="20" text-anchor="middle" fill="#9089bf" font-size="9">London + NY overlap</text>
+
+      <text x="390" y="245" text-anchor="middle" fill="#9089bf" font-size="10" font-style="italic">S. Masry, 2011 · EUR/USD trade activity</text>
+    </svg>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">Why this FX pattern?</div>
+    The FX liquidity peak coincides with the <strong>London-New York overlap</strong> (1:00 PM–5:00 PM GMT). During this window, the two largest financial centers in the world operate simultaneously, maximizing volumes and reducing spreads.
+  </div>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Market</th><th>Seasonal pattern</th><th>Main cause</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Equity</strong></td><td>Intraday U-shaped profile (strong at open and close)</td><td>Overnight order accumulation + position closing</td></tr>
+        <tr><td><strong>FX</strong></td><td>Two peaks: London open + London/NY overlap</td><td>Sequential global sessions (Tokyo → London → NY)</td></tr>
+        <tr><td><strong>All classes</strong></td><td>Weekly, monthly, yearly seasonality</td><td>Economic calendar, month-end, January effects…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 8 — MARKET EVENTS
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="events">
+  <div class="sec-hd">
+    <span class="sec-num">08</span>
+    <h2 class="sec-title">Market Events</h2>
+  </div>
+
+  <p>Markets react to <strong>events</strong> that disturb their normal dynamics. These events are classified according to their origin (internal to the market or external) and their predictability.</p>
+
+  <div class="diag">
+    <div class="diag-title">Taxonomy of Market Events</div>
+    <svg viewBox="0 0 720 270" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- Central: Events -->
+      <ellipse cx="360" cy="135" rx="80" ry="45" fill="rgba(201,168,76,0.12)" stroke="#c9a84c" stroke-width="2"/>
+      <text x="360" y="130" text-anchor="middle" fill="#e8c97a" font-size="14" font-weight="700">Market</text>
+      <text x="360" y="150" text-anchor="middle" fill="#e8c97a" font-size="14" font-weight="700">Events</text>
+
+      <!-- Left: Endogenous -->
+      <rect x="15" y="60" width="200" height="150" rx="10" fill="rgba(167,139,250,0.1)" stroke="#a78bfa" stroke-width="1.8"/>
+      <text x="115" y="90" text-anchor="middle" fill="#a78bfa" font-size="14" font-weight="700">ENDOGENOUS</text>
+      <text x="115" y="110" text-anchor="middle" fill="#9089bf" font-size="11">Internal origin</text>
+      <line x1="65" y1="120" x2="200" y2="120" stroke="rgba(167,139,250,0.3)" stroke-width="1"/>
+      <text x="115" y="138" text-anchor="middle" fill="#9089bf" font-size="10">• Lack of liquidity</text>
+      <text x="115" y="154" text-anchor="middle" fill="#9089bf" font-size="10">• Algo feedback loops</text>
+      <text x="115" y="170" text-anchor="middle" fill="#9089bf" font-size="10">• Flash crashes</text>
+      <text x="115" y="186" text-anchor="middle" fill="#9089bf" font-size="10">• Stop-loss cascades</text>
+      <line x1="215" y1="135" x2="280" y2="135" stroke="#a78bfa" stroke-width="1.3" opacity=".5" marker-end="url(#arr)"/>
+
+      <!-- Right: Exogenous -->
+      <rect x="505" y="60" width="200" height="150" rx="10" fill="rgba(224,123,123,0.1)" stroke="#e07b7b" stroke-width="1.8"/>
+      <text x="605" y="90" text-anchor="middle" fill="#e07b7b" font-size="14" font-weight="700">EXOGENOUS</text>
+      <text x="605" y="110" text-anchor="middle" fill="#9089bf" font-size="11">External origin</text>
+      <line x1="555" y1="120" x2="690" y2="120" stroke="rgba(224,123,123,0.3)" stroke-width="1"/>
+      <text x="605" y="138" text-anchor="middle" fill="#9089bf" font-size="10">• Non-Farm Payroll (NFP)</text>
+      <text x="605" y="154" text-anchor="middle" fill="#9089bf" font-size="10">• GDP publications</text>
+      <text x="605" y="170" text-anchor="middle" fill="#9089bf" font-size="10">• SNB / ECB decisions</text>
+      <text x="605" y="186" text-anchor="middle" fill="#9089bf" font-size="10">• Geopolitical events</text>
+      <line x1="440" y1="135" x2="505" y2="135" stroke="#e07b7b" stroke-width="1.3" opacity=".5" marker-end="url(#arr)"/>
+
+      <!-- Bottom: Scheduled vs Unscheduled -->
+      <rect x="200" y="225" width="145" height="38" rx="7" fill="rgba(123,196,150,0.1)" stroke="#7bc496" stroke-width="1.5"/>
+      <text x="272" y="241" text-anchor="middle" fill="#7bc496" font-size="11" font-weight="600">Scheduled</text>
+      <text x="272" y="257" text-anchor="middle" fill="#9089bf" font-size="10">NFP · GDP · Indicators</text>
+
+      <rect x="375" y="225" width="145" height="38" rx="7" fill="rgba(232,164,122,0.1)" stroke="#e8a47a" stroke-width="1.5"/>
+      <text x="447" y="241" text-anchor="middle" fill="#e8a47a" font-size="11" font-weight="600">Unscheduled</text>
+      <text x="447" y="257" text-anchor="middle" fill="#9089bf" font-size="10">SNB floor · Attacks · …</text>
+
+      <!-- Arrows to bottom -->
+      <line x1="440" y1="180" x2="272" y2="225" stroke="#7bc496" stroke-width="1" opacity=".4" marker-end="url(#arr)"/>
+      <line x1="480" y1="178" x2="447" y2="225" stroke="#e8a47a" stroke-width="1" opacity=".4" marker-end="url(#arr)"/>
+    </svg>
+  </div>
+
+  <h3>Scheduled Events</h3>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Event</th><th>Frequency</th><th>Impact</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--gold)">Non-Farm Payroll (NFP)</strong></td>
+          <td>First Friday of the month</td>
+          <td class="r">★★★★★</td>
+          <td>8:30 EST (2:30 PM CH) · US employment</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--blue)">GDP by country</strong></td>
+          <td>Quarterly</td>
+          <td class="o">★★★★</td>
+          <td>BEA, Eurostat publications…</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--green)">Economic indicators</strong></td>
+          <td>Monthly/weekly</td>
+          <td class="m">★★★</td>
+          <td>Home sales, PMI, ISM…</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--violet)">Central bank decisions</strong></td>
+          <td>6-8 times/year</td>
+          <td class="r">★★★★★</td>
+          <td>Fed, ECB, SNB</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Unscheduled Events</h3>
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-year">September 2011</div>
+      <div class="tl-title">SNB sets EUR/CHF floor at 1.20</div>
+      <div class="tl-desc">Surprise decision by the Swiss National Bank. The CHF had appreciated massively during the crisis. Immediate and violent impact on EUR/CHF. Perfect example of an unscheduled exogenous event of the highest magnitude.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">May 2010</div>
+      <div class="tl-title">Flash Crash — DOW Jones −9.2% in 5 min</div>
+      <div class="tl-desc">Endogenous event amplified by algorithmic trading. Feedback loops between algorithms → stop-loss cascade → brutal drop → rapid recovery. No external news identified.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2001</div>
+      <div class="tl-title">Manhattan Attack</div>
+      <div class="tl-desc">Exogenous geopolitical shock. Temporary closure of NYSE. Lasting impact on equity markets and implied volatility.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 9 — QUIZ
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="quiz">
+  <div class="sec-hd">
+    <span class="sec-num">09</span>
+    <h2 class="sec-title">Exam Questions</h2>
+  </div>
+
+  <div class="qlevel easy">Easy</div>
+  <div class="qi" onclick="toggle(this)">
+    <div class="qi-q"><span class="qi-qtxt">What is the difference between a <em>Market Maker</em> and a <em>Broker</em>?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a">A <strong>Market Maker</strong> (e.g., Oanda) proposes bid/ask prices, holds inventory and therefore takes market risk — it is remunerated via the spread. A <strong>Broker</strong> (e.g., Dukascopy) takes no risk, holds no inventory, and transmits orders while earning a commission. The key distinction: <em>inventory = risk = market maker</em>.</div>
+  </div>
+
+  <div class="qi" onclick="toggle(this)">
+    <div class="qi-q"><span class="qi-qtxt">List the 3 forms of EMH and their meaning.</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><strong>Weak:</strong> past prices are incorporated → technical analysis is useless. <strong>Semi-strong:</strong> all public information is incorporated immediately → fundamental analysis is useless. <strong>Strong:</strong> even private information (insider) is incorporated → no one can beat the market systematically.</div>
+  </div>
+
+  <div class="qi" onclick="toggle(this)">
+    <div class="qi-q"><span class="qi-qtxt">What is a <em>Futures</em> and how does it differ from a <em>Forward</em>?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a">A <strong>Forward</strong> is a bilateral OTC contract, non-standardized, between two parties, to buy/sell an asset at a fixed price and date. A <strong>Futures</strong> is the standardized version of a forward, traded on an exchange with a <em>clearing</em> process. The Futures reduces counterparty risk thanks to the clearing house that substitutes itself for both parties.</div>
+  </div>
+
+  <div class="qlevel med">Intermediate</div>
+  <div class="qi" onclick="toggle(this)">
+    <div class="qi-q"><span class="qi-qtxt">What is <em>volatility clustering</em>? Which model captures it and how?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><strong>Volatility clustering</strong> is the phenomenon by which large price variations concentrate in time (followed by large variations), and likewise for small variations. It is a property of <em>conditional heteroskedasticity</em> — variance is not constant. The <strong>GARCH(1,1)</strong> model captures it: $\sigma_t^2 = \omega + \alpha\epsilon_{t-1}^2 + \beta\sigma_{t-1}^2$. The $\beta$ term (persistence) close to 1 indicates long memory of volatility. This is the "H" in GARCH: Heteroskedastic.</div>
+  </div>
+
+  <div class="qi" onclick="toggle(this)">
+    <div class="qi-q"><span class="qi-qtxt">Why do FX markets have a liquidity peak in the early afternoon (European time)?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a">Because it is the <strong>London-New York overlap</strong> window (approximately 1:00 PM–5:00 PM GMT). During this period, the two most important financial centers in the world operate simultaneously. The superposition of order books from both venues maximizes liquidity, reduces spreads, and increases volume. This phenomenon is well documented in S. Masry (2011) and represents the daily peak of global FX activity.</div>
+  </div>
+
+  <div class="qi" onclick="toggle(this)">
+    <div class="qi-q"><span class="qi-qtxt">What is the difference between an endogenous and an exogenous event? Give an example of each.</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a">An <strong>endogenous event</strong> arises from the internal dynamics of the market (e.g., <em>Flash Crash</em> of May 6, 2010 — stop-loss cascade triggered by algorithms, with no external news). An <strong>exogenous event</strong> is information or a shock coming from outside (e.g., <em>SNB EUR/CHF floor imposed in September 2011</em> — surprise monetary policy decision). The distinction is important for modeling: endogenous events are partially capturable by microstructure models, exogenous ones require jump models.</div>
+  </div>
+
+  <div class="qlevel hard">Difficult</div>
+  <div class="qi" onclick="toggle(this)">
+    <div class="qi-q"><span class="qi-qtxt">How do <em>fat tails</em> challenge Black-Scholes, and what are the alternatives?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><strong>Black-Scholes</strong> rests on the assumption that log-returns follow a normal (Gaussian) distribution. However, <em>fat tails</em> show that the empirical kurtosis of returns is greater than 3 (leptokurtic). Consequences: (1) the risk of extreme drops is underestimated — leading to a dangerously low <em>Value-at-Risk</em>; (2) <em>implied volatility</em> varies with the strike (<em>volatility smile</em>), which BS cannot capture with a constant σ.<br><br>Alternatives: fat-tailed distributions such as the <strong>Lévy-stable distribution</strong> (Mandelbrot, 1963), the <strong>Student-t distribution</strong>, <strong>jump models</strong> (Merton 1976, Kou 2002), or <strong>stochastic volatility</strong> models (Heston). These approaches capture excess kurtosis and the volatility smile.</div>
+  </div>
+
+  <div class="qi" onclick="toggle(this)">
+    <div class="qi-q"><span class="qi-qtxt">Why was the 2013 Nobel Prize shared between Fama and Shiller when their theories are opposed? What does this say about EMH?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a">Fama (EMH) defends the idea that prices incorporate all available information and that markets cannot be predicted. Shiller, on the contrary, demonstrates that asset prices are <em>excessively volatile</em> relative to fundamentals (discounted dividends), implying persistent irrationality. The Nobel Committee rewarded both because they both contributed to understanding price formation: Fama in the short term (hard to predict), Shiller in the long term (partial predictability via P/E ratios). This illustrates that the efficiency question is fundamentally unresolved, and probably poorly posed as binary: markets can be <em>partially</em> efficient, at different frequencies and for different asset classes.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION PITFALLS
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="pieges">
+  <div class="sec-hd">
+    <span class="sec-num">!</span>
+    <h2 class="sec-title">Classic Pitfalls</h2>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">⚠️</div>
+    <div class="piege-text"><strong>Confusing Forward and Futures:</strong> A Forward is bilateral and OTC (non-standardized); a Futures is standardized and traded on an exchange with clearing. Never say "a futures is just a forward traded on an exchange" without mentioning standardization and the clearing process.</div>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">⚠️</div>
+    <div class="piege-text"><strong>Believing that weak EMH = pure random markets:</strong> The weak form says past prices contain no exploitable information, but it does not exclude fat tails, volatility clustering, or stylised facts. A market can be weakly efficient AND have fat tails.</div>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">⚠️</div>
+    <div class="piege-text"><strong>Underestimating Fat Tails:</strong> A -5% drop in one day is predicted as "impossible" by the Gaussian (50 standard deviations), but happens several times per decade. Using a Gaussian for extreme risk is a fundamental modeling error.</div>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">⚠️</div>
+    <div class="piege-text"><strong>Confusing seasonality and trend:</strong> Seasonality is a recurrent and predictable variation (intraday, weekly, monthly). Trend is a directional long-term evolution. A model must treat them separately.</div>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">⚠️</div>
+    <div class="piege-text"><strong>Reversing endogenous/exogenous:</strong> Endogenous = internal origin (liquidity, algos). Exogenous = external origin (news, central banks). Do not confuse them, especially for the Flash Crash (endogenous!) and the SNB floor (exogenous!).</div>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">⚠️</div>
+    <div class="piege-text"><strong>Forgetting roll-over on Futures:</strong> In practice, commodity futures are sold/bought before maturity and replaced by the next contract. We don't want to take delivery of a ton of wheat. This mechanism creates the <em>roll yield</em> which can be positive (backwardation) or negative (contango).</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION REVISION SHEET
+═══════════════════════════════════════════════════════════ -->
+<section class="sec" id="fiche">
+  <div class="sec-hd">
+    <span class="sec-num">★</span>
+    <h2 class="sec-title">Final Revision Sheet</h2>
+  </div>
+
+  <div class="fiche-grid">
+    <div class="fc2">
+      <h4>EMH — 3 forms</h4>
+      <ul>
+        <li><strong>Weak</strong> : past prices incorporated · Technical analysis useless</li>
+        <li><strong>Semi-strong</strong> : public info incorporated immediately</li>
+        <li><strong>Strong</strong> : even private info incorporated</li>
+        <li><strong>Fama</strong> 1960 · Nobel 2013</li>
+        <li>Critiques: bubbles, Flash Crash, herding, algos</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Markets & Intermediaries</h4>
+      <ul>
+        <li><strong>Regulated</strong> : NYSE, LSE, SIX, CME · Clearing</li>
+        <li><strong>OTC</strong> : Oanda · Bilateral · Less transparent</li>
+        <li><strong>Market Maker</strong> : inventory + risk + spread</li>
+        <li><strong>Broker</strong> : no inventory · commission</li>
+        <li>FX = backbone of world markets</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Key instruments</h4>
+      <ul>
+        <li><strong>Spot</strong> : immediate purchase of the asset</li>
+        <li><strong>Forward</strong> : OTC · non-standardized</li>
+        <li><strong>Futures</strong> : standardized · exchange · clearing · roll-over</li>
+        <li><strong>Option</strong> : right (not obligation) Call/Put</li>
+        <li><strong>Index</strong> : basket (SP500, DAX…)</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Volumes</h4>
+      <ul>
+        <li>NYSE Euronext US : <strong>6,920 Bn$</strong></li>
+        <li>Global FX : <strong>~5 trillion $/day</strong></li>
+        <li>EUR/USD : <strong>25%</strong> of FX volume</li>
+        <li>50% of transactions = swaps</li>
+        <li>EUR/USD ≈ <strong>3.6M$/second</strong></li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Stylised Facts</h4>
+      <ul>
+        <li><strong>Volatility clustering</strong> → GARCH · heteroskedasticity</li>
+        <li><strong>Fat tails</strong> → leptokurtosis · Lévy/Student-t</li>
+        <li><strong>Negative autocorrelation</strong> → high frequency · bid-ask bounce</li>
+        <li><strong>Scaling laws</strong> → $\mathbb{E}[|r|] \sim \Delta t^\alpha$</li>
+        <li><strong>Seasonality</strong> → U-shape equity · FX sessions</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Market Events</h4>
+      <ul>
+        <li><strong>Endogenous</strong> : liquidity, algos, Flash Crash</li>
+        <li><strong>Exogenous</strong> : news, central banks, geopolitics</li>
+        <li><strong>Scheduled</strong> : NFP (1st Friday) · GDP · ECB</li>
+        <li><strong>Unscheduled</strong> : SNB floor 2011 · 9/11</li>
+        <li>NFP = 8:30 EST = 2:30 PM Swiss time</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Formule clé -->
+  <div class="box vio">
+    <div class="box-title">Key formula to memorize</div>
+    <p style="text-align:center;font-size:1.1rem;margin:.5rem 0">EUR/USD volume per second:</p>
+    $$\frac{5 \times 10^{12} \times 0.25 \times 0.5}{86400 \times 2} \approx 3.6 \text{ M\$/s}$$
+    <p style="text-align:center;font-size:.85rem;color:var(--muted)">Scaling law : $\mathbb{E}[|r|] \sim \Delta t^{\alpha}$ · GARCH : $\sigma_t^2 = \omega + \alpha\epsilon_{t-1}^2 + \beta\sigma_{t-1}^2$</p>
+  </div>
+
+  <div class="oral">
+    <p><strong>Closing message for the oral exam:</strong> "The whole of this chapter leads us to a fundamental conclusion for computational finance: real markets are structurally different from a Gaussian random walk. They exhibit fat tails, volatility clustering, recurrent seasonalities, and react to endogenous and exogenous events. This empirical reality — documented notably by Cont (2001, 2005) — is what motivates all the more sophisticated models we study in this course: GARCH for volatility, fat-tailed distributions for extreme risk, and jump models for unpredictable events."</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+function toggle(el){
+  const a=el.querySelector('.qi-a');
+  const arr=el.querySelector('.qi-arr');
+  a.classList.toggle('open');
+  arr.style.transform=a.classList.contains('open')?'rotate(180deg)':'rotate(0deg)';
+}
+
+// Active sidebar on scroll
+const sections=document.querySelectorAll('.sec');
+const links=document.querySelectorAll('.sb nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id});
+  links.forEach(l=>{
+    l.classList.toggle('active',l.getAttribute('href')==='#'+cur);
+  });
+});
+</script>
+</body>
+</html>
