@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CF.04 — Time Series & Autoregressive Models</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']], processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root{
+  --bg:#0d0b14;--bg-card:#161221;--bg-code:#1c1828;
+  --text:#e4dffa;--muted:#9089bf;--border:rgba(180,150,80,.18);--bstrong:rgba(180,150,80,.4);
+  --gold:#c9a84c;--glight:#e8c97a;--blue:#7eb8d4;--green:#7bc496;--red:#e07b7b;--violet:#a78bfa;
+  --ff:'EB Garamond',Georgia,serif;--fd:'Cormorant Garamond',Georgia,serif;--fm:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:18px;line-height:1.85;display:flex}
+.sb{width:270px;min-height:100vh;background:var(--bg-card);border-right:1px solid var(--border);padding:2rem 1.4rem;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sb-logo{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--gold);margin-bottom:.3rem}
+.sb-sub{font-family:var(--fm);font-size:.73rem;color:var(--muted);margin-bottom:1.8rem;letter-spacing:.05em}
+.sb nav ul{list-style:none}
+.sb nav ul li{margin-bottom:.2rem}
+.sb nav ul li a{color:var(--muted);text-decoration:none;font-size:.88rem;display:block;padding:.35rem .7rem;border-radius:4px;border-left:2px solid transparent;transition:all .18s}
+.sb nav ul li a:hover,.sb nav ul li a.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,168,76,.07)}
+.sb nav ul li a .n{font-family:var(--fm);font-size:.72rem;color:var(--gold);margin-right:.45rem;opacity:.75}
+.sb-section{font-family:var(--fm);font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:.5rem .7rem .3rem;opacity:.6}
+.main{margin-left:270px;flex:1;padding:3rem 4rem;max-width:1040px}
+.hero{border-bottom:1px solid var(--border);padding-bottom:3rem;margin-bottom:4.5rem}
+.hero-tag{font-family:var(--fm);font-size:.75rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero h1{font-family:var(--fd);font-size:3.4rem;font-weight:700;line-height:1.1;margin-bottom:.8rem}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:620px;margin-bottom:1.5rem}
+.badges{display:flex;gap:.7rem;flex-wrap:wrap}
+.badge{font-family:var(--fm);font-size:.72rem;padding:.25rem .75rem;border:1px solid var(--bstrong);border-radius:20px;color:var(--gold);letter-spacing:.04em}
+.badge.b{border-color:rgba(126,184,212,.35);color:var(--blue)}
+.badge.g{border-color:rgba(123,196,150,.35);color:var(--green)}
+.badge.r{border-color:rgba(224,123,123,.35);color:var(--red)}
+.sec{margin-bottom:5rem;scroll-margin-top:2rem}
+.sec-hd{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.sec-num{font-family:var(--fm);font-size:.85rem;color:var(--gold);opacity:.65;min-width:2.5rem}
+.sec-title{font-family:var(--fd);font-size:1.95rem;font-weight:700;color:var(--text)}
+h3{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--glight);margin:2rem 0 .8rem}
+h4{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--blue);margin:1.4rem 0 .5rem}
+p{margin-bottom:.9rem}
+strong{color:var(--glight);font-weight:600}
+em{color:var(--blue);font-style:italic}
+a{color:var(--gold);text-decoration:none}
+code{font-family:var(--fm);background:var(--bg-code);padding:.1em .4em;border-radius:3px;font-size:.82em;color:var(--gold)}
+ul,ol{padding-left:1.5rem;margin-bottom:.9rem}
+li{margin-bottom:.35rem}
+.box{background:var(--bg-card);border-left:3px solid var(--gold);padding:1.1rem 1.4rem;border-radius:0 6px 6px 0;margin:1.4rem 0}
+.box.info{border-left-color:var(--blue)}.box.warn{border-left-color:var(--red)}.box.ok{border-left-color:var(--green)}.box.vio{border-left-color:var(--violet)}
+.box-title{font-family:var(--fm);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem}
+.box.info .box-title{color:var(--blue)}.box.warn .box-title{color:var(--red)}.box.ok .box-title{color:var(--green)}.box.vio .box-title{color:var(--violet)}
+.mblock{background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:1.3rem 1.8rem;margin:1.4rem 0;overflow-x:auto;text-align:center}
+.mblock .mlabel{font-family:var(--fm);font-size:.7rem;color:var(--muted);text-align:left;margin-bottom:.7rem;text-transform:uppercase;letter-spacing:.08em}
+.twrap{overflow-x:auto;margin:1.4rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead{background:var(--bg-code)}
+th{padding:.8rem 1rem;text-align:left;font-family:var(--fm);font-size:.73rem;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--bstrong)}
+td{padding:.7rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(201,168,76,.03)}
+td.g{color:var(--green)}td.r{color:var(--red)}td.m{color:var(--muted)}
+.fcards{display:flex;flex-direction:column;gap:1.5rem;margin-top:1rem}
+.fc{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.fc-head{background:var(--bg-code);padding:.8rem 1.4rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.fc-name{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--gold)}
+.fc-tag{font-family:var(--fm);font-size:.7rem;color:var(--muted);padding:.2rem .6rem;background:rgba(255,255,255,.04);border-radius:20px}
+.fc-body{padding:1.4rem}
+.fc-expr{text-align:center;padding:1.2rem;background:var(--bg-code);border-radius:6px;margin-bottom:1.1rem;overflow-x:auto}
+.fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;font-size:.88rem}
+.fc-item h5{font-family:var(--fm);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:.3rem}
+.fc-item p{color:var(--muted);margin:0;font-size:.88rem}
+.qlevel{display:inline-block;font-family:var(--fm);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;padding:.2rem .7rem;border-radius:4px;margin-bottom:.8rem;margin-top:1.2rem}
+.qlevel.easy{background:rgba(123,196,150,.13);color:var(--green)}
+.qlevel.med{background:rgba(126,184,212,.13);color:var(--blue)}
+.qlevel.hard{background:rgba(224,123,123,.13);color:var(--red)}
+.qi{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.8rem;overflow:hidden}
+.qi-q{padding:.9rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;transition:background .15s}
+.qi-q:hover{background:rgba(201,168,76,.05)}
+.qi-qtxt{flex:1;font-size:.93rem}
+.qi-arr{color:var(--gold);font-size:1.1rem;transition:transform .2s;min-width:1.2rem;text-align:center}
+.qi-a{padding:0 1.1rem;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .2s;background:var(--bg-code);font-size:.88rem;color:var(--muted);border-top:0 solid var(--border)}
+.qi-a.open{max-height:800px;padding:1rem 1.1rem;border-top:1px solid var(--border)}
+.piege{display:flex;gap:.9rem;align-items:flex-start;margin-bottom:.9rem;padding:.8rem 1rem;background:rgba(224,123,123,.06);border-radius:6px;border-left:3px solid var(--red)}
+.piege-icon{font-size:1.1rem;min-width:1.4rem}
+.piege-text{font-size:.93rem}
+.piege-text strong{color:var(--red)}
+.tl{position:relative;padding-left:2rem;margin:1.4rem 0}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold),transparent)}
+.tl-item{position:relative;margin-bottom:2rem;padding-left:1.4rem}
+.tl-item::before{content:'';position:absolute;left:-2.4rem;top:.6rem;width:8px;height:8px;border-radius:50%;background:var(--gold);border:2px solid var(--bg)}
+.tl-year{font-family:var(--fm);font-size:.78rem;color:var(--gold);margin-bottom:.25rem}
+.tl-title{font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:.25rem}
+.tl-desc{font-size:.9rem;color:var(--muted)}
+.fiche-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.4rem 0}
+.fc2{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.1rem}
+.fc2 h4{font-family:var(--fm);font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;color:var(--gold);margin:0 0 .7rem 0}
+.fc2 ul{list-style:none;padding:0;font-size:.85rem}
+.fc2 ul li{padding:.22rem 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted)}
+.fc2 ul li:last-child{border:none}
+.fc2 ul li strong{color:var(--text)}
+.oral{background:var(--bg-card);border:1px solid var(--bstrong);border-radius:10px;padding:2rem;margin:1rem 0;position:relative}
+.oral::before{content:'"';font-family:var(--fd);font-size:5rem;color:var(--gold);opacity:.15;position:absolute;top:-.5rem;left:.8rem;line-height:1}
+.oral p{font-size:1rem;line-height:1.9;color:var(--text)}
+.oral p+p{margin-top:.8rem}
+.diag{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin:1.8rem 0;overflow-x:auto}
+.diag-title{font-family:var(--fm);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:1rem;opacity:.8}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin:1.4rem 0}
+.ccard{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.2rem;transition:border-color .18s}
+.ccard:hover{border-color:var(--bstrong)}
+.ccard .ctag{font-family:var(--fm);font-size:.68rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
+.ccard h4{font-family:var(--fd);font-size:1.15rem;color:var(--text);margin:0 0 .4rem 0}
+.ccard p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.6}
+.story-block{background:linear-gradient(135deg,rgba(201,168,76,.06),rgba(167,139,250,.04));border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:2rem 2.5rem;margin:1.4rem 0;font-style:italic;line-height:2}
+.story-block p{color:var(--text);margin-bottom:.8rem}
+.story-block .lesson{font-style:normal;margin-top:1.5rem;padding:1rem 1.4rem;background:var(--bg-code);border-radius:6px;border-left:3px solid var(--gold)}
+.story-block .lesson strong{display:block;font-family:var(--fm);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem;font-style:normal}
+.step-flow{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin:1.4rem 0}
+.step-box{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.7rem 1.1rem;font-size:.88rem;text-align:center;min-width:140px}
+.step-box .step-label{font-family:var(--fm);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.3rem}
+.step-arrow{color:var(--gold);font-size:1.3rem;opacity:.7}
+.step-box.active{border-color:var(--green);background:rgba(123,196,150,.07)}
+.step-box.warn{border-color:var(--red);background:rgba(224,123,123,.07)}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:3px}
+@media(max-width:900px){.sb{display:none}.main{margin-left:0;padding:2rem 1.4rem}.hero h1{font-size:2.4rem}.fiche-grid{grid-template-columns:1fr}.fc-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ SIDEBAR ═══════════════════════════════ -->
+<nav class="sb">
+  <div class="sb-logo">CF · Lecture 4</div>
+  <div class="sb-sub">UNIV. GENEVA · A. DUPUIS · v1.1</div>
+  <nav>
+    <div class="sb-section">Mise en contexte</div>
+    <ul>
+      <li><a href="#histoire"><span class="n">★</span>Histoire</a></li>
+      <li><a href="#resume"><span class="n">00</span>Résumé 30s</a></li>
+      <li><a href="#oral"><span class="n">01</span>Réponse d'oral</a></li>
+    </ul>
+    <div class="sb-section">Fondamentaux</div>
+    <ul>
+      <li><a href="#timeseries"><span class="n">02</span>Séries temporelles</a></li>
+      <li><a href="#stationnarite"><span class="n">03</span>Stationnarité</a></li>
+      <li><a href="#acf"><span class="n">04</span>Autocorrélation ACF</a></li>
+    </ul>
+    <div class="sb-section">Modèles</div>
+    <ul>
+      <li><a href="#modeles"><span class="n">05</span>Famille AR/MA/ARMA</a></li>
+      <li><a href="#ar1"><span class="n">06</span>AR(1) en détail</a></li>
+      <li><a href="#selection"><span class="n">07</span>Sélection AIC/BIC</a></li>
+    </ul>
+    <div class="sb-section">Examen</div>
+    <ul>
+      <li><a href="#formules"><span class="n">08</span>Formules clés</a></li>
+      <li><a href="#comparaison"><span class="n">09</span>Comparaison</a></li>
+      <li><a href="#questions"><span class="n">10</span>Questions d'examen</a></li>
+      <li><a href="#pieges"><span class="n">11</span>Pièges classiques</a></li>
+      <li><a href="#fiche"><span class="n">12</span>Fiche de révision</a></li>
+    </ul>
+  </nav>
+</nav>
+
+<!-- ═══════════════════════════════ MAIN ═══════════════════════════════ -->
+<main class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">CF.04 — Introduction to Computational Finance · University of Geneva</div>
+  <h1><em>Time Series</em><br>&amp; Autoregressive Models</h1>
+  <p class="hero-desc">De la série des prix bruts aux modèles prédictifs : capturer la mémoire temporelle des marchés financiers.</p>
+  <div class="badges">
+    <span class="badge">Time Series</span>
+    <span class="badge r">Stationarity</span>
+    <span class="badge b">ACF / PACF</span>
+    <span class="badge">AR(p)</span>
+    <span class="badge">MA(q)</span>
+    <span class="badge g">ARMA(p,q)</span>
+    <span class="badge b">AIC / BIC</span>
+    <span class="badge">ADF Test</span>
+  </div>
+</div>
+
+<!-- ═══ § ★ HISTOIRE ═══ -->
+<section class="sec" id="histoire">
+<div class="sec-hd"><span class="sec-num">★</span><h2 class="sec-title">Histoire — Pourquoi tout cela ?</h2></div>
+
+<div class="story-block">
+  <p><strong style="font-style:normal;color:var(--gold)">Genève, janvier 2012, 8h47.</strong></p>
+  <p>Antoine, analyste quantitatif junior dans une banque privée genevoise, reçoit son premier vrai défi. Sur son écran : soixante-dix cotations EUR/USD quotidiennes. Son responsable pose la question, apparemment simple : <em>« Y a-t-il un pattern exploitable ici ? Peut-on prédire le prochain mouvement ? »</em></p>
+  <p>Antoine regarde la série. Il voit le taux passer de 1.27 à 1.33, puis se stabiliser, puis corriger légèrement. Il calcule la moyenne : 1.30. L'écart-type : 0.015. Utile… mais terriblement insuffisant pour répondre à la question posée.</p>
+  <p><strong style="font-style:normal;color:var(--red)">Problème 1 — La non-stationnarité.</strong> Ces prix EUR/USD <em>montent</em> sur la période — leur moyenne n'est pas constante dans le temps. Appliquer un modèle directement sur les prix, c'est comme mesurer la vitesse d'une voiture en regardant uniquement sa position. On perd l'essentiel.</p>
+  <p><strong style="font-style:normal;color:var(--gold)">Solution :</strong> Antoine calcule les rendements quotidiens $r_t = (X_t - X_{t-1}) / X_{t-1}$. La nouvelle série oscille autour de zéro, avec une variance stable. Elle est <em>(faiblement) stationnaire</em>.</p>
+  <p><strong style="font-style:normal;color:var(--blue)">Problème 2 — La structure cachée.</strong> Ces rendements contiennent-ils une mémoire ? Le rendement d'aujourd'hui dépend-il de celui d'hier ? D'il y a deux jours ?</p>
+  <p><strong style="font-style:normal;color:var(--gold)">Solution :</strong> Il calcule la <em>fonction d'autocorrélation</em> (ACF). Les barres restent dans l'intervalle de confiance — très peu de structure. Un AR(1) donne $\hat{\varphi}_1 \approx -0.125$ : légère tendance mean-reverting, mais faible pouvoir prédictif. Le marché EUR/USD à court terme ressemble à un bruit blanc.</p>
+  <p><strong style="font-style:normal;color:var(--green)">La leçon :</strong> un bon modèle de série temporelle nécessite trois étapes incontournables.</p>
+  <div class="lesson">
+    <strong>Les 3 piliers du workflow</strong>
+    ① <strong>Stationnariser</strong> les données (rendements, différenciation, log-transformation)<br>
+    ② <strong>Analyser l'ACF</strong> pour détecter la structure temporelle et choisir l'ordre<br>
+    ③ <strong>Estimer et valider</strong> le modèle AR/MA/ARMA avec les critères AIC/BIC
+  </div>
+</div>
+</section>
+
+<!-- ═══ §00 RÉSUMÉ ═══ -->
+<section class="sec" id="resume">
+<div class="sec-hd"><span class="sec-num">00</span><h2 class="sec-title">Résumé exécutif — 30 secondes</h2></div>
+<div class="box ok">
+  <div class="box-title">Définition centrale</div>
+  Une <strong>série temporelle</strong> (*time series*) est une suite d'observations indexées dans le temps $\{X_{t_i}\}$. Les <strong>modèles autorégressifs</strong> (*autoregressive models*) — AR(p), MA(q), ARMA(p,q) — modélisent $X_t$ comme une fonction linéaire de ses valeurs passées et/ou d'un bruit aléatoire. Leur application rigoureuse exige que la série soit <strong>stationnaire</strong> (*stationary*), c'est-à-dire à moyenne et autocovariance stables dans le temps. La <strong>fonction d'autocorrélation</strong> (*Autocorrelation Function*, ACF) révèle la structure temporelle de la série et guide le choix du modèle.
+</div>
+
+<div class="cgrid">
+  <div class="ccard">
+    <div class="ctag">Concept clé</div>
+    <h4>Lag τ</h4>
+    <p>Décalage temporel entre deux observations. $\tau = 1$ signifie « hier » par rapport à « aujourd'hui ».</p>
+  </div>
+  <div class="ccard">
+    <div class="ctag">Prérequis</div>
+    <h4>Stationnarité faible</h4>
+    <p>Moyenne constante + autocovariance qui ne dépend que du lag τ, pas du temps absolu.</p>
+  </div>
+  <div class="ccard">
+    <div class="ctag">Outil diagnostique</div>
+    <h4>ACF</h4>
+    <p>Corrélation de $X_t$ avec lui-même décalé de τ. Révèle les patterns cachés dans la série.</p>
+  </div>
+  <div class="ccard">
+    <div class="ctag">Modèle phare</div>
+    <h4>AR(1)</h4>
+    <p>$X_t = c + \varphi_1 X_{t-1} + \varepsilon_t$. Un seul paramètre, riche en propriétés analytiques.</p>
+  </div>
+</div>
+</section>
+
+<!-- ═══ §01 ORAL ═══ -->
+<section class="sec" id="oral">
+<div class="sec-hd"><span class="sec-num">01</span><h2 class="sec-title">Réponse modèle d'oral — 3 minutes</h2></div>
+<div class="oral">
+  <p>Une série temporelle est une séquence d'observations réelles indexées dans le temps, comme les cours boursiers ou les taux de change. L'objectif fondamental est de comprendre la structure de cette série — comment le passé influence-t-il le futur ? — et éventuellement de prédire des observations futures.</p>
+  <p>Pour modéliser correctement une série temporelle, le prérequis essentiel est la <strong>stationnarité</strong>. Une série est faiblement stationnaire si sa moyenne est constante et si son autocovariance ne dépend que du lag τ, pas du temps. En pratique, les prix financiers ne sont jamais stationnaires — ils dérivent dans le temps. On travaille donc sur les <strong>rendements</strong>, qui sont généralement stationnaires. Ce fait peut être vérifié formellement avec le test Augmented Dickey-Fuller.</p>
+  <p>L'outil central pour analyser la structure d'une série stationnaire est la <strong>fonction d'autocorrélation</strong> (ACF). Elle mesure la corrélation linéaire entre $X_t$ et $X_{t+\tau}$ pour différents lags. Une ACF à décroissance lente et positive indique une tendance ; une ACF avec alternance de valeurs positives et négatives signale un comportement contre-tendanciel, dit *mean-reverting*.</p>
+  <p>Sur la base de l'ACF, on choisit la famille de modèle. Un modèle <strong>AR(p)</strong> exprime $X_t$ comme combinaison linéaire de ses $p$ valeurs passées plus un bruit blanc. Un modèle <strong>MA(q)</strong> utilise les $q$ erreurs passées. Le modèle <strong>ARMA(p,q)</strong> combine les deux. Pour le modèle AR(1), on peut démontrer analytiquement que le coefficient $\varphi_1$ est égal à la corrélation au lag 1, que la variance vaut $\sigma_\varepsilon^2 / (1-\varphi_1^2)$, et que la condition de stationnarité est $|\varphi_1| &lt; 1$.</p>
+  <p>Enfin, pour sélectionner l'ordre optimal du modèle, on utilise les critères <strong>AIC</strong> et <strong>BIC</strong>, qui pénalisent la complexité pour éviter le surapprentissage. Le BIC pénalise davantage les modèles à grand nombre de paramètres.</p>
+</div>
+</section>
+
+<!-- ═══ §02 TIME SERIES ═══ -->
+<section class="sec" id="timeseries">
+<div class="sec-hd"><span class="sec-num">02</span><h2 class="sec-title">Séries temporelles — Les bases</h2></div>
+
+<h3>Définition formelle</h3>
+<p>Une <strong>série temporelle univariée</strong> (*univariate time series*) est une suite d'observations réelles :</p>
+<div class="mblock">
+  <div class="mlabel">Définition — Time Series</div>
+  $$X(t_i) \in \mathbb{R}, \quad t_i \text{ occurrences ordonnées}$$
+</div>
+<p>L'ordre est crucial : contrairement à la théorie de l'information où les occurrences peuvent être réordonnées, ici la <em>séquence temporelle est l'information elle-même</em>. Le <strong>lag</strong> (ou décalage temporel) $\tau$ est le temps entre deux observations. La variable retardée $X_{t-\tau}$ est appelée <em>lagged variable</em>.</p>
+
+<div class="diag">
+  <div class="diag-title">Schéma 1 — Anatomie d'une série temporelle &amp; notion de lag</div>
+  <svg viewBox="0 0 680 185" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-height:200px">
+    <rect width="680" height="185" fill="#1c1828" rx="6"/>
+    <!-- grid verticals -->
+    <line x1="90" y1="25" x2="90" y2="152" stroke="#9089bf" stroke-width="0.3" stroke-dasharray="2,5" opacity="0.5"/>
+    <line x1="170" y1="25" x2="170" y2="152" stroke="#9089bf" stroke-width="0.3" stroke-dasharray="2,5" opacity="0.5"/>
+    <line x1="250" y1="25" x2="250" y2="152" stroke="#c9a84c" stroke-width="0.6" stroke-dasharray="2,4" opacity="0.7"/>
+    <line x1="330" y1="25" x2="330" y2="152" stroke="#9089bf" stroke-width="0.3" stroke-dasharray="2,5" opacity="0.5"/>
+    <line x1="410" y1="25" x2="410" y2="152" stroke="#c9a84c" stroke-width="0.6" stroke-dasharray="2,4" opacity="0.7"/>
+    <line x1="490" y1="25" x2="490" y2="152" stroke="#9089bf" stroke-width="0.3" stroke-dasharray="2,5" opacity="0.5"/>
+    <line x1="570" y1="25" x2="570" y2="152" stroke="#9089bf" stroke-width="0.3" stroke-dasharray="2,5" opacity="0.5"/>
+    <!-- Y axis -->
+    <line x1="62" y1="152" x2="62" y2="22" stroke="#c9a84c" stroke-width="1.4"/>
+    <polygon points="58,24 62,16 66,24" fill="#c9a84c"/>
+    <text x="25" y="90" fill="#9089bf" font-family="EB Garamond, serif" font-size="13" text-anchor="middle">X</text>
+    <!-- X axis -->
+    <line x1="62" y1="152" x2="625" y2="152" stroke="#c9a84c" stroke-width="1.4"/>
+    <polygon points="617,148 625,152 617,156" fill="#c9a84c"/>
+    <text x="638" y="157" fill="#9089bf" font-family="EB Garamond, serif" font-size="13">t</text>
+    <!-- Data polyline -->
+    <polyline points="90,105 170,73 250,120 330,57 410,94 490,67 570,108" fill="none" stroke="#7eb8d4" stroke-width="1.8" stroke-linejoin="round"/>
+    <!-- Circles - regular -->
+    <circle cx="90" cy="105" r="4.5" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.8"/>
+    <circle cx="170" cy="73" r="4.5" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.8"/>
+    <circle cx="330" cy="57" r="4.5" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.8"/>
+    <circle cx="490" cy="67" r="4.5" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.8"/>
+    <circle cx="570" cy="108" r="4.5" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.8"/>
+    <!-- Highlighted circles -->
+    <circle cx="250" cy="120" r="6.5" fill="#c9a84c" opacity="0.9"/>
+    <circle cx="410" cy="94" r="6.5" fill="#c9a84c" opacity="0.9"/>
+    <!-- Dashed lines to axis for highlighted points -->
+    <line x1="250" y1="120" x2="250" y2="152" stroke="#c9a84c" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.6"/>
+    <line x1="410" y1="94" x2="410" y2="152" stroke="#c9a84c" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.6"/>
+    <!-- Lag bracket -->
+    <line x1="250" y1="120" x2="250" y2="36" stroke="#c9a84c" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.5"/>
+    <line x1="410" y1="94" x2="410" y2="36" stroke="#c9a84c" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.5"/>
+    <line x1="255" y1="33" x2="405" y2="33" stroke="#c9a84c" stroke-width="1.5"/>
+    <polygon points="257,29 249,33 257,37" fill="#c9a84c"/>
+    <polygon points="403,29 411,33 403,37" fill="#c9a84c"/>
+    <text x="330" y="27" fill="#c9a84c" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">τ = lag</text>
+    <!-- Time labels -->
+    <text x="90" y="170" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">t₁</text>
+    <text x="170" y="170" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">t₂</text>
+    <text x="250" y="170" fill="#e8c97a" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle" font-weight="bold">t</text>
+    <text x="330" y="170" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">t₃</text>
+    <text x="410" y="170" fill="#e8c97a" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle" font-weight="bold">t+τ</text>
+    <text x="490" y="170" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">t₅</text>
+    <text x="570" y="170" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">t₆</text>
+    <!-- Italic labels on highlighted points -->
+    <text x="215" y="118" fill="#e8c97a" font-family="EB Garamond, serif" font-size="14" font-style="italic">X</text>
+    <text x="224" y="122" fill="#e8c97a" font-family="JetBrains Mono, monospace" font-size="9">t</text>
+    <text x="420" y="90" fill="#e8c97a" font-family="EB Garamond, serif" font-size="14" font-style="italic">X</text>
+    <text x="429" y="94" fill="#e8c97a" font-family="JetBrains Mono, monospace" font-size="9">t+τ</text>
+  </svg>
+</div>
+
+<h3>Objectifs d'un modèle de série temporelle</h3>
+<p>Le cours souligne qu'un modèle peut avoir plusieurs objectifs, parfois contradictoires :</p>
+<div class="twrap">
+<table>
+<thead><tr><th>Objectif</th><th>Description</th><th>Exemple d'usage</th></tr></thead>
+<tbody>
+<tr><td><strong>Identification</strong></td><td>Identifier les éléments structurels importants</td><td>Détecter la saisonnalité dans les volumes de trading</td></tr>
+<tr><td><strong>Explication</strong></td><td>Comprendre comment le passé influence le présent</td><td>Mesurer l'inertie des taux d'intérêt</td></tr>
+<tr><td><strong>Modélisation</strong></td><td>Représenter l'état actuel de façon synthétique</td><td>Calibrer un modèle de volatilité</td></tr>
+<tr><td><strong>Prédiction</strong></td><td>Prévoir les observations futures</td><td>Algorithme de trading</td></tr>
+</tbody>
+</table>
+</div>
+<div class="box info">
+  <div class="box-title">Point crucial (examen)</div>
+  Un modèle peut être <strong>excellent pour expliquer</strong> mais <strong>médiocre pour prédire</strong>. Ces deux objectifs ne requièrent pas les mêmes critères d'évaluation. Ne pas les confondre !
+</div>
+</section>
+
+<!-- ═══ §03 STATIONNARITÉ ═══ -->
+<section class="sec" id="stationnarite">
+<div class="sec-hd"><span class="sec-num">03</span><h2 class="sec-title">Stationnarité</h2></div>
+
+<h3>Pourquoi la stationnarité est indispensable ?</h3>
+<p>On ne peut pas appliquer directement un modèle autorégressif à n'importe quelle série. Trois types de non-stationnarité doivent être détectés et corrigés :</p>
+
+<div class="diag">
+  <div class="diag-title">Schéma 2 — Les trois ennemis de la stationnarité</div>
+  <svg viewBox="0 0 680 215" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-height:230px">
+    <rect width="680" height="215" fill="#1c1828" rx="6"/>
+    <!-- Separator lines between panels -->
+    <line x1="222" y1="15" x2="222" y2="200" stroke="#322a1c" stroke-width="1"/>
+    <line x1="456" y1="15" x2="456" y2="200" stroke="#322a1c" stroke-width="1"/>
+
+    <!-- ── Panel 1: TREND ── -->
+    <text x="111" y="28" fill="#e07b7b" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle" font-weight="bold">① TENDANCE</text>
+    <!-- mini axes -->
+    <line x1="30" y1="185" x2="205" y2="185" stroke="#9089bf" stroke-width="0.8" opacity="0.5"/>
+    <line x1="30" y1="185" x2="30" y2="45" stroke="#9089bf" stroke-width="0.8" opacity="0.5"/>
+    <!-- trend line (dashed red) -->
+    <line x1="35" y1="178" x2="200" y2="58" stroke="#e07b7b" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.7"/>
+    <!-- data points with upward drift -->
+    <polyline points="35,175 55,162 75,155 95,143 115,132 135,118 155,107 175,94 195,80" fill="none" stroke="#7eb8d4" stroke-width="1.5" stroke-linejoin="round"/>
+    <circle cx="35" cy="175" r="3" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="75" cy="155" r="3" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="115" cy="132" r="3" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="155" cy="107" r="3" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="195" cy="80" r="3" fill="#7eb8d4" opacity="0.8"/>
+    <!-- mean label shifting -->
+    <text x="145" y="60" fill="#e07b7b" font-family="EB Garamond, serif" font-size="11" font-style="italic">μ(t) ≠ cst</text>
+    <polygon points="170,68 180,60 180,72" fill="#e07b7b" opacity="0.7"/>
+
+    <!-- ── Panel 2: SEASONALITY ── -->
+    <text x="339" y="28" fill="#e07b7b" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle" font-weight="bold">② SAISONNALITÉ</text>
+    <!-- mini axes -->
+    <line x1="240" y1="185" x2="440" y2="185" stroke="#9089bf" stroke-width="0.8" opacity="0.5"/>
+    <line x1="240" y1="185" x2="240" y2="45" stroke="#9089bf" stroke-width="0.8" opacity="0.5"/>
+    <!-- center line -->
+    <line x1="240" y1="115" x2="440" y2="115" stroke="#9089bf" stroke-width="0.5" stroke-dasharray="3,5" opacity="0.4"/>
+    <!-- sine wave -->
+    <path d="M245,115 Q265,60 285,115 Q305,170 325,115 Q345,60 365,115 Q385,170 405,115 Q425,60 440,115" fill="none" stroke="#7eb8d4" stroke-width="1.8"/>
+    <!-- season labels -->
+    <text x="265" y="58" fill="#c9a84c" font-family="EB Garamond, serif" font-size="10" text-anchor="middle">hiver</text>
+    <text x="325" y="58" fill="#c9a84c" font-family="EB Garamond, serif" font-size="10" text-anchor="middle">été</text>
+    <text x="385" y="58" fill="#c9a84c" font-family="EB Garamond, serif" font-size="10" text-anchor="middle">hiver</text>
+    <text x="345" y="195" fill="#e07b7b" font-family="EB Garamond, serif" font-size="11" font-style="italic" text-anchor="middle">μ(t) oscille</text>
+
+    <!-- ── Panel 3: HETEROSKEDASTICITY ── -->
+    <text x="568" y="28" fill="#e07b7b" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle" font-weight="bold">③ HÉTÉROSCÉDASTICITÉ</text>
+    <!-- mini axes -->
+    <line x1="470" y1="185" x2="665" y2="185" stroke="#9089bf" stroke-width="0.8" opacity="0.5"/>
+    <line x1="470" y1="185" x2="470" y2="45" stroke="#9089bf" stroke-width="0.8" opacity="0.5"/>
+    <!-- center line -->
+    <line x1="470" y1="115" x2="665" y2="115" stroke="#9089bf" stroke-width="0.5" stroke-dasharray="3,5" opacity="0.4"/>
+    <!-- expanding cone -->
+    <path d="M475,112 L530,100 L585,80 L640,55" fill="none" stroke="#e07b7b" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/>
+    <path d="M475,118 L530,130 L585,150 L640,175" fill="none" stroke="#e07b7b" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/>
+    <!-- scatter points: increasingly spread -->
+    <circle cx="480" cy="113" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="492" cy="117" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="504" cy="109" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="516" cy="122" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="528" cy="104" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="540" cy="130" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="552" cy="95" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="564" cy="140" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="576" cy="82" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="588" cy="152" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="600" cy="68" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="612" cy="165" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="624" cy="56" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <circle cx="636" cy="178" r="2.5" fill="#7eb8d4" opacity="0.8"/>
+    <text x="575" y="48" fill="#e07b7b" font-family="EB Garamond, serif" font-size="11" font-style="italic" text-anchor="middle">σ²(t) croissant</text>
+  </svg>
+</div>
+
+<p>Ces trois problèmes rendent les paramètres estimés instables, les tests statistiques non fiables, et les prédictions invalides. C'est pourquoi <strong>la stationnarité est un prérequis, pas une option</strong>.</p>
+
+<h3>Définitions formelles</h3>
+
+<h4>Stationnarité stricte (*Strict Stationarity*)</h4>
+<p>Un processus $\{X_t\}$ est <strong>strictement stationnaire</strong> si sa distribution jointe est invariante par translation temporelle :</p>
+<div class="mblock">
+  <div class="mlabel">Définition — Strict Stationarity</div>
+  $$F(X_{t_1+\tau}, \ldots, X_{t_n+\tau}) = F(X_{t_1}, \ldots, X_{t_n}) \quad \forall \tau, n$$
+</div>
+<p>Cette condition est très forte — elle impose que <em>toute la distribution</em> reste inchangée par translation. En pratique, elle est quasi impossible à vérifier sur des données réelles.</p>
+
+<h4>Stationnarité faible (*Weak / Covariance Stationarity*) ← la pratique</h4>
+<p>Un processus est <strong>faiblement stationnaire</strong> si deux conditions sont satisfaites :</p>
+<div class="mblock">
+  <div class="mlabel">Définition — Weak Stationarity</div>
+  $$\text{(a) Moyenne constante :} \quad \mathbb{E}[X_t] = \mu \quad \forall t$$
+  $$\text{(b) Autocovariance dépend uniquement de } \tau : \quad \text{Cov}(X_t, X_{t+\tau}) = \gamma(\tau) \quad \forall t, \tau$$
+</div>
+
+<div class="box">
+  <div class="box-title">Intuition</div>
+  Imaginez une rivière en état d'équilibre : le débit moyen ne change pas selon la saison (moyenne constante), et les tourbillons à un point ont toujours la même relation avec les tourbillons à 100 mètres en aval (autocovariance stable). C'est ça, la stationnarité faible.
+</div>
+
+<h3>Comment obtenir la stationnarité en pratique ?</h3>
+
+<div class="step-flow">
+  <div class="step-box warn">
+    <div class="step-label">Données brutes</div>
+    Prix EUR/USD<br><small style="color:var(--red)">Non-stationnaire</small>
+  </div>
+  <span class="step-arrow">→</span>
+  <div class="step-box">
+    <div class="step-label">Transformation</div>
+    Rendements<br>Log / Différences
+  </div>
+  <span class="step-arrow">→</span>
+  <div class="step-box">
+    <div class="step-label">Test ADF</div>
+    p-value &lt; 0.05 ?
+  </div>
+  <span class="step-arrow">→</span>
+  <div class="step-box active">
+    <div class="step-label">Résultat</div>
+    Série stationnaire<br><small style="color:var(--green)">Prête pour modélisation</small>
+  </div>
+</div>
+
+<p>Les transformations principales sont :</p>
+<ul>
+  <li><strong>Rendements simples</strong> : $r_t = (X_t - X_{t-1}) / X_{t-1}$ — élimine la tendance, stabilise la variance</li>
+  <li><strong>Log-rendements</strong> : $r_t = \ln(X_t / X_{t-1})$ — atténue l'effet des changements de volatilité (hétéroscédasticité)</li>
+  <li><strong>Différenciation</strong> : $\Delta X_t = X_t - X_{t-1}$ — supprime une tendance linéaire</li>
+  <li><strong>Décomposition saisonnière</strong> : supprimer la composante saisonnière identifiée</li>
+</ul>
+
+<div class="box info">
+  <div class="box-title">Exemple empirique du cours — EUR/USD 2012</div>
+  Les <strong>prix EUR/USD</strong> (p-value ADF > 0.15) : non stationnaires. Les <strong>rendements quotidiens</strong> (p-value ADF = 0.00) : stationnaires. Ce résultat est typique de tout actif financier — c'est pourquoi on travaille systématiquement sur les rendements.
+</div>
+
+<h3>Test Augmented Dickey-Fuller (ADF)</h3>
+<p>Le <strong>test ADF</strong> (*Augmented Dickey-Fuller Test*) teste formellement l'hypothèse nulle $H_0$ : "la série a une racine unitaire" (non-stationnaire). Si la p-value est <strong>inférieure à 0.05</strong>, on rejette $H_0$ et on conclut à la stationnarité. En dessous de 0.05 = stationnaire ✓</p>
+</section>
+
+<!-- ═══ §04 ACF ═══ -->
+<section class="sec" id="acf">
+<div class="sec-hd"><span class="sec-num">04</span><h2 class="sec-title">Autocorrélation — ACF</h2></div>
+
+<h3>Rappel : corrélation entre deux variables</h3>
+<div class="mblock">
+  <div class="mlabel">Corrélation de Pearson</div>
+  $$\text{Cor}(X, Y) = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\cdot\text{Var}(Y)}} = \frac{\mathbb{E}[(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])]}{\sqrt{\mathbb{E}[(X-\mathbb{E}[X])^2]\cdot\mathbb{E}[(Y-\mathbb{E}[Y])^2]}}$$
+</div>
+
+<h3>Définition de l'autocorrélation</h3>
+<p>L'<strong>autocorrélation</strong> (*autocorrelation*) est la corrélation d'une variable avec <em>elle-même</em> à un décalage temporel $\tau$ :</p>
+<div class="mblock">
+  <div class="mlabel">ACF — Autocorrelation Function</div>
+  $$\text{ACF}(\tau) = \rho_\tau = \text{Cor}(X_t, X_{t+\tau}) = \frac{\mathbb{E}[(X_t - \mu)(X_{t+\tau} - \mu)]}{\sigma^2}$$
+  $$\text{(sous hypothèse de stationnarité faible : } \mu_t = \mu_{t+\tau} = \mu \text{ et } \sigma_t = \sigma_{t+\tau} = \sigma\text{)}$$
+</div>
+<p>L'ACF est une <em>fonction</em> du lag τ — elle décrit la structure complète de dépendance temporelle de la série. C'est l'outil diagnostique fondamental avant toute modélisation.</p>
+
+<h3>Guide de lecture de l'ACF</h3>
+
+<div class="diag">
+  <div class="diag-title">Schéma 3 — ACF : trois profils typiques et leur interprétation</div>
+  <svg viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-height:260px">
+    <rect width="680" height="240" fill="#1c1828" rx="6"/>
+    <!-- Panel separators -->
+    <line x1="226" y1="10" x2="226" y2="230" stroke="#322a1c" stroke-width="1"/>
+    <line x1="454" y1="10" x2="454" y2="230" stroke="#322a1c" stroke-width="1"/>
+
+    <!-- ── PANEL 1: White noise (no autocorr) ── -->
+    <text x="113" y="22" fill="#7bc496" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle" font-weight="bold">BRUIT BLANC</text>
+    <text x="113" y="34" fill="#9089bf" font-family="EB Garamond, serif" font-size="10" text-anchor="middle" font-style="italic">φ₁ ≈ 0</text>
+    <!-- axes -->
+    <line x1="18" y1="140" x2="218" y2="140" stroke="#9089bf" stroke-width="0.8" opacity="0.6"/>
+    <line x1="18" y1="50" x2="218" y2="50" stroke="#e07b7b" stroke-width="0.6" stroke-dasharray="4,3" opacity="0.5"/>
+    <line x1="18" y1="230" x2="218" y2="230" stroke="#e07b7b" stroke-width="0.6" stroke-dasharray="4,3" opacity="0.5"/>
+    <text x="10" y="143" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="end">0</text>
+    <text x="10" y="54" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="end">+</text>
+    <!-- lag labels -->
+    <text x="35" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">1</text>
+    <text x="60" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">2</text>
+    <text x="85" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">3</text>
+    <text x="110" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">4</text>
+    <text x="135" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">5</text>
+    <text x="160" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">6</text>
+    <text x="185" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">7</text>
+    <!-- confidence interval shading -->
+    <rect x="18" y="50" width="200" height="180" fill="#7bc496" opacity="0.04" rx="2"/>
+    <!-- bars near zero -->
+    <rect x="27" y="135" width="14" height="5" fill="#7bc496" opacity="0.7"/>
+    <rect x="52" y="142" width="14" height="-3" fill="#7bc496" opacity="0.7"/>
+    <rect x="77" y="136" width="14" height="4" fill="#7bc496" opacity="0.7"/>
+    <rect x="102" y="143" width="14" height="-4" fill="#7bc496" opacity="0.7"/>
+    <rect x="127" y="137" width="14" height="3" fill="#7bc496" opacity="0.7"/>
+    <rect x="152" y="141" width="14" height="-2" fill="#7bc496" opacity="0.7"/>
+    <rect x="177" y="138" width="14" height="3" fill="#7bc496" opacity="0.7"/>
+    <text x="113" y="198" fill="#7bc496" font-family="EB Garamond, serif" font-size="11" text-anchor="middle">Pas de structure</text>
+
+    <!-- ── PANEL 2: Positive (trending) ── -->
+    <text x="339" y="22" fill="#7eb8d4" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle" font-weight="bold">TENDANCE</text>
+    <text x="339" y="34" fill="#9089bf" font-family="EB Garamond, serif" font-size="10" text-anchor="middle" font-style="italic">φ₁ &gt; 0 (décrois. lente)</text>
+    <!-- axes -->
+    <line x1="244" y1="140" x2="444" y2="140" stroke="#9089bf" stroke-width="0.8" opacity="0.6"/>
+    <line x1="244" y1="50" x2="444" y2="50" stroke="#e07b7b" stroke-width="0.6" stroke-dasharray="4,3" opacity="0.5"/>
+    <line x1="244" y1="230" x2="444" y2="230" stroke="#e07b7b" stroke-width="0.6" stroke-dasharray="4,3" opacity="0.5"/>
+    <text x="236" y="143" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="end">0</text>
+    <!-- confidence band -->
+    <rect x="244" y="50" width="200" height="180" fill="#7eb8d4" opacity="0.04" rx="2"/>
+    <!-- bars: high at lag1, decreasing -->
+    <rect x="253" y="77" width="14" height="63" fill="#7eb8d4" opacity="0.85"/>
+    <rect x="278" y="93" width="14" height="47" fill="#7eb8d4" opacity="0.75"/>
+    <rect x="303" y="107" width="14" height="33" fill="#7eb8d4" opacity="0.65"/>
+    <rect x="328" y="117" width="14" height="23" fill="#7eb8d4" opacity="0.55"/>
+    <rect x="353" y="124" width="14" height="16" fill="#7eb8d4" opacity="0.5"/>
+    <rect x="378" y="129" width="14" height="11" fill="#7eb8d4" opacity="0.45"/>
+    <rect x="403" y="132" width="14" height="8" fill="#7eb8d4" opacity="0.4"/>
+    <!-- lag labels -->
+    <text x="261" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">1</text>
+    <text x="286" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">2</text>
+    <text x="311" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">3</text>
+    <text x="336" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">4</text>
+    <text x="361" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">5</text>
+    <text x="386" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">6</text>
+    <text x="411" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">7</text>
+    <text x="339" y="198" fill="#7eb8d4" font-family="EB Garamond, serif" font-size="11" text-anchor="middle">Momentum / Trend</text>
+
+    <!-- ── PANEL 3: Negative (mean-reverting) ── -->
+    <text x="567" y="22" fill="#e8c97a" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle" font-weight="bold">CONTRE-TENDANCE</text>
+    <text x="567" y="34" fill="#9089bf" font-family="EB Garamond, serif" font-size="10" text-anchor="middle" font-style="italic">φ₁ &lt; 0 (oscillations)</text>
+    <!-- axes -->
+    <line x1="470" y1="140" x2="670" y2="140" stroke="#9089bf" stroke-width="0.8" opacity="0.6"/>
+    <line x1="470" y1="50" x2="670" y2="50" stroke="#e07b7b" stroke-width="0.6" stroke-dasharray="4,3" opacity="0.5"/>
+    <line x1="470" y1="230" x2="670" y2="230" stroke="#e07b7b" stroke-width="0.6" stroke-dasharray="4,3" opacity="0.5"/>
+    <text x="462" y="143" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="end">0</text>
+    <!-- confidence band -->
+    <rect x="470" y="50" width="200" height="180" fill="#e8c97a" opacity="0.03" rx="2"/>
+    <!-- alternating bars -->
+    <rect x="479" y="140" width="14" height="-55" fill="#e8c97a" opacity="0.8"/>
+    <rect x="504" y="140" width="14" height="30" fill="#e07b7b" opacity="0.7"/>
+    <rect x="529" y="140" width="14" height="-18" fill="#e8c97a" opacity="0.65"/>
+    <rect x="554" y="140" width="14" height="12" fill="#e07b7b" opacity="0.6"/>
+    <rect x="579" y="140" width="14" height="-8" fill="#e8c97a" opacity="0.55"/>
+    <rect x="604" y="140" width="14" height="5" fill="#e07b7b" opacity="0.5"/>
+    <rect x="629" y="140" width="14" height="-4" fill="#e8c97a" opacity="0.45"/>
+    <!-- lag labels -->
+    <text x="487" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">1</text>
+    <text x="512" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">2</text>
+    <text x="537" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">3</text>
+    <text x="562" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">4</text>
+    <text x="587" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">5</text>
+    <text x="612" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">6</text>
+    <text x="637" y="218" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">7</text>
+    <text x="567" y="198" fill="#e8c97a" font-family="EB Garamond, serif" font-size="11" text-anchor="middle">Mean-Reverting</text>
+  </svg>
+</div>
+
+<h3>Intervalle de confiance de l'ACF</h3>
+<p>Pour $n$ observations, l'intervalle de confiance approximatif à 95% est :</p>
+<div class="mblock">
+  <div class="mlabel">Confidence Interval — ACF</div>
+  $$\text{IC}_{95\%} \approx \pm \frac{1.96}{\sqrt{n}}$$
+</div>
+<p>Toute barre de l'ACF <strong>dépassant cet intervalle</strong> est considérée statistiquement significative. C'est la ligne bleue en pointillés dans tous les graphes ACF du cours.</p>
+
+<div class="box vio">
+  <div class="box-title">Exemple remarquable — VIX (cours)</div>
+  Les rendements du VIX entre 2010 et 2013 montrent des autocorrélations <strong>significativement négatives</strong> au lag 1. Cela signifie : si le VIX monte fortement aujourd'hui, il tend à baisser demain. Ce comportement mean-reverting du VIX est un fait empirique bien établi en finance.
+</div>
+</section>
+
+<!-- ═══ §05 MODÈLES ARMA ═══ -->
+<section class="sec" id="modeles">
+<div class="sec-hd"><span class="sec-num">05</span><h2 class="sec-title">La famille AR / MA / ARMA</h2></div>
+
+<h3>Les trois modèles fondamentaux</h3>
+
+<div class="fcards">
+<div class="fc">
+  <div class="fc-head"><span class="fc-name">AR(p) — Autoregressive Model</span><span class="fc-tag">ordre p</span></div>
+  <div class="fc-body">
+    <div class="fc-expr">$$X_t = c + \sum_{i=1}^{p} \varphi_i X_{t-i} + \varepsilon_t$$</div>
+    <p>Le présent est une <strong>combinaison linéaire des $p$ valeurs passées</strong> plus un bruit. Les $\varphi_i$ sont les coefficients autorégressifs. La <em>mémoire</em> du modèle porte sur les valeurs passées elles-mêmes.</p>
+    <div class="fc-grid">
+      <div class="fc-item"><h5>Usage typique</h5><p>Séries avec inertie (PIB, volatilité)</p></div>
+      <div class="fc-item"><h5>Estimation</h5><p>AR(1) : analytique. AR(p&gt;1) : maximum de vraisemblance</p></div>
+    </div>
+  </div>
+</div>
+<div class="fc">
+  <div class="fc-head"><span class="fc-name">MA(q) — Moving Average Model</span><span class="fc-tag">ordre q</span></div>
+  <div class="fc-body">
+    <div class="fc-expr">$$X_t = \mu + \varepsilon_t + \theta_1\varepsilon_{t-1} + \cdots + \theta_q\varepsilon_{t-q}$$</div>
+    <p>Le présent est la moyenne plus une <strong>combinaison linéaire des $q$ erreurs passées</strong>. La <em>mémoire</em> porte sur les chocs passés (non observés), pas sur les valeurs elles-mêmes.</p>
+    <div class="fc-grid">
+      <div class="fc-item"><h5>Usage typique</h5><p>Chocs transitoires, processus à mémoire courte</p></div>
+      <div class="fc-item"><h5>Propriété clé</h5><p>Toujours stationnaire (contrairement à AR)</p></div>
+    </div>
+  </div>
+</div>
+<div class="fc">
+  <div class="fc-head"><span class="fc-name">ARMA(p,q) — Combined Model</span><span class="fc-tag">ordre p, q</span></div>
+  <div class="fc-body">
+    <div class="fc-expr">$$X_t = c + \varepsilon_t + \sum_{i=1}^{p} \varphi_i X_{t-i} + \sum_{i=1}^{q} \theta_i \varepsilon_{t-i}$$</div>
+    <p>Combinaison des deux : <strong>valeurs passées ET erreurs passées</strong>. Modèle le plus général et le plus flexible de la famille. Avec peu de paramètres, il peut capter des structures complexes.</p>
+    <div class="fc-grid">
+      <div class="fc-item"><h5>Cas limites</h5><p>AR(p) = ARMA(p,0) ; MA(q) = ARMA(0,q)</p></div>
+      <div class="fc-item"><h5>Extension</h5><p>ARIMA pour séries non-stationnaires (I = Integrated)</p></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="diag">
+  <div class="diag-title">Schéma 4 — Hiérarchie et relations de la famille ARMA</div>
+  <svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-height:240px">
+    <rect width="680" height="220" fill="#1c1828" rx="6"/>
+    <!-- ARMA box at top center -->
+    <rect x="230" y="18" width="220" height="52" rx="8" fill="#161221" stroke="#c9a84c" stroke-width="1.5"/>
+    <text x="340" y="39" fill="#c9a84c" font-family="Cormorant Garamond, serif" font-size="16" font-weight="700" text-anchor="middle">ARMA(p, q)</text>
+    <text x="340" y="57" fill="#9089bf" font-family="EB Garamond, serif" font-size="12" text-anchor="middle">valeurs passées + erreurs passées</text>
+    <!-- Arrow left to AR -->
+    <line x1="290" y1="70" x2="175" y2="118" stroke="#c9a84c" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.7"/>
+    <polygon points="173,113 170,120 178,118" fill="#c9a84c" opacity="0.7"/>
+    <!-- Arrow right to MA -->
+    <line x1="390" y1="70" x2="505" y2="118" stroke="#c9a84c" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.7"/>
+    <polygon points="502,113 509,118 503,122" fill="#c9a84c" opacity="0.7"/>
+    <!-- AR(p) box -->
+    <rect x="60" y="118" width="220" height="52" rx="8" fill="#161221" stroke="#7eb8d4" stroke-width="1.5"/>
+    <text x="170" y="139" fill="#7eb8d4" font-family="Cormorant Garamond, serif" font-size="16" font-weight="700" text-anchor="middle">AR(p)</text>
+    <text x="170" y="157" fill="#9089bf" font-family="EB Garamond, serif" font-size="12" text-anchor="middle">ARMA(p, 0) — q = 0</text>
+    <!-- MA(q) box -->
+    <rect x="400" y="118" width="220" height="52" rx="8" fill="#161221" stroke="#7bc496" stroke-width="1.5"/>
+    <text x="510" y="139" fill="#7bc496" font-family="Cormorant Garamond, serif" font-size="16" font-weight="700" text-anchor="middle">MA(q)</text>
+    <text x="510" y="157" fill="#9089bf" font-family="EB Garamond, serif" font-size="12" text-anchor="middle">ARMA(0, q) — p = 0</text>
+    <!-- Arrow AR to AR(1) -->
+    <line x1="170" y1="170" x2="170" y2="188" stroke="#7eb8d4" stroke-width="1.2" opacity="0.6"/>
+    <polygon points="166,186 170,194 174,186" fill="#7eb8d4" opacity="0.6"/>
+    <!-- AR(1) box -->
+    <rect x="60" y="188" width="220" height="24" rx="5" fill="rgba(126,184,212,0.1)" stroke="#7eb8d4" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="170" y="204" fill="#7eb8d4" font-family="Cormorant Garamond, serif" font-size="14" font-weight="600" text-anchor="middle">AR(1) — p = 1, résultats analytiques</text>
+    <!-- Labels on arrows -->
+    <text x="210" y="104" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle" transform="rotate(-25 210 104)">q = 0</text>
+    <text x="465" y="104" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle" transform="rotate(25 465 104)">p = 0</text>
+  </svg>
+</div>
+</section>
+
+<!-- ═══ §06 AR(1) ═══ -->
+<section class="sec" id="ar1">
+<div class="sec-hd"><span class="sec-num">06</span><h2 class="sec-title">AR(1) — Analyse complète</h2></div>
+
+<p>Le modèle AR(1) est le plus simple des modèles autorégressifs et permet d'établir des résultats analytiques fermés. C'est le point de départ de toute l'analyse.</p>
+<div class="mblock">
+  <div class="mlabel">Modèle AR(1) — Définition</div>
+  $$X_t = c + \varphi_1 X_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim \mathcal{N}(0, \sigma_\varepsilon^2) \text{ i.i.d.}$$
+</div>
+
+<h3>① Calcul de la moyenne</h3>
+<p>Si le processus est stationnaire, sa moyenne est constante : $\mathbb{E}[X_t] = \mathbb{E}[X_{t-1}] = \mu$. On prend l'espérance des deux membres :</p>
+<div class="mblock">
+  <div class="mlabel">Dérivation — Moyenne d'un AR(1)</div>
+  $$\mu = \mathbb{E}[c + \varphi_1 X_{t-1} + \varepsilon_t] = c + \varphi_1 \mu + \underbrace{\mathbb{E}[\varepsilon_t]}_{=0}$$
+  $$\mu(1 - \varphi_1) = c \implies \boxed{\mu = \frac{c}{1 - \varphi_1}}$$
+</div>
+<p>En pratique, on normalise la série pour avoir $c = 0 \implies \mu = 0$. Cela simplifie toutes les dérivations suivantes.</p>
+
+<h3>② Calcul de la variance</h3>
+<p>La stationnarité impose $\text{Var}[X_t] = \text{Var}[X_{t-1}] = \sigma^2$. On calcule la variance des deux membres (avec $c = 0$) :</p>
+<div class="mblock">
+  <div class="mlabel">Dérivation — Variance d'un AR(1)</div>
+  $$\sigma^2 = \text{Var}[\varphi_1 X_{t-1} + \varepsilon_t] = \varphi_1^2 \underbrace{\text{Var}[X_{t-1}]}_{\sigma^2} + \underbrace{\text{Var}[\varepsilon_t]}_{\sigma_\varepsilon^2}$$
+  $$\sigma^2(1 - \varphi_1^2) = \sigma_\varepsilon^2 \implies \boxed{\sigma^2 = \frac{\sigma_\varepsilon^2}{1 - \varphi_1^2}}$$
+  $$\text{Condition : } \varphi_1^2 &lt; 1 \iff |\varphi_1| &lt; 1$$
+</div>
+<div class="box warn">
+  <div class="box-title">Condition de stationnarité d'un AR(1)</div>
+  La variance est positive si et seulement si $|\varphi_1| < 1$. Cela donne la condition nécessaire et suffisante de stationnarité d'un AR(1). Si $\varphi_1 = 1$, on a une <strong>marche aléatoire</strong> (*random walk*) — non-stationnaire (variance infinie). Si $|\varphi_1| > 1$, le processus est explosif.
+</div>
+
+<h3>③ Calcul de l'autocorrélation</h3>
+<p>C'est le résultat le plus élégant : le paramètre $\varphi_1$ d'un AR(1) <em>est exactement</em> l'autocorrélation au lag 1.</p>
+<div class="mblock">
+  <div class="mlabel">Dérivation — Autocorrélation AR(1)</div>
+  $$\gamma_1 = \text{Cov}(X_t, X_{t+1}) = \mathbb{E}[X_t \cdot X_{t+1}] \quad (\mu = 0)$$
+  $$= \mathbb{E}[X_t(\varphi_1 X_t + \varepsilon_{t+1})] = \varphi_1 \underbrace{\mathbb{E}[X_t^2]}_{\text{Var}[X_t]} + \underbrace{\mathbb{E}[X_t \varepsilon_{t+1}]}_{= 0 \text{ (indép.)}}$$
+  $$\gamma_1 = \varphi_1 \sigma^2 \implies \rho_1 = \frac{\gamma_1}{\sigma^2} = \varphi_1$$
+  $$\boxed{\varphi_1 = \rho_1 = \text{ACF}(1)}$$
+</div>
+<p>Et plus généralement, l'ACF d'un AR(1) décroît géométriquement : $\rho_\tau = \varphi_1^\tau$. C'est pourquoi l'ACF d'un AR(1) décroît exponentiellement vers zéro.</p>
+
+<h3>Interprétation de $\varphi_1$</h3>
+
+<div class="diag">
+  <div class="diag-title">Schéma 5 — Comportement d'un AR(1) selon la valeur de φ₁</div>
+  <svg viewBox="0 0 680 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-height:230px">
+    <rect width="680" height="210" fill="#1c1828" rx="6"/>
+    <!-- Grid -->
+    <line x1="42" y1="105" x2="510" y2="105" stroke="#9089bf" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.35"/>
+    <line x1="42" y1="65" x2="510" y2="65" stroke="#9089bf" stroke-width="0.3" stroke-dasharray="3,6" opacity="0.2"/>
+    <line x1="42" y1="145" x2="510" y2="145" stroke="#9089bf" stroke-width="0.3" stroke-dasharray="3,6" opacity="0.2"/>
+    <!-- Axes -->
+    <line x1="42" y1="170" x2="510" y2="170" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
+    <line x1="42" y1="20" x2="42" y2="170" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
+    <text x="515" y="175" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="10">t</text>
+    <!-- φ=0.9 (blue): slowly trending upward then leveling -->
+    <polyline points="45,105 75,100 105,92 135,86 165,81 195,77 225,82 255,87 285,82 315,76 345,70 375,75 405,80 435,76 465,72 495,76" fill="none" stroke="#7eb8d4" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- φ=0 (gold dashed): very noisy -->
+    <polyline points="45,105 75,83 105,112 135,80 165,108 195,76 225,114 255,84 285,118 315,88 345,120 375,85 405,110 435,82 465,116 495,90" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5,3" opacity="0.7"/>
+    <!-- φ=-0.7 (green): oscillating -->
+    <polyline points="45,105 75,75 105,120 135,80 165,116 195,84 225,113 255,87 285,118 315,88 345,112 375,85 405,114 435,89 465,111 495,88" fill="none" stroke="#7bc496" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Legend box -->
+    <rect x="520" y="22" width="148" height="95" fill="#161221" rx="5" stroke="#322a1c" stroke-width="1"/>
+    <line x1="530" y1="43" x2="555" y2="43" stroke="#7eb8d4" stroke-width="2.2"/>
+    <text x="560" y="47" fill="#7eb8d4" font-family="EB Garamond, serif" font-size="12">φ₁ = 0.9</text>
+    <text x="560" y="59" fill="#9089bf" font-family="EB Garamond, serif" font-size="10" font-style="italic">tendance</text>
+    <line x1="530" y1="73" x2="555" y2="73" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="4,2"/>
+    <text x="560" y="77" fill="#c9a84c" font-family="EB Garamond, serif" font-size="12">φ₁ = 0</text>
+    <text x="560" y="89" fill="#9089bf" font-family="EB Garamond, serif" font-size="10" font-style="italic">bruit blanc</text>
+    <line x1="530" y1="103" x2="555" y2="103" stroke="#7bc496" stroke-width="2"/>
+    <text x="560" y="107" fill="#7bc496" font-family="EB Garamond, serif" font-size="12">φ₁ = -0.7</text>
+    <text x="560" y="119" fill="#9089bf" font-family="EB Garamond, serif" font-size="10" font-style="italic">mean-reverting</text>
+    <!-- Condition bar on right -->
+    <rect x="525" y="140" width="138" height="55" fill="rgba(224,123,123,0.08)" rx="5" stroke="rgba(224,123,123,0.3)" stroke-width="1"/>
+    <text x="594" y="156" fill="#e07b7b" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">STATIONNARITÉ</text>
+    <text x="594" y="170" fill="#e8c97a" font-family="EB Garamond, serif" font-size="13" text-anchor="middle">|φ₁| &lt; 1</text>
+    <text x="594" y="184" fill="#9089bf" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">requis</text>
+  </svg>
+</div>
+
+<div class="twrap">
+<table>
+<thead><tr><th>Valeur de φ₁</th><th>Comportement</th><th>Interprétation financière</th></tr></thead>
+<tbody>
+<tr><td>$\varphi_1 \approx 1$</td><td class="r">Marche aléatoire (non stationnaire)</td><td>Prix actions — pas de force de rappel</td></tr>
+<tr><td>$0 &lt; \varphi_1 &lt; 1$</td><td class="g">Tendance (momentum)</td><td>Indices avec inertie (S&amp;P 500 court terme)</td></tr>
+<tr><td>$\varphi_1 = 0$</td><td class="m">Bruit blanc</td><td>Rendements EUR/USD (faible structure)</td></tr>
+<tr><td>$-1 &lt; \varphi_1 &lt; 0$</td><td class="g">Mean-reverting (oscillant)</td><td>Rendements VIX, taux d'intérêt</td></tr>
+<tr><td>$|\varphi_1| \geq 1$</td><td class="r">Explosif (non stationnaire)</td><td>Bulle spéculative</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- ═══ §07 AIC/BIC ═══ -->
+<section class="sec" id="selection">
+<div class="sec-hd"><span class="sec-num">07</span><h2 class="sec-title">Sélection du modèle — AIC &amp; BIC</h2></div>
+
+<p>Pour les ordres $p > 1$, les coefficients doivent être estimés numériquement (maximum de vraisemblance). La question devient : quel ordre $p$ choisir ? Ajouter plus de paramètres améliore toujours le fit en échantillon, mais au risque du <em>surapprentissage</em>.</p>
+
+<div class="fcards">
+<div class="fc">
+  <div class="fc-head"><span class="fc-name">AIC — Akaike Information Criterion</span><span class="fc-tag">pénalisation légère</span></div>
+  <div class="fc-body">
+    <div class="fc-expr">$$\text{AIC} = 2p - 2\ln(\hat{L})$$</div>
+    <div class="fc-grid">
+      <div class="fc-item"><h5>p</h5><p>Nombre de paramètres du modèle</p></div>
+      <div class="fc-item"><h5>$\hat{L}$</h5><p>Valeur maximale de la vraisemblance (*likelihood*)</p></div>
+      <div class="fc-item"><h5>Interprétation</h5><p>Minimiser l'AIC. La pénalité $2p$ est constante par paramètre.</p></div>
+      <div class="fc-item"><h5>Biais</h5><p>Tend à <strong>sur-sélectionner</strong> (choisir des modèles trop complexes)</p></div>
+    </div>
+  </div>
+</div>
+<div class="fc">
+  <div class="fc-head"><span class="fc-name">BIC — Bayesian Information Criterion</span><span class="fc-tag">pénalisation forte</span></div>
+  <div class="fc-body">
+    <div class="fc-expr">$$\text{BIC} = \ln(n) \cdot p - 2\ln(\hat{L})$$</div>
+    <div class="fc-grid">
+      <div class="fc-item"><h5>n</h5><p>Nombre d'observations</p></div>
+      <div class="fc-item"><h5>$\ln(n) \cdot p$</h5><p>Pénalité croissante avec $n$ et $p$</p></div>
+      <div class="fc-item"><h5>Interprétation</h5><p>Minimiser le BIC. Pénalise plus sévèrement les grands modèles.</p></div>
+      <div class="fc-item"><h5>Avantage</h5><p>Plus <strong>parcimonieux</strong> que l'AIC, cohérent pour $n \to \infty$</p></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="box info">
+  <div class="box-title">Exemple concret — S&amp;P 500 (cours, slide 51)</div>
+  Sur les rendements S&amp;P 500 (2023–2024), l'ACF montre très peu d'autocorrélation. L'AIC continue de diminuer avec l'ordre $p$ tandis que le BIC recommande un <strong>modèle d'ordre 3</strong> (ou même 1). En pratique, lorsque AIC et BIC divergent, le BIC est préféré pour les données financières courtes.
+</div>
+</section>
+
+<!-- ═══ §08 FORMULES ═══ -->
+<section class="sec" id="formules">
+<div class="sec-hd"><span class="sec-num">08</span><h2 class="sec-title">Formules clés pour l'examen</h2></div>
+
+<div class="fcards">
+<div class="fc">
+  <div class="fc-head"><span class="fc-name">ACF d'un AR(1)</span><span class="fc-tag">résultat analytique</span></div>
+  <div class="fc-body">
+    <div class="fc-expr">$$\rho_\tau = \varphi_1^\tau$$</div>
+    <div class="fc-grid">
+      <div class="fc-item"><h5>Signification</h5><p>L'autocorrélation au lag τ décroît géométriquement avec le lag.</p></div>
+      <div class="fc-item"><h5>Conséquence</h5><p>Pour $|\varphi_1| < 1$, l'ACF tend vers 0 — la série « oublie » son passé.</p></div>
+      <div class="fc-item"><h5>Exemple numérique</h5><p>$\varphi_1 = 0.7$ : $\rho_1 = 0.7$, $\rho_2 = 0.49$, $\rho_3 = 0.34$, …</p></div>
+      <div class="fc-item"><h5>Cas $\varphi_1 < 0$</h5><p>Alternance : $\rho_1 < 0$, $\rho_2 > 0$, $\rho_3 < 0$, … (oscillations)</p></div>
+    </div>
+  </div>
+</div>
+<div class="fc">
+  <div class="fc-head"><span class="fc-name">Variance d'un AR(1)</span><span class="fc-tag">condition de stationnarité</span></div>
+  <div class="fc-body">
+    <div class="fc-expr">$$\sigma^2_{X} = \frac{\sigma^2_\varepsilon}{1 - \varphi_1^2}$$</div>
+    <div class="fc-grid">
+      <div class="fc-item"><h5>$\sigma^2_\varepsilon$</h5><p>Variance du bruit blanc (innovation)</p></div>
+      <div class="fc-item"><h5>$1 - \varphi_1^2$</h5><p>Facteur d'amplification : plus $|\varphi_1| \to 1$, plus la variance explose</p></div>
+      <div class="fc-item"><h5>Exemple numérique</h5><p>$\varphi_1 = 0.9$, $\sigma_\varepsilon = 1$ → $\sigma^2_X = 1/(1-0.81) \approx 5.26$</p></div>
+      <div class="fc-item"><h5>Intuition</h5><p>La corrélation temporelle "accumule" la variance — la série est plus volatile que le bruit seul.</p></div>
+    </div>
+  </div>
+</div>
+<div class="fc">
+  <div class="fc-head"><span class="fc-name">Moyenne d'un AR(1)</span><span class="fc-tag">long terme</span></div>
+  <div class="fc-body">
+    <div class="fc-expr">$$\mu = \frac{c}{1 - \varphi_1}$$</div>
+    <div class="fc-grid">
+      <div class="fc-item"><h5>c</h5><p>Constante (intercept) du modèle AR(1)</p></div>
+      <div class="fc-item"><h5>Intuition</h5><p>Le dénominateur $(1-\varphi_1)$ agit comme un diviseur qui "dilue" la constante selon la mémoire du processus.</p></div>
+      <div class="fc-item"><h5>Cas normalisé</h5><p>Si $c=0 \Rightarrow \mu = 0$ : on travaille avec des données centrées.</p></div>
+      <div class="fc-item"><h5>Exemple numérique</h5><p>$c = 0.1$, $\varphi_1 = 0.8$ → $\mu = 0.1/0.2 = 0.5$</p></div>
+    </div>
+  </div>
+</div>
+<div class="fc">
+  <div class="fc-head"><span class="fc-name">Stationnarité faible</span><span class="fc-tag">prérequis</span></div>
+  <div class="fc-body">
+    <div class="fc-expr">$$\mathbb{E}[X_t] = \mu = \text{cst} \quad \text{et} \quad \text{Cov}(X_t, X_{t+\tau}) = \gamma(\tau)$$</div>
+    <div class="fc-grid">
+      <div class="fc-item"><h5>Condition (a)</h5><p>La moyenne ne dépend pas du temps $t$</p></div>
+      <div class="fc-item"><h5>Condition (b)</h5><p>L'autocovariance ne dépend que du lag $\tau$, pas de $t$</p></div>
+      <div class="fc-item"><h5>Test formel</h5><p>Test ADF : H₀ = non-stationnaire. Rejeter H₀ si p-value &lt; 0.05</p></div>
+      <div class="fc-item"><h5>Pratique</h5><p>Les rendements financiers sont quasi-systématiquement stationnaires.</p></div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- ═══ §09 COMPARAISON ═══ -->
+<section class="sec" id="comparaison">
+<div class="sec-hd"><span class="sec-num">09</span><h2 class="sec-title">Comparaison des modèles</h2></div>
+
+<div class="twrap">
+<table>
+<thead>
+<tr><th>Modèle</th><th>Formule</th><th>Paramètres</th><th>Forces</th><th>Limites</th><th>Usage typique</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>AR(1)</strong></td>
+  <td>$X_t = c + \varphi_1 X_{t-1} + \varepsilon_t$</td>
+  <td class="m">1 ($\varphi_1$)</td>
+  <td class="g">Estimation analytique. Interprétation directe.</td>
+  <td class="r">Trop simple pour structures complexes.</td>
+  <td>Taux d'intérêt, VIX, première analyse</td>
+</tr>
+<tr>
+  <td><strong>AR(p)</strong></td>
+  <td>$X_t = c + \sum_{i=1}^p \varphi_i X_{t-i} + \varepsilon_t$</td>
+  <td class="m">p ($\varphi_1 \ldots \varphi_p$)</td>
+  <td class="g">Capture mémoire longue. Flexible.</td>
+  <td class="r">Estimation numérique requise. Risque overfitting.</td>
+  <td>PIB, inflation, S&amp;P 500</td>
+</tr>
+<tr>
+  <td><strong>MA(q)</strong></td>
+  <td>$X_t = \mu + \varepsilon_t + \sum_{i=1}^q \theta_i \varepsilon_{t-i}$</td>
+  <td class="m">q ($\theta_1 \ldots \theta_q$)</td>
+  <td class="g">Toujours stationnaire. Chocs transitoires.</td>
+  <td class="r">Erreurs non observables (plus complexe à estimer).</td>
+  <td>Effets de court terme, ajustements de prix</td>
+</tr>
+<tr>
+  <td><strong>ARMA(p,q)</strong></td>
+  <td>$X_t = c + \sum \varphi_i X_{t-i} + \varepsilon_t + \sum \theta_i \varepsilon_{t-i}$</td>
+  <td class="m">p+q</td>
+  <td class="g">Très flexible. Parcimonieux pour structures complexes.</td>
+  <td class="r">Identification difficile (choix p et q). Non trivial.</td>
+  <td>Taux de change, volatilité implicite</td>
+</tr>
+<tr>
+  <td><strong>Random Walk</strong></td>
+  <td>$X_t = X_{t-1} + \varepsilon_t$</td>
+  <td class="m">0</td>
+  <td class="g">Modèle de référence (benchmark).</td>
+  <td class="r">Non-stationnaire. ACF ne décroît pas.</td>
+  <td>Prix d'actions (hypothèse EMH)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="box">
+  <div class="box-title">Comment choisir entre AIC et BIC ?</div>
+  <strong>BIC est préféré</strong> quand on cherche le "vrai" modèle parcimonieux (consistant asymptotiquement). <strong>AIC est préféré</strong> quand l'objectif est la prédiction et qu'on tolère un peu plus de complexité. En finance, avec des séries courtes, le BIC est souvent plus adapté.
+</div>
+</section>
+
+<!-- ═══ §10 QUESTIONS ═══ -->
+<section class="sec" id="questions">
+<div class="sec-hd"><span class="sec-num">10</span><h2 class="sec-title">Questions d'examen possibles</h2></div>
+
+<div class="qlevel easy">● Facile</div>
+
+<div class="qi">
+  <div class="qi-q"><span class="qi-qtxt">Qu'est-ce que la stationnarité faible (*weak stationarity*) et pourquoi est-elle nécessaire pour appliquer un modèle AR ?</span><span class="qi-arr">▶</span></div>
+  <div class="qi-a"><p>La stationnarité faible requiert deux conditions : (a) la moyenne est constante $\mathbb{E}[X_t] = \mu$ pour tout $t$, et (b) l'autocovariance $\text{Cov}(X_t, X_{t+\tau}) = \gamma(\tau)$ ne dépend que du lag $\tau$, pas du temps absolu $t$. Elle est nécessaire car les modèles AR supposent que les relations entre observations (capturées par les coefficients $\varphi_i$) restent stables dans le temps. Sans stationnarité, les estimateurs sont biaisés, les tests invalides, et le modèle peut capturer des relations qui n'existent pas (*spurious correlations*).</p></div>
+</div>
+
+<div class="qi">
+  <div class="qi-q"><span class="qi-qtxt">Pourquoi travaille-t-on en général sur les rendements financiers plutôt que sur les prix ?</span><span class="qi-arr">▶</span></div>
+  <div class="qi-a"><p>Les prix financiers ne sont pas stationnaires : ils dérivent dans le temps (tendance), ont une variance qui évolue (hétéroscédasticité), et leur test ADF donne quasi-systématiquement une p-value > 0.05. Les rendements $r_t = (X_t - X_{t-1})/X_{t-1}$ ou log-rendements $\ln(X_t/X_{t-1})$ oscillent autour d'une moyenne quasi-nulle avec une variance plus stable. Ils passent le test ADF avec p-value ≈ 0.00. De plus, les rendements ont une interprétation économique directe (performance en %).</p></div>
+</div>
+
+<div class="qi">
+  <div class="qi-q"><span class="qi-qtxt">Quelle est la différence principale entre un modèle AR(p) et un modèle MA(q) ?</span><span class="qi-arr">▶</span></div>
+  <div class="qi-a"><p>Un AR(p) exprime $X_t$ comme combinaison linéaire de ses $p$ <strong>valeurs passées</strong> : $X_t = c + \sum \varphi_i X_{t-i} + \varepsilon_t$. Un MA(q) l'exprime comme combinaison des $q$ <strong>erreurs (chocs) passées</strong> : $X_t = \mu + \varepsilon_t + \sum \theta_i \varepsilon_{t-i}$. Conséquence clé : l'ACF d'un MA(q) est nulle pour tous les lags $\tau > q$ (coupure nette), tandis que l'ACF d'un AR(p) décroît progressivement. Un MA(q) est toujours stationnaire, pas un AR(p) si $|\varphi_1| \geq 1$.</p></div>
+</div>
+
+<div class="qlevel med">● Intermédiaire</div>
+
+<div class="qi">
+  <div class="qi-q"><span class="qi-qtxt">Démontrez que la variance d'un AR(1) vaut $\sigma^2_X = \sigma^2_\varepsilon / (1 - \varphi_1^2)$ et déduisez la condition de stationnarité.</span><span class="qi-arr">▶</span></div>
+  <div class="qi-a"><p>Avec $c = 0$ et $X_t = \varphi_1 X_{t-1} + \varepsilon_t$ :</p>
+  <p>$\text{Var}[X_t] = \text{Var}[\varphi_1 X_{t-1} + \varepsilon_t] = \varphi_1^2 \text{Var}[X_{t-1}] + \text{Var}[\varepsilon_t]$ (par indépendance de $\varepsilon_t$ et $X_{t-1}$)</p>
+  <p>Si le processus est stationnaire : $\text{Var}[X_t] = \text{Var}[X_{t-1}] = \sigma^2$, donc :</p>
+  <p>$\sigma^2 = \varphi_1^2 \sigma^2 + \sigma^2_\varepsilon \Rightarrow \sigma^2(1 - \varphi_1^2) = \sigma^2_\varepsilon \Rightarrow \sigma^2 = \frac{\sigma^2_\varepsilon}{1-\varphi_1^2}$</p>
+  <p>Pour que cette variance soit positive et finie, il faut $1 - \varphi_1^2 > 0$, soit $|\varphi_1| < 1$. C'est la condition nécessaire et suffisante de stationnarité de l'AR(1).</p></div>
+</div>
+
+<div class="qi">
+  <div class="qi-q"><span class="qi-qtxt">Comment l'ACF permet-elle d'identifier si une série a un comportement "tendanciel" ou "mean-reverting" ?</span><span class="qi-arr">▶</span></div>
+  <div class="qi-a"><p>L'ACF mesure $\rho_\tau = \text{Cor}(X_t, X_{t+\tau})$. Pour un AR(1), $\rho_\tau = \varphi_1^\tau$.</p>
+  <p>Si $\varphi_1 > 0$ (tendanciel) : toutes les barres ACF sont positives et décroissent lentement. Cela signifie que des valeurs élevées aujourd'hui sont corrélées avec des valeurs élevées demain — la série a de l'inertie, une tendance. L'ACF reste au-dessus de zéro pour de nombreux lags.</p>
+  <p>Si $\varphi_1 < 0$ (mean-reverting) : les barres alternent, avec $\rho_1 < 0$ significatif. Cela signifie qu'une valeur élevée aujourd'hui prédit une valeur basse demain — la série oscille autour de sa moyenne. Exemple : les rendements du VIX montrent des autocorrélations négatives significatives au lag 1.</p>
+  <p>Si les barres ACF sont toutes dans l'intervalle de confiance : la série est proche d'un bruit blanc, difficile à prédire.</p></div>
+</div>
+
+<div class="qi">
+  <div class="qi-q"><span class="qi-qtxt">Qu'est-ce que la stationnarité stricte et en quoi diffère-t-elle de la stationnarité faible ?</span><span class="qi-arr">▶</span></div>
+  <div class="qi-a"><p>La stationnarité stricte impose que la <strong>distribution jointe complète</strong> $F(X_{t_1+\tau}, \ldots, X_{t_n+\tau}) = F(X_{t_1}, \ldots, X_{t_n})$ soit invariante par translation temporelle — pour tous les $n$, tous les $\tau$. C'est une condition très forte qui porte sur tous les moments de toutes les distributions marginales et jointes.</p>
+  <p>La stationnarité faible n'impose que deux conditions : (a) moyenne constante et (b) autocovariance ne dépendant que du lag. Elle ne porte que sur les deux premiers moments.</p>
+  <p>Relations : stationnarité stricte $\Rightarrow$ stationnarité faible (si les variances existent). L'inverse n'est pas vrai en général. Exception : pour les processus gaussiens, les deux notions sont équivalentes (car un gaussien est entièrement caractérisé par ses deux premiers moments). En pratique, on utilise toujours la stationnarité faible, plus vérifiable.</p></div>
+</div>
+
+<div class="qlevel hard">● Difficile</div>
+
+<div class="qi">
+  <div class="qi-q"><span class="qi-qtxt">Montrez que pour un AR(1), le coefficient $\varphi_1$ est exactement égal à la corrélation entre $X_t$ et $X_{t+1}$. Qu'est-ce que cela implique pour l'estimation ?</span><span class="qi-arr">▶</span></div>
+  <div class="qi-a"><p>Avec $\mu = 0$, on calcule $\gamma_1 = \text{Cov}(X_t, X_{t+1}) = \mathbb{E}[X_t \cdot X_{t+1}]$.</p>
+  <p>$\gamma_1 = \mathbb{E}[X_t(\varphi_1 X_t + \varepsilon_{t+1})] = \varphi_1 \mathbb{E}[X_t^2] + \mathbb{E}[X_t \varepsilon_{t+1}]$</p>
+  <p>Comme $\varepsilon_{t+1}$ est indépendant de $X_t$ : $\mathbb{E}[X_t \varepsilon_{t+1}] = \mathbb{E}[X_t]\mathbb{E}[\varepsilon_{t+1}] = 0$.</p>
+  <p>Donc $\gamma_1 = \varphi_1 \sigma^2$, et $\rho_1 = \gamma_1 / \sigma^2 = \varphi_1$. CQFD.</p>
+  <p>Implication pour l'estimation : le coefficient $\varphi_1$ d'un AR(1) peut être estimé directement comme la corrélation empirique entre $X_t$ et $X_{t-1}$ (estimateur de Pearson), sans avoir recours à un algorithme d'optimisation numérique. C'est un résultat unique à l'AR(1) — pour les ordres supérieurs, l'estimation analytique n'est plus possible.</p></div>
+</div>
+
+<div class="qi">
+  <div class="qi-q"><span class="qi-qtxt">Pourquoi l'AIC tend-il à sur-sélectionner (choisir trop de paramètres) par rapport au BIC ?</span><span class="qi-arr">▶</span></div>
+  <div class="qi-a"><p>Comparons les pénalités : AIC pénalise avec $2p$, BIC avec $\ln(n) \cdot p$.</p>
+  <p>Pour qu'AIC soit plus sévère que BIC, il faudrait $2 > \ln(n)$, soit $n < e^2 \approx 7.4$. Pour tout $n \geq 8$, $\ln(n) > 2$, donc BIC pénalise toujours <strong>plus</strong> que AIC l'ajout d'un paramètre. Plus $n$ est grand, plus l'écart est important (BIC pénalise avec $\ln(n) \approx 5$ pour $n=150$, $\approx 7.6$ pour $n=2000$).</p>
+  <p>Conséquence : face à deux modèles qui s'ajustent aussi bien, AIC préfèrera le plus complexe (plus de paramètres), tandis que BIC restera sur le modèle parcimonieux. En termes théoriques, BIC est <em>consistent</em> (converge vers le vrai ordre si $n \to \infty$) tandis qu'AIC ne l'est pas. C'est pourquoi BIC est préféré pour l'identification de structure.</p></div>
+</div>
+
+<div class="qi">
+  <div class="qi-q"><span class="qi-qtxt">Comment étendrait-on le cadre AR aux séries non-stationnaires ? Expliquez le modèle ARIMA.</span><span class="qi-arr">▶</span></div>
+  <div class="qi-a"><p>Un modèle <strong>ARIMA(p, d, q)</strong> (*Autoregressive Integrated Moving Average*) étend ARMA aux séries non-stationnaires via un paramètre $d$ d'intégration. L'idée : si une série $X_t$ est non-stationnaire mais que sa différence $d$-ième $\Delta^d X_t$ est stationnaire, on applique un ARMA(p,q) à la série différenciée.</p>
+  <p>Pour $d = 1$ (le cas le plus courant) : $\Delta X_t = X_t - X_{t-1}$ est stationnaire. On modélise $Y_t = \Delta X_t$ avec un ARMA(p,q). Exemple : les prix d'actions nécessitent souvent ARIMA(p,1,q) car leur différence première (= les rendements) est stationnaire.</p>
+  <p>La marche aléatoire $X_t = X_{t-1} + \varepsilon_t$ est un cas particulier ARIMA(0,1,0). Les extensions SARIMA ajoutent une composante saisonnière.</p></div>
+</div>
+</section>
+
+<!-- ═══ §11 PIÈGES ═══ -->
+<section class="sec" id="pieges">
+<div class="sec-hd"><span class="sec-num">11</span><h2 class="sec-title">Pièges classiques</h2></div>
+
+<div class="piege">
+  <div class="piege-icon">⚠</div>
+  <div class="piege-text"><strong>Appliquer un modèle AR directement sur les prix</strong> — Les prix ne sont pas stationnaires. Il faut toujours stationnariser (rendements, différences) avant toute modélisation. Vérifier avec le test ADF.</div>
+</div>
+
+<div class="piege">
+  <div class="piege-icon">⚠</div>
+  <div class="piege-text"><strong>Confondre "bon fit" et "bonne prédiction"</strong> — Un modèle peut avoir un excellent $R^2$ <em>in-sample</em> mais de mauvaises prédictions hors-échantillon. Dans le cours, l'AR(1) sur $X_t = X_{t-1} + \varepsilon$ donne coeff ≈ 1 et fit parfait en-échantillon, mais les prédictions divergent rapidement hors-échantillon.</div>
+</div>
+
+<div class="piege">
+  <div class="piege-icon">⚠</div>
+  <div class="piege-text"><strong>Oublier la condition $|\varphi_1| &lt; 1$ pour la stationnarité</strong> — Si $|\varphi_1| \geq 1$, le modèle AR(1) n'est pas stationnaire. La variance explose. Cette condition n'est pas automatiquement vérifiée lors de l'estimation.</div>
+</div>
+
+<div class="piege">
+  <div class="piege-icon">⚠</div>
+  <div class="piege-text"><strong>Confondre ACF et PACF</strong> — L'ACF mesure la corrélation totale entre $X_t$ et $X_{t+\tau}$ (y compris les effets indirects). La PACF (*Partial ACF*) mesure la corrélation <em>directe</em> après élimination des lags intermédiaires. Pour identifier l'ordre d'un AR, on utilise la PACF (coupure nette à $p$). Pour identifier l'ordre d'un MA, on utilise l'ACF.</div>
+</div>
+
+<div class="piege">
+  <div class="piege-icon">⚠</div>
+  <div class="piege-text"><strong>Ignorer la définition du lag temporel</strong> — La fréquence importe ! Un lag τ=1 signifie des choses très différentes selon que les données sont journalières, hebdomadaires ou mensuelles. Dans le cours : "when does a day start?" — la définition exacte de la fréquence d'échantillonnage est non triviale.</div>
+</div>
+
+<div class="piege">
+  <div class="piege-icon">⚠</div>
+  <div class="piege-text"><strong>Croire que AIC toujours &lt; BIC</strong> — Comparer AIC et BIC uniquement pour le même modèle n'a pas de sens. On compare les valeurs AIC entre eux et BIC entre eux. On ne compare jamais AIC d'un modèle avec BIC d'un autre.</div>
+</div>
+
+<div class="piege">
+  <div class="piege-icon">⚠</div>
+  <div class="piege-text"><strong>Négliger l'hétéroscédasticité</strong> — Les modèles AR supposent une variance du bruit $\sigma_\varepsilon^2$ constante. En finance, la volatilité est souvent variable (hétéroscédasticité). Pour modéliser cela correctement, il faut des modèles GARCH — une extension naturelle au-delà de ce cours.</div>
+</div>
+</section>
+
+<!-- ═══ §12 FICHE ═══ -->
+<section class="sec" id="fiche">
+<div class="sec-hd"><span class="sec-num">12</span><h2 class="sec-title">Fiche de révision finale</h2></div>
+
+<div class="fiche-grid">
+  <div class="fc2">
+    <h4>Concepts Fondamentaux</h4>
+    <ul>
+      <li><strong>Time Series</strong> : $\{X_{t_i}\}$ ordonnée dans le temps</li>
+      <li><strong>Lag τ</strong> : décalage temporel entre observations</li>
+      <li><strong>Stationnarité faible</strong> : μ=cst + Cov dépend de τ seul</li>
+      <li><strong>Stationnarité stricte</strong> : distribution invariante par translation</li>
+      <li><strong>Test ADF</strong> : p-value &lt; 0.05 → stationnaire ✓</li>
+      <li><strong>En pratique</strong> : travailler sur les rendements</li>
+    </ul>
+  </div>
+  <div class="fc2">
+    <h4>ACF — Autocorrelation Function</h4>
+    <ul>
+      <li><strong>Formule</strong> : $\rho_\tau = \text{Cov}(X_t, X_{t+\tau}) / \sigma^2$</li>
+      <li><strong>Confiance</strong> : $\pm 1.96/\sqrt{n}$ (95%)</li>
+      <li><strong>ACF &gt; 0 décroissant</strong> → tendance (φ &gt; 0)</li>
+      <li><strong>ACF alternant ±</strong> → mean-reverting (φ &lt; 0)</li>
+      <li><strong>ACF ≈ 0 partout</strong> → bruit blanc, pas de structure</li>
+      <li><strong>AR(1)</strong> : ACF(τ) = φ₁<sup>τ</sup> (décroissance géom.)</li>
+    </ul>
+  </div>
+  <div class="fc2">
+    <h4>Famille AR / MA / ARMA</h4>
+    <ul>
+      <li><strong>AR(p)</strong> : $X_t = c + \sum \varphi_i X_{t-i} + \varepsilon_t$</li>
+      <li><strong>MA(q)</strong> : $X_t = \mu + \varepsilon_t + \sum \theta_i \varepsilon_{t-i}$</li>
+      <li><strong>ARMA(p,q)</strong> : valeurs + erreurs passées</li>
+      <li><strong>Sélection</strong> : minimiser AIC ou BIC</li>
+      <li><strong>AIC</strong> : $2p - 2\ln L$ (légère pénalité)</li>
+      <li><strong>BIC</strong> : $\ln(n)p - 2\ln L$ (forte pénalité)</li>
+    </ul>
+  </div>
+  <div class="fc2">
+    <h4>AR(1) — Résultats Clés</h4>
+    <ul>
+      <li><strong>Modèle</strong> : $X_t = c + \varphi_1 X_{t-1} + \varepsilon_t$</li>
+      <li><strong>Moyenne</strong> : $\mu = c / (1 - \varphi_1)$</li>
+      <li><strong>Variance</strong> : $\sigma^2 = \sigma^2_\varepsilon / (1 - \varphi_1^2)$</li>
+      <li><strong>Autocorrélation</strong> : $\varphi_1 = \rho_1 = \text{ACF}(1)$</li>
+      <li><strong>Stationnarité</strong> : $|\varphi_1| &lt; 1$ requis !</li>
+      <li><strong>φ₁ &gt; 0</strong> → tendance ; <strong>φ₁ &lt; 0</strong> → mean-reverting</li>
+    </ul>
+  </div>
+</div>
+
+<div class="box ok">
+  <div class="box-title">Workflow complet — À retenir</div>
+  <strong>① Données brutes</strong> (non-stationnaires en général) → <strong>② Stationnariser</strong> (rendements / log / diff) → <strong>③ Vérifier ADF</strong> (p-value &lt; 0.05) → <strong>④ Calculer ACF</strong> (identifier la structure) → <strong>⑤ Choisir le modèle</strong> AR/MA/ARMA et l'ordre → <strong>⑥ Estimer</strong> les paramètres → <strong>⑦ Valider</strong> avec AIC/BIC et tests résiduels
+</div>
+
+<div class="box vio">
+  <div class="box-title">Exemples du cours à citer en oral</div>
+  <strong>EUR/USD 2012</strong> : prix non-stationnaire (ADF p=0.15) → rendements stationnaires (p=0.00), φ₁≈-0.125, faible structure.<br>
+  <strong>VIX 2010-2013</strong> : autocorrélations négatives significatives au lag 1 (mean-reverting).<br>
+  <strong>S&amp;P 500 2023-24</strong> : AR(3) retenu par BIC sur les rendements.<br>
+  <strong>PIB Suisse</strong> : AR de plus haut ordre nécessaire pour capturer la structure trimestrielle.
+</div>
+</section>
+
+</main>
+
+<script>
+// Quiz accordion
+document.querySelectorAll('.qi-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const ans = q.nextElementSibling;
+    const arr = q.querySelector('.qi-arr');
+    const wasOpen = ans.classList.contains('open');
+    document.querySelectorAll('.qi-a.open').forEach(a => {
+      a.classList.remove('open');
+      a.previousElementSibling.querySelector('.qi-arr').style.transform = '';
+    });
+    if (!wasOpen) {
+      ans.classList.add('open');
+      arr.style.transform = 'rotate(90deg)';
+    }
+  });
+});
+
+// Scroll-aware sidebar
+const sections = document.querySelectorAll('.sec');
+const navLinks = document.querySelectorAll('.sb nav a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const link = document.querySelector(`.sb nav a[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.25, rootMargin: '-60px 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Smooth scroll
+document.querySelectorAll('.sb nav a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>

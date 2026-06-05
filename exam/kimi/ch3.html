@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Révision — Marchés & Comportements | Computational Finance</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                macros: {
+                    E: "\\mathbb{E}",
+                    Var: "\\mathrm{Var}"
+                }
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0b1120;
+            --bg-secondary: #111827;
+            --bg-card: #1e293b;
+            --bg-hover: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #38bdf8;
+            --accent-soft: #0ea5e9;
+            --accent-2: #818cf8;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --border: #334155;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --font-main: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.65;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 0;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .meta {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 3rem 0 1.25rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h2::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 1.8rem;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-2));
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--accent-soft);
+        }
+
+        p { margin-bottom: 1rem; }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-accent {
+            border-left: 4px solid var(--accent);
+        }
+
+        .card-warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .card-danger {
+            border-left: 4px solid var(--danger);
+        }
+
+        .card-success {
+            border-left: 4px solid var(--success);
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li { margin-bottom: 0.5rem; }
+
+        li::marker { color: var(--accent); }
+
+        /* Funny intro */
+        .intro-funny {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            border: 1px solid #4338ca;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-funny::before {
+            content: '"';
+            position: absolute;
+            top: -1rem;
+            left: 1rem;
+            font-size: 6rem;
+            color: rgba(99, 102, 241, 0.2);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .intro-funny p {
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tag-warning {
+            background: rgba(251, 191, 36, 0.15);
+            color: var(--warning);
+        }
+
+        .tag-danger {
+            background: rgba(248, 113, 113, 0.15);
+            color: var(--danger);
+        }
+
+        .tag-success {
+            background: rgba(52, 211, 153, 0.15);
+            color: var(--success);
+        }
+
+        /* Formula box */
+        .formula-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .formula-meta {
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .formula-meta strong {
+            color: var(--accent-soft);
+        }
+
+        /* Details / Summary */
+        details {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        summary {
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--accent);
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        summary:hover {
+            background: rgba(56, 189, 248, 0.05);
+        }
+
+        summary::after {
+            content: '▸';
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::after {
+            transform: rotate(90deg);
+        }
+
+        details > div {
+            padding: 0 1.25rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Figures */
+        figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+
+        figcaption {
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .svg-chart {
+            max-width: 100%;
+            height: auto;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        /* Grid for key takeaways */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Oral questions */
+        .question-block {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--accent-2);
+        }
+
+        .question {
+            font-weight: 600;
+            color: var(--accent-2);
+            margin-bottom: 0.5rem;
+        }
+
+        .answer {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .trap {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--danger);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .trap::before {
+            content: '⚠';
+            flex-shrink: 0;
+        }
+
+        /* Cheat sheet table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-secondary);
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        tr:hover td {
+            background: rgba(56, 189, 248, 0.03);
+        }
+
+        /* Preparation sheet */
+        .prep-sheet {
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+            border: 1px solid #34d399;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+
+        .prep-sheet h3 {
+            color: #6ee7b7;
+            margin-top: 0;
+        }
+
+        .prep-sheet ul {
+            margin-left: 1.25rem;
+        }
+
+        .prep-sheet li {
+            color: #d1fae5;
+            margin-bottom: 0.75rem;
+        }
+
+        .prep-sheet li::marker {
+            color: #34d399;
+        }
+
+        /* Print */
+        @media print {
+            nav { display: none; }
+            body { background: white; color: black; }
+            .card { border: 1px solid #ccc; box-shadow: none; break-inside: avoid; }
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.4rem; }
+            .container { padding: 1rem; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+    </style>
+</head>
+<body>
+
+<<nav>
+    <div class="nav-container">
+        <a href="#contexte">Contexte</a>
+        <a href="#overview">Vue d'ensemble</a>
+        <a href="#emh">EMH</a>
+        <a href="#micro">Microstructure</a>
+        <a href="#instruments">Instruments</a>
+        <a href="#stylised">Faits stylisés</a>
+        <a href="#events">Événements</a>
+        <a href="#oral">Oral</a>
+        <a href="#resume">Résumé</a>
+        <a href="#prep">Prep 15'</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <header>
+        <h1>Marchés & Comportements</h1>
+        <div class="subtitle">Computational Finance — Révision Examen Oral</div>
+        <div class="meta">Université de Genève | A. Dupuis | v1.1</div>
+    </header>
+
+    <!-- 0. INTRO DRÔLE -->
+    <section id="contexte">
+        <div class="intro-funny">
+            <p>
+                Imaginez un trader des années 70 téléporté sur un desk moderne. Il voit des écrans clignoter à la microseconde, 
+                entend parler de « bulles Bitcoin » et découvre que 5 000 milliards de dollars changent de main chaque jour sur le marché des devises. 
+                Il demande : <em>« Où sont les gens ? »</em> On lui répond : <em>« Les algorithmes ont mangé leurs sandwiches. »</em><br><br>
+                Bienvenue dans la microstructure des marchés financiers modernes : efficaces sur le papier, chaotiques dans la vraie vie.
+            </p>
+        </div>
+    </section>
+
+    <!-- 1. VUE D'ENSEMBLE -->
+    <section id="overview">
+        <h2>1. Vue d'ensemble</h2>
+
+        <div class="card card-accent">
+            <h3>Résumé du chapitre</h3>
+            <p>
+                Ce chapitre explore la <strong>structure</strong> et le <strong>comportement</strong> des marchés financiers. 
+                Il déconstruit l'hypothèse de marché efficace (EMH), cartographie les lieux d'échange (régulés vs OTC), 
+                passe en revue les instruments et actifs, et identifie les <em>faits stylisés</em> — ces propriétés empiriques 
+                qui prouvent que les marchés réels sont bien plus complexes qu'une simple marche aléatoire.
+            </p>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <h4>Concepts clés</h4>
+                <ul>
+                    <li><strong>EMH</strong> — Efficience informationnelle (3 formes)</li>
+                    <li><strong>Microstructure</strong> — Régulés vs OTC, brokers vs teneurs de marché</li>
+                    <li><strong>Faits stylisés</strong> — Clustering, queues grasses, saisonnalité, lois d'échelle</li>
+                    <li><strong>Événements</strong> — Endogènes vs exogènes, programmés vs surprises</li>
+                </ul>
+            </div>
+            <div class="card card-warning">
+                <h4>Ce qu'il faut absolument comprendre</h4>
+                <ul>
+                    <li>Les 3 formes de l'EMH et <em>leurs limites empiriques</em></li>
+                    <li>La différence entre marchés régulés et OTC (risque, transparence, clearing)</li>
+                    <li>Les 5 faits stylisés majeurs et <em>pourquoi ils contredisent la marche aléatoire</em></li>
+                    <li>La distinction endogène/exogène et son impact sur la volatilité</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. CONTENU DÉTAILLÉ -->
+    <section id="emh">
+        <h2>2. Contenu détaillé</h2>
+
+        <h3>A. Hypothèse de Marché Efficace (EMH)</h3>
+
+        <div class="card">
+            <span class="tag">Fondamental</span>
+            <h4>Définition & Intuition</h4>
+            <p>
+                Théorie proposée par <strong>Eugene Fama</strong> (1960, prix Nobel 2013). L'EMH postule que les marchés sont 
+                « justes » : le prix d'un actif reflète toujours sa valeur fondamentale. Les comportements sont rationnels 
+                <em>en moyenne</em>, et il est impossible de battre le marché de manière systématique.
+            </p>
+            <p>
+                <strong>Intuition pédagogique :</strong> L'EMH est le <em>modèle parfait du professeur</em>. Les marchés réels, eux, 
+                sont des adolescents turbulents : parfois rationnels, souvent paniqués, parfois euphoriques.
+            </p>
+        </div>
+
+        <div class="card">
+            <h4>Les trois formes</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Forme</th>
+                        <th>Information intégrée</th>
+                        <th>Conséquence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Faible</strong></td>
+                        <td>Tout l'historique des prix</td>
+                        <td>Analyse technique inefficace. Futur déterminé par l'information <em>exogène</em>. Sans nouvelle info, le prix suit une marche aléatoire.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Semi-forte</strong></td>
+                        <td>Toute information <em>publique</em> (résultats, indicateurs...)</td>
+                        <td>L'analyse fondamentale ne permet pas de battre le marché.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Forte</strong></td>
+                        <td>Toute information <em>publique et privée</em> (insider trading inclus)</td>
+                        <td>Même l'information privée est sans valeur. <em>Théorique et irréaliste.</em></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card card-danger">
+            <span class="tag tag-danger">Critique majeure</span>
+            <h4>Pourquoi l'EMH est contestée</h4>
+            <p>Même la forme <em>faible</em> est largement critiquée empiriquement :</p>
+            <ul>
+                <li><strong>Surévaluation durable :</strong> Des actions peuvent rester surévaluées longtemps par rapport aux fondamentaux.</li>
+                <li><strong>Soros et Buffett :</strong> Sont-ils juste chanceux depuis 50 ans ? La persistance de leur performance contredit l'EMH.</li>
+                <li><strong>Comportement de troupeau</strong> (<em>herding</em>) : les investisseurs copient les autres, créant des bulles.</li>
+                <li><strong>Trading algorithmique :</strong> amplifie les mouvements et crée des corrélations artificielles.</li>
+                <li><strong>Bulles spéculatives :</strong> Bitcoin 2013 (voir figure ci-dessous).</li>
+                <li><strong>Krachs éclairs :</strong> Flash Crash 2010 (voir figure ci-dessous).</li>
+            </ul>
+        </div>
+
+        <figure>
+            <img src="https://kimi-web-img.moonshot.cn/img/i.insider.com/9f137e498c8c3f204598d040fcfc822da022e4f1" alt="Bulle Bitcoin 2013">
+            <figcaption>Figure 1 — Bulle Bitcoin (2013). Une déviation massive et durable par rapport à toute valeur fondamentale, incompatible avec l'EMH forte.</figcaption>
+        </figure>
+
+        <figure>
+            <img src="https://kimi-web-img.moonshot.cn/img/res.cloudinary.com/e12a4990459251d890caead6fed6c03cf02a0be3.png" alt="Flash Crash 2010">
+            <figcaption>Figure 2 — Flash Crash (6 mai 2010). Chute de 9% du Dow Jones en minutes, suivie d'un rebond quasi immédiat. Illustre la fragilité endogène de la liquidité.</figcaption>
+        </figure>
+
+        <details>
+            <summary>Voir les détails mathématiques — Marche aléatoire vs EMH</summary>
+            <div>
+                <p>Sous EMH faible, le prix suit une marche aléatoire :</p>
+                <div class="formula-box">
+                    $$P_t = P_{t-1} + \varepsilon_t, \quad \varepsilon_t \overset{\text{i.i.d.}}{\sim} (0, \sigma^2)$$
+                </div>
+                <p>Implications : rendements indépendants, variance linéaire en temps ($\Var(r_t) \sim \Delta t$), pas d'autocorrélation. Les faits stylisés montrent que <em>chacune</em> de ces propriétés est violée empiriquement.</p>
+            </div>
+        </details>
+    </section>
+
+    <section id="micro">
+        <h3>B. Microstructure des marchés</h3>
+
+        <div class="grid-2">
+            <div class="card">
+                <span class="tag tag-success">Régulé</span>
+                <h4>Marchés régulés</h4>
+                <p><strong>Exemples :</strong> NYSE, LSE, CME, SIX.</p>
+                <ul>
+                    <li>Lieu physique ou plateforme électronique <strong>strictement régulée</strong></li>
+                    <li>Processus de <strong>clearing</strong> (compensation) obligatoire</li>
+                    <li>Transparence des ordres et des prix</li>
+                    <li>Le trading électronique domine aujourd'hui</li>
+                </ul>
+            </div>
+            <div class="card card-warning">
+                <span class="tag tag-warning">OTC</span>
+                <h4>Marchés de gré-à-gré (OTC)</h4>
+                <p><strong>Exemples :</strong> Oanda, marchés des devises interbancaires.</p>
+                <ul>
+                    <li>Moins formels, <strong>plus risqués</strong></li>
+                    <li><strong>Teneurs de marché</strong> proposent des cotations bilatérales</li>
+                    <li>Faible transparence, pas forcément de lieu physique</li>
+                    <li>Contrats sur mesure (forwards)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h4>Courtier vs Teneur de marché</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rôle</th>
+                        <th>Inventaire</th>
+                        <th>Risque</th>
+                        <th>Rémunération</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Courtier</strong> (Broker)<br><small>Dukascopy, InteractiveBrokers</small></td>
+                        <td>Non</td>
+                        <td>Ne prend pas de risque</td>
+                        <td>Commissions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Teneur de marché</strong> (Market Maker)<br><small>Oanda</small></td>
+                        <td>Oui</td>
+                        <td>Prend le risque de contrepartie</td>
+                        <td>Spread (différal)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="formula-meta">
+                <strong>Intuition :</strong> Le courtier est l'<em>agent immobilier</em> (met en relation). Le teneur de marché est le <em>commerçant</em> (achète et revend, gagne sur la marge).
+            </p>
+        </div>
+
+        <div class="card">
+            <h4>Les actifs</h4>
+            <ul>
+                <li><strong>Actions (Equity)</strong> — Titres de participation. Dividendes périodiques.</li>
+                <li><strong>Obligations (Bonds)</strong> — Prêt à des États (trésors) ou entreprises. Prix fonction de la maturité et du calendrier des coupons.</li>
+                <li><strong>Matières premières (Commodities)</strong> — Blé, pétrole, or... Transigées via des <em>futures</em> (personne ne veut recevoir une tonne de blé).</li>
+                <li><strong>Devises (Currencies)</strong> — Traitées par paires (EUR/USD). Il existe un différentiel de taux d'intérêt entre les deux devises. <em>Backbone des marchés financiers.</em></li>
+            </ul>
+        </div>
+
+        <div class="card card-accent">
+            <h4>Considérations sur les volumes</h4>
+            <p>
+                Le marché des devises est le <strong>plus grand marché financier mondial</strong> (données BIS, 2013) :
+            </p>
+            <ul>
+                <li>Volume quotidien : ~<<strong>5 000 milliards de dollars</strong> ($5 \times 10^{12}$)</li>
+                <li><strong>25 %</strong> du volume en EUR/USD</li>
+                <li><strong>50 %</strong> sont des <em>swaps</em> (opérations de change à terme)</li>
+                <li>USD/JPY : 18 %, GBP/USD : 9 %</li>
+            </ul>
+
+            <div class="formula-box">
+                <p>Estimation du flux moyen (long ou short) sur EUR/USD :</p>
+                $$ \frac{5 \times 10^{12} \times 0{,}25 \times 0{,}5}{86\,400 \times 2} \approx 3{,}6 \times 10^{6} \text{ USD/sec} $$
+            </div>
+            <div class="formula-meta">
+                <strong>Variables :</strong> $5 \times 10^{12}$ = volume total quotidien ; $0{,}25$ = part EUR/USD ; $0{,}5$ = part swaps ; $86\,400$ = secondes par jour ; $2$ = moyenne long/short. <br>
+                <strong>Intuition :</strong> À chaque seconde, environ 3,6 millions de dollars changent de main <em>uniquement</em> sur la paire EUR/USD. Cela illustre l'échelle de la liquidité et la vitesse de la microstructure moderne.
+            </div>
+
+            <figure>
+                <img src="https://kimi-web-img.moonshot.cn/img/www.bis.org/707295d3903245dc5e73580a1614d49cc93e6fe2.jpg" alt="BIS Triennial Survey 2013">
+                <figcaption>Figure 3 — Enquête triennale de la BIS (2013). Croissance du marché des changes par instrument et par contrepartie. Les « Other financial institutions » dominent depuis 2010.</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section id="instruments">
+        <h3>C. Instruments principaux</h3>
+
+        <div class="grid-2">
+            <div class="card">
+                <h4>Spot</h4>
+                <p>L'instrument « au comptant » : une action, un montant en dollars. <br><em>Remarque :</em> on ne trade pas une tonne de blé en spot — on utilise des dérivés.</p>
+            </div>
+            <div class="card">
+                <h4>Forward</h4>
+                <p>Contrat de gré-à-gré où deux parties s'engagent à acheter/vendre un actif à un <strong>prix et une date futurs</strong> déterminés. Personnalisé, non standardisé.</p>
+            </div>
+            <div class="card">
+                <h4>Futures</h4>
+                <p>Version <strong>standardisée</strong> du forward, négociée sur une bourse avec <strong>clearing</strong>. Souvent « renouvelée » (<em>rollover</em>) juste avant maturité pour éviter la livraison physique.</p>
+            </div>
+            <div class="card">
+                <h4>Option</h4>
+                <p>Donne le <strong>droit</strong> (pas l'obligation) d'acheter (<em>call</em>) ou de vendre (<em>put</em>) un actif à un prix et une date donnés. Prime payée d'avance.</p>
+            </div>
+            <div class="card">
+                <h4>Indice</h4>
+                <p>Panier d'actifs : S&P 500, panier de devises, etc. Permet d'exposer à un marché entier.</p>
+            </div>
+            <div class="card card-success">
+                <h4>Usage pratique</h4>
+                <p>Futures et options servent principalement à <strong>couvrir</strong> (<em>hedge</em>) des positions existantes contre les risques de prix.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="stylised">
+        <h3>D. Faits stylisés (Stylised Facts)</h3>
+
+        <div class="card card-danger">
+            <p><strong>Question centrale :</strong> En quoi une série de prix réelle diffère-t-elle d'une simple marche aléatoire ?</p>
+            <p>La réponse : <em>En presque tous points.</em> Voici les faits empiriques incontournables.</p>
+        </div>
+
+        <h4>1. Regroupement de volatilité (Volatility Clustering)</h4>
+        <div class="card">
+            <span class="tag">Cont (2005)</span>
+            <p>
+                Les grands changements de prix sont suivis de grands changements, et les petits de petits. 
+                On parle d'<strong>hétéroscédasticité</strong> conditionnelle — le « H » de GARCH.
+            </p>
+            <p><strong>Intuition :</strong> Les marchés ont des « modes ». Un choc (guerre, faillite) crée de l'incertitude qui persiste plusieurs séances. Inversement, les périodes calmes tendent à durer.</p>
+            
+            <figure>
+                <img src="https://kimi-web-img.moonshot.cn/img/maseconomics.com/003124f24a9a7971a1a9b81a82ba5dea4117f61b.webp" alt="Volatility Clustering GARCH">
+                <figcaption>Figure 4 — Clustering de volatilité sur le S&P 500. Les chocs de rendement (barres rouges/violettes) provoquent une élévation durable du sigma conditionnel (courbe verte). Source : MAS Economics.</figcaption>
+            </figure>
+
+            <details>
+                <summary>Voir les détails mathématiques — GARCH(1,1)</summary>
+                <div>
+                    <p>Le modèle GARCH(1,1) capture ce phénomène :</p>
+                    <div class="formula-box">
+                        $$ \sigma_t^2 = \omega + \alpha r_{t-1}^2 + \beta \sigma_{t-1}^2 $$
+                    </div>
+                    <div class="formula-meta">
+                        <strong>$\sigma_t^2$</strong> = variance conditionnelle au temps $t$.<br>
+                        <strong>$\omega > 0$</strong> = variance de long terme.<br>
+                        <strong>$\alpha$</strong> = effet du choc au temps $t-1$ (news).<<br>
+                        <strong>$\beta$</strong> = persistance de la volatilité (mémoire).<<br>
+                        <strong>Stationnarité :</strong> $\alpha + \beta < 1$. Si $\alpha + \beta \approx 1$ (IGARCH), les chocs persistent très longtemps.
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <h4>2. Autocorrélation négative à court terme</h4>
+        <div class="card">
+            <span class="tag">Cont (2001)</span>
+            <p>En haute fréquence (intra-journalier), on observe une <strong>autocorrélation négative</strong> des rendements.</p>
+            <p><strong>Intuition :</strong> Effet de « rebond » entre le bid et l'ask (<em>bid-ask bounce</em>). Un prix qui touche le ask a tendance à revenir vers le bid au tick suivant, créant une légère inversion.</p>
+        </div>
+
+        <h4>3. Lois d'échelle (Scaling Laws)</h4>
+        <div class="card">
+            <div class="formula-box">
+                $$ \E[|r_t|] \sim \Delta t^{\alpha} $$
+            </div>
+            <div class="formula-meta">
+                <strong>$r_t$</strong> = rendement sur l'intervalle $\Delta t$.<br>
+                <strong>$\alpha$</strong> = exposant de scaling (typiquement $\approx 0.5$ pour une marche aléatoire, mais empiriquement différent selon les actifs).<<br>
+                <strong>Intuition :</strong> Il existe une <em>auto-similarité</em> statistique entre les échelles de temps. Le comportement moyen d'un rendement sur 1 minute ressemble à celui sur 1 jour, à un facteur d'échelle près.
+            </div>
+        </div>
+
+        <h4>4. Queuses grasses (Fat Tails)</h4>
+        <div class="card">
+            <span class="tag">Cont (2001) | Sewell (2011)</span>
+            <p>
+                La distribution des rendements a des <strong>queues plus épaisses</strong> que la loi normale. 
+                Les événements extrêmes (krachs, rallies) sont bien plus probables que ne le prédit le modèle gaussien.
+            </p>
+            <p><strong>Terme technique :</strong> distribution <em>leptokurtique</em> (kurtosis > 3).</p>
+            
+            <figure>
+                <img src="https://kimi-web-img.moonshot.cn/img/www.brownadvisory.com/f79093b75b2b84003da364e83c4976ac251cc65f.jpg" alt="Fat Tails Distribution">
+                <figcaption>Figure 5 — Distribution à queues grasses vs normale. La courbe verte montre une probabilité plus élevée d'événements extrêmes (pertes ou gains massifs). Source : Brown Advisory.</figcaption>
+            </figure>
+
+            <p><strong>Implication :</strong> La Value-at-Risk calculée sous hypothèse normale <em>sous-estime systématiquement</em> le risque de queue.</p>
+        </div>
+
+        <h4>5. Saisonnalité</h4>
+        <div class="card">
+            <p>Des patterns réguliers apparaissent à différentes échelles :</p>
+            <ul>
+                <li><strong>Quotidienne :</strong> Volume et volatilité suivent l'ouverture des places financières (Tokyo → Londres → New York).</li>
+                <li><strong>Hebdomadaire :</strong> Effet « weekend », effet lundi.</li>
+                <li><strong>Mensuelle/Annuelle :</strong> Effet de fin de mois, « Sell in May », etc.</li>
+            </ul>
+            <p><strong>Intuition :</strong> Les humains (et leurs algorithmes) ont des emplois du temps. Les marchés ne dorment jamais, mais ils ronronnent à Tokyo et rugissent à New York.</p>
+
+            <figure>
+                <svg class="svg-chart" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Background -->
+                    <rect width="600" height="220" fill="#0f172a" rx="8"/>
+                    <!-- Axes -->
+                    <line x1="50" y1="180" x2="580" y2="180" stroke="#475569" stroke-width="2"/>
+                    <line x1="50" y1="180" x2="50" y2="30" stroke="#475569" stroke-width="2"/>
+                    <!-- Grid -->
+                    <line x1="50" y1="140" x2="580" y2="140" stroke="#1e293b" stroke-width="1"/>
+                    <line x1="50" y1="100" x2="580" y2="100" stroke="#1e293b" stroke-width="1"/>
+                    <line x1="50" y1="60" x2="580" y2="60" stroke="#1e293b" stroke-width="1"/>
+                    <!-- Curve: U-shape with peaks at London and NY -->
+                    <path d="M 50,160 C 100,150 130,80 180,60 C 230,40 280,90 320,100 C 360,110 400,50 450,40 C 500,30 540,80 580,90" 
+                          fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Points -->
+                    <circle cx="180" cy="60" r="4" fill="#fbbf24"/>
+                    <circle cx="450" cy="40" r="4" fill="#fbbf24"/>
+                    <!-- Labels -->
+                    <text x="50" y="200" fill="#94a3b8" font-size="12" text-anchor="middle">00h</text>
+                    <text x="180" y="200" fill="#94a3b8" font-size="12" text-anchor="middle">08h (Londres)</text>
+                    <text x="320" y="200" fill="#94a3b8" font-size="12" text-anchor="middle">14h</text>
+                    <text x="450" y="200" fill="#94a3b8" font-size="12" text-anchor="middle">21h (New York)</text>
+                    <text x="580" y="200" fill="#94a3b8" font-size="12" text-anchor="middle">24h</text>
+                    <text x="20" y="110" fill="#94a3b8" font-size="12" transform="rotate(-90 20 110)">Volume relatif</text>
+                    <!-- Annotation -->
+                    <text x="300" y="20" fill="#fbbf24" font-size="13" text-anchor="middle" font-weight="bold">Pattern intra-journalier typique FX</text>
+                </svg>
+                <figcaption>Figure 6 — Schéma de saisonnalité quotidienne sur le marché des changes. Double pic : ouverture européenne (8h GMT) et chevauchement Londres/New York (14h-16h GMT). Source : inspiré de Masry (2011).</figcaption>
+            </figure>
+        </div>
+
+        <h4>6. Asymétrie</h4>
+        <div class="card">
+            <p>Certains marchés (notamment les <strong>actions</strong>) présentent une asymétrie négative : les baisses sont plus brutales et rapides que les hausses.</p>
+            <p><strong>Intuition :</strong> La peur est un émotion plus forte que la cupidité. On vend en panique, on achète avec prudence.</p>
+        </div>
+
+        <h4>7. Corrélations microstructurelles</h4>
+        <div class="card">
+            <div class="grid-2">
+                <div>
+                    <p><strong>Spread ↓ ↔ Volume ↑</strong> (négative)</p>
+                    <p>Plus le marché est liquide (spread bid-ask étroit), plus les participants tradent massivement.</p>
+                </div>
+                <div>
+                    <p><strong>Volume ↑ ↔ Volatilité ↑</strong> (positive)</p>
+                    <p>L'activité trading s'intensifie lors des périodes agitées (news, événements).</p>
+                </div>
+            </div>
+            
+            <figure>
+                <svg class="svg-chart" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="400" height="250" fill="#0f172a" rx="8"/>
+                    <!-- Axes -->
+                    <line x1="50" y1="220" x2="370" y2="220" stroke="#475569" stroke-width="2"/>
+                    <line x1="50" y1="220" x2="50" y2="30" stroke="#475569" stroke-width="2"/>
+                    <!-- Trend line negative -->
+                    <line x1="70" y1="50" x2="350" y2="200" stroke="#f87171" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Points -->
+                    <circle cx="100" cy="65" r="3" fill="#fbbf24" opacity="0.7"/>
+                    <circle cx="140" cy="85" r="3" fill="#fbbf24" opacity="0.7"/>
+                    <circle cx="200" cy="120" r="3" fill="#fbbf24" opacity="0.7"/>
+                    <circle cx="280" cy="165" r="3" fill="#fbbf24" opacity="0.7"/>
+                    <circle cx="320" cy="185" r="3" fill="#fbbf24" opacity="0.7"/>
+                    <!-- Labels -->
+                    <text x="210" y="245" fill="#94a3b8" font-size="12" text-anchor="middle">Volume ↑</text>
+                    <text x="15" y="130" fill="#94a3b8" font-size="12" transform="rotate(-90 15 130)">Spread (bid-ask) ↓</text>
+                    <text x="200" y="20" fill="#f87171" font-size="13" text-anchor="middle" font-weight="bold">Corrélation négative</text>
+                </svg>
+                <figcaption>Figure 7 — Relation négative entre spread et volume. La liquidité attire les flux ; l'illiquidité les repousse.</figcaption>
+            </figure>
+        </div>
+
+        <div class="card card-success">
+            <h4>Synthèse : Pourquoi ce n'est PAS une marche aléatoire</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Propriété marche aléatoire</th>
+                        <th>Réalité empirique</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rendements indépendants</td>
+                        <td>Clustering de volatilité (dépendance)</td>
+                    </tr>
+                    <tr>
+                        <td>Distribution normale</td>
+                        <td>Queues grasses (leptokurtic)</td>
+                    </tr>
+                    <tr>
+                        <td>Pas de pattern temporel</td>
+                        <td>Saisonnalité intra-journalière</td>
+                    </tr>
+                    <tr>
+                        <td>Échelle linéaire unique</td>
+                        <td>Lois d'échelle non triviales</td>
+                    </tr>
+                    <tr>
+                        <td>Symétrie parfaite</td>
+                        <td>Asymétrie négative (equity)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="events">
+        <h3>E. Événements de marché</h3>
+
+        <div class="card">
+            <h4>Taxonomie</h4>
+            <ul>
+                <li><strong>Endogènes :</strong> Proviennent de l'<em>intérieur</em> du marché. Ex : manque de liquidité soudain, déséquilibre des carnets d'ordres, cascade de stop-loss.</li>
+                <li><strong>Exogènes :</strong> Proviennent de l'<em>extérieur</em>. Ex : annonces économiques, catastrophes, décisions politiques.</li>
+            </ul>
+            <p>Les événements exogènes se divisent en :</p>
+            <ul>
+                <li><strong>Programmés :</strong> Date et heure connues à l'avance. Le marché anticipe et se prépare.
+                    <ul>
+                        <li><em>Non-Farm Payroll (NFP)</em> : 1er vendredi du mois, 8h30 EST (14h30 suisse)</li>
+                        <li>Publication du <em>PIB</em> par pays</li>
+                        <li>Indicateurs économiques : ventes de maisons, indice de consommation, IPC...</li>
+                    </ul>
+                </li>
+                <li><strong>Non programmés :</strong> Surprises totales. Impact maximal car aucune anticipation.
+                    <ul>
+                        <li>Septembre 2011 : le <em>SNB impose un plancher à 1.20 EUR/CHF</em></li>
+                        <li>11 septembre 2001 : attentats de Manhattan</li>
+                        <li>Guerres, faillites inattendues, tweets présidentiels...</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card card-danger">
+            <h4>Impact typique</h4>
+            <p>Lors d'un événement majeur (programmé ou non), on observe simultanément :</p>
+            <ul>
+                <li>⬆️ Saut de volatilité (réalisation instantanée)</li>
+                <li>⬆️ Élargissement brutal du spread bid-ask</li>
+                <li>⬆️ Pic de volume (réaction des algorithmes et des market makers)</li>
+                <li>⬇️ Liquidité temporaire (les teneurs de marché retirent leurs ordres)</li>
+            </ul>
+        </div>
+
+        <figure>
+            <svg class="svg-chart" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+                <rect width="600" height="220" fill="#0f172a" rx="8"/>
+                <!-- Price line -->
+                <path d="M 40,100 L 220,100 L 230,160 L 240,50 L 250,110 L 260,90 L 580,95" 
+                      fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Event line -->
+                <line x1="235" y1="190" x2="235" y2="30" stroke="#f87171" stroke-width="1.5" stroke-dasharray="6,4"/>
+                <text x="235" y="22" fill="#f87171" font-size="13" text-anchor="middle" font-weight="bold">Événement</text>
+                <!-- Volatility zone -->
+                <rect x="230" y="40" width="40" height="130" fill="rgba(248, 113, 113, 0.1)" rx="4"/>
+                <!-- Labels -->
+                <text x="130" y="180" fill="#94a3b8" font-size="12" text-anchor="middle">Avant</text>
+                <text x="235" y="180" fill="#f87171" font-size="12" text-anchor="middle">Impact</text>
+                <text x="420" y="180" fill="#94a3b8" font-size="12" text-anchor="middle">Après / Absorption</text>
+                <text x="20" y="110" fill="#94a3b8" font-size="12" transform="rotate(-90 20 110)">Prix</text>
+            </svg>
+            <figcaption>Figure 8 — Schéma d'impact d'un événement de marché. Saut brutal du prix, élargissement de la volatilité, puis phase d'absorption progressive. Source : inspiré de Bisig (2012).</figcaption>
+        </figure>
+    </section>
+
+    <!-- 3. QUESTIONS D'ORAL -->
+    <section id="oral">
+        <h2>3. Questions d'oral possibles</h2>
+
+        <div class="question-block">
+            <div class="question">Q1 — Définissez l'EMH et ses trois formes. Donnez un argument contre chacune.</div>
+            <div class="answer">
+                <strong>Réponse type :</strong> Fama (1960). Faible = historique des prix intégré → analyse technique inutile. 
+                Semi-forte = info publique intégrée → analyse fondamentale inutile. Forte = info privée intégrée → impossible de battre le marché même avec du insider. 
+                Contre : forme faible (autocorrélation HF, saisonnalité), semi-forte (anomalies comme le momentum), forte (scandales insider trading, bulles).
+            </div>
+            <div class="trap">Piège : Confondre « efficience informationnelle » (prix juste) et « efficience allocationnelle » (optimum social).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question">Q2 — Quelle est la différence entre un courtier et un teneur de marché ?</div>
+            <div class="answer">
+                <strong>Réponse type :</strong> Le courtier (broker) est un intermédiaire pur : il met en relation acheteur et vendeur, 
+                ne prend pas de risque, n'a pas d'inventaire, gagne des commissions. 
+                Le teneur de marché (market maker) quote en continu un prix d'achat (bid) et de vente (ask), 
+                détient un inventaire, prend le risque de contrepartie et est rémunéré par le spread.
+            </div>
+            <div class="trap">Piège : Dire que le courtier « fait le marché ». C'est le rôle du MM.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question">Q3 — Calculez l'ordre de grandeur du flux EUR/USD par seconde. Quelles hypothèses faites-vous ?</div>
+            <div class="answer">
+                <strong>Réponse type :</strong> Volume BIS ≈ $5 \times 10^{12}$/jour. EUR/USD = 25%. Swaps = 50% (on les inclut ou on les retire selon la question ; le calcul de Dupuis les inclut). 
+                On divise par 86 400 secondes et par 2 (moyenne long/short). Résultat ≈ 3,6 millions USD/sec. 
+                Hypothèses : répartition uniforme sur la journée (fausse : il y a saisonnalité), volume BIS stable.
+            </div>
+            <div class="trap">Piège : Oublier la division par 2 (on cherche un sens, pas les deux). Oublier que le marché ne dort jamais (FX = 24h, donc 86 400 et pas 25 200).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question">Q4 — Citez trois faits stylisés et expliquez pourquoi ils contredisent la marche aléatoire.</div>
+            <div class="answer">
+                <strong>Réponse type :</strong> (1) <em>Clustering</em> : dépendance temporelle de la volatilité, impossible sous i.i.d. 
+                (2) <em>Queues grasses</em> : la normale sous-estime les extremes ; une marche aléatoire gaussienne n'a pas de krachs. 
+                (3) <em>Saisonnalité</em> : patterns prévisibles (ouverture Londres) contredisent l'absence de mémoire. 
+                (4) <em>Autocorrélation négative HF</em> : microstructure crée de la dépendance.
+            </div>
+            <div class="trap">Piège : Citer les faits sans explicitement lier à la marche aléatoire (i.i.d., normale, pas de mémoire).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question">Q5 — Différence entre un événement endogène et exogène ? Donnez un exemple de chaque.</div>
+            <div class="answer">
+                <strong>Réponse type :</strong> Endogène = interne au marché (manque de liquidité, cascade de stops, flash crash 2010). 
+                Exogène = externe (news, NFP, décision SNB). Programmé vs non-programmé ne concerne <em>que</em> les exogènes.
+            </div>
+            <div class="trap">Piège : Classer un événement programmé comme endogène. Le NFP est exogène programmé.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question">Q6 — Pourquoi les futures sont-ils souvent « rollés » avant maturité ?</div>
+            <div class="answer">
+                <strong>Réponse type :</strong> Pour éviter la livraison physique de l'actif sous-jacent (ex: tonne de blé, baril de pétrole). 
+                On ferme la position sur le contrat proche et on rouvre sur le contrat suivant (rollover).
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. RÉSUMÉ ULTRA-RAPIDE -->
+    <section id="resume">
+        <h2>4. Résumé ultra-rapide</h2>
+
+        <div class="grid-2">
+            <div class="card">
+                <h4>Définitions essentielles</h4>
+                <ul>
+                    <li><strong>EMH</strong> : prix = valeur fondamentale, info instantanément intégrée.</li>
+                    <li><strong>OTC</strong> : gré-à-gré, sans central de compensation, moins transparent.</li>
+                    <li><strong>Clearing</strong> : compensation des ordres par une chambre de clearing (régulé).</li>
+                    <li><strong>Faits stylisés</strong> : propriétés empiriques universelles des séries de rendements.</li>
+                    <li><strong>Hétéroscédasticité</strong> : variance non constante dans le temps.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4>Formules & résultats</h4>
+                <ul>
+                    <li>Flux EUR/USD : $\approx 3{,}6 \times 10^{6}$ USD/sec</li>
+                    <li>Scaling law : $\E[|r|] \sim \Delta t^{\alpha}$</li>
+                    <li>GARCH(1,1) : $\sigma_t^2 = \omega + \alpha r_{t-1}^2 + \beta \sigma_{t-1}^2$</li>
+                    <li>Volume FX total : $\sim 5 \times 10^{12}$ USD/jour</li>
+                </ul>
+            </div>
+            <div class="card card-success">
+                <h4>Ce qu'il faut retenir</h4>
+                <ul>
+                    <li>Les marchés ne sont <em>pas</em> efficients (surtout pas en forme forte).</li>
+                    <li>Les devises dominent en volume ; les actions en visibilité.</li>
+                    <li>La volatilité se regroupe : un choc aujourd'hui annonce de l'incertitude demain.</li>
+                    <li>Les queues grasses impliquent : <em>la normale ment sur le risque extrême</em>.</li>
+                </ul>
+            </div>
+            <div class="card card-danger">
+                <h4>Erreurs fréquentes à éviter</h4>
+                <ul>
+                    <li>Confondre broker et market maker (inventaire vs pas d'inventaire).</li>
+                    <li>Confondre forward (OTC, sur mesure) et futures (standardisé, clearing).</li>
+                    <li>Croire que « programmé » = « endogène ». Faux : programmé = exogène connu.</li>
+                    <li>Oublier que le FX est 24/7 (pas de fermeture comme l'action).</li>
+                    <li>Appliquer aveuglément la loi normale sans vérifier les queues.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. FEUILLE DE PRÉPARATION -->
+    <section id="prep">
+        <h2>5. Feuille de préparation (15 minutes avant l'examen)</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+            <em>« Ce que j'écris sur ma feuille dès le début de la préparation »</em>
+        </p>
+
+        <div class="prep-sheet">
+            <h3>🧠 Formules à mémoriser</h3>
+            <ul>
+                <li>Volume FX : $5 \times 10^{12}$ USD/jour → EUR/USD = 25% → flux ≈ 3,6M USD/sec</li>
+                <li>Scaling : $\E[|r|] \sim \Delta t^{\alpha}$</li>
+                <li>GARCH(1,1) : $\sigma_t^2 = \omega + \alpha r_{t-1}^2 + \beta \sigma_{t-1}^2$ (condition $\alpha+\beta < 1$)</li>
+            </ul>
+
+            <h3>🎯 Concepts-clés (les dire en une phrase)</h3>
+            <ul>
+                <li><strong>EMH faible</strong> : historique intégré → pas d'analyse technique.</li>
+                <li><strong>EMH semi-forte</strong> : info publique intégrée → pas d'analyse fondamentale.</li>
+                <li><strong>EMH forte</strong> : info privée intégrée → impossible de battre le marché.</li>
+                <li><strong>Broker</strong> : passe-plat, pas de risque.</li>
+                <li><strong>Market Maker</strong> : commerçant, risque d'inventaire, gagne le spread.</li>
+                <li><strong>Volatility clustering</strong> : les chocs s'accumulent (H de GARCH).</li>
+                <li><strong>Fat tails</strong> : les krachs sont plus probables que la normale ne le dit.</li>
+            </ul>
+
+            <h3>🔗 Relations importantes</h3>
+            <ul>
+                <li>Spread étroit ↔ Volume élevé (négatif)</li>
+                <li>Volume élevé ↔ Volatilité élevée (positif)</li>
+                <li>News exogène → Saut de volatilité + Élargissement du spread</li>
+                <li>Manque de liquidité → Événement endogène (flash crash)</li>
+            </ul>
+
+            <h3>⚠️ Points à ne surtout pas oublier pendant l'oral</h3>
+            <ul>
+                <li>Citer <strong>Fama (1960, Nobel 2013)</strong> pour l'EMH.</li>
+                <li>Citer <strong>Cont (2001, 2005)</strong> pour les faits stylisés.</li>
+                <li>Mentionner que le FX est le marché le plus liquide (pas l'action !).</li>
+                <li>Insister sur la différence <strong>endogène / exogène</strong> avec exemples concrets.</li>
+                <li>Si on parle de GARCH, dire que c'est une réponse empirique au clustering, pas une théorie.</li>
+                <li>Ne jamais dire « le marché est efficace » sans préciser <em>quelle forme</em> et <em>quelle échelle de temps</em>.</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 3rem 0 1rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 2rem;">
+        <p>Document de révision généré pour la préparation d'examen oral — Computational Finance</p>
+        <p style="margin-top: 0.5rem;">Basé sur les cours de l'Université de Genève (A. Dupuis, v1.1)</p>
+    </footer>
+
+</div>
+
+</body>
+</html>

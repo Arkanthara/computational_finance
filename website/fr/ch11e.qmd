@@ -1,0 +1,154 @@
+---
+title: "Les Obligations — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Imaginez que vous êtes une pizzeria qui manque de four. Vous demandez à votre voisin de vous prêter 1 000 CHF. En échange, vous lui promettez 50 CHF par semestre pendant 2 ans (les *coupons*), puis vous lui rendez ses 1 000 CHF (le *principal*). Vous rédigez un papier signé, immuable — c'est votre **obligation**. Votre voisin peut ensuite revendre ce papier sur le marché. Si entre-temps les pizzerias sont devenues très risquées, personne ne voudra payer 1 000 CHF pour votre promesse : le **prix baisse**. Si vous êtes devenus très populaires, tout le monde veut votre papier : le **prix monte**. Le *yield*, c'est ce que votre voisin espère gagner en achetant ce papier aujourd'hui.
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- Une obligation = contrat fixe entre emprunteur (émetteur) et prêteur (investisseur).
+- Le **prix** est la valeur actualisée de tous les flux futurs (coupons + principal).
+- La relation **prix ↔ rendement est inverse et convexe** : c'est LA propriété fondamentale.
+- On ne peut pas lire le rendement implicite directement → **tâtonnement** numérique.
+- Les rendements de coupons différents ne sont pas comparables → **standard zéro-coupon**.
+- La **courbe des taux** (zéro-coupon) se reconstruit par **Bootstrap** à partir des prix observés.
+- Le **credit spread** mesure le surcoût de risque d'un émetteur par rapport à l'État.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+|---------|-------------------------------|-----------|
+| **Coupon** | Paiement périodique fixe versé à l'investisseur. | Les intérêts d'un prêt classique. |
+| **Principal** (Face Value) | Montant remboursé à l'échéance. | Le capital initial rendu à maturité. |
+| **Yield** $y$ | Taux de rendement requis par le marché. | Le degré de liberté qui équilibre le prix. |
+| **Prix au-dessus du pair** (Premium) | $B > 100$ : le coupon est plus attractif que le marché. | Le marché paie plus pour des coupons généreux. |
+| **Zéro-coupon** | Obligation sans coupon, vendue à escompte, remboursée au pair. | Zéro intermédiaire = 1 seul flux à maturité. |
+| **Courbe des taux** (Yield Curve) | Graphique des taux zéro-coupon en fonction de la maturité. | Le « prix du temps » pour chaque horizon. |
+| **Bootstrap** | Algorithme qui extrait les taux zéro-coupon en cascade des plus courts aux plus longs. | On résout une inconnue à la fois en utilisant les taux déjà calculés. |
+| **Credit Spread** | Écart de rendement entre obligataire corporate et souverain de même maturité. | La prime de risque de crédit de l'émetteur. |
+| **Convexité** | Courbure de la relation prix-rendement, favorable à l'investisseur. | La hausse de prix > la baisse de prix pour une même variation de taux. |
+| **Callable Bond** | Obligation que l'émetteur peut rembourser avant maturité. | Risque de réinvestissement forcé à taux défavorable. |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+```{mermaid}
+graph LR
+    A[Risque émetteur ↑] -->|augmente| CS[Credit Spread ↑]
+    CS -->|s'ajoute à| Y[Yield y ↑]
+    Y -->|inverse| B[Prix B ↓]
+    B -->|Bootstrap| ZC[Courbe zéro-coupon]
+    ZC -->|permet de comparer| OBL[Toutes obligations]
+    ZC -->|actualise| VP[Valeur présente des flux]
+    Y -->|inconnu si B observé| TE[Trial & Error]
+    TE -->|retrouve| Y
+```
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+|---------|---------------|-----------|
+| $B(t) = \sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)} + P \cdot e^{-y(T-t)}$ | Prix = somme des flux actualisés au yield $y$. | Formule centrale, tout en découle. |
+| $y_{\text{corp}} = y_{\text{souv}} + \text{CS}$ | Yield corporate = taux sans risque + prime de crédit. | Le spread est toujours positif. |
+| $r_{\text{réel}} \approx r_{\text{nom}} - \pi$ | Rendement réel corrigé de l'inflation. | Risque inflation = érosion silencieuse. |
+| $\text{résidu}(y) = B_{\text{obs}} - B_{\text{calc}}(y)$ | Erreur à annuler dans le tâtonnement. | On cherche $y$ tel que résidu $= 0$. |
+| Bootstrap : $\sum c_i e^{-r_{t_i} t_i} + (P + c) e^{-r_T \cdot T} = B$ | Isoler $r_T$ avec les taux courts déjà connus. | Résolution en cascade, du court au long. |
+
+---
+
+## ⚠️ Pièges classiques
+
+- Confondre **prix** et **valeur nominale** : une obligation peut valoir 109 même si le pair est 100.
+- Croire que la relation prix-yield est linéaire : elle est **convexe** (courbure favorable à l'investisseur).
+- Oublier que la **préservation du capital est conditionnelle** : valable seulement si détenu jusqu'à maturité ET pas de défaut.
+- Penser que obligations et actions sont toujours décorrélées : **2022 a montré le contraire** (hausse brutale des taux → les deux baissent ensemble).
+- Confondre **risque de taux** et **risque de réinvestissement** : ils jouent en sens opposés (hausse de taux → prix baisse MAIS réinvestissement des coupons s'améliore).
+- Sur le Bootstrap : oublier d'utiliser les **taux déjà calculés** pour actualiser les coupons intermédiaires.
+- **Callable bonds** : l'émetteur exerce son droit de rappel quand les taux baissent → toujours au mauvais moment pour l'investisseur.
+- Les agences de notation n'intègrent **pas les critères ESG** dans leur note.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Qu'est-ce qu'une obligation et comment est-elle structurée ?
+
+**R courte :** Contrat de dette entre émetteur et investisseur, avec coupons périodiques fixes et remboursement du principal à maturité. Le contrat est immuable.
+
+---
+
+**Q :** Comment calcule-t-on le prix d'une obligation ?
+
+**R courte :** Valeur présente de tous les flux futurs, actualisés au yield $y$ : $B = \sum c_i e^{-y(t_i-t)} + P e^{-y(T-t)}$.
+
+---
+
+**Q :** Pourquoi prix et rendement varient-ils en sens inverse ?
+
+**R courte :** Si les taux montent, les flux futurs sont davantage actualisés → valeur présente diminue. Si le coupon est fixe, seul le prix peut ajuster le rendement effectif.
+
+---
+
+**Q :** Qu'est-ce que la convexité et pourquoi est-elle favorable ?
+
+**R courte :** La courbure de la relation prix-yield fait que le gain de prix lors d'une baisse de taux est supérieur à la perte lors d'une hausse de même amplitude.
+
+---
+
+**Q :** Comment fonctionne l'algorithme de tâtonnement (Trial & Error) ?
+
+**R courte :** On part d'un $y$ très élevé, on calcule le résidu $B_{\text{obs}} - B_{\text{calc}}$. Si positif on divise $y$ par 2, si négatif on fait la moyenne avec le $y$ précédent. On itère jusqu'à convergence.
+
+---
+
+**Q :** Pourquoi utilise-t-on les taux zéro-coupon plutôt que les yields bruts ?
+
+**R courte :** Les yields dépendent de la structure des coupons → non comparables entre obligations différentes. Les taux zéro-coupon normalisent à un standard commun.
+
+---
+
+**Q :** Expliquez le Bootstrap en une phrase.
+
+**R courte :** On extrait les taux zéro-coupon du plus court au plus long en utilisant à chaque étape les taux déjà calculés pour isoler l'inconnue restante.
+
+---
+
+**Q :** Qu'est-ce que le credit spread et que reflète-t-il ?
+
+**R courte :** Différence de yield entre une obligation corporate et une souveraine de même maturité ; il reflète le risque de crédit supplémentaire de l'émetteur.
+
+---
+
+**Q :** Citez les 5 risques obligataires et leur protection principale.
+
+**R courte :** Taux (duration courte), crédit (notation élevée), inflation (TIPS), liquidité (obligations liquides), réinvestissement (éviter les callables).
+
+---
+
+**Q :** Pourquoi 2022 a-t-il remis en cause la diversification par les obligations ?
+
+**R courte :** Les banques centrales ont relevé brutalement les taux → prix des obligations et actions ont chuté simultanément → corrélation devenue positive, annulant l'effet diversificateur.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+- **Prix = VP des flux futurs** actualisés au yield $y$.
+- **Prix ↑ ⟺ yield ↓** : relation inverse et convexe.
+- **Au-dessus du pair** si coupon > taux marché ; **en-dessous** si coupon < taux marché.
+- **Trial & Error** : problème inverse, bissection numérique pour trouver $y$ à partir de $B$.
+- **Zéro-coupon** = standard de comparaison universel.
+- **Bootstrap** : cascade du plus court au plus long pour reconstruire la courbe des taux.
+- **Credit Spread** = prime de risque sur le taux souverain.
+- **Risque de réinvestissement** ≠ **risque de taux** : ils s'opposent.
+- **2022** : exception à la décorrélation actions/obligations.
+- **Callable** = risque de réinvestissement forcé pour l'investisseur.

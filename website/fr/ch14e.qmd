@@ -1,0 +1,140 @@
+---
+title: "Investissement durable et ESG — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Imaginez que vous gérez un immense réservoir d'eau commun. Certains voisins y puisent massivement, y jettent des déchets et laissent la pompe tourner la nuit. Vous, vous pouvez décider à qui vous prêtez de l'argent pour acheter des pompes. Est-ce que prêter moins cher aux voisins économes et plus cher aux pollueurs change quelque chose ? Oui — c'est exactement ça, la finance durable : utiliser **l'allocation du capital** comme levier pour orienter les comportements. On ne résout pas tout, mais on ne finance plus les problèmes les yeux fermés.
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- Les activités humaines actuelles ne sont **pas soutenables** (climat, biodiversité, inégalités).
+- La finance alloue des milliers de milliards chaque année → levier puissant mais pas suffisant seul.
+- **ESG** = cadre pour intégrer des critères **non-financiers** dans les décisions d'investissement.
+- Mesurer l'impact nécessite des **données**, des **indicateurs** et des **outils** spécifiques.
+- Il existe un **spectre** de stratégies, du plus passif (exclusion) au plus actif (impact).
+- La notation ESG est **relative** (sectorielle), non absolue — piège majeur.
+- Le domaine est jeune, en cours de standardisation, et la réglementation s'intensifie.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+| ------- | ----------------------------- | --------- |
+| **ESG** | Cadre en 3 piliers (Environnemental, Social, Gouvernance) pour mesurer la durabilité d'une entreprise. | Le bulletin de notes non-financier d'une entreprise. |
+| **Notation ESG** | Score relatif au sein d'un secteur, agrégé par une moyenne pondérée E, S, G. | Comme une note sur courbe : être AA en pétrole ne signifie pas être vertueux en absolu. |
+| **Scope 1/2/3** | Trois périmètres d'émissions carbone, des plus directes (Scope 1) aux plus indirectes (Scope 3). | Le Scope 3 = tout ce que vos clients et fournisseurs émettent grâce à vous. |
+| **ITR** (*Implied Temperature Rise*) | Hausse de température implicite si toutes les entreprises se comportaient comme celle analysée. | Traduit une trajectoire carbone en degrés Celsius pour comparer à l'Accord de Paris. |
+| **ODD / SDG** | 17 objectifs mondiaux onusiens (2015, horizon 2030) désormais quantifiés dans les portefeuilles. | La liste de courses du développement durable planétaire. |
+| **Best-in-class** | Surpondérer les meilleurs élèves ESG par secteur, sans exclure les secteurs polluants. | On garde les entreprises pétrolières les moins pires pour les pousser à faire mieux. |
+| **Engagement actionnarial** | Dialogue avec les directions + vote en AG pour influencer les pratiques ESG. | L'actionnaire prend la parole au lieu de claquer la porte. |
+| **Impact Investing** | Investir en cherchant un impact social/environnemental mesurable, intentionnel et additionnel. | Pas juste éviter le mal : prouver qu'on fait du bien, chiffres à l'appui. |
+| **Greenwashing** | Communication sur la durabilité qui dépasse les actions réelles. | Shell déclarant contribuer aux ODD environnementaux — à vérifier avec des données tierces. |
+| **Divergence des notateurs** | Deux fournisseurs ESG peuvent donner des scores très différents pour la même entreprise. | R² ≈ 0,32 entre MSCI et Sustainalytics : accord sur la tendance, divergence dans les détails. |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+- Crises globales (climat, biodiversité, inégalités) → besoin de **finance durable**
+- Finance durable → nécessite de **mesurer** : ESG, ODD, ITR, Scopes 1/2/3
+- Mesure → repose sur des **données** (MSCI, Sustainalytics…) + **outils** (dashboards, benchmarks ESG)
+- Données → alimentent les **7 stratégies ESG** (Eurosif 2019)
+- Stratégies → du moins engagé au plus engagé : Exclusion → Norms-based → Best-in-class → Thématique → Intégration → Engagement → Impact
+- Engagement + Vote → pression sur les entreprises → amélioration des pratiques
+- Intégration → risques ESG = **risques financiers** à long terme
+- Impact → condition triple : intentionnalité + mesurabilité + **additionnalité**
+- Compenswiss → combine simultanément les 4 axes : Intégration, Vote, Engagement (ASIR), Exclusions
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+| ------- | ------------- | --------- |
+| $\text{Score ESG} = \sum_i w_i \cdot s_i$ | Moyenne pondérée des scores E, S, G selon matérialité sectorielle | Pondération ≠ fixe : dépend du secteur |
+| **R² ≈ 0,32** | Corrélation entre MSCI et Sustainalytics sur S&P 1200 (2016) | Faible → divergence significative entre notateurs |
+| **ITR** (°C) | Hausse implicite si comportement généralisé à toutes entreprises | Cible : ≤ 1,5 °C (Accord de Paris) |
+| **tCO₂e / M$ investi** | Unité d'empreinte carbone d'un portefeuille | Permet de comparer portefeuille vs. benchmark dans le temps |
+| **3 piliers → 10 thèmes → 37 enjeux** | Structure MSCI 2023 | Chiffres à citer à l'oral |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **Relatif ≠ Absolu** : un score AA dans un secteur très polluant ne signifie pas que l'entreprise est vertueuse en termes absolus.
+- **Divergence des notateurs** : ne jamais traiter un score ESG d'un seul fournisseur comme une vérité objective.
+- **Scope 3 ignoré** : c'est souvent le périmètre le plus important (ex. : automobiles, pétrole) — l'omettre fausse toute l'analyse.
+- **Hausse des scores dans le temps** : peut signifier amélioration réelle *ou* simplement meilleur reporting — distinguer les deux.
+- **Exclusion ≠ impact** : exclure une entreprise ne la pousse pas à changer ; seul l'engagement dialogue le fait.
+- **Best-in-class ≠ vertu absolue** : un producteur de charbon peut être meilleur de sa catégorie tout en restant très polluant.
+- **Additionnalité** (Impact Investing) : si l'impact aurait eu lieu sans l'investissement, ce n'est pas de l'*impact investing*.
+- **Greenwashing** : les déclarations d'entreprise sur les ODD doivent être validées par des données tierces indépendantes.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Qu'est-ce que l'ESG et pourquoi a-t-il émergé ?
+
+**R courte :** Cadre à 3 piliers (Environnemental, Social, Gouvernance) pour intégrer des risques non-financiers dans l'investissement. Il répond aux crises climatiques, sociales et de gouvernance — la finance doit refléter ces risques.
+
+---
+
+**Q :** Quelle est la différence entre Scope 1, 2 et 3 ?
+
+**R courte :** Scope 1 = émissions directes. Scope 2 = énergie indirecte achetée. Scope 3 = toutes les émissions indirectes en amont (fournisseurs) et en aval (clients). Scope 3 est souvent le plus important mais le plus difficile à mesurer.
+
+---
+
+**Q :** Pourquoi les notations ESG de différents fournisseurs divergent-elles ?
+
+**R courte :** Chaque fournisseur utilise ses propres méthodologies, sources, pondérations. R² ≈ 0,32 entre MSCI et Sustainalytics — les données non-financières sont bien moins standardisées que les données comptables.
+
+---
+
+**Q :** Quelle est la différence entre exclusion et best-in-class ?
+
+**R courte :** L'exclusion bannit des secteurs entiers. Le best-in-class conserve tous les secteurs mais surpondère les meilleurs élèves ESG de chaque secteur, incitant à une *race to the top*.
+
+---
+
+**Q :** Quelles sont les trois conditions de l'impact investing ?
+
+**R courte :** Intentionnalité (l'impact est voulu), mesurabilité (il est quantifié), additionnalité (il n'aurait pas eu lieu sans cet investissement).
+
+---
+
+**Q :** Que fait compenswiss concrètement en matière d'ESG ?
+
+**R courte :** Quatre axes combinés : intégration ESG dans les benchmarks et dashboards, vote en AG (~100 assemblées/an en Suisse), engagement via ASIR (150+ émetteurs), et exclusions (~100 sociétés — normatif + charbon avec seuil abaissé à 30 %).
+
+---
+
+**Q :** Qu'est-ce que le score ITR et quelle est la cible ?
+
+**R courte :** L'*Implied Temperature Rise* est la hausse de température implicite si toutes les entreprises se comportaient comme celle analysée. Cible : ≤ 1,5 °C pour être aligné avec l'Accord de Paris.
+
+---
+
+**Q :** Pourquoi les scores ESG ont-ils tendance à augmenter dans le temps ?
+
+**R courte :** Double cause possible : amélioration réelle des pratiques ET amélioration du reporting. Il faut distinguer les deux, sinon on surestime les progrès réels.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+1. **ESG** = 3 piliers, 10 thèmes, 37 enjeux (MSCI 2023) → notation **relative** par secteur, échelle CCC à AAA.
+2. **Scopes 1/2/3** : émissions directes → énergie indirecte → tout le reste (souvent le plus grand).
+3. **ITR** traduit la trajectoire carbone en °C → cible ≤ 1,5 °C.
+4. **7 stratégies** (Eurosif) : Exclusion · Norms-based · Best-in-class · Thématique · Intégration · Engagement · Impact.
+5. **Impact investing** = intentionnalité + mesurabilité + additionnalité.
+6. **Divergence des notateurs** : R² ≈ 0,32 → un seul score ESG n'est pas une vérité absolue.
+7. **Compenswiss** : 4 axes = Intégration + Vote (~100 AG/an) + Engagement ASIR (150+ émetteurs) + Exclusions (~100 sociétés).
+8. **Greenwashing** : toujours valider les déclarations d'entreprise avec des données tierces.
+9. La finance durable **oriente** le capital mais ne **remplace pas** les politiques publiques.
+10. Domaine **jeune et en mouvement** : réglementation croissante (SFDR, taxonomie verte, FINMA).

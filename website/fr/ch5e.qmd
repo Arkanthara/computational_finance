@@ -1,0 +1,153 @@
+---
+title: "Le Carnet d'Ordres à Cours Limité — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Imaginez un marché aux puces géant : des milliers de vendeurs collent des post-its sur un tableau ("je vends à 50€"), des acheteurs en ajoutent ("j'achète à max 48€"). Personne ne s'apparie encore. Puis quelqu'un crie : "J'achète maintenant !" — boom, le post-it du vendeur le moins cher disparaît. C'est le LOB. Et le détail croustillant : **75 % des post-its sont arrachés avant même d'avoir servi**. Le teneur de marché OTC, lui, c'est le brocanteur qui achète et revend lui-même — pratique, mais il garde la différence (le spread) et prend le risque de se retrouver avec un stock invendable.
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- **Problème :** organiser des millions d'échanges simultanés de façon transparente et équitable.
+- **Deux modèles :** OTC (via teneur de marché, spread = rémunération, risque inventaire) vs. LOB (carnet centralisé, participants directs).
+- **Arbitrage fondamental :** ordre limite (meilleur prix, non garanti) ↔ ordre au marché (exécution garantie, prix moins favorable).
+- **Dynamique du LOB :** 3 cas selon la position du prix par rapport au bid/ask.
+- **Réalité statistique :** 70–80 % d'annulations, impact prix concave, distributions à queues épaisses.
+- **Modélisation physique :** un modèle minimaliste (Maslov) reproduit les propriétés statistiques clés des marchés réels.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+| ------- | ----------------------------- | --------- |
+| **LOB** $\mathcal{L}(t)$ | Ensemble des ordres soumis, non exécutés et non annulés à l'instant $t$ | Le "carnet de commandes" en attente |
+| **Bid** $b(t)$ | Prix maximal parmi tous les ordres d'achat actifs | Le plus offrant côté achat |
+| **Ask** $a(t)$ | Prix minimal parmi tous les ordres de vente actifs | Le moins demandant côté vente |
+| **Spread** $s(t)$ | Écart ask − bid, toujours $\geq 0$ | Zone sans accord : aucun croisement possible |
+| **Mid-price** $m(t)$ | Moyenne de bid et ask, proxy du "vrai prix" | Point de référence neutre |
+| **Prix relatif** $\delta^x$ | Distance d'un ordre au meilleur prix de son côté | $\delta^x = 0$ = au mieux ; $\delta^x > 0$ = moins agressif |
+| **Profondeur** $N^b, N^a$ | Volume total disponible à chaque niveau de prix relatif | Mesure la liquidité à chaque échelon du carnet |
+| **Ordre limite** | Non exécutable immédiatement → entre dans le LOB et attend | "Je veux, mais seulement à ce prix" |
+| **Ordre au marché** | Exécuté immédiatement au meilleur prix disponible | "Je veux maintenant, peu importe le prix exact" |
+| **Tick** $\pi$ | Plus petit écart de prix possible entre deux ordres consécutifs | Granularité minimale du carnet |
+| **Exposant de Hurst** $H$ | Mesure la mémoire à long terme d'une série temporelle | $H < 0{,}5$ = mean-reverting ; $H = 0{,}5$ = marche aléatoire |
+| **Impact de marché** | Modification du LOB causée par un ordre, potentiellement permanente | Un gros ordre laisse une "empreinte" durable |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+- Ordre soumis → comparé à bid/ask → **Ordre au marché** si $p_x \geq a(t)$, **Ordre limite** sinon
+- Ordre limite sous le bid → LOB inchangé
+- Ordre limite dans le spread → bid $\uparrow$ (ou ask $\downarrow$) → spread réduit
+- Ordre au marché → consomme la profondeur → impact prix **concave** en $|w|$
+- Impact normalisé par capitalisation → **Master Curve** (Lillo et al.) → loi de puissance universelle
+- LOB → 70–80 % des ordres annulés avant exécution
+- Modèle de Maslov (homogène) → $H \approx 1/4$, non-gaussien, clustering de volatilité
+- Hétérogénéité → **ABM** (Agent-Based Models)
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+| ------- | ------------- | --------- |
+| $b(t) = \max_{x \in B(t)} p_x$ | Meilleur bid | Prix max parmi les ordres d'achat actifs |
+| $a(t) = \min_{x \in A(t)} p_x$ | Meilleur ask | Prix min parmi les ordres de vente actifs |
+| $s(t) = a(t) - b(t) \geq 0$ | Spread | Toujours positif ou nul |
+| $m(t) = \dfrac{a(t)+b(t)}{2}$ | Mid-price | Proxy du prix "juste" |
+| $\delta^x = b(t) - p_x$ (achat) / $p_x - a(t)$ (vente) | Prix relatif | $\delta^x = 0$ = meilleur prix ; $> 0$ = loin du marché |
+| $N^b(p,t) = \sum_{\{x \in B(t) \mid \delta^x = p\}} w_x$ | Profondeur bid | Volume disponible à distance $p$ du bid |
+| $I(|w|)$ concave en $|w|$ | Impact instantané | Rendements décroissants — diviser les ordres coûte moins cher |
+
+---
+
+## ⚠️ Pièges classiques
+
+- $s(t) \geq 0$ **toujours** — si ask < bid, il y aurait eu appariement immédiat.
+- Ordre limite ≠ exécution garantie → **risque d'opportunité** (le marché peut ne jamais revenir au prix voulu).
+- Doubler $|w|$ ne **double pas** l'impact — impact **concave**, pas linéaire.
+- $H \approx 1/4$ dans Maslov → **anti-persistant** (mean-reverting), pas tendanciel ($H > 0{,}5$).
+- Dark pool opaque ≠ efficacité garantie (scandales et amendes régulatoires documentés).
+- Maslov = traders **homogènes** → ne reproduit pas l'hétérogénéité → nécessite ABM.
+- La courbe maîtresse (Master Curve) est universelle **après normalisation** par capitalisation — pas brute.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Quelle est la différence entre OTC et LOB ?
+
+**R courte :** En OTC, on traite avec un teneur de marché qui se rémunère via le spread et porte un risque d'inventaire. En LOB, on traite avec d'autres participants via un carnet centralisé et automatique.
+
+---
+
+**Q :** Pourquoi le spread est-il toujours positif ?
+
+**R courte :** Si ask < bid, il y aurait appariement immédiat. Par définition, les ordres restants dans le LOB ne peuvent pas se croiser.
+
+---
+
+**Q :** Quand un ordre limite dans le spread modifie-t-il le bid ?
+
+**R courte :** Quand $b(t) < p_x < a(t)$ pour un achat : cet ordre devient le nouveau bid, réduisant le spread.
+
+---
+
+**Q :** Pourquoi utiliser un ordre au marché plutôt qu'un ordre limite ?
+
+**R courte :** Pour garantir l'exécution quand la vitesse prime sur le prix — par exemple lors d'une forte tendance ou pour clôturer rapidement une position.
+
+---
+
+**Q :** Qu'implique concrètement un impact de marché concave ?
+
+**R courte :** Diviser un gros ordre en petits morceaux coûte moins cher qu'un seul ordre massif — c'est la base des algorithmes d'exécution optimale (VWAP, TWAP, etc.).
+
+---
+
+**Q :** Que vaut $H$ dans Maslov et que cela signifie-t-il ?
+
+**R courte :** $H \approx 1/4 < 0{,}5$ → anti-persistance : une hausse tend à être suivie d'une baisse (mean-reverting), contrairement à une marche aléatoire ($H = 0{,}5$).
+
+---
+
+**Q :** Pourquoi 70–80 % des ordres sont-ils annulés ?
+
+**R courte :** Exploration de prix, ajustements algorithmiques continus, changements d'intention — la majorité des ordres limites ne trouvent jamais contrepartie au prix voulu.
+
+---
+
+**Q :** Qu'est-ce que la Master Curve de Lillo et al. ?
+
+**R courte :** En normalisant l'impact de marché par la capitalisation boursière, on obtient une courbe universelle (loi de puissance) valable pour tous les actifs — indépendamment de leur taille ou secteur.
+
+---
+
+**Q :** Quelles sont les trois règles de priorité et en quoi diffèrent-elles ?
+
+**R courte :** Prix-Temps (FIFO à égalité) favorise les ordres précoces ; Prorata ($w / \sum w$) favorise les gros ordres par allocation proportionnelle ; Prix-Taille sert le plus grand ordre en premier à prix égal.
+
+---
+
+**Q :** Quelle est la différence entre un ordre iceberg et un dark pool ?
+
+**R courte :** Iceberg = taille partiellement cachée dans un LOB visible. Dark pool = LOB entièrement opaque, aucun ordre visible avant exécution.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+- **LOB** = ensemble des ordres actifs (soumis, non exécutés, non annulés).
+- **Spread** $s = a - b \geq 0$ toujours ; **mid-price** $m = (a+b)/2$.
+- **Ordre limite** : meilleur prix, risque de non-exécution. **Ordre au marché** : exécution garantie, prix moins bon.
+- **3 cas (achat)** : sous bid → inchangé ; dans spread → nouveau bid ; au-dessus ask → exécution immédiate.
+- **Priorités** : Prix-Temps (FIFO) / Prorata / Prix-Taille.
+- **70–80 % des ordres sont annulés** avant exécution.
+- **Impact prix concave** en $|w|$ → diviser les ordres est moins coûteux.
+- **Master Curve** = loi de puissance universelle après normalisation par capitalisation.
+- **Maslov** → modèle minimal → $H \approx 1/4$ (anti-persistant), non-gaussien, clustering de volatilité.
+- **ABM** (Agent-Based Models) = extension pour comportements hétérogènes et émergents.

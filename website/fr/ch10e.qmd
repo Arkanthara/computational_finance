@@ -1,0 +1,152 @@
+---
+title: "Les Grecques des Options — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Imaginez que vous pilotez un avion (votre portefeuille d'options) dans un ciel agité.
+
+- Le **Delta** est votre altimètre : il dit combien l'avion monte si vous tirez sur le manche.
+- Le **Gamma** dit à quelle vitesse cet altimètre lui-même se dérègle quand la météo change.
+- Le **Theta** est la jauge de carburant : elle descend inexorablement, peu importe ce que vous faites.
+- Le **Vega** mesure la turbulence atmosphérique (volatilité).
+- Le **Rho** capte la pente de la piste d'atterrissage (taux d'intérêt).
+
+Gérer des options, c'est garder tous ces cadrans stables en même temps — sans perdre le fil.
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- Une option est exposée à **plusieurs risques simultanés** : prix du sous-jacent, temps, volatilité, taux.
+- Les **Grecques** décomposent ces risques en métriques indépendantes et actionables.
+- Les stratégies naïves (nue, couverte, stop-loss) sont insuffisantes : trop risquées, trop coûteuses, ou trop chères en frais de transaction.
+- La réponse rigoureuse est le **Delta hedging** (couverture dynamique continue).
+- Le **Gamma** mesure l'imperfection du Delta hedge ; le neutraliser nécessite d'autres options.
+- **Triangle Θ–Γ** : long Gamma coûte du Theta. Il n'y a pas de repas gratuit.
+- Black-Scholes a ses limites ; des modèles alternatifs et des méthodes numériques avancées existent.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+| ------- | ----------------------------- | --------- |
+| Delta (Δ) | Variation du prix de l'option pour +1 USD du sous-jacent. | Coefficient de transmission entre sous-jacent et option ; aussi ≈ proba risque-neutre d'exercice. |
+| Gamma (Γ) | Vitesse à laquelle le Delta lui-même évolue. | Courbure ; indique si le Delta hedge va vite devenir obsolète. |
+| Theta (Θ) | Perte de valeur de l'option chaque jour qui passe. | Ennemi de l'acheteur, allié du vendeur ; non couvrable. |
+| Vega (ν) | Sensibilité du prix à +1 % de volatilité implicite. | Capte l'incertitude sur l'incertitude. |
+| Rho (ρ) | Impact d'une variation des taux sans risque. | Moins critique à court terme ; important pour les options longues. |
+| Delta hedge | Détenir Δ actions par option pour neutraliser le risque directionnel. | Rend le portefeuille insensible aux petits mouvements du sous-jacent. |
+| Gamma hedge | Ajouter des options pour neutraliser la courbure résiduelle. | Corrige l'erreur d'approximation linéaire du Delta. |
+| Option nue | Vendre une option sans aucune couverture. | Simple mais perte théoriquement illimitée si S monte fortement. |
+| Stop-loss | Acheter si $S > K$, vendre si $S < K$. | Dynamique mais coûts de transaction élevés et ambiguïté en $K$. |
+| AD (différentiation automatique) | Calcul exact des dérivées en un seul passage dans le code. | O(1) vs O(n) pour les différences finies. |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+- **Prix de l'option** → dérivée partielle en $S$ → **Delta (Δ)**
+- **Delta** → dérivée partielle en $S$ → **Gamma (Γ)**
+- **Prix de l'option** → dérivée partielle en $t$ → **Theta (Θ)**
+- **Γ élevé** → Delta change vite → rééquilibrage fréquent nécessaire
+- **Long Γ** ↔ **Θ très négatif** (trade-off fondamental, imposé par l'EDP de Black-Scholes)
+- **Delta hedge** neutralise $Δ\,δS$ mais laisse subsister $\frac{1}{2}Γ\,δS^2$
+- **Gamma hedge** → trader des **options** (sous-jacent a $Γ = 0$)
+- **Delta adjust** après Gamma hedge → trader le **sous-jacent**
+- **Δ call** = $N(d_1)$ ≈ probabilité risque-neutre d'exercice
+- **Δ put** = $N(d_1) - 1$ = **Δ call − 1** (parité call-put)
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+| ------- | ------------- | --------- |
+| $\Delta_c = N(d_1)$ | Delta du call | Toujours dans $[0, 1]$ |
+| $\Delta_p = N(d_1) - 1$ | Delta du put | Toujours dans $[-1, 0]$ |
+| $\Delta_c - \Delta_p = 1$ | Parité des Deltas | Cohérent avec parité call-put |
+| $\Gamma = \dfrac{N'(d_1)}{S_0\,\sigma\,\sqrt{T}}$ | Gamma (call = put) | Toujours $> 0$, max ATM |
+| $\Theta_c = -\dfrac{S_0 N'(d_1)\sigma}{2\sqrt{T}} - rKe^{-rT}N(d_2)$ | Theta du call | Généralement négatif |
+| $\delta c \approx \Theta\,\delta t + \Delta\,\delta S + \tfrac{1}{2}\Gamma\,\delta S^2$ | Taylor d'ordre 2 | Les 3 Grecques en action |
+| $w_T = -\Gamma_\Pi / \Gamma_T$ | Quantité d'options pour Gamma hedge | Puis ajuster Δ via sous-jacent |
+| $d_1 = \dfrac{\ln(S_0/K) + (r + \sigma^2/2)T}{\sigma\sqrt{T}}$ | Paramètre Black-Scholes | $d_2 = d_1 - \sigma\sqrt{T}$ |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **Theta ATM diverge** : quand $T \to 0$ et option ATM, le Theta tend vers $-\infty$. Ne pas l'ignorer près de l'expiration.
+- **Gamma négatif = vendeur d'option** : un grand mouvement (hausse ou baisse) est toujours défavorable ; la couverture Delta devient vite obsolète.
+- **Stop-loss ≠ Black-Scholes** : le coût théorique $\max(S_0 - K, 0)$ diffère de $c_{BS}$ car il faut actualiser les flux et gérer l'ambiguïté en $K$.
+- **On ne couvre pas le Theta** : le temps est certain, aucune stratégie ne l'évite.
+- **Ordre du Gamma hedge** : neutraliser Γ d'abord (via options), puis rétablir Δ (via sous-jacent) — pas l'inverse.
+- **Put américain < Call européen** dans l'exemple du cours : l'exercice anticipé avec dividendes donne un résultat contre-intuitif.
+- **AD ≠ différences finies** : AD donne des dérivées exactes en $O(1)$, pas des approximations.
+- **Confondre Vega et Gamma** : Vega = sensibilité à $\sigma$ (volatilité), Gamma = courbure en $S$.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Qu'est-ce que le Delta d'une option et comment s'en sert-on pour couvrir ?
+
+**R courte :** $\Delta = \partial c / \partial S$ ; pour couvrir une vente de call, on achète $\Delta \times N_{\text{options}}$ actions. Le portefeuille est alors insensible aux petits mouvements du sous-jacent.
+
+---
+
+**Q :** Pourquoi le Delta hedge seul est-il insuffisant ?
+
+**R courte :** Le Delta approxime la relation option-sous-jacent de façon linéaire, mais la vraie relation est convexe. Le terme quadratique $\frac{1}{2}\Gamma\,\delta S^2$ est ignoré, créant un écart pour les grands mouvements.
+
+---
+
+**Q :** Comment rendre un portefeuille Gamma-neutre ?
+
+**R courte :** Ajouter $w_T = -\Gamma_\Pi / \Gamma_T$ options de couverture pour annuler le Gamma, puis rétablir la neutralité Delta en tradant le sous-jacent.
+
+---
+
+**Q :** Pourquoi ne peut-on pas couvrir le Theta ?
+
+**R courte :** Le passage du temps est certain et non aléatoire ; aucun actif financier ne permet de s'en protéger. C'est simplement le coût quotidien de détenir une option.
+
+---
+
+**Q :** Quel est le lien entre Theta et Gamma pour un portefeuille Delta-neutre ?
+
+**R courte :** L'EDP de Black-Scholes impose un trade-off strict : long Gamma implique Theta très négatif. Bénéficier de la courbure a un coût quotidien.
+
+---
+
+**Q :** Pourquoi la stratégie stop-loss est-elle sous-optimale ?
+
+**R courte :** Elle génère des coûts de transaction élevés (surtout si le sous-jacent oscille autour de $K$) et son coût théorique ne coïncide pas avec le prix Black-Scholes à cause de l'actualisation et de l'ambiguïté en $K$.
+
+---
+
+**Q :** Quelle est la différence entre différences finies et différentiation automatique pour calculer les Grecques ?
+
+**R courte :** Les différences finies nécessitent $O(n)$ évaluations du modèle (une par paramètre) et donnent des résultats approchés. L'AD calcule toutes les dérivées exactes en $O(1)$ par rétropropagation automatique.
+
+---
+
+**Q :** Quelles sont les limites de Black-Scholes et comment y remédier ?
+
+**R courte :** Volatilité constante (→ Heston), pas de sauts (→ Merton), options américaines (→ arbres binomiaux). Pour la relation complexe ou la couverture optimale, on utilise réseaux de neurones ou Reinforcement Learning.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+- **5 Grecques** : Δ (direction), Γ (courbure), Θ (temps), ν (vol), ρ (taux).
+- **Δ call** = $N(d_1) \in [0,1]$ ; **Δ put** = $N(d_1)-1 \in [-1,0]$.
+- **Γ > 0** toujours (position longue) ; max ATM ; explose ATM quand $T \to 0$.
+- **Θ < 0** généralement ; ATM diverge vers $-\infty$ près de l'expiration.
+- **Delta hedge** = détenir Δ actions par option ; rééquilibrage quotidien.
+- **Gamma hedge** = d'abord options (Γ), puis sous-jacent (Δ).
+- **Triangle Θ–Γ** : long Γ = Θ très négatif ; pas de repas gratuit.
+- **Θ ne se couvre pas** ; Γ ne se neutralise qu'avec des options.
+- **Taylor** : $\delta c \approx \Theta\,\delta t + \Delta\,\delta S + \frac{1}{2}\Gamma\,\delta S^2$.
+- **AD** : dérivées exactes en $O(1)$ — meilleure méthode pour les grands portefeuilles.

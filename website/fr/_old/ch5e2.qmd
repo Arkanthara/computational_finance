@@ -1,0 +1,272 @@
+---
+title: "Le Carnet d'Ordres à Cours Limité"
+subtitle: "Guide de révision — Préparation à l'oral"
+---
+
+## Pourquoi tout ça ? Une mise en contexte
+
+Imaginez que vous voulez acheter 10 000 actions Apple demain matin. À qui les achetez-vous ? Il n'y a pas d'«Apple SA» qui vend ses propres actions en continu. Il faut trouver quelqu'un qui veut vendre exactement au même moment que vous voulez acheter. C'est précisément le problème que les marchés financiers ont résolu — et le **carnet d'ordres à cours limité (LOB)** est la solution dominante sur les grandes places boursières mondiales.
+
+Ce chapitre répond à une question fondamentale : **comment les prix se forment-ils, seconde après seconde, à partir de millions de décisions individuelles ?** La réponse est à la fois mécanique (des règles précises d'appariement) et statistique (des propriétés émergentes surprenantes).
+
+---
+
+## Avec qui échange-t-on ?
+
+### Le teneur de marché : l'intermédiaire de confiance
+
+**L'idée.** Le modèle le plus intuitif est celui du **teneur de marché** (*market maker*). C'est un intermédiaire qui s'engage en permanence à acheter *et* à vendre un actif. Vous n'avez pas besoin de trouver un acheteur — le teneur de marché est toujours là. Ces échanges directs, hors bourse organisée, s'appellent des échanges **de gré à gré** (Over The Counter, OTC).
+
+**L'intuition.** Pensez à un libraire d'occasion : il achète vos livres moins cher qu'il ne les revend. C'est sa marge. Mais si tout le monde lui vend le même roman sans que personne n'en veuille, il se retrouve avec un stock encombrant et risqué. C'est exactement le **risque d'inventaire** du teneur de marché.
+
+**La rémunération.** Le teneur de marché gagne sur le **spread bid-ask** : il achète au prix *bid* (plus bas) et revend au prix *ask* (plus haut). Même sans bouger les prix, chaque aller-retour lui génère un profit.
+
+::: {.callout-note collapse="true"}
+### Détail : le risque d'inventaire en pratique
+
+Si les ordres des clients forment la séquence $\{+1, +1, -1, -1, -1, -1, -1, \ldots\}$, le teneur de marché accumule la position inverse $\{-1, -1, +1, +1, +1, \ldots\}$, soit rapidement une exposition nette de $-5$. Trop risqué : il doit se couvrir (*hedge*) auprès d'un autre teneur de marché. Ce mécanisme est typique du marché des changes (Forex), le plus grand marché OTC au monde.
+:::
+
+### Le LOB : la bourse organisée
+
+**L'idée.** L'alternative au teneur de marché est le **carnet d'ordres à cours limité**. Ici, personne n'est l'intermédiaire permanent : acheteurs et vendeurs soumettent leurs ordres à un système centralisé, qui les apparie automatiquement selon des règles précises. NYSE, Euronext, SIX Swiss Exchange… tous fonctionnent sur ce principe.
+
+**L'intuition.** C'est une salle des ventes avec un tableau géant : chacun affiche son prix et sa quantité, et un algorithme fait les mariages en continu.
+
+> **À retenir pour l'oral :** Les deux modèles coexistent. OTC = teneur de marché, risque d'inventaire, profit sur le spread. LOB = appariement automatique, risque d'opportunité (l'ordre peut ne jamais être exécuté).
+
+---
+
+## Structure du LOB : les briques essentielles
+
+### Qu'est-ce qu'un ordre ?
+
+Un ordre, c'est simplement une intention d'achat ou de vente, caractérisée par trois éléments : un **prix** $p_x$, une **taille** $w_x$ (en multiples du lot minimal), et un **horodatage** $t_x$. L'horodatage est crucial pour la gestion des priorités.
+
+### Les prix qui comptent : bid, ask, spread, mid
+
+Ces quatre grandeurs résument l'état du marché à chaque instant.
+
+- Le **bid** $b(t)$ est le meilleur prix auquel quelqu'un est prêt à acheter *maintenant*.
+- L'**ask** $a(t)$ est le meilleur prix auquel quelqu'un est prêt à vendre *maintenant*.
+- Le **spread** $s(t) = a(t) - b(t)$ est toujours positif ou nul : si ask < bid, il y aurait eu un appariement immédiat.
+- Le **mid-price** $m(t) = \frac{a(t)+b(t)}{2}$ sert de proxy du « vrai » prix de l'actif, plus stable que le bid ou l'ask seuls.
+
+::: {.callout-note collapse="true"}
+### Formules formelles
+
+$$b(t) = \max_{x \in B(t)} p_x \qquad a(t) = \min_{x \in A(t)} p_x$$
+
+où $B(t)$ désigne l'ensemble des ordres d'achat actifs et $A(t)$ celui des ordres de vente actifs.
+:::
+
+### Le prix relatif : où est placé l'ordre dans le carnet ?
+
+Le **prix relatif** $\delta^x$ mesure la distance d'un ordre par rapport au meilleur prix de son côté. $\delta^x = 0$ signifie que l'ordre est placé exactement au meilleur prix (agressif). $\delta^x > 0$ signifie qu'il est placé plus loin du marché (passif, plus patient).
+
+### La profondeur : combien de volume à chaque niveau ?
+
+La **profondeur** $N^b(p,t)$ ou $N^a(p,t)$ indique le volume total d'ordres disponibles à un niveau de prix relatif donné. Un LOB « profond » — avec beaucoup de volume à différents niveaux — est un LOB **liquide** : on peut y exécuter de grosses transactions sans trop déplacer les prix.
+
+::: {.callout-note collapse="true"}
+### Définition formelle de la profondeur
+
+$$N^b(p, t) = \sum_{\{x \in B(t) \mid \delta^x = p\}} w_x \qquad N^a(p, t) = \sum_{\{x \in A(t) \mid \delta^x = p\}} w_x$$
+:::
+
+---
+
+## Les deux types d'ordres et l'arbitrage fondamental
+
+### Ordre à cours limité vs ordre au marché
+
+Tout participant fait face à un choix binaire, qui cache un **arbitrage fondamental** :
+
+L'**ordre à cours limité** (*limit order*) est un ordre placé à un prix spécifique. Si ce prix n'est pas disponible immédiatement, l'ordre entre dans le LOB et attend. Il offre potentiellement un meilleur prix — mais n'est **jamais garanti d'être exécuté** (risque d'opportunité).
+
+L'**ordre au marché** (*market order*) est exécuté immédiatement au meilleur prix disponible. L'exécution est certaine — mais le prix obtenu peut être défavorable.
+
+> **L'arbitrage fondamental :** meilleur prix ↔ risque de non-exécution. C'est la tension centrale de tout algorithme d'exécution.
+
+**Pourquoi ne pas toujours utiliser des ordres à cours limité ?** Dans un marché en mouvement rapide, attendre le prix souhaité peut signifier rater une opportunité ou, pire, laisser une position perdante s'accumuler.
+
+::: {.callout-note collapse="true"}
+### Les trois cas d'un ordre d'achat
+
+Pour un ordre d'achat de prix $p_x$ soumis au LOB :
+
+| Condition | Type | Effet sur le carnet |
+|---|---|---|
+| $p_x \leq b(t)$ | Limite | Aucun changement du bid |
+| $b(t) < p_x < a(t)$ | Limite dans le spread | Le bid monte jusqu'à $p_x$ |
+| $p_x \geq a(t)$ | Marché | Exécution immédiate au meilleur ask |
+
+Pour les ordres de vente, la logique est parfaitement symétrique.
+:::
+
+::: {.callout-note collapse="true"}
+### Exemple numérique
+
+Bid $= 1{,}50$, Ask $= 1{,}53$, Mid $= 1{,}515$, Spread $= 0{,}03$.
+
+- Ordre à $1{,}48$ → limite sous le bid, rien ne change.
+- Ordre à $1{,}51$ → dans le spread, nouveau bid $= 1{,}51$, spread réduit à $0{,}02$.
+- Ordre à $1{,}53$ → atteint l'ask, exécution immédiate, ask passe à $1{,}54$.
+:::
+
+---
+
+## La gestion des priorités : qui passe en premier ?
+
+**Le problème.** Quand plusieurs ordres sont placés au même prix, qui est exécuté en premier quand un ordre au marché arrive ?
+
+Trois règles coexistent selon les marchés :
+
+La règle **prix-temps** (*price-time*, FIFO) sert en priorité le meilleur prix, puis, en cas d'égalité, le premier arrivé. Elle favorise la rapidité de soumission.
+
+La règle **prorata** distribue l'exécution proportionnellement à la taille des ordres ($w / \sum w$). Elle avantage les gros ordres.
+
+La règle **prix-taille** sert en premier le plus grand ordre à prix égal. Elle récompense la prise de risque en volume.
+
+> **Pour l'oral :** Ces règles ont des conséquences stratégiques fortes. La règle prix-temps incite les algorithmes à soumettre leurs ordres le plus tôt possible — ce qui génère une course à la vitesse (*arms race*) entre traders haute fréquence.
+
+::: {.callout-note collapse="true"}
+### Exemple prorata
+
+Trois ordres au même prix $p_0$ : $w_0 = 4$, $w_1 = 2$, $w_2 = 4$, total $= 10$.
+
+Un ordre de vente de taille $-2$ arrive. La répartition :
+
+- $w_0$ reçoit : $2 \times \frac{4}{10} = 0{,}8$
+- $w_1$ reçoit : $2 \times \frac{2}{10} = 0{,}4$
+- $w_2$ reçoit : $2 \times \frac{4}{10} = 0{,}8$
+:::
+
+---
+
+## Visibilité : ce qu'on voit (et ce qu'on cache)
+
+La plupart des bourses publient leur LOB en temps réel. Mais la réalité est plus nuancée.
+
+Les **ordres iceberg** n'affichent qu'une fraction de leur taille réelle. Une fois la tranche visible exécutée, une nouvelle tranche est révélée — comme un iceberg dont seule la pointe dépasse. Les grands acteurs institutionnels les utilisent pour ne pas révéler l'ampleur de leurs intentions au marché.
+
+Les **dark pools** vont plus loin : ce sont des systèmes d'échanges alternatifs où *tous* les ordres sont cachés. Seules des informations partielles sur les exécutions sont publiées a posteriori. En théorie, ils permettent aux gros investisseurs d'échanger sans « effrayeur » le marché. En pratique, leur opacité a donné lieu à plusieurs scandales (obligations de meilleure exécution non respectées).
+
+> **À retenir :** Même avec un LOB transparent, on a accès au bid, à l'ask, à la profondeur, et à l'historique des ordres. C'est une richesse informationnelle considérable — mais la recherche est loin d'en avoir extrait tout le potentiel.
+
+---
+
+## Faits empiriques : ce que les données nous disent
+
+Ces propriétés ont été observées de manière robuste sur de nombreux marchés et actifs différents.
+
+### Les tailles d'ordres
+
+La distribution des tailles est globalement uniforme à grande échelle, mais avec des **concentrations marquées autour des valeurs rondes** (100, 500, 1 000…). Les traders ont une préférence naturelle pour les chiffres ronds — un biais humain simple aux conséquences mesurables.
+
+### Les prix relatifs : des queues très épaisses
+
+La distribution des prix relatifs $\delta$ suit une **loi d'échelle à queues épaisses** (*fat tails*). Contrairement à ce que prédirait une loi normale, un nombre non négligeable d'ordres est placé *très loin* du bid ou de l'ask courant. Des ordres extrêmes existent et ne sont pas anecdotiques.
+
+### Le taux d'annulation : 70–80 %
+
+C'est le chiffre qui surprend toujours : **la grande majorité des ordres soumis au LOB n'est jamais exécutée**. Les algorithmes explorent le carnet en permanence, ajustent leurs offres en temps réel, et annulent dès que les conditions changent. La vie d'un ordre dans le LOB ressemble plus à une tentative avortée qu'à une transaction aboutie.
+
+### L'impact de marché : concave et universel
+
+L'**impact sur le prix** mesure combien un ordre déplace le bid ou l'ask. La relation empirique clé (Lillo et al.) est que cet impact est une **fonction concave de la taille de l'ordre**.
+
+Doubler la taille d'un ordre ne double pas l'impact. L'intuition : à mesure qu'un gros ordre « consomme » de la liquidité, il doit aller chercher des ordres de plus en plus éloignés du meilleur prix, mais le carnet s'approfondit progressivement — l'impact marginal décroît.
+
+Après normalisation par la capitalisation boursière, une **courbe maîtresse universelle** (loi de puissance) se dégage pour des actifs très différents. C'est un résultat remarquable : des mécanismes statistiques identiques semblent gouverner l'impact de marché indépendamment de l'actif.
+
+> **Pour l'oral :** On distingue l'*impact instantané* (effet immédiat sur le prix) de l'*impact permanent* (effet durable). Ce dernier s'explique soit par la **transmission d'information** (un gros achat suggère que l'acheteur sait quelque chose), soit par une **cascade d'ordres** déclenchés en réaction.
+
+::: {.callout-note collapse="true"}
+### Récapitulatif des faits empiriques
+
+| Propriété | Observation |
+|---|---|
+| Taille des ordres | Uniforme + concentrée sur valeurs rondes |
+| Prix relatif $\delta$ | Loi d'échelle, queues épaisses |
+| Annulations | **70–80 %** des ordres |
+| Profondeur | Distribution à queues épaisses |
+| Impact prix | $I(|w|)$ **concave** en $|w|$ |
+:::
+
+---
+
+## Le modèle de Maslov : la physique au service de la finance
+
+### Deux cultures, deux approches
+
+La modélisation des LOBs est tiraillée entre deux traditions :
+
+Les **économistes** (microstructure financière) construisent des modèles avec des agents rationnels et des fonctions d'utilité. Les fondements théoriques sont solides, mais les modèles deviennent vite complexes.
+
+Les **physiciens** (économophysique) préfèrent des modèles simplifiés, inspirés des systèmes complexes et de la physique statistique. L'objectif n'est pas de décrire chaque agent, mais de reproduire les propriétés *émergentes* du système.
+
+### Le modèle en deux mots
+
+Le modèle de **Maslov** est l'un des plus simples qui soit. À chaque pas de temps, un seul trader arrive. Il est acheteur ou vendeur avec probabilité 1/2. Avec probabilité $1-r$, il passe un ordre au marché ; avec probabilité $r$, il passe un ordre limite placé à une distance aléatoire $k$ du dernier prix de transaction. Pas d'annulation.
+
+C'est tout. Et pourtant, ce modèle minimaliste reproduit des propriétés statistiques qui ressemblent à s'y méprendre aux vrais marchés.
+
+### Ce que le modèle produit
+
+**Des distributions non-gaussiennes des incréments de prix.** Pour des lags courts, la distribution des variations de prix est en forme de tente (*Laplace-like*) avec des queues bien plus larges que la loi normale. C'est exactement ce qu'on observe sur les marchés réels.
+
+**Du *volatility clustering*.** Les grands mouvements de prix sont regroupés en épisodes de forte volatilité, séparés par des périodes calmes. Ce phénomène, documenté empiriquement depuis longtemps, émerge spontanément du modèle.
+
+**Un exposant de Hurst $H \approx 1/4$.** L'exposant de Hurst mesure la « mémoire » d'une série temporelle. $H = 1/2$ correspond à une marche aléatoire sans mémoire. $H \approx 1/4 < 1/2$ signifie que les prix sont **anti-persistants** : une hausse tend à être suivie d'une baisse, et vice versa. Autrement dit, le modèle de Maslov produit naturellement un comportement *mean-reverting* à court terme.
+
+> **L'idée clé à retenir :** Un modèle extrêmement simple — homogène, sans annulation, avec deux types d'ordres seulement — parvient à reproduire les signatures statistiques des marchés réels. C'est la force de l'approche physique. Pour introduire de l'hétérogénéité (traders différents, stratégies diverses), on passe aux **modèles à base d'agents** (*Agent-Based Models*, ABM).
+
+::: {.callout-note collapse="true"}
+### Algorithme complet du modèle de Maslov
+
+À chaque itération $t$ :
+
+1. Tirer le côté : acheteur ($+1$) ou vendeur ($-1$) avec $p = 0{,}5$.
+2. Tirer le type d'ordre :
+   - Avec probabilité $1 - r$ → **ordre au marché** au bid (si vendeur) ou à l'ask (si acheteur).
+   - Avec probabilité $r$ → **ordre limite** à $p_x = p' - k$ (acheteur) ou $p_x = p' + k$ (vendeur), où $p'$ est le dernier prix de transaction et $k$ est tiré selon une distribution donnée.
+3. L'ordre est exécuté ou entre dans le LOB.
+4. Aucune annulation.
+
+**Résultats avec $r = 0{,}5$, $k = 1$ (déterministe), sur 1 000 itérations :**
+
+- Distribution des incréments : queues épaisses.
+- Autocorrélation des variations de prix : négative (anti-persistance).
+- Exposant de Hurst : $H \approx 1/4$.
+:::
+
+---
+
+## Carte mentale du chapitre
+
+```{mermaid}
+flowchart LR
+  A[Ordre soumis] --> B{Apparié\nimmédiatement ?}
+  B -- Oui --> C[Ordre au marché\nExécution garantie\nPrix moins bon]
+  B -- Non --> D[Ordre à cours limité\nEntre dans le LOB\nMeilleur prix potentiel]
+  D --> E{Annulé ?}
+  E -- 70–80 % --> F[Annulation]
+  E -- 20–30 % --> G[Exécution]
+```
+
+---
+
+## Pièges classiques à l'oral
+
+**Le spread est toujours positif.** Si ask < bid, un appariement aurait eu lieu. L'égalité $s(t) = 0$ est possible mais transitoire.
+
+**Ordre limite ≠ exécution garantie.** C'est son risque fondamental. Ne pas confondre « placé dans le carnet » avec « exécuté ».
+
+**L'impact prix est concave, pas linéaire.** Doubler la taille de l'ordre ne double pas l'impact. L'intuition est la profondeur croissante du carnet.
+
+**Dark pools ≠ efficacité garantie.** L'opacité est un outil, pas une vertu. Les scandales empiriques le montrent.
+
+**Le modèle de Maslov est homogène.** Pour modéliser des traders hétérogènes avec des stratégies différentes, il faut passer aux ABM — sujet d'un chapitre distinct.
+
+**$H = 1/4$ dans le modèle de Maslov signifie anti-persistance**, pas tendance. Ne pas confondre $H < 1/2$ (mean-reverting) et $H > 1/2$ (trending).

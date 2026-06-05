@@ -1,0 +1,140 @@
+---
+title: "Construction de Portefeuille — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Imagine que tu es cuisinier et que tu dois préparer un plat avec plusieurs ingrédients.
+Si tu mets 100 % de piments, tu risques de tout rater.
+Si tu mélanges savamment piments, riz et légumes — certains épicés, certains doux — le résultat est stable même si un ingrédient est raté.
+C'est exactement ça, un **portefeuille** : mélanger des actifs qui ne réagissent pas tous de la même façon aux chocs du marché.
+Markowitz a formalisé cette intuition en 1952, et a reçu le Nobel pour ça.
+La morale : ne jamais mettre tous ses œufs dans le même panier — c'est le seul *free lunch* de la finance.
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- **Problème** : un seul actif est trop volatile/risqué ; comment combiner $N$ actifs pour faire mieux ?
+- **Solution** : la diversification — choisir des actifs peu corrélés pour que leurs risques se compensent.
+- **Mesure du risque** : la variance (ou volatilité) du portefeuille, gouvernée par les covariances entre actifs.
+- **Rendement** : combinaison linéaire des rendements individuels (aucun gain de diversification ici).
+- **Outil** : la frontière efficiente (ensemble des portefeuilles optimaux risque/rendement).
+- **Extension** : ajouter un actif sans risque → la CML (*Capital Market Line*) domine tout.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+| ------- | ----------------------------- | --------- |
+| Diversification | Combiner des actifs peu corrélés réduit le risque global sans sacrifier le rendement. | Si l'un chute, l'autre compense. |
+| Variance du portefeuille | Elle dépend non seulement des risques individuels, mais surtout des **covariances** entre actifs. | La corrélation est la clé, pas juste la volatilité de chaque actif. |
+| Frontière efficiente (*Efficient Frontier*) | Ensemble des portefeuilles qui maximisent le rendement pour un risque donné. | Tout portefeuille en dessous est sous-optimal — on peut faire mieux. |
+| Matrice de covariance $\mathbf{C}$ | Encode toutes les relations de co-mouvement entre actifs. | Sans elle, impossible de calculer le risque du portefeuille. |
+| CML (*Capital Market Line*) | Droite tangente à la frontière efficiente depuis le taux sans risque. | Elle domine la frontière efficiente seule — meilleur couple rendement/risque possible. |
+| Portefeuille tangent | Point de contact entre la CML et la frontière efficiente — le portefeuille risqué optimal. | Tout investisseur rationnel combine ce portefeuille avec l'actif sans risque. |
+| Paramètre $q$ | Contrôle le compromis risque/rendement dans l'optimisation numérique. | $q=0$ → risque minimal ; $q\to\infty$ → rendement maximal. |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+- Actifs individuels ($E[R_i]$, $\sigma_i$) → **Matrice de covariance $\mathbf{C}$**
+- Poids $\mathbf{w}$ + $\mathbf{C}$ → **Variance du portefeuille** $\sigma_p^2 = \mathbf{w}^T \mathbf{C}\, \mathbf{w}$
+- Poids $\mathbf{w}$ + $E[R_i]$ → **Rendement espéré** $E[R_p] = \sum w_i E[R_i]$
+- ($\sigma_p$, $E[R_p]$) pour tous les $\mathbf{w}$ → **Frontière efficiente**
+- Frontière efficiente + actif sans risque → **CML** → **Portefeuille optimal**
+- Corrélation $\rho \downarrow$ → courbure de la frontière $\uparrow$ → gain de diversification $\uparrow$
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+| ------- | ------------- | --------- |
+| $E[R_p] = \sum_i w_i E[R_i]$ | Rendement espéré du portefeuille | Linéaire — pas de magie ici |
+| $\sigma_p^2 = \mathbf{w}^T \mathbf{C}\, \mathbf{w}$ | Variance du portefeuille (forme matricielle) | La magie est ici |
+| $\sigma_p^2 = \sum_i\sum_j w_i w_j\,\text{Cov}(R_i,R_j)$ | Idem développé | Fait intervenir toutes les paires |
+| $\rho_{ij} = \frac{\text{Cov}(R_i,R_j)}{\sigma_i\,\sigma_j}$ | Corrélation normalisée $\in [-1,+1]$ | Relie covariance et corrélation |
+| $\sigma_P = \sqrt{w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1 w_2\rho_{12}\sigma_1\sigma_2}$ | Volatilité pour 2 actifs | Cas pédagogique de référence |
+| $\sigma_{P_1} = (1-w_{rf})\,\sigma_{P_0}$ | Risque : combo actif sans risque + portefeuille | Linéaire → droite dans l'espace $(\sigma, E[R])$ |
+| $\min_{\mathbf{w}}\;\mathbf{w}^T\mathbf{C}\mathbf{w} - q\,\mathbf{w}^T\boldsymbol{\mu}$ | Problème d'optimisation numérique | Faire varier $q$ trace la frontière |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **Rendements espérés** : estimation difficile (« art plutôt que science ») — petite erreur → très mauvaise allocation.
+- **Corrélations en crise** : tendent toutes vers $+1$ en période de choc → la diversification disparaît exactement quand on en a besoin.
+- **$\rho = -1$** : théorique uniquement ; quasi inexistant en pratique.
+- **Si $\sigma_1 \neq \sigma_2$**, même avec $\rho = -1$, le risque n'est pas nul : $\sigma_P = |w_1\sigma_1 - w_2\sigma_2|$.
+- **Taille d'échantillon** : estimer $\mathbf{C}$ fiablement requiert au moins $N^2/2$ observations.
+- **Poids négatifs** (solution forme fermée) : impliquent la vente à découvert (*short selling*), souvent irréaliste.
+- **Contraintes sur les poids** : toute contrainte abaisse la frontière efficiente — moins de liberté = moins d'efficacité.
+- **Monte-Carlo** : ne trouve jamais exactement la vraie frontière — seulement une approximation.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Qu'est-ce que la diversification et pourquoi fonctionne-t-elle ?
+
+**R courte :** Combiner des actifs peu corrélés fait que leurs fluctuations se compensent. Le rendement espéré reste la moyenne pondérée, mais le risque diminue — c'est le seul *free lunch* en finance.
+
+---
+
+**Q :** Pourquoi la variance du portefeuille est-elle plus complexe que son rendement ?
+
+**R courte :** Le rendement est une somme linéaire des rendements individuels. La variance fait intervenir toutes les paires de covariances $\text{Cov}(R_i, R_j)$ — d'où la formule double somme $\mathbf{w}^T\mathbf{C}\mathbf{w}$.
+
+---
+
+**Q :** Que se passe-t-il quand $\rho = 1$ vs $\rho = -1$ pour un portefeuille à 2 actifs ?
+
+**R courte :** $\rho = 1$ : la volatilité est la moyenne pondérée des volatilités individuelles, pas de gain. $\rho = -1$ avec poids et volatilités égaux : risque nul. C'est le cas extrême théorique.
+
+---
+
+**Q :** Qu'est-ce que la frontière efficiente ?
+
+**R courte :** L'ensemble des portefeuilles qui maximisent le rendement pour un niveau de risque donné. Tout portefeuille hors frontière est dominé : il existe mieux pour le même risque ou pour le même rendement.
+
+---
+
+**Q :** Comparez les trois méthodes de calcul de la frontière efficiente.
+
+**R courte :** Monte-Carlo : intuitif mais lent et approximatif. Forme fermée (Lagrange) : exact et rapide mais poids négatifs possibles, peu de contraintes. Optimisation numérique (`scipy`) : méthode standard — flexible, contraintes réalistes, léger risque d'optimum local.
+
+---
+
+**Q :** Quel est le rôle de l'actif sans risque et de la CML ?
+
+**R courte :** L'actif sans risque ($\sigma=0$, $\rho=0$ avec tout autre actif) permet de tracer la CML, droite tangente à la frontière efficiente. La CML domine la frontière seule : pour tout niveau de risque, on peut faire mieux en combinant actif sans risque et portefeuille tangent.
+
+---
+
+**Q :** Comment le paramètre $q$ permet-il de tracer la frontière efficiente ?
+
+**R courte :** $q$ pondère le compromis risque/rendement dans le problème $\min \mathbf{w}^T\mathbf{C}\mathbf{w} - q\,\mathbf{w}^T\boldsymbol{\mu}$. En faisant varier $q$ de 0 à $+\infty$, on parcourt la frontière du portefeuille à variance minimale jusqu'au portefeuille à rendement maximal.
+
+---
+
+**Q :** Pourquoi les corrélations sont-elles un piège en période de crise ?
+
+**R courte :** Lors des crises, les corrélations entre actifs tendent vers $+1$ (les actifs chutent tous ensemble). La diversification disparaît exactement quand l'investisseur en a le plus besoin.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+- La **diversification** réduit le risque sans réduire le rendement espéré — seul *free lunch* en finance.
+- Le rendement du portefeuille est linéaire en les poids ; la **variance** fait intervenir les covariances.
+- Formule clé : $\sigma_p^2 = \mathbf{w}^T\mathbf{C}\mathbf{w}$.
+- Plus $\rho$ est faible, plus le gain de diversification est grand.
+- La **frontière efficiente** : ensemble des allocations dominantes (risque minimal pour rendement fixé).
+- Méthode pratique : **optimisation numérique** avec paramètre $q$ balayé de 0 à $+\infty$.
+- La **CML** domine la frontière efficiente dès qu'on ajoute un actif sans risque.
+- Piège majeur : les corrélations montent vers $+1$ en crise — la diversification disparaît.
+- Estimer $\mathbf{C}$ fiablement nécessite $\geq N^2/2$ observations.
+- Les **rendements espérés** sont plus un art qu'une science — c'est le maillon faible du modèle.

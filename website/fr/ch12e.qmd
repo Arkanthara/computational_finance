@@ -1,0 +1,147 @@
+---
+title: "Obligations : sensibilité au temps et aux taux — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Imaginez que vous skiez sur la piste enneigée de la courbe des taux (yield curve).
+Les **taux forward** vous indiquent la pente que vous allez rencontrer plus loin sur la
+piste — même si vous n'y êtes pas encore. La **duration** mesure à quel point votre
+vitesse (le prix de l'obligation) va chuter si la pente change brutalement.
+Et la **convexité** ? C'est la courbure de la piste elle-même : grâce à elle,
+la chute en cas de choc est moins catastrophique que prévu, et la remontée est plus
+généreuse. Un vrai avantage structurel pour l'investisseur-skieur genevois.
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- La courbe zéro-coupon (zero-coupon curve) contient implicitement tous les **taux futurs** → taux forward.
+- En l'absence d'arbitrage (no-arbitrage), deux stratégies équivalentes doivent produire le même résultat : elles déterminent le taux forward.
+- La **duration** (double rôle) : moyenne temporelle pondérée des flux ET sensibilité du prix au taux.
+- Pour les petits chocs : l'approximation linéaire par la duration suffit.
+- Pour les grands chocs : il faut ajouter la **convexité** (terme du 2e ordre).
+- La convexité est toujours favorable au détenteur d'une obligation classique.
+- La duration d'un portefeuille est additive (pondérée) → outil de gestion active du risque.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+| :------ | :---------------------------- | :-------- |
+| Taux forward (forward rate) | Taux implicitement contenu dans la courbe zéro-coupon pour une période future | Deux chemins d'investissement = même résultat → pas d'arbitrage |
+| Absence d'arbitrage (no-arbitrage) | Si le forward dévie de sa valeur d'équilibre, un profit sans risque devient possible | « Free lunch » éliminé par le marché |
+| Déplacement parallèle (parallel shift) | Tous les taux bougent du même montant, quelle que soit la maturité | Banque centrale change les taux uniformément |
+| Aplatissement (flattening) | L'écart taux courts–taux longs se réduit | Signal anticipé de ralentissement économique |
+| Pentification (steepening) | L'écart taux courts–taux longs s'élargit | Anticipation de reprise ou d'inflation |
+| Duration de Macaulay | Moyenne pondérée des dates de paiement d'une obligation | Centre de gravité temporel des flux de trésorerie |
+| Convexité (convexity) | Mesure la courbure (non-linéarité) de la relation prix–taux | Asymétrie favorable : pertes moindres / gains supérieurs |
+| Duration modifiée (modified duration) | Duration ajustée pour la convention de capitalisation discrète | Élasticité directe du prix au taux |
+| DV01 / Dollar duration | Variation absolue du prix en dollars pour 1 point de base | Monnaie universelle du risk management |
+| Key rate duration | Sensibilité du prix à un choc sur un segment précis de la courbe | Indispensable pour les chocs non parallèles |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+- Courbe zéro-coupon → **taux forward** (condition d'absence d'arbitrage)
+- Courbe zéro-coupon → **prix de l'obligation** (actualisation des flux)
+- Prix → **duration de Macaulay** (dérivée première normalisée)
+- Duration de Macaulay → **duration modifiée** (ajustement capitalisation discrète)
+- Duration modifiée → **DV01** (× prix de marché / 100)
+- Duration → **approximation 1er ordre** : $\delta B / B \approx -D \cdot \delta y$
+- Convexité → **approximation 2e ordre** : ajouter $\frac{1}{2} C (\delta y)^2$
+- 3 mouvements de courbe → **key rate duration** pour les chocs non parallèles
+- Duration portefeuille = $\sum w_k D_k$ → gestion active selon anticipations
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+| :------ | :------------ | :-------- |
+| $r = \dfrac{R_2 T_2 - R_1 T_1}{T_2 - T_1}$ | Taux forward entre $T_1$ et $T_2$ | Interpolation pondérée, composition continue |
+| $D = \sum_i (t_i - t)\,\dfrac{c_i\,e^{-y(t_i-t)}}{B}$ | Duration de Macaulay | Moyenne pondérée des dates de paiement |
+| $\dfrac{\delta B}{B} \approx -D\,\delta y$ | Approximation 1er ordre | Petits chocs ($|\delta y| < 0{,}5\,\%$) |
+| $\dfrac{\delta B}{B} \approx -D\,\delta y + \dfrac{1}{2}C\,(\delta y)^2$ | Approximation 2e ordre | Grands chocs — toujours plus précis |
+| $D_{\text{mod}} = \dfrac{D}{1 + y/n_c}$ | Duration modifiée | En continu : $D_{\text{mod}} = D$ |
+| $\text{DV01} = \dfrac{D_{\text{mod}}\cdot B}{100}$ | Dollar duration (DV01) | Variation absolue pour 1 pb |
+| $D_{\text{ptf}} = \sum_k w_k\,D_k$ | Duration de portefeuille | Additivité pondérée par valeur de marché |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **Forward ≠ taux spot futur réel** : le taux forward est implicite dans la courbe aujourd'hui, pas une prédiction certaine.
+- **D < maturité** pour une obligation à coupons (les coupons intermédiaires avancent le centre de gravité) ; $D =$ maturité seulement pour un zéro-coupon.
+- **Duration seule insuffisante** pour $|\delta y| \geq 0{,}5\,\%$ : surestimer les pertes et sous-estimer les gains — toujours ajouter la convexité.
+- **Macaulay vs. modifiée** : en composition continue elles sont égales ; en discret, $D_{\text{mod}} = D\,/\,(1 + y/n_c)$ — ne pas confondre.
+- **Convexité toujours positive** pour une obligation classique (sans option) — c'est structurellement un avantage, jamais un risque.
+- **Portefeuille multi-devises** : calculer une duration *par devise*, jamais une seule duration globale.
+- **Ne pas négliger les chocs non parallèles** : la duration classique ne suffit pas — utiliser la key rate duration.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Qu'est-ce qu'un taux forward et comment le dérive-t-on ?
+
+**R courte :** Taux implicite dans la courbe zéro-coupon pour une période future. Formule : $r = (R_2 T_2 - R_1 T_1)/(T_2 - T_1)$. Issu de la condition de non-arbitrage entre deux stratégies d'investissement équivalentes.
+
+---
+
+**Q :** Pourquoi la duration d'une obligation à coupons est-elle inférieure à sa maturité ?
+
+**R courte :** Les coupons intermédiaires produisent des flux avant l'échéance finale, tirant le centre de gravité temporel vers le présent.
+
+---
+
+**Q :** Quelle est la différence entre duration de Macaulay et duration modifiée ?
+
+**R courte :** En composition continue, elles sont identiques. En capitalisation discrète ($n_c$ périodes/an) : $D_{\text{mod}} = D\,/\,(1 + y/n_c)$. La duration modifiée est directement une élasticité prix–taux.
+
+---
+
+**Q :** Pourquoi dit-on que la convexité est « favorable » au détenteur ?
+
+**R courte :** La relation prix–taux est convexe (bombée vers le haut) : en cas de hausse des taux, la perte réelle est plus faible que prédit linéairement ; en cas de baisse, le gain est plus grand.
+
+---
+
+**Q :** Un examinateur vous donne $\delta y = 1\,\%$, duration = 2,653, $C = 7{,}570$, $B = 94{,}21$. Estimez $\delta B$.
+
+**R courte :** $\delta B \approx -94{,}21 \times 2{,}653 \times 0{,}01 + \frac{1}{2}\times 94{,}21 \times 7{,}570 \times (0{,}01)^2 \approx -2{,}464$ USD.
+
+---
+
+**Q :** Comment pilote-t-on la duration d'un portefeuille face à une hausse anticipée des taux ?
+
+**R courte :** On réduit la duration en vendant des obligations à maturité longue et en achetant des obligations à maturité courte.
+
+---
+
+**Q :** À quoi sert le DV01 par rapport à la duration de Macaulay ?
+
+**R courte :** Le DV01 exprime la sensibilité en valeur absolue ($) pour 1 point de base — comparable directement entre obligations de tailles différentes, utilisé en gestion des risques.
+
+---
+
+**Q :** Quels sont les trois mouvements types de la courbe des taux ?
+
+**R courte :** Déplacement parallèle (tous les taux bougent du même montant), aplatissement (écart courts–longs se réduit), pentification (écart courts–longs s'élargit).
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+- Taux forward = taux futur implicite extrait de la courbe zéro-coupon par non-arbitrage.
+- Formule : $r = (R_2 T_2 - R_1 T_1)/(T_2 - T_1)$ — composition continue obligatoire.
+- Duration = centre de gravité temporel des flux = sensibilité au taux ($\delta B / B \approx -D\,\delta y$).
+- Zéro-coupon : $D =$ maturité. Obligation à coupons : $D <$ maturité.
+- Grand choc → ajouter la convexité : $+\frac{1}{2}C\,(\delta y)^2$.
+- Convexité positive → toujours favorable au détenteur (asymétrie gain/perte).
+- $D_{\text{mod}} = D/(1+y/n_c)$ ; $\text{DV01} = D_{\text{mod}} \cdot B / 100$.
+- Duration portefeuille = $\sum w_k D_k$ → piloter selon anticipations de taux.
+- 3 mouvements de courbe : parallèle / aplatissement / pentification.
+- Key rate duration pour les chocs non parallèles (aplatissement, pentification).

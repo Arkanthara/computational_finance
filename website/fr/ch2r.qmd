@@ -1,0 +1,254 @@
+---
+title: "Séries temporelles et modèles autorégressifs — Révision"
+---
+
+## Séries temporelles (Time Series)
+
+**Définition :** suite ordonnée d'observations $X(t_i) \in \mathbb{R}$
+
+- **Lag** $\tau$ : décalage entre deux observations — $X_{t-\tau}$ = variable décalée (Lagged Variable)
+- L'**ordre temporel** est porteur d'information (≠ théorie de l'information)
+
+**Statistiques de base :** $\mathbb{E}[X]$ (moyenne), $\text{Var}[X]$ (variance), $\sqrt{\text{Var}[X]}$ (volatilité)
+
+---
+
+## Objectifs possibles
+
+| Objectif | Description |
+|---|---|
+| Identification | Tendances, saisonnalités, ruptures |
+| Explication | Comment le passé influence le présent |
+| Modélisation | Représentation formelle du processus |
+| Prédiction | Anticiper des valeurs futures |
+
+::: {.callout-warning title="Piège"}
+Bon modèle explicatif ≠ bon modèle prédictif. Clarifier l'objectif **avant** de choisir un modèle.
+:::
+
+---
+
+## Stationnarité (Stationarity)
+
+### Pourquoi c'est nécessaire
+
+- Cohérence (Consistency) des relations dans le temps
+- Estimation fiable des paramètres (Reliable Estimation)
+- Analyse simplifiée
+- Éviter les corrélations fallacieuses (Spurious Results)
+
+### Sources de non-stationnarité
+
+| Source | Description | Exemple |
+|---|---|---|
+| Tendance (Trend) | Moyenne qui dérive | Prix d'actif en hausse |
+| Saisonnalité (Seasonality) | Variations périodiques | Effet janvier, températures |
+| Hétéroscédasticité (Heteroskedasticity) | Volatilité non constante | Marchés en crise |
+
+### Définitions formelles
+
+**Stationnarité stricte (Strict Stationarity) :**
+
+$$
+F(X_{t_1+\tau}, \ldots, X_{t_n+\tau}) = F(X_{t_1}, \ldots, X_{t_n}) \quad \forall\, \tau, n
+$$
+
+→ Toute la distribution jointe est invariante par translation temporelle. Difficile à vérifier.
+
+**Stationnarité faible (Weak Stationarity) — utilisée en pratique :**
+
+$$
+\text{a) } \mathbb{E}[X_t] = \mu = \text{cte} \quad \text{b) } \text{Cov}(X_t, X_{t+\tau}) = \gamma(\tau)
+$$
+
+→ Moyenne constante + autocovariance ne dépendant que du lag $\tau$.
+
+### Test ADF (Augmented Dickey-Fuller)
+
+- $H_0$ : racine unitaire → **non stationnaire**
+- $H_1$ : **stationnaire**
+
+| p-value | Décision |
+|---|---|
+| > 0.05 | Non stationnaire — ne pas rejeter $H_0$ |
+| ≤ 0.05 | Stationnaire — rejeter $H_0$ |
+
+### Comment rendre une série stationnaire
+
+| Méthode | Formule / Action |
+|---|---|
+| Différenciation (Differencing) | $\Delta X_t = X_t - X_{t-1}$ |
+| Log-rendements (Log Returns) | $r_t = \ln(X_t / X_{t-1})$ |
+| Rendements simples (Returns) | $r_t = (X_t - X_{t-1})\,/\,X_{t-1}$ |
+| Log transform | $\ln(X_t)$ — atténue l'hétéroscédasticité |
+| Décomposition | Retirer tendance et saisonnalité |
+
+::: {.callout-note title="Règle pratique"}
+**Prix → non stationnaire** (p-value > 0.05) | **Rendements → stationnaire** (p-value ≈ 0.00)
+
+Travailler systématiquement avec les **rendements** en finance.
+:::
+
+---
+
+## Autocorrélation (Autocorrelation)
+
+### Définitions
+
+**Corrélation (Correlation) :**
+
+$$
+\text{Cor}(X, Y) = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\,\text{Var}(Y)}}
+$$
+
+**Autocorrélation au lag $\tau$** (sous stationnarité) :
+
+$$
+\rho_\tau = \frac{\mathbb{E}[(X_t - \mu)(X_{t+\tau} - \mu)]}{\sigma^2}
+$$
+
+**ACF (Autocorrelation Function) :** $\text{ACF}(\tau) = \rho_\tau$ — représentée par un corrélogramme.
+
+### Lecture du corrélogramme
+
+| Signal ACF | Interprétation |
+|---|---|
+| Décroissance lente, positive | Tendance (Trend) |
+| Alternance +/− | Contre-tendance / Mean-reversion |
+| Pics à intervalles réguliers | Saisonnalité |
+| Tout dans les IC | Bruit blanc (White Noise) |
+
+**Intervalles de confiance (IC) à 95 % :** $\pm\, 1.96\,/\,\sqrt{n}$
+
+::: {.callout-tip title="Règle"}
+Barre **dépassant** les IC → autocorrélation **statistiquement significative** à ce lag.
+:::
+
+---
+
+## Modèles autorégressifs
+
+### Trois modèles fondamentaux
+
+**AR(p) — AutoRégressif d'ordre p :**
+
+$$
+X_t = c + \sum_{i=1}^{p} \varphi_i\, X_{t-i} + \varepsilon_t
+$$
+
+**MA(q) — Moyenne Mobile d'ordre q (Moving Average) :**
+
+$$
+X_t = \mu + \varepsilon_t + \theta_1\,\varepsilon_{t-1} + \cdots + \theta_q\,\varepsilon_{t-q}
+$$
+
+**ARMA(p,q) :**
+
+$$
+X_t = c + \varepsilon_t + \sum_{i=1}^{p} \varphi_i\, X_{t-i} + \sum_{i=1}^{q} \theta_i\, \varepsilon_{t-i}
+$$
+
+### Comparaison AR vs MA
+
+| | AR(p) | MA(q) |
+|---|---|---|
+| Dépend de | Valeurs passées $X_{t-i}$ | Erreurs passées $\varepsilon_{t-i}$ |
+| Mémoire | Infinie (si $|\varphi| < 1$) | Finie (exactement $q$ périodes) |
+| Estimation | Analytique pour $p=1$ | Numérique (MLE) |
+
+---
+
+## Modèle AR(1) — Résultats analytiques
+
+**Modèle :**
+
+$$
+X_t = c + \varphi_1\, X_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim \mathcal{N}(0,\,\sigma_\varepsilon^2)
+$$
+
+### Formules clés
+
+| Propriété | Formule | Dérivation clé |
+|---|---|---|
+| Moyenne | $\mu = c\,/\,(1-\varphi_1)$ | $\mathbb{E}[X_t] = \mathbb{E}[X_{t-1}]$ sous stationnarité |
+| Variance | $\sigma^2 = \sigma_\varepsilon^2\,/\,(1-\varphi_1^2)$ | $\text{Var}[X_t] = \text{Var}[X_{t-1}]$ sous stationnarité |
+| Autocorrélation lag 1 | $\rho_1 = \varphi_1$ | Indépendance de $X_t$ et $\varepsilon_{t+1}$ |
+| Stationnarité | $|\varphi_1| < 1$ | Nécessaire pour $\sigma^2 > 0$ |
+
+### Interprétation de $\varphi_1$
+
+| Valeur de $\varphi_1$ | Comportement | Application |
+|---|---|---|
+| $\varphi_1 > 0$ | Tendanciel (Trending) | Stratégies momentum |
+| $\varphi_1 < 0$ | Contre-tendanciel (Mean-reverting) | Stratégies mean-reversion |
+| $\varphi_1 = 0$ | Bruit blanc (White Noise) | Aucune prédictibilité |
+| $\varphi_1 = 1$ | Marche aléatoire (Random Walk) | **Non stationnaire** |
+| $|\varphi_1| > 1$ | Processus explosif | Invalide |
+
+::: {.callout-warning title="Piège — Marche aléatoire"}
+$\varphi_1 = 1$ → parfait fit **en échantillon** (in-sample), mais prédiction **hors échantillon** (out-of-sample) catastrophique.
+
+**Bon fit ≠ bon pouvoir prédictif.**
+:::
+
+---
+
+## Sélection de l'ordre (Model Order Selection)
+
+### Critères d'information (Information Criteria)
+
+$$
+\text{AIC} = 2p - 2\ln(L) \qquad \text{BIC} = \ln(n)\cdot p - 2\ln(L)
+$$
+
+| Critère | Pénalité | Tendance | Usage |
+|---|---|---|---|
+| AIC | $2p$ | Ordres plus élevés | Prédiction |
+| BIC | $\ln(n)\cdot p$ | Ordres plus faibles | Identification du vrai modèle |
+
+**Règle :** **minimiser** AIC ou BIC. BIC plus strict car $\ln(n) > 2$ si $n > 8$.
+
+### Estimation pour $p > 1$
+
+- Pas de formule analytique → **MLE** (Maximum Likelihood Estimation)
+
+---
+
+## Exemples empiriques
+
+| Série | ACF | $\varphi_1$ | Interprétation |
+|---|---|---|---|
+| Marche aléatoire | Forte, tous lags | ≈ 1 | Non stationnaire, imprévisible |
+| EUR/USD returns | Faible, IC non dépassés | −0.125 | Marché efficient |
+| VIX returns | Négative significative | < 0 | Mean-reversion de la peur |
+| S&P 500 returns | Faible | ≈ 0 | Peu de structure AR |
+| PIB CH (trimestriel) | Modérée | > 0 | Persistance économique |
+
+---
+
+## Pièges et points critiques
+
+::: {.callout-warning title="À ne pas oublier"}
+
+- **Prix ≠ stationnaire** — toujours travailler sur les rendements en finance
+- **Stationnarité stricte** ≠ stationnarité faible — la faible suffit en pratique
+- **ADF : p-value > 0.05** = non stationnaire (piège de sens inversé)
+- **AR(1), $|\varphi_1| \geq 1$** = non stationnaire — la condition $|\varphi_1| < 1$ est impérative
+- **Bon fit in-sample** ≠ bonne prédiction out-of-sample
+- **ACF + BIC** → outils complémentaires pour choisir l'ordre $p$
+
+:::
+
+---
+
+## Relations entre concepts
+
+```{mermaid}
+flowchart LR
+    A[Série brute] -->|ADF p>0.05| B[Non stationnaire]
+    B -->|Rendements / Différences| C[Série stationnaire]
+    C --> D[ACF]
+    D -->|ρ₁ > 0| E[AR tendanciel\nφ₁ > 0]
+    D -->|ρ₁ < 0| F[AR contre-tendanciel\nφ₁ < 0]
+    D -->|Choix de p| G[AR p / AIC / BIC]
+```

@@ -1,0 +1,128 @@
+---
+title: "Séries temporelles et modèles autorégressifs — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Imaginez un médecin qui suit la tension artérielle d'un patient chaque jour.
+Pour établir un diagnostic valide, le patient doit être dans un **état stable** — c'est la **stationnarité**.
+Il peut alors demander : "Une tension élevée hier prédit-elle une tension élevée demain ?" → tendance ($\varphi_1 > 0$).
+Ou : "Prédit-elle un retour à la normale ?" → mean-reversion ($\varphi_1 < 0$).
+L'**ACF** mesure cette mémoire. Le modèle **AR(1)** la formalise en une seule équation.
+Si le patient prend un médicament (choc externe) dont l'effet se dissipe en $q$ jours — c'est la composante **MA**.
+
+---
+
+## 🧠 Idée centrale
+
+- Une série temporelle exploite l'**ordre** des observations : le passé informe sur le présent
+- Prérequis absolu : la **stationnarité** — sinon les paramètres estimés sont sans sens
+- L'**ACF** révèle la structure cachée (tendance, saisonnalité, mean-reversion)
+- **AR(p)** : $X_t$ s'explique par ses $p$ valeurs passées + bruit
+- **Résultat clé AR(1)** : $\varphi_1 = \rho_1$ — le paramètre *est* l'autocorrélation au lag 1
+- Pour $p > 1$ : estimation numérique, sélection de l'ordre par **AIC / BIC**
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+|---|---|---|
+| Lag $\tau$ | Décalage de $\tau$ périodes entre deux observations | "Il y a $\tau$ jours" |
+| Stationnarité faible | Moyenne constante et autocovariance fonction du lag seulement | La série "se comporte pareil" dans le temps |
+| Test ADF | Teste si la série a une racine unitaire (non-stationnarité) | p < 0.05 → stationnaire |
+| ACF | Corrélation de la série avec elle-même à chaque lag | Mesure la "mémoire" de la série |
+| AR(p) | $X_t$ est une combinaison linéaire de ses $p$ valeurs passées | La série s'explique par elle-même |
+| MA(q) | $X_t$ dépend des $q$ erreurs passées seulement | La série se souvient de ses chocs, pas de ses niveaux |
+| $\varphi_1 > 0$ | Comportement tendanciel (Trending) | Hier haut → aujourd'hui haut |
+| $\varphi_1 < 0$ | Comportement mean-reverting | Hier haut → aujourd'hui bas |
+| AIC / BIC | Critères de sélection de l'ordre — à minimiser | Équilibre entre fit et parcimonie |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+```{mermaid}
+flowchart LR
+    A[Prix bruts\nnon stationnaires] -->|Rendements / différences| B[Série stationnaire\nADF p ≤ 0.05]
+    B --> C[ACF]
+    C -->|Lag significatif| D[Choix du modèle\nAR / MA / ARMA]
+    C -->|Ordre p| E[AIC / BIC\nMinimiser]
+    D --> F[Paramètres\nφ₁ = ρ₁ pour AR 1]
+    F -->|φ₁ > 0| G[Tendance]
+    F -->|φ₁ < 0| H[Mean-reversion]
+```
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+|---|---|---|
+| $\varphi_1 = \rho_1$ | Paramètre AR(1) = autocorrélation lag 1 | **Résultat fondamental** |
+| $\sigma^2 = \sigma_\varepsilon^2\,/\,(1 - \varphi_1^2)$ | Variance AR(1) | Implique $\lvert\varphi_1\rvert < 1$ |
+| $\mu = c\,/\,(1 - \varphi_1)$ | Moyenne AR(1) | Si $c = 0$ alors $\mu = 0$ |
+| $\text{AIC} = 2p - 2\ln L$ | Critère d'Akaike | Minimiser — tolérant |
+| $\text{BIC} = \ln(n)\,p - 2\ln L$ | Critère Bayésien | Minimiser — strict |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **Prix ≠ stationnaires** — transformer systématiquement en rendements avant de modéliser
+- **Test ADF inversé** : p-value > 0.05 = *non* stationnaire (piège de lecture)
+- **$\lvert\varphi_1\rvert \geq 1$** → non stationnaire ($= 1$ : marche aléatoire) ou explosif ($> 1$)
+- **Bon fit in-sample ≠ bonne prédiction** — marche aléatoire : fit parfait, prédiction nulle
+- **AIC vs BIC** : BIC pénalise plus ($\ln n > 2$ si $n > 8$) → ordres plus faibles sélectionnés
+- **Stationnarité stricte ≠ faible** : la faible suffit en pratique, la stricte est rarement vérifiable
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Pourquoi a-t-on besoin de stationnarité ?
+
+**R courte :** Pour que les paramètres estimés soient valides dans le temps et éviter des corrélations fallacieuses entre séries sans relation réelle.
+
+**Q :** Quelle est la différence entre stationnarité stricte et faible ?
+
+**R courte :** La stricte exige l'invariance de toute la distribution jointe ; la faible exige seulement une moyenne constante et une autocovariance fonction du lag seulement.
+
+**Q :** Pourquoi les prix ne sont-ils pas stationnaires mais les rendements le sont ?
+
+**R courte :** Les prix dérivent à la hausse — leur moyenne et leur variance changent dans le temps. Les rendements oscillent autour de zéro sans dérive systématique.
+
+**Q :** Comment interpréter $\varphi_1$ dans un AR(1) ?
+
+**R courte :** C'est l'autocorrélation au lag 1. Positif → tendance, négatif → mean-reversion, nul → bruit blanc. Sa valeur absolue doit être strictement inférieure à 1.
+
+**Q :** À quoi sert l'ACF et comment s'en sert-on ?
+
+**R courte :** Elle mesure la mémoire de la série à chaque lag. Les barres significatives (hors intervalles de confiance) indiquent les lags pertinents et orientent le choix du modèle.
+
+**Q :** Quelle est la différence entre AR et MA ?
+
+**R courte :** AR dépend des *valeurs* passées (mémoire infinie si $\lvert\varphi\rvert < 1$) ; MA dépend des *erreurs* passées (mémoire finie, exactement $q$ périodes).
+
+**Q :** Comment choisit-on l'ordre $p$ d'un AR ?
+
+**R courte :** On minimise l'AIC ou le BIC qui pénalisent l'ajout de paramètres inutiles. Le BIC est plus parcimonieux et retrouve souvent le vrai ordre.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+::: {.callout-note title="L'essentiel du chapitre"}
+
+1. Série temporelle : l'ordre compte — le passé informe sur le présent
+2. Stationnarité faible = moyenne constante + autocovariance dépendant du lag seulement
+3. **En pratique** : prix → non stationnaire / rendements → stationnaire
+4. **ADF** : p-value < 0.05 → stationnaire (sens inversé !)
+5. **ACF** mesure la mémoire et guide le choix du modèle
+6. **AR(1)** : $X_t = c + \varphi_1 X_{t-1} + \varepsilon_t$ avec $\varphi_1 = \rho_1$ et $\lvert\varphi_1\rvert < 1$
+7. $\varphi_1 > 0$ → tendance ; $\varphi_1 < 0$ → mean-reversion
+8. Variance AR(1) : $\sigma_\varepsilon^2\,/\,(1 - \varphi_1^2)$ — explose si $\lvert\varphi_1\rvert \geq 1$
+9. Ordre $p > 1$ → MLE + AIC/BIC à minimiser (BIC plus strict)
+10. **Piège central** : excellent fit in-sample ≠ bonne prédiction out-of-sample
+
+:::

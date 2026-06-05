@@ -1,0 +1,192 @@
+---
+title: "Marchés financiers et comportements — Révision"
+---
+
+## Hypothèse d'efficience des marchés (Efficient Market Hypothesis — EMH)
+
+**Auteur** : E. Fama, 1960 · Nobel 2013
+
+**Principe** : les prix reflètent **toute** l'information disponible → impossible de battre le marché durablement.
+
+### Les 3 formes
+
+| Forme | Information intégrée | Conséquence |
+|-------|---------------------|-------------|
+| **Faible** (*Weak*) | Prix passés uniquement | Analyse technique inefficace |
+| **Semi-forte** (*Semi-strong*) | Toute info publique | Analyse fondamentale inefficace |
+| **Forte** (*Strong*) | Info publique + privée | Même les initiés ne battent pas le marché |
+
+### Critiques de l'EMH
+
+- Équités sur-évaluées durablement par rapport aux fondamentaux
+- Soros, Buffett : trop constants pour être juste chanceux
+- **Comportement de troupeau** (*herding behaviour*)
+- **Trading algorithmique** (*algorithmic trading*) amplifie les inefficiences
+- **Bulles spéculatives** (*speculative bubbles*)
+
+::: {.callout-warning title="Pièges — Deux exemples emblématiques"}
+**Bulle Bitcoin (2013)** : prix passé de ~\$0 à +\$1 000 en un an → spéculation pure, incompatible avec l'EMH
+
+**Flash Crash (6 mai 2010)** : Dow Jones −9,2 % (−998 pts) puis récupération totale en quelques minutes, sans nouvelle fondamentale
+:::
+
+::: {.callout-note title="Paradoxe Nobel 2013"}
+Fama (pro-EMH) et Shiller (anti-EMH) ont partagé le même Nobel → **pas de consensus** sur l'efficience des marchés.
+:::
+
+---
+
+## Où échange-t-on ? (Where Do We Exchange?)
+
+### Marchés réglementés (Exchanges) vs OTC
+
+| Critère | Marché réglementé | OTC (*Over The Counter*) |
+|---------|------------------|--------------------------|
+| Exemples | NYSE, LSE, CME, SIX | Oanda, marchés obligataires |
+| Réglementation | Stricte | Souple |
+| Compensation | Chambre de compensation ✅ | Pas de clearing ❌ |
+| Transparence | Haute | Faible |
+| Risque de contrepartie | Faible | Plus élevé |
+
+### Broker vs Market Maker
+
+| Rôle | *Market Maker* | *Broker* |
+|------|---------------|----------|
+| Exemple | Oanda | Dukascopy |
+| Inventaire | ✅ Oui | ❌ Non |
+| Risque pris | ✅ Oui | ❌ Non |
+| Rémunération | Spread bid/ask | Commission |
+
+---
+
+## Les actifs financiers (Financial Assets)
+
+| Actif | Caractéristiques clés |
+|-------|-----------------------|
+| **Actions** (*Equity*) | Dividendes périodiques · risque résiduel |
+| **Obligations** (*Bonds*) | Prêt à un État ou entreprise · prix ∝ 1/taux · coupons + maturité |
+| **Matières premières** (*Commodities*) | Blé, pétrole, or · transactées via **futures** |
+| **Devises** (*Currencies / FX*) | Cotées en **paires** · différentiel de taux d'intérêt · backbone des marchés |
+
+::: {.callout-note title="Obligations — Relation clé"}
+Prix obligation ↑ quand taux ↓ · Prix obligation ↓ quand taux ↑
+:::
+
+---
+
+## Volumes de transaction (Volumes)
+
+### Bourses mondiales (2013)
+
+| Bourse | Volume (Mds USD) |
+|--------|-----------------|
+| NYSE Euronext US | 6 920 |
+| NASDAQ OMX US | 4 748 |
+| Tokyo SE | 3 429 |
+
+### Marché des changes (FX)
+
+- Volume journalier mondial : **~5 000 milliards USD/jour**
+- EUR/USD : **25 %** du volume · USD/JPY : 18 % · GBP/USD : 9 %
+- 50 % des transactions = **swaps de change** (*FX swaps*)
+
+Flux EUR/USD par seconde :
+
+$$\frac{5 \times 10^{12} \times 0.25 \times 0.5}{86\,400 \times 2} \approx 3.6 \text{ M USD/s}$$
+
+---
+
+## Les instruments financiers (Main Instruments)
+
+| Instrument | Définition | Particularité |
+|------------|-----------|---------------|
+| **Spot** | Actif réel, livraison immédiate | Base de référence |
+| **Forward** | Accord futur à prix fixé aujourd'hui · OTC | Risque de contrepartie |
+| **Futures** | Forward standardisé · bourse | Chambre de compensation · appels de marge |
+| **Option** | **Droit** (non obligation) d'acheter (*call*) ou vendre (*put*) | Prime à payer · levier |
+| **Indice** (*Index*) | Panier d'actifs (S&P 500, CAC 40...) | Diversification |
+
+::: {.callout-warning title="Piège — Roll over des Futures"}
+Un futures a une date d'expiration. Sans **roll over** (clôture + réouverture sur le contrat suivant) →
+livraison physique possible (ex : tonnes de blé ou barils de pétrole !).
+:::
+
+---
+
+## Faits stylisés (Stylised Facts)
+
+**Définition** : régularités empiriques robustes qui distinguent les marchés réels d'une simple marche aléatoire (*random walk*).
+
+| Fait stylisé | Description | Implication |
+|-------------|-------------|-------------|
+| **Regroupement de volatilité** (*Volatility clustering*) | Grandes variations → grandes variations · petites → petites | → modèles **GARCH** |
+| **Auto-corrélation négative** (*Negative autocorrelation*) | À haute fréquence, lag 1 négatif | Dû au *bid-ask bounce* |
+| **Lois d'échelle** (*Scaling laws*) | $\mathbb{E}[\|r\|] \sim \Delta t^{\alpha}$ | Auto-similarité multi-échelle |
+| **Queues épaisses** (*Fat tails*) | Événements extrêmes bien plus fréquents que la loi normale | Risque sous-estimé par les modèles gaussiens |
+| **Saisonnalité** (*Seasonality*) | Journalière, hebdomadaire, mensuelle, annuelle | Non-stationnarité cyclique |
+| **Asymétrie** (*Asymmetry*) | Marchés actions baissent plus vite qu'ils ne montent | Skewness négatif |
+| **Corrélation spread / volume** | Spread ↓ quand volume ↑ | Plus de liquidité → meilleurs prix |
+| **Corrélation volume / volatilité** | Volume ↑ quand volatilité ↑ | Incertitude → activité |
+
+::: {.callout-important title="GARCH — Le H vient des faits stylisés"}
+**H** = *Heteroskedasticity* = variance non constante = regroupement de volatilité. C'est précisément ce que GARCH modélise.
+:::
+
+::: {.callout-warning title="Piège — Fat tails et modèles gaussiens"}
+Utiliser la loi normale pour modéliser les rendements **sous-estime fortement** la probabilité des événements extrêmes.
+Les distributions empiriques ressemblent davantage aux distributions de **Lévy** (*Lévy distributions*).
+:::
+
+---
+
+## Saisonnalité (Seasonality)
+
+### Actions — Profil en U (*U-shape*)
+
+- **Pic à l'ouverture** : réaction aux nouvelles de la nuit
+- **Creux en milieu de journée** : faible activité
+- **Pic à la clôture** : clôture des positions journalières
+
+### Devises — Sessions mondiales
+
+| Session | Heures GMT | Activité |
+|---------|-----------|---------|
+| Sydney | 22h – 07h | Faible |
+| Tokyo | 00h – 09h | Modérée |
+| Londres | 08h – 17h | **Maximale** |
+| New York | 13h – 22h | Forte |
+
+**Pic absolu** : chevauchement **Londres + New York** (13h–17h GMT)
+
+---
+
+## Événements de marché (Market Events)
+
+### Classification
+
+| Type | Origine | Exemple |
+|------|---------|---------|
+| **Endogène** (*Endogenous*) | Intérieur du marché | Manque de liquidité (*liquidity crunch*) |
+| **Exogène programmé** (*Scheduled*) | Externe + date connue | NFP, PIB, décisions de taux |
+| **Exogène non programmé** (*Unscheduled*) | Externe + surprise | Attentats, décision BNS 2011 |
+
+### Actualités programmées clés
+
+- **Non-Farm Payrolls (NFP)** : 1er vendredi du mois · 8h30 EST (14h30 CH) · emploi US
+- **PIB** (*GDP*) : trimestriel · croissance économique
+- **Décisions de taux** : Fed, BCE, BNS
+
+::: {.callout-warning title="Piège — L'écart aux attentes, pas le chiffre absolu"}
+Ce qui fait bouger le marché = **surprise** = chiffre publié − consensus attendu.
+Un bon chiffre *en dessous des attentes* peut faire **baisser** le marché.
+:::
+
+---
+
+## Récapitulatif — Ce que les marchés ne sont PAS
+
+::: {.callout-note title="Les marchés ≠ marche aléatoire"}
+Les marchés présentent : volatility clustering · fat tails · saisonnalité · autocorrélation · scaling laws.
+
+Causes : interactions humaines · comportement de troupeau · contraintes institutionnelles · trading algorithmique.
+:::

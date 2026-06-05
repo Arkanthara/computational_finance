@@ -1,0 +1,654 @@
+---
+title: "Rendements et valeur temporelle de l'argent"
+---
+
+## Le système Suisse des trois piliers (The Swiss 3-Pillar System) {#sec-trois-piliers}
+
+### Contexte et objectif
+
+La Suisse a mis en place un système de prévoyance retraite structuré autour de **trois piliers complémentaires**.
+Ce système vise à garantir la sécurité financière des personnes âgées tout en combinant solidarité collective,
+prévoyance professionnelle et épargne individuelle.
+
+::: {.callout-note title="À retenir — Impact social"}
+Le système des trois piliers a permis de faire passer la proportion de personnes âgées de plus de 65 ans
+menacées de pauvreté de **51 % en 1979** à environ **15 à 20 % aujourd'hui**.
+À titre de comparaison, cette proportion dans la population active n'est que de 4,3 %.
+:::
+
+### Les trois piliers
+
+#### Premier pilier — Prévoyance étatique (State Pension)
+
+Le premier pilier est la **prévoyance étatique**, obligatoire pour l'ensemble des résidents en Suisse.
+Il repose sur la solidarité entre les générations : les actifs financent directement les retraités.
+
+Il comprend trois composantes :
+
+- **AVS** — Assurance vieillesse et survivants : couvre les risques liés à la vieillesse et au décès
+- **IAI** — Assurance invalidité : couvre les risques d'incapacité de travail durable
+- **PC** — Prestations complémentaires : complètent les rentes insuffisantes pour couvrir le minimum vital
+
+**Objectif principal** : assurer la **couverture du minimum vital**.
+
+::: {.callout-tip title="Intuition"}
+Le premier pilier est un système de répartition (*pay-as-you-go*) : il ne s'agit pas d'une épargne individuelle,
+mais d'un mécanisme collectif de redistribution. Il garantit un revenu de base minimal mais ne prétend pas
+maintenir le niveau de vie antérieur à la retraite.
+:::
+
+#### Deuxième pilier — Prévoyance professionnelle (Occupational Pension)
+
+Le deuxième pilier est la **prévoyance professionnelle**, obligatoire pour les salariés dépassant un certain seuil de revenu.
+Il fonctionne selon un système de capitalisation : les cotisations sont épargnées et investies.
+
+Il repose sur deux lois fédérales :
+
+- **LPP** — Loi fédérale sur la prévoyance professionnelle : régit l'assurance vieillesse liée à l'emploi
+- **LAA** — Loi fédérale sur l'assurance accidents : couvre les accidents professionnels et non professionnels
+
+**Objectif principal** : **maintenir le niveau de vie habituel** à la retraite, en complément du premier pilier.
+
+::: {.callout-tip title="Intuition"}
+Combinés, les premier et deuxième piliers visent à assurer environ 60 à 70 % du dernier salaire.
+Le deuxième pilier joue un rôle central dans la stabilité financière de la retraite en Suisse.
+:::
+
+#### Troisième pilier — Prévoyance privée (Private Pension)
+
+Le troisième pilier est la **prévoyance privée**, facultative, permettant à chaque individu d'adapter son épargne
+retraite à ses besoins et objectifs personnels.
+
+Il se divise en deux sous-catégories :
+
+- **3a — Prévoyance liée** : épargne avec avantages fiscaux significatifs, soumise à des conditions et plafonds de versement annuels
+- **3b — Prévoyance libre** : épargne sans contrainte particulière, mais sans avantages fiscaux spécifiques
+
+**Objectif principal** : répondre aux **besoins supplémentaires** et personnaliser la planification de la retraite.
+
+### Synthèse des trois piliers
+
+```{mermaid}
+graph TD
+    A["Système Suisse des 3 piliers"] --> B["1er Pilier\nPrévoyance étatique"]
+    A --> C["2e Pilier\nPrévoyance professionnelle"]
+    A --> D["3e Pilier\nPrévoyance privée"]
+    B --> E["AVS · IAI · PC"]
+    C --> F["LPP · LAA"]
+    D --> G["3a liée · 3b libre"]
+    E --> H["Minimum vital"]
+    F --> I["Maintien du niveau de vie"]
+    G --> J["Besoins supplémentaires"]
+```
+
+---
+
+## Introduction aux rendements (Returns) {#sec-intro-rendements}
+
+### Qu'est-ce qu'un rendement ?
+
+Un **rendement** (ou *yield* en anglais) mesure le **profit ou la perte** générés par un investissement sur une période donnée.
+Les rendements sont habituellement exprimés **en pourcentage (%)**, ce qui permet de comparer des investissements
+de montants ou d'horizons de temps différents.
+
+::: {.callout-note title="À retenir"}
+Deux questions fondamentales guident ce chapitre :
+
+- Comment calculer un rendement entre deux observations ?
+- Comment calculer et combiner une série de rendements sur une période ?
+
+Et une question plus avancée : que signifient les **rendements continus** (logarithmiques) ?
+:::
+
+### Notations et conventions
+
+On travaille avec une **série temporelle de prix** (*price timeseries*) :
+
+- $P(t)$ désigne le prix d'un actif au temps $t$
+- $t$ représente des **pas de temps équidistants** : journaliers, hebdomadaires, mensuels, etc.
+
+**Exemple** :
+
+$$P(t) = \{100,\ 100.4,\ 102,\ 101.3,\ 102.8,\ \ldots\}$$
+
+Cette convention s'applique uniformément à tous les types de rendements présentés dans ce chapitre.
+
+---
+
+## Rendements simples (Simple Returns) {#sec-rendements-simples}
+
+### Rendement sur une seule période
+
+Le **rendement simple sur une période** entre $t-1$ et $t$ est défini par :
+
+$$R_1(t) = \frac{P(t) - P(t-1)}{P(t-1)}$$
+
+Ce qui se réécrit de manière équivalente :
+
+$$R_1(t) = \frac{P(t)}{P(t-1)} - 1$$
+
+Ou encore, sous la forme dite *gross return* (rendement brut) :
+
+$$1 + R_1(t) = \frac{P(t)}{P(t-1)}$$
+
+::: {.callout-tip title="Intuition"}
+Le rendement simple mesure la **variation relative** du prix. En normalisant par le prix initial, on rend les
+comparaisons possibles entre actifs de valeurs très différentes. Un gain de 10 CHF sur un actif à 100 CHF
+(+10 %) est plus significatif que le même gain sur un actif à 1 000 CHF (+1 %).
+:::
+
+#### Asymétrie des rendements simples
+
+Les rendements simples présentent une **asymétrie fondamentale** illustrée par l'exemple suivant :
+
+- Si $P(t-1) = 50$ et $P(t) = 60$ :
+  $$R_1(t) = \frac{60}{50} - 1 = +20\%$$
+- Si $P(t-1) = 60$ et $P(t) = 50$ :
+  $$R_1(t) = \frac{50}{60} - 1 \approx -16.7\%$$
+
+::: {.callout-warning title="Asymétrie — Point important"}
+Une hausse de +20 % n'est pas compensée par une baisse de −20 %. Pour revenir au prix initial après une
+hausse de 20 %, il faudrait une baisse de $1 - 1/1.2 \approx 16.7\%$ seulement. Cette asymétrie est une
+propriété structurelle des rendements simples, corrigée par les rendements logarithmiques.
+:::
+
+### Rendement sur plusieurs périodes
+
+Pour calculer le rendement simple sur **deux périodes** (de $t-2$ à $t$) :
+
+$$R_2(t) = \frac{P(t) - P(t-2)}{P(t-2)} = \frac{P(t)}{P(t-2)} - 1$$
+
+En décomposant le ratio de prix :
+
+$$R_2(t) = \frac{P(t)}{P(t-1)} \cdot \frac{P(t-1)}{P(t-2)} - 1$$
+
+On obtient la **relation de composition** fondamentale :
+
+$$1 + R_2(t) = \bigl(1 + R_1(t)\bigr) \cdot \bigl(1 + R_1(t-1)\bigr)$$
+
+#### Généralisation à $n$ périodes
+
+Pour $n$ périodes consécutives, le rendement se calcule par un **produit** :
+
+$$1 + R_n(t) = \prod_{i=0}^{n-1} \bigl(1 + R_1(t-i)\bigr)$$
+
+::: {.callout-important title="Règle d'or — Ne pas sommer les rendements simples"}
+On **ne somme pas** les rendements simples sur plusieurs périodes. On les **compose par multiplication**.
+La somme des rendements individuels constitue une approximation acceptable uniquement pour de très petits rendements.
+Pour des calculs rigoureux, la formule multiplicative est obligatoire.
+:::
+
+### Exemple numérique complet
+
+Supposons l'évolution de prix suivante pour un actif donné :
+
+| Temps | 1   | 2   | 3    | 4    |
+|-------|-----|-----|------|------|
+| Prix  | 10  | 12  | 14   | 16   |
+| $R_1$ | —   | 20% | 16,7% | 14,3% |
+
+Le rendement total de $t=1$ à $t=4$ vaut :
+
+$$R_4(4) = \frac{16 - 10}{10} = 60\%$$
+
+**Vérification par la somme** (méthode incorrecte) :
+
+$$20\% + 16.7\% + 14.3\% = 50.9\% \neq 60\%$$
+
+**Vérification par le produit** (méthode correcte) :
+
+$$(1 + 20\%) \times (1 + 16.7\%) \times (1 + 14.3\%) - 1 = 60\% \checkmark$$
+
+::: {.callout-tip title="Intuition — Intérêts composés"}
+La différence entre 50,9 % et 60 % illustre l'effet des **intérêts composés** (*compounding*) : à chaque période,
+le rendement est appliqué sur un capital déjà valorisé par les périodes précédentes. Plus les rendements sont
+élevés et la période longue, plus cet écart est significatif.
+:::
+
+---
+
+## Rendements de portefeuille (Portfolio Returns) {#sec-portefeuille}
+
+### Définition d'un portefeuille
+
+Un **portefeuille** (*portfolio*) est une collection de $n$ actifs. Chaque actif $i$ est caractérisé par :
+
+- un rendement individuel $R_i$
+- une **allocation** (ou pondération) $\alpha_i$ représentant la fraction du capital investi dans cet actif
+
+La contrainte de normalisation impose que les allocations somment à 1 :
+
+$$\sum_{i=1}^{n} \alpha_i = 1$$
+
+Cette contrainte signifie que l'intégralité du capital est allouée (pas de levier, pas de liquidité résiduelle non comptée).
+
+### Rendement du portefeuille
+
+Le rendement du portefeuille est défini comme la **moyenne pondérée** des rendements individuels :
+
+$$R_p = \sum_{i=1}^{n} \alpha_i R_i$$
+
+#### Vérification de cohérence
+
+On vérifie que cette définition est cohérente en développant la valeur finale du portefeuille :
+
+$$\sum_{i=1}^{n} \alpha_i (1 + R_i) = \sum_{i=1}^{n} \alpha_i + \sum_{i=1}^{n} \alpha_i R_i = 1 + R_p$$
+
+Ce résultat confirme que le rendement de portefeuille, défini comme une **combinaison linéaire** des
+rendements individuels, est bien cohérent avec la définition économique de la valeur du portefeuille.
+
+::: {.callout-tip title="Intuition — Exemple concret"}
+Un portefeuille composé à 60 % d'actions (rendement 10 %) et 40 % d'obligations (rendement 3 %) génère :
+
+$$R_p = 0.60 \times 10\% + 0.40 \times 3\% = 7.2\%$$
+
+La pondération reflète directement la part de capital allouée à chaque actif.
+:::
+
+::: {.callout-note title="À retenir — Limitation sur plusieurs périodes"}
+La formule de rendement de portefeuille $R_p = \sum \alpha_i R_i$ est **valide pour une seule période**.
+Pour des rendements multi-périodes (simples), la composition n'est plus linéaire. Cette propriété d'additivité
+est en revanche conservée pour les rendements continus, comme nous le verrons.
+:::
+
+---
+
+## Annualisation des rendements (Annualisation) {#sec-annualisation}
+
+### Pourquoi annualiser ?
+
+L'annualisation permet de **comparer des rendements mesurés sur des horizons différents** en les ramenant
+à une base commune annuelle. Sans cette standardisation, il est impossible de comparer un fonds mensuel à
+un fonds journalier.
+
+### Formules d'annualisation
+
+Soient les notations suivantes :
+
+- $R_a$ : rendement annuel (*annual return*)
+- $R_m$ : rendement mensuel (*monthly return*)
+- $R_d$ : rendement journalier (*daily return*)
+
+En appliquant la formule de composition sur 12 mois :
+
+$$1 + R_a = \bigl(1 + R_m\bigr)^{12}$$
+
+$$R_a = \bigl(1 + R_m\bigr)^{12} - 1$$
+
+Pour les rendements journaliers, en supposant **256 jours ouvrables** par an :
+
+$$R_a = \bigl(1 + R_d\bigr)^{256} - 1$$
+
+::: {.callout-note title="À retenir — Convention sur les jours ouvrables"}
+Le nombre de jours ouvrables utilisé pour l'annualisation varie selon les conventions de marché :
+**250, 256 ou 300 jours** selon les institutions et les marchés. Il est important de préciser quelle
+convention est adoptée pour garantir la comparabilité des résultats.
+:::
+
+::: {.callout-warning title="Erreur fréquente — Ne pas multiplier simplement"}
+L'annualisation **ne se fait pas** en multipliant le rendement mensuel par 12.
+La multiplication est une approximation valable uniquement pour de très petits rendements :
+
+$$R_a \approx 12 \times R_m \quad \text{(approximation, petits rendements)}$$
+$$R_a = (1 + R_m)^{12} - 1 \quad \text{(formule exacte)}$$
+:::
+
+::: {.callout-tip title="Intuition — Effet de la composition"}
+Un rendement mensuel de 1 % ne donne pas 12 % annuels. En réalité :
+$(1.01)^{12} - 1 \approx 12.68\%$. L'écart vient des intérêts appliqués sur les intérêts accumulés chaque mois.
+Plus le rendement mensuel est élevé, plus l'écart avec la multiplication simple est important.
+:::
+
+---
+
+## Valeur temporelle de l'argent (Time Value of Money) {#sec-valeur-temporelle}
+
+### Principe fondamental
+
+La **valeur temporelle de l'argent** est l'un des principes fondateurs de la finance :
+**1 CHF disponible aujourd'hui vaut davantage que 1 CHF disponible dans le futur**, car l'argent
+présent peut être investi pour générer un rendement.
+
+Ce principe justifie l'utilisation de taux d'actualisation pour comparer des flux financiers à des dates différentes.
+
+### Capitalisation discrète
+
+Si $R$ est le rendement par période et $PV$ la valeur présente (*Present Value*), la **valeur future**
+(*Future Value*) à l'horizon $n$ est :
+
+$$FV_n^1 = PV \cdot (1 + R)^n$$
+
+La progression dans le temps est la suivante :
+
+| Temps | Valeur future |
+|-------|--------------|
+| $t = 1$ | $PV \cdot (1+R)$ |
+| $t = 2$ | $PV \cdot (1+R)^2$ |
+| $\vdots$ | $\vdots$ |
+| $t = n$ | $PV \cdot (1+R)^n$ |
+
+#### Fréquence de capitalisation plus élevée
+
+Si le paiement des intérêts est effectué $m$ fois par an sur $n$ années :
+
+$$FV_n^m = PV \cdot \left(1 + \frac{R}{m}\right)^{m \cdot n}$$
+
+::: {.callout-tip title="Intuition — Fréquence et valeur finale"}
+Plus la capitalisation est fréquente (mensuelle, hebdomadaire, journalière), plus la valeur future croît,
+car les intérêts sont réinvestis et produisent eux-mêmes des intérêts plus tôt. C'est l'effet des intérêts composés.
+:::
+
+### Capitalisation continue
+
+En faisant tendre le nombre de paiements par an vers l'infini ($m \to \infty$), on obtient la
+**capitalisation continue** (*continuous compounding*) :
+
+$$FV_n^\infty = \lim_{m \to \infty} PV \cdot \left(1 + \frac{R}{m}\right)^{m \cdot n} = PV \cdot e^{Rn}$$
+
+Ce résultat découle de la définition même du nombre d'Euler $e$ :
+
+$$\lim_{m \to \infty} \left(1 + \frac{R}{m}\right)^m = e^R$$
+
+### Exemple numérique — Impact de la fréquence
+
+Avec $PV = 1\,000$ CHF, $R = 10\%$ et $n = 1$ an :
+
+| Fréquence       | Calcul                                     | Valeur (CHF) |
+|-----------------|--------------------------------------------|--------------|
+| Annuelle        | $1000 \cdot (1 + 0.1)^1$                  | 1 100,0      |
+| Trimestrielle   | $1000 \cdot (1 + 0.1/4)^4$               | 1 103,8      |
+| Hebdomadaire    | $1000 \cdot (1 + 0.1/52)^{52}$           | 1 105,1      |
+| Journalière     | $1000 \cdot (1 + 0.1/365)^{365}$         | 1 105,2      |
+| Continue        | $1000 \cdot e^{0.1}$                      | 1 105,2      |
+
+::: {.callout-note title="À retenir — Rôle théorique de la capitalisation continue"}
+La capitalisation continue donne la **valeur future maximale théorique** pour un taux $R$ donné. En pratique,
+elle n'est pas réaliste mais sert de cadre mathématique privilégié dans les modèles théoriques, car l'exponentielle
+est plus simple à différencier et à intégrer que les puissances de fractions.
+:::
+
+### Lien entre rendement continu et rendement simple
+
+En posant l'équivalence entre capitalisation discrète et continue :
+
+$$PV \cdot (1+R)^n = FV_n = PV \cdot e^{rn}$$
+
+On déduit la **relation fondamentale** entre le taux continu $r$ et le taux simple $R$ :
+
+$$\ln(1 + R) = r \quad \Longrightarrow \quad r < R$$
+
+::: {.callout-tip title="Intuition — Pourquoi $r < R$ ?"}
+Le logarithme est une fonction concave : $\ln(1+x) < x$ pour tout $x > 0$. Le taux continu $r$ est donc
+toujours inférieur au taux simple $R$ correspondant. La différence est faible pour de petits rendements
+mais peut devenir significative pour des taux élevés.
+:::
+
+**Exemple numérique** : Si $R = 10\%$, alors $r = \ln(1.10) \approx 9.53\%$.
+
+Vérification : $1000 \cdot e^{0.0953} \approx 1100$ CHF $\checkmark$
+
+::: {.callout-important title="Passage entre les deux conventions"}
+La relation de passage est simple et doit être maîtrisée :
+
+$$r = \ln(1 + R) \quad \text{et} \quad R = e^r - 1$$
+
+Elle permet de convertir un taux simple en taux continu et vice versa.
+:::
+
+---
+
+## Rendements continus (Continuous Returns / Log Returns) {#sec-rendements-continus}
+
+### Définition du rendement logarithmique
+
+Le **rendement continu** sur une période, également appelé **rendement logarithmique** (*log return*), est défini par :
+
+$$r(t) = \ln\!\left(1 + R(t)\right) = \ln\!\left(\frac{P_t}{P_{t-1}}\right) = \ln P_t - \ln P_{t-1}$$
+
+Il s'agit d'une **différence de logarithmes de prix** consécutifs.
+
+::: {.callout-tip title="Intuition — Pourquoi les log-rendements ?"}
+Le rendement logarithmique est la version continue du rendement simple. Il mesure la variation relative
+du prix dans un cadre continu. Ses propriétés mathématiques (symétrie, additivité) en font l'outil
+de prédilection en modélisation financière théorique et en statistiques des actifs financiers.
+:::
+
+### Propriétés clés des rendements logarithmiques
+
+#### Symétrie
+
+Contrairement aux rendements simples, les rendements logarithmiques sont **parfaitement symétriques** :
+
+Si un actif passe de 100 à 110 puis revient à 100 :
+
+- Rendement simple : $+10\%$ puis $-9.09\%$ (asymétrique)
+- Log-rendement : $+\ln(1.1) \approx +9.53\%$ puis $-\ln(1.1) \approx -9.53\%$ (symétrique)
+
+#### Facilité de manipulation analytique
+
+La présence de logarithmes simplifie considérablement :
+
+- Les calculs de calcul stochastique (mouvement brownien géométrique)
+- Les démonstrations analytiques impliquant des produits de rendements
+- L'estimation statistique (distributions normales, etc.)
+
+### Rendements continus multi-périodes
+
+Pour **deux périodes** :
+
+$$r_2(t) = \ln\!\left(\frac{P_t}{P_{t-2}}\right) = \ln\!\left(\frac{P_t}{P_{t-1}} \cdot \frac{P_{t-1}}{P_{t-2}}\right)$$
+
+En utilisant la propriété $\ln(a \cdot b) = \ln a + \ln b$ :
+
+$$r_2(t) = \ln\frac{P_t}{P_{t-1}} + \ln\frac{P_{t-1}}{P_{t-2}} = r_1(t) + r_1(t-1)$$
+
+#### Généralisation à $n$ périodes
+
+$$r_n(t) = \sum_{i=0}^{n-1} r_1(t-i)$$
+
+::: {.callout-important title="Additivité des rendements continus multi-périodes"}
+Les rendements logarithmiques sur $n$ périodes sont **additifs** : on les **somme** simplement.
+C'est un avantage majeur par rapport aux rendements simples qui nécessitent une multiplication.
+Cette propriété facilite grandement l'analyse statistique de séries temporelles financières.
+:::
+
+### Rendements continus d'un portefeuille
+
+En revanche, l'additivité **ne s'applique pas** à la dimension transversale (portefeuille).
+Avec les mêmes notations ($n$ actifs, allocations $\alpha_i$, $\sum \alpha_i = 1$) :
+
+$$r_p = \ln(1 + R_p) = \ln\!\left(1 + \sum_{i=1}^{n} \alpha_i R_i\right) \neq \sum_{i=1}^{n} \alpha_i r_i$$
+
+::: {.callout-warning title="Attention — Portefeuille et rendements continus"}
+Le rendement continu d'un portefeuille n'est **pas** la moyenne pondérée des rendements continus individuels.
+L'additivité des log-rendements ne vaut que pour l'agrégation **temporelle** (séries de périodes successives),
+pas pour l'agrégation **transversale** (combinaison d'actifs simultanément détenus).
+
+En pratique, on utilise souvent l'approximation $r_p \approx \sum \alpha_i r_i$ pour de petits rendements.
+:::
+
+### Tableau récapitulatif — Simples vs Continus
+
+| Propriété | Rendements simples | Rendements logarithmiques |
+|-----------|-------------------|--------------------------|
+| Définition | $R = P_t/P_{t-1} - 1$ | $r = \ln(P_t/P_{t-1})$ |
+| Multi-périodes | Produit $(1+R_n) = \prod(1+R_i)$ | Somme $r_n = \sum r_i$ |
+| Portefeuille | $R_p = \sum \alpha_i R_i$ | $r_p \neq \sum \alpha_i r_i$ |
+| Symétrie | Non | Oui |
+| Plage de valeurs | $]-1, +\infty[$ | $]-\infty, +\infty[$ |
+
+---
+
+## Exemples de comptabilité (Bookkeeping Examples) {#sec-comptabilite}
+
+Les exemples suivants illustrent comment calculer la **valeur nette d'inventaire** (*Net Asset Value*, NAV)
+d'un portefeuille et décomposer sa performance selon les sources de risque.
+
+### Investisseur CHF dans un actif CHF {#sec-chf-chf}
+
+#### Mise en situation
+
+Un investisseur dont la devise de référence est le **franc suisse (CHF)** achète **15 actions UBS**,
+cotées en CHF, au temps $t=1$. Il ferme sa position au temps $t=3$. Son capital initial est de 1 000 CHF.
+
+| Temps | Prix UBS (CHF) | Position (actions) | Cash (CHF) | NAV (CHF) |
+|-------|----------------|-------------------|------------|-----------|
+| 0     | 50             | 0                 | 1 000      | 1 000     |
+| 1     | 55             | 15                | 175        | 1 000     |
+| 2     | 60             | 15                | 175        | 1 075     |
+| 3     | 62             | 0                 | 1 105      | 1 105     |
+| 4     | 55             | 0                 | 1 105      | 1 105     |
+
+*Au temps $t=1$ : achat de 15 actions à 55 CHF = 825 CHF investis, cash résiduel = 1 000 − 825 = 175 CHF.*
+
+#### Analyse de la performance
+
+- **P&L (Profit & Loss)** : $1\,105 - 1\,000 = +105$ CHF
+- **Rendement de la NAV** : $1105/1000 - 1 = 10.5\%$
+- **Rendement du prix UBS** (de $t=1$ à $t=3$) : $62/55 - 1 = 12.7\%$
+
+**Décomposition du rendement de la NAV par source** :
+
+$$\frac{1000 - 175}{1000} \times 12.7\% + \frac{175}{1000} \times 0\% = 82.5\% \times 12.7\% \approx 10.5\%$$
+
+::: {.callout-note title="À retenir"}
+Dans ce cas simple (actif et investisseur dans la même devise), la performance est **entièrement expliquée**
+par l'évolution du cours d'UBS. Il n'existe aucun risque de change. Le cash résiduel (175 CHF) ne rapporte
+rien (rendement 0 % supposé) et dilue légèrement la performance globale.
+:::
+
+### Investisseur CHF dans un actif USD — USDCHF statique, sans carry {#sec-chf-usd-statique}
+
+#### Mise en situation
+
+Un investisseur CHF achète **10 actions Apple** (AAPL, cotées en USD). Le taux de change USD/CHF
+reste constant à 0,90. Le rendement sur le cash en USD est nul (sans *carry*).
+
+La **formule de NAV** devient :
+
+$$\text{NAV} = \text{position\_AAPL} \times \text{prix\_AAPL} \times \text{USDCHF} + \text{Cash}$$
+
+| Temps | Prix AAPL (USD) | Position (actions) | USDCHF | Cash (CHF) | NAV (CHF) |
+|-------|----------------|-------------------|--------|------------|-----------|
+| 0     | 45             | 0                 | 0,90   | 1 000,0    | 1 000,0   |
+| 1     | 48             | 10                | 0,90   | 568,0      | 1 000,0   |
+| 2     | 49             | 10                | 0,90   | 568,0      | 1 009,0   |
+| 3     | 48             | 10                | 0,90   | 568,0      | 1 000,0   |
+| 4     | 49             | 0                 | 0,90   | 1 009,0    | 1 009,0   |
+
+#### Analyse des risques et de la performance
+
+L'investisseur est exposé à **deux risques** :
+
+1. **Risque action** (*equity risk*) : évolution du prix d'AAPL en USD
+2. **Risque de change** (*FX risk*, *Foreign Exchange risk*) : évolution du taux USD/CHF
+
+Dans ce cas, le taux de change est stable $\rightarrow$ la **P&L de CHF 9,0** est entièrement expliquée
+par la performance positive d'AAPL sur la période $[t=1, t=4]$.
+
+::: {.callout-tip title="Intuition — Deux sources de risque imbriquées"}
+Même si l'investisseur ne s'intéresse qu'aux actions Apple, sa performance en CHF dépend de *deux* facteurs :
+la valeur d'AAPL en dollars *et* la valeur du dollar en francs suisses. Ces deux risques peuvent se compenser
+ou s'amplifier mutuellement.
+:::
+
+### Investisseur CHF dans un actif USD — sans carry, avec variation de change {#sec-chf-usd-nocarry}
+
+#### Mise en situation
+
+Même configuration que précédemment, mais cette fois le **taux USD/CHF varie** à la baisse.
+
+| Temps | Prix AAPL (USD) | Position (actions) | USDCHF | Cash (CHF) | NAV (CHF) |
+|-------|----------------|-------------------|--------|------------|-----------|
+| 0     | 45             | 0                 | 0,89   | 1 000,0    | 1 000,0   |
+| 1     | 48             | 10                | 0,90   | 568,0      | 1 000,0   |
+| 2     | 49             | 10                | 0,90   | 568,0      | 1 009,0   |
+| 3     | 48             | 10                | 0,89   | 568,0      | 995,2     |
+| 4     | 49             | 0                 | 0,88   | 999,2      | 999,2     |
+
+#### Analyse
+
+- En $t=4$, le prix d'AAPL est de nouveau à 49 USD (comme en $t=2$), mais la NAV est de 999,2 CHF
+  au lieu de 1 009,0 CHF.
+- L'explication : le taux USDCHF a **baissé** de 0,90 à 0,88 entre $t=2$ et $t=4$.
+- La **P&L totale est de −0,8 CHF** : la performance positive d'AAPL_USD est plus que compensée
+  par la dépréciation du dollar américain.
+
+::: {.callout-warning title="Risque de change — Impact négatif potentiel"}
+Le risque de change peut **éroder voire inverser** la performance d'un investissement étranger.
+Un investisseur CHF qui détient des actifs en USD est négativement impacté lorsque le dollar se déprécie
+face au franc suisse, indépendamment de la performance de l'actif sous-jacent.
+:::
+
+#### Peut-on éliminer le risque de change ?
+
+Oui, en recourant à une stratégie de **couverture de change** (*FX hedging*), mais cette couverture a un coût.
+
+### Investisseur CHF dans un actif USD — couvert, sans carry {#sec-chf-usd-hedge}
+
+#### Mise en situation
+
+Même configuration, mais l'investisseur met en place une **couverture sur le risque de change**
+(position courte en USD) avec un différentiel d'intérêt (*interest rate differential*) de 2 %.
+
+| Temps | Prix AAPL (USD) | Position (actions) | USDCHF | Position USD (hedge) | Cash (CHF) | NAV (CHF) |
+|-------|----------------|-------------------|--------|--------------------|------------|-----------|
+| 0     | 45             | 0                 | 0,89   | 0                  | 1 000,0    | 1 000,0   |
+| 1     | 48             | 10                | 0,90   | −480               | 568,0      | 1 000,0   |
+| 2     | 49             | 10                | 0,90   | −490               | 567,2      | 1 008,2   |
+| 3     | 48             | 10                | 0,89   | −480               | 571,8      | 999,0     |
+| 4     | 49             | 0                 | 0,88   | 0                  | 1 007,6    | 1 007,6   |
+
+*La position de couverture (colonne "Position USD") est **négative** car on vend du dollar à terme
+pour se protéger contre sa dépréciation.*
+
+#### Analyse
+
+- La couverture est **adaptée dynamiquement** à la valeur de la position principale (delta hedging)
+- **P&L finale** : CHF +7,6
+- Décomposition : performance positive d'AAPL_USD, partiellement absorbée par la dépréciation USD/CHF,
+  moins un **coût de couverture de CHF 2,4**
+
+::: {.callout-note title="À retenir — Couverture et volatilité de la NAV"}
+La couverture de change réduit la **volatilité de la NAV** car le portefeuille n'est plus exposé qu'à
+un seul risque dominant (le risque action). En contrepartie, elle engendre un **coût lié au différentiel
+de taux d'intérêt** entre les deux devises et nécessite un suivi et un rééquilibrage réguliers.
+:::
+
+::: {.callout-tip title="Intuition — Coût de la couverture"}
+Couvrir le risque de change, c'est comme souscrire une assurance : on paye une prime pour se protéger
+contre un risque indésirable. Le coût de la couverture dépend principalement du différentiel de taux
+d'intérêt entre les deux devises (ici, 2 % par an entre USD et CHF).
+:::
+
+---
+
+## Points clés à retenir (Key Takeaways) {#sec-cles}
+
+::: {.callout-note title="Rendements simples — Composition multiplicative"}
+- Rendement sur une période : $R_1(t) = P(t)/P(t-1) - 1$
+- Sur plusieurs périodes : composition par **multiplication** — $1 + R_n = \prod (1 + R_i)$
+- Rendement de portefeuille : **combinaison linéaire** $R_p = \sum \alpha_i R_i$
+- Présentent une **asymétrie** intrinsèque
+:::
+
+::: {.callout-note title="Rendements continus (logarithmiques) — Composition additive"}
+- Définition : $r(t) = \ln(P_t / P_{t-1})$
+- Sur plusieurs périodes : **sommation** — $r_n = \sum r_i$
+- Sont **symétriques** et plus simples à manipuler analytiquement
+- Le rendement continu d'un portefeuille ne se simplifie pas : $r_p \neq \sum \alpha_i r_i$
+:::
+
+::: {.callout-note title="Valeur temporelle de l'argent"}
+- Capitalisation discrète : $FV = PV \cdot (1+R)^n$
+- Capitalisation continue (limite) : $FV = PV \cdot e^{rn}$
+- Relation entre taux continu et simple : $r = \ln(1+R) < R$
+- La capitalisation continue est un cadre théorique commode mais non réaliste en pratique
+:::
+
+::: {.callout-note title="Comptabilité et gestion de portefeuille"}
+- La NAV d'un portefeuille doit toujours être exprimée dans la **devise de référence** de l'investisseur
+- Un actif étranger expose à un **risque de change** (FX risk) en plus du risque propre à l'actif
+- Ce risque peut être **couvert** par une position inverse en devises, mais la couverture a un **coût**
+- La couverture réduit la volatilité de la NAV mais ne l'annule pas complètement
+:::

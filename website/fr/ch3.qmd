@@ -1,0 +1,835 @@
+---
+title: "Marchés financiers et comportements"
+---
+
+## Introduction et vue d'ensemble {#sec-intro}
+
+Ce chapitre explore la structure des marchés financiers et leurs propriétés empiriques.
+Deux grandes questions le traversent :
+
+- Les marchés sont-ils **efficients** — c'est-à-dire reflètent-ils correctement toute l'information disponible ?
+- Les prix financiers se comportent-ils comme de simples **marches aléatoires**, ou présentent-ils des structures reconnaissables ?
+
+Pour y répondre, on examine les lieux d'échange, les instruments disponibles, les volumes traités, et enfin les
+**faits stylisés** (*stylised facts*) — c'est-à-dire les régularités empiriques que l'on observe universellement sur les marchés financiers.
+
+---
+
+## Évolution des marchés (Market Evolution) {#sec-evolution}
+
+### Une volatilité croissante sur le long terme
+
+L'observation du S&P 500 de 1950 à 2012 illustre une transformation profonde des marchés financiers.
+Jusqu'aux années 1970, les marchés présentaient des mouvements relativement **calmes et réguliers**.
+
+À partir des années 1980, plusieurs phénomènes ont amplifié la volatilité :
+
+- La **dérégulation** progressive des marchés financiers
+- Le développement du **trading électronique** (*electronic trading*)
+- La **mondialisation** des flux de capitaux
+- L'apparition de nouveaux instruments financiers complexes (*derivatives*)
+
+::: {.callout-tip title="Intuition"}
+Les moyennes mobiles sur 1, 2 et 3 ans lissent les fluctuations à court terme et permettent de
+visualiser les tendances de fond. On constate que la croissance du S&P 500 s'est accélérée à
+partir des années 1980, accompagnée d'une volatilité bien plus marquée.
+:::
+
+::: {.callout-note title="À retenir"}
+La volatilité des marchés financiers n'est pas stationnaire : elle tend à augmenter avec la
+complexification des systèmes financiers et l'essor du trading algorithmique.
+:::
+
+---
+
+## Hypothèse d'efficience des marchés (Efficient Market Hypothesis — EMH) {#sec-emh}
+
+### Définition et origine
+
+L'**hypothèse d'efficience des marchés** (*Efficient Market Hypothesis*, EMH) est une théorie fondamentale de la finance moderne,
+proposée par **Eugene Fama** en 1960 et récompensée par le **prix Nobel d'économie en 2013**.
+
+Elle repose sur l'idée centrale que les prix des actifs financiers **reflètent à tout moment toute l'information disponible**.
+En conséquence :
+
+- Les comportements des investisseurs sont **rationnels en moyenne**
+- Il est **impossible de battre le marché** de manière systématique
+- Le prix est **toujours à sa juste valeur** (*fair value*)
+- Il est **impossible d'acheter des actifs sous-évalués ou sur-évalués** de façon durable
+
+::: {.callout-tip title="Intuition"}
+Si les prix intègrent immédiatement toute l'information, alors toute opportunité de profit anormal est instantanément
+éliminée par les arbitrageurs. Le marché fonctionne comme une machine à traitement de l'information.
+:::
+
+### Les trois formes de l'EMH
+
+L'EMH se décline en **trois formes** selon l'étendue de l'information intégrée dans les prix :
+
+#### Forme faible (Weak Form)
+
+La forme faible stipule que les prix reflètent **toute l'information contenue dans les prix passés**.
+
+Implications :
+
+- L'**analyse technique** (*technical analysis*) est inefficace — étudier les graphiques historiques ne permet pas de générer des rendements anormaux
+- Le futur des prix est déterminé uniquement par de l'**information externe** (*exogenous information*)
+- Le prix suit un **processus aléatoire** (*random walk*) — sans nouvelle information, il n'y a pas de tendance prévisible
+- Le marché **n'est pas nécessairement à l'équilibre** à tout instant
+
+::: {.callout-warning title="Conséquence pratique"}
+Si la forme faible est vraie, les stratégies de trading basées sur les moyennes mobiles, les bandes de Bollinger,
+les supports et résistances sont sans valeur ajoutée systématique. Toute règle mécanique dérivée des prix
+passés est vouée à l'inefficacité à long terme.
+:::
+
+#### Forme semi-forte (Semi-Strong Form)
+
+La forme semi-forte stipule que les prix reflètent **toute l'information publique disponible**, et ce
+**instantanément** dès qu'elle est publiée.
+
+Cela inclut :
+
+- Les annonces de résultats d'entreprises
+- Les décisions de banques centrales
+- Les données macroéconomiques publiées
+- Les communiqués de presse et analyses d'analystes
+
+::: {.callout-tip title="Intuition"}
+Si la forme semi-forte est valide, il est inutile de lire les journaux financiers pour prendre des décisions
+d'investissement : au moment où vous lisez une information, elle est déjà intégrée dans le prix.
+:::
+
+#### Forme forte (Strong Form)
+
+La forme forte est la plus exigeante : elle stipule que les prix reflètent **toute l'information**, qu'elle
+soit **publique ou privée** (*insider information*).
+
+::: {.callout-important title="Implication radicale"}
+Si la forme forte est vraie, même les **initiés** (*insiders*) — personnes disposant d'informations confidentielles
+sur une entreprise — ne peuvent pas réaliser de profit anormal. C'est la forme la moins acceptée empiriquement,
+et elle entre directement en contradiction avec l'existence même des lois contre le délit d'initié.
+:::
+
+### Critiques de l'EMH
+
+L'EMH est **largement critiquée**, y compris dans sa forme la plus faible. Les marchés présentent de nombreux
+signes d'irrationalité :
+
+#### Sur-évaluation durable
+
+Les marchés actions (*equity*) peuvent rester sur-évalués par rapport aux **fondamentaux économiques** (*fundamentals*)
+pendant de longues périodes. L'exemple de la bulle internet (1997–2000) en est l'illustration la plus frappante.
+
+#### Le cas des grands investisseurs
+
+La surperformance durable de gestionnaires comme **George Soros** ou **Warren Buffett** est difficile à expliquer
+par la seule chance statistique. Si les marchés étaient parfaitement efficients, ces performances exceptionnelles
+sur plusieurs décennies auraient une probabilité négligeable.
+
+::: {.callout-tip title="Intuition"}
+Si vous lancez une pièce 1 000 fois et obtenez toujours pile, pensez-vous que c'est de la chance ? La
+surperformance durable de certains investisseurs suggère qu'il existe des inefficiences exploitables.
+:::
+
+#### Comportements de troupeau (Herding Behaviour)
+
+Le **comportement de troupeau** (*herding behaviour*) décrit la tendance des investisseurs à imiter les décisions
+des autres plutôt qu'à analyser les fondamentaux. Ce phénomène amplifie les mouvements de marché et crée
+des inefficiences collectives.
+
+#### Trading algorithmique (Algorithmic Trading)
+
+L'essor du **trading algorithmique** (*algorithmic trading*, *algo trading*) a profondément modifié la microstructure
+des marchés. Des algorithmes automatiques réagissent à des signaux en millisecondes, parfois en amplifiant
+des mouvements irrationnels plutôt qu'en les corrigeant.
+
+#### Bulles spéculatives (Speculative Bubbles)
+
+Les **bulles spéculatives** (*speculative bubbles*) constituent peut-être la critique la plus forte de l'EMH :
+des actifs restent systématiquement mal valorisés pendant des mois ou des années avant un retour brutal
+à la réalité.
+
+### Exemple — La bulle Bitcoin (Bitcoin Bubble)
+
+La bulle Bitcoin de 2013 est un exemple paradigmatique de comportement irrationnel de marché.
+
+Entre janvier 2013 et décembre 2013 :
+
+- Le prix du Bitcoin est passé de quelques dollars à **plus de 1 000 USD**
+- Les transactions quotidiennes ont explosé, indiquant une forte spéculation
+- La hausse s'est accompagnée d'un intérêt médiatique massif — signal classique d'euphorie de marché
+- La correction a ensuite été brutale et prolongée
+
+::: {.callout-warning title="Leçon de la bulle Bitcoin"}
+La corrélation entre le prix et le volume de transactions indique que la hausse était alimentée par la
+spéculation et le phénomène FOMO (*Fear Of Missing Out*) plutôt que par une valorisation fondamentale.
+Ce type de dynamique est incompatible avec l'EMH.
+:::
+
+### Exemple — Le Flash Crash du 6 mai 2010
+
+Le **Flash Crash** (*Flash Crash*) du 6 mai 2010 est l'un des événements les plus étudiés de l'histoire des marchés modernes.
+
+En quelques minutes, le Dow Jones a chuté de près de **998 points (−9,2 %)** avant de récupérer la quasi-totalité
+de ses pertes dans la même session.
+
+Caractéristiques de l'événement :
+
+- La chute s'est produite entre **14h30 et 15h00** heure de New York
+- Les cours de certaines actions ont temporairement atteint des niveaux absurdes (quelques centimes ou plusieurs milliers de dollars)
+- Plusieurs bourses américaines (NASDAQ, NYSE, ARCA, BATS...) ont enregistré des mouvements similaires simultanément
+- Les algorithmes de trading haute fréquence (*High Frequency Trading*, HFT) ont joué un rôle central dans l'amplification
+
+::: {.callout-important title="Implications pour l'EMH"}
+Un effondrement de 9 % sans information fondamentale nouvelle, suivi d'une récupération immédiate, est
+**incompatible avec un marché efficient**. Il révèle les fragilités introduites par l'automatisation et
+le trading haute fréquence dans la microstructure des marchés.
+:::
+
+### Un dernier mot — Le paradoxe du Nobel 2013
+
+En 2013, le prix Nobel d'économie a été attribué conjointement à **Eugene Fama** (défenseur de l'EMH),
+**Lars Peter Hansen** et **Robert Shiller** (critique de l'EMH et théoricien des bulles spéculatives).
+
+Comme l'a relevé le journaliste Christophe Boucher dans *Le Monde* :
+
+> L'économie reste la seule discipline où deux personnes peuvent partager le même prix Nobel en racontant des choses complètement opposées.
+
+::: {.callout-note title="À retenir"}
+Il n'existe **pas de consensus** sur l'efficience des marchés financiers. L'EMH reste un cadre de référence
+utile mais imparfait. La réalité empirique des marchés contient des éléments compatibles et incompatibles
+avec cette hypothèse.
+:::
+
+---
+
+## Où échange-t-on ? (Where Do We Exchange?) {#sec-lieux}
+
+### Marchés réglementés (Regulated Markets / Exchanges)
+
+Les **marchés réglementés** (*exchanges*) sont des places d'échange officielles, soumises à une
+réglementation stricte.
+
+Exemples :
+
+- **NYSE** — New York Stock Exchange (actions américaines)
+- **LSE** — London Stock Exchange (actions britanniques)
+- **CME** — Chicago Mercantile Exchange (futures sur matières premières)
+- **SIX** — SIX Swiss Exchange (actions suisses)
+
+Caractéristiques :
+
+- Il s'agit d'un **lieu physique ou électronique centralisé**
+- La réglementation est **stricte** : règles de cotation, surveillance, transparence
+- Il existe un **processus de compensation** (*clearing process*) par une chambre de compensation (*clearing house*)
+- Le trading **électronique** (*electronic trading*) est en forte croissance, mais le parquet (*floor trading*) subsiste partiellement
+
+::: {.callout-note title="À retenir — La compensation (Clearing)"}
+La chambre de compensation se porte contrepartie centrale (*Central Counterparty*, CCP) de chaque transaction.
+Elle garantit que même si une contrepartie fait défaut, l'autre recevra son paiement. Ce mécanisme réduit
+considérablement le **risque de contrepartie** (*counterparty risk*).
+:::
+
+Des courtiers (*brokers*) comme **Interactive Brokers** permettent d'accéder à plusieurs places de marché
+simultanément depuis une interface unique.
+
+### Marchés de gré à gré (Over The Counter — OTC)
+
+Les marchés **OTC** (*Over The Counter*) sont des marchés décentralisés où les transactions se réalisent
+directement entre les parties, sans passer par une bourse centrale.
+
+Exemples :
+
+- **Oanda** (courtier en devises)
+- Marchés obligataires
+- Marchés de produits dérivés complexes
+
+Caractéristiques :
+
+- Fonctionnement **moins formel** et réglementation plus souple
+- Présence de **teneurs de marché** (*market makers*) qui proposent des cours d'achat et de vente (*bid/ask quotes*)
+- **Manque de transparence** : les prix ne sont pas nécessairement diffusés publiquement
+- **Pas nécessairement de lieu physique** — tout se passe par téléphone ou électroniquement
+
+::: {.callout-warning title="Risque OTC"}
+Les marchés OTC sont plus risqués car ils ne bénéficient pas de la protection offerte par une chambre de
+compensation. En cas de défaut d'une contrepartie, la récupération des fonds peut être difficile.
+:::
+
+### Teneur de marché vs Courtier
+
+Il est important de distinguer deux types d'intermédiaires financiers :
+
+| Rôle | Teneur de marché (*Market Maker*) | Courtier (*Broker*) |
+|------|----------------------------------|---------------------|
+| Exemple | Oanda | Dukascopy |
+| Prise de risque | ✅ Oui — tient un inventaire | ❌ Non — pas d'inventaire |
+| Rémunération | Spread bid/ask | Commission |
+| Fonction | Assure la liquidité | Exécute les ordres |
+
+::: {.callout-tip title="Intuition — Teneur de marché"}
+Un teneur de marché se rémunère sur le **spread** : il achète à un prix légèrement inférieur au prix de marché
+et revend légèrement au-dessus. En contrepartie, il prend le risque de détenir des positions en inventaire.
+Plus le marché est liquide, plus le spread est faible.
+:::
+
+---
+
+## Les actifs financiers (Financial Assets) {#sec-actifs}
+
+### Actions (Equity)
+
+Les **actions** (*equity*, *stocks*, *shares*) représentent une participation au capital d'une entreprise.
+
+Caractéristiques principales :
+
+- Le détenteur devient **actionnaire** (*shareholder*) et copropriétaire de l'entreprise
+- Des **dividendes** (*dividends*) sont versés périodiquement (si l'entreprise le décide)
+- L'actionnaire supporte le **risque résiduel** : en cas de faillite, les actionnaires sont remboursés en dernier
+
+::: {.callout-tip title="Intuition"}
+Détenir une action, c'est parier sur la croissance future d'une entreprise. Le rendement vient à la fois de
+la plus-value (*capital gain*) sur le prix de l'action et des dividendes distribués.
+:::
+
+### Obligations (Bonds)
+
+Les **obligations** (*bonds*) sont des titres de **créance** : l'investisseur prête de l'argent à un émetteur
+qui s'engage à le rembourser avec des intérêts.
+
+Caractéristiques :
+
+- Peuvent être émises par des **États** (*sovereign bonds*, *treasuries*) ou des **entreprises** (*corporate bonds*)
+- Le prix d'une obligation est une **fonction de sa maturité** (*maturity*) et du **calendrier de paiement des coupons** (*coupon schedule*)
+- Moins risquées que les actions en général (les créanciers sont remboursés avant les actionnaires)
+
+::: {.callout-note title="À retenir — Relation prix / taux"}
+Le prix d'une obligation évolue en sens **inverse** du taux d'intérêt : si les taux montent, les obligations
+existantes (à taux fixe plus bas) perdent de la valeur. Cette relation est fondamentale en gestion obligataire.
+:::
+
+### Matières premières (Commodities)
+
+Les **matières premières** (*commodities*) incluent des produits physiques tels que :
+
+- **Agricoles** : blé (*wheat*), maïs (*corn*), café, sucre, etc.
+- **Énergétiques** : pétrole (*oil*), gaz naturel (*natural gas*)
+- **Métaux** : or (*gold*), argent (*silver*), cuivre (*copper*)
+
+Particularité financière :
+
+- Les matières premières ne se transactent généralement **pas directement** sur les marchés financiers
+- On utilise des **contrats à terme** (*futures*) pour s'exposer à ces actifs sans avoir à prendre livraison physique
+- Le rôle du stockage et des coûts de transport est central dans la valorisation
+
+::: {.callout-warning title="Livraison physique — Attention"}
+Un investisseur qui achète un futures sur le pétrole et oublie de clôturer ou de rouler (*roll over*) sa position
+avant l'expiration peut se retrouver obligé de **prendre livraison de barils de pétrole** ! C'est pour cela que
+la gestion des dates d'expiration est cruciale sur les marchés de matières premières.
+:::
+
+### Devises (Currencies / Foreign Exchange — FX)
+
+Les **devises** (*currencies*) constituent un marché à part entière, le **marché des changes** (*Forex*, *FX market*).
+
+Caractéristiques fondamentales :
+
+- Les devises **se cotent toujours par paires** : EUR/USD, USD/CHF, GBP/USD, etc.
+- Il existe un **différentiel de taux d'intérêt** (*interest rate differential*) entre les deux devises d'une paire
+- Ce différentiel génère un **rendement de portage** (*carry*) ou un **coût de portage** selon la position prise
+
+::: {.callout-important title="Les devises — Épine dorsale des marchés"}
+Les devises sont la **colonne vertébrale** (*backbone*) des marchés financiers. Tout investissement international
+implique une conversion de devises, exposant l'investisseur au risque de change (FX risk).
+:::
+
+---
+
+## Volumes de transaction (Considerations About Volumes) {#sec-volumes}
+
+### Bourses mondiales — Classement par volume
+
+Les plus grandes bourses mondiales par volume d'échanges d'actions en 2013 (en milliards de dollars) :
+
+| Rang | Bourse | Volume (Mds USD) |
+|------|--------|-----------------|
+| 1 | NYSE Euronext US | 6 920 |
+| 2 | NASDAQ OMX US | 4 748 |
+| 3 | Tokyo Stock Exchange | 3 429 |
+| 4 | Shanghai Stock Exchange | 1 720 |
+| 5 | Shenzhen Stock Exchange | 1 684 |
+| 6 | London Stock Exchange | 1 142 |
+| 7 | NYSE Euronext Europe | 833 |
+| 8 | TMX Group (Canada) | 745 |
+| 9 | Hong Kong Exchanges | 677 |
+| 10 | Korea Exchange | 676 |
+
+::: {.callout-note title="À retenir"}
+Les marchés américains (NYSE + NASDAQ) représentent à eux seuls près de **60 %** du volume mondial des
+échanges d'actions, confirmant la domination des États-Unis dans la finance mondiale.
+:::
+
+### Volume journalier sur le NASDAQ
+
+Pour donner un ordre de grandeur concret, les statistiques journalières du NASDAQ en mars 2014 indiquent :
+
+- Volume total d'actions : entre **2 et 2,5 milliards de titres** par jour
+- Volume en dollars : entre **70 et 85 milliards de dollars** par jour
+- Nombre total de transactions : entre **9,8 et 11,6 millions** par jour
+
+Ces chiffres illustrent l'échelle colossale des marchés financiers modernes et la nécessité d'une infrastructure technologique robuste pour les gérer.
+
+### Le marché des changes — Le plus grand marché au monde
+
+Le marché des changes est de loin le **marché le plus liquide de la planète**.
+D'après les données de la **BRI** (*Banque des règlements internationaux*, *Bank for International Settlements*, BIS) :
+
+- Volume journalier : **environ 5 000 milliards (5 × 10¹²) de dollars**
+- La paire **EUR/USD** représente à elle seule **25 %** du volume total
+- Environ **50 % des transactions** sont des **swaps de change** (*FX swaps*)
+
+**Estimation du flux par seconde sur EUR/USD** :
+
+$$\frac{5 \times 10^{12} \times 0.25 \times 0.5}{86\,400 \times 2} \approx 3.6 \text{ millions USD/seconde}$$
+
+Les autres paires majeures (*majors*) :
+
+- **USD/JPY** : 18 % du volume
+- **GBP/USD** : 9 % du volume
+
+::: {.callout-tip title="Intuition — Taille du marché FX"}
+5 000 milliards de dollars par jour signifie que le marché des changes échange en **une seule journée** une
+somme supérieure au PIB annuel de nombreux pays. Aucun gouvernement ne peut contrôler durablement ce marché.
+:::
+
+---
+
+## Les principaux instruments (Main Instruments) {#sec-instruments}
+
+### Vue d'ensemble
+
+Les marchés financiers proposent une gamme variée d'instruments permettant de s'exposer à différents actifs
+sous différentes formes. Le choix de l'instrument dépend de l'horizon d'investissement, du niveau de risque
+souhaité et du besoin éventuel de couverture (*hedging*).
+
+### Instrument au comptant (Spot)
+
+L'instrument **au comptant** (*spot*) désigne l'actif lui-même, transacté et livré immédiatement.
+
+Exemples :
+
+- Une **action** achetée en bourse
+- Un montant de **dollars** acheté contre des euros
+- Note : une tonne de blé physique n'est généralement **pas** cotée en spot sur les marchés financiers
+
+::: {.callout-tip title="Intuition"}
+Acheter du spot, c'est acheter l'actif réel, ici et maintenant. La livraison peut cependant prendre quelques
+jours ouvrables (typiquement T+2 pour les actions).
+:::
+
+### Contrat à terme de gré à gré (Forward)
+
+Un **contrat forward** (*forward contract*) est un accord entre deux parties pour **acheter ou vendre un actif
+à un prix fixé aujourd'hui, à une date future déterminée**.
+
+Caractéristiques :
+
+- Contrat **bilatéral**, négocié de gré à gré (*OTC*)
+- Flexibilité sur le montant, la date et les conditions
+- Implique un **risque de contrepartie** (pas de chambre de compensation)
+
+### Contrat à terme standardisé (Futures)
+
+Un **contrat futures** (*futures contract*) est la **version standardisée** d'un forward, négociée sur une
+bourse organisée avec un mécanisme de compensation.
+
+Différences par rapport au forward :
+
+- Contrats **standardisés** : montant, date d'expiration, actif sous-jacent prédéfinis
+- Transactés sur une **bourse réglementée** (*exchange*)
+- **Chambre de compensation** (*clearing house*) élimine le risque de contrepartie
+- **Appels de marge** (*margin calls*) quotidiens selon l'évolution des prix
+
+::: {.callout-warning title="Le roll over — Attention à l'expiration"}
+Les futures ont une **date d'expiration** (*expiry date*). Un investisseur qui ne souhaite pas prendre livraison
+de l'actif sous-jacent (typique pour les matières premières !) doit **rouler** (*roll over*) sa position : clôturer
+le contrat proche de son expiration et en ouvrir un nouveau sur le contrat suivant. Cette opération a un coût.
+:::
+
+::: {.callout-tip title="Intuition — Futures vs Forward"}
+Le futures est au forward ce qu'un appartement standardisé en copropriété est à une maison sur mesure :
+plus de liquidité et de sécurité (grâce à la chambre de compensation), mais moins de flexibilité.
+:::
+
+### Option (Option)
+
+Une **option** (*option*) est un **droit** (et non une obligation) d'acheter (*call option*) ou de vendre
+(*put option*) un actif à un prix prédéfini (*strike price*), à ou avant une date donnée (*expiry date*).
+
+Caractéristiques :
+
+- L'acheteur de l'option paie une **prime** (*premium*) pour acquérir ce droit
+- Le vendeur (*writer*) encaisse la prime et prend l'obligation de livrer/acheter si l'option est exercée
+- L'option peut être **exercée ou non** selon l'évolution du prix de l'actif sous-jacent
+
+::: {.callout-note title="À retenir — Usages des options"}
+Les options servent à :
+
+- **Se couvrir** (*hedge*) contre des mouvements adverses de prix
+- **Spéculer** avec un effet de levier (*leverage*)
+- **Générer des revenus** en vendant des options (*premium collection strategies*)
+:::
+
+### Indice (Index)
+
+Un **indice** (*index*) regroupe un ensemble d'actifs en un **panier** (*basket*) représentatif d'un marché
+ou d'un segment de marché.
+
+Exemples :
+
+- **S&P 500** : les 500 plus grandes capitalisations boursières américaines
+- **Currency basket** : panier de devises pondérées
+- **CAC 40**, **DAX 40**, **SMI** : indices d'actions européens
+
+::: {.callout-tip title="Intuition"}
+Un indice permet de mesurer la performance globale d'un marché sans s'exposer au risque spécifique d'une
+seule entreprise. Les ETF (*Exchange Traded Funds*) permettent de répliquer la performance d'un indice
+à moindre coût.
+:::
+
+### Et bien d'autres produits dérivés...
+
+Les marchés financiers proposent également une vaste gamme de **produits dérivés** (*derivatives*) :
+
+- **Swaps** (notamment les swaps de taux et les swaps de change)
+- **CDO** (*Collateralized Debt Obligations*)
+- **Warrants**, **certificats**, **turbos**, etc.
+
+Ces instruments sont souvent utilisés à la fois pour la **couverture** (*hedging*) et la **spéculation**.
+
+---
+
+## Les faits stylisés (Stylised Facts) {#sec-stylised-facts}
+
+### Définition
+
+Les **faits stylisés** (*stylised facts*) sont des **régularités empiriques robustes** observées sur les séries
+temporelles de prix et de rendements financiers, quel que soit le marché, la fréquence ou la période considérée.
+
+Leur importance tient au fait qu'ils **distinguent les marchés réels d'une simple marche aléatoire** (*random walk*).
+Un modèle financier réaliste se doit de reproduire ces propriétés.
+
+Référence principale : **Cont (2001, 2005)**, *Empirical properties of asset returns*.
+
+### Regroupement de la volatilité (Volatility Clustering)
+
+Le **regroupement de la volatilité** (*volatility clustering*) est sans doute le fait stylisé le plus connu.
+Il a été formalisé par **Cont (2005)**.
+
+Observation :
+
+- Les **grandes variations** de prix tendent à être suivies par de **grandes variations** (dans un sens ou un autre)
+- Les **petites variations** tendent à être suivies par de **petites variations**
+
+Cette propriété implique que la **volatilité n'est pas constante dans le temps** — on parle d'**hétéroscédasticité**
+(*heteroskedasticity*).
+
+::: {.callout-note title="À retenir — Le modèle GARCH"}
+L'hétéroscédasticité est précisément ce que modélise la famille des modèles **GARCH** (*Generalized Autoregressive
+Conditional Heteroskedasticity*). Le **H** de GARCH désigne directement ce phénomène. Ces modèles sont
+omniprésents en finance quantitative pour la modélisation et la prévision de volatilité.
+:::
+
+::: {.callout-tip title="Intuition"}
+Le regroupement de volatilité traduit le fait que les marchés "s'agitent" par épisodes : les crises et
+les périodes de stress se caractérisent par des mouvements amples et successifs, tandis que les périodes
+calmes voient de petits mouvements se succéder. Les rendements journaliers de BMW en sont un exemple visuel clair.
+:::
+
+### Auto-corrélation négative à court terme
+
+À **haute fréquence** (*high frequency*), les séries de rendements présentent une **auto-corrélation négative**
+(*negative autocorrelation*) aux décalages temporels courts.
+
+Ce phénomène a été documenté par **Cont (2001)** sur des données *tick* USD/Yen de 1992 à 1994.
+
+Observation :
+
+- Au premier décalage (*lag 1*), l'auto-corrélation des variations de prix est négativement significative
+- Pour les décalages suivants, elle revient proche de zéro
+
+::: {.callout-tip title="Intuition — Bid-ask bounce"}
+Cette auto-corrélation négative à court terme est en partie expliquée par le **rebond bid-ask** (*bid-ask bounce*) :
+les transactions alternent entre le prix d'achat (*ask*) et le prix de vente (*bid*), créant mécaniquement
+une alternance positive/négative dans les variations de prix.
+:::
+
+::: {.callout-warning title="Contrairement au moyen terme"}
+À des fréquences plus basses (journalière, hebdomadaire), les rendements sont **proches de l'absence de
+corrélation** — conformément à la forme faible de l'EMH. C'est à haute fréquence que les déviations sont visibles.
+:::
+
+### Lois d'échelle (Scaling Laws)
+
+Les **lois d'échelle** (*scaling laws*) décrivent comment certaines statistiques des rendements se transforment
+lorsqu'on change d'échelle temporelle.
+
+Formulation :
+
+$$\mathbb{E}[|r|] \sim \Delta t^{\alpha}$$
+
+Cette relation indique que l'**espérance de la valeur absolue du rendement** évolue comme une **loi de puissance**
+du pas de temps $\Delta t$, avec un exposant $\alpha$.
+
+Propriétés :
+
+- Cette loi est observée sur une **large gamme d'échelles de temps** (de la seconde à plusieurs mois)
+- Elle décrit comment passer d'une résolution temporelle à une autre
+- Elle constitue une forme de **auto-similarité** (*self-similarity*) des marchés financiers
+
+::: {.callout-tip title="Intuition — Fractales financières"}
+Les lois d'échelle rappellent le comportement des **fractales** : en zoomant ou en dézoomant sur une série
+de prix financiers, on retrouve des propriétés statistiques similaires. Cela contraste avec la marche
+aléatoire simple où $\alpha = 0.5$ exactement.
+:::
+
+### Distributions à queues épaisses (Fat-Tailed Distributions)
+
+Les rendements financiers ne suivent **pas une loi normale** (gaussienne) — c'est l'un des faits stylisés
+les plus importants pour la gestion du risque.
+
+Les distributions empiriques des rendements présentent des **queues épaisses** (*fat tails*, *heavy tails*) :
+
+- Le **pic central** (*leptokurtosis*) est plus élevé et plus fin que celui d'une gaussienne
+- Les **queues** de distribution contiennent **beaucoup plus de probabilité** que la gaussienne ne le prédit
+
+::: {.callout-important title="Conséquence pour la gestion du risque"}
+Les événements extrêmes (krachs, flash crashes, crises) sont **beaucoup plus fréquents** que ce que prédit
+la loi normale. Un modèle de risque basé sur la normalité sous-estimera systématiquement les pertes extrêmes.
+C'est précisément ce qui a contribué à la crise financière de 2008 (modèles de risque inadaptés).
+:::
+
+Les distributions empiriques ressemblent davantage à des **distributions de Lévy** (*Lévy distributions*) ou
+à des **distributions stables** (*stable distributions*), qui possèdent des queues bien plus épaisses que la
+gaussienne.
+
+Exemple illustratif :
+
+- La densité de probabilité des variations de prix du S&P 500 toutes les 30 minutes montre clairement un pic
+  plus élevé et des queues plus épaisses que la distribution gaussienne de même variance.
+
+### Autres faits stylisés importants
+
+Au-delà des quatre propriétés présentées en détail, les marchés présentent d'autres régularités :
+
+**Saisonnalité** (*seasonality*) :
+
+- Motifs saisonniers **journaliers**, **hebdomadaires**, **mensuels** et **annuels** dans les volumes et la volatilité
+- L'activité de marché n'est pas uniforme au cours de la journée
+
+**Asymétrie en actions** (*asymmetry in equity markets*) :
+
+- Les marchés actions tendent à baisser plus vite qu'ils ne montent (*negative skewness*)
+- Les corrections sont souvent plus brutales et plus rapides que les hausses
+
+**Corrélations entre spread, volume et volatilité** :
+
+- **Corrélation négative** entre le spread *bid-ask* et le volume : plus le volume est élevé, plus le spread est faible (*tight spread*)
+- **Corrélation positive** entre le volume et la volatilité : les périodes de forte activité sont aussi des périodes de forte incertitude
+
+::: {.callout-note title="À retenir — Conclusion sur les faits stylisés"}
+L'ensemble de ces faits stylisés montre clairement que les marchés financiers **ne se comportent pas comme
+des marches aléatoires simples**. Ils résultent d'interactions humaines complexes, de comportements de
+troupeau, de contraintes institutionnelles, et de dynamiques non linéaires.
+:::
+
+---
+
+## Saisonnalité des marchés (Market Seasonality) {#sec-saisonnalite}
+
+### Saisonnalité intraday des actions (Equity Daily Seasonality)
+
+Les marchés actions présentent une **saisonnalité intraday** caractéristique, documentée notamment par
+**Frijns (2006)** sur plusieurs bourses (NYSE, NASDAQ, Paris Bourse).
+
+Le profil intraday de la volatilité ou du volume présente une forme caractéristique dite **en U** (*U-shape*) :
+
+- **Pic à l'ouverture** : forte activité et forte volatilité dès l'ouverture des marchés
+- **Calme en milieu de journée** : activité réduite
+- **Pic à la clôture** : regain d'activité avant la fermeture
+
+::: {.callout-tip title="Intuition — Pourquoi cette forme en U ?"}
+À l'ouverture, les traders réagissent aux nouvelles accumulées pendant la nuit et ajustent leurs positions.
+En milieu de journée, l'activité se réduit naturellement. À la clôture, les traders doivent clôturer leurs
+positions journalières, créant un second pic d'activité.
+:::
+
+Ce profil est **robuste** sur différents marchés boursiers, bien que son intensité varie selon les
+microstructures locales (règles de cotation, horaires, présence d'un fixing en milieu de journée).
+
+### Saisonnalité intraday des devises (FX Daily Seasonality)
+
+Le marché des changes présente une saisonnalité intraday différente, dictée par les **chevauchements de sessions**
+mondiales (*Masry, 2011*).
+
+Le marché FX est ouvert 24h/24, 5j/7. L'activité suit les ouvertures successives des grandes places financières :
+
+| Session | Heures GMT | Caractéristiques |
+|---------|-----------|-----------------|
+| Sydney | 22h00 – 07h00 | Faible volume |
+| Tokyo | 00h00 – 09h00 | Volume modéré (JPY actif) |
+| Londres | 08h00 – 17h00 | **Volume maximal** |
+| New York | 13h00 – 22h00 | Fort volume |
+
+Le **pic majeur** d'activité se produit lors du **chevauchement Londres–New York** (13h00–17h00 GMT),
+qui concentre la majorité des échanges mondiaux.
+
+::: {.callout-note title="À retenir — Chevauchement Londres-New York"}
+La session de chevauchement entre Londres et New York est la période de **plus grande liquidité** et souvent
+de plus grande volatilité sur le marché des changes. C'est lors de cette fenêtre que la plupart des
+indicateurs économiques importants sont publiés.
+:::
+
+#### Saisonnalité hebdomadaire et influence du sommeil
+
+Des recherches approfondies montrent également une **saisonnalité hebdomadaire** (*intraweek seasonality*)
+sur le marché FX. Les pics d'activité se répètent à intervalles réguliers au cours de la semaine,
+correspondant aux ouvertures successives des sessions.
+
+L'influence des **"sleeping hours"** (heures de sommeil par région) sur l'activité de marché illustre
+que les marchés sont directement pilotés par les **cycles biologiques et sociaux des traders humains**.
+
+::: {.callout-tip title="Intuition"}
+La saisonnalité FX est une conséquence directe du fait que le marché des changes est mondial et
+décentralisé. L'activité suit le soleil : elle se déplace d'Asie vers l'Europe puis vers l'Amérique
+au fil des heures.
+:::
+
+---
+
+## Événements de marché (Market Events) {#sec-evenements}
+
+### Classification — Endogènes vs Exogènes
+
+Les **événements de marché** (*market events*) sont des perturbations qui génèrent des mouvements de prix
+significatifs. Ils se classent en deux grandes catégories :
+
+```{mermaid}
+graph TD
+    A["Événements de marché"] --> B["Endogènes\n(Endogenous)"]
+    A --> C["Exogènes\n(Exogenous)"]
+    B --> D["Manque de liquidité\n(Liquidity crunch)"]
+    C --> E["Actualités programmées\n(Scheduled news)"]
+    C --> F["Actualités non programmées\n(Unscheduled news)"]
+```
+
+::: {.callout-note title="Définitions — Endo/Exogène"}
+- **Endogène** (*endogenous*) : vient de l'**intérieur** du système — la cause naît du marché lui-même
+- **Exogène** (*exogenous*) : vient de l'**extérieur** — une information ou un choc externe impacte le marché
+:::
+
+### Événements endogènes
+
+Les événements endogènes résultent des **dynamiques internes** du marché, sans cause externe identifiable.
+
+Le principal exemple est le **manque de liquidité** (*liquidity crunch*) :
+
+- Des vendeurs nombreux ne trouvent pas d'acheteurs (ou inversement)
+- Les prix s'effondrent (ou s'envolent) non pas à cause d'une nouvelle économique, mais à cause d'un déséquilibre entre offre et demande de liquidité
+- Le **Flash Crash** de 2010 est un exemple d'événement en partie endogène, amplifié par les algorithmes de trading
+
+### Événements exogènes — Actualités programmées
+
+Les **actualités programmées** (*scheduled news*) sont des publications économiques dont la date et l'heure
+sont annoncées à l'avance. Elles génèrent des pics de volatilité prévisibles.
+
+Exemples importants :
+
+- **Non-Farm Payrolls (NFP)** : publication chaque **premier vendredi du mois à 8h30 EST** (14h30 heure suisse) — mesure de l'emploi américain hors secteur agricole. C'est l'un des indicateurs les plus attendus et qui génère la plus forte réaction sur le marché des changes.
+- **PIB** (*Gross Domestic Product*, GDP) : publication trimestrielle des données de croissance économique par pays
+- **Indices de consommation** : confiance des consommateurs, ventes de maisons, commandes de biens durables, etc.
+- **Décisions de taux** des banques centrales (Fed, BCE, BNS...)
+
+::: {.callout-important title="Négocier les actualités — Un défi majeur"}
+Les actualités programmées sont connues à l'avance, mais leur **contenu** est incertain. Les marchés
+anticipent déjà une valeur attendue (*consensus*). Ce qui compte n'est pas le chiffre publié en absolu,
+mais l'**écart par rapport aux attentes** (*surprise*). Un bon chiffre en dessous des attentes peut faire
+baisser un marché.
+:::
+
+### Événements exogènes — Actualités non programmées
+
+Les **actualités non programmées** (*unscheduled news*) sont, par définition, imprévisibles. Leur impact
+est généralement plus violent car les marchés ne peuvent pas s'y préparer.
+
+Exemples historiques :
+
+- **Septembre 2011** : la Banque Nationale Suisse (BNS) fixe unilatéralement un **plancher** (*floor*) de 1,20 CHF pour l'EUR/CHF, générant une hausse immédiate de plusieurs pourcents du franc suisse en quelques secondes
+- **Attaque terroriste du 11 septembre 2001** à Manhattan : fermeture des bourses américaines, effondrement mondial des marchés à la réouverture
+- Catastrophes naturelles, accidents nucléaires, décisions politiques surprises...
+
+::: {.callout-warning title="Gestion du risque face aux événements non programmés"}
+Les événements non programmés illustrent la **limite des modèles de risque** : aucun modèle ne peut anticiper
+un attentat ou une décision de banque centrale surprise. La gestion du risque doit prévoir des mécanismes
+de protection contre l'inconnu (*tail risk hedging*, *black swan events*).
+:::
+
+### Quantification des événements de marché
+
+Des recherches académiques, notamment celles de **T. Bisig (2012)**, ont cherché à **quantifier et classifier**
+les événements de marché sur des données haute fréquence EUR/USD.
+
+La méthodologie consiste à :
+
+- Mesurer la **magnitude** (*magnitude*) de chaque événement — c'est-à-dire l'ampleur du mouvement de prix
+- Analyser le **profil temporel** de la réaction — immédiate ou progressive
+- Superposer la magnitude et le prix autour du moment de l'événement
+
+Les graphiques illustrent des événements réels survenus sur la paire EUR/USD entre 2007 et 2009, montrant
+que chaque événement majeur laisse une **empreinte caractéristique** sur les données haute fréquence.
+
+::: {.callout-tip title="Intuition — Utilité de la quantification"}
+Être capable d'identifier et de quantifier automatiquement les événements de marché dans des données haute
+fréquence permet de nettoyer les données (pour les modèles statistiques), d'estimer l'impact des actualités,
+et potentiellement de construire des stratégies de trading *event-driven*.
+:::
+
+---
+
+## Points clés à retenir (Key Takeaways) {#sec-cles}
+
+::: {.callout-note title="Efficience des marchés (EMH)"}
+- Théorie de Fama (1960, Nobel 2013) : les prix reflètent toute l'information disponible
+- Trois formes : **faible** (prix passés), **semi-forte** (information publique), **forte** (toute information)
+- Largement critiquée : bulles spéculatives, Flash Crash, comportements de troupeau témoignent d'inefficiences réelles
+- **Pas de consensus** : l'EMH reste un cadre utile, pas une vérité absolue
+:::
+
+::: {.callout-note title="Lieux et instruments d'échange"}
+- **Marchés réglementés** (*exchanges*) : centralisés, surveillance stricte, chambre de compensation → moins risqués
+- **OTC** (*Over The Counter*) : décentralisés, teneurs de marché, moins transparents → plus risqués
+- Instruments : **spot**, **forward**, **futures** (standardisé), **options** (droit, non obligation), **indices**
+- Le **roll over** des futures est crucial pour éviter la livraison physique
+:::
+
+::: {.callout-note title="Volumes"}
+- **NYSE Euronext US** : plus grande bourse mondiale en volume (~6 900 Mds USD en 2013)
+- **Forex** : le plus grand marché de la planète (~5 000 Mds USD/jour)
+- **EUR/USD** : 25 % du volume FX mondial · ~3,6 M USD échangés par seconde
+:::
+
+::: {.callout-note title="Faits stylisés — Les marchés ne sont pas des marches aléatoires"}
+- **Regroupement de volatilité** : grandes variations suivent grandes variations (→ GARCH)
+- **Auto-corrélation négative** à court terme / haute fréquence
+- **Lois d'échelle** : $\mathbb{E}[|r|] \sim \Delta t^{\alpha}$
+- **Queues épaisses** (*fat tails*) : les événements extrêmes sont bien plus fréquents que la loi normale ne le prédit
+- **Saisonnalité** : journalière (forme en U pour actions ; sessions pour FX), hebdomadaire, mensuelle
+:::
+
+::: {.callout-note title="Événements de marché"}
+- **Endogènes** : nés du marché lui-même (manque de liquidité)
+- **Exogènes programmés** : NFP, PIB, décisions de taux → volatilité anticipée
+- **Exogènes non programmés** : attentats, décisions surprises de banques centrales → impact brutal et imprévisible
+- La quantification des événements (Bisig, 2012) permet leur analyse systématique sur données haute fréquence
+:::

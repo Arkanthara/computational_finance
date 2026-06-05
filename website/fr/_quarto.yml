@@ -26,15 +26,7 @@ website:
     contents:
       - section: "Cours"
         contents: 
-          - section: "0. Système suisse à 3 piliers, rendements et valeur temps"
-            contents:
-              - text: "Détails"
-                href: ch0.qmd
-              - text: "Synthèse"
-                href: ch0r.qmd
-              - text: "Quiz"
-                href: ch0q.qmd
-          - section: "1. Séries temporelles et modèles autoregressifs"
+          - section: "1. Système Suisse et Returns"
             contents:
               - text: "Détails"
                 href: ch1.qmd
@@ -42,7 +34,9 @@ website:
                 href: ch1r.qmd
               - text: "Quiz"
                 href: ch1q.qmd
-          - section: "2. Marches et comportements"
+              - text: "Examen"
+                href: ch1e.qmd
+          - section: "2. Séries temporelles et modèles autoregressifs"
             contents:
               - text: "Détails"
                 href: ch2.qmd
@@ -50,6 +44,18 @@ website:
                 href: ch2r.qmd
               - text: "Quiz"
                 href: ch2q.qmd
+              - text: "Examen"
+                href: ch2e.qmd
+          - section: "3. Marches et comportements"
+            contents:
+              - text: "Détails"
+                href: ch3.qmd
+              - text: "Synthèse"
+                href: ch3r.qmd
+              - text: "Quiz"
+                href: ch3q.qmd
+              - text: "Examen"
+                href: ch3e.qmd
           - section: "4. Données, moyenne mobile et temps intrinsèque"
             contents:
               - text: "Détails"
@@ -58,6 +64,8 @@ website:
                 href: ch4r.qmd
               - text: "Quiz"
                 href: ch4q.qmd
+              - text: "Examen"
+                href: ch4e.qmd
           - section: "5. Carnet d'ordres limite"
             contents:
               - text: "Détails"
@@ -66,6 +74,8 @@ website:
                 href: ch5r.qmd
               - text: "Quiz"
                 href: ch5q.qmd
+              - text: "Examen"
+                href: ch5e.qmd
           - section: "6. Exécution algorithmique"
             contents:
               - text: "Détails"
@@ -74,6 +84,8 @@ website:
                 href: ch6r.qmd
               - text: "Quiz"
                 href: ch6q.qmd
+              - text: "Examen"
+                href: ch6e.qmd
           - section: "7. Construction de portefeuille"
             contents:
               - text: "Détails"
@@ -82,6 +94,8 @@ website:
                 href: ch7r.qmd
               - text: "Quiz"
                 href: ch7q.qmd
+              - text: "Examen"
+                href: ch7e.qmd
           - section: "8. Modèles à base d'agents"
             contents:
               - text: "Détails"
@@ -90,6 +104,8 @@ website:
                 href: ch8r.qmd
               - text: "Quiz"
                 href: ch8q.qmd
+              - text: "Examen"
+                href: ch8e.qmd
           - section: "9. Options - notions de base"
             contents:
               - text: "Détails"
@@ -98,6 +114,8 @@ website:
                 href: ch9r.qmd
               - text: "Quiz"
                 href: ch9q.qmd
+              - text: "Examen"
+                href: ch9e.qmd
           - section: "10. Options - Grecques"
             contents:
               - text: "Détails"
@@ -106,6 +124,8 @@ website:
                 href: ch10r.qmd
               - text: "Quiz"
                 href: ch10q.qmd
+              - text: "Examen"
+                href: ch10e.qmd
           - section: "11. Obligations - notions de base"
             contents:
               - text: "Détails"
@@ -114,6 +134,8 @@ website:
                 href: ch11r.qmd
               - text: "Quiz"
                 href: ch11q.qmd
+              - text: "Examen"
+                href: ch11e.qmd
           - section: "12. Obligations - sensibilités temps et taux"
             contents:
               - text: "Détails"
@@ -122,6 +144,8 @@ website:
                 href: ch12r.qmd
               - text: "Quiz"
                 href: ch12q.qmd
+              - text: "Examen"
+                href: ch12e.qmd
           - section: "13. Futures, forwards et ESG"
             contents:
               - text: "Détails"
@@ -130,6 +154,8 @@ website:
                 href: ch13r.qmd
               - text: "Quiz"
                 href: ch13q.qmd
+              - text: "Examen"
+                href: ch13e.qmd
           - section: "14. Données alternatives et rétrospective"
             contents:
               - text: "Détails"
@@ -138,6 +164,8 @@ website:
                 href: ch14r.qmd
               - text: "Quiz"
                 href: ch14q.qmd
+              - text: "Examen"
+                href: ch14e.qmd
 
 format:
   html:

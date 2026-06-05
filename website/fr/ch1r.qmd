@@ -1,0 +1,153 @@
+---
+title: "Rendements et valeur temporelle de l'argent — Révision"
+---
+
+## Système des 3 piliers (3-Pillar System)
+
+| Pilier | Nom | Composantes | Objectif |
+|--------|-----|-------------|----------|
+| **1er** | Prévoyance étatique | AVS · IAI · PC | Minimum vital |
+| **2e** | Prévoyance professionnelle | LPP · LAA | Maintien niveau de vie |
+| **3e** | Prévoyance privée | 3a (liée) · 3b (libre) | Besoins supplémentaires |
+
+::: {.callout-note title="Chiffre clé"}
+Personnes âgées >65 ans menacées de pauvreté : **51 % en 1979 → ~15–20 % aujourd'hui**
+:::
+
+---
+
+## Rendements simples (Simple Returns)
+
+### Formules fondamentales
+
+**1 période :**
+
+$$R_1(t) = \frac{P(t)}{P(t-1)} - 1 \qquad \Leftrightarrow \qquad 1 + R_1(t) = \frac{P(t)}{P(t-1)}$$
+
+**$n$ périodes — composition multiplicative :**
+
+$$1 + R_n(t) = \prod_{i=0}^{n-1}\bigl(1 + R_1(t-i)\bigr)$$
+
+**Portefeuille ($n$ actifs, $\sum\alpha_i = 1$) :**
+
+$$R_p = \sum_{i=1}^{n} \alpha_i R_i$$
+
+### Exemple numérique
+
+| Temps | 1 | 2 | 3 | 4 |
+|-------|---|---|---|---|
+| Prix | 10 | 12 | 14 | 16 |
+| $R_1$ | — | 20% | 16,7% | 14,3% |
+
+- **Somme** : $20\% + 16.7\% + 14.3\% = 50.9\%$ ❌
+- **Produit** : $(1.20)(1.167)(1.143) - 1 = 60\%$ ✅
+
+::: {.callout-warning title="Piège — Ne jamais sommer les rendements simples"}
+Les rendements simples multi-périodes se **composent** (produit), ils ne se **somment pas**.
+:::
+
+::: {.callout-warning title="Piège — Asymétrie"}
+$+20\%$ puis $-20\%$ **≠** retour au point de départ. Hausse de 50 → 60 (+20%), retour : 60 → 50 (−16,7%).
+:::
+
+---
+
+## Annualisation (Annualisation)
+
+| Base | Formule |
+|------|---------|
+| Mensuel → Annuel | $R_a = (1 + R_m)^{12} - 1$ |
+| Journalier → Annuel | $R_a = (1 + R_d)^{256} - 1$ |
+
+::: {.callout-warning title="Piège — Ne pas multiplier simplement"}
+$R_a \neq 12 \times R_m$ · Toujours utiliser la composition · Convention : 250 / 256 / 300 jours selon les marchés.
+:::
+
+---
+
+## Valeur temporelle de l'argent (Time Value of Money)
+
+### Capitalisation discrète vs continue
+
+| Fréquence | Formule | Valeur (PV=1000, R=10%, n=1) |
+|-----------|---------|------------------------------|
+| Annuelle | $PV(1+R)^n$ | 1 100,0 CHF |
+| Trimestrielle | $PV(1+R/4)^{4n}$ | 1 103,8 CHF |
+| Journalière | $PV(1+R/365)^{365n}$ | 1 105,2 CHF |
+| **Continue** | $PV \cdot e^{Rn}$ | **1 105,2 CHF** |
+
+### Relation taux simple ↔ taux continu
+
+$$r = \ln(1+R) \quad \Longrightarrow \quad r < R$$
+
+$$R = e^r - 1$$
+
+**Exemple :** $R = 10\%$ → $r = \ln(1.10) = 9.53\%$
+
+::: {.callout-note title="À retenir"}
+Capitalisation continue = outil **théorique** (exponentielle plus commode analytiquement), pas réaliste en pratique.
+:::
+
+---
+
+## Rendements continus / logarithmiques (Log Returns)
+
+### Formule
+
+$$r(t) = \ln\!\left(\frac{P_t}{P_{t-1}}\right) = \ln P_t - \ln P_{t-1}$$
+
+### Comparaison simples vs logarithmiques
+
+| Propriété | Rendements simples | Rendements log |
+|-----------|--------------------|----------------|
+| Multi-périodes | **Produit** $\prod(1+R_i)$ | **Somme** $\sum r_i$ |
+| Portefeuille | $R_p = \sum\alpha_i R_i$ ✅ | $r_p \neq \sum\alpha_i r_i$ ⚠️ |
+| Symétrie | ❌ Asymétrique | ✅ Symétrique |
+| Plage | $]-1,+\infty[$ | $]-\infty,+\infty[$ |
+
+::: {.callout-important title="Additivité temporelle des log-rendements"}
+$r_n(t) = \displaystyle\sum_{i=0}^{n-1} r_1(t-i)$ — valable **uniquement** pour l'agrégation temporelle, **pas** pour les portefeuilles.
+:::
+
+---
+
+## Comptabilité (Bookkeeping)
+
+### Formule de NAV avec actif étranger
+
+$$\text{NAV (CHF)} = \text{position} \times \text{prix (USD)} \times \text{USDCHF} + \text{Cash (CHF)}$$
+
+### Synthèse des 4 cas
+
+| Cas | FX fixe ? | Couverture ? | P&L | Risques exposés |
+|-----|-----------|-------------|-----|----------------|
+| CHF → actif CHF | — | — | +105 CHF | Action seul |
+| CHF → actif USD, FX fixe | ✅ | ❌ | +9 CHF | Action seul |
+| CHF → actif USD, FX variable | ❌ | ❌ | −0,8 CHF | Action **+** FX |
+| CHF → actif USD, FX variable | ❌ | ✅ | +7,6 CHF | Action seul (coût hedge = 2,4 CHF) |
+
+::: {.callout-warning title="Piège — Risque de change"}
+Même si le prix de l'actif en USD remonte à son niveau initial, la **NAV en CHF peut être inférieure** si le dollar s'est déprécié entretemps.
+:::
+
+::: {.callout-note title="Couverture de change (FX Hedging)"}
+- **Principe** : position courte en USD pour neutraliser le risque FX
+- **Avantage** : réduit la volatilité de la NAV
+- **Coût** : différentiel de taux d'intérêt entre les deux devises
+:::
+
+---
+
+## Récapitulatif des formules clés
+
+| Concept | Formule |
+|---------|---------|
+| Rendement simple 1 période | $R_1(t) = P(t)/P(t-1) - 1$ |
+| Rendement simple $n$ périodes | $1 + R_n = \prod(1+R_i)$ |
+| Rendement de portefeuille | $R_p = \sum\alpha_i R_i$ |
+| Annualisation (mensuel) | $R_a = (1+R_m)^{12} - 1$ |
+| Capitalisation discrète | $FV = PV(1+R)^n$ |
+| Capitalisation continue | $FV = PV \cdot e^{Rn}$ |
+| Taux continu ↔ simple | $r = \ln(1+R)$ |
+| Log-rendement 1 période | $r(t) = \ln(P_t/P_{t-1})$ |
+| Log-rendement $n$ périodes | $r_n(t) = \sum r_i(t)$ |

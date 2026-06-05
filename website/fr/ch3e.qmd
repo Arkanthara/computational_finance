@@ -1,0 +1,160 @@
+---
+title: "Marchés financiers et comportements — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Imaginez un marché aux puces planétaire ouvert 24h/24, où des millions de participants hurlent simultanément leurs prix.
+Certains pensent connaître la vraie valeur des objets (les "efficientistes"), d'autres les regardent simplement
+se vendre de plus en plus vite et en concluent qu'il faut acheter (les "chartistes").
+Soudain, sans raison apparente, tout le monde panique et jette ses affaires par terre en 5 minutes — puis reprend
+ses esprits et ramasse tout. C'est le *Flash Crash*.
+
+Ce chapitre répond à une question simple : **les marchés sont-ils intelligents, ou juste agités ?**
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- Les marchés existent pour échanger des actifs de manière organisée (ou pas).
+- L'EMH affirme que les prix sont toujours "justes" — mais la réalité dit souvent le contraire.
+- Les marchés ne sont **pas des marches aléatoires** : ils ont des structures répétables appelées **faits stylisés**.
+- La volatilité se regroupe, les queues sont épaisses, les données saisonnières sont stables.
+- Les événements de marché peuvent venir de l'intérieur (endogènes) ou de l'extérieur (exogènes).
+- La taille des marchés est vertigineuse : le FX échange ~5 000 Mds USD **par jour**.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+|---------|-------------------------------|-----------|
+| **EMH** (*Efficient Market Hypothesis*) | Les prix reflètent toute l'information disponible → impossible de battre le marché durablement | Si c'était vrai à 100 %, Buffett et Soros ne seraient que chanceux |
+| **Forme faible** (*Weak form*) | Les prix passés ne prédisent pas le futur → l'analyse technique ne sert à rien | Le prix d'hier ne dit rien sur le prix de demain |
+| **Forme semi-forte** (*Semi-strong*) | Toute info publique est déjà dans le prix → lire les journaux ne sert à rien | Le marché a déjà lu le journal avant vous |
+| **Forme forte** (*Strong form*) | Même les initiés ne peuvent pas battre le marché | Théoriquement parfait, empiriquement absurde |
+| **Marché réglementé** (*Exchange*) | Lieu centralisé, strict, avec chambre de compensation | NYSE, LSE, SIX — la règle du jeu est claire |
+| **OTC** (*Over The Counter*) | Transactions directes entre parties, sans bourse centrale | Plus flexible, mais plus risqué |
+| ***Market maker*** | Teneur de marché qui prend un inventaire et profite du spread | Il assume le risque en échange du spread |
+| **Volatility clustering** | Grandes variations suivies de grandes variations, petites de petites | La volatilité arrive en épisodes, pas au hasard |
+| **Fat tails** (*queues épaisses*) | Les événements extrêmes sont bien plus fréquents que la loi normale ne le prédit | Les krachs sont "impossibles" selon Gauss, mais ils arrivent tout le temps |
+| **Faits stylisés** (*Stylised facts*) | Régularités empiriques universelles des marchés financiers | Ce que tout marché a en commun, quelle que soit l'époque |
+| **Saisonnalité** (*Seasonality*) | Motifs répétables dans le temps (intraday, hebdo, annuel) | En FX : pic à l'ouverture Londres-New York |
+| **Événement endogène** | Choc né du marché lui-même (ex : manque de liquidité) | Le marché se panique tout seul |
+| **Événement exogène** | Choc venant de l'extérieur (news, banque centrale...) | Le monde réel frappe à la porte du marché |
+| **Futures** | Contrat standardisé pour acheter/vendre un actif à une date future | Forward + bourse + chambre de compensation |
+| **Option** | Droit (non obligation) d'acheter (*call*) ou vendre (*put*) à un prix fixé | On paie une prime pour le droit de choisir |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+```{mermaid}
+graph TD
+    A["Marchés financiers"] --> B["Efficience ?"]
+    A --> C["Structure"]
+    A --> D["Comportement empirique"]
+
+    B --> B1["EMH — 3 formes"]
+    B1 --> B2["Faible → prix passés"]
+    B1 --> B3["Semi-forte → info publique"]
+    B1 --> B4["Forte → info privée"]
+    B --> B5["Critiques : bulles, Flash Crash, Buffett"]
+
+    C --> C1["Lieux : Exchange vs OTC"]
+    C --> C2["Actifs : equity, bonds, FX, commodities"]
+    C --> C3["Instruments : spot, forward, futures, options"]
+
+    D --> D1["Faits stylisés"]
+    D1 --> D2["Volatility clustering → GARCH"]
+    D1 --> D3["Fat tails → non-gaussien"]
+    D1 --> D4["Scaling laws"]
+    D1 --> D5["Saisonnalité"]
+    D --> D6["Événements : endogène / exogène"]
+```
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+|---------|---------------|-----------|
+| $\mathbb{E}[\|r\|] \sim \Delta t^{\alpha}$ | Loi d'échelle des rendements | $\alpha \neq 0.5$ en pratique (marche aléatoire = 0.5) |
+| $\frac{5 \times 10^{12} \times 0.25 \times 0.5}{86\,400 \times 2} \approx 3.6 \text{ M USD/s}$ | Flux EUR/USD par seconde | FX = marché le plus liquide au monde |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **L'EMH ne dit pas que les marchés ne font jamais d'erreurs** — elle dit juste qu'on ne peut pas les exploiter systématiquement.
+- **La forme forte est la moins acceptée empiriquement** — les délits d'initié existent et sont rentables (si illégaux).
+- **Ce n'est pas le chiffre NFP qui fait bouger le marché, c'est la surprise** : chiffre publié − consensus attendu.
+- **Un futures ≠ Forward** : le futures est standardisé, compensé, avec appels de marge quotidiens.
+- **Oublier le roll over d'un futures** = prendre livraison physique (barils de pétrole, tonnes de blé...).
+- **Fat tails ≠ bug** : c'est une propriété structurelle. Modéliser les rendements avec une loi normale **sous-estime systématiquement** les risques extrêmes.
+- **Volatility clustering ≠ prévisibilité du sens** : on peut prévoir que la volatilité sera forte, pas si le marché montera ou baissera.
+- **OTC = moins de protection** : sans chambre de compensation, le risque de contrepartie est réel.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Qu'est-ce que l'EMH et pourquoi est-elle controversée ?
+
+**R courte :** Théorie de Fama (1960) selon laquelle les prix reflètent toute l'info disponible. Controversée car les bulles spéculatives, le Flash Crash et les performances durables de certains gérants la contredisent empiriquement.
+
+---
+
+**Q :** Quelles sont les 3 formes de l'EMH ?
+
+**R courte :** Faible (prix passés), semi-forte (toute info publique), forte (toute info y compris privée). La plus faible est la plus plausible, la forte est empiriquement rejetée.
+
+---
+
+**Q :** Qu'est-ce qu'un fait stylisé ? Citez-en 3.
+
+**R courte :** Régularité empirique universelle sur les marchés. Exemples : volatility clustering, fat tails, saisonnalité intraday.
+
+---
+
+**Q :** Pourquoi le volatility clustering est-il important en finance ?
+
+**R courte :** Il montre que la volatilité n'est pas constante (hétéroscédasticité). C'est la base des modèles GARCH, incontournables en gestion du risque.
+
+---
+
+**Q :** Quelle est la différence entre un futures et un forward ?
+
+**R courte :** Même principe (achat/vente différé à prix fixé), mais le futures est standardisé, négocié en bourse, et compensé par une chambre de compensation. Le forward est OTC et flexible.
+
+---
+
+**Q :** Pourquoi les modèles gaussiens sous-estiment-ils le risque ?
+
+**R courte :** Les rendements réels ont des queues épaisses (*fat tails*) : les événements extrêmes sont beaucoup plus fréquents que ce qu'une loi normale prédit. Utiliser Gauss, c'est ignorer les krachs.
+
+---
+
+**Q :** Quelle est la différence entre un événement endogène et exogène ?
+
+**R courte :** Endogène = né du marché lui-même (ex : manque de liquidité, flash crash). Exogène = choc extérieur (news programmée comme NFP, ou non programmée comme une décision surprise de banque centrale).
+
+---
+
+**Q :** Pourquoi le marché FX est-il si particulier ?
+
+**R courte :** C'est le plus grand marché au monde (~5 000 Mds USD/jour), ouvert 24h/24, entièrement décentralisé (OTC), avec une saisonnalité dictée par les sessions mondiales. EUR/USD seul représente 25 % du volume.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+::: {.callout-note title="L'essentiel du chapitre"}
+- **EMH** : les prix reflètent toute l'info → 3 formes (faible / semi-forte / forte) → largement critiquée
+- **Exchange vs OTC** : chambre de compensation vs risque de contrepartie
+- **Instruments** : spot · forward · futures (standardisé, roll over !) · option (droit ≠ obligation)
+- **Faits stylisés** : volatility clustering (→ GARCH) · fat tails (→ pas gaussien) · scaling laws · saisonnalité
+- **Événements** : endogène (interne) vs exogène (programmé ou surprise)
+- **Marché FX** : ~5 000 Mds USD/jour · EUR/USD = 25 % · pic à chevauchement Londres-New York
+- **Les marchés ≠ marche aléatoire** : structure répétable, prévisible en volatilité, pas en direction
+:::

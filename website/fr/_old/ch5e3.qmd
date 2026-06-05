@@ -1,0 +1,226 @@
+---
+title: "Le Carnet d'Ordres à Cours Limité"
+subtitle: "Guide de révision — Préparation à l'oral"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+---
+
+## Mise en contexte
+
+Vous voulez acheter 10 000 actions Apple. À qui ? Il n'y a pas de vendeur permanent —
+le marché doit *organiser* la rencontre. Le **LOB** est la solution dominante sur toutes
+les grandes bourses mondiales. Comprendre le LOB, c'est comprendre comment les prix
+naissent, seconde après seconde, de millions de décisions individuelles.
+
+---
+
+## Avec qui échange-t-on ?
+
+### Teneur de marché (OTC)
+
+**Idée.** Un intermédiaire toujours présent, qui achète *et* vend en continu.
+
+**Intuition.** Le libraire d'occasion : il achète vos livres moins cher qu'il ne les revend.
+
+**Points clés :**
+
+- Profit sur le **spread bid-ask** (achète bas, revend haut).
+- Prend un **risque d'inventaire** : si trop de gens lui vendent, il accumule une position dangereuse.
+- Se couvre (*hedge*) périodiquement auprès d'autres teneurs de marché.
+- Typique des marchés OTC, ex. : Forex.
+
+### LOB (Bourse organisée)
+
+**Idée.** Pas d'intermédiaire : les ordres sont appariés automatiquement dans un carnet centralisé.
+
+**Intuition.** Un tableau d'affichage géant géré par un algorithme.
+
+**Points clés :**
+
+- Le LOB $\mathcal{L}(t)$ = ensemble des ordres **actifs** (soumis, non exécutés, non annulés).
+- Utilisé par NYSE, Euronext, SIX Swiss Exchange…
+- Le risque n'est plus d'inventaire mais **d'opportunité** (l'ordre peut ne jamais être exécuté).
+
+---
+
+## Définitions clés
+
+### Les quatre prix fondamentaux
+
+| Symbole | Nom | Définition courte |
+|---|---|---|
+| $b(t)$ | **Bid** | Meilleur prix d'achat actif |
+| $a(t)$ | **Ask** | Meilleur prix de vente actif |
+| $s(t) = a(t)-b(t)$ | **Spread** | Toujours $\geq 0$ |
+| $m(t) = \frac{a+b}{2}$ | **Mid-price** | Proxy du "vrai" prix |
+
+> ⚠️ $s(t) \geq 0$ **toujours** : si ask < bid, un appariement aurait déjà eu lieu.
+
+### Prix relatif $\delta^x$
+
+- Mesure la **distance** d'un ordre par rapport au meilleur prix de son côté.
+- $\delta^x = 0$ → ordre placé exactement au bid/ask (agressif).
+- $\delta^x > 0$ → ordre plus loin du marché (passif, plus patient).
+
+### Profondeur du carnet
+
+- Volume total disponible à chaque niveau de prix relatif.
+- LOB **profond** = beaucoup de volume = marché **liquide**.
+
+::: {.callout-note collapse="true"}
+### Formules formelles
+
+$$b(t) = \max_{x \in B(t)} p_x \qquad a(t) = \min_{x \in A(t)} p_x$$
+
+$$N^b(p, t) = \sum_{\{x \in B(t) \mid \delta^x = p\}} w_x \qquad N^a(p, t) = \sum_{\{x \in A(t) \mid \delta^x = p\}} w_x$$
+
+Un ordre : $x = (p_x, w_x, t_x)$ — prix, taille, horodatage.
+:::
+
+---
+
+## Types d'ordres
+
+**L'arbitrage fondamental : meilleur prix ↔ risque de non-exécution.**
+
+| Type | Exécution | Prix | Risque |
+|---|---|---|---|
+| **Limite** (*Limit Order*) | Différée | Meilleur | Non-exécution |
+| **Marché** (*Market Order*) | Immédiate | Moins bon | Prix défavorable |
+
+**Les 3 cas pour un ordre d'achat :**
+
+| Condition | Type | Effet |
+|---|---|---|
+| $p_x \leq b(t)$ | Limite | Bid inchangé |
+| $b(t) < p_x < a(t)$ | Limite dans le spread | Bid $\uparrow$ jusqu'à $p_x$ |
+| $p_x \geq a(t)$ | Marché | Exécution au meilleur ask |
+
+::: {.callout-note collapse="true"}
+### Exemple numérique
+
+Bid $= 1{,}50$, Ask $= 1{,}53$.
+
+- Ordre à $1{,}48$ → limite sous le bid, rien ne change.
+- Ordre à $1{,}51$ → dans le spread, nouveau bid $= 1{,}51$, spread passe à $0{,}02$.
+- Ordre à $1{,}53$ → atteint l'ask, exécution immédiate, ask passe à $1{,}54$.
+:::
+
+---
+
+## Priorités
+
+Quand plusieurs ordres sont au même prix, qui est exécuté en premier ?
+
+| Règle | Critère 2 | Favorise |
+|---|---|---|
+| **Prix-Temps** (FIFO) | Premier arrivé | Rapidité de soumission |
+| **Prorata** | $w / \sum w$ | Gros ordres |
+| **Prix-Taille** | Plus grand $w$ | Gros ordres |
+
+> ⚠️ La règle prix-temps crée une **course à la vitesse** entre algorithmes (HFT).
+
+::: {.callout-note collapse="true"}
+### Exemple prorata
+
+Ordres : $w_0 = 4$, $w_1 = 2$, $w_2 = 4$. Un ordre $-2$ arrive.
+
+- $w_0$ : $2 \times \frac{4}{10} = 0{,}8$
+- $w_1$ : $2 \times \frac{2}{10} = 0{,}4$
+- $w_2$ : $2 \times \frac{4}{10} = 0{,}8$
+:::
+
+---
+
+## Visibilité
+
+| Mécanisme | Transparence | Usage |
+|---|---|---|
+| **LOB standard** | Totale | La plupart des bourses |
+| **Ordre iceberg** | Partielle (tranche visible) | Cacher l'ampleur d'un gros ordre |
+| **Dark pool** | Nulle | Gros volumes institutionnels |
+
+- Ordre iceberg : seule la pointe est visible ; une nouvelle tranche se révèle après exécution.
+- Dark pool : opacité ≠ efficacité garantie (scandales documentés).
+
+---
+
+## Faits empiriques
+
+| Propriété | Observation | Intuition |
+|---|---|---|
+| **Taille des ordres** | Uniforme + pics sur valeurs rondes | Biais cognitif humain |
+| **Prix relatif $\delta$** | Queues épaisses (fat tails) | Beaucoup d'ordres très loin du marché |
+| **Annulations** | **70–80 %** des ordres | Les algos explorent et s'ajustent en continu |
+| **Profondeur** | Distribution à queues épaisses | Concentration près du bid/ask, mais aussi au loin |
+| **Impact prix** | **Concave** en $|w|$ | Doubler la taille ne double pas l'impact |
+
+### Impact de marché — détail
+
+- **Impact instantané** : déplacement immédiat du bid/ask.
+- **Impact permanent** : effet durable, même après exécution.
+  - Causes : signal d'information transmis aux autres traders, ou cascade d'ordres déclenchée.
+- **Courbe maîtresse** (Lillo et al.) : après normalisation par la capitalisation → **loi de puissance universelle** pour tous les actifs.
+
+---
+
+## Modèle de Maslov
+
+### Deux approches de modélisation
+
+| École | Hypothèses | Force |
+|---|---|---|
+| **Économistes** | Agents rationnels, utilité | Fondements théoriques |
+| **Physiciens** (éconophysique) | Modèle simple, propriétés émergentes | Capture les faits stylisés |
+
+### L'algorithme
+
+À chaque pas de temps, un seul trader arrive :
+
+- Acheteur ou vendeur avec $p = 0{,}5$.
+- Prob. $1-r$ → **ordre au marché** (bid ou ask).
+- Prob. $r$ → **ordre limite** à $p' \mp k$ ($p'$ = dernier prix, $k$ aléatoire).
+- Aucune annulation.
+
+### Résultats clés
+
+| Propriété | Résultat | Comparaison |
+|---|---|---|
+| Distribution des incréments | **Non-gaussienne**, queues épaisses | Conforme aux marchés réels |
+| Volatilité | **Clustering** (épisodes groupés) | Conforme aux marchés réels |
+| Exposant de Hurst $H$ | $\approx 1/4$ | vs $1/2$ pour une marche aléatoire |
+| Autocorrélation | **Négative** (anti-persistante) | Mean-reverting à court terme |
+
+> **Interprétation de $H$ :**
+> $H < 0{,}5$ → anti-persistant (mean-reverting) · $H = 0{,}5$ → marche aléatoire · $H > 0{,}5$ → tendanciel
+
+> **L'essentiel :** un modèle minimaliste reproduit les signatures statistiques des vrais marchés. Pour les agents hétérogènes → **ABM** (chapitre suivant).
+
+---
+
+## Flux d'un ordre dans le LOB
+
+```{mermaid}
+flowchart LR
+  A[Ordre soumis] --> B{Apparié ?}
+  B -- Oui --> C[Marché\nExécution immédiate]
+  B -- Non --> D[Limite\nEntre dans le LOB]
+  D --> E{Annulé ?}
+  E -- 70–80 % --> F[Annulation]
+  E -- 20–30 % --> G[Exécution]
+```
+
+---
+
+## Pièges à l'oral ⚠️
+
+- **Spread négatif impossible** : si $a(t) < b(t)$, un appariement aurait eu lieu.
+- **Ordre limite ≠ exécution garantie** : risque d'opportunité.
+- **Impact concave** : doubler $|w|$ ne double pas l'impact sur le prix.
+- **$H = 1/4$ = anti-persistance**, pas tendance ($H > 1/2$).
+- **Dark pool ≠ efficacité** : l'opacité peut être exploitée contre les clients.
+- **Maslov = homogène** : pour l'hétérogénéité des agents → ABM.

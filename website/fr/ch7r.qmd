@@ -128,7 +128,7 @@ $$
 - $q \to \infty$ → rendement maximal
 - Faire varier $q$ trace la frontière efficiente entière
 
-::: {.callout-warning title="Effet des contraintes">
+::: {.callout-warning title="Effet des contraintes"}
 Des contraintes sur les poids **abaissent** la frontière efficiente et **réduisent** la zone de risque atteignable.
 :::
 

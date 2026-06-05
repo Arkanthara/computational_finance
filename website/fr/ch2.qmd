@@ -1,0 +1,823 @@
+---
+title: "Séries temporelles et modèles autorégressifs"
+---
+
+## Vue d'ensemble
+
+Ce chapitre introduit les **séries temporelles** (Time Series) et les **modèles autorégressifs** (Autoregressive Models), des outils fondamentaux en finance computationnelle pour analyser et modéliser l'évolution d'une variable au cours du temps.
+
+La démarche générale suit le schéma suivant :
+
+```{mermaid}
+flowchart TD
+    A[Série temporelle brute\nex : prix] --> B{Stationnaire ?}
+    B -- Non --> C[Transformer\nrendements, différences, log...]
+    C --> D[Série stationnaire]
+    B -- Oui --> D
+    D --> E[Analyser l'ACF]
+    E --> F[Choisir le modèle\nAR, MA, ARMA]
+    F --> G[Estimer les paramètres\nMLE, moindres carrés...]
+    G --> H[Valider\nAIC, BIC, analyse des résidus]
+```
+
+---
+
+## Introduction aux séries temporelles
+
+### Définition formelle
+
+Une **série temporelle univariée** (Univariate Time Series) est une suite d'observations d'une seule variable réelle, indexée par le temps :
+
+$$
+X(t_i) \in \mathbb{R}, \quad t_i \text{ occurrences}
+$$
+
+**Exemple typique — le taux de change EUR/USD observé chaque jour :**
+
+$$
+X(t_i) = \ldots,\ 1.3012,\ 1.3014,\ 1.3022,\ \ldots
+$$
+
+$$
+t_i = \{\ldots,\ \text{7 jan. 2013 00:00:00},\ \text{8 jan. 2013 00:00:00},\ \ldots\}
+$$
+
+Dans cet exemple, la **fréquence** est journalière. Cela soulève déjà une question pratique : quand commence précisément une journée ? Le fuseau horaire, les jours fériés et les heures d'ouverture des marchés sont autant de subtilités qui compliquent la définition des instants $t_i$ en pratique.
+
+::: {.callout-note title="À retenir"}
+L'ordre des observations est **fondamental** dans une série temporelle. Contrairement à la théorie de l'information où les occurrences peuvent être réarrangées librement, **l'ordre temporel porte de l'information** — c'est précisément ce que les modèles de ce chapitre cherchent à exploiter.
+:::
+
+### Le décalage temporel (Lag)
+
+::: {.callout-tip title="Définition — Lag"}
+Le **décalage** ou **lag** $\tau$ est la durée qui sépare deux observations. On parle aussi de **variables décalées** (Lagged Variables) : $X_{t-\tau}$ désigne la valeur de la variable $X$ observée $\tau$ périodes avant l'instant $t$.
+:::
+
+Le lag est la notion centrale des modèles autorégressifs.
+
+**Exemples :**
+
+- Lag $\tau = 1$ : on compare $X_t$ à $X_{t-1}$ (observation immédiatement précédente)
+- Lag $\tau = 5$ : on compare $X_t$ à $X_{t-5}$ (ex. même jour de la semaine précédente pour des données journalières)
+
+### Caractéristiques statistiques d'une série
+
+Les statistiques de base permettent une première description de la série :
+
+- **Espérance** (Expected Value) : $\mathbb{E}[X]$ — valeur moyenne de long terme
+- **Variance** (Variance) : $\text{Var}[X]$ — dispersion des valeurs autour de la moyenne
+- **Volatilité** (Volatility / Standard Deviation) : $\sqrt{\text{Var}[X]}$ — l'écart-type, très utilisé en finance
+
+Ces statistiques globales sont nécessaires mais insuffisantes : elles ignorent entièrement la **structure temporelle** de la série. Ce chapitre présente des outils pour aller bien au-delà.
+
+---
+
+## Objectifs de l'analyse des séries temporelles
+
+Une analyse de série temporelle peut poursuivre plusieurs objectifs, qui ne sont pas nécessairement compatibles entre eux :
+
+- **Identification** : repérer les éléments structurants de la série (tendances, saisonnalités, ruptures)
+- **Explication** : comprendre comment le passé influence le présent et quantifier ces effets
+- **Modélisation** : disposer d'une représentation formelle et parcimonieuse du processus sous-jacent
+- **Prédiction** : anticiper des observations futures avec une quantification de l'incertitude
+
+::: {.callout-warning title="Important — Objectif et choix du modèle"}
+Un modèle peut être excellent pour **expliquer** et médiocre pour **prédire**, et réciproquement. Ces deux objectifs peuvent conduire à des architectures de modèles très différentes. Il est donc essentiel de clarifier l'objectif **avant** de choisir un modèle.
+:::
+
+**Références classiques dans ce domaine :**
+
+- Box, Jenkins, Reinsel, Ljung — *Time Series Analysis: Forecasting and Control*, 5e éd., 2015
+- Brockwell, Davis — *Introduction to Time Series and Forecasting*, 3e éd., 2016
+
+---
+
+## Panorama des modèles de séries temporelles
+
+Il existe de nombreux modèles économétriques (Econometric Models) pour les séries temporelles. On distingue deux grandes familles.
+
+**Modèles de régression (Regression Models) :**
+
+- Régression linéaire (Linear Regression)
+- Ridge, Lasso (régressions régularisées)
+- Régression polynomiale (Polynomial Regression)
+
+**Modèles autorégressifs (Autoregressive Models) :**
+
+- AR(p) : AutoRégressif d'ordre $p$
+- MA(q) : Moyenne Mobile d'ordre $q$ (Moving Average)
+- ARMA(p,q) : combinaison AR et MA
+
+::: {.callout-tip title="Intuition — Pourquoi autorégressif ?"}
+Dans un modèle autorégressif, la valeur actuelle de la série s'exprime comme une **fonction de ses propres valeurs passées**. La série "s'explique par elle-même" — d'où le préfixe *auto*. Cette approche est naturelle pour modéliser des phénomènes où le passé influence le présent : prix d'actifs, PIB, température, etc.
+:::
+
+Ce chapitre se concentre sur les modèles autorégressifs simples, car ils constituent une base classique et analytiquement tractable.
+
+---
+
+## Stationnarité (Stationarity)
+
+La stationnarité est la condition préalable à toute analyse autoregressive sérieuse. Cette section en explique les raisons, les formes et les méthodes pour l'obtenir.
+
+### Pourquoi exiger la stationnarité ?
+
+L'utilisation de modèles autorégressifs sur des données non stationnaires conduit à des résultats incorrects. Quatre raisons fondamentales motivent cette exigence :
+
+- **Cohérence** (Consistency) : les relations entre variables doivent rester stables dans le temps pour que les paramètres estimés soient valides sur toute la période
+- **Estimation fiable** (Reliable Estimation) : des paramètres estimés sur données non stationnaires produisent des conclusions trompeuses
+- **Analyse simplifiée** (Simplified Analysis) : la stationnarité simplifie considérablement les propriétés mathématiques et statistiques des estimateurs
+- **Éviter les corrélations fallacieuses** (Avoiding Spurious Results) : deux séries non stationnaires peuvent sembler fortement corrélées sans aucune relation causale réelle
+
+### Les sources de non-stationnarité
+
+#### Tendance (Trend)
+
+Une série présente une **tendance** lorsque sa moyenne évolue de façon systématique au cours du temps, à la hausse ou à la baisse.
+
+**Exemple :** le prix d'un actif en marché haussier augmente progressivement. La moyenne calculée sur toute la période n'est représentative d'aucun instant particulier.
+
+::: {.callout-tip title="Intuition — Tendance"}
+Imaginez peser une personne chaque jour pendant un régime amaigrissant. La série de poids a une tendance à la baisse. La "moyenne globale" ne correspond à aucun état réel du système, ni au début ni à la fin du régime.
+:::
+
+#### Saisonnalité (Seasonality)
+
+La **saisonnalité** désigne des variations **périodiques et prévisibles** qui se répètent à intervalles réguliers.
+
+**Exemples courants :**
+
+- Températures : cycle annuel (hiver froid, été chaud)
+- Commerce de détail : pics de ventes en décembre (fêtes)
+- Marchés financiers : effets hebdomadaires (volumes plus faibles le vendredi)
+
+#### Hétéroscédasticité (Heteroskedasticity)
+
+L'**hétéroscédasticité** désigne une **volatilité non constante** dans le temps : la dispersion des observations varie d'une période à l'autre.
+
+**Exemple financier :** les marchés connaissent des périodes calmes (faible volatilité) et des crises (forte volatilité). La variance des rendements n'est pas constante dans le temps.
+
+::: {.callout-warning title="Important — Hétéroscédasticité en finance"}
+L'hétéroscédasticité est particulièrement fréquente en finance. On parle de **clusters de volatilité** (Volatility Clustering) : les périodes agitées tendent à se regrouper. Des modèles spécialisés comme **GARCH** (Generalized AutoRegressive Conditional Heteroskedasticity) ont été développés pour traiter ce phénomène.
+:::
+
+### Définitions formelles de la stationnarité
+
+#### Stationnarité stricte (Strict Stationarity)
+
+Un processus $\{X_t\}$ est **strictement stationnaire** si sa distribution jointe est invariante par translation temporelle :
+
+$$
+F(X_{t_1+\tau}, \ldots, X_{t_n+\tau}) = F(X_{t_1}, \ldots, X_{t_n}) \quad \forall\, \tau,\, n
+$$
+
+où $F$ est la fonction de répartition (Cumulative Distribution Function) conjointe.
+
+Cela signifie que **toute** la structure probabiliste du processus est identique quelle que soit la période considérée — non seulement la moyenne et la variance, mais aussi l'asymétrie, les queues de distribution, etc.
+
+::: {.callout-warning title="Limite de la stationnarité stricte"}
+La stationnarité stricte est très contraignante et difficile à vérifier empiriquement car elle porte sur la distribution jointe complète. En pratique, on se contente de la **stationnarité faible**.
+:::
+
+#### Stationnarité faible (Weak Stationarity)
+
+La **stationnarité faible** (aussi appelée stationnarité du second ordre, ou Wide-Sense Stationarity) impose deux conditions portant uniquement sur les deux premiers moments :
+
+**Condition a — Moyenne constante :**
+
+$$
+\mathbb{E}[X_t] = \mu = \text{constante} \quad \forall\, t
+$$
+
+**Condition b — Autocovariance ne dépendant que du lag :**
+
+$$
+\text{Cov}(X_t,\, X_{t+\tau}) = \gamma(\tau) \quad \forall\, \tau
+$$
+
+où $\gamma$ est appelée **fonction d'autocovariance** (Autocovariance Function). Cruciale : elle ne dépend pas des instants absolus $t$ et $t+\tau$, seulement de leur différence $\tau$.
+
+::: {.callout-note title="À retenir — Stationnarité faible"}
+Un processus est **faiblement stationnaire** si :
+
+1. Sa **moyenne est constante** dans le temps
+2. Son **autocovariance ne dépend que du lag $\tau$**, pas des instants absolus
+
+La stationnarité faible est bien moins restrictive que la stationnarité stricte et suffit pour la quasi-totalité des analyses pratiques.
+:::
+
+### Tests de stationnarité
+
+#### Inspection visuelle
+
+Une première évaluation consiste à tracer la série et à vérifier :
+
+- La moyenne semble-t-elle constante sur toute la période ?
+- La dispersion autour de la moyenne semble-t-elle stable ?
+- Y a-t-il des tendances ou des cycles visibles ?
+
+#### Test de Dickey-Fuller Augmenté (ADF — Augmented Dickey-Fuller Test)
+
+Le test ADF est le test statistique de référence pour la stationnarité faible.
+
+- **Hypothèse nulle** $H_0$ : la série possède une racine unitaire → **non stationnaire**
+- **Hypothèse alternative** $H_1$ : la série est **stationnaire**
+
+**Règle de décision :**
+
+- p-value **> 0.05** : on ne rejette pas $H_0$ → la série est probablement **non stationnaire**
+- p-value **≤ 0.05** : on rejette $H_0$ → la série est probablement **stationnaire**
+
+### Comment rendre une série stationnaire ?
+
+Plusieurs transformations peuvent être combinées selon le type de non-stationnarité :
+
+- **Différenciation** (Differencing) : calculer $\Delta X_t = X_t - X_{t-1}$
+- **Rendements** (Returns) : $r_t = (X_t - X_{t-1})\,/\,X_{t-1}$ (simples) ou $r_t = \ln(X_t\,/\,X_{t-1})$ (log-rendements)
+- **Décomposition** : identifier et soustraire les composantes de tendance et de saisonnalité
+- **Transformation logarithmique** (Log Transform) : $\ln(X_t)$ atténue les effets d'une volatilité croissante
+
+::: {.callout-note title="À retenir — Pratique financière"}
+En finance, on travaille presque systématiquement avec les **rendements** plutôt qu'avec les prix bruts.
+
+- Les **prix** ont tendance à croître → généralement non stationnaires
+- Les **rendements** oscillent autour de zéro → stationnaires dans la plupart des cas
+:::
+
+### Exemples illustratifs
+
+#### Simulation — Prix vs. Rendements
+
+On considère trois séries de prix simulées sur 252 jours (1 an de bourse) :
+
+1. **Plain** : sans dérive ni saisonnalité de volatilité
+2. **Seasonality** : volatilité basse → haute → basse (low-high-low)
+3. **Drift** : dérive annuelle de 30%
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+from statsmodels.tsa.stattools import adfuller
+
+# Paramètres
+mu     = 0.30   # dérive annuelle
+sigma  = 0.15   # volatilité de base
+dsigma = 0.80   # amplitude de la variation de volatilité
+
+S0 = 100  # prix initial
+T  = 1    # horizon en années
+N  = 252  # nombre de jours de bourse
+
+dt = T / N
+np.random.seed(6)
+
+# Génération des chocs aléatoires
+random_numbers_1   = np.random.normal(0 * dt, sigma * np.sqrt(dt), N)
+random_numbers_2_1 = np.random.normal(0 * dt, sigma * (1 - dsigma) * np.sqrt(dt), N)
+random_numbers_2_2 = np.random.normal(0 * dt, sigma * (1 + dsigma) * np.sqrt(dt), N)
+random_numbers_3   = np.random.normal(mu * dt, sigma * np.sqrt(dt), N)
+
+# Évolution des prix
+price_series_1    = np.zeros(N)
+price_series_1[0] = S0
+price_series_2    = price_series_1.copy()
+price_series_3    = price_series_1.copy()
+
+for t in range(1, N):
+    price_series_1[t] = price_series_1[t-1] * (1 + random_numbers_1[t-1])
+    if t > N * 0.2 and t < N * 0.6:
+        price_series_2[t] = price_series_2[t-1] * (1 + random_numbers_2_2[t-1])
+    else:
+        price_series_2[t] = price_series_2[t-1] * (1 + random_numbers_2_1[t-1])
+    price_series_3[t] = price_series_3[t-1] * (1 + random_numbers_3[t-1])
+
+# Affichage
+plt.plot(price_series_1, label='no seasonality, no drift')
+plt.plot(price_series_2, label='seasonality (low-high-low) vol')
+plt.plot(price_series_3, label='drift (30%)')
+plt.ylabel('prices')
+plt.legend()
+plt.show()
+
+# Test ADF sur les prix
+print('Augmented Dickey Fuller test')
+print(f'prices plain,       p-value = {adfuller(price_series_1)[1]:.2f}')
+print(f'prices seasonality, p-value = {adfuller(price_series_2)[1]:.2f}')
+print(f'prices drift,       p-value = {adfuller(price_series_3)[1]:.2f}')
+print()
+# Test ADF sur les rendements
+print(f'returns plain,       p-value = {adfuller(random_numbers_1)[1]:.2f}')
+print(f'returns seasonality, p-value = {adfuller(random_numbers_2_1)[1]:.2f}, '
+      f'{adfuller(random_numbers_2_2)[1]:.2f}')
+print(f'returns drift,       p-value = {adfuller(random_numbers_3)[1]:.2f}')
+```
+
+**Résultats du test ADF :**
+
+| Série | p-value | Stationnaire ? |
+|---|---|---|
+| Prix (plain) | 0.15 | ✗ Non |
+| Prix (seasonality) | 0.36 | ✗ Non |
+| Prix (drift) | 0.67 | ✗ Non |
+| Rendements (plain) | 0.00 | ✓ Oui |
+| Rendements (seasonality) | 0.00 | ✓ Oui |
+| Rendements (drift) | 0.00 | ✓ Oui |
+
+::: {.callout-warning title="Résultat clé"}
+Les **prix** ne sont **jamais** stationnaires (p-value > 0.05), même sans dérive ni saisonnalité. Les **rendements** sont **toujours** stationnaires (p-value ≈ 0.00). La transformation en rendements suffit à obtenir la stationnarité.
+:::
+
+#### Exemple empirique — EUR/USD (janvier–mars 2012)
+
+Sur la période considérée :
+
+- La **série de prix** présente une tendance à la hausse → **non stationnaire**
+- Les **rendements journaliers** oscillent autour de zéro sans dérive visible → **(faiblement) stationnaires**
+
+La simple transformation en rendements suffit dans ce cas pour satisfaire la condition de stationnarité.
+
+---
+
+## Autocorrélation (Autocorrelation)
+
+L'autocorrélation est le concept central qui relie les observations d'une série à son propre passé. Sa mesure, la fonction d'autocorrélation (ACF), est l'outil diagnostique principal avant tout modélisation.
+
+### Rappel — La corrélation entre deux variables
+
+La **corrélation** (Correlation) entre deux variables aléatoires $X$ et $Y$ mesure l'intensité de leur relation linéaire :
+
+$$
+\text{Cor}(X, Y) = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X) \cdot \text{Var}(Y)}} = \frac{\mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])]}{\sqrt{\mathbb{E}[(X - \mathbb{E}[X])^2] \cdot \mathbb{E}[(Y - \mathbb{E}[Y])^2]}}
+$$
+
+Elle appartient à $[-1,\, 1]$ :
+
+- $+1$ : relation linéaire positive parfaite
+- $-1$ : relation linéaire négative parfaite
+- $0$ : absence de relation linéaire
+
+### Définition de l'autocorrélation
+
+L'**autocorrélation** est la corrélation d'une série temporelle avec **elle-même**, décalée d'un lag $\tau$ :
+
+$$
+\text{Cor}(X_t,\, X_{t+\tau}) = \frac{\mathbb{E}[(X_t - \mu_0)(X_{t+\tau} - \mu_\tau)]}{\sigma_0\, \sigma_\tau}
+$$
+
+où $\mu_0,\, \mu_\tau$ sont les moyennes et $\sigma_0,\, \sigma_\tau$ les écarts-types aux instants $t$ et $t+\tau$.
+
+#### Simplification sous stationnarité
+
+Lorsque la série est **faiblement stationnaire**, on a $\mu_0 = \mu_\tau = \mu$ et $\sigma_0 = \sigma_\tau = \sigma$. L'autocorrélation se simplifie alors en :
+
+$$
+\rho_\tau = \text{Cor}(X_t,\, X_{t+\tau}) = \frac{\mathbb{E}[(X_t - \mu)(X_{t+\tau} - \mu)]}{\sigma^2}
+$$
+
+Elle ne dépend alors que du lag $\tau$, et non des instants absolus. C'est pourquoi la stationnarité est un prérequis : sans elle, l'autocorrélation n'est pas un concept bien défini.
+
+### La fonction d'autocorrélation (ACF — Autocorrelation Function)
+
+La **fonction d'autocorrélation** associe à chaque lag $\tau$ son autocorrélation :
+
+$$
+\text{ACF}(\tau) = \rho_\tau
+$$
+
+Elle est représentée graphiquement par un **corrélogramme** : un diagramme en barres verticales où chaque barre correspond à un lag.
+
+::: {.callout-note title="À retenir — Rôle de l'ACF"}
+L'ACF décrit la **structure temporelle** d'une série et permet d'identifier des patterns :
+
+- **Tendance** (Trend) : ACF décroissant lentement depuis des valeurs positives élevées
+- **Saisonnalité** (Seasonality) : ACF avec des pics régulièrement espacés (ex. toutes les 5 barres pour un cycle hebdomadaire sur données journalières)
+- **Mémoire courte** : ACF nulle au-delà d'un lag faible
+- **Bruit blanc** (White Noise) : ACF nulle à tous les lags (dans les limites statistiques)
+:::
+
+### Intervalles de confiance sur le corrélogramme
+
+Sur un corrélogramme, des **intervalles de confiance** (Confidence Intervals) sont tracés en pointillés de part et d'autre de zéro.
+
+- Toute barre **dépassant** ces intervalles indique une autocorrélation **statistiquement significative**
+- Pour une série de longueur $n$, les intervalles sont approximativement $\pm\, 1.96\,/\, \sqrt{n}$ (à 95 % de confiance)
+- En l'absence de structure, environ 5 % des barres peuvent dépasser les intervalles par hasard
+
+### Détection de patterns cachés
+
+Considérons le processus suivant, dont la structure est invisible à l'œil nu :
+
+$$
+X_t = \varepsilon_t + \sin\!\left(2\pi\, \frac{t}{10}\right)
+$$
+
+La composante sinusoïdale de période 10 est masquée par le bruit $\varepsilon_t$. La série tracée semble aléatoire.
+
+En revanche, le **corrélogramme** révèle la structure cachée : des barres significatives apparaissent à des multiples de 10, signalant sans ambiguïté la périodicité.
+
+::: {.callout-tip title="Intuition — L'ACF comme microscope temporel"}
+L'ACF agit comme un **microscope** pour la structure temporelle d'une série. Là où le graphique brut ne montre que du désordre, l'ACF peut révéler :
+
+- Des **cycles** cachés (pics régulièrement espacés)
+- Des **dépendances persistantes** (décroissance lente)
+- Des **alternances** régulières (oscillation positive/négative)
+:::
+
+### ACF et comportements typiques
+
+#### Série tendancielle (Positive Autocorrelation — Trend)
+
+Une série avec tendance présente des autocorrélations **positives élevées** qui décroissent lentement avec le lag :
+
+- Une valeur élevée aujourd'hui prédit une valeur élevée demain (et après-demain, etc.)
+- La "mémoire" de la série est longue
+
+**Implication financière :** ce type de structure se prête à des stratégies de **momentum** (acheter les actifs ayant récemment bien performé).
+
+#### Série contre-tendancielle (Negative Autocorrelation — Counter-trend)
+
+Une série contre-tendancielle présente une autocorrélation **significativement négative** au lag 1 :
+
+- Une valeur élevée aujourd'hui prédit une valeur faible demain
+- La série alterne régulièrement autour de sa moyenne (mean-reversion)
+
+**Implication financière :** ce type de structure se prête à des stratégies de **retour à la moyenne** (acheter après une baisse, vendre après une hausse).
+
+---
+
+## Modèles autorégressifs (Autoregressive Models)
+
+L'ACF indique comment les événements passés influencent le présent. On formalise cette relation dans trois grandes familles de modèles.
+
+### Modèle AR(p) — AutoRégressif d'ordre p
+
+$$
+X_t = c + \sum_{i=1}^{p} \varphi_i\, X_{t-i} + \varepsilon_t
+$$
+
+**Paramètres :**
+
+- $c$ : constante (intercept)
+- $\varphi_i$ : coefficients autorégressifs (AR Coefficients)
+- $p$ : ordre du modèle (nombre de lags utilisés)
+- $\varepsilon_t \sim \mathcal{N}(0,\, \sigma_\varepsilon^2)$ : bruit blanc (White Noise), indépendant du passé
+
+Le modèle AR(p) exprime la valeur courante comme une **combinaison linéaire de ses $p$ valeurs passées**, plus un choc aléatoire.
+
+::: {.callout-tip title="Intuition — AR(p)"}
+Le modèle AR(p) est analogue à un individu qui prédit son humeur du jour en se basant sur ses $p$ humeurs les plus récentes, plus une part d'imprédictible. Si $p = 1$, seule la veille compte ; si $p = 5$, la semaine entière compte.
+:::
+
+### Modèle MA(q) — Moyenne Mobile d'ordre q (Moving Average)
+
+$$
+X_t = \mu + \varepsilon_t + \theta_1\,\varepsilon_{t-1} + \cdots + \theta_q\,\varepsilon_{t-q}
+$$
+
+**Paramètres :**
+
+- $\mu$ : moyenne de la série
+- $\theta_i$ : coefficients de la moyenne mobile (MA Coefficients)
+- $q$ : ordre du modèle
+- $\varepsilon_{t-i}$ : chocs (erreurs) passés
+
+Le modèle MA(q) exprime la valeur courante comme une **combinaison linéaire des $q$ erreurs passées**.
+
+::: {.callout-tip title="Intuition — AR vs MA"}
+- **AR(p)** : "Mon état actuel dépend de mes $p$ états passés." La série se souvient de ses valeurs.
+- **MA(q)** : "Mon état actuel dépend des $q$ chocs imprévus que j'ai reçus." La série se souvient de ses erreurs, non de ses niveaux. Un choc reçu il y a plus de $q$ périodes n'a plus aucune influence.
+:::
+
+### Modèle ARMA(p,q) — AutoRégressif à Moyenne Mobile
+
+$$
+X_t = c + \varepsilon_t + \sum_{i=1}^{p} \varphi_i\, X_{t-i} + \sum_{i=1}^{q} \theta_i\, \varepsilon_{t-i}
+$$
+
+Le modèle ARMA(p,q) **combine** les deux approches : la valeur courante dépend à la fois des **valeurs passées** (composante AR) et des **erreurs passées** (composante MA). Il offre plus de flexibilité avec un nombre de paramètres potentiellement plus faible qu'un AR ou MA seul du même ordre.
+
+::: {.callout-note title="À retenir — Ordres et estimation"}
+- Les entiers $p$ et $q$ sont les **ordres** du modèle
+- Pour AR(1), le paramètre $\varphi_1$ admet une formule analytique — voir section suivante
+- Pour AR(p) avec $p > 1$, les paramètres doivent être estimés **numériquement** par maximum de vraisemblance (Maximum Likelihood Estimation, MLE)
+- Le **choix des ordres optimaux** repose sur des critères d'information (AIC, BIC)
+:::
+
+---
+
+## Le modèle AR(1) en détail
+
+Ce cours se concentre sur le modèle **AR(1)** car c'est le plus simple de la famille et il admet des **résultats analytiques** (formules fermées), ce qui en fait un outil pédagogique de premier ordre.
+
+### Définition du modèle AR(1)
+
+Pour $p = 1$, le modèle AR(1) est :
+
+$$
+X_t = c + \varphi_1\, X_{t-1} + \varepsilon_t
+$$
+
+avec $\varepsilon_t \sim \mathcal{N}(0,\, \sigma_\varepsilon^2)$ **indépendant** de $X_{t-1}$.
+
+### Calcul de la moyenne
+
+En supposant la stationnarité, la moyenne est constante dans le temps : $\mathbb{E}[X_t] = \mathbb{E}[X_{t-1}] = \mu$.
+
+En prenant l'espérance des deux membres du modèle :
+
+$$
+\mathbb{E}[X_t] = \mathbb{E}[c] + \varphi_1\,\mathbb{E}[X_{t-1}] + \mathbb{E}[\varepsilon_t]
+$$
+
+$$
+\mu = c + \varphi_1\,\mu + 0
+$$
+
+En résolvant pour $\mu$ :
+
+$$
+\mu = \frac{c}{1 - \varphi_1}
+$$
+
+**Normalisation pratique :** en recentrant la série ($X_t \leftarrow X_t - \mu$), on peut poser $c = 0$ et donc $\mu = 0$ sans perte de généralité. Cela simplifie les calculs suivants.
+
+### Calcul de la variance
+
+La stationnarité implique que la variance est constante : $\text{Var}[X_t] = \text{Var}[X_{t-1}]$.
+
+En calculant la variance du modèle (avec $c = 0$) :
+
+$$
+\text{Var}[X_t] = \text{Var}[\varphi_1\, X_{t-1} + \varepsilon_t]
+$$
+
+Comme $X_{t-1}$ et $\varepsilon_t$ sont indépendants, les variances s'additionnent :
+
+$$
+\text{Var}[X_t] = \varphi_1^2\,\text{Var}[X_{t-1}] + \sigma_\varepsilon^2
+$$
+
+En utilisant $\text{Var}[X_t] = \text{Var}[X_{t-1}]$ :
+
+$$
+\text{Var}[X_t] = \varphi_1^2\,\text{Var}[X_t] + \sigma_\varepsilon^2
+\implies \text{Var}[X_t]\,(1 - \varphi_1^2) = \sigma_\varepsilon^2
+$$
+
+$$
+\text{Var}[X_t] = \frac{\sigma_\varepsilon^2}{1 - \varphi_1^2}
+$$
+
+::: {.callout-warning title="Condition de stationnarité"}
+Pour que la variance soit strictement positive ($\text{Var}[X_t] > 0$), il faut $1 - \varphi_1^2 > 0$, soit :
+
+$$
+|\varphi_1| < 1
+$$
+
+C'est la **condition de stationnarité** du modèle AR(1). Si $\varphi_1 = 1$, on obtient une **marche aléatoire** (Random Walk), processus non stationnaire à variance infinie. Si $|\varphi_1| > 1$, le processus **explose**.
+:::
+
+### Calcul de l'autocorrélation au lag 1
+
+Avec $\mu = 0$, l'autocovariance au lag 1 est :
+
+$$
+\gamma_1 = \text{Cov}(X_t,\, X_{t+1}) = \mathbb{E}[X_t\, X_{t+1}]
+$$
+
+En substituant $X_{t+1} = \varphi_1\, X_t + \varepsilon_{t+1}$ :
+
+$$
+\gamma_1 = \mathbb{E}\bigl[X_t\,(\varphi_1\, X_t + \varepsilon_{t+1})\bigr] = \varphi_1\,\mathbb{E}[X_t^2] + \mathbb{E}[X_t\,\varepsilon_{t+1}]
+$$
+
+Comme $\varepsilon_{t+1}$ est **indépendant** de $X_t$ et que $\mathbb{E}[\varepsilon_{t+1}] = 0$ :
+
+$$
+\mathbb{E}[X_t\,\varepsilon_{t+1}] = \mathbb{E}[X_t] \cdot \mathbb{E}[\varepsilon_{t+1}] = 0 \cdot 0 = 0
+$$
+
+Et comme $\mu = 0$, on a $\mathbb{E}[X_t^2] = \text{Var}[X_t]$. Donc :
+
+$$
+\gamma_1 = \varphi_1\,\text{Var}[X_t]
+$$
+
+L'**autocorrélation au lag 1** est :
+
+$$
+\rho_1 = \frac{\text{Cov}(X_t,\, X_{t+1})}{\text{Var}(X_t)} = \varphi_1
+$$
+
+::: {.callout-note title="À retenir — Résultat fondamental du AR(1)"}
+Dans un modèle AR(1), **le paramètre $\varphi_1$ est exactement l'autocorrélation au lag 1** :
+
+$$
+\varphi_1 = \rho_1
+$$
+
+Cela simplifie considérablement l'estimation : il suffit de calculer l'autocorrélation empirique au lag 1 sur les données pour obtenir directement l'estimateur de $\varphi_1$. Pas besoin d'optimisation numérique.
+:::
+
+### Récapitulatif des propriétés analytiques du AR(1)
+
+| Propriété | Formule |
+|---|---|
+| Moyenne | $\mu = c\, /\, (1 - \varphi_1)$ |
+| Variance | $\sigma^2 = \sigma_\varepsilon^2\, /\, (1 - \varphi_1^2)$ |
+| Autocorrélation lag 1 | $\rho_1 = \varphi_1$ |
+| Condition de stationnarité | $|\varphi_1| < 1$ |
+
+### Interprétation du paramètre $\varphi_1$
+
+Le signe et la magnitude de $\varphi_1$ déterminent le comportement qualitatif de la série :
+
+- **$\varphi_1 > 0$** — comportement **tendanciel** (Trending) : une valeur élevée aujourd'hui prédit une valeur élevée demain. Plus $\varphi_1$ est proche de 1, plus la mémoire est longue et la série persistante.
+- **$\varphi_1 < 0$** — comportement **contre-tendanciel** (Mean-reverting) : une valeur élevée aujourd'hui prédit une valeur faible demain. La série alterne régulièrement autour de sa moyenne.
+- **$\varphi_1 = 0$** — la série est un **bruit blanc** (White Noise) : aucune mémoire, le passé n'informe pas sur le futur.
+- **$\varphi_1 \to 1$** — la série tend vers une **marche aléatoire** : mémoire infinie, processus non stationnaire.
+
+::: {.callout-tip title="Intuition — Mémoire du processus AR(1)"}
+Moins $|\varphi_1|$ est grand (proche de 0), plus la série "oublie" rapidement son passé. Par exemple :
+
+- $\varphi_1 = 0.9$ : un choc met environ $\ln(0.05)\,/\,\ln(0.9) \approx 28$ périodes à se dissiper (réduction à 5 %)
+- $\varphi_1 = 0.1$ : le même choc se dissipe en 1 à 2 périodes seulement
+:::
+
+---
+
+## Applications et exemples du modèle AR(1)
+
+### Exemple 1 — La marche aléatoire (Random Walk)
+
+Considérons le processus :
+
+$$
+X_t = X_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim \mathcal{N}(0,\, 1)
+$$
+
+C'est un AR(1) avec $\varphi_1 = 1$ — un cas limite **non stationnaire**.
+
+**Caractéristiques observées :**
+
+- L'ACF montre des autocorrélations positives très élevées à **tous** les lags (décroissance quasi nulle)
+- Le coefficient estimé est proche de 1 (≈ 0.999)
+- L'ajustement **en échantillon** (in-sample fitting) est quasi parfait (erreur ≈ 0.999)
+
+::: {.callout-warning title="Piège de la marche aléatoire — In-sample vs Out-of-sample"}
+Malgré un ajustement in-sample excellent, la **prédiction hors échantillon** (out-of-sample) est désastreuse. Le modèle prédit une droite (dernier niveau connu + éventuelle dérive), alors que la série continue d'évoluer aléatoirement de façon totalement imprévisible.
+
+**Un bon fit en échantillon ne garantit pas un bon pouvoir prédictif.**
+:::
+
+### Exemple 2 — Rendements EUR/USD (janvier–mars 2012)
+
+Pour les rendements journaliers EUR/USD sur cette période :
+
+- L'ACF montre des autocorrélations **très faibles** à tous les lags, la plupart dans les intervalles de confiance
+- Le coefficient estimé est $\varphi_1 = -0.125$, erreur d'ajustement = 0.017
+- L'ajustement est **médiocre** : aucune structure autoregressive significative n'est détectée
+
+::: {.callout-tip title="Intuition — Efficience des marchés (Efficient Market Hypothesis)"}
+L'absence quasi-totale d'autocorrélation sur les rendements EUR/USD est cohérente avec l'**hypothèse d'efficience des marchés** : les prix intègrent instantanément toute l'information disponible, rendant les rendements futurs quasi-imprévisibles. Un modèle AR(1) ne peut pas capturer ce que les marchés ont déjà intégré.
+:::
+
+### Exemple 3 — Rendements du VIX (autocorrélation négative)
+
+Le **VIX** est l'indice de volatilité implicite du S&P 500, surnommé "indice de la peur".
+
+**Observations sur la période janvier 2010 – septembre 2013 :**
+
+- La série brute du VIX est **non stationnaire** (tendance et clusters de volatilité visibles)
+- Les **rendements journaliers** du VIX présentent des **autocorrélations négatives significatives** au lag 1
+
+::: {.callout-tip title="Intuition — Mean-reversion du VIX"}
+Le VIX est intrinsèquement **mean-reverting** : après une forte hausse (panique de marché), il tend naturellement à redescendre vers sa moyenne historique. Un jour de forte hausse du VIX est souvent suivi d'une baisse, produisant une autocorrélation négative. Un modèle AR(1) avec $\varphi_1 < 0$ capture ce comportement.
+:::
+
+---
+
+## Au-delà du modèle AR(1)
+
+### Estimation des modèles d'ordre supérieur
+
+Pour $p > 1$, les coefficients $\varphi_1,\, \ldots,\, \varphi_p$ n'ont pas de formule analytique fermée. Ils doivent être estimés numériquement, typiquement par la **méthode du maximum de vraisemblance** (Maximum Likelihood Estimation, MLE).
+
+### Sélection de l'ordre optimal
+
+La sélection de l'ordre est une question clé : un ordre trop faible sous-ajuste les données, un ordre trop élevé sur-ajuste (overfitting). On utilise des **critères d'information** (Information Criteria) qui pénalisent la complexité.
+
+#### Critère d'information d'Akaike (AIC — Akaike Information Criterion)
+
+$$
+\text{AIC} = 2p - 2\ln(L)
+$$
+
+#### Critère d'information bayésien (BIC — Bayesian Information Criterion)
+
+$$
+\text{BIC} = \ln(n) \cdot p - 2\ln(L)
+$$
+
+**Notation :**
+
+- $p$ : nombre de paramètres estimés
+- $L$ : valeur maximisée de la vraisemblance (Maximized Likelihood)
+- $n$ : nombre d'observations
+
+::: {.callout-note title="À retenir — Principe AIC / BIC"}
+Les deux critères cherchent un **équilibre** entre deux objectifs antagonistes :
+
+- La **qualité d'ajustement** est récompensée via le terme $+2\ln(L)$ : plus le modèle colle aux données, plus $L$ est grand et plus le critère est faible (meilleur)
+- La **complexité** est pénalisée via le nombre de paramètres $p$ : ajouter un paramètre inutile augmente le critère
+
+On cherche le modèle qui **minimise** l'AIC ou le BIC.
+:::
+
+::: {.callout-tip title="Intuition — AIC vs BIC"}
+- **AIC** : penalise la complexité par le facteur $2$ — plus tolérant, il favorise les modèles un peu plus riches
+- **BIC** : penalise par $\ln(n)$ — plus sévère, il favorise des modèles plus parcimonieux. Pour $n > 8$, on a $\ln(n) > 2$, donc BIC pénalise davantage chaque paramètre supplémentaire
+
+En pratique, BIC identifie souvent plus précisément le "vrai" ordre du processus générateur, tandis qu'AIC peut sélectionner un ordre légèrement trop élevé.
+:::
+
+### Exemples d'application
+
+#### S&P 500 (novembre 2023 – septembre 2024)
+
+- Les rendements du S&P 500 présentent une **faible autocorrélation**, difficile à distinguer du bruit statistique
+- Un modèle AR(3) est ajusté : il capture la **tendance générale** mais pas les fluctuations quotidiennes
+- L'AIC continue de décroître avec l'ordre (favorise des ordres élevés)
+- Le BIC se stabilise rapidement et recommande un ordre faible
+- Conclusion : peu de structure autoregressive exploitable sur les rendements journaliers du S&P 500
+
+#### PIB suisse trimestriel (CH GDP)
+
+- Les données trimestrielles sont **moins nombreuses** mais présentent une autocorrélation plus marquée
+- La fréquence trimestrielle introduit une persistance naturelle : la croissance d'un trimestre est liée à celle du suivant
+- Le modèle AR capture mieux la structure, avec une qualité d'ajustement visible sur le graphique des valeurs ajustées
+
+#### Processus artificiel — $X_t = -0.5\,X_{t-1} + 0.5\,X_{t-3} + \varepsilon$
+
+Cet exemple est particulièrement instructif car le **vrai processus générateur** est connu. C'est un AR(3) avec :
+
+$$
+\varphi_1 = -0.5, \quad \varphi_2 = 0, \quad \varphi_3 = 0.5
+$$
+
+**Observations :**
+
+- L'ACF montre des autocorrélations significatives aux lags 1 et 3 (comme attendu par la structure vraie)
+- Le **BIC identifie correctement l'ordre 3** comme optimal (minimum de BIC à $p = 3$)
+- L'AIC continue de décroître légèrement au-delà, illustrant sa tendance à sur-estimer l'ordre
+- Le modèle AR(3) ajusté reproduit fidèlement les principales fluctuations de la série
+
+::: {.callout-tip title="Intuition — Validation par le processus connu"}
+Lorsque le vrai processus générateur est connu, on peut vérifier que les critères d'information retrouvent le bon ordre. C'est un test de cohérence idéal. Sur données réelles, il n'existe pas de "vrai" ordre, mais AIC et BIC guident vers le meilleur compromis biais-variance disponible dans les données.
+:::
+
+---
+
+## Points clés à retenir
+
+::: {.callout-note title="Résumé du chapitre"}
+
+**Séries temporelles (Time Series) :**
+
+- Une série temporelle décrit l'évolution d'une variable au cours du temps
+- Le **lag** $\tau$ est le décalage entre deux observations — l'ordre temporel est porteur d'information
+
+**Stationnarité (Stationarity) :**
+
+- Condition préalable à toute modélisation autoregressive
+- En pratique, on travaille sur les **rendements** plutôt que les prix bruts
+- Test formel : **ADF** (p-value < 0.05 → stationnaire)
+
+**Autocorrélation — ACF (Autocorrelation Function) :**
+
+- Mesure la corrélation de la série avec elle-même à différents lags
+- ACF positive → tendance ; ACF négative → contre-tendance (mean-reversion)
+- L'ACF révèle des patterns cachés et guide le choix du modèle
+
+**Modèles autorégressifs :**
+
+- $\text{AR}(p)$ : $X_t = c + \sum_{i=1}^p \varphi_i X_{t-i} + \varepsilon_t$
+- $\text{MA}(q)$ : $X_t = \mu + \varepsilon_t + \sum_{i=1}^q \theta_i \varepsilon_{t-i}$
+- $\text{ARMA}(p,q)$ : combinaison des deux
+
+**Modèle AR(1) — résultats analytiques :**
+
+- Paramètre unique : $\varphi_1 = \rho_1$ (autocorrélation au lag 1)
+- Variance : $\text{Var}[X_t] = \sigma_\varepsilon^2\, /\, (1 - \varphi_1^2)$
+- Condition de stationnarité : $|\varphi_1| < 1$
+- $\varphi_1 > 0$ → tendance ; $\varphi_1 < 0$ → retour à la moyenne
+
+**Sélection de l'ordre :**
+
+- AR(p) avec $p > 1$ : estimation numérique par MLE
+- **AIC** et **BIC** (minimiser) — BIC plus parcimonieux qu'AIC pour de grands échantillons
+- Un bon ajustement in-sample n'implique pas un bon pouvoir prédictif out-of-sample
+
+:::

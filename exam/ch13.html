@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Futures & Forwards — Guide Examen Oral · Computational Finance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']], processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root {
+  --bg:#0d0b14; --bg-card:#161221; --bg-code:#1c1828;
+  --text:#e4dffa; --muted:#9089bf; --border:rgba(180,150,80,.18); --bstrong:rgba(180,150,80,.4);
+  --gold:#c9a84c; --glight:#e8c97a; --blue:#7eb8d4; --green:#7bc496; --red:#e07b7b; --violet:#a78bfa;
+  --ff:'EB Garamond',Georgia,serif; --fd:'Cormorant Garamond',Georgia,serif; --fm:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:18px;line-height:1.85;display:flex}
+
+.sb{width:270px;min-height:100vh;background:var(--bg-card);border-right:1px solid var(--border);
+  padding:2rem 1.4rem;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sb-logo{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--gold);margin-bottom:.3rem}
+.sb-sub{font-family:var(--fm);font-size:.73rem;color:var(--muted);margin-bottom:1.8rem;letter-spacing:.05em}
+.sb nav ul{list-style:none}
+.sb nav ul li{margin-bottom:.2rem}
+.sb nav ul li a{color:var(--muted);text-decoration:none;font-size:.88rem;display:block;
+  padding:.35rem .7rem;border-radius:4px;border-left:2px solid transparent;transition:all .18s}
+.sb nav ul li a:hover,.sb nav ul li a.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,168,76,.07)}
+.sb nav ul li a .n{font-family:var(--fm);font-size:.72rem;color:var(--gold);margin-right:.45rem;opacity:.75}
+.sb-section{font-family:var(--fm);font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--muted);padding:.5rem .7rem .3rem;opacity:.6}
+
+.main{margin-left:270px;flex:1;padding:3rem 4rem;max-width:1060px}
+
+.hero{border-bottom:1px solid var(--border);padding-bottom:3rem;margin-bottom:4.5rem}
+.hero-tag{font-family:var(--fm);font-size:.75rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero h1{font-family:var(--fd);font-size:3.6rem;font-weight:700;line-height:1.1;margin-bottom:.8rem}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:640px;margin-bottom:1.5rem}
+.badges{display:flex;gap:.7rem;flex-wrap:wrap}
+.badge{font-family:var(--fm);font-size:.72rem;padding:.25rem .75rem;border:1px solid var(--bstrong);
+  border-radius:20px;color:var(--gold);letter-spacing:.04em}
+.badge.b{border-color:rgba(126,184,212,.35);color:var(--blue)}
+.badge.g{border-color:rgba(123,196,150,.35);color:var(--green)}
+.badge.r{border-color:rgba(224,123,123,.35);color:var(--red)}
+.badge.v{border-color:rgba(167,139,250,.35);color:var(--violet)}
+
+.sec{margin-bottom:5rem;scroll-margin-top:2rem}
+.sec-hd{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.sec-num{font-family:var(--fm);font-size:.85rem;color:var(--gold);opacity:.65;min-width:2.5rem}
+.sec-title{font-family:var(--fd);font-size:1.95rem;font-weight:700;color:var(--text)}
+
+h3{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--glight);margin:2rem 0 .8rem}
+h4{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--blue);margin:1.4rem 0 .5rem}
+p{margin-bottom:.9rem}
+strong{color:var(--glight);font-weight:600}
+em{color:var(--blue);font-style:italic}
+a{color:var(--gold);text-decoration:none}
+code{font-family:var(--fm);background:var(--bg-code);padding:.1em .4em;border-radius:3px;font-size:.82em;color:var(--gold)}
+ul,ol{padding-left:1.5rem;margin-bottom:.9rem}
+li{margin-bottom:.35rem}
+
+.box{background:var(--bg-card);border-left:3px solid var(--gold);padding:1.1rem 1.4rem;border-radius:0 6px 6px 0;margin:1.4rem 0}
+.box.info{border-left-color:var(--blue)}.box.warn{border-left-color:var(--red)}.box.ok{border-left-color:var(--green)}.box.vio{border-left-color:var(--violet)}
+.box-title{font-family:var(--fm);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem}
+.box.info .box-title{color:var(--blue)}.box.warn .box-title{color:var(--red)}.box.ok .box-title{color:var(--green)}.box.vio .box-title{color:var(--violet)}
+
+.mblock{background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:1.3rem 1.8rem;
+  margin:1.4rem 0;overflow-x:auto;text-align:center}
+.mblock .mlabel{font-family:var(--fm);font-size:.7rem;color:var(--muted);text-align:left;margin-bottom:.7rem;
+  text-transform:uppercase;letter-spacing:.08em}
+
+.twrap{overflow-x:auto;margin:1.4rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead{background:var(--bg-code)}
+th{padding:.8rem 1rem;text-align:left;font-family:var(--fm);font-size:.73rem;color:var(--gold);
+  text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--bstrong)}
+td{padding:.7rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(201,168,76,.03)}
+td.g{color:var(--green)}td.r{color:var(--red)}td.m{color:var(--muted)}
+tr.hrow td{background:rgba(224,123,123,.08);color:var(--red);font-weight:600}
+tr.crow td{background:rgba(123,196,150,.08);color:var(--green);font-weight:600}
+
+.fcards{display:flex;flex-direction:column;gap:1.5rem;margin-top:1rem}
+.fc{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.fc-head{background:var(--bg-code);padding:.8rem 1.4rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between}
+.fc-name{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--gold)}
+.fc-tag{font-family:var(--fm);font-size:.7rem;color:var(--muted);padding:.2rem .6rem;
+  background:rgba(255,255,255,.04);border-radius:20px}
+.fc-body{padding:1.4rem}
+.fc-expr{text-align:center;padding:1.2rem;background:var(--bg-code);border-radius:6px;margin-bottom:1.1rem;overflow-x:auto}
+.fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;font-size:.88rem}
+.fc-item h5{font-family:var(--fm);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:.3rem}
+.fc-item p{color:var(--muted);margin:0;font-size:.88rem}
+
+.qlevel{display:inline-block;font-family:var(--fm);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.1em;padding:.2rem .7rem;border-radius:4px;margin-bottom:.8rem;margin-top:1.2rem}
+.qlevel.easy{background:rgba(123,196,150,.13);color:var(--green)}
+.qlevel.med{background:rgba(126,184,212,.13);color:var(--blue)}
+.qlevel.hard{background:rgba(224,123,123,.13);color:var(--red)}
+.qi{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.8rem;overflow:hidden}
+.qi-q{padding:.9rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;
+  gap:.8rem;transition:background .15s}
+.qi-q:hover{background:rgba(201,168,76,.05)}
+.qi-qtxt{flex:1;font-size:.93rem}
+.qi-arr{color:var(--gold);font-size:1.1rem;transition:transform .2s;min-width:1.2rem;text-align:center}
+.qi-a{padding:0 1.1rem;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .2s;
+  background:var(--bg-code);font-size:.88rem;color:var(--muted);border-top:0 solid var(--border)}
+.qi-a.open{max-height:800px;padding:1rem 1.1rem;border-top:1px solid var(--border)}
+.qi-a p{margin-bottom:.5rem;color:var(--muted)}
+.qi-a strong{color:var(--glight)}
+
+.piege{display:flex;gap:.9rem;align-items:flex-start;margin-bottom:.9rem;
+  padding:.8rem 1rem;background:rgba(224,123,123,.06);border-radius:6px;border-left:3px solid var(--red)}
+.piege-icon{font-size:1.1rem;min-width:1.4rem}
+.piege-text{font-size:.93rem}
+.piege-text strong{color:var(--red)}
+
+.tl{position:relative;padding-left:2rem;margin:1.4rem 0}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold),transparent)}
+.tl-item{position:relative;margin-bottom:2rem;padding-left:1.4rem}
+.tl-item::before{content:'';position:absolute;left:-2.4rem;top:.6rem;width:8px;height:8px;
+  border-radius:50%;background:var(--gold);border:2px solid var(--bg)}
+.tl-year{font-family:var(--fm);font-size:.78rem;color:var(--gold);margin-bottom:.25rem}
+.tl-title{font-family:var(--fd);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:.25rem}
+.tl-desc{font-size:.9rem;color:var(--muted)}
+
+.fiche-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.4rem 0}
+.fc2{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.1rem}
+.fc2 h4{font-family:var(--fm);font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--gold);margin:0 0 .7rem 0}
+.fc2 ul{list-style:none;padding:0;font-size:.85rem}
+.fc2 ul li{padding:.22rem 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted)}
+.fc2 ul li:last-child{border:none}
+.fc2 ul li strong{color:var(--text)}
+
+.oral{background:var(--bg-card);border:1px solid var(--bstrong);border-radius:10px;
+  padding:2rem;margin:1rem 0;position:relative}
+.oral::before{content:'"';font-family:var(--fd);font-size:5rem;color:var(--gold);opacity:.15;
+  position:absolute;top:-.5rem;left:.8rem;line-height:1}
+.oral p{font-size:1rem;line-height:1.9;color:var(--text)}
+.oral p+p{margin-top:.8rem}
+
+.diag{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;
+  padding:1.2rem 1.5rem;margin:1.4rem 0;overflow-x:auto}
+.diag-title{font-family:var(--fm);font-size:.73rem;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--gold);margin-bottom:1rem}
+
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem;margin:1.4rem 0}
+.ccard{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.2rem;transition:border-color .18s}
+.ccard:hover{border-color:var(--bstrong)}
+.ccard .ctag{font-family:var(--fm);font-size:.68rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
+.ccard h4{font-family:var(--fd);font-size:1.1rem;color:var(--text);margin:0 0 .4rem 0}
+.ccard p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.6}
+
+.funny-box{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(123,196,150,.04));
+  border:1px solid rgba(201,168,76,.22);border-radius:12px;padding:1.8rem;margin:1.4rem 0}
+.funny-emoji{font-size:2.5rem;margin-bottom:.8rem;display:block}
+.funny-title{font-family:var(--fd);font-size:1.55rem;font-weight:700;color:var(--gold);margin-bottom:.7rem}
+
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:3px}
+
+@media(max-width:900px){
+  .sb{display:none}.main{margin-left:0;padding:2rem 1.4rem}
+  .hero h1{font-size:2.4rem}.fiche-grid{grid-template-columns:1fr}.fc-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- GLOBAL SVG DEFS for markers -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden">
+  <defs>
+    <marker id="arr-gold" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#c9a84c"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#7eb8d4"/>
+    </marker>
+    <marker id="arr-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#7bc496"/>
+    </marker>
+    <marker id="arr-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#e07b7b"/>
+    </marker>
+    <marker id="arr-muted" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#9089bf"/>
+    </marker>
+  </defs>
+</svg>
+
+<!-- SIDEBAR -->
+<aside class="sb">
+  <div class="sb-logo">CF — Futures</div>
+  <div class="sb-sub">UNIV. GENÈVE · A. DUPUIS · V1.1</div>
+  <nav><ul>
+    <div class="sb-section">Mise en Scène</div>
+    <li><a href="#funny" class="active"><span class="n">🎭</span>La Comédie des Marchés</a></li>
+    <li><a href="#resume"><span class="n">01</span>Résumé Express</a></li>
+    <li><a href="#oral"><span class="n">02</span>Réponse Orale</a></li>
+    <div class="sb-section">Concepts Clés</div>
+    <li><a href="#fwdfut"><span class="n">03</span>Forward vs Futures</a></li>
+    <li><a href="#margins"><span class="n">04</span>Marges & Margin Calls</a></li>
+    <li><a href="#pricing"><span class="n">05</span>Pricing & Arbitrage</a></li>
+    <li><a href="#valuation"><span class="n">06</span>Valuation</a></li>
+    <li><a href="#contango"><span class="n">07</span>Contango & Backwardation</a></li>
+    <div class="sb-section">Analyse</div>
+    <li><a href="#formulas"><span class="n">08</span>Formules Importantes</a></li>
+    <li><a href="#diagrams"><span class="n">09</span>Carte Conceptuelle</a></li>
+    <li><a href="#comparison"><span class="n">10</span>Comparaisons</a></li>
+    <div class="sb-section">Examen</div>
+    <li><a href="#questions"><span class="n">11</span>Questions d'Examen</a></li>
+    <li><a href="#pieges"><span class="n">12</span>Pièges Classiques</a></li>
+    <li><a href="#fiche"><span class="n">13</span>Fiche de Révision</a></li>
+  </ul></nav>
+</aside>
+
+<main class="main">
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<section class="hero">
+  <div class="hero-tag">Computational Finance · University of Geneva · A. Dupuis · v1.1 · Pages 327–342</div>
+  <h1>Futures <em>&amp;</em> Forwards</h1>
+  <p class="hero-desc">Du paysan médiéval au trader algorithmique — l'art de vendre ce qu'on ne possède pas encore, d'acheter ce dont on n'a pas besoin, et de s'enrichir (légalement) grâce aux mathématiques de l'arbitrage.</p>
+  <div class="badges">
+    <span class="badge">Contrats à Terme</span>
+    <span class="badge b">Cost of Carry</span>
+    <span class="badge g">Arbitrage-Free Pricing</span>
+    <span class="badge r">Margin Calls</span>
+    <span class="badge">Contango</span>
+    <span class="badge b">Backwardation</span>
+    <span class="badge v">CME · OTC</span>
+    <span class="badge g">Mark-to-Market</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 00 — FUNNY ═══════════════════════════════ -->
+<section class="sec" id="funny">
+  <div class="sec-hd">
+    <span class="sec-num">🎭</span>
+    <h2 class="sec-title">La Comédie des Marchés à Terme</h2>
+  </div>
+
+  <div class="funny-box">
+    <span class="funny-emoji">🌾</span>
+    <div class="funny-title">L'Origine Tragique des Futures (1848, Chicago)</div>
+    <p>Imaginez-vous en 1848, dans les grandes plaines américaines. Vous êtes un fermier. Vous avez planté 10 000 bushels de blé mais la récolte n'est que dans 6 mois. Problème existentiel : si tout le monde a une bonne récolte, le prix s'effondre et vous êtes ruiné. Si la récolte est mauvaise, vous êtes riche mais vous n'avez rien à vendre. Bienvenue dans le monde du <em>commodity price risk</em>.</p>
+    <p>La solution brillante : <strong>trouver un acheteur aujourd'hui et fixer le prix maintenant pour une livraison future</strong>. Le Chicago Board of Trade invente le futures contract. Le fermier est content, l'acheteur est content, et un siècle plus tard des traders en cravate hurlent dans une salle bondée pour vendre du blé qu'ils n'ont <em>jamais vu</em> et n'ont <em>aucune intention de toucher</em>. 🌽</p>
+  </div>
+
+  <div class="funny-box" style="background:linear-gradient(135deg,rgba(126,184,212,.07),rgba(167,139,250,.04));border-color:rgba(126,184,212,.22);">
+    <span class="funny-emoji">🏦</span>
+    <div class="funny-title" style="color:var(--blue)">Fast-Forward au XXIe Siècle : Le Paradoxe du Futures Trader</div>
+    <p>Le trader moderne utilise les futures pour :</p>
+    <ul>
+      <li>🛢️ S'exposer au prix du pétrole <strong>sans jamais stocker un baril</strong> dans son studio parisien</li>
+      <li>🌽 Spéculer sur le maïs <strong>sans avoir jamais visité une ferme</strong></li>
+      <li>💰 Hedger un portefeuille en 3 clics depuis son bureau</li>
+      <li>😅 Recevoir un <em>margin call</em> à 3h du matin <strong>et regretter ses choix de vie</strong></li>
+    </ul>
+    <p>Et la magie ? <strong>Il n'y aura jamais de livraison physique</strong>. On <em>roll</em> la position avant l'échéance. Le fermier de 1848 ne reconnaîtrait pas son invention.</p>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">💡 La Différence Fondamentale avec les Options (chapitre précédent)</div>
+    <p>Une <strong>option</strong> = droit d'acheter/vendre (vous pouvez ne pas exercer). Un <strong>futures</strong> = obligation. Pas le choix, pas d'état d'âme. C'est comme la différence entre avoir l'option d'aller au cinéma et avoir déjà acheté votre billet non-remboursable — dans le deuxième cas, vous y allez que le film soit bon ou pas.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 01 — RÉSUMÉ ═══════════════════════════════ -->
+<section class="sec" id="resume">
+  <div class="sec-hd">
+    <span class="sec-num">01</span>
+    <h2 class="sec-title">Résumé Exécutif <span style="font-size:1rem;color:var(--muted)">(30 secondes)</span></h2>
+  </div>
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Définition</div>
+      <h4>Futures Contract</h4>
+      <p>Accord entre deux parties pour acheter/vendre un actif à la date T au prix K. <strong>Obligation</strong> — pas une option. Standardisé sur exchange.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Pricing</div>
+      <h4>$F_t = S_t \, e^{r(T-t)}$</h4>
+      <p>Le prix futures = coût de portage de l'actif jusqu'à maturité. Dérivé par <strong>arbitrage sans risque</strong>.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Valuation</div>
+      <h4>$f_t = S_t - K e^{-r(T-t)}$</h4>
+      <p>Valeur d'un contrat existant. Initialement nulle. Exposition quasi-totale au spot $S_t$.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Marges</div>
+      <h4>Margin System</h4>
+      <p>Règlement <strong>quotidien</strong> des P&amp;L (mark-to-market). Initial margin → maintenance margin → margin call si besoin.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Structure de Terme</div>
+      <h4>Contango / Backwardation</h4>
+      <p>Reflète les anticipations du marché. Convergence <strong>garantie</strong> $F_T \to S_T$ à l'échéance.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Application</div>
+      <h4>Hedging &amp; Speculation</h4>
+      <p>Exposition aux commodities, devises, taux <strong>sans détention physique</strong>. Roll pour maintenir l'exposition.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 02 — ORAL ═══════════════════════════════ -->
+<section class="sec" id="oral">
+  <div class="sec-hd">
+    <span class="sec-num">02</span>
+    <h2 class="sec-title">Réponse Modèle d'Oral <span style="font-size:1rem;color:var(--muted)">(3–5 minutes)</span></h2>
+  </div>
+  <div class="oral">
+    <p>Un <strong>futures contract</strong> est un accord entre deux parties pour acheter ou vendre un actif à une date future $T$, à un prix fixé aujourd'hui $K$. Contrairement aux options, il s'agit d'une <em>obligation</em> — les deux parties doivent honorer le contrat. Les futures sont négociés sur des marchés organisés comme le CME, ce qui les distingue des <em>forwards</em> qui sont des contrats OTC bilatéraux. La différence pratique clé : les futures ont un règlement quotidien (mark-to-market) avec un système de marges, tandis que les forwards se règlent uniquement à l'échéance.</p>
+    <p>La question centrale est : <strong>comment pricer ce contrat ?</strong> L'idée est que le prix du futures doit refléter le coût de <em>répliquer</em> l'exposition. Si je veux fournir un actif à l'échéance $T$, je peux emprunter $S_t$ au taux sans risque $r$ aujourd'hui, acheter l'actif et le conserver jusqu'à $T$. Cette stratégie coûte $S_t e^{r(T-t)}$. Par un argument d'arbitrage : si le prix du futures dévie de cette valeur, il existe un profit sans risque — impossible en marché efficient. L'unique prix d'équilibre est donc $F_t = S_t e^{r(T-t)}$. Si l'actif verse un revenu $I$ ou un yield $q$, on obtient respectivement $F_t = (S_t - I)e^{r(T-t)}$ ou $F_t = S_t e^{(r-q)(T-t)}$.</p>
+    <p>Pour garantir l'intégrité du système, l'exchange impose un mécanisme de <strong>marges</strong>. Chaque partie dépose une <em>initial margin</em>. Le contrat est ensuite <em>marked-to-market</em> quotidiennement — les gains et pertes sont réglés en cash chaque jour. Si le solde descend en dessous du seuil de <em>maintenance margin</em>, un <em>margin call</em> est déclenché et la partie doit reconstituer son compte jusqu'à l'initial margin.</p>
+    <p>La <strong>valeur</strong> d'un futures existant est $f_t = (F_t - K)e^{-r(T-t)} = S_t - Ke^{-r(T-t)}$. Être long un futures, c'est donc essentiellement être exposé au prix spot $S_t$ avec un delta de 1. Enfin, on distingue deux régimes : le <em>contango</em> ($F_t > \mathbb{E}[S_T]$, coûts de portage élevés, prix anticipés en hausse) et la <em>backwardation</em> ($F_t < \mathbb{E}[S_T]$, forte demande immédiate). Dans les deux cas, $F_T \to S_T$ à l'échéance par arbitrage.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 03 — FORWARD VS FUTURES ═══════════════════════════════ -->
+<section class="sec" id="fwdfut">
+  <div class="sec-hd">
+    <span class="sec-num">03</span>
+    <h2 class="sec-title">Forward <em>vs</em> Futures</h2>
+  </div>
+
+  <h3>Structure des marchés</h3>
+
+  <div class="diag">
+    <div class="diag-title">🏗️ Architecture — OTC (Forwards) vs Exchange (Futures)</div>
+    <svg viewBox="0 0 760 290" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;display:block;margin:0 auto">
+
+      <!-- LEFT: OTC -->
+      <rect x="8" y="8" width="358" height="274" rx="8" fill="#161221" stroke="rgba(126,184,212,0.3)" stroke-width="1.5"/>
+      <text x="187" y="34" text-anchor="middle" fill="#7eb8d4" font-size="12" font-family="JetBrains Mono,monospace" letter-spacing="1">OTC — FORWARDS</text>
+
+      <rect x="28" y="95" width="120" height="58" rx="6" fill="#1c1828" stroke="rgba(126,184,212,0.55)" stroke-width="1.5"/>
+      <text x="88" y="122" text-anchor="middle" fill="#7eb8d4" font-size="13" font-family="EB Garamond,serif">Acheteur</text>
+      <text x="88" y="141" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Long Forward</text>
+
+      <rect x="212" y="95" width="120" height="58" rx="6" fill="#1c1828" stroke="rgba(123,196,150,0.55)" stroke-width="1.5"/>
+      <text x="272" y="122" text-anchor="middle" fill="#7bc496" font-size="13" font-family="EB Garamond,serif">Vendeur</text>
+      <text x="272" y="141" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Short Forward</text>
+
+      <line x1="148" y1="124" x2="210" y2="124" stroke="#c9a84c" stroke-width="2" marker-end="url(#arr-gold)"/>
+      <line x1="210" y1="134" x2="148" y2="134" stroke="#c9a84c" stroke-width="2" marker-end="url(#arr-gold)"/>
+      <text x="180" y="118" text-anchor="middle" fill="#c9a84c" font-size="9" font-family="JetBrains Mono,monospace">Contrat direct</text>
+
+      <rect x="58" y="200" width="244" height="46" rx="5" fill="rgba(224,123,123,0.08)" stroke="rgba(224,123,123,0.3)" stroke-width="1"/>
+      <text x="180" y="221" text-anchor="middle" fill="#e07b7b" font-size="10" font-family="JetBrains Mono,monospace">⚠ Risque de contrepartie élevé</text>
+      <text x="180" y="237" text-anchor="middle" fill="#9089bf" font-size="10" font-family="EB Garamond,serif">Règlement unique à maturité</text>
+
+      <text x="180" y="60" text-anchor="middle" fill="#9089bf" font-size="10" font-family="EB Garamond,serif" font-style="italic">Non standardisé · Flexible · Illiquide</text>
+
+      <!-- RIGHT: Exchange -->
+      <rect x="392" y="8" width="360" height="274" rx="8" fill="#161221" stroke="rgba(123,196,150,0.3)" stroke-width="1.5"/>
+      <text x="572" y="34" text-anchor="middle" fill="#7bc496" font-size="12" font-family="JetBrains Mono,monospace" letter-spacing="1">EXCHANGE — FUTURES</text>
+
+      <rect x="408" y="68" width="108" height="52" rx="6" fill="#1c1828" stroke="rgba(126,184,212,0.55)" stroke-width="1.5"/>
+      <text x="462" y="92" text-anchor="middle" fill="#7eb8d4" font-size="13" font-family="EB Garamond,serif">Acheteur</text>
+      <text x="462" y="110" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Long</text>
+
+      <ellipse cx="572" cy="155" rx="72" ry="38" fill="#1c1828" stroke="#c9a84c" stroke-width="2"/>
+      <text x="572" y="151" text-anchor="middle" fill="#c9a84c" font-size="13" font-family="EB Garamond,serif" font-weight="bold">Exchange</text>
+      <text x="572" y="168" text-anchor="middle" fill="#e8c97a" font-size="10" font-family="JetBrains Mono,monospace">Clearing House</text>
+
+      <rect x="636" y="68" width="108" height="52" rx="6" fill="#1c1828" stroke="rgba(123,196,150,0.55)" stroke-width="1.5"/>
+      <text x="690" y="92" text-anchor="middle" fill="#7bc496" font-size="13" font-family="EB Garamond,serif">Vendeur</text>
+      <text x="690" y="110" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Short</text>
+
+      <line x1="516" y1="120" x2="468" y2="113" stroke="#7eb8d4" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+      <line x1="468" y1="121" x2="516" y2="130" stroke="#7eb8d4" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+      <line x1="628" y1="120" x2="674" y2="113" stroke="#7bc496" stroke-width="1.5" marker-end="url(#arr-green)"/>
+      <line x1="674" y1="121" x2="628" y2="130" stroke="#7bc496" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+      <rect x="412" y="210" width="100" height="40" rx="4" fill="rgba(126,184,212,0.1)" stroke="rgba(126,184,212,0.3)" stroke-width="1"/>
+      <text x="462" y="228" text-anchor="middle" fill="#7eb8d4" font-size="9" font-family="JetBrains Mono,monospace">Marge</text>
+      <text x="462" y="242" text-anchor="middle" fill="#7eb8d4" font-size="9" font-family="JetBrains Mono,monospace">acheteur</text>
+
+      <rect x="524" y="210" width="96" height="40" rx="4" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.25)" stroke-width="1"/>
+      <text x="572" y="228" text-anchor="middle" fill="#c9a84c" font-size="9" font-family="JetBrains Mono,monospace">Daily MTM</text>
+      <text x="572" y="242" text-anchor="middle" fill="#9089bf" font-size="9" font-family="EB Garamond,serif">règlement</text>
+
+      <rect x="640" y="210" width="100" height="40" rx="4" fill="rgba(123,196,150,0.1)" stroke="rgba(123,196,150,0.3)" stroke-width="1"/>
+      <text x="690" y="228" text-anchor="middle" fill="#7bc496" font-size="9" font-family="JetBrains Mono,monospace">Marge</text>
+      <text x="690" y="242" text-anchor="middle" fill="#7bc496" font-size="9" font-family="JetBrains Mono,monospace">vendeur</text>
+
+      <line x1="462" y1="210" x2="524" y2="228" stroke="rgba(201,168,76,0.25)" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="640" y1="228" x2="620" y2="228" stroke="rgba(201,168,76,0.25)" stroke-width="1" stroke-dasharray="3,2"/>
+
+      <text x="572" y="60" text-anchor="middle" fill="#9089bf" font-size="10" font-family="EB Garamond,serif" font-style="italic">Standardisé · Transparent · Très liquide</text>
+    </svg>
+  </div>
+
+  <h3>Tableau comparatif complet</h3>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Caractéristique</th><th>Forward</th><th>Futures</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Marché</strong></td><td class="m">OTC (gré-à-gré)</td><td class="g">Exchange (CME, CBOT…)</td></tr>
+        <tr><td><strong>Standardisation</strong></td><td class="m">Non — sur mesure</td><td class="g">Oui (quantité, date, qualité)</td></tr>
+        <tr><td><strong>Date de livraison</strong></td><td class="m">Date spécifique fixée</td><td class="g">Plage de dates possibles</td></tr>
+        <tr><td><strong>Règlement</strong></td><td class="m">Uniquement à l'échéance</td><td class="g">Quotidien (mark-to-market)</td></tr>
+        <tr><td><strong>Risque de contrepartie</strong></td><td class="r">Élevé — bilatéral</td><td class="g">Quasi nul — Clearing House</td></tr>
+        <tr><td><strong>Livraison physique</strong></td><td class="m">Livraison ou cash settlement</td><td class="g">Généralement clôturé avant T</td></tr>
+        <tr><td><strong>Liquidité</strong></td><td class="r">Faible</td><td class="g">Très élevée</td></tr>
+        <tr><td><strong>Transparence des prix</strong></td><td class="r">Faible</td><td class="g">Élevée (prix publics)</td></tr>
+        <tr><td><strong>Flexibilité</strong></td><td class="g">Très flexible</td><td class="m">Rigide (standardisé)</td></tr>
+        <tr><td><strong>Formule de prix</strong></td><td>$F_0 = S_0 e^{rT}$</td><td>$F_t = S_t e^{r(T-t)}$</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">🏛️ CME — Chicago Mercantile Exchange</div>
+    <p>La plus grande bourse de futures au monde. Instruments : commodities (métaux précieux, céréales, énergie), equity (indices S&amp;P, Nasdaq…), devises, treasury bonds. C'est le <em>clearing house</em> qui s'interpose entre les contreparties, éliminant le risque de défaut.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 04 — MARGES ═══════════════════════════════ -->
+<section class="sec" id="margins">
+  <div class="sec-hd">
+    <span class="sec-num">04</span>
+    <h2 class="sec-title">Opération des <em>Marges</em></h2>
+  </div>
+
+  <h3>Pourquoi les marges ?</h3>
+  <p>Le risque principal d'un futures est que l'une des contreparties <strong>n'honore pas son engagement</strong>. Pour mitiger ce risque, l'exchange impose un mécanisme de marges avec règlement quotidien.</p>
+
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Initial Margin</div>
+      <h4>Dépôt Initial</h4>
+      <p>Montant déposé à l'ouverture. Sert de garantie. Typiquement 5–15 % de la valeur notionnelle. Exemple : 2000 USD/contrat or.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Maintenance Margin</div>
+      <h4>Seuil Minimal</h4>
+      <p>Si le solde tombe en dessous → <em>margin call</em>. Typiquement ~75 % de l'initial. Exemple : 1500 USD/contrat.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Mark-to-Market</div>
+      <h4>Règlement Quotidien</h4>
+      <p>Les gains/pertes sont <strong>réellement transférés</strong> chaque jour entre les comptes. Le P&amp;L ne s'accumule pas.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Margin Call</div>
+      <h4>Appel de Marge</h4>
+      <p>Notification exigeant la reconstitution jusqu'à l'<em>initial margin</em>. Si non respecté → fermeture forcée de la position.</p>
+    </div>
+  </div>
+
+  <!-- MARGIN CHART -->
+  <div class="diag">
+    <div class="diag-title">📊 Évolution de la Marge — Exemple 2 contrats or (200 oz) à 400 USD/oz</div>
+    <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:720px;display:block;margin:0 auto">
+      <!-- scale: y(v) = 30 + (4600-v)*0.0733 ; 4600->30 ; 2600->177 ; 4000->73.9≈74 ; 3000->117.3≈117 ; 3400->88.1≈88 ; 3220->101.2≈101 ; 2660->143.8≈144 ; 4060->80-->
+      <!-- Let me use simpler: map 2400..5000 to y:290..30; range=2600, px=260; scale=0.1/unit -->
+      <!-- y(v) = 290 - (v-2400)*0.1 -->
+      <!-- 2400:290; 3000:230; 3500:180; 4000:130; 4600:80; 5000:40 -->
+      <!-- initial margin 4000 → 130 ; maintenance 3000 → 230 -->
+
+      <!-- Safe zone (above maintenance) -->
+      <rect x="70" y="30" width="620" height="200" fill="rgba(123,196,150,0.03)"/>
+      <!-- Danger zone (below maintenance) -->
+      <rect x="70" y="230" width="620" height="60" fill="rgba(224,123,123,0.06)"/>
+
+      <!-- Grid lines -->
+      <line x1="70" y1="130" x2="690" y2="130" stroke="rgba(232,201,122,0.2)" stroke-width="1" stroke-dasharray="4,3"/>
+      <line x1="70" y1="230" x2="690" y2="230" stroke="rgba(224,123,123,0.45)" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+      <!-- Labels left -->
+      <text x="62" y="133" text-anchor="end" fill="#e8c97a" font-size="10" font-family="JetBrains Mono,monospace">4000</text>
+      <text x="62" y="233" text-anchor="end" fill="#e07b7b" font-size="10" font-family="JetBrains Mono,monospace">3000</text>
+      <text x="62" y="183" text-anchor="end" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">3500</text>
+      <text x="62" y="103" text-anchor="end" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">4300</text>
+
+      <!-- Axis labels right -->
+      <text x="695" y="133" fill="#e8c97a" font-size="9" font-family="JetBrains Mono,monospace">Initial</text>
+      <text x="695" y="233" fill="#e07b7b" font-size="9" font-family="JetBrains Mono,monospace">Maint.</text>
+
+      <!-- Axes -->
+      <line x1="70" y1="290" x2="680" y2="290" stroke="#9089bf" stroke-width="1.5"/>
+      <line x1="70" y1="30" x2="70" y2="295" stroke="#9089bf" stroke-width="1.5"/>
+
+      <!-- Y-axis label -->
+      <text transform="rotate(-90,22,160)" x="22" y="164" text-anchor="middle" fill="#9089bf" font-size="11" font-family="EB Garamond,serif">Solde Marge (USD)</text>
+
+      <!-- X-axis dates: positions x=120,220,340,450,580,660 -->
+      <text x="100" y="307" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Ouvert.</text>
+      <text x="220" y="307" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Jun 5</text>
+      <text x="340" y="307" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Jun 6</text>
+      <text x="460" y="307" text-anchor="middle" fill="#e07b7b" font-size="10" font-family="JetBrains Mono,monospace">Jun 9</text>
+      <text x="580" y="307" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Jun 10</text>
+      <text x="660" y="307" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">···</text>
+
+      <!-- POINT 0: Ouverture 4000 → y=130 -->
+      <circle cx="100" cy="130" r="5" fill="#e8c97a"/>
+      <text x="100" y="121" text-anchor="middle" fill="#e8c97a" font-size="9" font-family="JetBrains Mono,monospace">4000</text>
+
+      <!-- → Jun 5: 3400 → y=190 -->
+      <line x1="100" y1="130" x2="220" y2="190" stroke="#7eb8d4" stroke-width="2.5"/>
+      <circle cx="220" cy="190" r="5" fill="#7eb8d4"/>
+      <text x="220" y="181" text-anchor="middle" fill="#7eb8d4" font-size="9" font-family="JetBrains Mono,monospace">3400</text>
+      <text x="160" y="157" text-anchor="middle" fill="#e07b7b" font-size="9" font-family="EB Garamond,serif" font-style="italic">−600</text>
+
+      <!-- → Jun 6: 3220 → y=208 -->
+      <line x1="220" y1="190" x2="340" y2="208" stroke="#7eb8d4" stroke-width="2.5"/>
+      <circle cx="340" cy="208" r="5" fill="#7eb8d4"/>
+      <text x="340" y="199" text-anchor="middle" fill="#7eb8d4" font-size="9" font-family="JetBrains Mono,monospace">3220</text>
+      <text x="280" y="196" text-anchor="middle" fill="#e07b7b" font-size="9" font-family="EB Garamond,serif" font-style="italic">−180</text>
+
+      <!-- → Jun 9: 2660 → y=264 (BELOW MAINTENANCE) -->
+      <line x1="340" y1="208" x2="460" y2="264" stroke="#e07b7b" stroke-width="2.5"/>
+      <circle cx="460" cy="264" r="7" fill="#e07b7b"/>
+      <text x="460" y="255" text-anchor="middle" fill="#e07b7b" font-size="9" font-family="JetBrains Mono,monospace">2660 ⚠</text>
+      <text x="400" y="233" text-anchor="middle" fill="#e07b7b" font-size="9" font-family="EB Garamond,serif" font-style="italic">−560</text>
+
+      <!-- MARGIN CALL bubble -->
+      <rect x="412" y="272" width="108" height="34" rx="5" fill="rgba(224,123,123,0.2)" stroke="#e07b7b" stroke-width="1.5"/>
+      <text x="466" y="287" text-anchor="middle" fill="#e07b7b" font-size="10" font-family="JetBrains Mono,monospace">MARGIN CALL</text>
+      <text x="466" y="300" text-anchor="middle" fill="#e07b7b" font-size="10" font-family="JetBrains Mono,monospace">+1340 USD</text>
+
+      <!-- Vertical recovery jump → 4000 = y=130 -->
+      <line x1="460" y1="264" x2="490" y2="130" stroke="#7bc496" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arr-green)"/>
+      <text x="505" y="125" fill="#7bc496" font-size="9" font-family="JetBrains Mono,monospace">Reconstitution → 4000</text>
+
+      <!-- → Jun 10: 4060 → y=124 -->
+      <line x1="490" y1="130" x2="580" y2="124" stroke="#7bc496" stroke-width="2.5"/>
+      <circle cx="580" cy="124" r="5" fill="#7bc496"/>
+      <text x="580" y="115" text-anchor="middle" fill="#7bc496" font-size="9" font-family="JetBrains Mono,monospace">4060</text>
+
+      <!-- Zone labels -->
+      <text x="600" y="65" fill="rgba(123,196,150,0.5)" font-size="9" font-family="JetBrains Mono,monospace">Zone sécurisée</text>
+      <text x="600" y="248" fill="rgba(224,123,123,0.5)" font-size="9" font-family="JetBrains Mono,monospace">Zone danger</text>
+
+      <!-- Legend -->
+      <line x1="90" y1="330" x2="116" y2="330" stroke="#7eb8d4" stroke-width="2"/><text x="122" y="334" fill="#9089bf" font-size="10" font-family="EB Garamond,serif">Évolution balance</text>
+      <line x1="280" y1="330" x2="306" y2="330" stroke="#e07b7b" stroke-width="2"/><text x="312" y="334" fill="#9089bf" font-size="10" font-family="EB Garamond,serif">Balance &lt; Maintenance</text>
+      <line x1="470" y1="330" x2="496" y2="330" stroke="#7bc496" stroke-width="2" stroke-dasharray="4,3"/><text x="502" y="334" fill="#9089bf" font-size="10" font-family="EB Garamond,serif">Reconstitution</text>
+    </svg>
+  </div>
+
+  <h3>Exemple détaillé du cours (Hull)</h3>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Date</th><th>Prix Futures (USD)</th><th>Gain Quotidien (USD)</th><th>Gain Cumulé (USD)</th><th>Solde Marge (USD)</th><th>Margin Call (USD)</th></tr></thead>
+      <tbody>
+        <tr><td class="m"><em>Ouverture</em></td><td>400.00</td><td>—</td><td>—</td><td class="g">4 000</td><td>—</td></tr>
+        <tr><td>Jun 5</td><td>397.00</td><td class="r">−600</td><td class="r">−600</td><td>3 400</td><td>—</td></tr>
+        <tr><td>Jun 6</td><td>396.10</td><td class="r">−180</td><td class="r">−780</td><td>3 220</td><td>—</td></tr>
+        <tr class="hrow"><td><strong>Jun 9 ⚠</strong></td><td>393.30</td><td>−560</td><td>−1 340</td><td>2 660 &lt; 3000</td><td><strong>+1 340</strong></td></tr>
+        <tr class="crow"><td><em>Après appel</em></td><td>—</td><td>—</td><td>—</td><td>4 000</td><td><em>Reconstitué</em></td></tr>
+        <tr><td>Jun 10</td><td>393.60</td><td class="g">+60</td><td class="r">−1 280</td><td class="g">4 060</td><td>—</td></tr>
+        <tr><td class="m">···</td><td class="m">···</td><td class="m">···</td><td class="m">···</td><td class="m">···</td><td class="m">···</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Calcul du Margin Call — Piège Classique</div>
+    <p>Le Jun 9 : balance (2660) &lt; maintenance totale (2 × 1500 = 3000). La reconstitution se fait jusqu'à l'<strong>initial margin</strong> (4000), pas jusqu'à la maintenance. Margin call = 4000 − 2660 = <strong>1340 USD</strong>.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 05 — PRICING ═══════════════════════════════ -->
+<section class="sec" id="pricing">
+  <div class="sec-hd">
+    <span class="sec-num">05</span>
+    <h2 class="sec-title">Pricing <em>des Futures</em></h2>
+  </div>
+
+  <h3>Intuition : le Cost of Carry</h3>
+  <p>Le prix du futures doit refléter le coût de <strong>fournir l'actif à l'échéance</strong>. Pour ce faire, on peut emprunter $S_t$ au taux sans risque $r$, acheter l'actif, le conserver jusqu'en $T$. Coût total = $S_t \cdot e^{r(T-t)}$.</p>
+
+  <div class="mblock">
+    <div class="mlabel">Prix d'Équilibre — Absence d'Arbitrage</div>
+    $$\boxed{F_t = S_t \cdot e^{r(T-t)}}$$
+  </div>
+
+  <h3>Preuve par Arbitrage</h3>
+
+  <div class="diag">
+    <div class="diag-title">⚡ Les Deux Arguments d'Arbitrage — Pourquoi aucun autre prix n'est possible</div>
+    <svg viewBox="0 0 740 390" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:740px;display:block;margin:0 auto">
+
+      <!-- CAS 1 -->
+      <rect x="8" y="8" width="355" height="374" rx="8" fill="#161221" stroke="rgba(224,123,123,0.3)" stroke-width="1.5"/>
+      <text x="185" y="34" text-anchor="middle" fill="#e07b7b" font-size="12" font-family="JetBrains Mono,monospace">CAS 1 : F′ₜ &gt; Sₜ·eʳ⁽ᵀ⁻ᵗ⁾</text>
+      <text x="185" y="52" text-anchor="middle" fill="#9089bf" font-size="10" font-family="EB Garamond,serif" font-style="italic">Futures trop cher → arbitrage</text>
+
+      <rect x="28" y="66" width="300" height="46" rx="5" fill="#1c1828" stroke="rgba(126,184,212,0.4)" stroke-width="1"/>
+      <text x="178" y="87" text-anchor="middle" fill="#7eb8d4" font-size="12" font-family="EB Garamond,serif">① Emprunter Sₜ au taux r</text>
+      <text x="178" y="103" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Remboursement à T : Sₜ eʳ⁽ᵀ⁻ᵗ⁾</text>
+      <line x1="178" y1="112" x2="178" y2="126" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+
+      <rect x="28" y="130" width="300" height="46" rx="5" fill="#1c1828" stroke="rgba(126,184,212,0.4)" stroke-width="1"/>
+      <text x="178" y="151" text-anchor="middle" fill="#7eb8d4" font-size="12" font-family="EB Garamond,serif">② Acheter l'actif au prix Sₜ</text>
+      <text x="178" y="167" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Investissement immédiat</text>
+      <line x1="178" y1="176" x2="178" y2="190" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+
+      <rect x="28" y="194" width="300" height="46" rx="5" fill="#1c1828" stroke="rgba(126,184,212,0.4)" stroke-width="1"/>
+      <text x="178" y="215" text-anchor="middle" fill="#7eb8d4" font-size="12" font-family="EB Garamond,serif">③ Shorter un futures à F′ₜ</text>
+      <text x="178" y="231" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Short au prix gonflé</text>
+      <line x1="178" y1="240" x2="178" y2="254" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+
+      <rect x="28" y="258" width="300" height="46" rx="5" fill="#1c1828" stroke="rgba(123,196,150,0.4)" stroke-width="1"/>
+      <text x="178" y="279" text-anchor="middle" fill="#7bc496" font-size="12" font-family="EB Garamond,serif">④ À T : livrer l'actif, recevoir F′ₜ</text>
+      <text x="178" y="295" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Rembourser Sₜ eʳ⁽ᵀ⁻ᵗ⁾</text>
+
+      <rect x="55" y="318" width="248" height="50" rx="6" fill="rgba(123,196,150,0.12)" stroke="rgba(123,196,150,0.5)" stroke-width="1.5"/>
+      <text x="179" y="340" text-anchor="middle" fill="#7bc496" font-size="14" font-family="Cormorant Garamond,serif" font-weight="700">Profit = F′ₜ − Sₜ eʳ⁽ᵀ⁻ᵗ⁾ &gt; 0</text>
+      <text x="179" y="358" text-anchor="middle" fill="#7bc496" font-size="10" font-family="JetBrains Mono,monospace">Sans risque → Impossible !</text>
+
+      <!-- CAS 2 -->
+      <rect x="377" y="8" width="355" height="374" rx="8" fill="#161221" stroke="rgba(126,184,212,0.3)" stroke-width="1.5"/>
+      <text x="554" y="34" text-anchor="middle" fill="#7eb8d4" font-size="12" font-family="JetBrains Mono,monospace">CAS 2 : F″ₜ &lt; Sₜ·eʳ⁽ᵀ⁻ᵗ⁾</text>
+      <text x="554" y="52" text-anchor="middle" fill="#9089bf" font-size="10" font-family="EB Garamond,serif" font-style="italic">Futures trop bon marché → arbitrage inverse</text>
+
+      <rect x="397" y="66" width="300" height="46" rx="5" fill="#1c1828" stroke="rgba(123,196,150,0.4)" stroke-width="1"/>
+      <text x="547" y="87" text-anchor="middle" fill="#7bc496" font-size="12" font-family="EB Garamond,serif">① Acheter le futures à F″ₜ</text>
+      <text x="547" y="103" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Long au prix déprécié</text>
+      <line x1="547" y1="112" x2="547" y2="126" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+
+      <rect x="397" y="130" width="300" height="46" rx="5" fill="#1c1828" stroke="rgba(123,196,150,0.4)" stroke-width="1"/>
+      <text x="547" y="151" text-anchor="middle" fill="#7bc496" font-size="12" font-family="EB Garamond,serif">② Shorter l'actif au prix Sₜ</text>
+      <text x="547" y="167" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Short sell l'actif sous-jacent</text>
+      <line x1="547" y1="176" x2="547" y2="190" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+
+      <rect x="397" y="194" width="300" height="46" rx="5" fill="#1c1828" stroke="rgba(123,196,150,0.4)" stroke-width="1"/>
+      <text x="547" y="215" text-anchor="middle" fill="#7bc496" font-size="12" font-family="EB Garamond,serif">③ Investir Sₜ au taux r</text>
+      <text x="547" y="231" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Placement cash sans risque</text>
+      <line x1="547" y1="240" x2="547" y2="254" stroke="#c9a84c" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+
+      <rect x="397" y="258" width="300" height="46" rx="5" fill="#1c1828" stroke="rgba(224,123,123,0.4)" stroke-width="1"/>
+      <text x="547" y="279" text-anchor="middle" fill="#e07b7b" font-size="12" font-family="EB Garamond,serif">④ À T : Sₜeʳ⁽ᵀ⁻ᵗ⁾ reçu, payer F″ₜ</text>
+      <text x="547" y="295" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Racheter l'actif via futures</text>
+
+      <rect x="424" y="318" width="248" height="50" rx="6" fill="rgba(123,196,150,0.12)" stroke="rgba(123,196,150,0.5)" stroke-width="1.5"/>
+      <text x="548" y="340" text-anchor="middle" fill="#7bc496" font-size="14" font-family="Cormorant Garamond,serif" font-weight="700">Profit = Sₜ eʳ⁽ᵀ⁻ᵗ⁾ − F″ₜ &gt; 0</text>
+      <text x="548" y="358" text-anchor="middle" fill="#7bc496" font-size="10" font-family="JetBrains Mono,monospace">Sans risque → Impossible !</text>
+    </svg>
+  </div>
+
+  <h3>Extensions : Revenus et Yields</h3>
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Avec Revenu Discret I</div>
+      <h4>$F_t = (S_t - I)\, e^{r(T-t)}$</h4>
+      <p>Dividendes, coupons obligataires. Le détenteur de l'actif perçoit $I$, pas le long futures. Le futures est donc moins cher de $I e^{r(T-t)}$.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Avec Yield Continu q</div>
+      <h4>$F_t = S_t\, e^{(r-q)(T-t)}$</h4>
+      <p>Treasury bonds, devises ($q = r_f$), matières premières (coût de stockage $q &lt; 0$). Si $q &gt; r$ → backwardation structurelle.</p>
+    </div>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">✅ Exemple Numérique — Hull 3.5</div>
+    <p>Forward à 4 mois sur un zero-coupon bond (maturité 1 an). Prix spot : 930 USD. Taux sans risque : $r = 6\%$ p.a.</p>
+    <div class="mblock" style="margin:.8rem 0">
+      <div class="mlabel">Calcul</div>
+      $$F_0 = 930 \times e^{0.06 \times \frac{4}{12}} = 930 \times e^{0.02} \approx 930 \times 1.02020 = \mathbf{948.79 \text{ USD}}$$
+    </div>
+    <p>C'est le prix de livraison d'un contrat négocié aujourd'hui. Le bond aura encore 8 mois à maturité quand le contrat expirera.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 06 — VALUATION ═══════════════════════════════ -->
+<section class="sec" id="valuation">
+  <div class="sec-hd">
+    <span class="sec-num">06</span>
+    <h2 class="sec-title">Valuation <em>des Futures</em></h2>
+  </div>
+
+  <div class="box">
+    <div class="box-title">⚡ Distinction Fondamentale — Prix vs Valeur</div>
+    <p><strong>$F_t$ (Futures Price)</strong> : prix de livraison pour un <em>nouveau</em> contrat conclu en $t$. Résulte de l'offre/demande. Formule : $F_t = S_t e^{r(T-t)}$.</p>
+    <p><strong>$f_t$ (Value of Futures)</strong> : valeur marchande d'un contrat <em>existant</em> avec strike historique $K = F_0$. Initialement nulle, varie dans le temps.</p>
+  </div>
+
+  <div class="mblock">
+    <div class="mlabel">Valeur d'un Futures Existant</div>
+    $$f_t = (F_t - K)\cdot e^{-r(T-t)} \;=\; S_t - K\cdot e^{-r(T-t)}$$
+  </div>
+
+  <h3>Profil de Payoff à Maturité</h3>
+
+  <div class="diag">
+    <div class="diag-title">📈 Payoff Long vs Short Futures — Symétrie totale</div>
+    <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto">
+      <!-- Axes -->
+      <line x1="50" y1="140" x2="480" y2="140" stroke="#9089bf" stroke-width="1.5" marker-end="url(#arr-muted)"/>
+      <line x1="260" y1="20" x2="260" y2="265" stroke="#9089bf" stroke-width="1.5" marker-end="url(#arr-muted)"/>
+
+      <text x="488" y="144" fill="#9089bf" font-size="12" font-family="EB Garamond,serif" font-style="italic">S_T</text>
+      <text x="265" y="18" fill="#9089bf" font-size="12" font-family="EB Garamond,serif">Payoff</text>
+
+      <!-- Zero lines -->
+      <text x="42" y="144" text-anchor="end" fill="#9089bf" font-size="10">0</text>
+      <!-- K on x axis -->
+      <line x1="260" y1="136" x2="260" y2="144" stroke="#c9a84c" stroke-width="2"/>
+      <text x="260" y="158" text-anchor="middle" fill="#c9a84c" font-size="11" font-family="JetBrains Mono,monospace">K</text>
+
+      <!-- Long Futures: diagonal up -->
+      <line x1="70" y1="250" x2="450" y2="30" stroke="#7eb8d4" stroke-width="2.5"/>
+      <text x="455" y="28" fill="#7eb8d4" font-size="11" font-family="EB Garamond,serif" font-style="italic">Long Futures</text>
+      <text x="455" y="42" fill="#7eb8d4" font-size="10" font-family="JetBrains Mono,monospace">S_T − K</text>
+
+      <!-- Short Futures: diagonal down -->
+      <line x1="70" y1="30" x2="450" y2="250" stroke="#e07b7b" stroke-width="2.5"/>
+      <text x="455" y="252" fill="#e07b7b" font-size="11" font-family="EB Garamond,serif" font-style="italic">Short Futures</text>
+      <text x="455" y="266" fill="#e07b7b" font-size="10" font-family="JetBrains Mono,monospace">K − S_T</text>
+
+      <!-- Intersection point at K -->
+      <circle cx="260" cy="140" r="5" fill="none" stroke="#c9a84c" stroke-width="2"/>
+
+      <!-- Profit region labels -->
+      <text x="380" y="90" fill="#7bc496" font-size="10" font-family="JetBrains Mono,monospace">Profit Long</text>
+      <text x="100" y="200" fill="#7bc496" font-size="10" font-family="JetBrains Mono,monospace">Perte Long</text>
+      <text x="380" y="195" fill="#e07b7b" font-size="10" font-family="JetBrains Mono,monospace">Perte Short</text>
+      <text x="100" y="95" fill="#e07b7b" font-size="10" font-family="JetBrains Mono,monospace">Profit Short</text>
+
+      <!-- Symmetry annotation -->
+      <text x="260" y="232" text-anchor="middle" fill="#9089bf" font-size="9" font-family="JetBrains Mono,monospace">Payoff symétrique — perte illimitée possible</text>
+    </svg>
+  </div>
+
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Initialisation</div>
+      <h4>$f_0 = 0$</h4>
+      <p>Pas de prime à payer. À $t=0$, $K = F_0 = S_0 e^{rT}$, donc $f_0 = S_0 - S_0 = 0$.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Exposition Spot</div>
+      <h4>$\partial f_t / \partial S_t = 1$</h4>
+      <p>Être long un futures ≈ être long l'actif directement. Delta = 1, exposition totale.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Exposition au Taux</div>
+      <h4>Sensibilité à $r$</h4>
+      <p>Le taux sans risque influence $f_t$ via le terme $K e^{-r(T-t)}$. Hausse de $r$ → $f_t$ monte (Long).</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Convergence</div>
+      <h4>$f_T = S_T - K$</h4>
+      <p>À maturité, $e^{0}=1$ donc $f_T = S_T - K$ : le gain/perte final est exactement $S_T - K$.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 07 — CONTANGO & BACKWARDATION ═══════════════════════════════ -->
+<section class="sec" id="contango">
+  <div class="sec-hd">
+    <span class="sec-num">07</span>
+    <h2 class="sec-title">Contango <em>&amp;</em> Backwardation</h2>
+  </div>
+
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag" style="color:var(--blue)">Contango</div>
+      <h4 style="color:var(--blue)">$F_t &gt; \mathbb{E}[S_T]$</h4>
+      <p>Futures <strong>au-dessus</strong> du spot attendu. Coût de portage élevé (taux d'intérêt, stockage), prix anticipés en hausse. Situation "normale" pour la plupart des actifs.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag" style="color:var(--red)">Backwardation</div>
+      <h4 style="color:var(--red)">$F_t &lt; \mathbb{E}[S_T]$</h4>
+      <p>Futures <strong>en dessous</strong> du spot attendu. Forte demande immédiate (<em>convenience yield</em> élevé), pénurie actuelle, prix attendus en baisse.</p>
+    </div>
+  </div>
+
+  <div class="diag">
+    <div class="diag-title">📉📈 Structure de Terme — Contango vs Backwardation — Convergence garantie vers S_T</div>
+    <svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;display:block;margin:0 auto">
+      <!-- Axes -->
+      <line x1="60" y1="280" x2="640" y2="280" stroke="#9089bf" stroke-width="1.5" marker-end="url(#arr-muted)"/>
+      <line x1="60" y1="20" x2="60" y2="285" stroke="#9089bf" stroke-width="1.5"/>
+
+      <text x="648" y="284" fill="#9089bf" font-size="11" font-family="EB Garamond,serif" font-style="italic">Temps</text>
+      <text x="64" y="16" fill="#9089bf" font-size="11" font-family="EB Garamond,serif">Prix</text>
+      <text x="62" y="295" text-anchor="middle" fill="#c9a84c" font-size="10" font-family="JetBrains Mono,monospace">Auj.</text>
+      <text x="610" y="295" text-anchor="middle" fill="#c9a84c" font-size="10" font-family="JetBrains Mono,monospace">Maturité T</text>
+
+      <!-- Vertical maturity line -->
+      <line x1="610" y1="20" x2="610" y2="280" stroke="rgba(201,168,76,0.2)" stroke-width="1" stroke-dasharray="4,3"/>
+
+      <!-- Convergence point S_T -->
+      <circle cx="610" cy="160" r="8" fill="#c9a84c"/>
+      <text x="622" y="158" fill="#c9a84c" font-size="12" font-family="JetBrains Mono,monospace">S_T</text>
+
+      <!-- Expected spot (middle, orange dashed) -->
+      <path d="M 62 162 C 160 155,280 170,390 158,500 164,560 161 610 160" fill="none" stroke="#e8c97a" stroke-width="2" stroke-dasharray="7,4"/>
+      <text x="140" y="148" fill="#e8c97a" font-size="10" font-family="JetBrains Mono,monospace">E[S_T] — Expected future spot</text>
+
+      <!-- Contango curve (starts high, converges down) -->
+      <path d="M 62 62 C 140 78,250 95,370 113,490 136,560 150 610 160" fill="none" stroke="#7eb8d4" stroke-width="3"/>
+      <text x="80" y="54" fill="#7eb8d4" font-size="11" font-family="JetBrains Mono,monospace">CONTANGO</text>
+      <text x="80" y="68" fill="#9089bf" font-size="9" font-family="EB Garamond,serif" font-style="italic">F_t &gt; E[S_T] | Cost of Carry élevé</text>
+
+      <!-- Backwardation curve (starts low, converges up) -->
+      <path d="M 62 255 C 140 245,260 232,380 210,490 185,560 170 610 160" fill="none" stroke="#e07b7b" stroke-width="3"/>
+      <text x="80" y="272" fill="#e07b7b" font-size="11" font-family="JetBrains Mono,monospace">BACKWARDATION</text>
+      <text x="80" y="286" fill="#9089bf" font-size="9" font-family="EB Garamond,serif" font-style="italic">F_t &lt; E[S_T] | Convenience Yield élevé</text>
+
+      <!-- Convergence arrows -->
+      <line x1="605" y1="85" x2="607" y2="153" stroke="#7eb8d4" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arr-blue)"/>
+      <line x1="605" y1="230" x2="607" y2="167" stroke="#e07b7b" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arr-red)"/>
+
+      <!-- Annotation -->
+      <rect x="390" y="195" width="150" height="38" rx="5" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.25)" stroke-width="1"/>
+      <text x="465" y="212" text-anchor="middle" fill="#c9a84c" font-size="10" font-family="JetBrains Mono,monospace">Convergence garantie</text>
+      <text x="465" y="226" text-anchor="middle" fill="#e8c97a" font-size="10" font-family="EB Garamond,serif" font-style="italic">F_T → S_T (arbitrage)</text>
+
+      <!-- Switch annotation -->
+      <rect x="280" y="100" width="120" height="32" rx="4" fill="rgba(167,139,250,0.07)" stroke="rgba(167,139,250,0.2)" stroke-width="1"/>
+      <text x="340" y="114" text-anchor="middle" fill="#a78bfa" font-size="9" font-family="JetBrains Mono,monospace">⇄ Peut switcher</text>
+      <text x="340" y="126" text-anchor="middle" fill="#9089bf" font-size="9" font-family="EB Garamond,serif">entre les deux états</text>
+    </svg>
+  </div>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>État</th><th>Condition</th><th>Causes</th><th>Roll Yield</th><th>Exemples</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--blue)">Contango</strong></td>
+          <td>$F_t &gt; \mathbb{E}[S_T]$</td>
+          <td class="m">Taux r élevé, coût stockage, anticipation hausse prix</td>
+          <td class="r">Négatif (coûteux à roller)</td>
+          <td class="m">Or, pétrole en suroffre, la plupart des actifs</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--red)">Backwardation</strong></td>
+          <td>$F_t &lt; \mathbb{E}[S_T]$</td>
+          <td class="m">Convenience yield élevé, pénurie, forte demande spot</td>
+          <td class="g">Positif (gain au roll)</td>
+          <td class="m">Pétrole en crise, matières premières rares</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">📌 Impact sur les ETFs — Negative Roll Yield</div>
+    <p>En contango, un ETF sur futures (pétrole, VIX…) perd de la valeur à chaque roll même si le prix spot reste stable. C'est le <em>negative roll yield</em> — un piège classique pour les investisseurs qui pensent s'exposer au spot via un ETF de futures.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 08 — FORMULES ═══════════════════════════════ -->
+<section class="sec" id="formulas">
+  <div class="sec-hd">
+    <span class="sec-num">08</span>
+    <h2 class="sec-title">Formules <em>Importantes</em></h2>
+  </div>
+
+  <div class="fcards">
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Prix Futures — Cas de Base</span>
+        <span class="fc-tag">Cost of Carry · No dividend</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">$$F_t = S_t \cdot e^{r(T-t)}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$S_t$ : prix spot à $t$ | $r$ : taux sans risque continu | $T-t$ : temps restant | $F_t$ : prix futures</p></div>
+          <div class="fc-item"><h5>Intuition</h5><p>Coût de financement pour porter l'actif de $t$ à $T$. Seul prix qui n'offre aucun arbitrage.</p></div>
+          <div class="fc-item"><h5>Exemple numérique</h5><p>$S_0=930$, $r=6\%$, $T=4/12$ : $F_0 = 930 e^{0.02} = 948.79$ USD</p></div>
+          <div class="fc-item"><h5>Implication</h5><p>Si $F_t \neq S_t e^{r(T-t)}$ → arbitrage immédiat. Le marché s'ajuste instantanément.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Avec Revenu Discret I</span>
+        <span class="fc-tag">Dividendes · Coupons</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">$$F_t = (S_t - I)\cdot e^{r(T-t)}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$I$ : valeur actualisée des revenus perçus par le détenteur de l'actif (dividendes, coupons)</p></div>
+          <div class="fc-item"><h5>Intuition</h5><p>Le détenteur spot perçoit $I$, pas le long futures. On soustrait donc $I$ du prix spot effectif.</p></div>
+          <div class="fc-item"><h5>Application</h5><p>Actions versant dividendes, obligations avec coupons. Si $I=0$ → retour au cas de base.</p></div>
+          <div class="fc-item"><h5>Effet</h5><p>Le revenu $I$ réduit le prix futures. Plus $I$ est grand, moins le futures est cher relativement.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Avec Yield Continu q</span>
+        <span class="fc-tag">Treasury · Devises · Stockage</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">$$F_t = S_t \cdot e^{(r-q)(T-t)}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$q &gt; 0$ : yield continu (dividendes, taux étranger) | $q &lt; 0$ : coût de stockage (oil, blé)</p></div>
+          <div class="fc-item"><h5>Parité de change</h5><p>$F = S e^{(r_d - r_f)(T-t)}$ : parité des taux d'intérêt couverte (CIP), $q = r_f$</p></div>
+          <div class="fc-item"><h5>Contango/Backw.</h5><p>Si $r &gt; q$ → contango. Si $q &gt; r$ (convenience yield fort) → backwardation structurelle.</p></div>
+          <div class="fc-item"><h5>Exemple</h5><p>Pétrole avec coût stockage $q = -3\%$ : $F_t = S_t e^{(r+0.03)(T-t)}$ — futures plus cher.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head">
+        <span class="fc-name">Valeur d'un Futures Existant</span>
+        <span class="fc-tag">Mark-to-Market · Valuation</span>
+      </div>
+      <div class="fc-body">
+        <div class="fc-expr">$$f_t = (F_t - K)\cdot e^{-r(T-t)} = S_t - K\cdot e^{-r(T-t)}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$K = F_0$ : strike fixé à l'initiation | $f_t$ : valeur courante | $F_t$ : nouveau prix futures</p></div>
+          <div class="fc-item"><h5>Intuition</h5><p>Gain/perte vs prix d'entrée $K$, actualisé. $f_0 = 0$ (pas de prime). $f_T = S_T - K$ (payoff final).</p></div>
+          <div class="fc-item"><h5>Exemple</h5><p>$K=400$, $S_t=415$, $r=5\%$, 6 mois : $f_t \approx 415 - 400 e^{-0.025} \approx 24.95$</p></div>
+          <div class="fc-item"><h5>Delta</h5><p>$\partial f_t / \partial S_t = 1$ : être long un futures = être long l'actif directement.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 09 — DIAGRAMMES ═══════════════════════════════ -->
+<section class="sec" id="diagrams">
+  <div class="sec-hd">
+    <span class="sec-num">09</span>
+    <h2 class="sec-title">Carte Conceptuelle <em>du Chapitre</em></h2>
+  </div>
+
+  <div class="diag">
+    <div class="diag-title">🗺️ Vue d'Ensemble — Relations entre tous les Concepts</div>
+    <svg viewBox="0 0 740 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:740px;display:block;margin:0 auto">
+
+      <!-- Central node: Futures -->
+      <ellipse cx="370" cy="200" rx="88" ry="44" fill="#1c1828" stroke="#c9a84c" stroke-width="2.5"/>
+      <text x="370" y="196" text-anchor="middle" fill="#c9a84c" font-size="15" font-family="Cormorant Garamond,serif" font-weight="700">Futures</text>
+      <text x="370" y="213" text-anchor="middle" fill="#e8c97a" font-size="10" font-family="JetBrains Mono,monospace">Contract</text>
+
+      <!-- Node Forwards (top-left) -->
+      <rect x="22" y="28" width="140" height="58" rx="7" fill="#1c1828" stroke="rgba(126,184,212,0.55)" stroke-width="1.5"/>
+      <text x="92" y="54" text-anchor="middle" fill="#7eb8d4" font-size="13" font-family="Cormorant Garamond,serif" font-weight="600">Forwards</text>
+      <text x="92" y="70" text-anchor="middle" fill="#9089bf" font-size="9" font-family="JetBrains Mono,monospace">OTC · bilatéral · flexible</text>
+      <line x1="162" y1="72" x2="285" y2="172" stroke="rgba(126,184,212,0.35)" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <text x="220" y="112" text-anchor="middle" fill="#7eb8d4" font-size="10" font-family="JetBrains Mono,monospace" transform="rotate(-32,220,112)">vs</text>
+
+      <!-- Node Pricing (top-center) -->
+      <rect x="262" y="22" width="216" height="68" rx="7" fill="#1c1828" stroke="rgba(201,168,76,0.6)" stroke-width="1.5"/>
+      <text x="370" y="46" text-anchor="middle" fill="#c9a84c" font-size="13" font-family="Cormorant Garamond,serif" font-weight="600">Pricing</text>
+      <text x="370" y="62" text-anchor="middle" fill="#e8c97a" font-size="11" font-family="JetBrains Mono,monospace">Fₜ = Sₜ · eʳ⁽ᵀ⁻ᵗ⁾</text>
+      <text x="370" y="78" text-anchor="middle" fill="#9089bf" font-size="9" font-family="EB Garamond,serif" font-style="italic">Arbitrage-free · Cost of Carry</text>
+      <line x1="370" y1="90" x2="370" y2="156" stroke="rgba(201,168,76,0.4)" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+
+      <!-- Node Valuation (right) -->
+      <rect x="570" y="148" width="158" height="68" rx="7" fill="#1c1828" stroke="rgba(167,139,250,0.55)" stroke-width="1.5"/>
+      <text x="649" y="172" text-anchor="middle" fill="#a78bfa" font-size="13" font-family="Cormorant Garamond,serif" font-weight="600">Valuation</text>
+      <text x="649" y="188" text-anchor="middle" fill="#a78bfa" font-size="10" font-family="JetBrains Mono,monospace">fₜ = Sₜ − Ke⁻ʳ⁽ᵀ⁻ᵗ⁾</text>
+      <text x="649" y="204" text-anchor="middle" fill="#9089bf" font-size="9" font-family="EB Garamond,serif" font-style="italic">Mark-to-market · Δ=1</text>
+      <line x1="458" y1="204" x2="570" y2="190" stroke="rgba(167,139,250,0.35)" stroke-width="1.5" marker-end="url(#arr-muted)"/>
+
+      <!-- Node Margins (bottom-right) -->
+      <rect x="545" y="298" width="175" height="68" rx="7" fill="#1c1828" stroke="rgba(224,123,123,0.55)" stroke-width="1.5"/>
+      <text x="632" y="322" text-anchor="middle" fill="#e07b7b" font-size="13" font-family="Cormorant Garamond,serif" font-weight="600">Marges</text>
+      <text x="632" y="338" text-anchor="middle" fill="#e07b7b" font-size="10" font-family="JetBrains Mono,monospace">Initial · Maintenance</text>
+      <text x="632" y="354" text-anchor="middle" fill="#9089bf" font-size="9" font-family="EB Garamond,serif" font-style="italic">Daily Settlement · Margin Call</text>
+      <line x1="415" y1="238" x2="562" y2="315" stroke="rgba(224,123,123,0.35)" stroke-width="1.5" marker-end="url(#arr-red)"/>
+
+      <!-- Node Contango (bottom-left) -->
+      <rect x="22" y="298" width="192" height="68" rx="7" fill="#1c1828" stroke="rgba(123,196,150,0.55)" stroke-width="1.5"/>
+      <text x="118" y="322" text-anchor="middle" fill="#7bc496" font-size="13" font-family="Cormorant Garamond,serif" font-weight="600">Contango / Backw.</text>
+      <text x="118" y="338" text-anchor="middle" fill="#9089bf" font-size="10" font-family="JetBrains Mono,monospace">Market expectations</text>
+      <text x="118" y="354" text-anchor="middle" fill="#7bc496" font-size="9" font-family="JetBrains Mono,monospace">F_T → S_T (convergence)</text>
+      <line x1="325" y1="238" x2="195" y2="315" stroke="rgba(123,196,150,0.35)" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+      <!-- Node Applications (top-right) -->
+      <rect x="570" y="28" width="158" height="68" rx="7" fill="#1c1828" stroke="rgba(232,201,122,0.35)" stroke-width="1"/>
+      <text x="649" y="52" text-anchor="middle" fill="#e8c97a" font-size="13" font-family="Cormorant Garamond,serif">Applications</text>
+      <text x="649" y="68" text-anchor="middle" fill="#9089bf" font-size="9" font-family="JetBrains Mono,monospace">Hedging · Speculation</text>
+      <text x="649" y="82" text-anchor="middle" fill="#9089bf" font-size="9" font-family="JetBrains Mono,monospace">Commodities · Roll</text>
+      <line x1="458" y1="180" x2="570" y2="82" stroke="rgba(232,201,122,0.25)" stroke-width="1" stroke-dasharray="4,3"/>
+
+      <!-- Central description -->
+      <text x="370" y="390" text-anchor="middle" fill="#9089bf" font-size="9" font-family="JetBrains Mono,monospace">CME · Obligation (≠ Option) · Standardisé · Mark-to-Market</text>
+    </svg>
+  </div>
+
+  <h3>Timeline d'un Futures — Du Trade à la Livraison</h3>
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-year">t = 0 : Initiation</div>
+      <div class="tl-title">Entrée dans le Contrat</div>
+      <div class="tl-desc">Strike $K = F_0 = S_0 e^{rT}$ fixé. Dépôt des initial margins. Valeur : $f_0 = 0$. Pas de prime à payer. Les deux parties s'engagent irrévocablement.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">t ∈ (0, T) : Vie du Contrat</div>
+      <div class="tl-title">Mark-to-Market Quotidien</div>
+      <div class="tl-desc">Chaque jour : calcul des P&amp;L, transfert entre comptes. Si solde &lt; maintenance → margin call. $F_t$ évolue selon offre/demande. $f_t = S_t - Ke^{-r(T-t)}$ varie continuellement.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Avant T : Roll ou Close-Out</div>
+      <div class="tl-title">Gestion de Position</div>
+      <div class="tl-desc">La majorité des traders ferment avant maturité (pas de livraison physique souhaitée). Pour maintenir l'exposition : <em>roll</em> = fermer le contrat proche + ouvrir un contrat plus lointain. Coût du roll selon contango/backwardation.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">t = T : Maturité</div>
+      <div class="tl-title">Convergence et Règlement Final</div>
+      <div class="tl-desc">$F_T = S_T$ par arbitrage. Si position encore ouverte : livraison physique ou cash settlement. Gain/perte cumulé = $S_T - K$ (long). En pratique : quasi jamais de livraison physique.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 10 — COMPARAISON ═══════════════════════════════ -->
+<section class="sec" id="comparison">
+  <div class="sec-hd">
+    <span class="sec-num">10</span>
+    <h2 class="sec-title">Comparaison <em>des Instruments</em></h2>
+  </div>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Critère</th><th>Forward</th><th>Futures</th><th>Option (Call/Put)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Obligation à maturité ?</strong></td><td class="r">Oui — obligatoire</td><td class="r">Oui — obligatoire</td><td class="g">Non — optionnel</td></tr>
+        <tr><td><strong>Prime initiale ?</strong></td><td class="g">Aucune</td><td class="g">Aucune (sauf marge)</td><td class="r">Oui — premium</td></tr>
+        <tr><td><strong>Perte max (Long)</strong></td><td class="r">Illimitée</td><td class="r">Illimitée</td><td class="g">Limitée à la prime</td></tr>
+        <tr><td><strong>Gain max (Long)</strong></td><td class="g">Illimité</td><td class="g">Illimité</td><td class="g">Illimité (Call)</td></tr>
+        <tr><td><strong>Marché</strong></td><td class="m">OTC</td><td class="g">Exchange</td><td class="m">OTC ou Exchange</td></tr>
+        <tr><td><strong>Règlement</strong></td><td class="m">À l'échéance</td><td class="g">Quotidien (MTM)</td><td class="m">À l'exercice</td></tr>
+        <tr><td><strong>Formule de prix</strong></td><td>$F_0 = S_0 e^{rT}$</td><td>$F_t = S_t e^{r(T-t)}$</td><td>Black-Scholes + $\sigma$</td></tr>
+        <tr><td><strong>Delta</strong></td><td class="m">$\Delta = 1$ (long)</td><td class="m">$\Delta = 1$ (long)</td><td class="m">$0 &lt; \Delta &lt; 1$ (call)</td></tr>
+        <tr><td><strong>Usage typique</strong></td><td class="m">Hedging corporatif, M&amp;A</td><td class="m">Hedging, spéculation, expo.</td><td class="m">Assurance, stratégies</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 11 — QUESTIONS ═══════════════════════════════ -->
+<section class="sec" id="questions">
+  <div class="sec-hd">
+    <span class="sec-num">11</span>
+    <h2 class="sec-title">Questions <em>d'Examen</em></h2>
+  </div>
+
+  <div class="qlevel easy">Niveau Facile</div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">Quelle est la différence fondamentale entre un forward et un futures ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Un <strong>forward</strong> est un contrat OTC bilatéral, non standardisé, réglé uniquement à l'échéance, avec risque de contrepartie élevé. Un <strong>futures</strong> est standardisé, négocié sur exchange (CME), avec règlement quotidien mark-to-market et clearing house qui élimine le risque de contrepartie. Même formule de prix, mais structure de marché et gestion du risque radicalement différentes.</p></div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">Pourquoi la valeur initiale d'un futures est-elle nulle ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>À l'initiation, le strike $K$ est fixé égal au prix futures courant $F_0 = S_0 e^{rT}$. La valeur est $f_0 = S_0 - K e^{-rT} = S_0 - F_0 e^{-rT} = S_0 - S_0 e^{rT} e^{-rT} = S_0 - S_0 = 0$. Intuitivement, le contrat est juste à sa valeur de marché — aucune des parties n'a d'avantage. Pas de prime à payer, contrairement à une option.</p></div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">Qu'est-ce qu'un "roll" et pourquoi est-il nécessaire ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Le <strong>roll</strong> consiste à clôturer un contrat futures proche de son échéance et simultanément ouvrir un nouveau contrat sur une maturité plus lointaine. Cela permet de maintenir une exposition continue sans prendre livraison physique de l'actif. Nécessaire car la plupart des traders veulent l'exposition économique, pas la livraison de barils de pétrole ou de tonnes de blé. Le coût du roll dépend de la structure de terme : négatif en contango, positif en backwardation.</p></div>
+  </div>
+
+  <div class="qlevel med">Niveau Intermédiaire</div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">Démontrez $F_t = S_t e^{r(T-t)}$ par un argument d'arbitrage complet.</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a">
+      <p><strong>Cas 1</strong> — Si $F_t' &gt; S_t e^{r(T-t)}$ : on emprunte $S_t$ au taux $r$, on achète l'actif, on shorte un futures à $F_t'$. À T : on livre l'actif, reçoit $F_t'$, rembourse $S_t e^{r(T-t)}$. Profit = $F_t' - S_t e^{r(T-t)} &gt; 0$ sans risque — impossible.</p>
+      <p><strong>Cas 2</strong> — Si $F_t'' &lt; S_t e^{r(T-t)}$ : on achète le futures à $F_t''$, on shorte l'actif en encaissant $S_t$, on investit $S_t$ à taux $r$. À T : l'investissement vaut $S_t e^{r(T-t)}$, on reçoit l'actif via le futures en payant $F_t''$. Profit = $S_t e^{r(T-t)} - F_t'' &gt; 0$ — impossible.</p>
+      <p>Conclusion : le seul prix compatible avec l'absence d'arbitrage est $F_t = S_t e^{r(T-t)}$.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">Calculez le margin call du 9 juin dans l'exemple du cours.</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a">
+      <p>Données : 2 contrats or, 200 oz, prix initial 400 USD/oz. Initial margin : 2 × 2000 = 4000 USD. Maintenance margin : 2 × 1500 = 3000 USD.</p>
+      <p>Du Jun 6 au Jun 9 : le prix passe de 396.10 à 393.30, soit −2.80 USD/oz. Perte = 200 × 2.80 = <strong>560 USD</strong>. Solde : 3220 − 560 = <strong>2660 USD</strong>.</p>
+      <p>2660 &lt; 3000 (maintenance) → Margin Call. Reconstitution jusqu'à l'initial margin : 4000 − 2660 = <strong>1340 USD</strong>.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">Quelle est la relation entre $F_t$, $f_t$ et $S_t$ ? Interprétez chaque terme.</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a">
+      <p><strong>$F_t$</strong> : Prix de livraison pour un <em>nouveau</em> contrat initié en $t$. Formule : $F_t = S_t e^{r(T-t)}$. Résulte de l'offre/demande mais ancré par l'arbitrage.</p>
+      <p><strong>$f_t$</strong> : Valeur marchande d'un contrat <em>existant</em> avec strike historique $K = F_0$. Formule : $f_t = S_t - K e^{-r(T-t)}$. Initialement nulle, varie avec $S_t$ et $r$.</p>
+      <p><strong>$S_t$</strong> : Prix spot de l'actif sous-jacent. Influence directe sur $f_t$ ($\partial f_t / \partial S_t = 1$). Être long un futures ≈ être long l'actif, mais sans payer $S_t$ aujourd'hui.</p>
+    </div>
+  </div>
+
+  <div class="qlevel hard">Niveau Difficile</div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">Comment généraliser la formule de pricing pour un actif avec yield continu $q$ ? Quel lien avec la parité de change couverte (CIP) ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a">
+      <p>Si l'actif verse un yield continu $q$, le détenteur de l'actif spot perçoit un retour supplémentaire que le long futures ne perçoit pas. Dans la stratégie de réplication, le coût de portage effectif devient $r - q$ (le yield compense partiellement le financement). D'où : $F_t = S_t e^{(r-q)(T-t)}$.</p>
+      <p>Pour les devises, $q = r_f$ (taux étranger), et la formule devient $F = S e^{(r_d - r_f)(T-t)}$ — exactement la parité des taux d'intérêt couverte (CIP). Cela signifie que le forward FX doit refléter le différentiel de taux pour éviter l'arbitrage de carry.</p>
+      <p>Si $q &gt; r$ (convenience yield élevé, ex. pétrole en pénurie) : $F_t &lt; S_t$ → backwardation structurelle. Le marché "paie" une prime pour accéder à l'actif physique immédiatement.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">Expliquez le "negative roll yield" en contango et son impact pratique sur les ETFs de matières premières.</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a">
+      <p>En contango, la courbe futures est ascendante : $F_{T_2} &gt; F_{T_1}$ pour $T_2 &gt; T_1$. Quand un ETF roule sa position (vend le contrat $T_1$ arrivant à maturité, achète $T_2$), il vend moins cher qu'il n'achète → perte systématique = <em>negative roll yield</em>.</p>
+      <p>Concrètement : un ETF pétrole en contango persistant peut perdre 10–20% par an uniquement à cause du roll, même si le prix spot reste constant. C'est pourquoi des ETFs comme l'USO (United States Oil Fund) ont historiquement largement sous-performé le spot pétrole.</p>
+      <p>En backwardation : le roll génère un gain (positive roll yield). Certains hedge funds ciblent les marchés en backwardation pour des stratégies de "commodity carry" — acheter les contrats lointains moins chers et bénéficier de leur convergence vers le spot.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">Pourquoi la valeur d'un futures est-elle "remise à zéro" quotidiennement alors que celle d'un forward ne l'est pas ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a">
+      <p>Pour un <strong>forward</strong> : pas de règlement intermédiaire. La valeur $f_t = (F_t - K) e^{-r(T-t)}$ s'accumule tout au long de la vie du contrat. À l'échéance, le gain/perte total est réglé en une fois. Le strike $K$ reste fixé à $F_0$.</p>
+      <p>Pour un <strong>futures</strong> avec mark-to-market : chaque jour, le gain/perte est réglé en cash. Après le règlement quotidien, le strike $K$ est mis à jour au nouveau prix futures $F_t$. Cela "remet à zéro" la valeur : $f_t = 0$ après chaque règlement. C'est économiquement équivalent à conclure un nouveau futures chaque jour au prix de marché.</p>
+      <p>Implication importante : la valeur formelle $f_t = (F_t - K) e^{-r(T-t)}$ représente donc la valeur <em>intraday</em> ou entre deux règlements — pas la valeur cumulée depuis l'ouverture du contrat.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 12 — PIÈGES ═══════════════════════════════ -->
+<section class="sec" id="pieges">
+  <div class="sec-hd">
+    <span class="sec-num">12</span>
+    <h2 class="sec-title">Pièges <em>Classiques</em></h2>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">💀</div>
+    <div class="piege-text"><strong>Prix vs Valeur :</strong> $F_t$ (prix d'un nouveau contrat) ≠ $f_t$ (valeur d'un contrat existant). $F_t = S_t e^{r(T-t)}$ toujours. $f_t$ dépend du strike historique $K$. Ne jamais confondre dans un calcul.</div>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">💀</div>
+    <div class="piege-text"><strong>Margin Call → reconstitution jusqu'à INITIAL margin, pas maintenance :</strong> Erreur classique et fatale aux examens. Solde actuel = 2660, initial = 4000, maintenance = 3000. Margin call = 4000 − 2660 = 1340, pas 3000 − 2660 = 340.</div>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">💀</div>
+    <div class="piege-text"><strong>Futures ≠ Option :</strong> Un futures est une <em>obligation</em>. La perte potentielle est illimitée des deux côtés. Ne jamais dire "on peut ne pas exercer" ou "la perte est limitée à la prime" — c'est la définition d'une option, pas d'un futures.</div>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">💀</div>
+    <div class="piege-text"><strong>Contango ≠ anticipation de hausse des prix :</strong> Le contango reflète principalement le cost of carry (taux d'intérêt, stockage), pas une prévision de hausse des prix spots. Le prix spot peut baisser même si le marché est en contango.</div>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">💀</div>
+    <div class="piege-text"><strong>$F_T = S_T$ est une identité d'arbitrage, pas une prédiction :</strong> La convergence à maturité est mécanique — si $F_T \neq S_T$, arbitrage immédiat possible. Ce n'est pas "le marché prédit que $S_T$ vaudra $F_0$". L'un converge vers l'autre, pas l'inverse.</div>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">💀</div>
+    <div class="piege-text"><strong>Sign du yield q :</strong> Dans $F_t = S_t e^{(r-q)(T-t)}$, un yield positif $q &gt; 0$ (dividendes, taux étranger) <em>diminue</em> le prix futures. Un coût de stockage équivaut à $q &lt; 0$, ce qui <em>augmente</em> le prix futures. Toujours vérifier le signe selon le contexte.</div>
+  </div>
+
+  <div class="piege">
+    <div class="piege-icon">💀</div>
+    <div class="piege-text"><strong>ETF sur futures ≠ exposition spot :</strong> En contango persistant, un ETF sur futures peut perdre massivement via le negative roll yield même si le spot ne bouge pas. Ce n'est pas un vrai proxy du spot — piège classique pour les investisseurs non avertis.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEC 13 — FICHE ═══════════════════════════════ -->
+<section class="sec" id="fiche">
+  <div class="sec-hd">
+    <span class="sec-num">13</span>
+    <h2 class="sec-title">Fiche de <em>Révision Finale</em></h2>
+  </div>
+
+  <div class="fiche-grid">
+    <div class="fc2">
+      <h4>📌 Définitions Clés</h4>
+      <ul>
+        <li><strong>Futures</strong> : obligation d'acheter/vendre à T pour K</li>
+        <li><strong>Forward</strong> : idem, mais OTC, non standardisé</li>
+        <li><strong>Initial Margin</strong> : dépôt de garantie à l'ouverture</li>
+        <li><strong>Maintenance Margin</strong> : seuil → déclenche margin call</li>
+        <li><strong>Mark-to-Market</strong> : règlement quotidien des P&amp;L</li>
+        <li><strong>Roll</strong> : renouvellement d'exposition avant T</li>
+        <li><strong>Contango</strong> : $F_t &gt; E[S_T]$ (cost of carry &gt; convenience yield)</li>
+        <li><strong>Backwardation</strong> : $F_t &lt; E[S_T]$ (convenience yield élevé)</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>🧮 Formules Essentielles</h4>
+      <ul>
+        <li><strong>Base</strong> : $F_t = S_t e^{r(T-t)}$</li>
+        <li><strong>Avec revenu</strong> : $F_t = (S_t - I) e^{r(T-t)}$</li>
+        <li><strong>Avec yield</strong> : $F_t = S_t e^{(r-q)(T-t)}$</li>
+        <li><strong>Valeur</strong> : $f_t = (F_t - K) e^{-r(T-t)}$</li>
+        <li><strong>Valeur simplif.</strong> : $f_t = S_t - K e^{-r(T-t)}$</li>
+        <li><strong>Hull 3.5</strong> : $930 \cdot e^{0.02} = 948.79$</li>
+        <li><strong>Init.</strong> : $f_0 = 0$ | <strong>Delta</strong> : $\partial f/\partial S = 1$</li>
+        <li><strong>Convergence</strong> : $F_T = S_T$ (arbitrage)</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>⚡ Points Clés à Mémoriser</h4>
+      <ul>
+        <li>Futures = <strong>obligation</strong> (≠ option = droit)</li>
+        <li>Pricing par <strong>cost of carry + arbitrage</strong></li>
+        <li>Mark-to-market = règlement <strong>quotidien</strong></li>
+        <li>Margin call → jusqu'à <strong>initial</strong> (pas maintenance)</li>
+        <li>Payoff symétrique — perte <strong>illimitée</strong></li>
+        <li>Roll : négatif en contango, positif en backwardation</li>
+        <li>Exchange → clearing house → risque contrepartie ≈ 0</li>
+        <li>En pratique : fermé avant T, <strong>jamais livré</strong></li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>🆚 Forward vs Futures (mémo express)</h4>
+      <ul>
+        <li><strong>OTC</strong> vs <strong>Exchange</strong></li>
+        <li><strong>Flexible</strong> vs <strong>Standardisé</strong></li>
+        <li><strong>Règlement fin</strong> vs <strong>Daily MTM</strong></li>
+        <li><strong>Risque contrepartie</strong> vs <strong>Clearing House</strong></li>
+        <li><strong>Date fixe</strong> vs <strong>Plage de dates</strong></li>
+        <li><strong>Livraison</strong> vs <strong>Clôturé avant T</strong></li>
+        <li><strong>Illiquide</strong> vs <strong>Très liquide</strong></li>
+        <li>Même formule de prix : $F = S e^{rT}$ ✓</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box ok" style="margin-top:2rem">
+    <div class="box-title">🎯 Script Ultra-Condensé pour l'Oral (30 sec)</div>
+    <p><strong>Un futures = obligation bilatérale + standardisation + clearing house.</strong> Prix par arbitrage : $F_t = S_t e^{r(T-t)}$ (cost of carry). Valeur d'un contrat existant : $f_t = S_t - Ke^{-r(T-t)}$, initialement nulle, delta = 1. Marges = règlement quotidien (mark-to-market) → initial margin → maintenance → margin call → reconstitution à initial. Structure de terme : contango ($F &gt; E[S_T]$) ou backwardation ($F &lt; E[S_T]$), avec convergence garantie $F_T \to S_T$.</p>
+  </div>
+
+  <div class="box vio" style="margin-top:1rem">
+    <div class="box-title">🌾 Rappel Humain Final</div>
+    <p>Le fermier de 1848 voulait juste savoir à quel prix il vendrait son blé. Il a involontairement créé un marché de centaines de milliers de milliards de notionnel par an. Leçon universelle : <strong>les besoins simples créent les instruments complexes</strong>. Et si votre margin call sonne à 3h du matin, pensez à lui — il avait les mêmes angoisses, mais avec de vraies vaches. 🐄</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+document.querySelectorAll('.qi-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.qi');
+    const ans = item.querySelector('.qi-a');
+    const arr = btn.querySelector('.qi-arr');
+    const open = ans.classList.contains('open');
+    document.querySelectorAll('.qi-a').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.qi-arr').forEach(a => a.style.transform = '');
+    if (!open) { ans.classList.add('open'); arr.style.transform = 'rotate(180deg)'; }
+  });
+});
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && e.target.id) {
+      document.querySelectorAll('.sb nav a').forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
+      });
+    }
+  });
+}, { threshold: 0.25 });
+document.querySelectorAll('.sec[id]').forEach(s => obs.observe(s));
+
+document.querySelectorAll('.sb nav a').forEach(l => {
+  l.addEventListener('click', e => {
+    const h = l.getAttribute('href');
+    if (h && h.startsWith('#')) {
+      e.preventDefault();
+      document.querySelector(h)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>

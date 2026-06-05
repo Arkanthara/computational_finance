@@ -1,0 +1,144 @@
+---
+title: "Données, Moyennes Mobiles et Temps Intrinsèque — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Vous êtes infirmier de garde aux urgences financières. Les constantes vitales du patient (les prix) arrivent de façon irrégulière — parfois toutes les millisecondes, parfois plus rien pendant des heures. Les mesures sont bruitées, avec trois thermomètres en désaccord (bid, ask, mid), et occasionnellement le patient fait une syncope (discontinuité).
+
+Pour ne pas paniquer : on lisse (moyennes mobiles) et, plutôt que de regarder l'horloge, on compte les épisodes de fièvre (temps intrinsèque). Malin.
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- Les données réelles sont **irrégulières, bruitées, discontinues** — rien à voir avec les séries théoriques.
+- On les traite presque toujours par **discrétisation** (grille fixe + dernier prix connu).
+- Les **moyennes mobiles** lissent le bruit mais introduisent un **lag inévitable**.
+- L'**EMA** est le compromis optimal : pondération décroissante + mise à jour en 1 seul scalaire.
+- Le **temps intrinsèque** remplace l'horloge par des **événements de prix** (changements directionnels).
+- Des **lois d'échelle universelles** relient temps intrinsèque et temps physique sur 13 paires FX.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+| ------- | ----------------------------- | --------- |
+| Spread bid-ask | Écart entre prix d'achat (bid) et de vente (ask), mesure de liquidité | Plus il est faible, plus le marché est liquide |
+| Discrétisation | Grille temporelle fixe, on retient le dernier prix avant chaque nœud | On lit l'horloge toutes les heures, on ignore l'entre-deux |
+| SMA | Moyenne glissante à poids égaux sur fenêtre de $n$ observations | L'observation d'il y a $n$ jours pèse autant qu'hier |
+| WMA | Poids linéairement décroissants vers le passé | On accorde plus de crédit au récent |
+| EMA | Pondération exponentielle décroissante, mise à jour récursive sur 1 valeur | On oublie progressivement le passé via $(1-\alpha)$ |
+| Time lag | Retard systématique de la série lissée par rapport au signal original | Inévitable : plus de lissage = plus de retard |
+| Temps intrinsèque | Temps mesuré par les renversements de prix, non par l'horloge | L'horloge du marché ne tourne que quand il se passe quelque chose |
+| DC (Directional Change) | Renversement de prix d'amplitude $\geq \delta$ depuis le dernier extrême | Un vrai retournement de tendance selon un seuil $\delta$ |
+| Overshoot (OS) | Mouvement de prix après le DC jusqu'au prochain retournement | Le marché dépasse le seuil avant de rebrousser chemin |
+| Lois d'échelle | Relations en loi de puissance entre grandeurs du temps intrinsèque et physique | Structure fractale universelle des marchés |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+- Données réelles → non équidistantes + bruitées + bid/ask/mid
+- Non équidistantes → Discrétisation (99,9 %) ou Interpolation (rare)
+- Données bruitées → SMA → WMA → EMA (compromis optimal)
+- Lissage → Time lag inévitable (↑ $n$ ou ↓ $\alpha$ ⟹ ↑ lag)
+- EMA → $\alpha$ calibré par équivalence SMA($n$) ou par impact résiduel
+- Données asynchrones → EMA généralisée avec $\mu = e^{-\alpha}$ et $\nu$
+- Temps physique → limites (arbitraire, insensible à l'activité)
+- Temps intrinsèque → DC (seuil $\delta$) → Overshoot → TM = DC + OS
+- Nombre de DC ∝ Volatilité ; Longueur OS ∝ Liquidité
+- Temps intrinsèque → 20 lois d'échelle universelles
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+| ------- | ------------- | --------- |
+| $\text{SMA}(t+1) = \text{SMA}(t) - \frac{X_{t-n+1}}{n} + \frac{X_{t+1}}{n}$ | Mise à jour incrémentale SMA | Retire le plus vieux, ajoute le plus récent |
+| $\text{WMA}(t) = \frac{\sum_{i=1}^n i \cdot X_{t-n+i}}{n(n+1)/2}$ | Poids linéaires croissants vers le récent | Dénominateur = $n(n+1)/2$ |
+| $\text{EMA}(t) = \alpha X_t + (1-\alpha)\,\text{EMA}(t-1)$ | Récursion EMA | **Formule centrale absolue** |
+| $\alpha = \frac{2}{n+1}$ | Équivalence âge moyen EMA ↔ SMA($n$) | Même âge moyen ≠ mêmes valeurs |
+| $\alpha = 1 - e^{\log(\epsilon_k)/k}$ | Impact résiduel $\epsilon_k$ après $k$ pas | Ex : $k=100$, $\epsilon=1\% \Rightarrow \alpha \approx 0{,}045$ |
+| $\text{TM} = \text{DC} + \text{OS}$ | Mouvement total = DC + dépassement | Décomposition fondamentale |
+| $\langle \Delta t_{\text{dc}} \rangle \sim (\delta/c)^{\alpha}$ | Durée moyenne d'un DC | Loi de puissance en $\delta$ |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **EMA ≠ SMA** avec $\alpha = 2/(n+1)$ — seul l'**âge moyen** est équivalent, pas les valeurs numériques.
+- **Le lag est inévitable** : on ne peut pas lisser fort et être parfaitement réactif — c'est un choix, pas un bug.
+- **EMA : mémoire théoriquement infinie** — ce n'est pas une fenêtre de $n$ points, mais un poids $(1-\alpha)^k$ qui tend vers 0.
+- **Warm-up period** : les premières valeurs EMA sont biaisées par l'initialisation, attendre avant d'utiliser.
+- **Mode initial arbitraire** dans l'algorithme DC — converge vite mais à signaler si demandé.
+- **Discrétisation = perte d'info** entre ticks — grille trop grossière ⟹ événements intra-période invisibles.
+- **Confondre DC et OS** : DC déclenche le changement de mode, OS est le mouvement dans le nouveau mode.
+- Question piège : *"EMA stocke combien d'observations ?"* → **1 seule valeur** (la précédente EMA).
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Quelles sont les 3 propriétés idéales d'une série temporelle et pourquoi la réalité diffère-t-elle ?
+
+**R courte :** Équidistante, lisse, continue — en pratique : activité irrégulière, bruit, sauts, et prix décomposé en bid/ask/mid.
+
+---
+
+**Q :** Quelle est la différence essentielle entre SMA, WMA et EMA ?
+
+**R courte :** SMA = poids égaux ; WMA = poids linéaires décroissants ; EMA = poids décroissants exponentiellement avec 1 seule valeur en mémoire.
+
+---
+
+**Q :** Pourquoi l'EMA est-elle préférée en pratique ?
+
+**R courte :** Mise à jour scalaire (1 valeur), pondération décroissante naturelle, paramètre $\alpha$ simple à interpréter et à calibrer.
+
+---
+
+**Q :** Comment calibre-t-on $\alpha$ pour une EMA ?
+
+**R courte :** Soit équivalence avec SMA($n$) : $\alpha = 2/(n+1)$. Soit par impact résiduel : on impose qu'une observation vieille de $k$ pas ait un poids $\leq \epsilon_k$.
+
+---
+
+**Q :** Qu'est-ce que le temps intrinsèque et pourquoi l'introduire ?
+
+**R courte :** Temps défini par les changements directionnels (DC $\geq \delta$), non par l'horloge. Avantage : adaptatif à l'activité, évite le biais des périodes creuses.
+
+---
+
+**Q :** Que mesurent le nombre de DC et la longueur des OS ?
+
+**R courte :** Nombre de DC / temps physique ∝ volatilité ; longueur des OS ∝ liquidité.
+
+---
+
+**Q :** Qu'est-ce qu'une loi d'échelle et pourquoi est-elle remarquable ?
+
+**R courte :** Relation empirique en loi de puissance entre le temps intrinsèque et le temps physique. 20 lois identifiées, universelles sur 13 paires FX — structure fractale des marchés.
+
+---
+
+**Q :** Comment l'EMA est-elle adaptée aux données asynchrones ?
+
+**R courte :** On remplace $\alpha$ fixe par $\alpha = \Delta t / \tau$ et $\mu = e^{-\alpha}$ : plus l'intervalle est long, plus le facteur d'oubli est grand. Le temps est intégré naturellement.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+- Données réelles : **bid/ask/mid**, irrégulières, bruitées, discontinues.
+- Traitement : **discrétisation** (99,9 %), interpolation (rare).
+- **SMA** = poids égaux, lag ; **WMA** = poids linéaires ; **EMA** = poids expo, 1 seule valeur.
+- EMA : $\text{EMA}(t) = \alpha X_t + (1-\alpha)\,\text{EMA}(t-1)$ — **formule à connaître par cœur**.
+- Lag **inévitable** : ↑ lissage ⟹ ↑ retard.
+- $\alpha = 2/(n+1)$ → même âge moyen que SMA($n$), **pas** les mêmes valeurs.
+- **Temps intrinsèque** = temps dicté par DC (renversements $\geq \delta$).
+- DC ∝ volatilité ; OS ∝ liquidité ; TM = DC + OS.
+- **20 lois d'échelle** robustes sur 13 paires FX → fractale universelle.
+- $\delta$ petit → temps rapide (marché volatile) ; $\delta$ grand → temps lent (marché calme).

@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Options — Les Greeks · Computational Finance · Unige</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']], processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root{
+  --bg:#0d0b14;--bg-card:#161221;--bg-code:#1c1828;
+  --text:#e4dffa;--muted:#9089bf;--border:rgba(180,150,80,.18);--bstrong:rgba(180,150,80,.4);
+  --gold:#c9a84c;--glight:#e8c97a;--blue:#7eb8d4;--green:#7bc496;--red:#e07b7b;--violet:#a78bfa;
+  --ff:'EB Garamond',Georgia,serif;--fd:'Cormorant Garamond',Georgia,serif;--fm:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:18px;line-height:1.85;display:flex}
+.sb{width:270px;min-height:100vh;background:var(--bg-card);border-right:1px solid var(--border);padding:2rem 1.4rem;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sb-logo{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--gold);margin-bottom:.3rem}
+.sb-sub{font-family:var(--fm);font-size:.73rem;color:var(--muted);margin-bottom:1.8rem;letter-spacing:.05em}
+.sb nav ul{list-style:none}
+.sb nav ul li{margin-bottom:.2rem}
+.sb nav ul li a{color:var(--muted);text-decoration:none;font-size:.88rem;display:block;padding:.35rem .7rem;border-radius:4px;border-left:2px solid transparent;transition:all .18s}
+.sb nav ul li a:hover,.sb nav ul li a.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,168,76,.07)}
+.sb nav ul li a .n{font-family:var(--fm);font-size:.72rem;color:var(--gold);margin-right:.45rem;opacity:.75}
+.sb-section{font-family:var(--fm);font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:.5rem .7rem .3rem;opacity:.6}
+.main{margin-left:270px;flex:1;padding:3rem 4rem;max-width:1020px}
+.hero{border-bottom:1px solid var(--border);padding-bottom:3rem;margin-bottom:4.5rem}
+.hero-tag{font-family:var(--fm);font-size:.75rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero h1{font-family:var(--fd);font-size:3.6rem;font-weight:700;line-height:1.1;margin-bottom:.8rem}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:660px;margin-bottom:1.5rem}
+.badges{display:flex;gap:.7rem;flex-wrap:wrap}
+.badge{font-family:var(--fm);font-size:.72rem;padding:.25rem .75rem;border:1px solid var(--bstrong);border-radius:20px;color:var(--gold);letter-spacing:.04em}
+.badge.b{border-color:rgba(126,184,212,.35);color:var(--blue)}
+.badge.g{border-color:rgba(123,196,150,.35);color:var(--green)}
+.badge.v{border-color:rgba(167,139,250,.35);color:var(--violet)}
+.sec{margin-bottom:5rem;scroll-margin-top:2rem}
+.sec-hd{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.sec-num{font-family:var(--fm);font-size:.85rem;color:var(--gold);opacity:.65;min-width:2.5rem}
+.sec-title{font-family:var(--fd);font-size:1.95rem;font-weight:700;color:var(--text)}
+h3{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--glight);margin:2rem 0 .8rem}
+h4{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--blue);margin:1.4rem 0 .5rem}
+p{margin-bottom:.9rem}
+strong{color:var(--glight);font-weight:600}
+em{color:var(--blue);font-style:italic}
+a{color:var(--gold);text-decoration:none}
+code{font-family:var(--fm);background:var(--bg-code);padding:.1em .4em;border-radius:3px;font-size:.82em;color:var(--gold)}
+ul,ol{padding-left:1.5rem;margin-bottom:.9rem}
+li{margin-bottom:.35rem}
+.box{background:var(--bg-card);border-left:3px solid var(--gold);padding:1.1rem 1.4rem;border-radius:0 6px 6px 0;margin:1.4rem 0}
+.box.info{border-left-color:var(--blue)}.box.warn{border-left-color:var(--red)}.box.ok{border-left-color:var(--green)}.box.vio{border-left-color:var(--violet)}
+.box-title{font-family:var(--fm);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem}
+.box.info .box-title{color:var(--blue)}.box.warn .box-title{color:var(--red)}.box.ok .box-title{color:var(--green)}.box.vio .box-title{color:var(--violet)}
+.mblock{background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:1.3rem 1.8rem;margin:1.4rem 0;overflow-x:auto;text-align:center}
+.mblock .mlabel{font-family:var(--fm);font-size:.7rem;color:var(--muted);text-align:left;margin-bottom:.7rem;text-transform:uppercase;letter-spacing:.08em}
+.twrap{overflow-x:auto;margin:1.4rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead{background:var(--bg-code)}
+th{padding:.8rem 1rem;text-align:left;font-family:var(--fm);font-size:.73rem;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--bstrong)}
+td{padding:.7rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(201,168,76,.03)}
+td.g{color:var(--green)}td.r{color:var(--red)}td.m{color:var(--muted)}
+.fcards{display:flex;flex-direction:column;gap:1.5rem;margin-top:1rem}
+.fc{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.fc-head{background:var(--bg-code);padding:.8rem 1.4rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.fc-name{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--gold)}
+.fc-tag{font-family:var(--fm);font-size:.7rem;color:var(--muted);padding:.2rem .6rem;background:rgba(255,255,255,.04);border-radius:20px}
+.fc-body{padding:1.4rem}
+.fc-expr{text-align:center;padding:1.2rem;background:var(--bg-code);border-radius:6px;margin-bottom:1.1rem;overflow-x:auto}
+.fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;font-size:.88rem}
+.fc-item h5{font-family:var(--fm);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:.3rem}
+.fc-item p{color:var(--muted);margin:0;font-size:.88rem}
+.qlevel{display:inline-block;font-family:var(--fm);font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;padding:.2rem .7rem;border-radius:4px;margin-bottom:.8rem;margin-top:1.2rem}
+.qlevel.easy{background:rgba(123,196,150,.13);color:var(--green)}
+.qlevel.med{background:rgba(126,184,212,.13);color:var(--blue)}
+.qlevel.hard{background:rgba(224,123,123,.13);color:var(--red)}
+.qi{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.8rem;overflow:hidden}
+.qi-q{padding:.9rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;transition:background .15s}
+.qi-q:hover{background:rgba(201,168,76,.05)}
+.qi-qtxt{flex:1;font-size:.93rem}
+.qi-arr{color:var(--gold);font-size:1.1rem;transition:transform .2s;min-width:1.2rem;text-align:center}
+.qi-a{padding:0 1.1rem;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .2s;background:var(--bg-code);font-size:.88rem;color:var(--muted);border-top:0 solid var(--border)}
+.qi-a.open{max-height:600px;padding:1rem 1.1rem;border-top:1px solid var(--border)}
+.piege{display:flex;gap:.9rem;align-items:flex-start;margin-bottom:.9rem;padding:.8rem 1rem;background:rgba(224,123,123,.06);border-radius:6px;border-left:3px solid var(--red)}
+.piege-icon{font-size:1.1rem;min-width:1.4rem}
+.piege-text{font-size:.93rem}
+.piege-text strong{color:var(--red)}
+.fiche-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.4rem 0}
+.fc2{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.1rem}
+.fc2 h4{font-family:var(--fm);font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;color:var(--gold);margin:0 0 .7rem 0}
+.fc2 ul{list-style:none;padding:0;font-size:.85rem}
+.fc2 ul li{padding:.22rem 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted)}
+.fc2 ul li:last-child{border:none}
+.fc2 ul li strong{color:var(--text)}
+.oral{background:var(--bg-card);border:1px solid var(--bstrong);border-radius:10px;padding:2rem;margin:1rem 0;position:relative}
+.oral::before{content:'"';font-family:var(--fd);font-size:5rem;color:var(--gold);opacity:.15;position:absolute;top:-.5rem;left:.8rem;line-height:1}
+.oral p{font-size:1rem;line-height:1.9;color:var(--text)}
+.oral p+p{margin-top:.8rem}
+.canvas-wrap{background:var(--bg-code);border:1px solid var(--border);border-radius:10px;padding:.5rem;margin:1.4rem 0;overflow:hidden}
+.canvas-label{font-family:var(--fm);font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;padding:.5rem .8rem .2rem;opacity:.8}
+canvas{width:100%;height:280px;display:block}
+.greek-dash{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem;margin:1.8rem 0}
+.gd-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.1rem .9rem;text-align:center;transition:border-color .2s,transform .15s}
+.gd-card:hover{border-color:var(--bstrong);transform:translateY(-2px)}
+.gd-sym{font-family:var(--fd);font-size:2.4rem;font-weight:700;margin-bottom:.3rem}
+.gd-name{font-family:var(--fm);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.5rem}
+.gd-desc{font-size:.8rem;color:var(--muted);line-height:1.5}
+.strat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.4rem 0}
+.strat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.2rem}
+.strat-card h4{font-family:var(--fd);font-size:1.1rem;margin:0 0 .5rem 0}
+.strat-card p{font-size:.88rem;color:var(--muted);margin:0 0 .5rem 0}
+.strat-card .pros{color:var(--green);font-size:.82rem}
+.strat-card .cons{color:var(--red);font-size:.82rem}
+.hedge-table{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;margin:1.4rem 0}
+.ht-cell{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:.8rem;text-align:center}
+.ht-header{background:var(--bg-code);font-family:var(--fm);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gold)}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:3px}
+@media(max-width:900px){.sb{display:none}.main{margin-left:0;padding:2rem 1.4rem}.hero h1{font-size:2.4rem}.fiche-grid,.strat-grid{grid-template-columns:1fr}.fc-grid{grid-template-columns:1fr}.greek-dash{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sb">
+  <div class="sb-logo">Options Greeks</div>
+  <div class="sb-sub">Computational Finance · Unige · v1.1</div>
+  <nav>
+    <ul>
+      <div class="sb-section">Introduction</div>
+      <li><a href="#exec"><span class="n">01</span>Résumé exécutif</a></li>
+      <li><a href="#oral"><span class="n">02</span>Réponse d'oral</a></li>
+      <div class="sb-section">Couverture</div>
+      <li><a href="#risk"><span class="n">03</span>Gestion des risques</a></li>
+      <div class="sb-section">Les Greeks</div>
+      <li><a href="#delta"><span class="n">04</span>Delta — Δ</a></li>
+      <li><a href="#deltahedge"><span class="n">05</span>Delta Hedging</a></li>
+      <li><a href="#theta"><span class="n">06</span>Theta — Θ</a></li>
+      <li><a href="#gamma"><span class="n">07</span>Gamma — Γ</a></li>
+      <li><a href="#taylor"><span class="n">08</span>Développement de Taylor</a></li>
+      <li><a href="#portfolio"><span class="n">09</span>Portfolios & Γ-Neutral</a></li>
+      <div class="sb-section">Référence</div>
+      <li><a href="#formulas"><span class="n">10</span>Formules importantes</a></li>
+      <li><a href="#compare"><span class="n">11</span>Comparaison</a></li>
+      <li><a href="#quiz"><span class="n">12</span>Questions d'examen</a></li>
+      <li><a href="#pièges"><span class="n">13</span>Pièges classiques</a></li>
+      <li><a href="#fiche"><span class="n">14</span>Fiche de révision</a></li>
+    </ul>
+  </nav>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main class="main">
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-tag">Computational Finance · Chapitre 7 · Options Greeks</div>
+  <h1>Le Tableau de Bord<br>de l'<em>Options Trader</em></h1>
+  <p class="hero-desc">
+    Imaginez piloter un avion sans instruments : vous savez que vous volez, mais vous ignorez votre altitude, votre vitesse, et si vous allez plonger dans 30 secondes. C'est exactement la situation d'un trader d'options <strong>sans les Greeks</strong>. Delta, Gamma, Theta, Vega, Rho — ce sont vos instruments de bord, chacun mesurant une dimension différente du risque. Ce guide vous prépare à comprendre, calculer et utiliser ces métriques pour un examen oral.
+  </p>
+  <div class="badges">
+    <span class="badge">Black-Scholes</span>
+    <span class="badge b">Delta Hedging</span>
+    <span class="badge b">Gamma Neutral</span>
+    <span class="badge g">Theta Decay</span>
+    <span class="badge v">Risk Management</span>
+  </div>
+</div>
+
+<!-- Dashboard visuel des Greeks -->
+<div class="greek-dash">
+  <div class="gd-card"><div class="gd-sym" style="color:var(--blue)">Δ</div><div class="gd-name">Delta</div><div class="gd-desc">Sensibilité au <strong style="color:var(--text)">prix</strong> du sous-jacent. Fraction de l'actif à détenir.</div></div>
+  <div class="gd-card"><div class="gd-sym" style="color:var(--green)">Γ</div><div class="gd-name">Gamma</div><div class="gd-desc">Sensibilité du <strong style="color:var(--text)">Delta</strong> au prix. Courbure de l'option.</div></div>
+  <div class="gd-card"><div class="gd-sym" style="color:var(--red)">Θ</div><div class="gd-name">Theta</div><div class="gd-desc"><strong style="color:var(--text)">Décroissance</strong> de la valeur avec le temps. L'ennemi silencieux.</div></div>
+  <div class="gd-card"><div class="gd-sym" style="color:var(--gold)">ν</div><div class="gd-name">Vega</div><div class="gd-desc">Sensibilité à la <strong style="color:var(--text)">volatilité</strong> implicite du marché.</div></div>
+  <div class="gd-card"><div class="gd-sym" style="color:var(--violet)">ρ</div><div class="gd-name">Rho</div><div class="gd-desc">Sensibilité au <strong style="color:var(--text)">taux d'intérêt</strong> sans risque.</div></div>
+</div>
+
+<!-- ═══ SECTION 1 — RÉSUMÉ EXÉCUTIF ═══ -->
+<div class="sec" id="exec">
+  <div class="sec-hd"><span class="sec-num">01</span><span class="sec-title">Résumé Exécutif</span></div>
+  <div class="box">
+    <div class="box-title">⚡ 30 secondes</div>
+    <p>Les <strong>Greeks</strong> sont des métriques de sensibilité décrivant comment le prix d'une option réagit à différents facteurs de marché. Dérivés du modèle Black-Scholes, ils permettent de <strong>mesurer, surveiller et couvrir</strong> les risques d'un portefeuille d'options. Les trois principaux étudiés dans ce cours sont : <strong>Delta</strong> (sensibilité au prix), <strong>Theta</strong> (sensibilité au temps) et <strong>Gamma</strong> (courbure du Delta). Ensemble, ils permettent de construire des stratégies de couverture dynamiques sophistiquées.</p>
+  </div>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Greek</th><th>Symbole</th><th>Définition</th><th>BS (Call)</th><th>Signe</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Delta</strong></td><td style="font-family:var(--fm);color:var(--blue)">Δ = ∂c/∂S</td><td>Sensibilité au prix sous-jacent</td><td>$N(d_1)$</td><td class="g">0 à 1</td></tr>
+        <tr><td><strong>Theta</strong></td><td style="font-family:var(--fm);color:var(--red)">Θ = ∂c/∂t</td><td>Décroissance temporelle</td><td>Formule complexe</td><td class="r">Négatif</td></tr>
+        <tr><td><strong>Gamma</strong></td><td style="font-family:var(--fm);color:var(--green)">Γ = ∂²c/∂S²</td><td>Taux de variation du Delta</td><td>$N'(d_1)/(S\sigma\sqrt{T})$</td><td class="g">Toujours &gt; 0</td></tr>
+        <tr><td><strong>Vega</strong></td><td style="font-family:var(--fm);color:var(--gold)">ν = ∂c/∂σ</td><td>Sensibilité à la volatilité</td><td>$S\sqrt{T}N'(d_1)$</td><td class="g">Positif</td></tr>
+        <tr><td><strong>Rho</strong></td><td style="font-family:var(--fm);color:var(--violet)">ρ = ∂c/∂r</td><td>Sensibilité aux taux</td><td>$KTe^{-rT}N(d_2)$</td><td class="g">Positif</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ SECTION 2 — RÉPONSE D'ORAL ═══ -->
+<div class="sec" id="oral">
+  <div class="sec-hd"><span class="sec-num">02</span><span class="sec-title">Réponse Modèle d'Oral</span></div>
+  <div class="oral">
+    <p>Les Greeks sont des métriques de sensibilité qui décrivent comment le prix d'une option réagit à des variations de différents facteurs de marché. Ils constituent l'outil fondamental de gestion des risques pour tout vendeur ou acheteur d'options.</p>
+    <p>Le <strong>Delta</strong> est le Greek le plus intuitif : il mesure la sensibilité du prix de l'option par rapport au prix du sous-jacent. Pour un call européen sans dividende dans Black-Scholes, on obtient $\Delta_c = N(d_1)$, qui est toujours compris entre 0 et 1. Concrètement, si $\Delta = 0.6$, une hausse de 1$ du sous-jacent entraîne une hausse d'environ 0.60$ du call. Cette propriété permet le <em>delta hedging</em> : en détenant $\Delta$ parts du sous-jacent pour chaque option vendue, on neutralise localement le risque de prix. Mais comme l'option est un instrument non linéaire, ce Delta évolue en permanence, et la couverture doit être rééquilibrée dynamiquement.</p>
+    <p>C'est là qu'intervient le <strong>Gamma</strong>. Il mesure la courbure de la courbe de prix de l'option, soit le taux de variation du Delta. Dans Black-Scholes, $\Gamma = N'(d_1) / (S_0 \sigma \sqrt{T})$ et il est toujours strictement positif. Un Gamma élevé signifie que le Delta change rapidement, rendant la couverture Delta plus coûteuse et plus imprécise. Pour gérer ce risque, on peut construire un portefeuille <em>Gamma-neutral</em>, mais cela nécessite d'ajouter des options à son portefeuille — un actif linéaire comme l'action a un Gamma nul.</p>
+    <p>Le <strong>Theta</strong> représente la décroissance temporelle : chaque jour qui passe érode la valeur de l'option. Il est généralement négatif (le temps joue contre le détenteur d'option), avec un comportement particulièrement notable pour les options <em>at the money</em> proches de la maturité, où Theta diverge.</p>
+    <p>En pratique, un gestionnaire de portefeuille delta-couvre son portefeuille quotidiennement et surveille les autres Greeks, n'agissant que lorsqu'ils deviennent trop importants.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 3 — GESTION DES RISQUES ═══ -->
+<div class="sec" id="risk">
+  <div class="sec-hd"><span class="sec-num">03</span><span class="sec-title">Gestion des Risques d'Options</span></div>
+  <div class="box info">
+    <div class="box-title">Cas Pratique</div>
+    <p>Vendre un call européen pour USD 300 000 sur 100 000 actions (sans dividende) : $S_0 = 49$, $K = 50$, $r = 5\%$, $\sigma = 20\%$, $T = 20/52 = 0.3846$ an. Black-Scholes donne $c = 240\,000\$$. <strong>Profit apparent : 60 000 $</strong> — mais un risque subsiste. Quelle stratégie adopter ?</p>
+  </div>
+
+  <div class="strat-grid">
+    <div class="strat-card">
+      <h4 style="color:var(--red)">🚫 Naked Option</h4>
+      <p>Ne rien faire. Si $S_T > K$ : perte potentiellement illimitée.</p>
+      <p class="pros">✓ Aucun coût initial</p>
+      <p class="cons">✗ Risque catastrophique si marché hausse</p>
+    </div>
+    <div class="strat-card">
+      <h4 style="color:var(--blue)">📦 Covered Option</h4>
+      <p>Acheter $N$ actions à $t=0$. Si $S_T \leq K$ : les actions perdent de la valeur.</p>
+      <p class="pros">✓ Protégé si exercice</p>
+      <p class="cons">✗ Capital immobilisé, coûteux si $S_T$ baisse</p>
+    </div>
+    <div class="strat-card">
+      <h4 style="color:var(--gold)">🛑 Stop-Loss</h4>
+      <p>Acheter si $S_t > K$, vendre si $S_t < K$. Dynamique mais imparfait.</p>
+      <p class="pros">✓ Stratégie intermédiaire</p>
+      <p class="cons">✗ Coûts de transaction, problème au voisinage de K</p>
+    </div>
+    <div class="strat-card" style="border-color:var(--bstrong)">
+      <h4 style="color:var(--green)">⚡ Delta Hedging</h4>
+      <p>Détenir $\Delta$ parts du sous-jacent. Rééquilibrage continu.</p>
+      <p class="pros">✓ Couverture précise, théoriquement parfaite en continu</p>
+      <p class="cons">✗ Coûts de transaction, Gamma résiduel</p>
+    </div>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Limite du Stop-Loss</div>
+    <p>Quand $S_t = K$, la stratégie est ambiguë. Une bande autour de $K$ (acheter si $S_t \geq K+\epsilon$, vendre si $S_t \leq K-\epsilon$) réduit le problème mais augmente les frais si le prix oscille autour de $K$. Les options <em>out-of-the-money</em> créeraient alors des coûts importants. La solution : les Greeks.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 4 — DELTA ═══ -->
+<div class="sec" id="delta">
+  <div class="sec-hd"><span class="sec-num">04</span><span class="sec-title">Delta — Δ</span></div>
+
+  <h3>Définition et intuition</h3>
+  <p>Le <strong>Delta</strong> (<em>Delta</em>) est la dérivée partielle du prix de l'option par rapport au prix du sous-jacent. Il mesure la sensibilité <em>instantanée</em> du prix de l'option à un mouvement infinitésimal du sous-jacent.</p>
+
+  <div class="mblock">
+    <div class="mlabel">Définition générale</div>
+    $$\Delta = \frac{\partial c}{\partial S}$$
+  </div>
+
+  <p>Dans le cadre Black-Scholes, pour un call et un put européen sans dividende :</p>
+
+  <div class="mblock">
+    <div class="mlabel">Delta Black-Scholes</div>
+    $$\Delta_c = N(d_1) \qquad \Delta_p = N(d_1) - 1$$
+    <p style="font-size:.82rem;color:var(--muted);margin-top:.8rem;text-align:left">où $d_1 = \dfrac{\ln(S_0/K) + (r + \sigma^2/2)T}{\sigma\sqrt{T}}$ et $N$ est la fonction de répartition normale standard.</p>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">Intuition clé</div>
+    <p>$\Delta_c = N(d_1)$ est interprétable comme la <strong>probabilité risque-neutre</strong> approximative que l'option finisse <em>in the money</em>. Pour un call très <em>in the money</em>, $\Delta \to 1$ (l'option se comporte comme l'actif). Pour un call très <em>out of the money</em>, $\Delta \to 0$. L'option <em>at the money</em> a $\Delta \approx 0.5$.</p>
+  </div>
+
+  <h3>Graphe : Prix du Call et Delta tangent</h3>
+  <p>Le Delta est la <strong>pente de la tangente</strong> à la courbe de prix du call. La non-linéarité du call (convexité) implique que cette pente varie — c'est précisément ce que capture le Gamma.</p>
+
+  <div class="canvas-wrap">
+    <div class="canvas-label">Prix du call européen vs prix du sous-jacent · K=100, r=3%, σ=20%, T=1</div>
+    <canvas id="cv-callprice"></canvas>
+  </div>
+
+  <h3>Graphe : Évolution de Delta selon S</h3>
+  <p>Le Delta d'un call évolue en forme de S : il passe de 0 (<em>deep out of the money</em>) à 1 (<em>deep in the money</em>), avec une pente maximale à $S = K$. Le Delta du put est un décalage vers le bas du Delta du call ($\Delta_p = \Delta_c - 1$).</p>
+
+  <div class="canvas-wrap">
+    <div class="canvas-label">Delta call et put vs prix du sous-jacent · K=100, r=3%, σ=20%, T=1</div>
+    <canvas id="cv-delta"></canvas>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">Delta & Moneyness</div>
+    <p>Quand $K$ diminue par rapport à $S$ (deep ITM), le vendeur doit acheter plus d'actions pour se couvrir. Quand $K$ est très supérieur à $S$ (deep OTM), presque aucune couverture n'est nécessaire. Le Delta hedging est une interpolation continue entre les stratégies <em>naked</em> et <em>covered</em>.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 5 — DELTA HEDGING ═══ -->
+<div class="sec" id="deltahedge">
+  <div class="sec-hd"><span class="sec-num">05</span><span class="sec-title">Delta Hedging</span></div>
+
+  <p>Un changement $\delta S$ du sous-jacent provoque une variation <em>approximative</em> $\delta c \approx \Delta \cdot \delta S$ du prix de l'option. En détenant $\Delta$ parts du sous-jacent par option, on annule ce risque au premier ordre.</p>
+
+  <div class="mblock">
+    <div class="mlabel">Condition de neutralité Delta</div>
+    $$\text{P\&L}_{hedge} = \Delta \cdot \delta S - \Delta \cdot \delta S = 0$$
+  </div>
+
+  <h3>Règle de couverture</h3>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Position</th><th>Action à prendre</th><th>Quantité</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Vente d'un call</strong></td><td class="g">Acheter $\Delta_c$ parts du sous-jacent</td><td>$+\Delta_c$ par option</td></tr>
+        <tr><td><strong>Achat d'un call</strong></td><td class="r">Vendre $\Delta_c$ parts du sous-jacent</td><td>$-\Delta_c$ par option</td></tr>
+        <tr><td><strong>Vente d'un put</strong></td><td class="r">Vendre $|\Delta_p|$ parts</td><td>$-|\Delta_p|$ par option</td></tr>
+        <tr><td><strong>Achat d'un put</strong></td><td class="g">Acheter $|\Delta_p|$ parts</td><td>$+|\Delta_p|$ par option</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">Exemple numérique — Call</div>
+    <p>Vente d'un call : $S=100$, $c=10$ (sur 2000 actions), $\Delta=0.6$.</p>
+    <p>→ Acheter $0.6 \times 2000 = 1200$ actions pour couvrir.</p>
+    <p>Si $S_{t+} = 101$ : $c'_{t+} = 10 + 0.6 \times 1 = 10.6$</p>
+    <p>P&L = $1200 \times (101-100) + 2000 \times (10 - 10.6) = 1200 - 1200 = \mathbf{0}$ ✓</p>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">Exemple numérique — Put</div>
+    <p>Vente d'un put : $S=100$, $p=10$ (sur 2000 actions), $\Delta_p=-0.4$.</p>
+    <p>→ Vendre $0.4 \times 2000 = 800$ actions pour couvrir.</p>
+    <p>Si $S_{t+} = 101$ : $p'_{t+} = 10 - 0.4 \times 1 = 9.6$</p>
+    <p>P&L = $-800 \times (101-100) + 2000 \times (10 - 9.6) = -800 + 800 = \mathbf{0}$ ✓</p>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Nature Dynamique</div>
+    <p>Le Delta évolue continuellement avec $S$ et $t$. Une couverture parfaite nécessiterait un rééquilibrage <strong>continu</strong> — impossible en pratique. En temps discret, des erreurs de couverture s'accumulent. Ces erreurs sont précisément liées au Gamma, qui mesure la rapidité d'évolution du Delta.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 6 — THETA ═══ -->
+<div class="sec" id="theta">
+  <div class="sec-hd"><span class="sec-num">06</span><span class="sec-title">Theta — Θ</span></div>
+
+  <h3>Définition</h3>
+  <p>Le <strong>Theta</strong> (<em>Theta</em>, ou <em>time decay</em>) mesure le taux de variation du prix de l'option par rapport au <strong>passage du temps</strong>. Contrairement aux autres Greeks, le temps n'est pas incertain — il s'écoule inexorablement. Il n'est donc pas possible de se "couvrir" contre Theta.</p>
+
+  <div class="mblock">
+    <div class="mlabel">Theta Black-Scholes</div>
+    $$\Theta_c = -\frac{S_0 N'(d_1)\,\sigma}{2\sqrt{T}} - rKe^{-rT}N(d_2)$$
+    $$\Theta_p = -\frac{S_0 N'(d_1)\,\sigma}{2\sqrt{T}} + rKe^{-rT}N(-d_2)$$
+    <p style="font-size:.82rem;color:var(--muted);margin-top:.8rem;text-align:left">où $N'(x) = \dfrac{1}{\sqrt{2\pi}}e^{-x^2/2}$ est la densité de probabilité normale standard.</p>
+  </div>
+
+  <h3>Comportement selon la moneyness</h3>
+  <div class="canvas-wrap">
+    <div class="canvas-label">Theta du call vs maturité résiduelle · S=100, r=3%, σ=10%</div>
+    <canvas id="cv-theta"></canvas>
+  </div>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Régime</th><th>Comportement de Θ quand T→0</th><th>Intuition</th></tr></thead>
+      <tbody>
+        <tr><td><strong>In the Money</strong></td><td class="m">Θ tend vers un plateau</td><td>L'option a de la valeur intrinsèque, la décroissance est limitée</td></tr>
+        <tr><td><strong>At the Money</strong></td><td class="r">Θ <strong>diverge</strong> (→ -∞)</td><td>L'incertitude maximale disparaît brutalement à l'expiration</td></tr>
+        <tr><td><strong>Out of the Money</strong></td><td class="m">Θ tend vers 0</td><td>L'option est déjà sans valeur, rien de plus à perdre</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box vio">
+    <div class="box-title">Exceptions — Theta positif</div>
+    <p>Theta est presque toujours négatif pour les calls et puts (le temps érode la valeur). <strong>Exceptions</strong> : (1) un put européen sur action sans dividende peut avoir $\Theta > 0$ lorsque l'option est très profondément <em>in the money</em> et $r$ élevé — la valeur temps est dominée par la valeur des intérêts sur le strike ; (2) certains calls avec taux d'intérêt très élevés.</p>
+  </div>
+
+  <div class="box info">
+    <div class="box-title">Lien Theta — Gamma (BSE)</div>
+    <p>L'équation de Black-Scholes révèle une relation fondamentale entre Theta et Gamma. Pour un portefeuille delta-neutre : $\Theta + \frac{1}{2}\sigma^2 S^2 \Gamma = r\Pi$. Un Gamma élevé (bonne convexité) compense un Theta négatif élevé. Il n'y a pas de "repas gratuit" : la convexité favorable a un coût temporel.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 7 — GAMMA ═══ -->
+<div class="sec" id="gamma">
+  <div class="sec-hd"><span class="sec-num">07</span><span class="sec-title">Gamma — Γ</span></div>
+
+  <h3>Définition</h3>
+  <p>Le <strong>Gamma</strong> (<em>Gamma</em>) est la dérivée seconde du prix de l'option par rapport au prix du sous-jacent, ou de manière équivalente, la dérivée du Delta par rapport à $S$. Il mesure la <strong>courbure</strong> de la courbe de prix de l'option.</p>
+
+  <div class="mblock">
+    <div class="mlabel">Gamma Black-Scholes (call et put identiques)</div>
+    $$\Gamma = \frac{\partial \Delta}{\partial S} = \frac{\partial^2 c}{\partial S^2} = \frac{N'(d_1)}{S_0\,\sigma\sqrt{T}} \quad > 0 \text{ toujours}$$
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">Propriété remarquable</div>
+    <p>Le Gamma est <strong>identique pour un call et un put</strong> de mêmes paramètres. C'est une conséquence directe de la parité call-put : $c - p = S - Ke^{-rT}$. En dérivant deux fois par rapport à $S$, on obtient $\partial^2 c/\partial S^2 = \partial^2 p/\partial S^2$.</p>
+  </div>
+
+  <h3>Gamma vs Maturité</h3>
+  <div class="canvas-wrap">
+    <div class="canvas-label">Gamma vs maturité résiduelle · S=100, r=8%, σ=10%</div>
+    <canvas id="cv-gamma-t"></canvas>
+  </div>
+
+  <h3>Gamma vs Prix du Sous-jacent</h3>
+  <div class="canvas-wrap">
+    <div class="canvas-label">Gamma vs S₀ · K=100, r=8%, σ=10%, T=1</div>
+    <canvas id="cv-gamma-s"></canvas>
+  </div>
+
+  <p>Le Gamma est maximal lorsque l'option est <em>at the money</em> et augmente fortement à l'approche de la maturité pour les options <em>at the money</em>. Cela reflète le fait que la décision d'exercice est la plus incertaine et la plus sensible près de $K$ quand $T \to 0$.</p>
+</div>
+
+<!-- ═══ SECTION 8 — TAYLOR ═══ -->
+<div class="sec" id="taylor">
+  <div class="sec-hd"><span class="sec-num">08</span><span class="sec-title">Développement de Taylor & Approximation du P&L</span></div>
+
+  <p>Les Greeks permettent de construire une approximation de Taylor du changement de valeur d'une option pour de petites variations de $S$ et $t$ :</p>
+
+  <div class="mblock">
+    <div class="mlabel">Développement de Taylor au second ordre</div>
+    $$\delta c \approx \underbrace{\Theta\,\delta t}_{\text{temps}} + \underbrace{\Delta\,\delta S}_{\text{linéaire}} + \underbrace{\frac{1}{2}\Gamma\,\delta S^2}_{\text{correction convexité}}$$
+  </div>
+
+  <h3>Visualisation : Gap Delta vs Réalité</h3>
+  <div class="canvas-wrap">
+    <div class="canvas-label">Approximation Delta et correction Gamma · le gap résiduel</div>
+    <canvas id="cv-taylor"></canvas>
+  </div>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Terme</th><th>Signification</th><th>Impact</th></tr></thead>
+      <tbody>
+        <tr><td>$\Theta\,\delta t$</td><td>Perte liée à l'écoulement du temps</td><td class="r">Négatif pour l'acheteur</td></tr>
+        <tr><td>$\Delta\,\delta S$</td><td>Approximation linéaire du mouvement de prix</td><td class="m">Neutralisé par delta hedge</td></tr>
+        <tr><td>$\frac{1}{2}\Gamma\,\delta S^2$</td><td>Correction de convexité — toujours positive</td><td class="g">Favorable à l'acheteur</td></tr>
+        <tr><td>Résidu</td><td>Termes d'ordre supérieur (Vanna, Volga...)</td><td class="m">Petits pour $\delta S$ modéré</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">Intuition Gamma & P&L</div>
+    <p>Puisque $\Gamma > 0$, le terme $\frac{1}{2}\Gamma\delta S^2 > 0$ est <strong>toujours positif</strong> quelque soit le signe de $\delta S$. Un acheteur d'option bénéficie donc de la convexité : les grands mouvements (dans n'importe quelle direction) lui sont favorables. En contrepartie, il paie via le Theta négatif. C'est l'équilibre fondamental de la finance des options.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 9 — PORTFOLIOS & GAMMA-NEUTRAL ═══ -->
+<div class="sec" id="portfolio">
+  <div class="sec-hd"><span class="sec-num">09</span><span class="sec-title">Portfolios & Γ-Neutral</span></div>
+
+  <h3>Additivité des Greeks</h3>
+  <p>Pour un portefeuille $\Pi$ de $n$ options de poids $w_i$, les Greeks sont additifs :</p>
+
+  <div class="mblock">
+    <div class="mlabel">Greeks d'un portefeuille</div>
+    $$\Delta_\Pi = \sum_{i=1}^n w_i \Delta_i \qquad \Theta_\Pi = \sum_{i=1}^n w_i \Theta_i \qquad \Gamma_\Pi = \sum_{i=1}^n w_i \Gamma_i$$
+  </div>
+
+  <div class="box info">
+    <div class="box-title">Conséquence : Netting</div>
+    <p>Les Greeks se compensent dans un portefeuille. Un portefeuille long et short d'options sur le même sous-jacent peut avoir un Delta, Gamma ou Theta proche de zéro.</p>
+  </div>
+
+  <h3>Rendre un portefeuille Γ-Neutre</h3>
+  <p>Un actif linéaire (action, futures) a $\Gamma = 0$, donc <strong>seules des options peuvent modifier le Gamma</strong> d'un portefeuille.</p>
+
+  <div class="mblock">
+    <div class="mlabel">Procédure Gamma-neutral</div>
+    $$w_T = -\frac{\Gamma_\Pi}{\Gamma_T} \quad \Rightarrow \quad \text{Ajouter } w_T \text{ options traitées de } \Gamma_T$$
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">Exemple Complet (cours)</div>
+    <p>Portefeuille $\Delta$-neutre avec $\Gamma_\Pi = -3000$. Option traitée : $\Delta_o = 0.62$, $\Gamma_o = 1.5$.</p>
+    <p><strong>Étape 1 — Gamma neutral :</strong> Ajouter $w_T = 3000/1.5 = 2000$ options longues.</p>
+    <p><strong>Étape 2 — Rétablir Delta :</strong> L'ajout modifie le Delta du portefeuille de $0 \to 2000 \times 0.62 = 1240$.</p>
+    <p><strong>Étape 3 :</strong> Vendre 1240 unités du sous-jacent pour rétablir $\Delta = 0$.</p>
+    <p>→ Résultat : portefeuille simultanément $\Delta$-neutre et $\Gamma$-neutre.</p>
+  </div>
+
+  <h3>Procédure en pratique</h3>
+
+  <!-- SVG Flowchart -->
+  <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;background:var(--bg-code);border-radius:8px;margin:1rem 0;border:1px solid var(--border)">
+    <!-- Boxes -->
+    <rect x="10" y="80" width="130" height="50" rx="6" fill="#1c1828" stroke="rgba(180,150,80,.4)"/>
+    <text x="75" y="101" font-family="JetBrains Mono" font-size="9" fill="#c9a84c" text-anchor="middle">PORTEFEUILLE</text>
+    <text x="75" y="116" font-family="JetBrains Mono" font-size="9" fill="#c9a84c" text-anchor="middle">INITIAL</text>
+    <text x="75" y="131" font-family="EB Garamond" font-size="9" fill="#9089bf" text-anchor="middle">Δ, Γ, Θ quelconques</text>
+
+    <rect x="190" y="80" width="130" height="50" rx="6" fill="#1c1828" stroke="rgba(123,196,150,.4)"/>
+    <text x="255" y="100" font-family="JetBrains Mono" font-size="9" fill="#7bc496" text-anchor="middle">CALCULER</text>
+    <text x="255" y="115" font-family="EB Garamond" font-size="9" fill="#e4dffa" text-anchor="middle">wT = -Γ / Γoption</text>
+    <text x="255" y="130" font-family="JetBrains Mono" font-size="9" fill="#9089bf" text-anchor="middle">options à ajouter</text>
+
+    <rect x="370" y="80" width="130" height="50" rx="6" fill="#1c1828" stroke="rgba(126,184,212,.4)"/>
+    <text x="435" y="100" font-family="JetBrains Mono" font-size="9" fill="#7eb8d4" text-anchor="middle">GAMMA-NEUTRAL</text>
+    <text x="435" y="115" font-family="EB Garamond" font-size="9" fill="#e4dffa" text-anchor="middle">Ajuster position en</text>
+    <text x="435" y="130" font-family="EB Garamond" font-size="9" fill="#e4dffa" text-anchor="middle">options traitées</text>
+
+    <rect x="550" y="80" width="130" height="50" rx="6" fill="#1c1828" stroke="rgba(201,168,76,.4)"/>
+    <text x="615" y="100" font-family="JetBrains Mono" font-size="9" fill="#c9a84c" text-anchor="middle">DELTA-NEUTRAL</text>
+    <text x="615" y="115" font-family="EB Garamond" font-size="9" fill="#e4dffa" text-anchor="middle">Rééquilibrer avec</text>
+    <text x="615" y="130" font-family="EB Garamond" font-size="9" fill="#e4dffa" text-anchor="middle">le sous-jacent</text>
+
+    <!-- Arrows -->
+    <line x1="140" y1="105" x2="188" y2="105" stroke="rgba(200,200,200,.3)" stroke-width="1.5" marker-end="url(#arr)"/>
+    <line x1="320" y1="105" x2="368" y2="105" stroke="rgba(200,200,200,.3)" stroke-width="1.5" marker-end="url(#arr)"/>
+    <line x1="500" y1="105" x2="548" y2="105" stroke="rgba(200,200,200,.3)" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- Cycle back arrow -->
+    <path d="M 615 132 Q 615 170 75 170 Q 10 170 10 132" fill="none" stroke="rgba(201,168,76,.25)" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <text x="350" y="185" font-family="JetBrains Mono" font-size="8" fill="#9089bf" text-anchor="middle">Rééquilibrage dynamique quotidien</text>
+
+    <!-- Labels under boxes -->
+    <text x="75" y="165" font-family="JetBrains Mono" font-size="7.5" fill="#9089bf" text-anchor="middle">Γ ≠ 0, Δ ≠ 0</text>
+    <text x="255" y="165" font-family="JetBrains Mono" font-size="7.5" fill="#7bc496" text-anchor="middle">Utiliser options</text>
+    <text x="435" y="165" font-family="JetBrains Mono" font-size="7.5" fill="#7eb8d4" text-anchor="middle">Γ = 0, Δ ≠ 0</text>
+    <text x="615" y="165" font-family="JetBrains Mono" font-size="7.5" fill="#c9a84c" text-anchor="middle">Γ = 0, Δ = 0</text>
+
+    <defs>
+      <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="rgba(200,200,200,.3)"/>
+      </marker>
+    </defs>
+  </svg>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Ordre des opérations — Crucial</div>
+    <p>Il faut <strong>d'abord rendre le portefeuille Gamma-neutre</strong> (avec des options), <em>puis</em> rétablir la neutralité Delta (avec le sous-jacent). L'ordre inverse ne fonctionne pas : l'ajout d'options change à la fois Gamma ET Delta.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 10 — FORMULES ═══ -->
+<div class="sec" id="formulas">
+  <div class="sec-hd"><span class="sec-num">10</span><span class="sec-title">Formules Importantes</span></div>
+
+  <div class="fcards">
+    <!-- BLACK-SCHOLES -->
+    <div class="fc">
+      <div class="fc-head"><span class="fc-name">Black-Scholes (Rappel)</span><span class="fc-tag">Fondation</span></div>
+      <div class="fc-body">
+        <div class="fc-expr">$$c = S_0 N(d_1) - Ke^{-rT}N(d_2) \quad p = Ke^{-rT}N(-d_2) - S_0 N(-d_1)$$
+        $$d_1 = \frac{\ln(S_0/K) + (r+\sigma^2/2)T}{\sigma\sqrt{T}} \qquad d_2 = d_1 - \sigma\sqrt{T}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$S_0$ prix actuel, $K$ strike, $r$ taux sans risque, $\sigma$ volatilité, $T$ maturité</p></div>
+          <div class="fc-item"><h5>Intuition</h5><p>$c$ = valeur espérée du payoff actualisée sous mesure risque-neutre</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELTA -->
+    <div class="fc">
+      <div class="fc-head"><span class="fc-name">Delta — Δ</span><span class="fc-tag">Sensibilité au prix</span></div>
+      <div class="fc-body">
+        <div class="fc-expr">$$\Delta = \frac{\partial c}{\partial S} \qquad \Delta_c = N(d_1) \in [0,1] \qquad \Delta_p = N(d_1)-1 \in [-1,0]$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Interprétation</h5><p>Fraction du sous-jacent à détenir pour couvrir 1 option</p></div>
+          <div class="fc-item"><h5>Cas limites</h5><p>ATM → $\Delta \approx 0.5$ ; Deep ITM → $\Delta \to 1$ ; Deep OTM → $\Delta \to 0$</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THETA -->
+    <div class="fc">
+      <div class="fc-head"><span class="fc-name">Theta — Θ</span><span class="fc-tag">Time Decay</span></div>
+      <div class="fc-body">
+        <div class="fc-expr">$$\Theta_c = -\frac{S_0 N'(d_1)\sigma}{2\sqrt{T}} - rKe^{-rT}N(d_2) \qquad \Theta_p = -\frac{S_0 N'(d_1)\sigma}{2\sqrt{T}} + rKe^{-rT}N(-d_2)$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Signe</h5><p>Généralement négatif. Le temps érode la valeur de l'option.</p></div>
+          <div class="fc-item"><h5>Lien BSE</h5><p>$\Theta + \frac{1}{2}\sigma^2 S^2 \Gamma = r\Pi$ (portefeuille delta-neutre)</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAMMA -->
+    <div class="fc">
+      <div class="fc-head"><span class="fc-name">Gamma — Γ</span><span class="fc-tag">Courbure</span></div>
+      <div class="fc-body">
+        <div class="fc-expr">$$\Gamma = \frac{\partial^2 c}{\partial S^2} = \frac{N'(d_1)}{S_0\,\sigma\sqrt{T}} > 0 \quad \text{(identique call et put)}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Propriété</h5><p>Toujours positif. Maximum ATM, augmente quand $T \to 0$ pour les options ATM.</p></div>
+          <div class="fc-item"><h5>Rôle</h5><p>Mesure l'imperfection de la couverture Delta sur des variations finies de S.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAYLOR -->
+    <div class="fc">
+      <div class="fc-head"><span class="fc-name">Approximation de Taylor</span><span class="fc-tag">P&L Analysis</span></div>
+      <div class="fc-body">
+        <div class="fc-expr">$$\delta c \approx \Theta\,\delta t + \Delta\,\delta S + \frac{1}{2}\Gamma\,\delta S^2$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Exemple numérique</h5><p>$\Theta=-5$, $\Delta=0.6$, $\Gamma=0.03$, $\delta t=1/365$, $\delta S=+2$ : $\delta c \approx -0.014 + 1.2 + 0.06 = +1.246$</p></div>
+          <div class="fc-item"><h5>Utilisation</h5><p>Permet d'estimer le P&L sans recalculer tout le modèle. Base des scénarios de stress.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAMMA NEUTRAL -->
+    <div class="fc">
+      <div class="fc-head"><span class="fc-name">Gamma-Neutral</span><span class="fc-tag">Couverture avancée</span></div>
+      <div class="fc-body">
+        <div class="fc-expr">$$w_T = -\frac{\Gamma_\Pi}{\Gamma_T} \quad \Rightarrow \quad \Delta_\Pi^{new} = \Delta_\Pi + w_T \Delta_T \quad \Rightarrow \quad \text{vendre } \Delta_\Pi^{new} \text{ du sous-jacent}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Condition</h5><p>Seules des options (non-linéaires) peuvent modifier le Gamma d'un portefeuille.</p></div>
+          <div class="fc-item"><h5>Séquence</h5><p>1. Gamma-neutre via options. 2. Rétablir Delta via sous-jacent.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 11 — COMPARAISON ═══ -->
+<div class="sec" id="compare">
+  <div class="sec-hd"><span class="sec-num">11</span><span class="sec-title">Comparaison des Approches</span></div>
+
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Stratégie</th><th>Principe</th><th>Forces</th><th>Limites</th><th>Coût</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--red)">Naked</strong></td>
+          <td>Aucune couverture</td>
+          <td class="g">Zéro coût</td>
+          <td class="r">Risque illimité (call vendu)</td>
+          <td class="g">0</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--blue)">Covered</strong></td>
+          <td>Acheter $N$ actions à $t=0$</td>
+          <td class="g">Protégé si exercice</td>
+          <td class="r">Capital immobilisé, coût si $S_T < K$</td>
+          <td class="r">Élevé</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--gold)">Stop-Loss</strong></td>
+          <td>Acheter/vendre autour de $K$</td>
+          <td class="g">Intermédiaire</td>
+          <td class="r">Inefficace à $S=K$, coûts élevés si oscillation</td>
+          <td class="m">Variable</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--green)">Δ-Hedge</strong></td>
+          <td>Détenir $\Delta$ actions, rééquilibrage</td>
+          <td class="g">Théoriquement parfait en continu</td>
+          <td class="r">Rééquilibrage discret → erreur Gamma</td>
+          <td class="m">Modéré</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--violet)">Δ+Γ-Hedge</strong></td>
+          <td>Options + sous-jacent</td>
+          <td class="g">Couverture au second ordre</td>
+          <td class="r">Complexe, coûteux, rééquilibrage fréquent</td>
+          <td class="r">Élevé</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Comparaison des Greeks</h3>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Greek</th><th>Ordre</th><th>Couverture par</th><th>Signe Call</th><th>Signe Put</th><th>Cas extrême</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Delta Δ</strong></td><td class="m">1er en S</td><td>Sous-jacent</td><td class="g">[0, 1]</td><td class="r">[-1, 0]</td><td>ATM → 0.5</td></tr>
+        <tr><td><strong>Gamma Γ</strong></td><td class="m">2ème en S</td><td>Options</td><td class="g">Toujours &gt; 0</td><td class="g">Toujours &gt; 0</td><td>ATM, T→0 → +∞</td></tr>
+        <tr><td><strong>Theta Θ</strong></td><td class="m">1er en t</td><td>Non couvrable</td><td class="r">Généralement &lt; 0</td><td class="r">Généralement &lt; 0</td><td>ATM, T→0 → -∞</td></tr>
+        <tr><td><strong>Vega ν</strong></td><td class="m">1er en σ</td><td>Options (vanille)</td><td class="g">&gt; 0</td><td class="g">&gt; 0</td><td>ATM → max</td></tr>
+        <tr><td><strong>Rho ρ</strong></td><td class="m">1er en r</td><td>Obligations / Swaps</td><td class="g">&gt; 0</td><td class="r">&lt; 0</td><td>ITM, T long</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ SECTION 12 — QUESTIONS ═══ -->
+<div class="sec" id="quiz">
+  <div class="sec-hd"><span class="sec-num">12</span><span class="sec-title">Questions d'Examen</span></div>
+
+  <div class="qlevel easy">Niveau Facile</div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Qu'est-ce que le Delta d'une option, et comment est-il interprété pour un call européen dans Black-Scholes ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Le Delta est la dérivée partielle du prix de l'option par rapport au prix du sous-jacent : $\Delta = \partial c/\partial S$. Pour un call européen sans dividende, $\Delta_c = N(d_1) \in [0,1]$. Il est interprété comme (1) la sensibilité au premier ordre du prix de l'option aux variations du sous-jacent, (2) la fraction du sous-jacent à détenir pour construire un portefeuille delta-neutre, et (3) approximativement la probabilité risque-neutre que l'option finisse in the money.</p></div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Pourquoi le Theta est-il généralement négatif ? Y a-t-il des exceptions ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Le Theta est négatif car le temps qui passe réduit l'incertitude future, donc la valeur temps de l'option. Plus on approche de la maturité, moins il reste de temps pour que le sous-jacent évolue favorablement. <strong>Exceptions :</strong> un put européen très profondément in the money sur action sans dividende peut avoir $\Theta > 0$ lorsque $r$ est élevé (les intérêts perçus sur le strike valent plus que la valeur temps). Certains calls avec des taux très élevés sont aussi concernés.</p></div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Que valent le Delta et le Gamma d'une position longue en actions ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Une action est un actif linéaire : $c = S$. Donc $\Delta = \partial S/\partial S = 1$ et $\Gamma = \partial^2 S/\partial S^2 = 0$. C'est précisément pour cette raison qu'on ne peut utiliser que le sous-jacent pour la couverture Delta, mais pas pour modifier le Gamma d'un portefeuille. Seules les options (non-linéaires) ont un Gamma non nul.</p></div>
+  </div>
+
+  <div class="qlevel med">Niveau Intermédiaire</div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Expliquez la procédure pour rendre un portefeuille simultanément Δ-neutre et Γ-neutre. Pourquoi l'ordre des étapes est-il important ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Étape 1 : Calculer $w_T = -\Gamma_\Pi / \Gamma_T$ et ajouter $w_T$ options traitées (non-linéaires) pour annuler le Gamma. Étape 2 : Recalculer le nouveau Delta $\Delta_\Pi^{new} = \Delta_\Pi + w_T \Delta_T$ et ajuster avec le sous-jacent pour ramener Delta à zéro. <strong>L'ordre est crucial</strong> car les options modifient simultanément Gamma ET Delta. Si on neutralise d'abord Delta puis Gamma, l'ajout des options pour neutraliser Gamma modifiera à nouveau le Delta, et on doit recommencer. La bonne séquence est : Gamma d'abord (options), puis Delta (sous-jacent).</p></div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Comment le Gamma se comporte-t-il pour une option at-the-money lorsque la maturité approche ? Quelle est la conséquence pour le delta hedging ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Pour une option ATM, $\Gamma \to +\infty$ quand $T \to 0$. Cela s'explique par le fait que le Delta passe très rapidement de ~0 à ~1 (ou -1 à 0 pour un put) juste avant l'expiration : l'option est sur le point de décider si elle expire in ou out of the money. La conséquence pour le delta hedging est très importante : les erreurs de couverture dues au rééquilibrage discret (proportionnelles à $\frac{1}{2}\Gamma \delta S^2$) deviennent gigantesques. Il devient extrêmement coûteux et difficile de maintenir une couverture correcte pour des options ATM proches de la maturité.</p></div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Décrivez la relation entre Theta et Gamma dans l'équation de Black-Scholes. Quelle intuition financière cela donne-t-il ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>L'équation de Black-Scholes pour un portefeuille delta-neutre donne : $\Theta + \frac{1}{2}\sigma^2 S^2 \Gamma = r\Pi$. Si $\Pi \approx 0$, alors $\Theta \approx -\frac{1}{2}\sigma^2 S^2 \Gamma$. Intuition : un Gamma élevé (convexité favorable) implique un Theta très négatif (décroissance rapide). L'acheteur d'une option "paie" la convexité via l'érosion temporelle. Il bénéficie de grands mouvements du sous-jacent (terme $\frac{1}{2}\Gamma\delta S^2 > 0$) mais perd chaque jour que le marché reste calme (terme $\Theta\delta t < 0$).</p></div>
+  </div>
+
+  <div class="qlevel hard">Niveau Difficile</div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Pourquoi la stratégie stop-loss théorique ne réplique-t-elle pas parfaitement le prix Black-Scholes ? Quelles sont les deux raisons fondamentales ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Deux raisons fondamentales : (1) <strong>Actualisation des flux</strong> : dans la stratégie stop-loss, les achats et ventes d'actions se produisent à différents moments, et les flux doivent être actualisés. La stratégie ne prend pas en compte la valeur temporelle de l'argent de manière cohérente avec le prix Black-Scholes. (2) <strong>Problème à la frontière</strong> : quand $S_t = K$, la stratégie ne sait pas s'il faut acheter ou vendre. En pratique, si le prix oscille autour de K, on achète et revend en boucle à des prix légèrement différents, générant des coûts de transaction potentiellement infinis. Ces deux raisons font que le coût attendu de la stratégie stop-loss diffère du prix Black-Scholes même sans frais de transaction.</p></div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q" onclick="toggleQ(this)"><span class="qi-qtxt">Un portefeuille est Δ-neutre mais a un Gamma de −3000. Comment interprétez-vous ce Gamma négatif, et quelles sont les implications pour la couverture ?</span><span class="qi-arr">▾</span></div>
+    <div class="qi-a"><p>Un Gamma négatif indique que le portefeuille est <strong>short en options</strong> de manière nette (positions vendues dominent). Le terme $\frac{1}{2}\Gamma\delta S^2 < 0$ signifie que des mouvements importants du sous-jacent (dans n'importe quelle direction) seront <strong>défavorables</strong> au portefeuille. Le portefeuille bénéficie de la stabilité du marché (il "collecte" le Theta positif d'avoir vendu des options) mais souffre des chocs de marché. Pour couvrir : ajouter $3000/\Gamma_T$ options longues pour neutraliser le Gamma. En pratique, les market makers qui vendent des options structurées se retrouvent typiquement long Gamma (acheteurs nets), tandis que les gestionnaires de portefeuilles complexes peuvent être short Gamma.</p></div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 13 — PIÈGES ═══ -->
+<div class="sec" id="pièges">
+  <div class="sec-hd"><span class="sec-num">13</span><span class="sec-title">Pièges Classiques</span></div>
+
+  <div class="piege"><span class="piege-icon">⚠️</span><div class="piege-text"><strong>Confondre Delta et probabilité d'exercice</strong> — $\Delta_c = N(d_1)$ est souvent confondu avec $N(d_2)$, qui est la vraie probabilité risque-neutre d'exercice. $N(d_1) > N(d_2)$ toujours. Le Delta est une probabilité ajustée par le sous-jacent, pas une probabilité pure.</div></div>
+
+  <div class="piege"><span class="piege-icon">⚠️</span><div class="piege-text"><strong>Oublier que Gamma est toujours positif</strong> — Même pour un put, $\Gamma > 0$. C'est la courbure de la courbe de prix qui est toujours positive (convexité). Un portefeuille peut avoir $\Gamma < 0$ uniquement s'il contient des positions short en options.</div></div>
+
+  <div class="piege"><span class="piege-icon">⚠️</span><div class="piege-text"><strong>Inverser l'ordre Gamma-Delta dans la couverture</strong> — Toujours neutraliser Gamma d'abord (options), puis Delta (sous-jacent). L'inverse casse la neutralité Delta déjà établie.</div></div>
+
+  <div class="piege"><span class="piege-icon">⚠️</span><div class="piege-text"><strong>Croire que la couverture Delta est parfaite</strong> — Elle n'est exacte que pour des mouvements infinitésimaux. L'erreur est $\frac{1}{2}\Gamma\delta S^2$. Pour des mouvements finis et une fréquence de rééquilibrage discrète, une erreur résiduelle subsiste toujours.</div></div>
+
+  <div class="piege"><span class="piege-icon">⚠️</span><div class="piege-text"><strong>Négliger le signe du Delta du put</strong> — $\Delta_p = N(d_1) - 1 < 0$. Vendre un put implique de <em>vendre</em> des actions pour couvrir (pas d'en acheter). Confondre le signe conduit à une couverture dans la mauvaise direction.</div></div>
+
+  <div class="piege"><span class="piege-icon">⚠️</span><div class="piege-text"><strong>Penser que Theta est toujours négatif</strong> — Exception notable : un put européen très ITM sur action sans dividende peut avoir $\Theta > 0$ avec un taux $r$ élevé. Ce point est régulièrement testé à l'examen.</div></div>
+
+  <div class="piege"><span class="piege-icon">⚠️</span><div class="piege-text"><strong>Confondre les paramètres Black-Scholes dans l'exemple</strong> — Le cours utilise $K=90$ pour ITM, $K=100$ pour ATM, $K=110$ pour OTM (avec $S=100$). Bien noter que la moneyness est relative à S, pas à K seul.</div></div>
+</div>
+
+<!-- ═══ SECTION 14 — FICHE ═══ -->
+<div class="sec" id="fiche">
+  <div class="sec-hd"><span class="sec-num">14</span><span class="sec-title">Fiche de Révision Finale</span></div>
+
+  <div class="fiche-grid">
+    <div class="fc2">
+      <h4>Delta — Δ</h4>
+      <ul>
+        <li><strong>Déf.</strong> $\partial c/\partial S$</li>
+        <li><strong>Call</strong> $N(d_1) \in [0,1]$</li>
+        <li><strong>Put</strong> $N(d_1)-1 \in [-1,0]$</li>
+        <li><strong>ATM</strong> $\approx \pm 0.5$</li>
+        <li><strong>Couv.</strong> Sous-jacent</li>
+        <li><strong>Rôle</strong> Neutralise risque de 1er ordre</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Gamma — Γ</h4>
+      <ul>
+        <li><strong>Déf.</strong> $\partial^2 c/\partial S^2 = \partial\Delta/\partial S$</li>
+        <li><strong>BS</strong> $N'(d_1)/(S\sigma\sqrt{T})$</li>
+        <li><strong>Signe</strong> Toujours &gt; 0</li>
+        <li><strong>ATM + T→0</strong> diverge → +∞</li>
+        <li><strong>Couv.</strong> Options seulement</li>
+        <li><strong>Rôle</strong> Courbure, erreur de couverture Δ</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Theta — Θ</h4>
+      <ul>
+        <li><strong>Déf.</strong> $\partial c/\partial t$</li>
+        <li><strong>Signe</strong> Généralement &lt; 0</li>
+        <li><strong>ATM + T→0</strong> diverge → -∞</li>
+        <li><strong>OTM + T→0</strong> → 0</li>
+        <li><strong>Couv.</strong> Impossible</li>
+        <li><strong>Lien</strong> $\Theta + \frac{1}{2}\sigma^2S^2\Gamma = r\Pi$</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Taylor & Stratégies</h4>
+      <ul>
+        <li><strong>Taylor</strong> $\delta c \approx \Theta\delta t + \Delta\delta S + \frac{1}{2}\Gamma\delta S^2$</li>
+        <li><strong>Naked</strong> Risque illimité</li>
+        <li><strong>Covered</strong> Capital immobilisé</li>
+        <li><strong>Stop-loss</strong> Imparfait à $S=K$</li>
+        <li><strong>Δ-hedge</strong> Dynamique, erreur Γ</li>
+        <li><strong>Γ-hedge</strong> Options puis sous-jacent</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Formules Black-Scholes</h4>
+      <ul>
+        <li><strong>Call</strong> $S_0N(d_1) - Ke^{-rT}N(d_2)$</li>
+        <li><strong>Put</strong> $Ke^{-rT}N(-d_2) - S_0N(-d_1)$</li>
+        <li><strong>$d_1$</strong> $[\ln(S/K)+(r+\sigma^2/2)T]/(\sigma\sqrt{T})$</li>
+        <li><strong>$d_2$</strong> $d_1 - \sigma\sqrt{T}$</li>
+        <li><strong>$N'(x)$</strong> $e^{-x^2/2}/\sqrt{2\pi}$</li>
+      </ul>
+    </div>
+    <div class="fc2">
+      <h4>Points à Mémoriser</h4>
+      <ul>
+        <li>$\Gamma_{call} = \Gamma_{put}$ (même paramètres)</li>
+        <li>Actif linéaire : $\Gamma = 0$</li>
+        <li>Ordre : Γ-neutre d'abord, puis Δ</li>
+        <li>Theta ATM diverge à maturité</li>
+        <li>$\Delta_p = \Delta_c - 1$ (parité)</li>
+        <li>Portfolio : Greeks = somme pondérée</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box" style="margin-top:2rem">
+    <div class="box-title">🎯 Message clé pour l'oral</div>
+    <p>Les Greeks ne sont pas de simples formules — ils sont les <strong>instruments de navigation</strong> du trader d'options. Delta donne la direction, Gamma donne la courbure de la trajectoire, Theta rappelle que le temps est un ennemi silencieux. Ensemble, ils permettent de passer d'une couverture statique imparfaite à une gestion dynamique et précise des risques.</p>
+  </div>
+</div>
+
+</main>
+
+<!-- ═══ JAVASCRIPT ═══ -->
+<script>
+// ─── NORMAL DISTRIBUTION ───
+function Phi(x) {
+  const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+  const sign = x<0?-1:1; x=Math.abs(x);
+  const t=1/(1+p*x);
+  const y=1-(((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t)*Math.exp(-x*x/2);
+  return 0.5*(1+sign*y);
+}
+function phi(x){return Math.exp(-0.5*x*x)/Math.sqrt(2*Math.PI);}
+
+// ─── BLACK-SCHOLES ───
+const BS={
+  d1:(S,K,r,s,T)=>(Math.log(S/K)+(r+0.5*s*s)*T)/(s*Math.sqrt(T)),
+  d2:(S,K,r,s,T)=>BS.d1(S,K,r,s,T)-s*Math.sqrt(T),
+  call:(S,K,r,s,T)=>S*Phi(BS.d1(S,K,r,s,T))-K*Math.exp(-r*T)*Phi(BS.d2(S,K,r,s,T)),
+  dCall:(S,K,r,s,T)=>Phi(BS.d1(S,K,r,s,T)),
+  dPut:(S,K,r,s,T)=>Phi(BS.d1(S,K,r,s,T))-1,
+  gamma:(S,K,r,s,T)=>phi(BS.d1(S,K,r,s,T))/(S*s*Math.sqrt(T)),
+  tCall:(S,K,r,s,T)=>-S*phi(BS.d1(S,K,r,s,T))*s/(2*Math.sqrt(T))-r*K*Math.exp(-r*T)*Phi(BS.d2(S,K,r,s,T)),
+  tPut:(S,K,r,s,T)=>-S*phi(BS.d1(S,K,r,s,T))*s/(2*Math.sqrt(T))+r*K*Math.exp(-r*T)*Phi(-BS.d2(S,K,r,s,T))
+};
+
+// ─── CHART UTILITY ───
+function Chart(id,xMin,xMax,yMin,yMax){
+  const cv=document.getElementById(id); if(!cv)return null;
+  const dpr=window.devicePixelRatio||1;
+  const W=cv.offsetWidth,H=cv.offsetHeight;
+  cv.width=W*dpr; cv.height=H*dpr;
+  const ctx=cv.getContext('2d'); ctx.scale(dpr,dpr);
+  const p={l:58,r:22,t:22,b:42};
+  const pw=W-p.l-p.r,ph=H-p.t-p.b;
+  const tx=x=>p.l+(x-xMin)/(xMax-xMin)*pw;
+  const ty=y=>p.t+ph-(y-yMin)/(yMax-yMin)*ph;
+
+  // Background
+  ctx.fillStyle='#1c1828'; ctx.fillRect(0,0,W,H);
+
+  // Grid
+  ctx.strokeStyle='rgba(255,255,255,0.04)'; ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){const y=yMin+i*(yMax-yMin)/5;ctx.beginPath();ctx.moveTo(p.l,ty(y));ctx.lineTo(W-p.r,ty(y));ctx.stroke();}
+  for(let i=0;i<=6;i++){const x=xMin+i*(xMax-xMin)/6;ctx.beginPath();ctx.moveTo(tx(x),p.t);ctx.lineTo(tx(x),H-p.b);ctx.stroke();}
+
+  // Zero line
+  if(yMin<0&&yMax>0){
+    ctx.strokeStyle='rgba(200,200,200,0.18)';ctx.lineWidth=1;
+    ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.moveTo(p.l,ty(0));ctx.lineTo(W-p.r,ty(0));ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Axes
+  ctx.strokeStyle='rgba(200,200,200,0.22)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(p.l,p.t);ctx.lineTo(p.l,H-p.b);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(p.l,H-p.b);ctx.lineTo(W-p.r,H-p.b);ctx.stroke();
+
+  // Tick labels
+  ctx.fillStyle='#6a6490';ctx.font='10px monospace';
+  const yr=yMax-yMin;
+  ctx.textAlign='right';
+  for(let i=0;i<=5;i++){
+    const y=yMin+i*(yMax-yMin)/5;
+    ctx.fillText(yr<2?y.toFixed(2):yr<10?y.toFixed(1):Math.round(y),p.l-5,ty(y)+3.5);
+  }
+  const xr=xMax-xMin;
+  ctx.textAlign='center';
+  for(let i=0;i<=6;i++){
+    const x=xMin+i*(xMax-xMin)/6;
+    ctx.fillText(xr<3?x.toFixed(2):xr<20?x.toFixed(1):Math.round(x),tx(x),H-p.b+17);
+  }
+
+  return{ctx,tx,ty,W,H,p,pw,ph,
+    line(pts,col,w=2,dash=[]){
+      if(!pts.length)return;
+      ctx.beginPath();ctx.strokeStyle=col;ctx.lineWidth=w;ctx.setLineDash(dash);
+      ctx.moveTo(pts[0][0],pts[0][1]);
+      for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);
+      ctx.stroke();ctx.setLineDash([]);
+    },
+    curve(fn,x0,x1,n=300){
+      const pts=[];
+      for(let i=0;i<=n;i++){const x=x0+i*(x1-x0)/n;const y=fn(x);if(isFinite(y))pts.push([tx(x),ty(y)]);}
+      return pts;
+    },
+    label(x,y,txt,col='#9089bf',size=11,align='center'){
+      ctx.fillStyle=col;ctx.font=`${size}px 'EB Garamond',serif`;ctx.textAlign=align;
+      ctx.fillText(txt,tx(x),ty(y));
+    },
+    vline(x,col,dash=[]){
+      ctx.strokeStyle=col;ctx.lineWidth=1;ctx.setLineDash(dash);
+      ctx.beginPath();ctx.moveTo(tx(x),p.t);ctx.lineTo(tx(x),H-p.b);ctx.stroke();ctx.setLineDash([]);
+    },
+    hline(y,col,dash=[]){
+      ctx.strokeStyle=col;ctx.lineWidth=1;ctx.setLineDash(dash);
+      ctx.beginPath();ctx.moveTo(p.l,ty(y));ctx.lineTo(W-p.r,ty(y));ctx.stroke();ctx.setLineDash([]);
+    },
+    dot(x,y,col,r=4){
+      ctx.beginPath();ctx.arc(tx(x),ty(y),r,0,2*Math.PI);
+      ctx.fillStyle=col;ctx.fill();
+    }
+  };
+}
+
+// ─── DRAW: CALL PRICE ───
+function drawCallPrice(){
+  const c=Chart('cv-callprice',70,130,0,42);
+  if(!c)return;
+  const {ctx,tx,ty,W,H,p,curve,line,dot,label,vline}=c;
+
+  const K=100,r=0.03,s=0.2,T=1;
+
+  // Intrinsic value (faint)
+  const ivPts=[];
+  for(let S=70;S<=130;S+=0.5){const v=Math.max(S-K,0);ivPts.push([tx(S),ty(v)]);}
+  ctx.beginPath();ctx.strokeStyle='rgba(255,255,255,0.07)';ctx.lineWidth=1.5;ctx.setLineDash([5,5]);
+  ctx.moveTo(ivPts[0][0],ivPts[0][1]);
+  for(let i=1;i<ivPts.length;i++)ctx.lineTo(ivPts[i][0],ivPts[i][1]);
+  ctx.stroke();ctx.setLineDash([]);
+
+  // Call price curve
+  const callPts=curve(S=>BS.call(S,K,r,s,T),71,130);
+  line(callPts,'#7eb8d4',2.5);
+
+  // Delta tangent at S=105
+  const S0=105,c0=BS.call(S0,K,r,s,T),D0=BS.dCall(S0,K,r,s,T);
+  const span=18;
+  const tanPts=[[tx(S0-span),ty(c0-D0*span)],[tx(S0+span),ty(c0+D0*span)]];
+  line(tanPts,'#c9a84c',1.8,[5,4]);
+
+  // Vertical line at S0
+  vline(S0,'rgba(201,168,76,0.2)',[4,4]);
+
+  // Annotation: slope = Delta
+  dot(S0,c0,'#c9a84c',5);
+  ctx.fillStyle='#c9a84c';ctx.font='bold 12px monospace';ctx.textAlign='left';
+  ctx.fillText(`Δ ≈ ${D0.toFixed(2)}`,tx(S0)+10,ty(c0)-8);
+  ctx.fillStyle='#9089bf';ctx.font='11px serif';ctx.textAlign='left';
+  ctx.fillText('pente = Δ',tx(S0)+10,ty(c0)+8);
+
+  // K line
+  vline(K,'rgba(232,201,122,0.25)',[3,3]);
+  ctx.fillStyle='#e8c97a';ctx.font='11px monospace';ctx.textAlign='center';
+  ctx.fillText('K=100',tx(K),H-p.b+30);
+
+  // Legend
+  ctx.fillStyle='#7eb8d4';ctx.font='12px serif';ctx.textAlign='left';
+  ctx.fillText('Prix du call c(S)',tx(72),ty(38));
+  ctx.fillStyle='rgba(255,255,255,0.4)';ctx.setLineDash([5,5]);ctx.lineWidth=1.2;
+  ctx.fillStyle='#9089bf';ctx.font='11px serif';
+  ctx.fillText('Valeur intrinsèque max(S-K,0)',tx(72),ty(35));
+
+  // Axis labels
+  ctx.fillStyle='#9089bf';ctx.font='12px serif';
+  ctx.textAlign='center';ctx.fillText('S (prix du sous-jacent)',tx(100),H-3);
+  ctx.save();ctx.translate(14,ty(21));ctx.rotate(-Math.PI/2);
+  ctx.fillText('c (prix du call)',0,0);ctx.restore();
+}
+
+// ─── DRAW: DELTA vs S ───
+function drawDelta(){
+  const c=Chart('cv-delta',70,130,-1.05,1.05);
+  if(!c)return;
+  const {ctx,tx,ty,W,H,p,curve,line,label,vline,hline,dot}=c;
+  const K=100,r=0.03,s=0.2,T=1;
+
+  hline(0,'rgba(200,200,200,0.15)',[4,3]);
+  hline(0.5,'rgba(201,168,76,0.12)',[3,4]);
+  hline(-0.5,'rgba(167,139,250,0.12)',[3,4]);
+  vline(K,'rgba(232,201,122,0.25)',[3,3]);
+
+  // Call delta
+  const dcPts=curve(S=>BS.dCall(S,K,r,s,T),70.5,130);
+  line(dcPts,'#c9a84c',2.5);
+
+  // Put delta
+  const dpPts=curve(S=>BS.dPut(S,K,r,s,T),70.5,130);
+  line(dpPts,'#e07b7b',2.5);
+
+  // ATM dot
+  dot(K,BS.dCall(K,K,r,s,T),'#c9a84c',5);
+  dot(K,BS.dPut(K,K,r,s,T),'#e07b7b',5);
+
+  // Annotations
+  ctx.fillStyle='#c9a84c';ctx.font='bold 12px monospace';ctx.textAlign='left';
+  ctx.fillText('Δ_call = N(d₁)',tx(112),ty(0.8));
+  ctx.fillStyle='#e07b7b';
+  ctx.fillText('Δ_put = N(d₁)−1',tx(112),ty(-0.25));
+
+  ctx.fillStyle='#e8c97a';ctx.font='11px monospace';ctx.textAlign='center';
+  ctx.fillText('K=100',tx(K),H-p.b+30);
+
+  // Axis labels
+  ctx.fillStyle='#9089bf';ctx.font='12px serif';
+  ctx.textAlign='center';ctx.fillText('K (strike)',tx(100),H-3);
+  ctx.save();ctx.translate(14,ty(0));ctx.rotate(-Math.PI/2);
+  ctx.fillText('Delta',0,0);ctx.restore();
+}
+
+// ─── DRAW: THETA vs T ───
+function drawTheta(){
+  const c=Chart('cv-theta',0,1,-11,1);
+  if(!c)return;
+  const {ctx,tx,ty,W,H,p,curve,line,hline}=c;
+  const S=100,r=0.03,s=0.1;
+
+  hline(0,'rgba(200,200,200,0.18)',[4,3]);
+
+  const colors=['#7bc496','#e8c97a','#a78bfa'];
+  const Ks=[90,100,110];
+  const labels=['ITM (K=90)','ATM (K=100)','OTM (K=110)'];
+
+  Ks.forEach((K,i)=>{
+    const pts=[];
+    for(let T=0.01;T<=1;T+=0.005){
+      const v=BS.tCall(S,K,r,s,T);
+      if(isFinite(v)&&v>-11)pts.push([tx(T),ty(v)]);
+    }
+    line(pts,colors[i],2.2);
+  });
+
+  // Legend
+  let ly=ty(-1.5);
+  colors.forEach((col,i)=>{
+    ctx.fillStyle=col;ctx.font='bold 12px monospace';ctx.textAlign='left';
+    ctx.fillText('─',tx(0.05),ly+i*16);
+    ctx.font='11px serif';
+    ctx.fillText(labels[i],tx(0.1),ly+i*16);
+  });
+
+  // Axis labels
+  ctx.fillStyle='#9089bf';ctx.font='12px serif';ctx.textAlign='center';
+  ctx.fillText('T (maturité résiduelle)',tx(0.5),H-3);
+  ctx.save();ctx.translate(14,ty(-5));ctx.rotate(-Math.PI/2);
+  ctx.fillText('Θ_call (par an)',0,0);ctx.restore();
+
+  // Annotations
+  ctx.fillStyle='#e8c97a';ctx.font='11px monospace';ctx.textAlign='left';
+  ctx.fillText('ATM diverge → −∞',tx(0.05),ty(-8));
+}
+
+// ─── DRAW: GAMMA vs T ───
+function drawGammaT(){
+  const c=Chart('cv-gamma-t',0,1,0,0.16);
+  if(!c)return;
+  const {ctx,tx,ty,W,H,p,curve,line}=c;
+  const S=100,r=0.08,s=0.1;
+  const colors=['#7eb8d4','#e8c97a','#7bc496'];
+  const Ks=[90,100,110];
+  const labels=['ITM (K=90)','ATM (K=100)','OTM (K=110)'];
+
+  Ks.forEach((K,i)=>{
+    const pts=[];
+    for(let T=0.01;T<=1;T+=0.005){
+      const v=BS.gamma(S,K,r,s,T);
+      if(isFinite(v)&&v<=0.16&&v>=0)pts.push([tx(T),ty(v)]);
+    }
+    line(pts,colors[i],2.2);
+  });
+
+  let ly=ty(0.145);
+  colors.forEach((col,i)=>{
+    ctx.fillStyle=col;ctx.font='bold 12px monospace';ctx.textAlign='left';
+    ctx.fillText('─',tx(0.05),ly+i*16);
+    ctx.font='11px serif';
+    ctx.fillText(labels[i],tx(0.1),ly+i*16);
+  });
+
+  ctx.fillStyle='#9089bf';ctx.font='12px serif';ctx.textAlign='center';
+  ctx.fillText('T (maturité résiduelle)',tx(0.5),H-3);
+  ctx.save();ctx.translate(14,ty(0.08));ctx.rotate(-Math.PI/2);
+  ctx.fillText('Γ',0,0);ctx.restore();
+
+  ctx.fillStyle='#e8c97a';ctx.font='11px serif';ctx.textAlign='left';
+  ctx.fillText('ATM: courbure ↑ quand T→0',tx(0.45),ty(0.14));
+}
+
+// ─── DRAW: GAMMA vs S ───
+function drawGammaS(){
+  const c=Chart('cv-gamma-s',90,110,0,0.048);
+  if(!c)return;
+  const {ctx,tx,ty,W,H,p,curve,line,vline,dot}=c;
+  const K=100,r=0.08,s=0.1,T=1;
+
+  vline(K,'rgba(232,201,122,0.25)',[3,3]);
+
+  const pts=curve(S=>BS.gamma(S,K,r,s,T),90.1,110);
+  line(pts,'#7bc496',2.5);
+
+  // Max annotation
+  const Smax=K*Math.exp(-(r+s*s/2)*T+s*s*T);
+  const gmax=BS.gamma(K,K,r,s,T);
+  dot(K,gmax,'#e8c97a',5);
+  ctx.fillStyle='#e8c97a';ctx.font='11px monospace';ctx.textAlign='left';
+  ctx.fillText('max ≈ ATM',tx(K)+8,ty(gmax)-5);
+
+  ctx.fillStyle='#e8c97a';ctx.font='11px monospace';ctx.textAlign='center';
+  ctx.fillText('K=100',tx(K),H-p.b+30);
+
+  ctx.fillStyle='#9089bf';ctx.font='12px serif';ctx.textAlign='center';
+  ctx.fillText('S₀ (prix du sous-jacent)',tx(100),H-3);
+  ctx.save();ctx.translate(14,ty(0.024));ctx.rotate(-Math.PI/2);
+  ctx.fillText('Γ',0,0);ctx.restore();
+}
+
+// ─── DRAW: TAYLOR APPROXIMATION ───
+function drawTaylor(){
+  const c=Chart('cv-taylor',92,116,-0.5,16);
+  if(!c)return;
+  const {ctx,tx,ty,W,H,p,line,curve,dot}=c;
+  const K=100,r=0.03,s=0.2,T=0.5;
+  const S0=100;
+  const c0=BS.call(S0,K,r,s,T);
+  const D0=BS.dCall(S0,K,r,s,T);
+  const G0=BS.gamma(S0,K,r,s,T);
+
+  // Actual call curve
+  const actualPts=curve(S=>BS.call(S,K,r,s,T),92.5,116);
+  line(actualPts,'#7eb8d4',2.5);
+
+  // Delta approximation (linear)
+  const linPts=curve(S=>c0+D0*(S-S0),92,116);
+  line(linPts,'#c9a84c',1.8,[6,4]);
+
+  // Delta + Gamma approximation (quadratic)
+  const quadPts=curve(S=>c0+D0*(S-S0)+0.5*G0*(S-S0)*(S-S0),92,116);
+  line(quadPts,'#7bc496',2,[3,3]);
+
+  // Anchor point
+  dot(S0,c0,'#e8c97a',5);
+
+  // Gap annotation at S=112
+  const S1=112;
+  const actual=BS.call(S1,K,r,s,T);
+  const linear=c0+D0*(S1-S0);
+  const quad=c0+D0*(S1-S0)+0.5*G0*(S1-S0)*(S1-S0);
+
+  ctx.strokeStyle='rgba(201,168,76,0.5)';ctx.lineWidth=1;ctx.setLineDash([2,2]);
+  ctx.beginPath();ctx.moveTo(tx(S1),ty(actual));ctx.lineTo(tx(S1),ty(linear));ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='rgba(201,168,76,0.5)';ctx.font='10px monospace';ctx.textAlign='left';
+  ctx.fillText('Gap Γ',tx(S1)+4,ty((actual+linear)/2));
+
+  // Legend
+  ctx.font='11px serif';ctx.textAlign='left';
+  ctx.fillStyle='#7eb8d4';ctx.fillText('Vraie valeur c(S)',tx(93),ty(14.5));
+  ctx.fillStyle='#c9a84c';ctx.fillText('Approx. Δ (linéaire)',tx(93),ty(13.0));
+  ctx.fillStyle='#7bc496';ctx.fillText('Approx. Δ + ½Γ·δS² (quadratique)',tx(93),ty(11.5));
+
+  ctx.fillStyle='#9089bf';ctx.font='12px serif';ctx.textAlign='center';
+  ctx.fillText('S (prix du sous-jacent)',tx(104),H-3);
+  ctx.save();ctx.translate(14,ty(8));ctx.rotate(-Math.PI/2);
+  ctx.fillText('c (prix du call)',0,0);ctx.restore();
+}
+
+// ─── INIT ───
+function init(){
+  drawCallPrice();
+  drawDelta();
+  drawTheta();
+  drawGammaT();
+  drawGammaS();
+  drawTaylor();
+}
+
+window.addEventListener('load',init);
+window.addEventListener('resize',()=>{setTimeout(init,100);});
+
+// ─── QUIZ ACCORDION ───
+function toggleQ(el){
+  const ans=el.nextElementSibling;
+  const arr=el.querySelector('.qi-arr');
+  const open=ans.classList.toggle('open');
+  arr.style.transform=open?'rotate(180deg)':'';
+}
+
+// ─── SIDEBAR HIGHLIGHT ───
+const secs=document.querySelectorAll('.sec');
+const links=document.querySelectorAll('.sb nav a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id;});
+  links.forEach(l=>{
+    l.classList.remove('active');
+    if(l.getAttribute('href')==='#'+cur)l.classList.add('active');
+  });
+},{passive:true});
+</script>
+</body>
+</html>

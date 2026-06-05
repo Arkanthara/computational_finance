@@ -1,0 +1,160 @@
+---
+title: "Options — Notions fondamentales — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Imaginez que vous achetez un billet de loterie inversée : vous payez **5€** pour avoir le *droit* de vendre votre appartement 300 000€ dans 6 mois, même si le marché s'effondre à 200 000€. Si le marché monte à 400 000€, vous jetez le billet et vendez au marché. Si ça chute, vous exercez votre droit et empêchez la catastrophe. C'est un **put** : une assurance contre la baisse. Le chapitre 9 pose les bases de ces contrats, de leur prix, et des modèles pour les valoriser.
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- Une option est un **droit asymétrique** : l'acheteur choisit d'exercer ou non, le vendeur subit.
+- Le **prix** de ce droit (la prime) dépend de $S_0$, $K$, $T$, $\sigma$, $r$ et des dividendes.
+- Des bornes de **non-arbitrage** encadrent toujours ce prix.
+- La **parité put-call** relie les deux types d'options par une équation d'équilibre fondamentale.
+- Le **pricing** repose sur l'idée de couvrir parfaitement le risque (*delta-hedging*) et d'utiliser des probabilités risque-neutres.
+- L'**arbre binomial** discrétise les prix ; **Black-Scholes** en est la limite continue analytique.
+- En pratique, la **volatilité implicite** n'est pas constante : le *smile* révèle les limites de BS.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+| ------- | ----------------------------- | --------- |
+| **Call** | Droit d'acheter au prix $K$ à maturité $T$ | Pari sur la hausse, perte limitée à la prime |
+| **Put** | Droit de vendre au prix $K$ à maturité $T$ | Assurance contre la baisse |
+| **Prime** | Prix payé pour acquérir le droit | Coût de l'assurance |
+| **Européenne vs Américaine** | Européenne = exercice uniquement à $T$ ; américaine = à tout moment | Américaine plus flexible, donc plus chère ou égale |
+| **Moneyness** | Relation entre $S_0$ et $K$ qui indique si l'option a une valeur intrinsèque | ITM = déjà dans le bon sens, OTM = pas encore |
+| **Non-arbitrage** | Tout prix hors bornes permet un profit garanti sans risque | Le marché corrige immédiatement |
+| **Parité put-call** | Call + cash actualisé = Put + actif sous-jacent | On peut synthétiser tout instrument à partir des trois autres |
+| **Delta ($\Delta$)** | Nombre d'actifs à détenir pour neutraliser le risque de la position en option | Plus $\Delta$ est proche de 1, plus le call se comporte comme l'actif |
+| **Probabilité risque-neutre** | Probabilité artificielle qui rend l'actif juste rentable au taux sans risque | Permet d'actualiser les payoffs sans prime de risque |
+| **Volatilité implicite** | Valeur de $\sigma$ que BS devrait avoir pour reproduire le prix observé | Baromètre des anticipations de marché |
+| **Smile de volatilité** | Courbe en U de la vol. implicite selon le strike | Le marché craint les queues épaisses que BS ignore |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+- **Option** → droit d'acheter (call) ou vendre (put) → payoff à maturité
+- **Payoff** + prime → **Profit** (peut être négatif)
+- $S_0$, $K$, $T$, $\sigma$, $r$ → déterminent le **prix** de l'option
+- Prix → encadré par des **bornes de non-arbitrage**
+- Call et put (même $K$, même $T$) → liés par la **parité put-call**
+- Parité put-call → permet de construire des **stratégies synthétiques** (bull spread, butterfly, protective put)
+- **Arbre binomial** → prix via $\Delta$ et probabilité risque-neutre $p$ → converge vers **Black-Scholes**
+- Prix BS observé sur le marché → inversion → **volatilité implicite**
+- Vol. implicite ≠ constante selon $K$ → **smile** → limites du modèle BS
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+| ------- | ------------- | --------- |
+| $\max(S_T - K,\ 0)$ | Payoff long call | Exercé seulement si $S_T > K$ |
+| $\max(K - S_T,\ 0)$ | Payoff long put | Exercé seulement si $S_T < K$ |
+| $S_0 - Ke^{-rT} \leq c \leq S_0$ | Bornes du call | Non-arbitrage |
+| $Ke^{-rT} - S_0 \leq p \leq K$ | Bornes du put | Non-arbitrage |
+| $c + Ke^{-rT} = p + S_0$ | Parité put-call | Relation d'équilibre fondamentale |
+| $\Delta = \dfrac{f_u - f_d}{S_0 u - S_0 d}$ | Delta de couverture | Neutralise le risque (1 étape) |
+| $p = \dfrac{e^{rT} - d}{u - d}$ | Probabilité risque-neutre | Pas la probabilité réelle ! |
+| $f = e^{-rT}\bigl[p\, f_u + (1-p)\, f_d\bigr]$ | Prix binomial | Espérance actualisée sous $\mathbb{Q}$ |
+| $u = e^{\sigma\sqrt{T}},\ d = e^{-\sigma\sqrt{T}}$ | Calibration de l'arbre | Lien $\sigma$ ↔ amplitude des branches |
+| $c = S_0 N(d_1) - Ke^{-rT}N(d_2)$ | Black-Scholes call | Formule analytique fermée |
+| $p = Ke^{-rT}N(-d_2) - S_0 N(-d_1)$ | Black-Scholes put | Symétrique via $N(-x) = 1 - N(x)$ |
+| $d_1 = \dfrac{\ln(S_0/K)+(r+\sigma^2/2)T}{\sigma\sqrt{T}}$, $\ d_2 = d_1 - \sigma\sqrt{T}$ | Termes BS | $N(d_2)$ ≈ proba risque-neutre d'être ITM |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **Short call ≠ short put** : le short call est la seule position à perte **théoriquement illimitée** (le prix peut monter indéfiniment).
+- **Volatilité** augmente la valeur des calls *et* des puts : contre-intuitif mais logique (plus de dispersion = plus de chances d'être ITM).
+- **Probabilité risque-neutre $p$ ≠ probabilité réelle** : elle sert uniquement à pricer, pas à prédire.
+- **Bornes** : si la borne inférieure donne un nombre négatif, la vraie borne inférieure reste **0** (une option ne peut pas valoir moins que zéro).
+- **Parité put-call** ne s'applique qu'aux options **européennes** sur actif sans dividende.
+- **Arbre binomial à 1 étape** : le prix obtenu diffère de BS car la discrétisation est grossière ; avec $n \to \infty$, il converge vers BS.
+- **Volatilité implicite ≠ volatilité historique** : l'une est prospective (marché), l'autre rétrospective (données).
+- **Smile** ne signifie pas que BS est inutile : il reste la *lingua franca* des traders — mais ses hypothèses sont violées en pratique.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Quelle est la différence entre un call et un put ?
+
+**R courte :** Le call donne le droit d'acheter (pari sur la hausse), le put donne le droit de vendre (protection contre la baisse). Les deux ont une perte limitée à la prime pour l'acheteur.
+
+---
+
+**Q :** Pourquoi la volatilité augmente-t-elle la valeur des deux types d'options ?
+
+**R courte :** Une forte volatilité élargit la distribution des prix futurs, augmentant la probabilité que l'option soit ITM à maturité, pour un call comme pour un put.
+
+---
+
+**Q :** Démontrez la borne inférieure du call : $c \geq S_0 - Ke^{-rT}$.
+
+**R courte :** Comparez deux portefeuilles : A = call + cash $Ke^{-rT}$, B = actif $S$. A vaut toujours au moins autant que B à maturité → $c + Ke^{-rT} \geq S_0$.
+
+---
+
+**Q :** Qu'est-ce que la parité put-call et comment la démontre-t-on ?
+
+**R courte :** $c + Ke^{-rT} = p + S_0$. On montre que deux portefeuilles (A = call + cash, C = put + actif) ont exactement le même payoff $\max(S_T, K)$ à maturité → même valeur aujourd'hui par non-arbitrage.
+
+---
+
+**Q :** Qu'est-ce que la probabilité risque-neutre et pourquoi l'utilise-t-on ?
+
+**R courte :** C'est une probabilité artificielle $p = (e^{rT}-d)/(u-d)$ sous laquelle l'actif croît au taux sans risque. Elle permet d'actualiser les payoffs sans prime de risque, simplifiée pour le pricing.
+
+---
+
+**Q :** Quelle est l'intuition derrière le delta de couverture ?
+
+**R courte :** $\Delta$ est le nombre d'unités de l'actif que l'émetteur d'une option doit détenir pour que son portefeuille soit neutre au risque : quel que soit le scénario, sa valeur est identique.
+
+---
+
+**Q :** Comment Black-Scholes se relie-t-il à l'arbre binomial ?
+
+**R courte :** BS est la limite de l'arbre binomial quand le nombre de pas $n \to \infty$ et la durée de chaque pas $\to 0$. Le prix binomial converge vers le prix BS.
+
+---
+
+**Q :** Qu'est-ce que le smile de volatilité et que révèle-t-il ?
+
+**R courte :** La vol. implicite calculée via BS varie selon le strike (forme en U). Cela révèle que les actifs réels ont des queues de distribution plus épaisses que la loi log-normale supposée par BS.
+
+---
+
+**Q :** Quand préférer l'arbre binomial à Black-Scholes ?
+
+**R courte :** Pour les options **exotiques** (barrière, binaire, américaines) où il n'existe pas de formule analytique. BS s'applique uniquement aux vanilles européennes.
+
+---
+
+**Q :** Qu'est-ce que le VIX et quel est son lien avec ce chapitre ?
+
+**R courte :** Le VIX est l'indice de volatilité implicite du S&P 500, construit à partir des prix d'options. C'est un baromètre direct de la peur du marché, basé sur la notion de vol. implicite.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+- **Call** = droit d'acheter à $K$ ; **Put** = droit de vendre à $K$ ; l'acheteur paie la prime, son risque est limité.
+- **Short call** = seule position à perte illimitée.
+- **Volatilité** ↑ → valeur call ↑ et put ↑ (les deux !).
+- **Bornes** : $S_0 - Ke^{-rT} \leq c \leq S_0$ et $Ke^{-rT} - S_0 \leq p \leq K$.
+- **Parité put-call** : $c + Ke^{-rT} = p + S_0$ (non-arbitrage, options européennes).
+- **Arbre binomial** : prix = $e^{-rT}[p\,f_u + (1-p)\,f_d]$ avec $p$ risque-neutre.
+- **$p$ risque-neutre ≠ probabilité réelle** ; $u = e^{\sigma\sqrt{T}}$, $d = e^{-\sigma\sqrt{T}}$.
+- **Black-Scholes** = limite continue de l'arbre ; formule fermée pour vanilles uniquement.
+- **Volatilité implicite** = $\sigma$ que BS doit avoir pour reproduire le prix marché.
+- **Smile** = vol. implicite non constante selon $K$ → preuve des limites de BS (queues épaisses).

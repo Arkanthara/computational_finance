@@ -1,0 +1,988 @@
+---
+title: "Rendements, Valeur Temps de l'Argent & Système Suisse des Trois Piliers"
+subtitle: "Introduction à la Finance Computationnelle — Chapitres 1 & 2 | Université de Genève"
+author: "Notes pédagogiques — A. Dupuis"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "📚 Sommaire"
+    number-sections: true
+    code-fold: true
+    smooth-scroll: true
+execute:
+  echo: true
+  warning: false
+  message: false
+lang: fr
+---
+
+# Mise en contexte : bienvenue dans le monde réel {.unnumbered}
+
+Imaginez la scène. Vous avez 25 ans, vous venez de décrocher un poste à Genève, votre premier salaire tombe et votre responsable RH vous parle de *piliers*, de *LPP*, de *AVS*...
+
+*"Des piliers ?"* vous demandez, encore un peu sonné par le coût d'un café au bord du lac.
+
+Votre RH ne rit pas.
+
+La Suisse a construit un des systèmes de retraite les plus sophistiqués au monde — mais pour comprendre **pourquoi** on cotise, **comment** ces fonds sont gérés et **ce que rapporte** votre épargne au fil du temps, il faut maîtriser deux concepts absolument fondamentaux : **les rendements** et **la valeur temps de l'argent**.
+
+Ce document couvre exactement cela. Il relie l'architecture institutionnelle du système suisse aux outils mathématiques qui permettent de gérer des milliards de francs. À la fin, vous saurez calculer un rendement proprement, annualiser une performance, et expliquer pourquoi un franc aujourd'hui vaut bien plus qu'un franc en 2065.
+
+::: {.callout-note}
+## Périmètre de ce document
+Ce document couvre les deux premiers chapitres thématiques du cours *Introduction to Computational Finance* (Université de Genève, A. Dupuis, v1.1). Il est optimisé pour la révision et la préparation à l'oral.
+:::
+
+---
+
+# Le Système Suisse des Trois Piliers (*The Swiss 3-Pillar System*)
+
+## Pourquoi un système de retraite institutionnel ?
+
+La question semble naïve : *"Pourquoi l'État s'occupe-t-il de ma retraite ?"*
+
+La réponse est dans un chiffre historique : en **1979**, environ **51%** des personnes de plus de 65 ans en Suisse étaient menacées de pauvreté. Une génération entière qui avait travaillé toute sa vie finissait dans la précarité. C'était inacceptable.
+
+Aujourd'hui, grâce au système des trois piliers, ce taux est tombé à **15–20%**. C'est encore trop, mais c'est une amélioration spectaculaire. À titre de comparaison, la proportion de personnes menacées de pauvreté dans la **population active** n'est que de **4,3%** — ce qui révèle à quel point le passage à la retraite constitue un saut dans le vide financier sans mécanismes de protection.
+
+::: {.callout-important}
+## Le paradoxe de la retraite
+On peut travailler toute sa vie et se retrouver plus pauvre le jour où l'on cesse de travailler. C'est précisément pour briser ce paradoxe que le système des trois piliers existe. Il fonctionne comme un **portefeuille diversifié** de revenus à la retraite — première introduction informelle à la diversification en finance.
+:::
+
+## Les trois piliers : architecture d'ensemble
+
+```{mermaid}
+flowchart TB
+    Root["🇨🇭 Système Suisse des Trois Piliers\nObjectif : protection financière à la retraite"]
+
+    P1["1ER PILIER\nPrévoyance étatique\nAVS · IAI · PC\nFinancement par répartition"]
+    P2["2E PILIER\nPrévoyance professionnelle\nLPP · LAA\nFinancement par capitalisation"]
+    P3["3E PILIER\nPrévoyance privée\n3a – Liée / 3b – Libre\nEpargne volontaire"]
+
+    O1["Couverture du\nminimum vital"]
+    O2["Maintien du\nniveau de vie habituel"]
+    O3["Couverture des\nbesoins supplémentaires"]
+
+    Root --> P1
+    Root --> P2
+    Root --> P3
+    P1 --> O1
+    P2 --> O2
+    P3 --> O3
+```
+
+| Pilier | Nom | Loi de référence | Objectif | Mode de financement |
+|--------|-----|-----------------|----------|---------------------|
+| **1er** | Prévoyance étatique | AVS, IAI, PC | Minimum vital | Répartition (*pay-as-you-go*) |
+| **2e** | Prévoyance professionnelle | LPP, LAA | Maintien du niveau de vie | Capitalisation individuelle |
+| **3e** | Prévoyance privée | — | Besoins supplémentaires | Épargne volontaire |
+
+### Le 1er pilier : l'AVS
+
+L'**Assurance Vieillesse et Survivants** (*AVS*) est la couverture étatique universelle. Chaque salarié cotise un pourcentage fixe de son salaire. Le mécanisme est dit **par répartition** (*pay-as-you-go*) : les cotisations des actifs d'aujourd'hui financent les retraites d'aujourd'hui. Solidaire, mais structurellement fragile face au vieillissement démographique.
+
+L'**Assurance Invalidité** (*IAI*) et les **Prestations Complémentaires** (*PC*) complètent ce pilier pour couvrir les situations d'incapacité et les lacunes de revenus.
+
+### Le 2e pilier : la LPP — là où la finance entre en jeu
+
+La **Loi sur la Prévoyance Professionnelle** (*LPP*) est obligatoire pour tous les salariés au-delà d'un seuil de revenu. Le mécanisme est ici fondamentalement différent : chaque salarié accumule un capital sur un compte individuel au sein d'une **caisse de pension** (*pension fund*).
+
+::: {.callout-tip}
+## Pourquoi le 2e pilier est le cœur de ce cours
+Les gestionnaires de caisses de pension (2e pilier) gèrent des centaines de milliards de francs. Pour accomplir leur mission, ils doivent :
+
+- Calculer des **rendements** (*returns*) sur leurs investissements
+- Projeter la **valeur future** (*future value*) des capitaux grâce à la valeur temps de l'argent
+- Construire des **portefeuilles** diversifiés et mesurer leur performance
+- Respecter des contraintes réglementaires strictes sur le risque
+
+Toute la finance quantitative que nous allons étudier est, en un sens, la boîte à outils d'un gestionnaire de caisse de pension suisse.
+:::
+
+### Le 3e pilier : votre épargne personnelle
+
+Le **3e pilier** est volontaire et se décline en deux formes :
+
+- **3a — Prévoyance liée** : déductible fiscalement, mais les fonds sont bloqués jusqu'à la retraite (ou quelques exceptions prévues par la loi)
+- **3b — Prévoyance libre** : totalement flexible, sans avantage fiscal spécifique
+
+C'est ici que vous, en tant qu'individu, devez prendre des décisions d'investissement. Comprendre les rendements et la valeur temps de l'argent devient alors une nécessité pratique, pas une abstraction académique.
+
+---
+
+# Rendements (*Returns*) — Mesurer la Performance
+
+## Pourquoi mesurer les rendements en pourcentage ?
+
+Un **rendement** (*return* ou *yield*) mesure le profit ou la perte d'un investissement, généralement exprimé en pourcentage.
+
+Dire *"j'ai gagné 100 CHF"* est peu informatif : est-ce sur un investissement de 100 CHF ou de 1 000 000 CHF ? Exprimer la performance en pourcentage permet de **comparer des investissements de tailles différentes**.
+
+**Notation de base :** Soit $P(t)$ une série temporelle (*time series*) de prix, avec $t$ désignant des pas de temps équidistants (journaliers, hebdomadaires, mensuels...).
+
+**Exemple :** $P(t) = \{100,\ 100.4,\ 102,\ 101.3,\ 102.8,\ \ldots\}$
+
+---
+
+## Rendements Simples (*Simple Returns*)
+
+### Rendement sur une seule période
+
+Le **rendement simple** (*simple return*) entre $t-1$ et $t$ est :
+
+$$
+R_1(t) = \frac{P(t) - P(t-1)}{P(t-1)} = \frac{P(t)}{P(t-1)} - 1
+$$
+
+ce qui est équivalent à :
+
+$$
+1 + R_1(t) = \frac{P(t)}{P(t-1)}
+$$
+
+**Exemples numériques :**
+
+| $P(t-1)$ | $P(t)$ | $R_1(t)$ | Interprétation |
+|-----------|---------|----------|----------------|
+| 50 | 60 | $60/50 - 1 = +20\%$ | Hausse |
+| 60 | 50 | $50/60 - 1 = -16.7\%$ | Baisse |
+
+Remarquez immédiatement une asymétrie : revenir de 60 à 50 ne coûte pas 20% mais seulement 16.7%.
+
+::: {.callout-warning}
+## L'asymétrie : un piège fondamental
+Pour une même variation absolue de prix, le rendement en hausse est différent (en valeur absolue) du rendement en baisse. Cela vient du fait que la **base de calcul change** : on divise par 50 à la montée, par 60 à la descente.
+
+Conséquence pratique : après +20% puis -20%, vous n'êtes **pas** revenu à votre point de départ ! $(1.20)(0.80) - 1 = -4\%$.
+:::
+
+```{python}
+#| label: fig-asymmetrie
+#| fig-cap: "Asymétrie des rendements simples : une hausse et une baisse du même montant absolu donnent des pourcentages différents"
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+fig.suptitle("Asymétrie des Rendements Simples", fontsize=14, fontweight='bold')
+
+# ---- Graphe gauche : barres asymétriques ----
+ax1 = axes[0]
+categories = ['Hausse\n50 → 60', 'Baisse\n60 → 50']
+vals = [20.0, -16.67]
+colors = ['#2ecc71', '#e74c3c']
+bars = ax1.bar(categories, vals, color=colors, width=0.45,
+               edgecolor='black', linewidth=1.0)
+ax1.axhline(y=0, color='black', linewidth=1.2)
+ax1.set_ylabel('Rendement (%)', fontsize=12)
+ax1.set_title('Rendements asymétriques', fontsize=12)
+for bar, val in zip(bars, vals):
+    ypos = val + 0.8 if val > 0 else val - 1.8
+    ax1.text(bar.get_x() + bar.get_width() / 2., ypos,
+             f'{val:.1f}%', ha='center', fontweight='bold', fontsize=14)
+ax1.set_ylim(-25, 30)
+ax1.grid(True, alpha=0.3, axis='y')
+ax1.set_facecolor('#fafafa')
+
+# ---- Graphe droit : trajectoire de prix ----
+ax2 = axes[1]
+t_path = [0, 1, 2]
+p_path = [50, 60, 50]
+ax2.plot(t_path, p_path, 'bo-', linewidth=2.5, markersize=14, zorder=5)
+ax2.axhline(y=50, color='gray', linestyle='--', alpha=0.5, label='Prix initial = 50')
+for i, (tv, pv) in enumerate(zip(t_path, p_path)):
+    ax2.annotate(f'P = {pv}', (tv, pv),
+                 textcoords="offset points", xytext=(0, 14),
+                 ha='center', fontweight='bold', fontsize=12)
+    if i > 0:
+        rv = (p_path[i] - p_path[i-1]) / p_path[i-1] * 100
+        mid_t = i - 0.5
+        mid_p = (p_path[i-1] + p_path[i]) / 2
+        col = '#2ecc71' if rv > 0 else '#e74c3c'
+        ax2.text(mid_t, mid_p - 4, f'R = {rv:.1f}%',
+                 ha='center', color=col, fontsize=12, fontweight='bold')
+ax2.set_xticks(t_path)
+ax2.set_xticklabels(['t = 0', 't = 1', 't = 2'], fontsize=11)
+ax2.set_ylabel('Prix (CHF)', fontsize=12)
+ax2.set_title('+20% puis −16.7% → retour au prix initial', fontsize=12)
+ax2.legend(fontsize=10)
+ax2.set_ylim(38, 78)
+ax2.grid(True, alpha=0.3)
+ax2.set_facecolor('#fafafa')
+
+plt.tight_layout()
+plt.show()
+```
+
+La figure illustre l'asymétrie : deux rendements de même amplitude absolue mais de signe opposé se compensent exactement en prix, **pas** en pourcentage.
+
+### Rendements sur plusieurs périodes — la règle de composition
+
+Pour plusieurs périodes, les rendements simples **se multiplient**, ils ne s'additionnent pas :
+
+$$
+1 + R_2(t) = \frac{P(t)}{P(t-2)} = \frac{P(t)}{P(t-1)} \cdot \frac{P(t-1)}{P(t-2)} = (1 + R_1(t))(1 + R_1(t-1))
+$$
+
+La généralisation à $n$ périodes est :
+
+$$
+\boxed{1 + R_n(t) = \prod_{i=0}^{n-1} \bigl(1 + R_1(t-i)\bigr)}
+$$
+
+**Exemple numérique complet :**
+
+| Temps | Prix | $R_1(t)$ |
+|-------|------|----------|
+| 1 | 10 | — |
+| 2 | 12 | $(12-10)/10 = +20\%$ |
+| 3 | 14 | $(14-12)/12 = +16.7\%$ |
+| 4 | 16 | $(16-14)/14 = +14.3\%$ |
+
+- Somme naïve : $20\% + 16.7\% + 14.3\% = 51\%$ ❌
+- Composition correcte : $(1.20)(1.167)(1.143) - 1 = 60\%$ ✓
+- Vérification directe : $R_4(4) = (16 - 10)/10 = 60\%$ ✓
+
+::: {.callout-important}
+## Règle d'or — à ne jamais oublier
+On n'additionne **jamais** des rendements simples sur plusieurs périodes. On compose les facteurs $(1 + R_i)$. La somme des rendements $50\% + 16.7\% + 14.3\% = 51\%$ est toujours inférieure au résultat correct $60\%$.
+:::
+
+---
+
+## Rendements de Portefeuille (*Portfolio Returns*)
+
+Un **portefeuille** (*portfolio*) est une collection de $n$ actifs avec des rendements $R_i$. Chaque actif $i$ a une **allocation** $\alpha_i$ (pondération) avec $\sum_{i=1}^n \alpha_i = 1$.
+
+Le rendement du portefeuille est la **moyenne pondérée** des rendements :
+
+$$
+R_p = \sum_{i=1}^n \alpha_i R_i
+$$
+
+**Vérification de cohérence :**
+
+$$
+\sum_{i=1}^n \alpha_i (1 + R_i) = \underbrace{\sum_{i=1}^n \alpha_i}_{=1} + \sum_{i=1}^n \alpha_i R_i = 1 + R_p
+$$
+
+La valeur du portefeuille évolue bien d'un facteur $(1 + R_p)$.
+
+::: {.callout-tip collapse="true"}
+## Exemple numérique portefeuille
+Portefeuille avec deux actifs :
+
+- Action UBS : $\alpha_1 = 60\%$, $R_1 = 10\%$
+- Obligation CHF : $\alpha_2 = 40\%$, $R_2 = 2\%$
+
+$$R_p = 0.60 \times 10\% + 0.40 \times 2\% = 6.8\%$$
+
+Cette formule simple est la base de toute l'allocation d'actifs (*asset allocation*). Sa généralisation à $n$ actifs et en termes matriciels est au cœur de la théorie moderne du portefeuille de Markowitz.
+:::
+
+---
+
+## Annualisation (*Annualisation*)
+
+L'annualisation permet de **comparer des performances sur des horizons différents** en les convertissant en base annuelle. Elle suit la même logique de composition :
+
+$$
+(1 + R_a) = (1 + R_m)^{12} \qquad \Rightarrow \qquad R_a = (1 + R_m)^{12} - 1
+$$
+
+$$
+R_a = (1 + R_d)^{256} - 1
+$$
+
+où 256 est le nombre conventionnel de jours ouvrés par an (d'autres conventions existent : 250, 252, 300...).
+
+::: {.callout-warning}
+## Piège : annualiser par multiplication
+On **ne multiplie pas** par 12 un rendement mensuel pour obtenir le rendement annuel !
+
+Exemple : $R_m = 1\%$
+
+- Méthode incorrecte : $12 \times 1\% = 12\%$ ❌
+- Méthode correcte : $(1.01)^{12} - 1 = 12.68\%$ ✓
+
+L'écart est faible sur de petits rendements, mais devient significatif pour des rendements élevés.
+:::
+
+```{python}
+#| label: fig-annualisation
+#| fig-cap: "Annualisation correcte par composition vs addition naive — l'écart se creuse avec la performance mensuelle"
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+rm_range = np.arange(0, 0.061, 0.001)  # 0% à 6% mensuel
+
+ra_correct = (1 + rm_range) ** 12 - 1
+ra_wrong   = 12 * rm_range
+
+fig, ax = plt.subplots(figsize=(10, 5))
+
+ax.plot(rm_range * 100, ra_correct * 100, 'b-',
+        linewidth=2.5, label=r'Correcte : $(1+R_m)^{12}-1$')
+ax.plot(rm_range * 100, ra_wrong * 100, 'r--',
+        linewidth=2.5, label=r'Incorrecte : $12 \times R_m$')
+ax.fill_between(rm_range * 100, ra_wrong * 100, ra_correct * 100,
+                alpha=0.12, color='red', label='Erreur de sous-estimation')
+
+# Annotations pour 1%, 2%, 4%, 6%
+for rm_mark in [0.01, 0.02, 0.04, 0.06]:
+    rc = (1 + rm_mark) ** 12 - 1
+    rw = 12 * rm_mark
+    ax.annotate(f'$R_m$={rm_mark*100:.0f}%\n→ {rc*100:.1f}% ✓\nvs {rw*100:.0f}% ✗',
+                xy=(rm_mark * 100, rc * 100),
+                xytext=(rm_mark * 100 + 0.25, rc * 100 - 6),
+                fontsize=8.5, ha='left',
+                arrowprops=dict(arrowstyle='->', color='navy', lw=1.3),
+                bbox=dict(boxstyle='round,pad=0.3',
+                          facecolor='lightyellow', edgecolor='navy', alpha=0.85))
+
+ax.set_xlabel('Rendement mensuel $R_m$ (%)', fontsize=12)
+ax.set_ylabel('Rendement annuel $R_a$ (%)', fontsize=12)
+ax.set_title('Annualisation : composition vs multiplication naïve', fontsize=13, fontweight='bold')
+ax.legend(fontsize=11)
+ax.grid(True, alpha=0.3)
+ax.set_facecolor('#fafafa')
+plt.tight_layout()
+plt.show()
+```
+
+La zone rouge représente l'erreur commise en additionnant. Sur des rendements mensuels de 4%, l'écart entre la méthode correcte et l'addition naïve dépasse déjà 6 points de base annuels.
+
+---
+
+## Valeur Temps de l'Argent (*Time Value of Money*)
+
+### L'intuition fondamentale
+
+**Un franc aujourd'hui vaut plus qu'un franc demain.** Pas parce que la monnaie se dégrade (quoique...), mais parce qu'un franc disponible maintenant peut être investi et générer un rendement.
+
+Ce principe — la **valeur temps de l'argent** (*time value of money*) — est le fondement absolu de toute la finance.
+
+### Valeur future (*Future Value*) avec capitalisation discrète
+
+Soit $PV$ la **valeur présente** (*present value*), $R$ le taux par période, et $n$ le nombre de périodes :
+
+$$
+FV_n^{(1)} = PV \cdot (1 + R)^n
+$$
+
+Si le paiement se fait $m$ fois par période :
+
+$$
+FV_n^{(m)} = PV \cdot \left(1 + \frac{R}{m}\right)^{m \cdot n}
+$$
+
+### Capitalisation continue (*Continuous Compounding*)
+
+Quand $m \to \infty$, on utilise la limite fondamentale de l'analyse :
+
+$$
+\lim_{m \to \infty} \left(1 + \frac{R}{m}\right)^{m} = e^R
+$$
+
+d'où :
+
+$$
+\boxed{FV_n^{(\infty)} = PV \cdot e^{Rn}}
+$$
+
+**Tableau numérique illustratif ($PV = 1\,000$ CHF, $R = 10\%$, $n = 1$ an) :**
+
+| Fréquence | Formule | Valeur Future (CHF) |
+|-----------|---------|---------------------|
+| Annuelle ($m = 1$) | $1000 \cdot (1.1)^1$ | **1100.0** |
+| Trimestrielle ($m = 4$) | $1000 \cdot (1.025)^4$ | **1103.8** |
+| Mensuelle ($m = 12$) | $1000 \cdot (1.00833)^{12}$ | **1104.7** |
+| Hebdomadaire ($m = 52$) | $1000 \cdot (1.001923)^{52}$ | **1105.1** |
+| Quotidienne ($m = 365$) | $1000 \cdot (1.000274)^{365}$ | **1105.2** |
+| Continue ($m \to \infty$) | $1000 \cdot e^{0.1}$ | **1105.2** |
+
+```{python}
+#| label: fig-tvm
+#| fig-cap: "Convergence de la valeur future vers la capitalisation continue en fonction de la fréquence m (PV=1000, R=10%, n=1 an)"
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+PV, R, n = 1000, 0.10, 1
+
+m_cont  = np.logspace(0, 6, 1200)
+fv_cont = PV * (1 + R / m_cont) ** (m_cont * n)
+fv_inf  = PV * np.exp(R * n)
+
+m_pts   = np.array([1, 4, 12, 52, 365, 8760])
+fv_pts  = PV * (1 + R / m_pts) ** (m_pts * n)
+labels  = ['Annuelle\nm=1', 'Trim.\nm=4', 'Mensuelle\nm=12',
+           'Hebdo\nm=52', 'Quot.\nm=365', 'Horaire\nm=8760']
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5.5))
+fig.suptitle("Valeur Temps de l'Argent — Capitalisation et Convergence",
+             fontsize=14, fontweight='bold')
+
+# ---- Gauche : courbe de convergence ----
+ax1 = axes[0]
+ax1.semilogx(m_cont, fv_cont, 'b-', linewidth=2.5, label='Capitalisation discrète')
+ax1.axhline(y=fv_inf, color='#e74c3c', linestyle='--', linewidth=2.5,
+            label=f'Continue $PV \\cdot e^{{Rn}}$ = {fv_inf:.1f} CHF')
+ax1.scatter(m_pts, fv_pts, s=70, color='navy', zorder=6)
+for mp, fp, lb in zip(m_pts, fv_pts, labels):
+    ax1.annotate(lb, (mp, fp), textcoords="offset points",
+                 xytext=(0, 10), ha='center', fontsize=8, color='navy')
+ax1.set_xlabel('Fréquence de capitalisation $m$ (échelle log)', fontsize=12)
+ax1.set_ylabel('Valeur Future (CHF)', fontsize=12)
+ax1.set_title('Convergence vers la capitalisation continue', fontsize=12)
+ax1.set_ylim(1099.5, 1106)
+ax1.legend(fontsize=11)
+ax1.grid(True, alpha=0.3)
+ax1.set_facecolor('#fafafa')
+
+# ---- Droite : barres par fréquence ----
+ax2 = axes[1]
+palette = ['#3498db', '#2980b9', '#1abc9c', '#16a085', '#27ae60', '#e74c3c']
+bars2 = ax2.bar(range(len(m_pts)), fv_pts, color=palette,
+                edgecolor='black', linewidth=0.8, zorder=3)
+ax2.axhline(y=fv_inf, color='#e74c3c', linestyle='--', linewidth=2,
+            label=f'Continue = {fv_inf:.1f} CHF', zorder=2)
+ax2.set_xticks(range(len(m_pts)))
+ax2.set_xticklabels(labels, fontsize=9)
+ax2.set_ylabel('Valeur Future (CHF)', fontsize=12)
+ax2.set_title('FV selon la fréquence de capitalisation\n(PV=1000, R=10%, n=1 an)', fontsize=12)
+for bar, val in zip(bars2, fv_pts):
+    ax2.text(bar.get_x() + bar.get_width() / 2., val + 0.05,
+             f'{val:.1f}', ha='center', va='bottom', fontsize=9, fontweight='bold')
+ax2.set_ylim(1099, 1107)
+ax2.legend(fontsize=11)
+ax2.grid(True, alpha=0.3, axis='y')
+ax2.set_facecolor('#fafafa')
+
+plt.tight_layout()
+plt.show()
+```
+
+La figure montre que la valeur future converge rapidement. La différence entre capitalisation annuelle (1100 CHF) et continue (1105.2 CHF) n'est que de 5.2 CHF sur 1000 CHF investis — mais sur des montants de plusieurs milliards (comme ceux des caisses de pension), cela représente des dizaines de millions.
+
+### Relation entre taux discret et taux continu
+
+En égalisant les deux formules :
+
+$$
+PV \cdot (1 + R)^n = FV = PV \cdot e^{rn}
+$$
+
+On obtient la relation fondamentale :
+
+$$
+\boxed{r = \ln(1 + R) \qquad \Longrightarrow \qquad r < R}
+$$
+
+**Exemple :** $R = 10\%$ $\Rightarrow$ $r = \ln(1.10) = 9.53\%$, et $1000 \cdot e^{0.0953} = 1100$ ✓
+
+::: {.callout-note}
+## Pourquoi $r < R$ ?
+La capitalisation continue est "plus efficace" par unité de taux : elle capitalise en permanence, donc le taux $r$ peut être plus faible que $R$ pour produire le même résultat final. C'est l'effet de la composition permanente.
+:::
+
+::: {.callout-tip collapse="true"}
+## Capitalisation continue : pratique en théorie, irréaliste en pratique
+Aucune banque ne capitalise réellement en continu. Mais la capitalisation continue est extrêmement pratique pour les modèles mathématiques car elle remplace les fractions et les puissances par des exponentielles et des logarithmes — bien plus agréables à manipuler en calcul différentiel. C'est pour cette raison qu'elle est universellement utilisée dans les modèles de pricing (Black-Scholes, etc.).
+:::
+
+---
+
+## Rendements Continus (*Continuous Returns* / *Log-Returns*)
+
+### Définition
+
+Le **rendement continu** (*log-return*) est défini comme :
+
+$$
+r(t) = \ln(1 + R(t)) = \ln\!\left(\frac{P_t}{P_{t-1}}\right) = \ln P_t - \ln P_{t-1}
+$$
+
+C'est simplement une **différence de logarithmes** de prix.
+
+### Propriété 1 : additivité temporelle
+
+Pour $n$ périodes, les log-returns sont **additifs** — contrairement aux rendements simples qui se multiplient :
+
+$$
+r_2(t) = \ln\!\left(\frac{P_t}{P_{t-2}}\right) = \ln\!\left(\frac{P_t}{P_{t-1}}\right) + \ln\!\left(\frac{P_{t-1}}{P_{t-2}}\right) = r_1(t) + r_1(t-1)
+$$
+
+Généralisation :
+
+$$
+\boxed{r_n(t) = \sum_{i=0}^{n-1} r_1(t-i)}
+$$
+
+### Propriété 2 : symétrie
+
+$$
+r(50 \to 60) = \ln(60/50) = +18.23\% \qquad r(60 \to 50) = \ln(50/60) = -18.23\%
+$$
+
+Une hausse et une baisse du même facteur multiplicatif donnent des log-returns de même amplitude et de signe opposé. C'est la **symétrie** (*symmetry*) que les rendements simples n'ont pas.
+
+### Rendements continus de portefeuille : attention !
+
+$$
+r_p = \ln(1 + R_p) = \ln\!\left(1 + \sum_{i=1}^n \alpha_i R_i\right) \neq \sum_{i=1}^n \alpha_i r_i
+$$
+
+::: {.callout-warning}
+## Piège majeur — à connaître par cœur
+Les log-returns sont **additifs dans le temps** (multi-périodes, un seul actif) mais **pas dans l'espace** (multi-actifs, portefeuille).
+
+Conséquence pratique :
+
+- Pour analyser une **série temporelle** d'un actif → log-returns (modèles GARCH, etc.)
+- Pour calculer le **rendement d'un portefeuille** à une date → rendements simples pondérés
+:::
+
+```{python}
+#| label: fig-logreturn
+#| fig-cap: "Rendements simples vs log-returns : asymétrie, symétrie, et relation r = ln(1+R)"
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+n_sim = 200
+prices = 100 * np.exp(np.cumsum(np.random.normal(0.0004, 0.013, n_sim)))
+
+simple_r = np.diff(prices) / prices[:-1] * 100
+log_r    = np.log(prices[1:] / prices[:-1]) * 100
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig.suptitle("Rendements Simples vs Log-Returns", fontsize=14, fontweight='bold')
+
+# ---- 1 : prix ----
+ax1 = axes[0, 0]
+ax1.plot(prices, color='steelblue', linewidth=1.5)
+ax1.set_title('Série de prix simulée (mouvement brownien géométrique)', fontsize=11)
+ax1.set_xlabel('Temps (jours)')
+ax1.set_ylabel('Prix')
+ax1.grid(True, alpha=0.3)
+ax1.set_facecolor('#fafafa')
+
+# ---- 2 : séries de rendements ----
+ax2 = axes[0, 1]
+ax2.plot(simple_r, color='#2ecc71', alpha=0.8, linewidth=1.0,
+         label='Rendements simples $R(t)$')
+ax2.plot(log_r, color='#e74c3c', alpha=0.8, linewidth=1.0,
+         label='Log-returns $r(t)$')
+ax2.axhline(y=0, color='black', linewidth=0.8)
+ax2.set_title('Comparaison période par période — très proches pour de petits rendements', fontsize=11)
+ax2.set_xlabel('Temps')
+ax2.set_ylabel('Rendement (%)')
+ax2.legend(fontsize=10)
+ax2.grid(True, alpha=0.3)
+ax2.set_facecolor('#fafafa')
+
+# ---- 3 : relation R vs r ----
+ax3 = axes[1, 0]
+ax3.scatter(simple_r, log_r, alpha=0.4, s=20, color='purple')
+lim = max(abs(simple_r).max(), abs(log_r).max())
+xx = np.linspace(-lim, lim, 200)
+ax3.plot(xx, xx, 'k--', linewidth=1.5, label='$r = R$ (hypothétique)')
+ax3.plot(xx, np.log(1 + xx / 100) * 100, 'r-',
+         linewidth=2.2, label='$r = \\ln(1+R)$ — valeur réelle')
+ax3.set_xlabel('Rendement simple $R(t)$ (%)', fontsize=11)
+ax3.set_ylabel('Log-return $r(t)$ (%)', fontsize=11)
+ax3.set_title('Relation $r$ vs $R$ : toujours $r \\leq R$', fontsize=11)
+ax3.legend(fontsize=9)
+ax3.grid(True, alpha=0.3)
+ax3.set_facecolor('#fafafa')
+
+# ---- 4 : symétrie ----
+ax4 = axes[1, 1]
+pct = np.arange(-35, 36, 5)
+log_pct = np.log(1 + pct / 100) * 100
+ax4.plot(pct, pct, 'g-o', linewidth=2, markersize=6,
+         label='Simples $R(t)$ — asymétriques')
+ax4.plot(pct, log_pct, 'r-s', linewidth=2, markersize=6,
+         label='Log-returns $r(t)$ — symétriques')
+ax4.axhline(y=0, color='black', linewidth=0.8)
+ax4.axvline(x=0, color='black', linewidth=0.8)
+# Annotation asymétrie
+ax4.annotate('+20% ≠ |−16.7%|', xy=(20, 20), xytext=(3, 27),
+             fontsize=9, color='#27ae60',
+             arrowprops=dict(arrowstyle='->', color='#27ae60'))
+ax4.annotate('+18.2% = |−18.2%|', xy=(20, np.log(1.2)*100),
+             xytext=(3, 10), fontsize=9, color='#c0392b',
+             arrowprops=dict(arrowstyle='->', color='#c0392b'))
+ax4.set_xlabel('Variation de prix (%)', fontsize=11)
+ax4.set_ylabel('Rendement calculé (%)', fontsize=11)
+ax4.set_title('Symétrie : log-returns oui, simples non', fontsize=11)
+ax4.legend(fontsize=10)
+ax4.grid(True, alpha=0.3)
+ax4.set_facecolor('#fafafa')
+
+plt.tight_layout()
+plt.show()
+```
+
+Le graphe en bas à gauche montre que $r = \ln(1+R) < R$ toujours (la courbe rouge est en dessous de la diagonale pour des rendements positifs). Le graphe en bas à droite illustre la symétrie des log-returns par rapport à l'asymétrie des rendements simples.
+
+---
+
+## Exemples de Comptabilité (*Bookkeeping Examples*)
+
+Ces exemples illustrent comment calculer la performance d'un portefeuille réel en tenant compte de la devise de l'investisseur.
+
+### Vocabulaire de base
+
+- **NAV** (*Net Asset Value*) : valeur nette du portefeuille, somme de tous les actifs convertis dans la devise de référence
+- **P&L** (*Profit and Loss*) : gain ou perte absolue en CHF
+- **FX** (*Foreign Exchange*) : risque de change, lié aux variations du taux de change entre deux devises
+- **Carry** (*carry cost*) : coût de couverture FX, lié au différentiel de taux d'intérêt entre deux devises
+
+### Cas 1 : Investisseur CHF → Actif CHF (UBS)
+
+L'investisseur achète 15 actions UBS (cotées en CHF) avec un capital de 1000 CHF.
+
+| Temps | Prix UBS (CHF) | Position (actions) | Cash (CHF) | NAV (CHF) |
+|-------|---------------|--------------------|------------|-----------|
+| 0 | 50 | 0 | 1000 | **1000** |
+| 1 | 55 | 15 | 175 | **1000** |
+| 2 | 60 | 15 | 175 | **1075** |
+| 3 | 62 | 0 | 1105 | **1105** |
+| 4 | 55 | 0 | 1105 | **1105** |
+
+**P&L = CHF 105 — Rendement NAV = 10.5%**
+
+Décomposition du rendement :
+
+- UBS : $62/55 - 1 = 12.7\%$ ; allocation UBS : $825/1000 = 82.5\%$
+- Cash : $0\%$ ; allocation cash : $175/1000 = 17.5\%$
+- $R_p = 82.5\% \times 12.7\% + 17.5\% \times 0\% = 10.5\%$ ✓
+
+**Un seul risque : risque actions (*equity risk*)**
+
+### Cas 2 : Investisseur CHF → Actif USD (AAPL) — FX statique
+
+L'investisseur achète 10 actions Apple (cotées en USD). USDCHF reste fixe à 0.90.
+
+$$
+NAV = \text{position}_{AAPL} \times P_{AAPL, USD} \times S_{USDCHF} + \text{Cash}_{CHF}
+$$
+
+Ici, USDCHF ne bouge pas → **P&L = CHF 9.0**, entièrement expliqué par la performance d'Apple.
+
+**Deux risques en principe : equity + FX — mais FX neutralisé ici par hypothèse.**
+
+### Cas 3 : Investisseur CHF → Actif USD (AAPL) — FX dynamique, sans couverture
+
+Même setup, mais USDCHF varie (de 0.90 à 0.88 à la fin).
+
+| Temps | Prix AAPL (USD) | USDCHF | NAV (CHF) |
+|-------|-----------------|--------|-----------|
+| 0 | 45 | 0.89 | 1000.0 |
+| 1 | 48 | 0.90 | 1000.0 |
+| 2 | 49 | 0.90 | 1009.0 |
+| 3 | 48 | 0.89 | 995.2 |
+| 4 | 49 | 0.88 | 999.2 |
+
+**P&L = −0.8 CHF** malgré le fait qu'Apple soit revenu à son niveau de t=2 (49 USD).
+
+La **dépréciation du dollar** a annulé la performance boursière positive.
+
+### Cas 4 : Investisseur CHF → Actif USD (AAPL) — FX couvert avec carry (2%)
+
+On prend une **position courte en USD** (*short USD*) pour neutraliser l'exposition FX. Le carry de 2% est le coût de cette couverture (différentiel de taux d'intérêt USD/CHF).
+
+| Temps | Prix AAPL (USD) | USDCHF | Position FX (USD) | Cash (CHF) | NAV (CHF) |
+|-------|-----------------|--------|--------------------|------------|-----------|
+| 0 | 45 | 0.89 | 0 | 1000 | 1000.0 |
+| 1 | 48 | 0.90 | −480 | 568.0 | 1000.0 |
+| 2 | 49 | 0.90 | −490 | 567.2 | 1008.2 |
+| 3 | 48 | 0.89 | −480 | 571.8 | 999.0 |
+| 4 | 49 | 0.88 | 0 | 1007.6 | 1007.6 |
+
+**P&L = +7.6 CHF** — La couverture a coûté 2.4 CHF (le carry) mais le NAV est bien moins volatile.
+
+```{python}
+#| label: fig-bookkeeping
+#| fig-cap: "Évolution du NAV dans les trois scénarios de bookkeeping — impact du risque FX et de la couverture"
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 5.5))
+fig.suptitle("Évolution du NAV — Exemples de Bookkeeping (CHF investor)",
+             fontsize=14, fontweight='bold')
+
+t = [0, 1, 2, 3, 4]
+
+# ---- Cas 1 : CHF actif ----
+nav1 = [1000, 1000, 1075, 1105, 1105]
+ax1  = axes[0]
+ax1.plot(t, nav1, 'o-', color='#2980b9', linewidth=2.5, markersize=11, label='NAV CHF')
+ax1.axhline(y=1000, color='gray', linestyle='--', alpha=0.5, linewidth=1.2, label='NAV initial')
+ax1.fill_between(t, 1000, nav1, alpha=0.12, color='#2980b9')
+ax1.set_title('Cas 1 — CHF → UBS (CHF)\nRisque : actions seulement', fontsize=10.5, fontweight='bold')
+ax1.set_xlabel('Temps')
+ax1.set_ylabel('NAV [CHF]')
+ax1.set_ylim(935, 1160)
+ax1.set_xticks(t)
+for ti, ni in zip(t, nav1):
+    ax1.annotate(f'{ni}', (ti, ni), textcoords="offset points",
+                 xytext=(0, 10), ha='center', fontsize=9)
+ax1.legend(fontsize=9)
+ax1.grid(True, alpha=0.3)
+ax1.text(0.5, 0.08, 'P&L = +105 CHF\nRetour = +10.5%',
+         transform=ax1.transAxes, ha='center', fontsize=10, color='#2980b9',
+         bbox=dict(boxstyle='round', facecolor='#d6eaf8', alpha=0.8))
+ax1.set_facecolor('#fafafa')
+
+# ---- Cas 2 : USD non couvert ----
+nav2 = [1000, 1000, 1009.0, 995.2, 999.2]
+ax2  = axes[1]
+ax2.plot(t, nav2, 'o-', color='#c0392b', linewidth=2.5, markersize=11, label='NAV (non couvert)')
+ax2.axhline(y=1000, color='gray', linestyle='--', alpha=0.5, linewidth=1.2, label='NAV initial')
+for i in range(len(t) - 1):
+    col = '#2ecc71' if nav2[i+1] >= 1000 else '#e74c3c'
+    ax2.fill_between([t[i], t[i+1]], 1000, [nav2[i], nav2[i+1]], alpha=0.18, color=col)
+ax2.set_title('Cas 2 — CHF → AAPL (USD)\nFX dynamique, sans couverture', fontsize=10.5, fontweight='bold')
+ax2.set_xlabel('Temps')
+ax2.set_ylabel('NAV [CHF]')
+ax2.set_ylim(975, 1025)
+ax2.set_xticks(t)
+for ti, ni in zip(t, nav2):
+    ax2.annotate(f'{ni}', (ti, ni), textcoords="offset points",
+                 xytext=(0, 8), ha='center', fontsize=9)
+ax2.legend(fontsize=9)
+ax2.grid(True, alpha=0.3)
+ax2.text(0.5, 0.08, 'P&L = −0.8 CHF\nRisque FX non compensé!',
+         transform=ax2.transAxes, ha='center', fontsize=10, color='#c0392b',
+         bbox=dict(boxstyle='round', facecolor='#fde8e8', alpha=0.8))
+ax2.set_facecolor('#fafafa')
+
+# ---- Cas 3 : USD couvert ----
+nav3h = [1000, 1000, 1008.2, 999.0, 1007.6]
+nav3u = [1000, 1000, 1009.0, 995.2, 999.2]
+ax3   = axes[2]
+ax3.plot(t, nav3h, 'o-', color='#27ae60', linewidth=2.5, markersize=11, label='NAV (couvert)')
+ax3.plot(t, nav3u, 's--', color='#e74c3c', linewidth=1.6, markersize=8,
+         alpha=0.6, label='NAV (non couvert)')
+ax3.axhline(y=1000, color='gray', linestyle='--', alpha=0.5, linewidth=1.2, label='NAV initial')
+ax3.fill_between(t, nav3u, nav3h, alpha=0.15, color='#27ae60')
+ax3.set_title('Cas 3 — CHF → AAPL (USD)\nFX couvert, carry 2%', fontsize=10.5, fontweight='bold')
+ax3.set_xlabel('Temps')
+ax3.set_ylabel('NAV [CHF]')
+ax3.set_ylim(975, 1025)
+ax3.set_xticks(t)
+for ti, ni in zip(t, nav3h):
+    ax3.annotate(f'{ni}', (ti, ni), textcoords="offset points",
+                 xytext=(0, 8), ha='center', fontsize=9, color='#1a5c35')
+ax3.legend(fontsize=9)
+ax3.grid(True, alpha=0.3)
+ax3.text(0.5, 0.08, 'P&L = +7.6 CHF\nCoût hedge = 2.4 CHF',
+         transform=ax3.transAxes, ha='center', fontsize=10, color='#27ae60',
+         bbox=dict(boxstyle='round', facecolor='#d5f5e3', alpha=0.8))
+ax3.set_facecolor('#fafafa')
+
+plt.tight_layout()
+plt.show()
+```
+
+La figure illustre l'impact du risque FX. Dans le cas 2 (rouge), le NAV finit légèrement négatif malgré une performance actions positive — victime de la dépréciation du dollar. Dans le cas 3 (vert), la couverture lisse la trajectoire et protège la performance.
+
+::: {.callout-tip collapse="true"}
+## Le coût de la couverture FX (carry)
+Couvrir le risque FX n'est pas gratuit. Le **carry** est lié à la **parité des taux d'intérêt couverte** (*Covered Interest Rate Parity*) :
+
+$$
+F_{t+T} = S_t \cdot \frac{1 + r_{CHF}}{1 + r_{USD}}
+$$
+
+Si le USD offre des taux plus élevés que le CHF, l'investisseur CHF "paye" la différence pour se couvrir. C'est le prix de l'élimination du risque FX.
+:::
+
+---
+
+## Tableau Comparatif Final
+
+| Caractéristique | Rendements simples $R(t)$ | Log-returns $r(t)$ |
+|-----------------|--------------------------|---------------------|
+| **Définition** | $\dfrac{P_t}{P_{t-1}} - 1$ | $\ln\dfrac{P_t}{P_{t-1}}$ |
+| **Multi-périodes** | Produit : $\prod (1+R_i)$ | Somme : $\sum r_i$ ✓ |
+| **Portefeuille** | Additif : $R_p = \sum \alpha_i R_i$ ✓ | Non additif ✗ |
+| **Symétrie** | ❌ Asymétrique | ✅ Symétrique |
+| **Relation** | — | $r = \ln(1+R) < R$ |
+| **Usage principal** | P&L, reporting, allocation | Modèles éco., GARCH, options |
+| **Avantage clé** | Intuitif, additif en portefeuille | Additif dans le temps |
+| **Inconvénient** | Composition complexe | Non additif pour portefeuilles |
+
+---
+
+## Pièges et Limites
+
+::: {.callout-warning}
+## Piège 1 — Additionner des rendements simples
+Sur plusieurs périodes, **ne jamais sommer** $R_1 + R_2 + \ldots$ Toujours utiliser la composition : $(1+R_n) = \prod (1+R_i)$. La somme sous-estime systématiquement le résultat réel.
+:::
+
+::: {.callout-warning}
+## Piège 2 — Annualiser par multiplication
+$R_a \neq 12 \times R_m$. La formule correcte est $R_a = (1+R_m)^{12} - 1$. L'erreur croît avec le niveau du rendement mensuel.
+:::
+
+::: {.callout-warning}
+## Piège 3 — Confondre taux discret et continu
+$R$ et $r$ ne sont pas identiques. $r = \ln(1+R)$, donc $r < R$ toujours. Remplacer l'un par l'autre dans une formule produit des erreurs de valorisation.
+:::
+
+::: {.callout-caution}
+## Piège 4 — Additivité des log-returns pour les portefeuilles
+Les log-returns sont **additifs dans le temps** pour un actif, mais **pas** pour un portefeuille multi-actifs à une date donnée. Confondre les deux conduit à des erreurs de mesure de performance.
+:::
+
+::: {.callout-caution}
+## Piège 5 — Ignorer le risque FX en bookkeeping
+Un investisseur CHF détenant un actif USD est exposé à **deux risques** : actions et change. Même une bonne performance boursière peut être annulée par l'appréciation du CHF. Le bookkeeping doit toujours convertir les positions dans la devise de référence.
+:::
+
+::: {.callout-important}
+## Limite — La capitalisation continue est un outil théorique
+Elle n'existe pas en pratique (aucune banque ne capitalise en continu). Elle est cependant indispensable dans les modèles de pricing car elle rend les calculs analytiquement tractables. Ne pas confondre commodité mathématique et réalité financière.
+:::
+
+---
+
+## Mini-Synthèse Finale
+
+### Les trois idées centrales à retenir
+
+**Idée 1 — Le système des trois piliers encadre l'épargne à long terme.** Avec une logique de diversification des sources de revenus, il a réduit drastiquement la pauvreté des retraités suisses. Le 2e pilier (LPP) constitue un terrain d'application direct de la finance quantitative : gestion de portefeuilles, mesure de rendements, optimisation risque/rendement.
+
+**Idée 2 — Les rendements mesurent la performance, mais il faut distinguer les familles.** Les rendements simples sont additifs dans l'espace (portefeuille) et se composent dans le temps (produit). Les log-returns sont additifs dans le temps et symétriques, mais pas additifs pour les portefeuilles. Chaque famille a son domaine d'excellence.
+
+**Idée 3 — La valeur temps de l'argent est le fondement de toute la finance.** Un franc investi aujourd'hui à taux $R$ vaut $(1+R)^n$ dans $n$ périodes. À la limite continue, $e^{Rn}$. Ce principe simple sous-tend le pricing des obligations, des options, et toute décision d'investissement à long terme.
+
+### Formulaire récapitulatif
+
+$$
+R_1(t) = \frac{P(t)}{P(t-1)} - 1
+$$
+
+$$
+1 + R_n(t) = \prod_{i=0}^{n-1}\bigl(1 + R_1(t-i)\bigr) \qquad \text{(composition)}
+$$
+
+$$
+R_p = \sum_{i=1}^n \alpha_i R_i \qquad \text{(rendement de portefeuille)}
+$$
+
+$$
+R_a = (1 + R_m)^{12} - 1 = (1 + R_d)^{256} - 1 \qquad \text{(annualisation)}
+$$
+
+$$
+FV = PV \cdot (1+R)^n = PV \cdot e^{rn} \qquad \text{(valeur future)}
+$$
+
+$$
+r(t) = \ln\frac{P_t}{P_{t-1}}, \quad r_n = \sum r_i, \quad r = \ln(1+R) < R
+$$
+
+---
+
+## Plan de Bataille — Oral en 15 Minutes ⚔️
+
+*Ce qu'il faut noter sur votre feuille de préparation. Concis, structuré, efficace.*
+
+---
+
+**SYSTÈME 3 PILIERS**
+
+```
+1er : AVS + IAI + PC → minimum vital → répartition (actifs paient retraités)
+2e  : LPP + LAA → maintien niveau vie → capitalisation individuelle → CAISSES DE PENSION
+3e  : 3a (lié, déductible) / 3b (libre) → épargne perso
+Stat : 51% des >65 ans pauvres en 1979 → 15-20% aujourd'hui
+Vs population active : 4.3% de pauvreté
+```
+
+**RENDEMENT SIMPLE**
+
+```
+R(t) = P(t)/P(t-1) - 1
+Multi-période : PRODUIT, pas somme → (1+Rn) = Π(1+Ri)
+Asymétrie : +20% et -16.7% se compensent EN PRIX mais pas en %
+Portefeuille : Rp = Σ αi·Ri  (additif dans l'espace ✓)
+```
+
+**ANNUALISATION**
+
+```
+Ra = (1+Rm)^12 - 1     [mensuel → annuel]
+Ra = (1+Rd)^256 - 1    [quotidien → annuel, 256 jours ouvrés]
+≠ 12 × Rm  (piège classique !)
+```
+
+**VALEUR TEMPS DE L'ARGENT**
+
+```
+Discret   : FV = PV(1+R)^n
+m-fois/an : FV = PV(1+R/m)^(mn)
+Continu   : FV = PV·e^(Rn)   ← m→∞
+Relation  : r = ln(1+R)  donc r < R   [ex: R=10% → r=9.53%]
+```
+
+**LOG-RETURNS**
+
+```
+r(t) = ln(P_t/P_{t-1}) = ln(P_t) - ln(P_{t-1})
+Temporel : r_n = Σ r_i          (additif ✓)
+Symétrie : r(hausse) = -r(baisse) (symétrique ✓)
+Portefeuille : rp ≠ Σ αi·ri    (NON additif ✗) → PIÈGE
+```
+
+**BOOKKEEPING — 3 CAS**
+
+```
+Cas 1 : CHF → actif CHF (UBS)     → 1 risque : equity
+Cas 2 : CHF → actif USD, FX bouge → 2 risques : equity + FX
+Cas 3 : couverture FX, avec carry  → 1 risque restant, coût = carry
+NAV = pos × prix_USD × USDCHF + Cash
+```
+
+**SCHÉMA RAPIDE À DESSINER**
+
+```
+Rendements : 2 familles
+┌───────────────────┬────────────────────┐
+│   SIMPLES R(t)    │   LOG-RETURNS r(t) │
+│ P(t)/P(t-1) - 1  │ ln(P(t)/P(t-1))    │
+│ Additif portefeuille │ Additif temps    │
+│ Composition ×     │ Composition +      │
+│ Asymétrique ✗     │ Symétrique ✓       │
+└───────────────────┴────────────────────┘
+Lien : r = ln(1+R)  →  r < R  toujours
+```
+
+::: {.callout-tip}
+## Phrase clé pour impressionner à l'oral
+
+*"Les rendements continus sont additifs dans le temps mais pas dans l'espace des actifs : c'est pour cette raison qu'on les utilise en séries temporelles (GARCH, test de normalité) mais qu'on revient aux rendements simples pour construire et mesurer la performance d'un portefeuille multi-actifs."*
+:::
+
+::: {.callout-note collapse="true"}
+## Connexion entre les deux chapitres — à mentionner si demandé
+Le système des trois piliers justifie l'étude des rendements et de la TVM :
+
+- Le **2e pilier** gère des milliards → doit mesurer des rendements, optimiser des portefeuilles, modéliser la valeur future des engagements
+- Le **3e pilier** (épargne individuelle) → l'investisseur particulier doit comprendre ces notions pour piloter son capital sur 30-40 ans
+- La **TVM** est fondamentale pour actualiser les engagements futurs des caisses de pension (combien vaut aujourd'hui une promesse de pension dans 30 ans ?)
+
+**La connexion n'est pas accidentelle : ces deux chapitres sont les fondations institutionnelles et mathématiques du cours.**
+:::

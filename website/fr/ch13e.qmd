@@ -1,0 +1,142 @@
+---
+title: "Contrats à terme : Futures et Forwards — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Un agriculteur sème du blé en mars et tremble à l'idée que le prix s'effondre en septembre.
+Solution : il appelle son banquier et dit « je vends à 200 €/tonne dans 6 mois, quoi qu'il arrive ».
+Contrat signé. Accord irrévocable. Personne ne peut se rétracter.
+C'est un **forward** : engagement ferme des deux côtés, pas de prime, pas de sortie de secours.
+Le **futures**, c'est la même chose mais en version industrielle : standardisé, en bourse, avec un contrôleur (la chambre de compensation) qui surveille tout le monde chaque soir.
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- Fixer aujourd'hui le **prix d'une transaction future** → élimine l'incertitude sur le prix.
+- Contrairement aux options : **obligation** des deux parties (pas de prime, pas de choix à la maturité).
+- Le **prix juste** d'un futures = coût de réplication = prix spot *porté dans le temps* au taux sans risque.
+- La **valeur** d'un contrat déjà ouvert = gain/perte latent actualisé.
+- Le **mécanisme de marges** élimine le risque de contrepartie des futures (quotidien, *marking to market*).
+- La structure par terme peut être en **contango** ou **backwardation**, mais converge toujours vers le spot à maturité.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+|---|---|---|
+| **Forward** | Contrat OTC sur mesure : achat/vente à $T$ au prix $K$, irrévocable. | Agriculteur qui vend sa récolte avant de la récolter. |
+| **Futures** | Même principe mais standardisé, coté en bourse, réglé chaque soir. | Version industrielle du forward, plus liquide. |
+| **Roll-over** | Fermer le contrat avant maturité et en ouvrir un nouveau plus lointain. | Rester exposé à l'or sans jamais recevoir de lingots. |
+| **Marge initiale** | Caution déposée à l'ouverture, fraction de la valeur totale du contrat. | Preuve de solvabilité, pas le prix du contrat. |
+| **Marge de maintenance** | Seuil plancher en dessous duquel un appel de marge est déclenché. | Niveau d'alarme du compte. |
+| **Appel de marge** | Reconstitution du compte jusqu'à la marge *initiale* (pas juste maintenance). | On remet les compteurs à zéro, pas à mi-chemin. |
+| **Prix du futures $F_t$** | Prix de livraison actuel du marché, déterminé par non-arbitrage. | Spot + coût de financement jusqu'à $T$. |
+| **Valeur du futures $f_t$** | Gain/perte latent d'un contrat déjà ouvert par rapport au $K$ initial. | Vaut 0 à l'ouverture, évolue ensuite. |
+| **Contango** | $F_t >$ spot attendu : courbe croissante avec la maturité. | Marché anticipe hausse ou coût de portage élevé. |
+| **Backwardation** | $F_t <$ spot attendu : courbe décroissante avec la maturité. | Forte demande immédiate, *convenience yield* élevé. |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+- Contrat à terme → **obligation** (≠ option = droit)
+- Forward (OTC) → risque de contrepartie élevé
+- Futures (bourse) → chambre de compensation → risque quasi nul
+- Futures → règlement quotidien (*marking to market*) → nécessite système de **marges**
+- Marge initiale → seuil = marge de maintenance → dépassé → **appel de marge** → reconstitution à la marge initiale
+- Prix spot $S_t$ + taux $r$ + maturité $T$ → **prix du futures** $F_t$ par non-arbitrage
+- Revenu discret $I$ ou rendement continu $q$ → **ajustement** de $F_t$
+- $F_t$ actuel vs $K$ initial → **valeur** $f_t$ (actualisée)
+- $F_t$ vs $E[S_T]$ → **contango** ou **backwardation**
+- Approche de $T$ → $F_t \to S_T$ (**convergence universelle**)
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+|---|---|---|
+| $F_t = S_t \cdot e^{r(T-t)}$ | Prix futures sans revenu ni coût | Base : spot + financement |
+| $F_t = (S_t - I) \cdot e^{r(T-t)}$ | Avec revenu discret $I$ (dividende actualisé) | $I$ réduit $F_t$ |
+| $F_t = S_t \cdot e^{(r-q)(T-t)}$ | Avec rendement/coût continu $q$ | $q>0$ revenu → $F_t$ ↓ ; $q<0$ coût stockage → $F_t$ ↑ |
+| $f_t = (F_t - K) \cdot e^{-r(T-t)}$ | Valeur d'un contrat existant | Actualiser le gain/perte attendu |
+| $f_t = S_t - K \cdot e^{-r(T-t)}$ | Valeur simplifiée (sans dividende) | $f_0 = 0$ toujours à l'ouverture |
+| Gain journalier $= \Delta F_t \times$ taille | *Marking to market* quotidien | Base du mécanisme de marges |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **Futures ≠ Options** : pas de prime, pas de choix — obligation ferme des deux côtés.
+- **Appel de marge** → reconstitution jusqu'à la marge **initiale**, pas seulement jusqu'à la maintenance.
+- **$q$ représente un revenu** → $F_t$ diminue ; **$q$ représente un coût de stockage** → $F_t$ augmente. Ne pas confondre le signe.
+- **$f_0 = 0$ à l'ouverture** : aucune prime échangée, $K = F_0$ par construction.
+- **$F_t \ne$ valeur $f_t$** : $F_t$ est le prix du marché aujourd'hui ; $f_t$ est la valeur économique d'un contrat déjà ouvert avec strike $K$ fixé dans le passé.
+- **Convergence à maturité** : $F_T = S_T$ toujours, qu'on soit en contango ou backwardation.
+- **Forward OTC ≠ Futures** : le forward ne se règle qu'à l'échéance ; le futures se règle chaque jour.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Quelle est la différence fondamentale entre un futures et une option ?
+
+**R courte :** Le futures est une **obligation** bilatérale ; l'option est un **droit** (acheteur seulement). Aucune prime dans un futures.
+
+---
+
+**Q :** Pourquoi le prix d'un futures est-il $S_t \cdot e^{r(T-t)}$ et pas simplement $S_t$ ?
+
+**R courte :** Parce que détenir le sous-jacent jusqu'à $T$ coûte le **financement** de la position. Si ce n'était pas le cas, il y aurait une opportunité d'arbitrage.
+
+---
+
+**Q :** Expliquez l'argument d'arbitrage si $F_t > S_t \cdot e^{r(T-t)}$.
+
+**R courte :** Emprunter $S_t$, acheter spot, shorter le futures → à maturité, livrer et rembourser → profit sans risque. La pression de vente ramène $F_t$ à sa valeur d'équilibre.
+
+---
+
+**Q :** À quoi sert le mécanisme de marges ?
+
+**R courte :** Éliminer le risque de contrepartie en matérialisant chaque jour les gains et pertes. Si un investisseur ne peut plus payer, il est liquidé avant que la perte ne devienne irrécupérable.
+
+---
+
+**Q :** Quelle est la valeur d'un futures à l'ouverture ? Pourquoi ?
+
+**R courte :** $f_0 = 0$. À l'ouverture, $K = F_0$, donc le gain latent est nul : aucune des deux parties n'a d'avantage sur l'autre.
+
+---
+
+**Q :** Qu'est-ce que le contango ? Et la backwardation ?
+
+**R courte :** Contango : $F_t >$ spot attendu (courbe croissante). Backwardation : $F_t <$ spot attendu (courbe décroissante). Dans les deux cas, $F_T \to S_T$ à maturité.
+
+---
+
+**Q :** Comment un investisseur peut-il rester exposé à une matière première indéfiniment sans jamais la recevoir physiquement ?
+
+**R courte :** Via le **roll-over** : clôturer le contrat avant maturité et rouvrir un contrat plus lointain sur la même livraison.
+
+---
+
+**Q :** Quel est l'impact d'un dividende sur le prix d'un futures ?
+
+**R courte :** Le dividende actualisé $I$ **réduit** $F_t$ : détenir l'actif en direct procure un avantage (dividende) que le futures ne procure pas → $F_t = (S_t - I) \cdot e^{r(T-t)}$.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+- **Obligation** ferme des deux côtés (≠ option).
+- Futures = Forward mais standardisé, coté, réglé **quotidiennement**.
+- Règlement quotidien → **marges** (initiale, maintenance, appel).
+- Appel de marge → reconstitution à la marge **initiale**.
+- Prix : $F_t = S_t \cdot e^{r(T-t)}$ — ajuster avec $I$ (discret) ou $q$ (continu).
+- Valeur : $f_t = S_t - K \cdot e^{-r(T-t)}$ — vaut **0 à l'ouverture**.
+- Contango : $F_t >$ spot attendu. Backwardation : $F_t <$ spot attendu.
+- **Convergence universelle** : $F_T = S_T$ toujours.

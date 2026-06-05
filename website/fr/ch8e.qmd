@@ -1,0 +1,147 @@
+---
+title: "Modèles basés sur les agents (ABM) — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Imagine une boîte de nuit parisienne le samedi soir. Si **tout le monde** y va : impossible de danser, soirée nulle. Si **personne** n'y va : ambiance de crypte. La stratégie gagnante ? Être dans la **minorité** — y aller quand les autres restent chez eux. Les marchés financiers, c'est pareil : acheter quand tout le monde vend (et vice versa) est souvent la vraie opportunité. Les ABM modélisent exactement cette tension entre comportement individuel et résultat collectif, à partir de règles microscopiques simples — comme simuler chaque voiture pour faire émerger les embouteillages.
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- Les marchés produisent des **faits stylisés** (queues épaisses, volatilité groupée) que les modèles gaussiens classiques échouent à reproduire.
+- L'approche **ascendante (Bottom-Up / ABM)** : des règles locales simples → comportement macroscopique complexe **émergent**.
+- Chaque ABM cible **un ou quelques** faits stylisés — aucun modèle ne reproduit tout.
+- Les trois modèles du cours illustrent trois philosophies : physique-herding, économie-hétérogénéité, et jeu de minorité analytique.
+- Le **Minority Game** est le modèle le plus riche : il admet des résultats analytiques et une transition de phase.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+|---|---|---|
+| **Faits stylisés** (Stylised Facts) | Régularités statistiques universellement observées sur les marchés réels. | Queues épaisses, volatilité groupée — le marché n'est pas gaussien. |
+| **ABM** (Agent Based Model) | On simule chaque agent avec des règles simples et on observe ce qui émerge collectivement. | Des fourmis stupides construisent une fourmilière intelligente. |
+| **Herding** (moutonnier) | Les agents se imitent, formant des clusters qui amplifient les mouvements de prix. | Si tout le monde vend en même temps, le prix s'effondre. |
+| **Fondamentalistes** | Agents qui comparent prix de marché à valeur fondamentale et tradent l'écart. | Stabilisateurs : ils ramènent le prix vers la réalité. |
+| **Chartistes** | Agents qui suivent la tendance (ou la contredisent) sans regarder les fondamentaux. | Déstabilisateurs : ils amplifient les bulles et les krachs. |
+| **Minority Game** | Jeu où gagne celui qui choisit le camp le moins peuplé. | Être dans la minorité = avoir vu juste. |
+| **Paramètre $\alpha = P/N$** | Ratio information disponible / nombre d'agents — gouverne le régime du système. | Trop d'agents pour peu d'info → chaos ; peu d'agents → ordre prévisible. |
+| **Transition de phase** | Au seuil $\alpha_c$, le système bascule de régime symétrique à asymétrique. | Comme l'eau qui gèle : une seule variable, un changement qualitatif net. |
+| **Prédictabilité $H$** | Mesure si certains patterns historiques prédisent systématiquement le futur. | $H \approx 0$ → marché efficace ; $H > 0$ → signal exploitable. |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+- $M$ (longueur historique) → $P = 2^M$ patterns → $\alpha = P/N$
+- $N$ (agents, **impair**) → $\alpha = P/N$
+- $S$ (stratégies/agent) → $\alpha_c(S)$
+- $\alpha$ vs $\alpha_c$ → phase symétrique ou asymétrique
+- Phase symétrique → $H \approx 0$, $\sigma^2/N > 1$ (herding, pire que hasard)
+- Phase asymétrique → $H$ croît, $\sigma^2/N < 1$ (diversification efficace)
+- Zone optimale : **juste avant** $\alpha_c$ (minimum de $\sigma^2/N$)
+- $A(t)$ (attendance) → $r(t) = A(t)/\lambda$ → dynamique de prix $P(t)$
+- Cont-Bouchaud : $a \ll 0.5$ → clusters → queues épaisses
+- Lux-Marchesi : migration fondamentalistes ↔ chartistes → dynamique endogène
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+|---|---|---|
+| $P = 2^M$ | Nombre de patterns d'historique | Croît exponentiellement en $M$ |
+| $\alpha = 2^M / N$ | Paramètre de contrôle info/agents | Gouverne la phase du système |
+| $A(t) = \sum_{i=1}^{N} a_i^{\mu(t), s_i}$ | Présence agrégée (attendance) | $>0$ : majorité acheteurs ; $<0$ : majorité vendeurs |
+| $U_{i,s}(t+1) = U_{i,s}(t) - a_{i,s}^{\mu(t)} \cdot \frac{A(t)}{\beta}$ | Mise à jour du score virtuel | Score ↑ si la stratégie était dans la minorité |
+| $P(s_j) = \dfrac{e^{\lambda U_{s_j}}}{\sum_k e^{\lambda U_{s_k}}}$ | Sélection Boltzmann (Softmax) | $\lambda \to \infty$ : déterministe ; $\lambda$ faible : aléatoire |
+| $H = \dfrac{1}{P}\sum_{\mu} \langle A \vert \mu \rangle^2$ | Prédictabilité | $H=0$ : marché efficace |
+| $r(t) = A(t)/\lambda$, $P(t) = P(t-1)\cdot e^{A(t)/\gamma}$ | Du jeu aux prix | $\gamma$ est un multiple de $N$ (liquidité) |
+| $\alpha_c(S) \approx 0.3374 + \frac{S-2}{2}$ | Seuil de transition (approximation) | $\alpha_{c,S=2} \approx 0.3374$ |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **$N$ doit être impair** : sans cela, on peut avoir égalité — pas de minorité stricte.
+- **$2^M$ ≠ $2^{2^M}$** : $P = 2^M$ est le nombre de patterns ; $2^{2^M}$ est le nombre total de stratégies (explosion combinatoire — on stocke des vecteurs de bits, pas des indices).
+- **Score virtuel ≠ score réel** : toutes les stratégies sont évaluées à chaque tour, même celles non jouées — c'est du *virtual scoring*.
+- **Zone optimale ≠ phase asymétrique** : le minimum de $\sigma^2/N$ est dans la **phase symétrique**, juste avant $\alpha_c$.
+- **$\lambda \to \infty$** ne signifie pas "agents irrationnels" — c'est le comportement le **plus rationnel** (meilleur score toujours choisi).
+- **Cont-Bouchaud** : $a = 0.5$ donne une gaussienne, PAS des queues épaisses. Les queues épaisses apparaissent pour $a \ll 0.5$.
+- **Lux-Marchesi** : ne pas oublier que les agents **changent de type** — c'est le cœur du modèle, pas juste la coexistence de deux types.
+- **$\sigma^2/N = 1$** est le benchmark aléatoire (agents indépendants) — valeur de référence pour juger la performance du système.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Pourquoi modéliser les marchés avec des ABM plutôt qu'avec des équations globales ?
+
+**R courte :** Les ABM permettent de faire **émerger** des propriétés macroscopiques (queues épaisses, herding) à partir de règles microscopiques simples, sans les supposer a priori.
+
+---
+
+**Q :** Dans Cont-Bouchaud, quel mécanisme produit des queues épaisses ?
+
+**R courte :** Les agents se regroupent en **clusters** qui décident collectivement. De grands clusters génèrent des ordres massifs synchronisés → mouvements extrêmes plus fréquents → queues épaisses.
+
+---
+
+**Q :** Quelle est la différence fondamentale entre fondamentalistes et chartistes dans Lux-Marchesi ?
+
+**R courte :** Les fondamentalistes tradent l'écart prix/valeur fondamentale (**stabilisateurs**) ; les chartistes suivent la tendance ou ses voisins (**déstabilisateurs**). La migration entre les deux crée la dynamique.
+
+---
+
+**Q :** Pourquoi $N$ doit-il être impair dans le Minority Game ?
+
+**R courte :** Pour garantir qu'il existe toujours une **minorité stricte** — si $N$ est pair, on peut avoir $N/2$ de chaque côté : match nul, pas de gagnant.
+
+---
+
+**Q :** Qu'est-ce que $\alpha$ et pourquoi est-il important ?
+
+**R courte :** $\alpha = 2^M/N$ mesure le ratio information/agents. Il détermine la **phase** du système — en dessous de $\alpha_c$ : herding et forte volatilité ; au-dessus : diversification et prévisibilité.
+
+---
+
+**Q :** Décrivez les deux phases du Minority Game.
+
+**R courte :** Phase **symétrique** ($\alpha < \alpha_c$) : $H \approx 0$, marché imprévisible, $\sigma^2/N > 1$ — pire que le hasard. Phase **asymétrique** ($\alpha > \alpha_c$) : $H$ non nul, patterns exploitables, $\sigma^2/N < 1$ — meilleur que le hasard.
+
+---
+
+**Q :** Où se trouve la zone optimale et pourquoi ?
+
+**R courte :** **Juste avant** $\alpha_c$ (phase symétrique), là où la variance $\sigma^2/N$ est minimale — équilibre parfait entre richesse de l'information et nombre d'agents.
+
+---
+
+**Q :** Comment le Minority Game se connecte-t-il aux prix réels ?
+
+**R courte :** On pose $r(t) = A(t)/\lambda$ — l'excès d'acheteurs pousse les prix à la hausse. Ce lien permet de générer des séries temporelles comparables aux marchés réels.
+
+---
+
+**Q :** Quel est le rôle du paramètre $\lambda$ dans la sélection de stratégie ?
+
+**R courte :** $\lambda$ contrôle la **rationalité** des agents. $\lambda \to \infty$ : l'agent choisit toujours sa meilleure stratégie (déterministe). $\lambda$ faible : choix quasi aléatoire.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+- **ABM = règles micro simples → comportements macro complexes émergents.**
+- **Cont-Bouchaud** : clusters moutonnier → fat tails si $a \ll 0.5$.
+- **Lux-Marchesi** : fondamentalistes (stabilisateurs) + chartistes (déstabilisateurs) + migration entre types.
+- **Minority Game** : $\alpha = 2^M/N$ est la clé ; $\alpha_c \approx 0.3374$ ($S=2$).
+- Phase **symétrique** ($\alpha < \alpha_c$) : imprévisible, vol. élevée, herding.
+- Phase **asymétrique** ($\alpha > \alpha_c$) : prévisible, vol. faible.
+- Zone optimale : **juste avant $\alpha_c$**, minimum de $\sigma^2/N$.
+- $\sigma^2/N = 1$ = benchmark aléatoire.
+- Le score virtuel $U$ évalue **toutes** les stratégies à chaque tour.
+- Aucun ABM ne reproduit **tous** les faits stylisés — chaque modèle éclaire un aspect.

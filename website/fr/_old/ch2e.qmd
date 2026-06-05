@@ -1,0 +1,1115 @@
+---
+title: "Séries Temporelles et Modèles Autorégressifs"
+subtitle: "La mémoire cachée des marchés — ou comment le passé hante le présent"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Table des matières"
+    number-sections: true
+    code-fold: true
+    code-tools: true
+    fig-align: center
+    fig-width: 10
+    fig-height: 6
+execute:
+  echo: true
+  warning: false
+  message: false
+lang: fr
+---
+
+# Prologue : le trader amnésique {.unnumbered}
+
+Imaginez une salle de marché, quelque part à Genève. Deux traders regardent le même flux EUR/USD. Le premier, appelons-le Maximilien, ne consulte que le dernier prix affiché. Il ne regarde pas le contexte, ne visualise pas la tendance des derniers jours, n'observe pas si la volatilité a changé de régime. Pour lui, chaque observation est une surprise cosmique, déconnectée de toute histoire. Il trade dans un éternel présent.
+
+À côté de lui, Séraphine fait exactement l'inverse : elle ne regarde pas *où* est le prix, mais *comment* il s'est comporté récemment. A-t-il tendance à continuer dans la même direction ? Revient-il systématiquement vers une moyenne ? Y a-t-il un pattern caché derrière ce bruit apparent ? Elle utilise des **modèles autorégressifs** (*autoregressive models*) — des modèles qui définissent la valeur actuelle d'une série comme une fonction de ses propres valeurs passées.
+
+À la fin du trimestre, Maximilien affiche des performances aussi aléatoires que les données qu'il regardait. Séraphine, elle, a au moins une boussole — imparfaite, certes, mais ancrée dans la structure des données.
+
+Ce chapitre vous donne la boussole de Séraphine.
+
+::: {.callout-important}
+## Un avertissement honnête d'entrée de jeu
+
+Les marchés financiers sont en grande partie du bruit. Un modèle autorégressif peut être **excellent pour expliquer** la structure d'une série et simultanément **mauvais pour prédire** son avenir. C'est une distinction fondamentale — et les deux objectifs sont valides. Ne pas les confondre est la première marque de rigueur.
+:::
+
+---
+
+# Introduction aux Séries Temporelles
+
+## Définition formelle
+
+Une **série temporelle univariée** (*univariate time series*) est une séquence d'observations scalaires indexées par le temps :
+
+$$
+X(t_i) \in \mathbb{R}, \quad t_i \in \{t_1, t_2, \ldots, t_n\}
+$$
+
+Un exemple typique issu des marchés :
+
+$$
+X_{t_i} = \{\ldots,\ 1.3012,\ 1.3014,\ 1.3022,\ \ldots\} \quad \text{avec} \quad t_i = \{\ldots,\ \text{Jan 7 2013 00:00},\ \text{Jan 8 2013 00:00},\ \ldots\}
+$$
+
+::: {.callout-note}
+## Définition : le lag (décalage temporel)
+
+Le **lag** (ou **décalage temporel**, *time lag*) $\tau$ désigne l'intervalle entre deux observations. Les **variables décalées** (*lagged variables*) $X_{t-1},\ X_{t-2},\ \ldots,\ X_{t-p}$ sont les valeurs passées de $X_t$ aux lags 1, 2, ..., $p$.
+
+La notion d'ordre est **fondamentale** : contrairement à d'autres problèmes statistiques où l'on peut mélanger les observations sans conséquence, ici $X_{t-1}$ précède $X_t$ et cet ordre est sacré.
+:::
+
+Une première question naturelle : que peut-on dire d'une telle série ? On peut calculer son espérance $\mathbb{E}[X]$, sa variance $\text{Var}(X)$ (aussi appelée **volatilité** *volatility* dans ce contexte). L'objet de ce chapitre est d'aller bien au-delà de ces statistiques résumées en capturant la **structure temporelle** de la dépendance.
+
+## Objectifs de la modélisation
+
+Modéliser une série temporelle peut répondre à des objectifs très différents. La clarté sur l'objectif visé conditionne le choix de l'outil.
+
+| Objectif | Description | Exemple financier |
+|---|---|---|
+| Identification de structure | Détecter tendances, saisonnalités, cycles | Détecter un régime de volatilité |
+| Explication causale | Comprendre comment le passé influence le futur | Persistance des rendements |
+| Modélisation de l'état | Synthétiser le comportement observé | Résumé du VIX |
+| Prédiction | Anticiper les valeurs futures | Prévision du PIB |
+
+::: {.callout-tip}
+## Un bon modèle ≠ un bon prédicteur
+
+Un modèle AR peut très bien décrire la structure d'autocorrélation d'une série (bon pour expliquer) tout en étant incapable de battre la moyenne mobile (mauvais prédicteur hors-échantillon). C'est normal — et pas un défaut. Soyez clair sur ce que vous cherchez.
+:::
+
+## Panorama des modèles disponibles
+
+La famille des modèles de séries temporelles est vaste. Ce chapitre se concentre sur la branche autoregressive classique.
+
+```{mermaid}
+mindmap
+  root((Modèles\nSéries Temporelles))
+    Régressions
+      Linéaire / Ridge / Lasso
+      Polynomiale
+    Modèles autorégressifs
+      AR_p
+      MA_q
+      ARMA_pq
+      ARIMA
+      GARCH
+    Agent-based models
+      Lecture 8
+```
+
+---
+
+# Stationnarité : le Prérequis Fondamental
+
+## Pourquoi les données brutes ne suffisent pas
+
+Avant de modéliser quoi que ce soit, il faut comprendre une règle d'or : on ne peut pas appliquer des modèles autorégressifs à n'importe quelle série brute. Les données financières présentent souvent trois pathologies majeures qui violent les hypothèses des modèles classiques.
+
+**Tendance** (*trend*) : la série monte ou descend systématiquement — un marché haussier sur dix ans, un taux directeur en baisse progressive. Si la moyenne change avec le temps, toute corrélation estimée peut être une illusion.
+
+**Saisonnalité** (*seasonality*) : des patterns cycliques et prévisibles — volumes plus faibles en été, effets de fin d'année, cycles économiques. Sans contrôle de ces effets, on détecte de fausses corrélations.
+
+**Hétéroscédasticité** (*heteroskedasticity*) : une variance non constante. Les marchés financiers en sont l'exemple classique — la volatilité explose en crise (2008, 2020) et se contracte en période calme. Un modèle supposant une variance constante sera systématiquement biaisé.
+
+::: {.callout-warning}
+## Appliquer AR à une série non stationnaire : le cas de la marche aléatoire
+
+Si l'on ajuste un AR(1) sur des prix (non stationnaires), on obtiendra un coefficient $\hat{\varphi}_1 \approx 1$ avec un ajustement en échantillon quasi parfait — et une prévision hors-échantillon catastrophique. Les chiffres sortent, mais ne veulent rien dire. C'est le principal piège des débutants.
+:::
+
+## Définitions formelles
+
+### Stationnarité stricte
+
+Un processus $\{X_t\}$ est **strictement stationnaire** (*strictly stationary*) si sa distribution jointe est invariante par translation temporelle :
+
+$$
+F(X_{t_1+\tau},\ \ldots,\ X_{t_n+\tau}) = F(X_{t_1},\ \ldots,\ X_{t_n}) \quad \forall\, \tau,\, n
+$$
+
+où $F$ est la **fonction de distribution cumulative** (*cumulative distribution function*, CDF). Cette condition est très forte et difficile à vérifier en pratique.
+
+### Stationnarité faible (second ordre)
+
+La **stationnarité faible** (*weak stationarity*, aussi appelée *covariance stationarity* ou *second-order stationarity*) n'impose que deux conditions :
+
+**(a) Moyenne constante :**
+
+$$
+\mathbb{E}[X_t] = \mu = \text{constante} \quad \forall\, t
+$$
+
+**(b) Autocovariance ne dépendant que du lag :**
+
+$$
+\text{Cov}(X_t,\ X_{t+\tau}) = \gamma(\tau) \quad \forall\, t
+$$
+
+où $\gamma$ est la **fonction d'autocovariance** (*autocovariance function*). En d'autres termes : la structure de dépendance temporelle est stable, même si les valeurs individuelles varient.
+
+::: {.callout-note collapse="true"}
+## Stricte vs faible : quelle différence en pratique ?
+
+La stationnarité stricte contrôle toute la distribution (moments d'ordre infini), tandis que la faible ne contrôle que les deux premiers moments. Pour une distribution gaussienne, les deux coïncident. En pratique, **on travaille presque toujours avec la stationnarité faible** — elle est testable et suffisante pour les résultats asymptotiques des estimateurs.
+:::
+
+## Le test ADF (Augmented Dickey-Fuller)
+
+Le **test ADF** (*Augmented Dickey-Fuller test*) est le test statistique standard pour la stationnarité. Il teste l'hypothèse nulle de l'existence d'une **racine unitaire** (*unit root*), c'est-à-dire la non-stationnarité.
+
+- **p-valeur < 0.05** → on rejette $H_0$ → la série est stationnaire ✓
+- **p-valeur ≥ 0.05** → on ne peut pas rejeter $H_0$ → série potentiellement non stationnaire ✗
+
+Un test visuel reste complémentaire : si la série dérive visuellement, pas besoin d'attendre le résultat du test.
+
+## Comment rendre une série stationnaire ?
+
+Différentes approches existent et peuvent être combinées :
+
+1. **Calculer les rendements** (*returns*) : $r_t = (X_t - X_{t-1}) / X_{t-1}$ ou $r_t = \ln(X_t / X_{t-1})$
+2. **Différenciation** (*differencing*) : $\Delta X_t = X_t - X_{t-1}$
+3. **Décomposition** : supprimer la tendance et la saisonnalité identifiées
+4. **Log-transformation** : $Y_t = \ln(X_t)$ pour atténuer l'effet d'une variance croissante
+
+::: {.callout-tip}
+## La règle d'or pour les actifs financiers
+
+Dans la quasi-totalité des cas, travailler sur les **rendements** de la série est la bonne approche. Les rendements correspondent à une transformation différence log-normale, produisant une série faiblement stationnaire avec des propriétés bien connues.
+:::
+
+## Illustration : prix vs rendements et test ADF
+
+```{python}
+#| label: fig-stationarity
+#| fig-cap: "Prix bruts (non stationnaires) vs rendements (stationnaires) — trois scénarios simulés avec p-valeurs ADF"
+
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.stattools import adfuller
+
+np.random.seed(42)
+N = 252
+dt = 1 / N
+sigma = 0.15
+dsigma = 0.80
+mu_drift = 0.30
+
+# Série 1 : pur bruit gaussien centré
+r1 = np.random.normal(0, sigma * np.sqrt(dt), N)
+
+# Série 2 : saisonnalité de volatilité (basse → haute → basse)
+idx = np.arange(N)
+r2_low  = np.random.normal(0, sigma * (1 - dsigma) * np.sqrt(dt), N)
+r2_high = np.random.normal(0, sigma * (1 + dsigma) * np.sqrt(dt), N)
+r2 = np.where((idx > N * 0.2) & (idx < N * 0.6), r2_high, r2_low)
+
+# Série 3 : dérive positive (30%)
+r3 = np.random.normal(mu_drift * dt, sigma * np.sqrt(dt), N)
+
+S0 = 100
+p1 = np.cumprod(1 + r1) * S0
+p2 = np.cumprod(1 + r2) * S0
+p3 = np.cumprod(1 + r3) * S0
+
+scenarios = [
+    (p1, r1, 'Sans tendance,\nsans saisonnalité', 'steelblue'),
+    (p2, r2, 'Saisonnalité\nde volatilité (low-high-low)', 'darkorange'),
+    (p3, r3, 'Dérive (30%)', 'forestgreen'),
+]
+
+fig, axes = plt.subplots(2, 3, figsize=(15, 8))
+fig.suptitle('Prix vs Rendements : stationnarité et test ADF\n'
+             '(p-valeur > 0.05 → ❌ Non-stationnaire  |  p-valeur < 0.05 → ✓ Stationnaire)',
+             fontsize=12, fontweight='bold')
+
+for i, (price, ret, label, color) in enumerate(scenarios):
+    pval_p = adfuller(price)[1]
+    pval_r = adfuller(ret)[1]
+
+    sym_p = '❌ Non-stat.' if pval_p > 0.05 else '✓ Stat.'
+    sym_r = '✓ Stat.' if pval_r <= 0.05 else '❌ Non-stat.'
+
+    axes[0, i].plot(price, color=color, linewidth=1.2)
+    axes[0, i].set_title(f'{label}\nADF p = {pval_p:.2f}  {sym_p}', fontsize=9)
+    axes[0, i].set_ylabel('Prix')
+    axes[0, i].set_xlabel('Jours')
+    axes[0, i].grid(True, alpha=0.2)
+
+    axes[1, i].plot(ret, color=color, linewidth=0.8)
+    axes[1, i].axhline(0, color='black', linewidth=0.5, linestyle='--')
+    axes[1, i].set_title(f'Rendements\nADF p = {pval_r:.3f}  {sym_r}', fontsize=9)
+    axes[1, i].set_ylabel('Rendements')
+    axes[1, i].set_xlabel('Jours')
+    axes[1, i].grid(True, alpha=0.2)
+
+plt.tight_layout()
+plt.show()
+```
+
+La figure confirme un résultat fondamental : **les prix bruts sont non stationnaires** dans les trois cas — même en l'absence de tendance ou de saisonnalité évidente (p-valeur ADF > 0.05). En revanche, **les rendements sont systématiquement stationnaires** (p-valeur ≈ 0.00). La transformation est donc indispensable.
+
+## Exemple empirique : EUR/USD
+
+```{python}
+#| label: fig-eurusd-stat
+#| fig-cap: "EUR/USD : de la non-stationnarité des prix à la stationnarité faible des rendements"
+
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+# Lecture du fichier eur_usd.txt si disponible
+try:
+    import pandas as pd
+    data_raw = []
+    with open('eur_usd.txt', 'r') as f:
+        for line in f:
+            parts = line.strip().split()
+            if len(parts) == 3:
+                ts, bid, ask = float(parts[0]), float(parts[1]), float(parts[2])
+                data_raw.append((ts, (bid + ask) / 2.0))
+    df = pd.DataFrame(data_raw, columns=['ts', 'mid'])
+    df['date'] = pd.to_datetime(df['ts'], unit='s')
+    df = df.sort_values('date')
+    daily = df.groupby(df['date'].dt.date)['mid'].last()
+    prices_eu = daily.values[:75]
+    source_label = 'EUR/USD – Données réelles (bid-ask mid)'
+except Exception:
+    # Données synthétiques reproduisant le comportement EUR/USD Jan-Mar 2012
+    np.random.seed(6)
+    prices_eu = np.zeros(75)
+    prices_eu[0] = 1.275
+    for t in range(1, 75):
+        prices_eu[t] = prices_eu[t - 1] * (1 + np.random.normal(0.0008, 0.005))
+    source_label = 'EUR/USD – Données synthétiques (illustratives)'
+
+returns_eu = np.diff(prices_eu) / prices_eu[:-1]
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 7))
+fig.suptitle('EUR/USD : non-stationnarité → stationnarité via les rendements', 
+             fontsize=12, fontweight='bold')
+
+ax1.plot(prices_eu, color='steelblue', linewidth=1.5)
+ax1.set_title(f'{source_label}  →  Non-stationnaire', fontsize=10)
+ax1.set_xlabel('Jours depuis 2012-01-01')
+ax1.set_ylabel('EUR/USD')
+ax1.grid(True, alpha=0.25)
+if len(prices_eu) > 10:
+    ax1.annotate(
+        'Dérive visible\n→ moyenne non constante',
+        xy=(len(prices_eu)-1, prices_eu[-1]),
+        xytext=(len(prices_eu)//2, prices_eu[len(prices_eu)//2]),
+        arrowprops=dict(arrowstyle='->', color='red'),
+        fontsize=9,
+        color='red'
+    )
+
+ax2.plot(returns_eu, color='black', linewidth=0.9)
+ax2.axhline(0, color='red', linewidth=0.8, linestyle='--', alpha=0.6)
+ax2.fill_between(range(len(returns_eu)), returns_eu, 0,
+                 where=(returns_eu > 0), alpha=0.3, color='steelblue')
+ax2.fill_between(range(len(returns_eu)), returns_eu, 0,
+                 where=(returns_eu < 0), alpha=0.3, color='darkorange')
+ax2.set_title('EUR/USD – Rendements journaliers  →  (Faiblement) Stationnaire', fontsize=10)
+ax2.set_xlabel('Jours depuis 2012-01-01')
+ax2.set_ylabel('Rendements journaliers EUR/USD')
+ax2.grid(True, alpha=0.25)
+
+plt.tight_layout()
+plt.show()
+```
+
+La transformation en rendements efface la dérive des prix et centre la série autour de zéro. Les rendements oscillent sans tendance systématique — signe d'une stationnarité faible acceptable pour l'analyse autoregressive.
+
+---
+
+# La Fonction d'Autocorrélation (ACF)
+
+## Définition et interprétation
+
+Rappel : la **corrélation** entre deux variables aléatoires $X$ et $Y$ mesure leur relation linéaire :
+
+$$
+\text{Cor}(X,Y) = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\cdot\text{Var}(Y)}} = \frac{\mathbb{E}[(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])]}{\sqrt{\mathbb{E}[(X-\mathbb{E}[X])^2]\cdot\mathbb{E}[(Y-\mathbb{E}[Y])^2]}}
+$$
+
+**L'autocorrélation** (*autocorrelation*) est la corrélation d'une série avec **elle-même**, décalée d'un lag $\tau$ :
+
+$$
+\text{Cor}(X_t,\ X_{t+\tau}) = \frac{\mathbb{E}[(X_t-\mu_0)(X_{t+\tau}-\mu_\tau)]}{\sigma_0\,\sigma_\tau}
+$$
+
+Pour une série **stationnaire** (où $\mu_0 = \mu_\tau = \mu$ et $\sigma_0 = \sigma_\tau = \sigma$) :
+
+$$
+\boxed{\rho_\tau = \text{ACF}(\tau) = \frac{\mathbb{E}[(X_t-\mu)(X_{t+\tau}-\mu)]}{\sigma^2}}
+$$
+
+La **fonction d'autocorrélation** (*AutoCorrelation Function*, ACF) est donc la courbe $\tau \mapsto \rho_\tau$ — l'outil diagnostique central de l'analyse des séries temporelles.
+
+::: {.callout-note}
+## À quoi sert l'ACF ?
+
+L'ACF permet de :
+
+- Détecter des **structures périodiques cachées** (pics réguliers à certains lags)
+- Identifier un comportement **tendanciel** (autocorrélations positives persistantes)
+- Identifier un comportement **contre-tendanciel** (alternance positive/négative)
+- Choisir l'ordre $p$ d'un modèle AR
+- Diagnostiquer les résidus d'un modèle (ils doivent être un bruit blanc)
+:::
+
+## L'ACF révèle la structure cachée
+
+```{python}
+#| label: fig-acf-structure
+#| fig-cap: "L'ACF révèle une structure sinusoïdale cachée (période = 10) invisible à l'oeil nu dans la série brute"
+
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.stattools import acf
+
+np.random.seed(42)
+N = 120
+t = np.arange(N)
+
+# Bruit blanc pur
+noise = np.random.normal(0, 1, N)
+
+# Signal sinusoïdal caché + bruit
+X_sin = np.random.normal(0, 1, N) + np.sin(2 * np.pi * t / 10)
+
+conf = 1.96 / np.sqrt(N)
+max_lag = 50
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 8))
+fig.suptitle("L'ACF révèle la structure temporelle — bruit blanc vs signal caché", 
+             fontsize=12, fontweight='bold')
+
+# --- Bruit blanc ---
+axes[0, 0].plot(noise, 'o-', markersize=3, color='steelblue', linewidth=0.7)
+axes[0, 0].set_title(r'Bruit blanc pur : $X_t = \varepsilon_t$', fontsize=11)
+axes[0, 0].set_xlabel('Événements')
+axes[0, 0].set_ylabel('$X_t$')
+axes[0, 0].grid(True, alpha=0.2)
+
+acf_noise = acf(noise, nlags=max_lag, fft=True)
+axes[1, 0].bar(np.arange(len(acf_noise)), acf_noise, color='steelblue', width=0.5)
+axes[1, 0].axhline(conf,  linestyle='--', color='crimson', linewidth=1.2, label='IC 95%')
+axes[1, 0].axhline(-conf, linestyle='--', color='crimson', linewidth=1.2)
+axes[1, 0].axhline(0, color='black', linewidth=0.5)
+axes[1, 0].set_title('ACF — Aucune structure significative\n(barres dans la bande de confiance)', fontsize=10)
+axes[1, 0].set_xlabel('Lag τ')
+axes[1, 0].set_ylabel('ACF(τ)')
+axes[1, 0].set_ylim(-0.55, 1.1)
+axes[1, 0].legend(fontsize=9)
+
+# --- Sinusoïde cachée ---
+axes[0, 1].plot(t, X_sin, 'o-', markersize=3, color='darkorange', linewidth=0.7)
+axes[0, 1].set_title(r'Structure cachée : $X_t = \varepsilon_t + \sin(2\pi t/10)$', fontsize=11)
+axes[0, 1].set_xlabel('Événements')
+axes[0, 1].set_ylabel('$X_t$')
+axes[0, 1].grid(True, alpha=0.2)
+
+acf_sin = acf(X_sin, nlags=max_lag, fft=True)
+axes[1, 1].bar(np.arange(len(acf_sin)), acf_sin, color='darkorange', width=0.5)
+axes[1, 1].axhline(conf,  linestyle='--', color='crimson', linewidth=1.2, label='IC 95%')
+axes[1, 1].axhline(-conf, linestyle='--', color='crimson', linewidth=1.2)
+axes[1, 1].axhline(0, color='black', linewidth=0.5)
+
+# Annoter les pics
+for peak_lag in [10, 20, 30, 40, 50]:
+    if peak_lag < len(acf_sin):
+        axes[1, 1].axvline(peak_lag, color='purple', linewidth=0.8, alpha=0.5, linestyle=':')
+
+axes[1, 1].set_title('ACF — Pics réguliers tous les 10 lags\n(période = 10 retrouvée automatiquement !)', fontsize=10)
+axes[1, 1].set_xlabel('Lag τ')
+axes[1, 1].set_ylabel('ACF(τ)')
+axes[1, 1].set_ylim(-0.55, 1.1)
+axes[1, 1].legend(fontsize=9)
+
+plt.tight_layout()
+plt.show()
+```
+
+Le résultat est frappant : la série sinusoïdale est **visuellement indiscernable** du bruit blanc (ligne du haut). Pourtant, l'ACF révèle immédiatement des pics significatifs aux lags 10, 20, 30, 40 — la signature exacte de la période du signal caché. L'ACF transforme un problème visuel impossible en un problème analytique trivial.
+
+## ACF et comportement tendanciel vs contre-tendanciel
+
+```{python}
+#| label: fig-acf-tendance
+#| fig-cap: "L'ACF caractérise le régime dynamique : φ₁ > 0 (tendance) vs φ₁ < 0 (contre-tendance)"
+
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.stattools import acf
+
+np.random.seed(42)
+N = 300
+max_lag = 20
+conf = 1.96 / np.sqrt(N)
+
+phi_pos = 0.90   # tendanciel
+phi_neg = -0.80  # contre-tendanciel
+
+X_pos = np.zeros(N)
+X_neg = np.zeros(N)
+for t in range(1, N):
+    X_pos[t] = phi_pos * X_pos[t - 1] + np.random.normal(0, 1)
+    X_neg[t] = phi_neg * X_neg[t - 1] + np.random.normal(0, 1)
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 8))
+fig.suptitle('ACF et régime dynamique des séries AR(1)', fontsize=12, fontweight='bold')
+
+# Série tendancielle
+axes[0, 0].plot(X_pos, color='steelblue', linewidth=0.9)
+axes[0, 0].set_title(f'Série tendancielle — φ₁ = {phi_pos}  (momentum)', fontsize=11)
+axes[0, 0].set_xlabel('Temps')
+axes[0, 0].set_ylabel('$X_t$')
+axes[0, 0].grid(True, alpha=0.2)
+
+acf_pos = acf(X_pos, nlags=max_lag, fft=True)
+axes[1, 0].bar(np.arange(len(acf_pos)), acf_pos, color='steelblue')
+axes[1, 0].axhline(conf,  linestyle='--', color='crimson', linewidth=1.2, label='IC 95%')
+axes[1, 0].axhline(-conf, linestyle='--', color='crimson', linewidth=1.2)
+axes[1, 0].axhline(0, color='black', linewidth=0.5)
+axes[1, 0].set_title('ACF : décroissance lente et positive\n→ persistance, momentum', fontsize=10)
+axes[1, 0].set_xlabel('Lag τ')
+axes[1, 0].set_ylabel('ACF(τ)')
+axes[1, 0].set_ylim(-1.05, 1.1)
+axes[1, 0].legend(fontsize=9)
+
+# Série contre-tendancielle
+axes[0, 1].plot(X_neg, color='darkorange', linewidth=0.9)
+axes[0, 1].set_title(f'Série contre-tendancielle — φ₁ = {phi_neg}  (mean-reversion)', fontsize=11)
+axes[0, 1].set_xlabel('Temps')
+axes[0, 1].set_ylabel('$X_t$')
+axes[0, 1].grid(True, alpha=0.2)
+
+acf_neg = acf(X_neg, nlags=max_lag, fft=True)
+axes[1, 1].bar(np.arange(len(acf_neg)), acf_neg, color='darkorange')
+axes[1, 1].axhline(conf,  linestyle='--', color='crimson', linewidth=1.2, label='IC 95%')
+axes[1, 1].axhline(-conf, linestyle='--', color='crimson', linewidth=1.2)
+axes[1, 1].axhline(0, color='black', linewidth=0.5)
+axes[1, 1].set_title('ACF : alternance rapide +/−\n→ retour à la moyenne, oscillations', fontsize=10)
+axes[1, 1].set_xlabel('Lag τ')
+axes[1, 1].set_ylabel('ACF(τ)')
+axes[1, 1].set_ylim(-1.05, 1.1)
+axes[1, 1].legend(fontsize=9)
+
+plt.tight_layout()
+plt.show()
+```
+
+Ce graphique synthétise l'essentiel de l'interprétation de l'ACF dans un contexte financier. Une **ACF à décroissance lente positive** (à gauche) trahit un comportement de *momentum* — ce qui monte tend à continuer de monter. Une **ACF alternant rapidement** (à droite) caractérise le *mean-reversion* — les excès sont rapidement corrigés.
+
+---
+
+# Les Modèles Autorégressifs : AR, MA, ARMA
+
+## Définitions formelles
+
+### Modèle AR(p) — Autorégressif d'ordre $p$
+
+$$
+\text{AR}(p) : \quad X_t = c + \sum_{i=1}^{p} \varphi_i\, X_{t-i} + \varepsilon_t
+$$
+
+**Intuition** : la valeur actuelle est une combinaison linéaire pondérée de ses $p$ valeurs passées, plus un bruit. La série se "souvient" de ses $p$ dernières observations.
+
+### Modèle MA(q) — Moyenne Mobile d'ordre $q$
+
+$$
+\text{MA}(q) : \quad X_t = \mu + \varepsilon_t + \theta_1\,\varepsilon_{t-1} + \cdots + \theta_q\,\varepsilon_{t-q}
+$$
+
+**Intuition** : la valeur actuelle dépend des $q$ derniers chocs aléatoires. La "mémoire" porte sur les **innovations passées**, non sur les valeurs passées elles-mêmes.
+
+### Modèle ARMA(p,q) — Combinaison
+
+$$
+\text{ARMA}(p,q) : \quad X_t = c + \varepsilon_t + \sum_{i=1}^{p} \varphi_i\, X_{t-i} + \sum_{j=1}^{q} \theta_j\, \varepsilon_{t-j}
+$$
+
+**Intuition** : double mémoire — sur les valeurs passées (composante AR) et sur les chocs passés (composante MA). Plus général, mais plus complexe à estimer.
+
+::: {.callout-note collapse="true"}
+## Extensions importantes hors du scope de ce chapitre
+
+**ARIMA(p, d, q)** : le "I" (*Integrated*) intègre une différenciation d'ordre $d$ dans le modèle — utile pour éviter la transformation manuelle vers la stationnarité.
+
+**GARCH(p, q)** : modélise non pas $X_t$, mais sa **variance conditionnelle** $\sigma_t^2$. Indispensable pour les rendements financiers où la volatilité elle-même est autocorrélée (*volatility clustering*).
+:::
+
+## Tableau comparatif des modèles
+
+| Modèle | Mémoire sur | Paramètres | ACF caractéristique | Usage typique |
+|---|---|---|---|---|
+| AR(p) | Valeurs passées $X_{t-i}$ | $\varphi_1,\ldots,\varphi_p$ | Décroissance exponentielle | Prix, PIB, taux |
+| MA(q) | Chocs passés $\varepsilon_{t-j}$ | $\theta_1,\ldots,\theta_q$ | **Tronquée** après le lag $q$ | Rendements, mesures |
+| ARMA(p,q) | Valeurs + chocs | $\varphi_i$ et $\theta_j$ | Décroissance après lag $q$ | Macro-économie |
+
+::: {.callout-tip}
+## Identifier MA vs AR grâce à l'ACF et la PACF
+
+L'ACF d'un MA(q) est tronquée après le lag $q$ (elle tombe à zéro brusquement). L'ACF d'un AR(p) décroît exponentiellement. La **PACF** (*Partial ACF*, hors scope de ce chapitre) est l'outil complémentaire : elle est tronquée pour les AR(p) et décroissante pour les MA(q).
+:::
+
+---
+
+# Le Modèle AR(1) : Analyse Complète
+
+## Définition
+
+Avec $p = 1$, le modèle autorégressif se réduit à :
+
+$$
+X_t = c + \varphi_1\, X_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim \mathcal{N}(0, \sigma_\varepsilon^2) \text{ i.i.d.}
+$$
+
+Après normalisation (centrage sur la moyenne, $c \to 0$) :
+
+$$
+X_t = \varphi_1\, X_{t-1} + \varepsilon_t
+$$
+
+## Propriété 1 : la Moyenne
+
+Si le processus est stationnaire, son espérance est constante : $\mathbb{E}[X_t] = \mathbb{E}[X_{t-1}] = \mu$. En prenant l'espérance des deux membres :
+
+$$
+\mu = c + \varphi_1\,\mu \quad \Rightarrow \quad \boxed{\mu = \frac{c}{1 - \varphi_1}}
+$$
+
+Après normalisation : $c = 0 \Rightarrow \mu = 0$.
+
+## Propriété 2 : la Variance
+
+La stationnarité impose $\text{Var}(X_t) = \text{Var}(X_{t-1})$. En développant :
+
+$$
+\text{Var}(X_t) = \text{Var}(\varphi_1 X_{t-1} + \varepsilon_t) = \varphi_1^2\,\text{Var}(X_t) + \sigma_\varepsilon^2
+$$
+
+D'où :
+
+$$
+\boxed{\text{Var}(X_t) = \frac{\sigma_\varepsilon^2}{1 - \varphi_1^2}}
+$$
+
+Cette expression n'est positive et définie que si $\varphi_1^2 < 1$, soit $|\varphi_1| < 1$.
+
+::: {.callout-important}
+## Condition de stationnarité du AR(1)
+
+Le modèle AR(1) est stationnaire **si et seulement si** $|\varphi_1| < 1$.
+
+- $|\varphi_1| = 1$ → **marche aléatoire** (*random walk*) : variance infinie, non-stationnaire
+- $|\varphi_1| > 1$ → processus **explosif** : variance diverge
+- $|\varphi_1| < 1$ → processus **stationnaire** : variance finie $= \sigma_\varepsilon^2 / (1-\varphi_1^2)$
+
+Plus $|\varphi_1|$ est proche de 1, plus la variance stationnaire est grande — et plus le processus "erre lentement".
+:::
+
+## Propriété 3 : l'Autocorrélation
+
+En calculant $\gamma_1 = \text{Cov}(X_t, X_{t+1})$ avec $\mu = 0$ :
+
+$$
+\gamma_1 = \mathbb{E}[X_t \cdot X_{t+1}] = \mathbb{E}[X_t (\varphi_1 X_t + \varepsilon_{t+1})] = \varphi_1\,\mathbb{E}[X_t^2] + \underbrace{\mathbb{E}[X_t\,\varepsilon_{t+1}]}_{=\,0}
+$$
+
+Le terme croisé s'annule car $\varepsilon_{t+1}$ est **indépendant** de $X_t$ (le bruit futur n'est pas corrélé au passé). Donc :
+
+$$
+\gamma_1 = \varphi_1\,\text{Var}(X_t)
+$$
+
+L'autocorrélation au lag 1 est alors :
+
+$$
+\boxed{\rho_1 = \frac{\text{Cov}(X_t, X_{t+1})}{\text{Var}(X_t)} = \varphi_1}
+$$
+
+**Résultat fondamental : le coefficient $\varphi_1$ du modèle AR(1) est exactement l'autocorrélation empirique au lag 1.** Estimer AR(1) revient simplement à calculer une autocorrélation.
+
+Par récurrence, l'autocorrélation au lag $\tau$ quelconque est :
+
+$$
+\rho_\tau = \varphi_1^\tau
+$$
+
+L'ACF d'un AR(1) décroît géométriquement — d'autant plus vite que $|\varphi_1|$ est petit.
+
+## Résumé des propriétés de AR(1)
+
+| Propriété | Formule | Condition |
+|---|---|---|
+| Moyenne | $\mu = c\,/\,(1-\varphi_1)$ | — |
+| Variance | $\sigma^2 = \sigma_\varepsilon^2\,/\,(1-\varphi_1^2)$ | $\|\varphi_1\| < 1$ |
+| Autocorr. lag 1 | $\rho_1 = \varphi_1$ | — |
+| Autocorr. lag $\tau$ | $\rho_\tau = \varphi_1^\tau$ | $\|\varphi_1\| < 1$ |
+| Stationnarité | Ssi $\|\varphi_1\| < 1$ | — |
+| Estimation | $\hat{\varphi}_1 = \hat{\rho}_1$ (ACF empirique lag 1) | OLS / MLE |
+
+## Illustration : comportement AR(1) selon φ₁
+
+```{python}
+#| label: fig-ar1-phi
+#| fig-cap: "Trajectoires AR(1) pour différentes valeurs de φ₁ — impact sur la persistance et la variance"
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(42)
+N = 600
+sigma_eps = 1.0
+
+configs = [
+    (0.98,  'steelblue',   r'$\varphi_1 = 0.98$ — quasi marche aléatoire'),
+    (0.60,  'forestgreen', r'$\varphi_1 = 0.60$ — persistant modéré'),
+    (0.00,  'gray',        r'$\varphi_1 = 0.00$ — bruit blanc'),
+    (-0.70, 'darkorange',  r'$\varphi_1 = -0.70$ — contre-tendanciel'),
+]
+
+fig, axes = plt.subplots(len(configs), 1, figsize=(12, 11), sharex=True)
+fig.suptitle('Comportement dynamique de AR(1) selon φ₁\n'
+             r'Processus : $X_t = \varphi_1 X_{t-1} + \varepsilon_t$,  $\varepsilon_t \sim \mathcal{N}(0,1)$',
+             fontsize=12, fontweight='bold')
+
+for ax, (phi, color, label) in zip(axes, configs):
+    X = np.zeros(N)
+    for t in range(1, N):
+        X[t] = phi * X[t - 1] + np.random.normal(0, sigma_eps)
+    var_th = sigma_eps**2 / (1 - phi**2) if abs(phi) < 1 else float('inf')
+    var_str = f'{var_th:.2f}' if np.isfinite(var_th) else '∞'
+    ax.plot(X, color=color, linewidth=0.9, alpha=0.85)
+    ax.axhline(0, color='black', linewidth=0.5, linestyle='--', alpha=0.5)
+    ax.set_ylabel('$X_t$')
+    ax.set_title(f'{label}   —   Var théorique = $\\sigma^2_\\varepsilon/(1-\\varphi_1^2)$ = {var_str}',
+                 fontsize=10)
+    ax.grid(True, alpha=0.15)
+
+axes[-1].set_xlabel('Temps')
+plt.tight_layout()
+plt.show()
+```
+
+L'effet visuel est immédiat. Avec $\varphi_1 = 0.98$, la série dérive lentement comme un cours de bourse en tendance, avec une variance très élevée. Avec $\varphi_1 = -0.70$, la série oscille rapidement autour de zéro — comportement typique du VIX ou de certaines primes de risque.
+
+## Application : AR(1) sur les rendements EUR/USD et sur des prix d'actions
+
+```{python}
+#| label: fig-ar1-applications
+#| eval: false
+#| fig-cap: "AR(1) sur données réelles : EUR/USD (faible autocorrélation) et actions (ACF comparée)"
+
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.stattools import acf
+from statsmodels.tsa.ar_model import AutoReg
+import os
+
+# ---- EUR/USD ----
+try:
+    data_raw = []
+    with open('eur_usd.txt', 'r') as f:
+        for line in f:
+            parts = line.strip().split()
+            if len(parts) == 3:
+                ts, bid, ask = float(parts[0]), float(parts[1]), float(parts[2])
+                data_raw.append((ts, (bid + ask) / 2.0))
+    import pandas as pd
+    df_eu = pd.DataFrame(data_raw, columns=['ts', 'mid'])
+    df_eu['date'] = pd.to_datetime(df_eu['ts'], unit='s')
+    df_eu = df_eu.sort_values('date')
+    daily_eu = df_eu.groupby(df_eu['date'].dt.date)['mid'].last()
+    prices_eu = daily_eu.values[:75]
+except Exception:
+    np.random.seed(6)
+    prices_eu = np.zeros(75)
+    prices_eu[0] = 1.275
+    for t in range(1, 75):
+        prices_eu[t] = prices_eu[t - 1] * (1 + np.random.normal(0.0, 0.005))
+
+ret_eu = np.diff(prices_eu) / prices_eu[:-1]
+
+# ---- Closing prices ----
+try:
+    import pandas as pd
+    df_cp = pd.read_csv('closing_price.csv')
+    stock_names = df_cp.columns.tolist()[:5]
+    stocks_ret = {name: df_cp[name].pct_change().dropna().values for name in stock_names}
+except Exception:
+    np.random.seed(99)
+    stock_names = ["McDonald's", "Bank of America", "IBM", "Chevron", "Coca-Cola"]
+    stocks_ret = {}
+    for i, name in enumerate(stock_names):
+        phi = np.random.uniform(-0.15, 0.15)
+        X = np.zeros(200)
+        for t in range(1, 200):
+            X[t] = phi * X[t-1] + np.random.normal(0, 0.012)
+        stocks_ret[name] = X[1:]
+
+# AR(1) sur EUR/USD
+model_eu = AutoReg(ret_eu, lags=1, old_names=False).fit()
+phi_eu = model_eu.params[1]
+fitted_eu = model_eu.fittedvalues
+
+acf_eu = acf(ret_eu, nlags=18, fft=True)
+conf_eu = 1.96 / np.sqrt(len(ret_eu))
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+fig.suptitle("AR(1) sur données réelles — EUR/USD et actions", fontsize=12, fontweight='bold')
+
+# ACF EUR/USD
+axes[0].bar(np.arange(len(acf_eu)), acf_eu, color='steelblue', width=0.5)
+axes[0].axhline(conf_eu,  linestyle='--', color='crimson', linewidth=1.2, label='IC 95%')
+axes[0].axhline(-conf_eu, linestyle='--', color='crimson', linewidth=1.2)
+axes[0].axhline(0, color='black', linewidth=0.5)
+axes[0].set_title(f'ACF – Rendements EUR/USD\nφ̂₁ = {phi_eu:.3f} (quasi nul)', fontsize=10)
+axes[0].set_xlabel('Lag τ')
+axes[0].set_ylabel('ACF(τ)')
+axes[0].legend(fontsize=9)
+
+# Ajustement EUR/USD
+axes[1].plot(ret_eu, color='black', linewidth=0.9, label='Réel')
+axes[1].plot(fitted_eu.index, fitted_eu.values, color='crimson', linewidth=1.8,
+             linestyle='--', label=f'AR(1) : φ̂={phi_eu:.3f}', alpha=0.9)
+axes[1].axhline(0, color='gray', linewidth=0.4)
+axes[1].set_title('Rendements EUR/USD vs AR(1)', fontsize=10)
+axes[1].set_xlabel('Jours')
+axes[1].set_ylabel('Rendements')
+axes[1].legend(fontsize=9)
+axes[1].grid(True, alpha=0.2)
+
+# ACF comparée des actions
+colors_stocks = ['steelblue', 'forestgreen', 'darkorange', 'purple', 'red']
+for (name, ret), color in zip(stocks_ret.items(), colors_stocks):
+    ac = acf(ret, nlags=10, fft=True)
+    axes[2].plot(np.arange(1, len(ac)), ac[1:], 'o-', color=color,
+                 label=name.split()[0], linewidth=1.2, markersize=4)
+
+n_stocks = len(next(iter(stocks_ret.values())))
+conf_s = 1.96 / np.sqrt(n_stocks)
+axes[2].axhline(conf_s,  linestyle='--', color='gray', linewidth=1.0, alpha=0.7)
+axes[2].axhline(-conf_s, linestyle='--', color='gray', linewidth=1.0, alpha=0.7)
+axes[2].axhline(0, color='black', linewidth=0.5)
+axes[2].set_title('ACF des rendements — actions comparées\n(autocorrélations typiquement faibles)', fontsize=10)
+axes[2].set_xlabel('Lag τ')
+axes[2].set_ylabel('ACF(τ)')
+axes[2].legend(fontsize=8, ncol=2)
+axes[2].grid(True, alpha=0.2)
+
+plt.tight_layout()
+plt.show()
+```
+
+La conclusion de l'exemple EUR/USD est éloquente : un coefficient $\hat{\varphi}_1 \approx -0.12$, des autocorrélations presque toutes dans la bande de confiance, un ajustement visuel pauvre. **Ce n'est pas un échec du modèle — c'est la réalité des marchés de change très liquides : les rendements sont quasi sans mémoire.** Les marchés efficients, c'est exactement ça.
+
+---
+
+# Au-delà de AR(1) : Sélection du Modèle
+
+## Le problème du choix de l'ordre $p$
+
+Pour les modèles AR(p) avec $p > 1$, les coefficients $\varphi_1,\ldots,\varphi_p$ ne se lisent plus directement dans l'ACF. Ils sont estimés par **vraisemblance maximale** (*Maximum Likelihood Estimation*, MLE). Mais comment choisir $p$ ?
+
+**Le problème** : augmenter $p$ améliore toujours l'ajustement *en échantillon* (in-sample), mais peut dégrader les prévisions *hors-échantillon* (out-of-sample) par surapprentissage. Il faut trouver le bon équilibre entre fit et parcimonie.
+
+## Critères de sélection : AIC et BIC
+
+### Critère d'Information d'Akaike (AIC)
+
+$$
+\text{AIC} = 2p - 2\ln(\hat{L})
+$$
+
+### Critère d'Information Bayésien (BIC)
+
+$$
+\text{BIC} = \ln(n)\cdot p - 2\ln(\hat{L})
+$$
+
+Où :
+
+- $p$ est l'ordre du modèle (nombre de paramètres)
+- $n$ est le nombre d'observations
+- $\hat{L}$ est la **vraisemblance maximisée** (*maximized likelihood*)
+
+**On minimise** AIC ou BIC sur une grille d'ordres candidats.
+
+::: {.callout-tip}
+## AIC vs BIC : quelle pénalité ?
+
+Le BIC pénalise plus fortement la complexité que l'AIC (coefficient $\ln(n)$ vs $2$). Pour $n = 300$ observations, $\ln(300) \approx 5.7 > 2$ — le BIC est donc beaucoup plus strict. En pratique, **BIC sélectionne des modèles plus parcimonieux**. Si l'objectif est la prédiction, l'AIC peut être préféré. Si l'objectif est l'identification de la vraie structure, le BIC est souvent recommandé.
+:::
+
+## Illustration : AIC/BIC sur un AR(3) synthétique
+
+```{python}
+#| label: fig-aicbic
+#| eval: false
+#| fig-cap: "Sélection de l'ordre optimal par AIC/BIC — le vrai ordre (3) est retrouvé par les deux critères"
+
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.stattools import acf
+from statsmodels.tsa.ar_model import AutoReg
+
+np.random.seed(99)
+N = 300
+
+# Vrai processus : AR(3) avec X_t = -0.5 X_{t-1} + 0.5 X_{t-3} + eps
+X_ar3 = np.zeros(N)
+for t in range(3, N):
+    X_ar3[t] = -0.5 * X_ar3[t - 1] + 0.5 * X_ar3[t - 3] + np.random.normal(0, 1)
+
+max_order = 9
+aic_list, bic_list = [], []
+
+for p in range(1, max_order + 1):
+    try:
+        res = AutoReg(X_ar3, lags=p, old_names=False).fit()
+        aic_list.append(res.aic)
+        bic_list.append(res.bic)
+    except Exception:
+        aic_list.append(np.nan)
+        bic_list.append(np.nan)
+
+orders = np.arange(1, max_order + 1)
+best_aic = orders[np.nanargmin(aic_list)]
+best_bic = orders[np.nanargmin(bic_list)]
+
+model_3 = AutoReg(X_ar3, lags=3, old_names=False).fit()
+fitted_3 = model_3.fittedvalues
+
+acf_ar3 = acf(X_ar3, nlags=12, fft=True)
+conf_ar3 = 1.96 / np.sqrt(N)
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+fig.suptitle(r'Sélection AR(p) par AIC/BIC — Vrai processus : $X_t = -0.5\,X_{t-1} + 0.5\,X_{t-3} + \varepsilon_t$',
+             fontsize=11, fontweight='bold')
+
+# ACF
+axes[0].bar(np.arange(len(acf_ar3)), acf_ar3, color='steelblue', width=0.5)
+axes[0].axhline(conf_ar3,  linestyle='--', color='crimson', linewidth=1.2, label='IC 95%')
+axes[0].axhline(-conf_ar3, linestyle='--', color='crimson', linewidth=1.2)
+axes[0].axhline(0, color='black', linewidth=0.5)
+axes[0].axvline(3, color='purple', linestyle=':', linewidth=1.5, label='Lag 3 (peak)')
+axes[0].set_title('ACF de la série AR(3)\n(pic notable au lag 3)', fontsize=10)
+axes[0].set_xlabel('Lag τ')
+axes[0].set_ylabel('ACF(τ)')
+axes[0].legend(fontsize=9)
+
+# Série + ajustement
+n_show = 150
+axes[1].plot(X_ar3[:n_show], color='steelblue', linewidth=0.9, label='Données originales', alpha=0.9)
+axes[1].plot(fitted_3.index[:n_show], fitted_3.values[:n_show], color='darkorange',
+             linewidth=1.5, label='Ajustement AR(3)', alpha=0.9)
+axes[1].set_title('Série et ajustement AR(p=3)', fontsize=10)
+axes[1].set_xlabel('Temps')
+axes[1].set_ylabel('$X_t$')
+axes[1].legend(fontsize=9)
+axes[1].grid(True, alpha=0.2)
+
+# AIC / BIC
+axes[2].plot(orders, aic_list, 'b-o', markersize=6, label='AIC', linewidth=1.5)
+axes[2].plot(orders, bic_list, '-s', color='darkorange', markersize=6, label='BIC', linewidth=1.5)
+axes[2].axvline(3, color='crimson', linestyle='--', linewidth=2, label='Vrai ordre = 3', alpha=0.85)
+axes[2].scatter([best_aic], [aic_list[best_aic - 1]], s=120, color='blue',
+                zorder=5, label=f'Opt. AIC = {best_aic}')
+axes[2].scatter([best_bic], [bic_list[best_bic - 1]], s=120, color='darkorange',
+                marker='D', zorder=5, label=f'Opt. BIC = {best_bic}')
+axes[2].set_title('AIC & BIC selon l\'ordre p\n(minimum = ordre optimal)', fontsize=10)
+axes[2].set_xlabel('Ordre p')
+axes[2].set_ylabel('Valeur du critère')
+axes[2].legend(fontsize=8)
+axes[2].grid(True, alpha=0.2)
+
+plt.tight_layout()
+plt.show()
+```
+
+AIC et BIC identifient tous deux l'ordre 3 comme optimal — retrouvant le vrai ordre du processus simulé. Sur des données réelles, ce consensus est souvent moins net, mais les deux critères restent les outils de référence pour la sélection de modèle.
+
+---
+
+# Pipeline Analytique Complet
+
+```{mermaid}
+flowchart TD
+    A["🗂️ Série temporelle brute\n<i>X_t ∈ ℝ</i>"] --> B{"🔍 Stationnaire ?\nTest ADF"}
+    
+    B -->|"❌ p ≥ 0.05"| C["⚙️ Transformation"]
+    C --> C1["Rendements\n<i>r_t = ΔX/X_{t-1}</i>"]
+    C --> C2["Différenciation\n<i>ΔX_t = X_t - X_{t-1}</i>"]
+    C --> C3["Log + décomposition\n<i>ln(X_t)</i>"]
+    C1 & C2 & C3 --> B
+    
+    B -->|"✓ p < 0.05"| E["✅ Série stationnaire"]
+    
+    E --> F["📊 Calcul de l'ACF\n<i>ρ_τ = Cov(X_t, X_{t+τ}) / σ²</i>"]
+    F --> G{"Quelle structure ?"}
+    
+    G -->|"Décroissance\nlente positive"| H["AR(p)\nTendanciel / Momentum"]
+    G -->|"ACF tronquée\nbrusquement"| I["MA(q)\nChocs passés"]
+    G -->|"Combinaison"| J["ARMA(p,q)"]
+    G -->|"Aucune structure\nACF ≈ 0"| K["⚠️ Quasi bruit blanc\nAR peu utile"]
+    
+    H & I & J --> L["📐 Estimation des paramètres\nAR(1) : φ̂₁ = ρ̂₁\nAR(p>1) : MLE"]
+    L --> M["🏆 Sélection de l'ordre\nMinimiser AIC ou BIC"]
+    M --> N["🔬 Diagnostic des résidus\nResidus = bruit blanc ?"]
+    N -->|"✓ Oui"| O["✨ Modèle validé\nPrêt pour analyse / prévision"]
+    N -->|"✗ Non"| G
+
+    style A fill:#e8f4f8,stroke:#2196F3,color:#000
+    style E fill:#e8f8e8,stroke:#4CAF50,color:#000
+    style O fill:#fff9e6,stroke:#FF9800,color:#000
+    style K fill:#ffe8e8,stroke:#f44336,color:#000
+```
+
+---
+
+# Pièges et Limites
+
+## La stationnarité : une approximation locale
+
+::: {.callout-warning}
+## Les marchés changent de régime
+
+Un actif peut être faiblement stationnaire sur une fenêtre de 6 mois et non-stationnaire sur 3 ans. Les corrélations évoluent, les crises brisent les régimes. La stationnarité est une **approximation locale et temporaire**, pas une propriété permanente du marché.
+:::
+
+## Le piège du parfait ajustement in-sample
+
+::: {.callout-caution}
+## Coefficient = 1, ajustement parfait — et prévision nulle
+
+Un AR(1) ajusté sur une marche aléatoire ($\varphi_1 = 1$) donne un coefficient $\hat{\varphi}_1 \approx 0.999$ et un ajustement en échantillon quasi parfait. La prévision hors-échantillon, elle, diverge immédiatement. **Un $R^2$ élevé in-sample ne dit rien de la qualité prédictive.** C'est le piège le plus classique en finance quantitative.
+:::
+
+## Les hypothèses irréalistes sur les bruits
+
+Le modèle AR suppose $\varepsilon_t \sim \mathcal{N}(0, \sigma^2)$ i.i.d. Or les rendements financiers violent systématiquement ces hypothèses :
+
+- **Queues épaisses** (*fat tails*) : les événements extrêmes sont bien plus fréquents qu'une loi normale ne le prédit
+- **Volatility clustering** : les périodes agitées succèdent aux périodes calmes — la variance n'est pas constante
+- **Asymétrie** : les chocs négatifs ont souvent un impact différent des positifs
+
+::: {.callout-tip}
+## La solution : GARCH
+
+Pour modéliser correctement la **variance conditionnelle** des rendements financiers, les modèles **GARCH** (Generalized Autoregressive Conditional Heteroskedasticity) sont la réponse standard. Ils appliquent le principe AR/MA à la variance elle-même.
+:::
+
+## Sélection d'ordre et data snooping
+
+Tester de nombreux ordres et retenir le "meilleur" revient à optimiser sur le bruit d'un jeu de données spécifique — c'est du **data snooping**. La règle de prudence : toujours valider hors-échantillon avec une procédure **walk-forward** (entraîner sur le passé, tester sur le futur strict).
+
+## La PACF ignorée
+
+Ce chapitre se concentre sur l'ACF. La **PACF** (*Partial Autocorrelation Function*) est l'outil complémentaire indispensable : elle isole l'effet direct de chaque lag en contrôlant les lags intermédiaires. Elle est tronquée pour les AR(p) (ce qui facilite la sélection de l'ordre) et décroissante pour les MA(q). Son absence dans ce chapitre est une limite à garder en tête.
+
+---
+
+# Mini Synthèse
+
+## L'idée centrale
+
+Une **série temporelle** est une séquence d'observations ordonnées dans le temps. Les **modèles autorégressifs** capturent la dépendance entre observations successives : le passé contient de l'information sur le futur — même si cette information est imparfaite et bruitée.
+
+## Ce qu'il faut absolument retenir
+
+| Concept | Formule clé | Interprétation |
+|---|---|---|
+| Stationnarité faible | $\mu = \text{cte}$, $\text{Cov}(X_t, X_{t+\tau}) = \gamma(\tau)$ | Structure temporelle stable |
+| ACF | $\rho_\tau = \mathbb{E}[(X_t-\mu)(X_{t+\tau}-\mu)]\,/\,\sigma^2$ | Mémoire au lag $\tau$ |
+| AR(1) | $X_t = \varphi_1 X_{t-1} + \varepsilon_t$ | Un paramètre, toute la dynamique |
+| Variance AR(1) | $\sigma^2 = \sigma_\varepsilon^2\,/\,(1-\varphi_1^2)$ | Stationnarité si $\|\varphi_1\| < 1$ |
+| Autocorr. AR(1) | $\rho_\tau = \varphi_1^\tau$ | Décroissance géométrique |
+| AIC | $2p - 2\ln(\hat{L})$ | Équilibre fit/complexité |
+| BIC | $\ln(n)\cdot p - 2\ln(\hat{L})$ | Plus strict que AIC |
+
+## Interprétation économique de φ₁
+
+- $\varphi_1 > 0$ → **momentum** : une bonne valeur aujourd'hui prédit une bonne valeur demain
+- $\varphi_1 < 0$ → **mean-reversion** : les excès sont corrigés à la prochaine période
+- $\varphi_1 \approx 0$ → **absence de mémoire** : cas typique des rendements de marché liquide
+
+::: {.callout-note}
+## Le message à garder
+
+Ce chapitre ne dit pas "les marchés ont de la mémoire". Il dit : "voici des outils rigoureux pour **tester si** une série a de la mémoire, et pour **modéliser** cette mémoire si elle existe." L'ACF est le microscope. AR(p) est le modèle. AIC/BIC est le rasoir d'Occam. La stationnarité est le permis de conduire — sans lui, ne prenez pas le volant.
+:::
+
+---
+
+# Plan de Bataille — Préparation Orale en 15 Minutes
+
+::: {.callout-tip}
+## 📋 Ce qu'écrire sur sa feuille (style télégraphique)
+
+**I. DÉFINITIONS (2 min)**
+
+- Série temporelle : $X(t_i) \in \mathbb{R}$, ordonnée, lag $\tau$ = décalage
+- Stationnarité stricte : $F(X_{t+\tau},...) = F(X_t,...)$ ∀τ,n
+- Stationnarité faible : $\mu=\text{cte}$ + $\text{Cov}(X_t, X_{t+\tau})=\gamma(\tau)$
+
+---
+
+**II. POURQUOI / QUAND (2 min)**
+
+- Problèmes données brutes : tendance, saisonnalité, hétéroscédasticité
+- Solution : rendements $r_t = \Delta X_t/X_{t-1}$, différences, log
+- Test : ADF → p < 0.05 → stationnaire ✓
+
+---
+
+**III. ACF (2 min)**
+
+$$\rho_\tau = \frac{\mathbb{E}[(X_t-\mu)(X_{t+\tau}-\mu)]}{\sigma^2}$$
+
+- $\rho_\tau > 0$ décroissant → tendance (momentum)
+- $\rho_\tau$ alternant → contre-tendance (mean-reversion)
+- IC 95% : $\pm\,1.96/\sqrt{n}$
+
+---
+
+**IV. MODÈLES (2 min)**
+
+- AR(p) : $X_t = c + \sum_i \varphi_i X_{t-i} + \varepsilon_t$ → mémoire des valeurs
+- MA(q) : $X_t = \mu + \sum_j \theta_j \varepsilon_{t-j} + \varepsilon_t$ → mémoire des chocs
+- ARMA(p,q) : combinaison
+
+---
+
+**V. AR(1) — RÉSULTATS CLÉS (4 min)**
+
+$X_t = \varphi_1 X_{t-1} + \varepsilon_t$, $\varepsilon_t \sim \mathcal{N}(0,\sigma_\varepsilon^2)$
+
+- $\mu = 0$ (normalisé)
+- $\text{Var}(X_t) = \sigma_\varepsilon^2/(1-\varphi_1^2)$ → **stationnaire ssi** $|\varphi_1| < 1$
+- $\rho_1 = \varphi_1$ → estimation directe = autocorrélation lag 1
+- $\rho_\tau = \varphi_1^\tau$ → décroissance géométrique
+
+---
+
+**VI. SÉLECTION / ORDRES SUPÉRIEURS (2 min)**
+
+- AIC = $2p - 2\ln(\hat{L})$ → minimiser
+- BIC = $\ln(n) p - 2\ln(\hat{L})$ → minimiser (plus strict)
+- $p > 1$ : pas de forme fermée → MLE numérique
+
+---
+
+**VII. PIÈGES À MENTIONNER (1 min)**
+
+- AR sur prix non-stationnaires → résultats fallacieux
+- $R^2$ in-sample parfait ≠ bon prédicteur
+- Fat tails, volatility clustering → hypothèse gaussienne violée
+- Data snooping → valider out-of-sample
+:::

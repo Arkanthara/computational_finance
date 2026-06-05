@@ -1,0 +1,158 @@
+---
+title: "Rendements et valeur temporelle de l'argent — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Vous placez 1 000 CHF en janvier. En décembre, vous avez 1 100 CHF.
+Super ! Mais votre ami dit qu'il a gagné "10 % par mois" — faut-il le croire ?
+Et votre banque annonce "10 % annuels, capitalisés quotidiennement" — c'est combien, exactement ?
+
+Ce chapitre répond à une seule obsession : **comment mesurer, comparer et composer des gains d'argent dans le temps** — sans se faire piéger par des chiffres qui semblent simples mais ne le sont pas.
+La règle d'or : **on ne somme pas, on multiplie** (pour les rendements simples) — et on prend le log pour se simplifier la vie.
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- Un **rendement** mesure une variation relative de prix — toujours en %.
+- Les rendements simples sur plusieurs périodes se **composent** (multiplication), ils ne se somment pas.
+- Les rendements **logarithmiques** (continus) sont additifs dans le temps — mais pas entre actifs d'un portefeuille.
+- L'argent a une **valeur temporelle** : 1 CHF aujourd'hui vaut plus que 1 CHF demain.
+- Plus on capitalise fréquemment, plus la valeur future est élevée — la limite étant la capitalisation **continue** ($e^{rn}$).
+- Le taux continu $r$ est **toujours inférieur** au taux simple $R$ correspondant.
+- Investir à l'étranger expose à un **risque de change** en plus du risque de l'actif.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+|---------|-------------------------------|-----------|
+| **Rendement simple** (*Simple return*) | Variation relative du prix entre deux dates | $(60 - 50) / 50 = 20\%$ |
+| **Composition** (*Compounding*) | Les rendements multi-périodes se multiplient, pas s'additionnent | Chaque période, on gagne sur un capital déjà augmenté |
+| **Rendement de portefeuille** (*Portfolio return*) | Moyenne pondérée des rendements individuels | $R_p = \sum \alpha_i R_i$ avec $\sum \alpha_i = 1$ |
+| **Annualisation** (*Annualisation*) | Ramener tout rendement à une base annuelle pour comparer | $(1 + R_m)^{12} - 1$, pas $12 \times R_m$ |
+| **Valeur temporelle** (*Time value of money*) | 1 CHF aujourd'hui vaut plus que 1 CHF demain | L'argent disponible peut être investi |
+| **Capitalisation continue** (*Continuous compounding*) | Limite mathématique quand on capitalise infiniment souvent | $PV \cdot e^{Rn}$ — outil théorique, pas réaliste |
+| **Taux continu** (*Continuous rate*) | Équivalent logarithmique du taux simple | $r = \ln(1+R)$ → toujours $r < R$ |
+| **Rendement logarithmique** (*Log return*) | Différence de logarithmes de prix consécutifs | Symétrique et additif dans le temps |
+| **Risque de change** (*FX risk*) | Variation du taux de change qui affecte la NAV en devise locale | Un actif USD peut perdre de la valeur en CHF même si son prix monte en USD |
+| **Couverture de change** (*FX hedging*) | Position inverse en devises pour neutraliser le risque FX | Comme une assurance — réduit la volatilité mais a un coût |
+| **NAV** (*Net Asset Value*) | Valeur totale du portefeuille : positions × prix × FX + cash | Le thermomètre de la santé du portefeuille |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+```{mermaid}
+graph TD
+    A["Prix P(t)"] --> B["Rendement simple R"]
+    A --> C["Rendement log r"]
+    B --> D["Multi-périodes → PRODUIT"]
+    C --> E["Multi-périodes → SOMME"]
+    B --> F["Portefeuille → Σ αᵢRᵢ ✅"]
+    C --> G["Portefeuille → Σ αᵢrᵢ ❌"]
+    B --> H["Annualisation → (1+Rm)^12 - 1"]
+    B <--> C
+    C --> I["r = ln(1+R) → r < R"]
+    J["Valeur temporelle"] --> K["Discret: PV·(1+R)^n"]
+    J --> L["Continu: PV·e^rn"]
+    K <--> L
+    M["Investissement FX"] --> N["NAV = position × prix × FX + cash"]
+    N --> O["Risque action + risque FX"]
+    O --> P["Couverture possible mais coûteuse"]
+```
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+|---------|---------------|-----------|
+| $R_1(t) = \dfrac{P(t)}{P(t-1)} - 1$ | Rendement simple 1 période | Base de tout |
+| $1 + R_n = \displaystyle\prod_{i=0}^{n-1}(1+R_i)$ | Composition sur $n$ périodes | **Produit**, jamais somme |
+| $R_p = \displaystyle\sum_{i=1}^{n} \alpha_i R_i$ | Rendement de portefeuille | Linéaire en $R$, pas en $r$ |
+| $R_a = (1+R_m)^{12} - 1$ | Annualisation depuis le mensuel | Exposant 12, pas ×12 |
+| $FV = PV \cdot (1+R)^n$ | Valeur future — discret | Capitalisation classique |
+| $FV = PV \cdot e^{rn}$ | Valeur future — continu | Limite mathématique |
+| $r = \ln(1+R)$ | Passage taux simple → continu | $r < R$ toujours |
+| $r(t) = \ln P_t - \ln P_{t-1}$ | Log-rendement 1 période | Différence de logs |
+| $r_n(t) = \displaystyle\sum_{i=0}^{n-1} r_i$ | Log-rendement $n$ périodes | **Somme** (pas produit) |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **Sommer les rendements simples** : $20\% + 16.7\% + 14.3\% = 50.9\%$ ≠ $60\%$ — toujours composer.
+- **Asymétrie des rendements simples** : $+20\%$ puis $-20\%$ ne ramène **pas** au prix initial ($100 \to 120 \to 96$).
+- **Annualisation par multiplication** : $R_a \neq 12 \times R_m$ — utiliser $(1+R_m)^{12}-1$.
+- **Confondre $r$ et $R$** : $r = \ln(1+R) < R$ — le taux continu est toujours plus petit.
+- **Additivité des log-rendements pour les portefeuilles** : $r_p \neq \sum \alpha_i r_i$ — l'additivité est **temporelle**, pas transversale.
+- **Ignorer le risque de change** : un actif USD qui monte peut donner une NAV CHF en baisse si le dollar se déprécie.
+- **La couverture FX annule tout risque** : faux — elle a un coût (différentiel de taux) et n'élimine pas le risque action.
+- **La capitalisation continue est réaliste** : non — c'est un outil mathématique théorique, la limite de la fréquence infinie.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Pourquoi ne peut-on pas simplement additionner des rendements simples sur plusieurs périodes ?
+
+**R courte :** Parce que chaque rendement s'applique à un capital différent — déjà valorisé par les périodes précédentes. La bonne opération est le produit : $1 + R_n = \prod(1 + R_i)$.
+
+---
+
+**Q :** Quelle est la différence entre rendement simple et rendement logarithmique ?
+
+**R courte :** Le rendement simple $R = P_t/P_{t-1} - 1$ est asymétrique et se compose par produit. Le log-rendement $r = \ln(P_t/P_{t-1})$ est symétrique et s'additionne dans le temps. Relation : $r = \ln(1+R) < R$.
+
+---
+
+**Q :** Pourquoi $r < R$ ?
+
+**R courte :** Parce que le logarithme est une fonction concave : $\ln(1+x) < x$ pour tout $x > 0$. Exemple : $R = 10\%$, $r = \ln(1.1) \approx 9.53\%$.
+
+---
+
+**Q :** Qu'est-ce que la valeur temporelle de l'argent ?
+
+**R courte :** 1 CHF aujourd'hui vaut plus que 1 CHF demain, car il peut être investi. La valeur future est $FV = PV \cdot (1+R)^n$ en discret, $PV \cdot e^{rn}$ en continu.
+
+---
+
+**Q :** Comment annualiser un rendement mensuel ?
+
+**R courte :** Par composition : $R_a = (1+R_m)^{12} - 1$. Multiplier par 12 n'est qu'une approximation valable pour de très petits rendements.
+
+---
+
+**Q :** Un investisseur CHF achète des actions AAPL (en USD). À quels risques est-il exposé ?
+
+**R courte :** Deux risques : le risque action (variation du prix AAPL en USD) et le risque de change FX (variation USD/CHF). La NAV en CHF dépend des deux simultanément.
+
+---
+
+**Q :** Peut-on éliminer le risque de change ? À quel prix ?
+
+**R courte :** Oui, par une couverture (*hedge*) en prenant une position inverse en USD. Le coût est le différentiel de taux d'intérêt entre les deux devises. Avantage : NAV moins volatile car un seul risque subsiste.
+
+---
+
+**Q :** Le rendement continu d'un portefeuille est-il la moyenne pondérée des log-rendements individuels ?
+
+**R courte :** Non. $r_p = \ln(1 + \sum \alpha_i R_i) \neq \sum \alpha_i r_i$. L'additivité des log-rendements s'applique au temps (périodes successives), pas aux actifs d'un portefeuille.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+::: {.callout-note title="L'essentiel du chapitre"}
+- **Rendements simples** → multi-périodes = **produit** ($\prod$) · portefeuille = $\sum \alpha_i R_i$ ✅
+- **Log-rendements** → multi-périodes = **somme** ($\sum$) · portefeuille ≠ $\sum \alpha_i r_i$ ❌
+- **Annualisation** → $(1+R_m)^{12} - 1$ · jamais $\times 12$
+- **Valeur temporelle** → discret : $(1+R)^n$ · continu : $e^{rn}$ · relation : $r = \ln(1+R) < R$
+- **Asymétrie simple** : $+20\%$ puis $-20\%$ ≠ retour à zéro
+- **Investissement FX** → NAV = position × prix × taux de change + cash · 2 risques : action + FX
+- **Couverture FX** → réduit la volatilité · coût = différentiel de taux · risque action reste
+:::

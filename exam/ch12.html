@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonds – Time & Yield Sensitivity · CF · Univ. Geneva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']], processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+:root{
+  --bg:#0d0b14;--bg-card:#161221;--bg-code:#1c1828;
+  --text:#e4dffa;--muted:#9089bf;--border:rgba(180,150,80,.18);--bstrong:rgba(180,150,80,.4);
+  --gold:#c9a84c;--glight:#e8c97a;--blue:#7eb8d4;--green:#7bc496;--red:#e07b7b;--violet:#a78bfa;
+  --ff:'EB Garamond',Georgia,serif;--fd:'Cormorant Garamond',Georgia,serif;--fm:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);font-size:18px;line-height:1.85;display:flex}
+
+.sb{width:270px;min-height:100vh;background:var(--bg-card);border-right:1px solid var(--border);
+  padding:2rem 1.4rem;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;z-index:100}
+.sb-logo{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--gold);margin-bottom:.3rem}
+.sb-sub{font-family:var(--fm);font-size:.73rem;color:var(--muted);margin-bottom:1.8rem;letter-spacing:.05em}
+.sb nav ul{list-style:none}
+.sb nav ul li{margin-bottom:.2rem}
+.sb nav ul li a{color:var(--muted);text-decoration:none;font-size:.88rem;display:block;
+  padding:.35rem .7rem;border-radius:4px;border-left:2px solid transparent;transition:all .18s}
+.sb nav ul li a:hover,.sb nav ul li a.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,168,76,.07)}
+.sb nav ul li a .n{font-family:var(--fm);font-size:.72rem;color:var(--gold);margin-right:.45rem;opacity:.75}
+.sb-section{font-family:var(--fm);font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--muted);padding:.5rem .7rem .3rem;opacity:.6}
+
+.main{margin-left:270px;flex:1;padding:3rem 4rem;max-width:1020px}
+
+.hero{border-bottom:1px solid var(--border);padding-bottom:3rem;margin-bottom:4.5rem}
+.hero-tag{font-family:var(--fm);font-size:.75rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.hero h1{font-family:var(--fd);font-size:3.6rem;font-weight:700;line-height:1.1;margin-bottom:.8rem}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:620px;margin-bottom:1.5rem}
+.badges{display:flex;gap:.7rem;flex-wrap:wrap}
+.badge{font-family:var(--fm);font-size:.72rem;padding:.25rem .75rem;border:1px solid var(--bstrong);
+  border-radius:20px;color:var(--gold);letter-spacing:.04em}
+.badge.b{border-color:rgba(126,184,212,.35);color:var(--blue)}
+.badge.g{border-color:rgba(123,196,150,.35);color:var(--green)}
+.badge.v{border-color:rgba(167,139,250,.35);color:var(--violet)}
+
+.sec{margin-bottom:5rem;scroll-margin-top:2rem}
+.sec-hd{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.sec-num{font-family:var(--fm);font-size:.85rem;color:var(--gold);opacity:.65;min-width:2.5rem}
+.sec-title{font-family:var(--fd);font-size:1.95rem;font-weight:700;color:var(--text)}
+h3{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--glight);margin:2rem 0 .8rem}
+h4{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--blue);margin:1.4rem 0 .5rem}
+p{margin-bottom:.9rem}
+strong{color:var(--glight);font-weight:600}
+em{color:var(--blue);font-style:italic}
+a{color:var(--gold);text-decoration:none}
+code{font-family:var(--fm);background:var(--bg-code);padding:.1em .4em;border-radius:3px;font-size:.82em;color:var(--gold)}
+ul,ol{padding-left:1.5rem;margin-bottom:.9rem}
+li{margin-bottom:.35rem}
+
+.box{background:var(--bg-card);border-left:3px solid var(--gold);padding:1.1rem 1.4rem;border-radius:0 6px 6px 0;margin:1.4rem 0}
+.box.info{border-left-color:var(--blue)}.box.warn{border-left-color:var(--red)}.box.ok{border-left-color:var(--green)}.box.vio{border-left-color:var(--violet)}
+.box-title{font-family:var(--fm);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem}
+.box.info .box-title{color:var(--blue)}.box.warn .box-title{color:var(--red)}.box.ok .box-title{color:var(--green)}.box.vio .box-title{color:var(--violet)}
+
+.mblock{background:var(--bg-code);border:1px solid var(--border);border-radius:8px;padding:1.3rem 1.8rem;
+  margin:1.4rem 0;overflow-x:auto;text-align:center}
+.mblock .mlabel{font-family:var(--fm);font-size:.7rem;color:var(--muted);text-align:left;margin-bottom:.7rem;
+  text-transform:uppercase;letter-spacing:.08em}
+
+.twrap{overflow-x:auto;margin:1.4rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead{background:var(--bg-code)}
+th{padding:.8rem 1rem;text-align:left;font-family:var(--fm);font-size:.73rem;color:var(--gold);
+  text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--bstrong)}
+td{padding:.7rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(201,168,76,.03)}
+td.g{color:var(--green)}td.r{color:var(--red)}td.m{color:var(--muted)}
+
+.fcards{display:flex;flex-direction:column;gap:1.5rem;margin-top:1rem}
+.fc{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.fc-head{background:var(--bg-code);padding:.8rem 1.4rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between}
+.fc-name{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--gold)}
+.fc-tag{font-family:var(--fm);font-size:.7rem;color:var(--muted);padding:.2rem .6rem;
+  background:rgba(255,255,255,.04);border-radius:20px}
+.fc-body{padding:1.4rem}
+.fc-expr{text-align:center;padding:1.2rem;background:var(--bg-code);border-radius:6px;margin-bottom:1.1rem;overflow-x:auto}
+.fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;font-size:.88rem}
+.fc-item h5{font-family:var(--fm);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:.3rem}
+.fc-item p{color:var(--muted);margin:0;font-size:.88rem}
+
+.qlevel{display:inline-block;font-family:var(--fm);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.1em;padding:.2rem .7rem;border-radius:4px;margin-bottom:.8rem;margin-top:1.2rem}
+.qlevel.easy{background:rgba(123,196,150,.13);color:var(--green)}
+.qlevel.med{background:rgba(126,184,212,.13);color:var(--blue)}
+.qlevel.hard{background:rgba(224,123,123,.13);color:var(--red)}
+.qi{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:.8rem;overflow:hidden}
+.qi-q{padding:.9rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;
+  gap:.8rem;transition:background .15s}
+.qi-q:hover{background:rgba(201,168,76,.05)}
+.qi-qtxt{flex:1;font-size:.93rem}
+.qi-arr{color:var(--gold);font-size:1.1rem;transition:transform .2s;min-width:1.2rem;text-align:center}
+.qi-a{padding:0 1.1rem;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .2s;
+  background:var(--bg-code);font-size:.88rem;color:var(--muted);border-top:0 solid var(--border)}
+.qi-a.open{max-height:800px;padding:1rem 1.1rem;border-top:1px solid var(--border)}
+
+.piege{display:flex;gap:.9rem;align-items:flex-start;margin-bottom:.9rem;
+  padding:.8rem 1rem;background:rgba(224,123,123,.06);border-radius:6px;border-left:3px solid var(--red)}
+.piege-icon{font-size:1.1rem;min-width:1.4rem}
+.piege-text{font-size:.93rem}
+.piege-text strong{color:var(--red)}
+
+.fiche-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.4rem 0}
+.fc2{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.1rem}
+.fc2 h4{font-family:var(--fm);font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--gold);margin:0 0 .7rem 0}
+.fc2 ul{list-style:none;padding:0;font-size:.85rem}
+.fc2 ul li{padding:.22rem 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted)}
+.fc2 ul li:last-child{border:none}
+.fc2 ul li strong{color:var(--text)}
+.fc2 ol{font-size:.85rem;color:var(--muted);padding-left:1.2rem}
+.fc2 ol li{padding:.2rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+
+.oral{background:var(--bg-card);border:1px solid var(--bstrong);border-radius:10px;
+  padding:2rem;margin:1rem 0;position:relative}
+.oral::before{content:'"';font-family:var(--fd);font-size:5rem;color:var(--gold);opacity:.15;
+  position:absolute;top:-.5rem;left:.8rem;line-height:1}
+.oral p{font-size:1rem;line-height:1.9;color:var(--text)}
+.oral p+p{margin-top:.8rem}
+
+.diag{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;
+  padding:1.5rem;margin:1.4rem 0;overflow-x:auto;text-align:center}
+.diag-caption{font-size:.82rem;color:var(--muted);margin-top:.8rem;text-align:center}
+
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin:1.4rem 0}
+.ccard{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.2rem;transition:border-color .18s}
+.ccard:hover{border-color:var(--bstrong)}
+.ccard .ctag{font-family:var(--fm);font-size:.68rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
+.ccard h4{font-family:var(--fd);font-size:1.15rem;color:var(--text);margin:0 0 .4rem 0}
+.ccard p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.6}
+
+.funny{background:linear-gradient(135deg,rgba(201,168,76,.06),rgba(167,139,250,.06));
+  border:1px solid rgba(201,168,76,.3);border-radius:12px;padding:1.8rem 2rem;margin:2rem 0}
+.funny-title{font-family:var(--fd);font-size:1.4rem;font-weight:700;color:var(--gold);margin-bottom:.8rem}
+
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:3px}
+
+@media(max-width:900px){.sb{display:none}.main{margin-left:0;padding:2rem 1.4rem}
+  .hero h1{font-size:2.4rem}.fiche-grid{grid-template-columns:1fr}.fc-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<aside class="sb">
+  <div class="sb-logo">CF · Bonds</div>
+  <div class="sb-sub">Time &amp; Yield Sensitivity</div>
+  <nav><ul>
+    <div class="sb-section">Sections</div>
+    <li><a href="#exec"><span class="n">00</span>Résumé Éclair</a></li>
+    <li><a href="#oral"><span class="n">01</span>Réponse Orale</a></li>
+    <li><a href="#forward"><span class="n">02</span>Forward Rates</a></li>
+    <li><a href="#evolution"><span class="n">03</span>Yield Curve</a></li>
+    <li><a href="#duration"><span class="n">04</span>Duration</a></li>
+    <li><a href="#convexity"><span class="n">05</span>Convexité</a></li>
+    <li><a href="#types"><span class="n">06</span>Types Duration</a></li>
+    <li><a href="#portfolio"><span class="n">07</span>Portfolio Mgmt</a></li>
+    <li><a href="#formulas"><span class="n">08</span>Formules Clés</a></li>
+    <li><a href="#compare"><span class="n">09</span>Comparaison</a></li>
+    <li><a href="#quiz"><span class="n">10</span>Questions Exam</a></li>
+    <li><a href="#traps"><span class="n">11</span>Pièges</a></li>
+    <li><a href="#fiche"><span class="n">12</span>Fiche Finale</a></li>
+  </ul></nav>
+</aside>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<main class="main">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Introduction to Computational Finance · Université de Genève · A. Dupuis · v1.1 · pp. 302–325</div>
+  <h1>Bonds — <em>Time &amp; Yield Sensitivity</em></h1>
+  <p class="hero-desc">Forward Rates · Évolution de la Yield Curve · Duration · Convexité · Types de Duration · Gestion de Portefeuille</p>
+  <div class="badges">
+    <span class="badge">Fixed Income</span>
+    <span class="badge b">Interest Rate Risk</span>
+    <span class="badge g">Macaulay · Modified · DV01</span>
+    <span class="badge v">No-Arbitrage</span>
+    <span class="badge">Convexity</span>
+  </div>
+</section>
+
+<!-- FUNNY INTRO -->
+<div class="funny">
+  <div class="funny-title">🏦 Scénario catastrophe du lundi matin à 8h00</div>
+  <p>Votre chef vous demande d'estimer l'impact d'une hausse de taux de <strong>200 bps</strong> sur le portefeuille obligataire. Vous répondez avec un sourire : <strong>"Facile, c'est juste −D × δy"</strong>, vous envoyez le rapport et rentrez content(e). Le lendemain : perte réelle <strong>−18.6M USD</strong>. Votre estimation : <strong>−16.2M USD</strong>. Différence : <strong>−2.4M USD</strong>. Raison : vous avez ignoré la convexité. 💼🔥</p>
+  <p>Ce chapitre vous apprend à ne plus faire cette erreur — et accessoirement à comprendre pourquoi votre banquier peut vous citer un taux hypothécaire pour dans 1 an <em>(spoiler : forward rates)</em>, et pourquoi les obligations ne se comportent jamais exactement comme prévu lors des grandes crises de taux.</p>
+</div>
+
+<!-- ══════════════ 00 · RÉSUMÉ ══════════════ -->
+<section class="sec" id="exec">
+  <div class="sec-hd"><span class="sec-num">00</span><h2 class="sec-title">Résumé Exécutif <span style="font-size:1rem;color:var(--muted);font-family:var(--fm)">(30 sec)</span></h2></div>
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Pilier 1</div>
+      <h4>Forward Rates</h4>
+      <p>Taux futurs <em>implicites</em> dans la courbe zéro actuelle, dérivés par absence d'arbitrage. $r = (R_2T_2 - R_1T_1)/(T_2-T_1)$.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Pilier 2</div>
+      <h4>Yield Curve Evolution</h4>
+      <p>La courbe se déforme via <em>parallel shift</em>, <em>flattening</em> ou <em>steepening</em>. Banques centrales (court terme) + marchés (long terme).</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Pilier 3</div>
+      <h4>Duration (Macaulay)</h4>
+      <p>Centre de gravité temporel des cash flows. Sensibilité au premier ordre : $\delta B/B \approx -D \cdot \delta y$.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Pilier 4</div>
+      <h4>Convexité</h4>
+      <p>Correction de second ordre pour grands chocs. $\delta B/B \approx -D\delta y + \frac{1}{2}C(\delta y)^2$. Toujours favorable pour l'acheteur.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 01 · ORAL ══════════════ -->
+<section class="sec" id="oral">
+  <div class="sec-hd"><span class="sec-num">01</span><h2 class="sec-title">Réponse Modèle d'Oral</h2></div>
+  <div class="oral">
+    <p>Ce chapitre traite de la sensibilité des obligations au temps et aux taux d'intérêt, organisé autour de trois piliers : les <strong>forward rates</strong>, l'<strong>évolution de la courbe des taux</strong>, et la <strong>duration</strong>.</p>
+    <p>Les <strong>forward rates</strong> sont les taux implicitement contenus dans la courbe zéro-coupon actuelle pour des périodes futures. L'intuition est simple : si le taux à 1 an est 10% et à 2 ans est 10.5%, le marché indique implicitement un taux de 11% entre l'année 1 et l'année 2. Ce taux — le forward 1y1 — est calculé par absence d'arbitrage via $r = (R_2T_2 - R_1T_1)/(T_2-T_1)$. Toute déviation permettrait un profit sans risque en achetant l'obligation 2 ans et en vendant simultanément l'obligation 1 an.</p>
+    <p>La <strong>yield curve</strong> évolue selon trois déformations : un <em>parallel shift</em> uniforme, un <em>flattening</em> qui réduit la pente, ou un <em>steepening</em> qui l'augmente. Les banques centrales pilotent la partie courte ; les forces de marché déterminent les maturités longues.</p>
+    <p>La <strong>duration de Macaulay</strong> est la moyenne pondérée des échéances des cash flows, les poids étant leurs valeurs actuelles relatives. Elle satisfait $\partial B/\partial y = -B \cdot D$, ce qui donne $\delta B/B \approx -D \cdot \delta y$. Pour une obligation 3 ans, coupon 10%, yield 12%, on obtient $D = 2.653$ ans. Pour de petits shifts (0.1%), l'approximation est parfaite ($-0.250$ USD). Pour de grands shifts (1%), une erreur de $0.035$ USD apparaît — due à la <strong>convexité</strong>.</p>
+    <p>La <strong>convexité</strong> est la courbure de la relation prix-yield. On ajoute un terme de second ordre : $\delta B/B \approx -D\delta y + \frac{1}{2}C(\delta y)^2$. Avec $C = 7.570$, l'estimation coïncide avec le prix réel. Ce terme est <em>toujours positif</em> — la convexité est donc toujours favorable pour le détenteur d'obligation.</p>
+    <p>Enfin, il existe plusieurs variantes de duration : la <strong>Modified Duration</strong> (ajustée pour la convention de compounding), le <strong>DV01</strong> (variation USD par basis point), la <strong>Effective Duration</strong> (pour les obligations avec options) et la <strong>Key Rate Duration</strong> (pour les shifts non-parallèles). En portefeuille : $D_p = \sum_i w_i D_i$.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 02 · FORWARD RATES ══════════════ -->
+<section class="sec" id="forward">
+  <div class="sec-hd"><span class="sec-num">02</span><h2 class="sec-title">Forward Rates</h2></div>
+
+  <h3>Définition &amp; Intuition</h3>
+  <p>Les <strong>taux forward</strong> (<em>forward rates</em>) sont les taux d'intérêt <em>implicitement contenus</em> dans la courbe zéro-coupon actuelle pour des périodes futures. Si le marché est en équilibre (absence d'arbitrage), ces taux décrivent ce que le marché "pense" que les taux seront dans le futur — sous réserve que rien ne change.</p>
+  <div class="box info">
+    <div class="box-title">💡 Intuition Centrale</div>
+    <p>Investir 100 USD pendant 2 ans au taux $R_2$ doit être <em>strictement équivalent</em> à investir pendant 1 an au taux $R_1$, puis réinvestir au taux forward $r$ entre l'année 1 et l'année 2. Si ce n'est pas le cas : arbitrage libre.</p>
+  </div>
+
+  <!-- SVG 1: Forward Rate Timeline -->
+  <h3>Construction Visuelle — De la Courbe Zéro aux Forward Rates</h3>
+  <div class="diag">
+  <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" style="max-width:700px;width:100%">
+    <defs>
+      <marker id="mkg" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#c9a84c"/></marker>
+      <marker id="mkb" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7eb8d4"/></marker>
+      <marker id="mkgr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7bc496"/></marker>
+      <marker id="mkv" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a78bfa"/></marker>
+      <marker id="mkr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#e07b7b"/></marker>
+    </defs>
+    <!-- axis -->
+    <line x1="55" y1="148" x2="660" y2="148" stroke="#9089bf" stroke-width="1.5"/>
+    <polygon points="655,143 665,148 655,153" fill="#9089bf"/>
+    <text x="672" y="152" font-family="'JetBrains Mono',monospace" font-size="12" fill="#9089bf">T</text>
+    <!-- markers -->
+    <circle cx="80"  cy="148" r="6" fill="#c9a84c"/>
+    <circle cx="260" cy="148" r="6" fill="#7eb8d4"/>
+    <circle cx="440" cy="148" r="6" fill="#7bc496"/>
+    <circle cx="600" cy="148" r="5" fill="#9089bf"/>
+    <text x="80"  y="170" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#c9a84c">T = 0</text>
+    <text x="260" y="170" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#7eb8d4">T = 1</text>
+    <text x="440" y="170" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#7bc496">T = 2</text>
+    <text x="600" y="170" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#9089bf">T = 3</text>
+    <!-- Zero rate R1: 0→1 -->
+    <line x1="88" y1="118" x2="248" y2="118" stroke="#c9a84c" stroke-width="2" marker-end="url(#mkg)"/>
+    <text x="174" y="110" text-anchor="middle" font-family="'EB Garamond',serif" font-size="13" fill="#c9a84c" font-weight="600">R₁ = 10.0%</text>
+    <text x="174" y="126" text-anchor="middle" font-family="'EB Garamond',serif" font-size="10" fill="#9089bf">zero rate 1 an</text>
+    <!-- Zero rate R2: 0→2 -->
+    <line x1="88" y1="90" x2="428" y2="90" stroke="#7eb8d4" stroke-width="2" marker-end="url(#mkb)"/>
+    <text x="258" y="82" text-anchor="middle" font-family="'EB Garamond',serif" font-size="13" fill="#7eb8d4" font-weight="600">R₂ = 10.5%</text>
+    <text x="258" y="98" text-anchor="middle" font-family="'EB Garamond',serif" font-size="10" fill="#9089bf">zero rate 2 ans</text>
+    <!-- Zero rate R3: 0→3 dashed -->
+    <line x1="88" y1="62" x2="588" y2="62" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#mkv)"/>
+    <text x="340" y="54" text-anchor="middle" font-family="'EB Garamond',serif" font-size="12" fill="#a78bfa">R₃ = 10.8% (zero rate 3 ans)</text>
+    <!-- Forward 1y1 : 1→2 -->
+    <line x1="268" y1="195" x2="428" y2="195" stroke="#7bc496" stroke-width="2.5" marker-end="url(#mkgr)"/>
+    <text x="348" y="218" text-anchor="middle" font-family="'EB Garamond',serif" font-size="13" fill="#7bc496" font-weight="600">r = 11.0% (forward 1y1)</text>
+    <text x="348" y="235" text-anchor="middle" font-family="'EB Garamond',serif" font-size="10" fill="#9089bf">taux implicite entre T=1 et T=2</text>
+    <!-- Forward 2y1 : 2→3 dashed -->
+    <line x1="448" y1="195" x2="588" y2="195" stroke="#e07b7b" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#mkr)"/>
+    <text x="525" y="218" text-anchor="middle" font-family="'EB Garamond',serif" font-size="12" fill="#e07b7b">r = 11.4% (forward 2y1)</text>
+    <!-- vertical connectors -->
+    <line x1="260" y1="142" x2="260" y2="189" stroke="#7eb8d4" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.5"/>
+    <line x1="440" y1="142" x2="440" y2="189" stroke="#7bc496" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.5"/>
+    <!-- Title -->
+    <text x="350" y="26" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="15" fill="#e8c97a" font-weight="700">De la Zero-Coupon Curve aux Forward Rates — Exemple du cours</text>
+  </svg>
+  <p class="diag-caption">Les flèches du <span style="color:#c9a84c">haut</span> représentent les taux zéro-coupon depuis T=0. Les flèches du <span style="color:#7bc496">bas</span> représentent les taux forward implicites entre deux dates futures.</p>
+  </div>
+
+  <h3>Calcul Numérique Détaillé</h3>
+  <h4>Investissement de 100 USD : comparaison 1 an vs 2 ans</h4>
+  <div class="mblock">
+    <div class="mlabel">Capitalisation continue</div>
+    $$\text{1 an :}\quad 100 \cdot e^{0.10 \times 1} = 110.52 \;\text{USD}$$
+    $$\text{2 ans :}\quad 100 \cdot e^{0.105 \times 2} = 123.37 \;\text{USD}$$
+  </div>
+
+  <h4>Forward 1y1 (entre T=1 et T=2)</h4>
+  <p>Le taux forward $x$ doit satisfaire la condition d'équivalence :</p>
+  <div class="mblock">
+    <div class="mlabel">Condition no-arbitrage</div>
+    $$100\,e^{0.10 \cdot 1} \cdot e^{x \cdot 1} = 100\,e^{0.105 \times 2}$$
+    $$0.10 + x = 0.21 \implies \boxed{x = 11\%}$$
+  </div>
+
+  <h4>Forward 2y1 (entre T=2 et T=3)</h4>
+  <div class="mblock">
+    <div class="mlabel">Calcul du forward 2y1</div>
+    $$100\,e^{0.105 \times 2} \cdot e^{x \cdot 1} = 100\,e^{0.108 \times 3}$$
+    $$x = \frac{0.108 \times 3 - 0.105 \times 2}{1} = \frac{0.324 - 0.210}{1} = \boxed{11.4\%}$$
+  </div>
+
+  <h3>Formule Générale</h3>
+  <div class="mblock">
+    <div class="mlabel">Taux forward entre T₁ et T₂ — capitalisation continue</div>
+    $$\boxed{r = \frac{R_2\,T_2 - R_1\,T_1}{T_2 - T_1}}$$
+  </div>
+  <p>où $R_1, R_2$ sont les taux zéro-coupon pour les maturités $T_1$ et $T_2$ respectivement.</p>
+
+  <!-- SVG 2: No-Arbitrage -->
+  <h3>L'Argument d'Absence d'Arbitrage</h3>
+  <p>Si le forward 1y1 était <em>10%</em> au lieu de 11%, un profit sans risque serait possible :</p>
+
+  <div class="diag">
+  <svg viewBox="0 0 680 215" xmlns="http://www.w3.org/2000/svg" style="max-width:680px;width:100%">
+    <defs>
+      <marker id="ag2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#7bc496"/></marker>
+      <marker id="ar2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#e07b7b"/></marker>
+    </defs>
+    <text x="340" y="22" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="14" fill="#e8c97a" font-weight="700">Stratégie d'Arbitrage si forward 1y1 = 10% ≠ 11%</text>
+    <!-- Strategy A -->
+    <text x="18" y="58" font-family="'JetBrains Mono',monospace" font-size="10" fill="#7bc496">STRATÉGIE A — Acheter obligation 2 ans (10.5%)</text>
+    <rect x="18" y="66" width="100" height="34" rx="4" fill="rgba(123,196,150,0.08)" stroke="#7bc496" stroke-width="1.2"/>
+    <text x="68" y="87" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#7bc496">−100 USD</text>
+    <text x="68" y="117" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">T = 0</text>
+    <line x1="122" y1="83" x2="548" y2="83" stroke="#7bc496" stroke-width="1.5" marker-end="url(#ag2)"/>
+    <text x="335" y="76" text-anchor="middle" font-family="'EB Garamond',serif" font-size="11" fill="#9089bf">→ attend 2 ans →</text>
+    <rect x="553" y="66" width="112" height="34" rx="4" fill="rgba(123,196,150,0.08)" stroke="#7bc496" stroke-width="1.2"/>
+    <text x="609" y="87" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#7bc496">+123.37 USD</text>
+    <text x="609" y="117" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">T = 2</text>
+    <!-- Strategy B -->
+    <text x="18" y="145" font-family="'JetBrains Mono',monospace" font-size="10" fill="#e07b7b">STRATÉGIE B — Vendre 1 an (10%) + contrat forward 1y1 (10%)</text>
+    <rect x="18" y="153" width="100" height="34" rx="4" fill="rgba(224,123,123,0.08)" stroke="#e07b7b" stroke-width="1.2"/>
+    <text x="68" y="174" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#e07b7b">+100 USD</text>
+    <line x1="122" y1="170" x2="300" y2="170" stroke="#e07b7b" stroke-width="1.5"/>
+    <rect x="305" y="153" width="120" height="34" rx="4" fill="rgba(224,123,123,0.08)" stroke="#e07b7b" stroke-width="1.2"/>
+    <text x="365" y="174" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#e07b7b">−110.52 USD</text>
+    <text x="365" y="204" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">T = 1</text>
+    <line x1="429" y1="170" x2="548" y2="170" stroke="#e07b7b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ar2)"/>
+    <rect x="553" y="153" width="112" height="34" rx="4" fill="rgba(224,123,123,0.08)" stroke="#e07b7b" stroke-width="1.2"/>
+    <text x="609" y="174" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#e07b7b">−122.14 USD</text>
+    <text x="609" y="204" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">T = 2</text>
+    <!-- Profit -->
+    <text x="340" y="207" text-anchor="middle" font-family="'EB Garamond',serif" font-size="13" fill="#c9a84c">🎯 Profit sans risque = 123.37 − 122.14 = +1.23 USD → Arbitrage éliminé par le marché !</text>
+  </svg>
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">✓ Conclusion No-Arbitrage</div>
+    <p>L'absence d'arbitrage contraint le forward 1y1 à être <strong>exactement 11%</strong>. Preuve formelle : $-100e^{0.1} \cdot e^{0.1} + 100e^{0.105 \times 2} = 100(-e^{0.2} + e^{0.21}) > 0$ si forward = 10%.</p>
+  </div>
+
+  <h3>Table Complète des Forward Rates</h3>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Maturité (ans)</th><th>Taux Zéro (%)</th><th>Forward Rate Annuel (%)</th><th>Calcul</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>10.0</td><td class="m">— (point de départ)</td><td class="m">—</td></tr>
+        <tr><td>2</td><td>10.5</td><td class="g">11.0 (forward 1y1)</td><td class="m">$(0.105×2 - 0.10×1)/1$</td></tr>
+        <tr><td>3</td><td>10.8</td><td class="g">11.4 (forward 2y1)</td><td class="m">$(0.108×3 - 0.105×2)/1$</td></tr>
+        <tr><td>4</td><td>11.0</td><td class="g">11.6 (forward 3y1)</td><td class="m">$(0.11×4 - 0.108×3)/1$</td></tr>
+        <tr><td>5</td><td>11.1</td><td class="g">11.5 (forward 4y1)</td><td class="m">$(0.111×5 - 0.11×4)/1$</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box vio">
+    <div class="box-title">🏠 Application Pratique : Crédit Hypothécaire</div>
+    <p>Vous voulez acheter une maison dans 1 an avec un crédit hypothécaire sur 10 ans. Votre banquier utilise le taux zéro-coupon à <strong>11 ans</strong> et le taux zéro-coupon à <strong>1 an</strong> pour calculer votre taux : c'est un forward 1y10. La <em>yield curve</em> passe ainsi d'une simple courbe à une <strong>surface des taux</strong> (surface dans le plan $T_1 \times T_2$).</p>
+  </div>
+</section>
+
+<!-- ══════════════ 03 · YIELD CURVE EVOLUTION ══════════════ -->
+<section class="sec" id="evolution">
+  <div class="sec-hd"><span class="sec-num">03</span><h2 class="sec-title">Évolution de la Yield Curve</h2></div>
+
+  <p>La courbe des taux évolue sous l'influence des <strong>banques centrales</strong> (partie courte — taux directeurs) et des <strong>forces de marché</strong> (partie longue — attentes inflation, croissance, risque). On identifie trois déformations canoniques :</p>
+
+  <!-- SVG 3: 4-panel yield curve evolutions -->
+  <div class="diag">
+  <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" style="max-width:700px;width:100%">
+    <!-- Panel 1: Normal -->
+    <text x="168" y="28" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="14" fill="#e8c97a" font-weight="700">① Courbe Normale</text>
+    <line x1="30" y1="175" x2="305" y2="175" stroke="#9089bf" stroke-width="1"/>
+    <line x1="30" y1="40" x2="30" y2="175" stroke="#9089bf" stroke-width="1"/>
+    <text x="312" y="179" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">T</text>
+    <text x="18" y="44" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">y</text>
+    <path d="M 42,162 C 90,145 150,120 220,98 C 255,88 285,80 298,76" fill="none" stroke="#7eb8d4" stroke-width="2.5"/>
+    <text x="168" y="195" text-anchor="middle" font-family="'EB Garamond',serif" font-size="12" fill="#9089bf">Pente positive — long terme &gt; court terme</text>
+    <text x="168" y="210" text-anchor="middle" font-family="'EB Garamond',serif" font-size="11" fill="#7eb8d4">Situation "normale" en expansion</text>
+
+    <!-- Panel 2: Parallel Shift -->
+    <text x="533" y="28" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="14" fill="#e8c97a" font-weight="700">② Parallel Shift</text>
+    <line x1="398" y1="175" x2="673" y2="175" stroke="#9089bf" stroke-width="1"/>
+    <line x1="398" y1="40" x2="398" y2="175" stroke="#9089bf" stroke-width="1"/>
+    <text x="680" y="179" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">T</text>
+    <text x="386" y="44" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">y</text>
+    <!-- original dashed -->
+    <path d="M 410,150 C 458,133 518,108 588,86 C 623,76 653,68 666,64" fill="none" stroke="#7eb8d4" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.6"/>
+    <!-- shifted solid -->
+    <path d="M 410,118 C 458,101 518,76 588,54 C 623,44 653,36 666,32" fill="none" stroke="#c9a84c" stroke-width="2.5"/>
+    <!-- arrows -->
+    <line x1="500" y1="104" x2="500" y2="78" stroke="#e07b7b" stroke-width="1.5" marker-end="url(#mku3)"/>
+    <line x1="580" y1="82" x2="580" y2="56" stroke="#e07b7b" stroke-width="1.5" marker-end="url(#mku3)"/>
+    <line x1="420" y1="146" x2="420" y2="120" stroke="#e07b7b" stroke-width="1.5" marker-end="url(#mku3)"/>
+    <text x="533" y="195" text-anchor="middle" font-family="'EB Garamond',serif" font-size="12" fill="#c9a84c">Toute la courbe monte/descend de δy</text>
+    <text x="533" y="210" text-anchor="middle" font-family="'EB Garamond',serif" font-size="11" fill="#9089bf">Hypothèse implicite de la duration</text>
+    <defs>
+      <marker id="mku3" markerWidth="6" markerHeight="6" refX="3" refY="6" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#e07b7b" transform="rotate(180,3,3)"/></marker>
+    </defs>
+
+    <!-- Separator line -->
+    <line x1="10" y1="230" x2="690" y2="230" stroke="#9089bf" stroke-width="0.5" opacity="0.3"/>
+
+    <!-- Panel 3: Flattening -->
+    <text x="168" y="254" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="14" fill="#e8c97a" font-weight="700">③ Flattening</text>
+    <line x1="30" y1="390" x2="305" y2="390" stroke="#9089bf" stroke-width="1"/>
+    <line x1="30" y1="260" x2="30" y2="390" stroke="#9089bf" stroke-width="1"/>
+    <!-- original dashed -->
+    <path d="M 42,378 C 90,361 150,336 220,314 C 255,304 285,296 298,292" fill="none" stroke="#7eb8d4" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.6"/>
+    <!-- flattened: short rates up, long rates stable -->
+    <path d="M 42,348 C 90,345 160,336 230,330 C 258,328 286,327 298,327" fill="none" stroke="#7bc496" stroke-width="2.5"/>
+    <!-- arrows: short up, long stable -->
+    <line x1="60" y1="374" x2="60" y2="350" stroke="#e07b7b" stroke-width="1.2" marker-end="url(#mku3)"/>
+    <text x="168" y="395" text-anchor="middle" font-family="'EB Garamond',serif" font-size="11" fill="#7bc496">Court terme ↑ · Long terme stable → Pente ↓</text>
+
+    <!-- Panel 4: Steepening -->
+    <text x="533" y="254" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="14" fill="#e8c97a" font-weight="700">④ Steepening</text>
+    <line x1="398" y1="390" x2="673" y2="390" stroke="#9089bf" stroke-width="1"/>
+    <line x1="398" y1="260" x2="398" y2="390" stroke="#9089bf" stroke-width="1"/>
+    <!-- original dashed -->
+    <path d="M 410,378 C 458,361 518,336 588,314 C 623,304 653,296 666,292" fill="none" stroke="#7eb8d4" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.6"/>
+    <!-- steepened: short stable, long up -->
+    <path d="M 410,380 C 458,365 518,336 588,298 C 623,282 653,270 666,263" fill="none" stroke="#a78bfa" stroke-width="2.5"/>
+    <!-- arrows: long up -->
+    <line x1="630" y1="290" x2="630" y2="268" stroke="#e07b7b" stroke-width="1.2" marker-end="url(#mku3)"/>
+    <line x1="580" y1="310" x2="580" y2="292" stroke="#e07b7b" stroke-width="1.2" marker-end="url(#mku3)"/>
+    <text x="533" y="395" text-anchor="middle" font-family="'EB Garamond',serif" font-size="11" fill="#a78bfa">Court terme stable · Long terme ↑ → Pente ↑</text>
+
+    <!-- Vertical separator -->
+    <line x1="350" y1="235" x2="350" y2="400" stroke="#9089bf" stroke-width="0.5" opacity="0.3"/>
+  </svg>
+  <p class="diag-caption">Les courbes <span style="color:#7eb8d4">pointillées bleues</span> = courbe originale ; les courbes <span style="color:#c9a84c">pleines colorées</span> = nouvelle forme après déformation.</p>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Courbe Inversée (Inverted Yield Curve)</div>
+    <p>Quand le court terme dépasse le long terme, la courbe est <em>inversée</em> — signal historique de récession imminente (ex. : USA 2022-2023). Les marchés anticipent une baisse future des taux directeurs par la Fed. La duration seule ne capture pas ces dynamiques complexes ; il faut les <strong>Key Rate Durations</strong>.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 04 · DURATION ══════════════ -->
+<section class="sec" id="duration">
+  <div class="sec-hd"><span class="sec-num">04</span><h2 class="sec-title">Duration de Macaulay</h2></div>
+
+  <h3>Définition &amp; Intuition</h3>
+  <div class="box info">
+    <div class="box-title">💡 L'image à retenir</div>
+    <p>Imaginez une bascule. Les <em>poids posés aux différentes positions temporelles</em> sont les valeurs actuelles des cash flows. La <strong>duration est le point d'équilibre de cette bascule</strong> — le centre de gravité temporel de tous les paiements.</p>
+  </div>
+  <p>Pour une <strong>obligation zéro-coupon</strong> de maturité $n$ : $D = n$ (un seul flux, à la maturité). Pour une <strong>obligation à coupons</strong> : $D &lt; n$ (les coupons intermédiaires tirent le centre vers l'avant).</p>
+
+  <h3>Formule Mathématique</h3>
+  <p>Rappel du prix de l'obligation (capitalisation continue) :</p>
+  <div class="mblock">
+    <div class="mlabel">Prix — Bond Pricing Formula</div>
+    $$B(t) = \sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)}$$
+  </div>
+  <p>où $c_n$ inclut le principal. La duration de Macaulay :</p>
+  <div class="mblock">
+    <div class="mlabel">Duration de Macaulay — définition</div>
+    $$\boxed{D = \frac{\displaystyle\sum_{i=1}^{n} (t_i - t)\cdot c_i \cdot e^{-y(t_i - t)}}{B(t)} = \sum_{i=1}^{n} (t_i - t)\cdot w_i}$$
+  </div>
+  <p>avec $w_i = c_i e^{-y(t_i-t)}/B(t)$ (poids = valeur actuelle relative du flux $i$). On a $\sum_i w_i = 1$ et $w_i > 0$.</p>
+
+  <h3>Dérivation de la Sensibilité Prix-Yield</h3>
+  <p>En dérivant $B(t)$ par rapport à $y$ :</p>
+  <div class="mblock">
+    <div class="mlabel">Dérivée — étape clé</div>
+    $$\frac{\partial B}{\partial y} = -\sum_{i=1}^{n} c_i \cdot (t_i - t) \cdot e^{-y(t_i - t)} = -B \cdot D$$
+  </div>
+  <div class="mblock">
+    <div class="mlabel">Approximation linéaire fondamentale</div>
+    $$\boxed{\frac{\delta B}{B} \approx -D \cdot \delta y}$$
+  </div>
+  <p>Une <strong>hausse de taux</strong> ($\delta y > 0$) implique une <strong>baisse de prix</strong> ($\delta B < 0$) : la relation inverse fondamentale du fixed income.</p>
+
+  <!-- SVG 4: Duration as balance -->
+  <h3>Visualisation — La Balance des Cash Flows</h3>
+  <div class="diag">
+  <svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg" style="max-width:680px;width:100%">
+    <text x="340" y="24" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="15" fill="#e8c97a" font-weight="700">Duration = Centre de Gravité — Obligation 3 ans, coupon 10%, yield 12%</text>
+    <!-- Time axis -->
+    <line x1="45" y1="138" x2="640" y2="138" stroke="#9089bf" stroke-width="1.5"/>
+    <!-- Cash flow bars — proportional to PV -->
+    <!-- t=0.5: PV=4.709/B ≈ 5%, small bar h=18 -->
+    <rect x="92" y="120" width="30" height="18" rx="2" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.2"/>
+    <text x="107" y="133" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#7eb8d4">5</text>
+    <text x="107" y="155" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">0.5</text>
+    <!-- t=1.0: PV=4.435 -->
+    <rect x="173" y="121" width="30" height="17" rx="2" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.2"/>
+    <text x="188" y="133" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#7eb8d4">5</text>
+    <text x="188" y="155" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">1.0</text>
+    <!-- t=1.5: PV=4.176 -->
+    <rect x="254" y="123" width="30" height="15" rx="2" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.2"/>
+    <text x="269" y="133" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#7eb8d4">5</text>
+    <text x="269" y="155" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">1.5</text>
+    <!-- t=2.0: PV=3.933 -->
+    <rect x="335" y="124" width="30" height="14" rx="2" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.2"/>
+    <text x="350" y="133" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#7eb8d4">5</text>
+    <text x="350" y="155" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">2.0</text>
+    <!-- t=2.5: PV=3.704 -->
+    <rect x="416" y="125" width="30" height="13" rx="2" fill="#1c1828" stroke="#7eb8d4" stroke-width="1.2"/>
+    <text x="431" y="133" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#7eb8d4">5</text>
+    <text x="431" y="155" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">2.5</text>
+    <!-- t=3.0: PV=73.256 — BIG BAR -->
+    <rect x="497" y="48" width="50" height="90" rx="3" fill="rgba(123,196,150,0.15)" stroke="#7bc496" stroke-width="1.8"/>
+    <text x="522" y="78" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#7bc496">105</text>
+    <text x="522" y="93" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#7bc496">+ principal</text>
+    <text x="522" y="155" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">3.0</text>
+    <!-- Duration fulcrum -->
+    <!-- D=2.653 → position: x = 45 + (2.653/3.5)*595 = 45 + 451 = 496 -->
+    <!-- But let's place it at x_D = 45 + (2.653/3.5)*580 ≈ 45 + 440 = 485 -->
+    <!-- Actually T range 0→3.5, pixels 45→640, so 1yr = 595/3.5 = 170px/yr -->
+    <!-- D=2.653: x = 45 + 2.653*170 = 45 + 451 = 496 -->
+    <polygon points="496,138 480,168 512,168" fill="#c9a84c" opacity="0.9"/>
+    <rect x="476" y="168" width="40" height="5" rx="2" fill="#c9a84c" opacity="0.7"/>
+    <text x="496" y="188" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="12" fill="#c9a84c" font-weight="600">D = 2.653 ans</text>
+    <text x="496" y="204" text-anchor="middle" font-family="'EB Garamond',serif" font-size="11" fill="#9089bf">Centre de gravité (entre 0 et 3 ans)</text>
+    <!-- Axis label -->
+    <text x="55" y="155" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">0</text>
+    <!-- B = total PV -->
+    <text x="600" y="90" font-family="'EB Garamond',serif" font-size="12" fill="#e4dffa">B(t) = <tspan fill="#c9a84c">94.213</tspan></text>
+    <text x="600" y="107" font-family="'EB Garamond',serif" font-size="11" fill="#9089bf">Σ valeurs actuelles</text>
+  </svg>
+  <p class="diag-caption">Le triangle <span style="color:#c9a84c">doré</span> représente le point d'équilibre de la bascule des cash flows. Le gros flux à T=3 (coupon + principal) domine, mais les coupons intermédiaires ramènent D à 2.653 ans.</p>
+  </div>
+
+  <h3>Exemple Numérique Complet</h3>
+  <p><strong>Obligation 3 ans, coupon 10% semestriel (5 USD), yield y = 12%</strong></p>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Temps (ans)</th><th>Cash Flow (USD)</th><th>Valeur Actuelle (USD)</th><th>Poids $w_i$</th><th>$t_i \times w_i$</th></tr></thead>
+      <tbody>
+        <tr><td>0.5</td><td>5</td><td>$5\,e^{-0.12 \times 0.5} = 4.709$</td><td>0.0500</td><td>0.025</td></tr>
+        <tr><td>1.0</td><td>5</td><td>4.435</td><td>0.0471</td><td>0.047</td></tr>
+        <tr><td>1.5</td><td>5</td><td>4.176</td><td>0.0443</td><td>0.066</td></tr>
+        <tr><td>2.0</td><td>5</td><td>3.933</td><td>0.0417</td><td>0.083</td></tr>
+        <tr><td>2.5</td><td>5</td><td>3.704</td><td>0.0393</td><td>0.098</td></tr>
+        <tr><td>3.0</td><td><strong>105</strong></td><td><strong>73.256</strong></td><td><strong>0.7775</strong></td><td><strong>2.333</strong></td></tr>
+        <tr style="background:rgba(201,168,76,.04)">
+          <td><strong>Total</strong></td><td>—</td>
+          <td class="g"><strong>B = 94.213</strong></td>
+          <td class="g"><strong>1.000</strong></td>
+          <td class="g"><strong>D = 2.653</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Validation de l'Approximation</h3>
+  <h4>Petit shift : δy = 0.1% → Parfait ✓</h4>
+  <div class="mblock">
+    <div class="mlabel">δy = 0.001 (0.1%)</div>
+    $$\delta B^{\text{réel}} = B(y{=}12.1\%) - 94.213 = 93.963 - 94.213 = -0.250 \;\text{USD}$$
+    $$\delta B^{\text{est}} = -B \cdot D \cdot \delta y = -94.213 \times 2.653 \times 0.001 = -0.250 \;\text{USD}\quad \checkmark$$
+  </div>
+  <h4>Grand shift : δy = 1.0% → Erreur significative ✗</h4>
+  <div class="mblock">
+    <div class="mlabel">δy = 0.01 (1%)</div>
+    $$\delta B^{\text{réel}} = 91.749 - 94.213 = -2.464 \;\text{USD}$$
+    $$\delta B^{\text{est}} = -94.213 \times 2.653 \times 0.01 = -2.499 \;\text{USD}\quad \text{Erreur} = 0.035$$
+  </div>
+  <div class="box warn">
+    <div class="box-title">⚠️ Limite Fondamentale</div>
+    <p>La duration est une approximation <strong>linéaire (1er ordre)</strong>. Elle est excellente pour $|\delta y| &lt; 0.5\%$, mais la relation prix-yield est <em>non linéaire</em>. Pour les grands shifts, on a besoin du terme de second ordre : la <strong>convexité</strong>.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 05 · CONVEXITÉ ══════════════ -->
+<section class="sec" id="convexity">
+  <div class="sec-hd"><span class="sec-num">05</span><h2 class="sec-title">Convexité</h2></div>
+
+  <h3>Intuition Géométrique</h3>
+  <p>La relation prix-yield est <strong>convexe</strong> (courbure vers le haut). Cela signifie :</p>
+  <ul>
+    <li>Taux <strong>↑</strong> : prix baisse, mais <em>moins vite que linéairement</em></li>
+    <li>Taux <strong>↓</strong> : prix monte, mais <em>plus vite que linéairement</em></li>
+    <li>Dans les deux cas, la réalité est <em>au-dessus</em> de l'approximation linéaire → <strong>toujours bénéfique</strong> pour l'acheteur d'obligation</li>
+  </ul>
+
+  <!-- SVG 5: Price-Yield Convexity -->
+  <div class="diag">
+  <svg viewBox="0 0 660 310" xmlns="http://www.w3.org/2000/svg" style="max-width:660px;width:100%">
+    <text x="330" y="24" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="15" fill="#e8c97a" font-weight="700">Relation Prix-Yield : Convexité vs Approximation Linéaire (Duration)</text>
+    <!-- Axes -->
+    <line x1="60" y1="272" x2="620" y2="272" stroke="#9089bf" stroke-width="1.5"/>
+    <line x1="60" y1="45" x2="60" y2="272" stroke="#9089bf" stroke-width="1.5"/>
+    <polygon points="615,267 625,272 615,277" fill="#9089bf"/>
+    <polygon points="55,50 60,40 65,50" fill="#9089bf"/>
+    <text x="635" y="276" font-family="'JetBrains Mono',monospace" font-size="11" fill="#9089bf">y (%)</text>
+    <text x="38" y="44" font-family="'JetBrains Mono',monospace" font-size="11" fill="#9089bf">B</text>
+    <!-- Grid lines -->
+    <line x1="60" y1="192" x2="620" y2="192" stroke="#9089bf" stroke-width="0.4" opacity="0.3" stroke-dasharray="3,4"/>
+    <line x1="340" y1="45" x2="340" y2="272" stroke="#9089bf" stroke-width="0.4" opacity="0.3" stroke-dasharray="3,4"/>
+    <!-- Axis labels -->
+    <text x="50" y="78" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">130</text>
+    <text x="50" y="138" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">110</text>
+    <text x="50" y="196" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="10" fill="#c9a84c">94.2</text>
+    <text x="50" y="248" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">75</text>
+    <text x="120" y="287" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">6%</text>
+    <text x="230" y="287" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">9%</text>
+    <text x="340" y="287" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#c9a84c">12%*</text>
+    <text x="450" y="287" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">15%</text>
+    <text x="560" y="287" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">18%</text>
+    <!-- Actual bond price curve (convex, decreasing) -->
+    <!-- Key points: (6%, ~130 → y=78), (9%, ~110 → y=138), (12%, ~94.2 → y=192), (15%, ~83 → y=228), (18%, ~74 → y=255) -->
+    <path d="M 75,75 C 140,90 190,125 340,192 C 430,228 500,245 610,264" fill="none" stroke="#7bc496" stroke-width="3"/>
+    <!-- Duration tangent line at y=12% (x=340, y=192) -->
+    <!-- Slope approx: from (6%, 130) to (18%, 74) => Δy=12%=120px, ΔB=-56 => dB/dy_svg ≈ -130 -->
+    <!-- Using slope of -B*D: let's draw a straight line through (340,192) with appropriate slope -->
+    <line x1="100" y1="106" x2="570" y2="256" stroke="#e07b7b" stroke-width="1.8" stroke-dasharray="7,4"/>
+    <!-- Reference point at y=12% -->
+    <circle cx="340" cy="192" r="6" fill="#c9a84c"/>
+    <line x1="340" y1="198" x2="340" y2="272" stroke="#c9a84c" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.5"/>
+    <!-- Convexity gap annotation - right side (y up) -->
+    <line x1="510" y1="230" x2="510" y2="248" stroke="#a78bfa" stroke-width="2"/>
+    <line x1="500" y1="230" x2="520" y2="230" stroke="#a78bfa" stroke-width="1.5"/>
+    <line x1="500" y1="248" x2="520" y2="248" stroke="#a78bfa" stroke-width="1.5"/>
+    <text x="530" y="237" font-family="'EB Garamond',serif" font-size="11" fill="#a78bfa">Δ convexité</text>
+    <text x="530" y="250" font-family="'EB Garamond',serif" font-size="11" fill="#a78bfa">(toujours &gt; 0)</text>
+    <!-- Convexity gap annotation - left side (y down) -->
+    <line x1="175" y1="118" x2="175" y2="138" stroke="#a78bfa" stroke-width="2"/>
+    <line x1="165" y1="118" x2="185" y2="118" stroke="#a78bfa" stroke-width="1.5"/>
+    <line x1="165" y1="138" x2="185" y2="138" stroke="#a78bfa" stroke-width="1.5"/>
+    <!-- Labels -->
+    <text x="80" y="63" font-family="'EB Garamond',serif" font-size="13" fill="#7bc496" font-weight="600">B(y) réel (convexe)</text>
+    <text x="115" y="280" font-family="'EB Garamond',serif" font-size="12" fill="#e07b7b">Approx. duration (linéaire)</text>
+    <text x="330" y="185" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#c9a84c">y* = 12%</text>
+    <!-- Arrows pointing to gap -->
+    <text x="68" y="128" font-family="'EB Garamond',serif" font-size="10" fill="#a78bfa">← B réel &gt; B est.</text>
+    <text x="68" y="141" font-family="'EB Garamond',serif" font-size="10" fill="#a78bfa">(si taux baissent)</text>
+    <text x="390" y="220" font-family="'EB Garamond',serif" font-size="10" fill="#a78bfa">B réel &gt; B est. →</text>
+    <text x="390" y="233" font-family="'EB Garamond',serif" font-size="10" fill="#a78bfa">(si taux montent)</text>
+  </svg>
+  <p class="diag-caption">La courbe <span style="color:#7bc496">verte</span> représente le prix réel (convexe). La droite <span style="color:#e07b7b">rouge pointillée</span> est l'approximation par la duration (tangente en y*=12%). La convexité (écart <span style="color:#a78bfa">violet</span>) est toujours positive — le prix réel est toujours au-dessus de la tangente.</p>
+  </div>
+
+  <h3>Définition Mathématique</h3>
+  <div class="mblock">
+    <div class="mlabel">Convexité C — second ordre</div>
+    $$\boxed{C = \frac{1}{B}\frac{\partial^2 B}{\partial y^2} = \frac{1}{B}\sum_{i=1}^{n} c_i (t_i - t)^2 e^{-y(t_i - t)}}$$
+  </div>
+
+  <h3>Approximation au Second Ordre (Taylor)</h3>
+  <div class="mblock">
+    <div class="mlabel">Variation de prix — expansion de Taylor à l'ordre 2</div>
+    $$\boxed{\frac{\delta B}{B} \approx -D \cdot \delta y + \frac{1}{2}\,C \cdot (\delta y)^2}$$
+  </div>
+
+  <h4>Validation numérique : δy = 1%, C = 7.570</h4>
+  <div class="mblock">
+    <div class="mlabel">Calcul complet</div>
+    $$\frac{\delta B}{B}^{\text{est}} = -2.653 \times 0.01 + \frac{1}{2} \times 7.570 \times (0.01)^2$$
+    $$= -0.02653 + 0.000379 = -0.026151$$
+    $$\delta B^{\text{est}} = 94.213 \times (-0.026151) = -\mathbf{2.464}\;\text{USD} = \delta B^{\text{réel}} \quad \checkmark$$
+  </div>
+
+  <div class="box ok">
+    <div class="box-title">✓ Propriété Fondamentale de la Convexité</div>
+    <p>Le terme $\frac{1}{2}C(\delta y)^2$ est <strong>toujours positif</strong> quel que soit le signe de $\delta y$. La convexité bénéficie toujours au détenteur d'obligation. Des obligations plus convexes se négocient avec une prime — les investisseurs paient pour cette protection asymétrique.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 06 · TYPES DE DURATION ══════════════ -->
+<section class="sec" id="types">
+  <div class="sec-hd"><span class="sec-num">06</span><h2 class="sec-title">Types de Duration</h2></div>
+
+  <!-- SVG 6: Duration Types Tree -->
+  <div class="diag">
+  <svg viewBox="0 0 680 295" xmlns="http://www.w3.org/2000/svg" style="max-width:680px;width:100%">
+    <text x="340" y="22" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="14" fill="#e8c97a" font-weight="700">Taxonomie des Mesures de Duration</text>
+    <!-- Root -->
+    <rect x="220" y="32" width="240" height="44" rx="7" fill="rgba(201,168,76,0.1)" stroke="#c9a84c" stroke-width="2"/>
+    <text x="340" y="51" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="15" fill="#c9a84c" font-weight="700">Macaulay Duration D(t)</text>
+    <text x="340" y="68" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">Σ(tᵢ−t)·wᵢ   [années]   cap. continue</text>
+    <!-- Branch to Modified -->
+    <line x1="340" y1="76" x2="340" y2="104" stroke="#c9a84c" stroke-width="1.5"/>
+    <rect x="200" y="104" width="280" height="44" rx="6" fill="rgba(126,184,212,0.08)" stroke="#7eb8d4" stroke-width="1.5"/>
+    <text x="340" y="122" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="14" fill="#7eb8d4" font-weight="600">Modified Duration D_mod</text>
+    <text x="340" y="139" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">D / (1 + y/nᶜ)   toute convention</text>
+    <!-- Branch to DV01 -->
+    <line x1="340" y1="148" x2="340" y2="174" stroke="#7eb8d4" stroke-width="1.5"/>
+    <rect x="200" y="174" width="280" height="44" rx="6" fill="rgba(123,196,150,0.08)" stroke="#7bc496" stroke-width="1.5"/>
+    <text x="340" y="192" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="14" fill="#7bc496" font-weight="600">Dollar Duration — DV01</text>
+    <text x="340" y="209" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">D_mod × B / 100   [USD/bp]</text>
+    <!-- Branch left: Effective -->
+    <line x1="220" y1="54" x2="120" y2="54" stroke="#c9a84c" stroke-width="1.5"/>
+    <line x1="120" y1="54" x2="120" y2="104" stroke="#c9a84c" stroke-width="1.5"/>
+    <rect x="10" y="104" width="220" height="44" rx="6" fill="rgba(167,139,250,0.08)" stroke="#a78bfa" stroke-width="1.5"/>
+    <text x="120" y="122" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="13" fill="#a78bfa" font-weight="600">Effective Duration</text>
+    <text x="120" y="139" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">(B⁻−B⁺)/(2B·δy)</text>
+    <text x="120" y="162" text-anchor="middle" font-family="'EB Garamond',serif" font-size="11" fill="#a78bfa">Obligations avec options</text>
+    <text x="120" y="177" text-anchor="middle" font-family="'EB Garamond',serif" font-size="11" fill="#9089bf">Callable, Putable, MBS</text>
+    <!-- Branch right: Key Rate -->
+    <line x1="460" y1="54" x2="570" y2="54" stroke="#c9a84c" stroke-width="1.5"/>
+    <line x1="570" y1="54" x2="570" y2="104" stroke="#c9a84c" stroke-width="1.5"/>
+    <rect x="456" y="104" width="218" height="44" rx="6" fill="rgba(224,123,123,0.08)" stroke="#e07b7b" stroke-width="1.5"/>
+    <text x="565" y="122" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="13" fill="#e07b7b" font-weight="600">Key Rate Duration</text>
+    <text x="565" y="139" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" fill="#9089bf">sensibilité par bucket</text>
+    <text x="565" y="162" text-anchor="middle" font-family="'EB Garamond',serif" font-size="11" fill="#e07b7b">Shifts non-parallèles</text>
+    <text x="565" y="177" text-anchor="middle" font-family="'EB Garamond',serif" font-size="11" fill="#9089bf">Flattening, Steepening</text>
+    <!-- Footer labels -->
+    <text x="120" y="220" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#9089bf">Flux non-fixes → numérique</text>
+    <text x="565" y="220" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#9089bf">Immunisation avancée</text>
+    <text x="340" y="252" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#9089bf">Standard trading desk / risk management</text>
+    <!-- Legend use case -->
+    <text x="340" y="275" text-anchor="middle" font-family="'EB Garamond',serif" font-size="12" fill="#9089bf">Chaque type répond à un besoin spécifique — du pédagogique (Macaulay) au trading (DV01)</text>
+  </svg>
+  </div>
+
+  <h3>1. Duration de Macaulay</h3>
+  <div class="mblock">$$D(t) = \sum_{i=1}^{n} (t_i - t) \cdot \frac{c_i e^{-y(t_i-t)}}{B(t)}$$</div>
+  <p>Base théorique, valide pour la capitalisation <em>continue</em>. Exprime la durée de vie moyenne pondérée de l'obligation en années.</p>
+
+  <h3>2. Duration Modifiée (<em>Modified Duration</em>)</h3>
+  <div class="mblock">$$D_{mod}(t) = \frac{D(t)}{1 + y/n_c}$$</div>
+  <p>Ajustement pour toute convention de compounding ($n_c$ = nombre de periodes par an). En capitalisation continue : $n_c \to \infty$, donc $D_{mod} = D$. En capitalisation semestrielle : $D_{mod} = D/(1 + y/2) &lt; D$.</p>
+  <div class="box info">
+    <div class="box-title">Pourquoi l'ajustement ?</div>
+    <p>La relation $\delta B/B = -D_{mod} \cdot \delta y$ est exacte pour <em>toute convention de compounding</em>. La Duration de Macaulay n'est directement applicable que pour la capitalisation continue. La modified duration standardise la mesure.</p>
+  </div>
+
+  <h3>3. Dollar Duration — DV01</h3>
+  <div class="mblock">$$\text{DV01} = D_{dollar} = \frac{D_{mod}(t) \cdot B}{100}$$</div>
+  <p><em>Dollar Value of 1 basis point</em> : variation absolue en USD du prix pour un mouvement de 1 bp (0.01%). Standard du marché pour le trading et le hedging. Avantage : directement agrégeable à travers un portefeuille.</p>
+
+  <h3>4. Duration Effective (<em>Effective Duration</em>)</h3>
+  <div class="mblock">$$D_{eff} = \frac{B(y - \delta y) - B(y + \delta y)}{2 \cdot B(y) \cdot \delta y}$$</div>
+  <p>Indispensable pour les obligations à <strong>options embarquées</strong> (callable, putable, MBS) dont les cash flows changent quand les taux changent. Elle est calculée <em>numériquement</em> via un modèle de taux.</p>
+
+  <h3>5. Key Rate Duration</h3>
+  <p>Mesure la sensibilité à des changements de taux sur des <em>maturités spécifiques</em> de la courbe. Permet de décomposer et d'immuniser précisément le risque de taux face aux shifts non-parallèles. Essentielle pour l'ALM avancé.</p>
+</section>
+
+<!-- ══════════════ 07 · PORTFOLIO ══════════════ -->
+<section class="sec" id="portfolio">
+  <div class="sec-hd"><span class="sec-num">07</span><h2 class="sec-title">Gestion de Portefeuille</h2></div>
+
+  <h3>Duration d'un Portefeuille</h3>
+  <div class="mblock">
+    <div class="mlabel">Additivité linéaire — propriété fondamentale</div>
+    $$D_{\text{portfolio}} = \sum_{i=1}^{N} w_i \cdot D_i \quad \text{avec} \quad w_i = \frac{V_i}{V_{\text{total}}}$$
+  </div>
+  <p>La duration d'un portefeuille est la <em>moyenne pondérée des durations des constituants</em>, pondérée par les valeurs de marché. Cette propriété de linéarité est très pratique pour la gestion.</p>
+
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="ctag">Taux Haussiers</div>
+      <h4>Réduire la Duration</h4>
+      <p>En période de hausse anticipée des taux, réduire la duration limite les pertes en mark-to-market. On vend des obligations longues, on achète des obligations courtes ou on entre en swap payeur.</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">ALM</div>
+      <h4>Duration Matching</h4>
+      <p>Technique d'<em>Asset-Liability Management</em> : faire correspondre la duration des actifs à celle des passifs pour neutraliser le risque de taux (fonds de pension, assureurs).</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Multi-Devises</div>
+      <h4>Duration par Devise</h4>
+      <p>Sur un portefeuille multi-devises, on calcule une <em>duration par devise</em> pour capturer les risques de taux spécifiques à chaque zone monétaire (EUR, USD, CHF, etc.).</p>
+    </div>
+    <div class="ccard">
+      <div class="ctag">Proxy</div>
+      <h4>Volatilité ≈ Duration</h4>
+      <p>La volatilité des rendements d'une obligation est un <em>bon proxy</em> pour sa duration : plus la duration est élevée, plus la volatilité est élevée. Utile pour les comparaisons rapides.</p>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title">📊 Trade-Off Risque-Rendement</div>
+    <p>Une duration élevée signifie : <strong>(a)</strong> sensibilité élevée aux taux, <strong>(b)</strong> volatilité élevée, mais <strong>(c)</strong> rendement attendu généralement plus élevé (prime de terme). C'est le trade-off fondamental en fixed income. En 2022, les portefeuilles à longue duration ont subi des pertes historiques lors de la hausse brutale des taux de la Fed.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 08 · FORMULES ══════════════ -->
+<section class="sec" id="formulas">
+  <div class="sec-hd"><span class="sec-num">08</span><h2 class="sec-title">Formules Essentielles</h2></div>
+  <div class="fcards">
+
+    <div class="fc">
+      <div class="fc-head"><span class="fc-name">Taux Forward Général</span><span class="fc-tag">No-Arbitrage</span></div>
+      <div class="fc-body">
+        <div class="fc-expr">$$r = \frac{R_2\,T_2 - R_1\,T_1}{T_2 - T_1}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$R_1, R_2$ : taux zéro-coupon aux maturités $T_1 &lt; T_2$. $r$ : taux forward entre $T_1$ et $T_2$. Capitalisation continue.</p></div>
+          <div class="fc-item"><h5>Intuition</h5><p>Équilibre entre investir directement à $T_2$ et combiner un investissement à $T_1$ puis un forward à $r$. Sinon : arbitrage.</p></div>
+          <div class="fc-item"><h5>Exemple</h5><p>$R_1=10\%$, $T_1=1$, $R_2=10.5\%$, $T_2=2$ → $r = (0.21 - 0.10)/1 = \mathbf{11\%}$</p></div>
+          <div class="fc-item"><h5>Limite</h5><p>Valide pour cap. continue. Pour semi-annual : formule plus complexe. Et ceci est l'équilibre théorique — en pratique le taux futur peut différer.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head"><span class="fc-name">Duration de Macaulay</span><span class="fc-tag">Centre de Gravité</span></div>
+      <div class="fc-body">
+        <div class="fc-expr">$$D = \frac{\displaystyle\sum_{i=1}^n (t_i - t)\cdot c_i\,e^{-y(t_i-t)}}{B(t)}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Variables</h5><p>$t_i$ : dates de paiement, $c_i$ : cash flows (dernier inclut le principal), $y$ : yield, $B(t)$ : prix.</p></div>
+          <div class="fc-item"><h5>Propriétés</h5><p>$0 &lt; D \leq T_{mat}$. $D = T$ pour zéro-coupon. Coupon ↑ → D ↓. Yield ↑ → D ↓.</p></div>
+          <div class="fc-item"><h5>Exemple numérique</h5><p>Oblig. 3 ans, coupon 10%, y=12% : $D = \mathbf{2.653}$ ans.</p></div>
+          <div class="fc-item"><h5>Interprétation</h5><p>Durée de vie effective. En années. Proxy de la sensibilité aux taux : durée élevée → risque élevé → rendement élevé.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head"><span class="fc-name">Sensibilité Prix-Yield</span><span class="fc-tag">Relation Clé</span></div>
+      <div class="fc-body">
+        <div class="fc-expr">$$\frac{\partial B}{\partial y} = -B \cdot D \quad \Longrightarrow \quad \frac{\delta B}{B} \approx -D \cdot \delta y$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Dérivation</h5><p>$\frac{\partial B}{\partial y} = -\sum_i c_i(t_i-t)e^{-y(t_i-t)} = -B\cdot D$. Par définition de D.</p></div>
+          <div class="fc-item"><h5>Exemple</h5><p>$D=2.653$, $\delta y = 0.1\%$, $B=94.213$ USD → $\delta B = -0.250$ USD ✓</p></div>
+          <div class="fc-item"><h5>Limite</h5><p>Approximation linéaire (1er ordre). Erreur croissante avec $|\delta y|$. Valide pour $|\delta y| \lesssim 0.5\%$.</p></div>
+          <div class="fc-item"><h5>Signe</h5><p>$\delta y &gt; 0$ → $\delta B &lt; 0$. La relation taux-prix est toujours <em>inverse</em>. Ne jamais oublier le signe négatif.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head"><span class="fc-name">Approximation avec Convexité</span><span class="fc-tag">Second Ordre — Taylor</span></div>
+      <div class="fc-body">
+        <div class="fc-expr">$$\frac{\delta B}{B} \approx -D \cdot \delta y + \frac{1}{2}\,C \cdot (\delta y)^2 \qquad C = \frac{1}{B}\sum_i c_i(t_i-t)^2 e^{-y(t_i-t)}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>Terme de convexité</h5><p>$\frac{1}{2}C(\delta y)^2 &gt; 0$ toujours. Correction positive quelle que soit la direction du mouvement de taux.</p></div>
+          <div class="fc-item"><h5>Exemple numérique</h5><p>$C = 7.570$, $\delta y = 1\%$ : correction = $+0.5 \times 7.570 \times 0.0001 \times 94.213 = +0.036$ USD</p></div>
+          <div class="fc-item"><h5>Résultat</h5><p>Estimation avec convexité : $-2.499 + 0.036 = -2.464$ USD = valeur réelle ✓</p></div>
+          <div class="fc-item"><h5>Usage</h5><p>Stress testing, grands chocs de taux (&gt;50 bps). Comparaison de portefeuilles par niveaux de convexité.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="fc-head"><span class="fc-name">Modified Duration &amp; DV01</span><span class="fc-tag">Convention de Marché</span></div>
+      <div class="fc-body">
+        <div class="fc-expr">$$D_{mod} = \frac{D}{1 + y/n_c} \qquad \text{DV01} = \frac{D_{mod} \cdot B}{100}$$</div>
+        <div class="fc-grid">
+          <div class="fc-item"><h5>$n_c$</h5><p>Nombre de compoundings par an : 1 (annuel), 2 (semestriel), 4 (trimestriel), $\infty$ (continu).</p></div>
+          <div class="fc-item"><h5>DV01</h5><p><em>Dollar Value of 1 bp</em>. Variation absolue en USD pour $\delta y = 0.01\%$. Standard en trading.</p></div>
+          <div class="fc-item"><h5>Exemple</h5><p>$D=2.653$, $y=12\%$, $n_c=2$ : $D_{mod} = 2.653/1.06 = 2.503$. DV01 $= 2.503 \times 94.213/100 = 2.358$ USD/bp.</p></div>
+          <div class="fc-item"><h5>Usage</h5><p>Calcul de la taille des positions de couverture (hedging). Mesure standard du desk rates pour agréger les risques.</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════ 09 · COMPARAISON ══════════════ -->
+<section class="sec" id="compare">
+  <div class="sec-hd"><span class="sec-num">09</span><h2 class="sec-title">Comparaison des Approches</h2></div>
+  <div class="twrap">
+    <table>
+      <thead><tr><th>Mesure</th><th>Formule</th><th>Unité</th><th>Forces</th><th>Limites</th><th>Usage principal</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--gold)">Macaulay D</strong></td>
+          <td class="m">$\sum_i t_i w_i$</td>
+          <td>Années</td>
+          <td class="g">Intuitive. Base théorique. Cap. continue exacte.</td>
+          <td class="r">Approximation 1er ordre. Non valide avec options.</td>
+          <td>Éducation, analyse simple</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--blue)">Modified D</strong></td>
+          <td class="m">$D/(1+y/n_c)$</td>
+          <td>Années</td>
+          <td class="g">Valide pour tout compounding. Standard pédagogique.</td>
+          <td class="r">Encore 1er ordre. Non valide avec options.</td>
+          <td>Pricing, ALM, comparaisons</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--green)">DV01</strong></td>
+          <td class="m">$D_{mod} \cdot B/100$</td>
+          <td>USD/bp</td>
+          <td class="g">Mesure absolue. Agrégeable directement en portefeuille. Standard marché.</td>
+          <td class="r">Dépend du notionnel. 1er ordre seulement.</td>
+          <td>Trading, hedging, risk management</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--violet)">Effective D</strong></td>
+          <td class="m">$(B^- - B^+)/(2B\delta y)$</td>
+          <td>Années</td>
+          <td class="g">Valide avec options embarquées. Capture l'optionalité.</td>
+          <td class="r">Numérique. Sensible au modèle. Plus lent à calculer.</td>
+          <td>MBS, callable/putable bonds</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--red)">Key Rate D</strong></td>
+          <td class="m">Sensibilité / bucket</td>
+          <td>Années/pt</td>
+          <td class="g">Shifts non-parallèles. Immunisation précise. Vue complète.</td>
+          <td class="r">Complexe. Nombreux paramètres. Nécessite un modèle de courbe.</td>
+          <td>ALM avancé, portefeuilles complexes</td>
+        </tr>
+        <tr>
+          <td><strong>Duration + Convexité</strong></td>
+          <td class="m">$-D\delta y + \tfrac{1}{2}C(\delta y)^2$</td>
+          <td>%</td>
+          <td class="g">Précision 2ème ordre. Capture asymétrie favorable. Stress tests.</td>
+          <td class="r">Encore une approximation pour très grands shifts.</td>
+          <td>Stress testing, grands chocs &gt;100bps</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════ 10 · QUESTIONS D'EXAMEN ══════════════ -->
+<section class="sec" id="quiz">
+  <div class="sec-hd"><span class="sec-num">10</span><h2 class="sec-title">Questions d'Examen</h2></div>
+
+  <div class="qlevel easy">Facile</div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">1. Qu'est-ce qu'un taux forward et pourquoi est-il contraint par l'absence d'arbitrage ?</span><span class="qi-arr">▼</span></div>
+    <div class="qi-a"><p>Un taux forward est le taux d'intérêt pour une période future, implicitement contenu dans la courbe zéro-coupon actuelle. Il est contraint par l'absence d'arbitrage car si ce taux déviait du niveau d'équilibre, on pourrait construire deux stratégies à coût nul en t=0 mais avec des payoffs différents à terme — créant un profit sans risque. Les forces de marché (arbitragistes) éliminent ces opportunités instantanément, ce qui fixe le forward à $r = (R_2T_2 - R_1T_1)/(T_2-T_1)$.</p></div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">2. Quelle est la duration d'un zéro-coupon de maturité 7 ans ?</span><span class="qi-arr">▼</span></div>
+    <div class="qi-a"><p>La duration est exactement <strong>7 ans</strong>. Un zéro-coupon n'a qu'un seul flux de trésorerie, à la maturité T=7. La duration étant la moyenne pondérée des temps de paiement (avec un seul poids égal à 1 à T=7), elle vaut D = 7 × 1 = 7 ans. C'est le seul cas où D = T.</p></div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">3. Si D=4 et les taux augmentent de 50 bps, quelle est l'approximation de la variation du prix d'une obligation de 1000 USD ?</span><span class="qi-arr">▼</span></div>
+    <div class="qi-a"><p>$\delta B \approx -B \cdot D \cdot \delta y = -1000 \times 4 \times 0.005 = -20$ USD. Le prix passe de 1000 à environ 980 USD. C'est une approximation de premier ordre (duration seule), valide pour ce petit shift de 50 bps.</p></div>
+  </div>
+
+  <div class="qlevel med">Intermédiaire</div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">4. Calculez le forward 1y2 sachant R₂=10.5% et R₃=10.8%.</span><span class="qi-arr">▼</span></div>
+    <div class="qi-a"><p>Avec $T_1=2$, $R_1=10.5\%$, $T_2=3$, $R_2=10.8\%$ :</p><p>$r = \frac{R_2 T_2 - R_1 T_1}{T_2 - T_1} = \frac{0.108 \times 3 - 0.105 \times 2}{3 - 2} = \frac{0.324 - 0.210}{1} = \mathbf{11.4\%}$</p><p>Intuition : le taux entre l'année 2 et l'année 3 doit être plus élevé que la moyenne 3-ans (10.8%) pour compenser les 2 premières années à 10.5% et atteindre un total cohérent.</p></div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">5. Pourquoi la duration d'une obligation à coupons est-elle inférieure à sa maturité ?</span><span class="qi-arr">▼</span></div>
+    <div class="qi-a"><p>La duration est une <em>moyenne pondérée</em> des dates de paiement. Les coupons intermédiaires, reçus <em>avant</em> la maturité, tirent le centre de gravité temporel vers l'avant. Même si le paiement final (coupon + principal) est très important et se produit à $T$, les coupons précédents en réduisent la pondération effective. Seul le zéro-coupon (un seul flux à T) donne D = T.</p></div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">6. Quelle est la différence pratique entre Duration de Macaulay et Modified Duration ?</span><span class="qi-arr">▼</span></div>
+    <div class="qi-a"><p>La Duration de Macaulay est définie et exacte pour la <em>capitalisation continue</em>. La Modified Duration s'applique à toute convention : $D_{mod} = D/(1 + y/n_c)$. Pour la cap. continue : $D_{mod} = D$. Pour la cap. semestrielle ($n_c = 2$) : $D_{mod} = D/(1 + y/2) &lt; D$. La relation $\delta B/B = -D_{mod} \cdot \delta y$ est exacte quel que soit $n_c$, alors que $\delta B/B = -D \cdot \delta y$ n'est exacte que pour la cap. continue.</p></div>
+  </div>
+
+  <div class="qlevel hard">Difficile</div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">7. Démontrez que la convexité est toujours bénéfique pour l'acheteur d'une obligation, quel que soit le signe de δy.</span><span class="qi-arr">▼</span></div>
+    <div class="qi-a"><p>L'expansion de Taylor au 2ème ordre donne : $\delta B/B \approx -D\,\delta y + \frac{1}{2}C\,(\delta y)^2$. Le terme de convexité $\frac{1}{2}C(\delta y)^2$ est <em>toujours positif</em> car $C &gt; 0$ (somme de termes positifs : $c_i t_i^2 e^{-y t_i} &gt; 0$) et $(\delta y)^2 &gt; 0$ quelle que soit la direction du mouvement. Ainsi, la variation réelle du prix est toujours <em>supérieure</em> (moins négative si taux monte, plus positive si taux baisse) à ce qu'estimerait la seule duration. Géométriquement : la courbe B(y) est convexe → elle est toujours au-dessus de sa tangente. Conséquence : les obligations plus convexes sont plus attractives → elles se négocient avec une prime.</p></div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">8. Construisez l'argument d'arbitrage complet si le forward 1y1 = 10% au lieu de 11%.</span><span class="qi-arr">▼</span></div>
+    <div class="qi-a">
+      <p><strong>À T=0 :</strong> (1) Shortez l'obligation 1 an à 10% → recevez +100 USD. (2) Entrez dans un contrat forward 1y1 à 10% (vous vous engagez à prêter 110.52 USD dans 1 an à 10%). (3) Achetez l'obligation 2 ans à 10.5% → déboursez −100 USD. Bilan T=0 : 0.</p>
+      <p><strong>À T=1 :</strong> L'obligation 1 an est remboursée, vous devez payer 110.52 USD. Vous exécutez le forward : prêtez 110.52 USD à 10% pour 1 an.</p>
+      <p><strong>À T=2 :</strong> L'obligation 2 ans vous verse $100e^{0.105×2} = 123.37$ USD. Le forward vous rapporte $110.52 \times e^{0.10} = 122.14$ USD. Profit net = $123.37 - 122.14 = +1.23$ USD sans aucune mise initiale. Preuve formelle : $100(-e^{0.2} + e^{0.21}) = 100(-1.2214 + 1.2337) &gt; 0$.</p>
+    </div>
+  </div>
+
+  <div class="qi">
+    <div class="qi-q"><span class="qi-qtxt">9. En quoi la Key Rate Duration complète-t-elle la Duration de Macaulay pour la gestion de portefeuille ?</span><span class="qi-arr">▼</span></div>
+    <div class="qi-a"><p>La Duration de Macaulay suppose un <em>parallel shift</em> uniforme : tous les points de la courbe bougent de la même façon. En réalité, la courbe se déforme (flattening, steepening, butterfly), et différentes parties réagissent différemment. La Key Rate Duration décompose la sensibilité par <em>bucket de maturité</em> (2y, 5y, 10y, 30y), permettant : (1) de savoir sur quelle partie de la courbe le portefeuille est le plus exposé, (2) de construire une immunisation précise face à des déformations réalistes, (3) d'identifier des paris directionnels ciblés sur certains points de la courbe. Un gestionnaire ALM match les Key Rate Durations des actifs et passifs — pas juste la duration globale.</p></div>
+  </div>
+</section>
+
+<!-- ══════════════ 11 · PIÈGES ══════════════ -->
+<section class="sec" id="traps">
+  <div class="sec-hd"><span class="sec-num">11</span><h2 class="sec-title">Pièges Classiques</h2></div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠️</span>
+    <div class="piege-text">
+      <strong>Confondre taux forward et taux futur prévu</strong><br>
+      Les forward rates sont les taux implicites dans la courbe <em>actuelle</em>, pas les taux que le marché "prédit" pour l'avenir. Si les conditions changent, les taux réels dévieront des forwards. Les forwards sont une <em>condition d'absence d'arbitrage</em>, non une prédiction. Sous la <em>Pure Expectations Theory</em>, ils seraient égaux aux taux futurs attendus, mais d'autres facteurs (prime de terme, prime de liquidité) les font dévier.
+    </div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠️</span>
+    <div class="piege-text">
+      <strong>Utiliser la duration seule pour de grands shifts de taux</strong><br>
+      $\delta B/B = -D \cdot \delta y$ n'est valide que pour de <em>petits δy</em>. Pour $|\delta y| \geq 1\%$, l'erreur devient significative. En stress test (hausse de 200bps), l'erreur peut atteindre 2-3% du prix — critique pour un grand portefeuille. Toujours inclure la convexité pour les analyses de risque importantes.
+    </div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠️</span>
+    <div class="piege-text">
+      <strong>Confondre Duration de Macaulay et Modified Duration</strong><br>
+      En capitalisation <em>continue</em> : $D_{mod} = D$. En capitalisation <em>semestrielle</em> (obligations d'État US, corporate bonds) : $D_{mod} = D/(1+y/2) &lt; D$. Mélanger les deux dans un calcul introduit une erreur systématique. Vérifier toujours la convention de compounding de l'obligation considérée.
+    </div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠️</span>
+    <div class="piege-text">
+      <strong>Croire que D = maturité pour toute obligation</strong><br>
+      Faux. $D = T_{maturity}$ <em>uniquement pour les zéro-coupons</em>. Pour toute obligation avec coupons, $D &lt; T_{maturity}$. Plus le coupon est élevé, plus D est petit. Plus le yield est élevé, plus D est petit (les flux lointains sont davantage actualisés et pèsent moins).
+    </div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠️</span>
+    <div class="piege-text">
+      <strong>Appliquer la Duration de Macaulay à une obligation callable</strong><br>
+      Les obligations avec options embarquées voient leurs flux de trésorerie <em>changer</em> si les taux changent (l'emprunteur peut rappeler l'obligation si les taux baissent). La Duration de Macaulay suppose des cash flows fixes. Pour tout instrument avec optionalité (callable, putable, MBS, convertibles), il faut impérativement utiliser la <strong>Duration Effective</strong>.
+    </div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠️</span>
+    <div class="piege-text">
+      <strong>Oublier le signe négatif dans δB/B = −D·δy</strong><br>
+      Erreur récurrente et fatale en examen. Une <em>hausse</em> de taux ($\delta y &gt; 0$) → <em>baisse</em> du prix ($\delta B &lt; 0$). La relation est toujours inverse. Mnémotechnique : quand les taux montent, les prix descendent (comme les bascules de l'investissement à terme vs immédiat).
+    </div>
+  </div>
+
+  <div class="piege">
+    <span class="piege-icon">⚠️</span>
+    <div class="piege-text">
+      <strong>Supposer que la duration est stable quand les taux changent</strong><br>
+      La duration elle-même dépend de $y$ (via les poids $w_i$). Quand les taux changent, la duration change aussi — c'est précisément la convexité qui capte cet effet de second ordre. Pour des analyses dynamiques sur horizon long, la duration doit être recalculée périodiquement.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 12 · FICHE FINALE ══════════════ -->
+<section class="sec" id="fiche">
+  <div class="sec-hd"><span class="sec-num">12</span><h2 class="sec-title">Fiche de Révision Finale</h2></div>
+
+  <div class="fiche-grid">
+    <div class="fc2">
+      <h4>Concepts Clés</h4>
+      <ul>
+        <li><strong>Forward Rate</strong> : taux implicite dans la courbe zéro actuelle</li>
+        <li><strong>No-Arbitrage</strong> : condition qui fixe les forwards</li>
+        <li><strong>Parallel Shift</strong> : toute la courbe monte/descend</li>
+        <li><strong>Flattening</strong> : court terme ↑, long stable → pente ↓</li>
+        <li><strong>Steepening</strong> : long terme ↑ → pente ↑</li>
+        <li><strong>Duration (Macaulay)</strong> : centre de gravité temporel</li>
+        <li><strong>Convexité</strong> : courbure de la relation B(y)</li>
+        <li><strong>DV01</strong> : variation USD/bp, standard du marché</li>
+      </ul>
+    </div>
+
+    <div class="fc2">
+      <h4>Formules à Connaître</h4>
+      <ul>
+        <li><strong>Forward</strong> : $r = (R_2T_2 - R_1T_1)/(T_2-T_1)$</li>
+        <li><strong>Prix</strong> : $B = \sum_i c_i e^{-y(t_i-t)}$</li>
+        <li><strong>Duration</strong> : $D = \sum_i (t_i-t) \cdot w_i$</li>
+        <li><strong>Sensibilité</strong> : $\partial B/\partial y = -B \cdot D$</li>
+        <li><strong>Approx. 1er ordre</strong> : $\delta B/B \approx -D \cdot \delta y$</li>
+        <li><strong>Convexité C</strong> : $\frac{1}{B}\sum_i c_i(t_i-t)^2 e^{-y(t_i-t)}$</li>
+        <li><strong>Approx. 2ème ordre</strong> : $\delta B/B = -D\delta y + \frac{1}{2}C(\delta y)^2$</li>
+        <li><strong>Modified D</strong> : $D_{mod} = D/(1+y/n_c)$</li>
+        <li><strong>DV01</strong> : $D_{mod} \cdot B/100$</li>
+        <li><strong>Portfolio D</strong> : $D_p = \sum_i w_i D_i$</li>
+      </ul>
+    </div>
+
+    <div class="fc2">
+      <h4>Exemple Numérique de Référence</h4>
+      <ul>
+        <li><strong>Obligation</strong> : 3 ans, coupon 10% semestriel, y = 12%</li>
+        <li><strong>Prix B(t)</strong> = <strong>94.213 USD</strong></li>
+        <li><strong>Duration D</strong> = <strong>2.653 ans</strong></li>
+        <li><strong>Convexité C</strong> = <strong>7.570</strong></li>
+        <li>δy = 0.1% → δB = <strong>−0.250 USD</strong> (exact ✓)</li>
+        <li>δy = 1.0%, dur. seule → δB = <strong>−2.499 USD</strong> ✗</li>
+        <li>δy = 1.0%, dur.+cvx → δB = <strong>−2.464 USD</strong> ✓</li>
+        <li>Forward 1y1 = <strong>11.0%</strong>, Forward 2y1 = <strong>11.4%</strong></li>
+      </ul>
+    </div>
+
+    <div class="fc2">
+      <h4>Points Mémo Absolus</h4>
+      <ul>
+        <li>Forward ≠ taux futur prévu (c'est implicite)</li>
+        <li>D = maturité <em>seulement</em> pour zéro-coupon</li>
+        <li>Coupon ↑ → Duration ↓ (flux plus précoces)</li>
+        <li>Yield ↑ → Duration ↓ (flux lointains moins pondérés)</li>
+        <li>Convexité toujours positive → toujours bénéfique</li>
+        <li>$\delta y > 0$ → $\delta B < 0$ (relation INVERSE)</li>
+        <li>Callable bonds → <em>Effective Duration</em> (pas Macaulay)</li>
+        <li>Taux haussiers → réduire la duration du portefeuille</li>
+        <li>Volatilité ≈ Duration (proxy utile en pratique)</li>
+      </ul>
+    </div>
+
+    <div class="fc2">
+      <h4>Types de Duration — Synthèse Éclair</h4>
+      <ul>
+        <li><strong>Macaulay</strong> : $\sum t_i w_i$ — base théorique, continu</li>
+        <li><strong>Modified</strong> : $D/(1+y/n_c)$ — tout compounding</li>
+        <li><strong>Dollar / DV01</strong> : USD/bp — trading desk</li>
+        <li><strong>Effective</strong> : numérique — options embarquées</li>
+        <li><strong>Key Rate</strong> : par bucket — shifts non-parallèles</li>
+      </ul>
+    </div>
+
+    <div class="fc2">
+      <h4>Déformations de la Yield Curve</h4>
+      <ul>
+        <li><strong>Parallel shift</strong> : $\Delta y$ uniforme sur toutes maturités</li>
+        <li><strong>Flattening</strong> : court terme ↑ OU long terme ↓</li>
+        <li><strong>Steepening</strong> : long terme ↑ OU court terme ↓</li>
+        <li><strong>Butterfly</strong> : milieu de courbe se déplace séparément</li>
+        <li><strong>Inversée</strong> : court terme &gt; long terme → signal récession</li>
+        <li>Banque centrale contrôle le <em>court terme</em></li>
+        <li>Le marché détermine le <em>long terme</em></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box ok" style="margin-top:2rem">
+    <div class="box-title">✓ Les 5 Idées à Retenir Absolument pour l'Oral</div>
+    <ol style="padding-left:1.4rem">
+      <li style="margin-bottom:.5rem"><strong>Les forward rates</strong> sont des taux <em>implicites</em> dérivés de la courbe actuelle par no-arbitrage. Formule : $r = (R_2T_2 - R_1T_1)/(T_2-T_1)$. Toute déviation = profit sans risque éliminé par le marché.</li>
+      <li style="margin-bottom:.5rem"><strong>La duration</strong> est le centre de gravité temporel des cash flows. Elle mesure la sensibilité de premier ordre : $\delta B/B \approx -D \cdot \delta y$. Toujours positive. Inférieure à la maturité pour les obligations à coupons.</li>
+      <li style="margin-bottom:.5rem"><strong>La convexité</strong> corrige la non-linéarité : le terme $\frac{1}{2}C(\delta y)^2 &gt; 0$ est toujours positif, toujours bénéfique pour l'acheteur. Critique pour $|\delta y| \geq 1\%$.</li>
+      <li style="margin-bottom:.5rem"><strong>La duration est linéaire</strong> en portefeuille : $D_p = \sum w_i D_i$. En période de hausse des taux, on réduit la duration. La volatilité est un bon proxy.</li>
+      <li><strong>La courbe évolue</strong> par parallel shift (capturé par la duration), flattening et steepening (nécessitent les Key Rate Durations). La duration standard suppose un shift parallèle.</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<script>
+// Quiz accordion
+document.querySelectorAll('.qi-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const a = q.nextElementSibling;
+    const arr = q.querySelector('.qi-arr');
+    a.classList.toggle('open');
+    arr.textContent = a.classList.contains('open') ? '▲' : '▼';
+  });
+});
+
+// Active sidebar highlighting via IntersectionObserver
+const sections = document.querySelectorAll('section.sec');
+const navLinks = document.querySelectorAll('.sb nav a');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.sb nav a[href="#${entry.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

@@ -1,504 +1,661 @@
 ---
-title: "Données, moyennes mobiles et temps intrinsèque"
+title: "Données, Moyennes Mobiles et Temps Intrinsèque"
 ---
 
-# Introduction
+## Plan du chapitre
 
-Ce chapitre aborde trois thématiques fondamentales en finance computationnelle :
+Ce chapitre aborde trois thèmes fondamentaux en finance computationnelle :
 
-- La nature réelle des données financières et leurs caractéristiques pratiques
-- Les opérateurs de lissage (moyennes mobiles) permettant de traiter le bruit
-- La notion de **temps intrinsèque** (Intrinsic Time), une alternative au temps physique
-
-L'objectif est de comprendre que les données financières brutes sont rarement aussi propres qu'on l'imaginerait, et qu'il existe des outils mathématiques pour les traiter efficacement.
-
----
-
-# Données en pratique (Data in Real Life)
-
-## Ce que l'on imagine
-
-Lorsque l'on pense aux données financières, on imagine souvent une série temporelle idéale :
-
-- **Équidistante** : les observations arrivent à intervalles réguliers
-- **Lisse** : les prix évoluent de façon continue et sans bruit
-- **Continue** : pas de sauts brusques, transitions douces entre les niveaux de prix
-
-💡 Cette représentation idéalisée correspond à ce que l'on modélise souvent en théorie (par exemple un mouvement brownien géométrique), mais elle est rarement ce que l'on observe dans les données réelles.
-
-## Ce que l'on observe réellement
-
-En pratique, les données financières de haute fréquence présentent des caractéristiques très différentes selon l'échelle de temps considérée :
-
-### À l'échelle de la seconde
-
-- **Activité non équidistante** : les transactions ne surviennent pas à intervalles réguliers. Certaines périodes sont très actives (ex. : ouverture des marchés, annonces macroéconomiques), d'autres très calmes (ex. : milieu de nuit)
-- **Bruit important** : les prix fluctuent de manière erratique à très court terme
-- **Données bid/ask** : on observe en réalité deux prix simultanément — le prix acheteur (*bid*) et le prix vendeur (*ask*). Le prix médian (*mid*) est souvent utilisé comme référence
-
-### À l'échelle du jour
-
-- Les prix peuvent présenter des **discontinuités** (sauts) liées à des événements exogènes (annonces, crises)
-- L'activité est clairement **hétérogène** au cours de la journée
-
-🧠 **À retenir** : Les données réelles sont asymétriques, bruitées, et non équidistantes. Toute modélisation sérieuse doit en tenir compte.
-
-## Comment les traiter ?
-
-Deux grandes approches existent pour travailler avec ces données irrégulières.
-
-### Approche 1 : La discrétisation (Discretization)
-
-La méthode la plus utilisée (dans environ 99,9 % des cas) consiste à **discrétiser** la série temporelle en échantillonnant à intervalles réguliers.
-
-- On retient le dernier prix connu à chaque instant de grille fixe
-- C'est ce qu'on appelle un **prix instantané** (*instantaneous price*)
-
-⚠️ **Limites de la discrétisation** :
-
-- Les informations entre deux ticks consécutifs sont ignorées
-- Des tendances de court terme peuvent passer inaperçues
-- La fréquence d'échantillonnage est un choix arbitraire du modélisateur
-
-### Approche 2 : L'interpolation (Interpolation)
-
-Une alternative, rarement utilisée en pratique, consiste à **interpoler** les valeurs manquantes entre les observations.
-
-- On utilise les observations passées pour inférer de nouvelles informations
-- Cela implique de fortes hypothèses sur la dynamique du prix entre deux ticks
-
-⚠️ **Limites de l'interpolation** :
-
-- Les hypothèses d'interpolation sont souvent arbitraires
-- Le temps physique reste la référence, ce qui peut sembler rigide et inadapté (voir la section sur le temps intrinsèque)
-
-💡 Ces deux approches restent ancrées dans le **temps physique**, dont on verra plus loin les limites conceptuelles.
+- La nature réelle des données financières et les défis qu'elles posent
+- Les opérateurs de lissage : moyennes mobiles simples, pondérées et exponentielles (SMA, WMA, EMA)
+- Le temps intrinsèque (Intrinsic Time) : un cadre alternatif au temps physique, avec ses lois d'échelle
 
 ---
 
-# Moyennes mobiles (Moving Averages)
+## Données en pratique (Data in Real Life)
 
-Les séries temporelles financières, qu'elles soient discrétisées ou non, sont généralement bruitées. Pour en extraire le signal sous-jacent, on utilise des **opérateurs de lissage**, dont les plus courants sont les moyennes mobiles.
+### Ce que l'on imagine
 
-## Moyenne mobile simple — SMA (Simple Moving Average)
+Lorsqu'on pense à une série temporelle financière, on se représente souvent un objet mathématique idéal, caractérisé par trois propriétés :
 
-### Définition
+- **Équidistante (Equidistant)** : les observations arrivent à intervalles de temps réguliers et prévisibles.
+- **Lisse (Smooth)** : les prix évoluent de façon continue, sans bruit ni fluctuations parasites.
+- **Continue (Continuous)** : il n'existe pas de sauts brusques entre deux instants consécutifs.
 
-Soit $X_t$ une série temporelle. La **moyenne mobile simple** sur une fenêtre de taille $n$ est définie comme la moyenne arithmétique des $n$ dernières observations :
+Cette vision correspond à celle d'un signal propre, tel qu'on pourrait le produire dans un cadre théorique ou en simulation.
 
-$$
-\text{SMA}(t) = \frac{X_{t-n+1} + X_{t-n+2} + \cdots + X_t}{n}
-$$
+::: {.callout-tip title="Intuition"}
+Imaginez un graphique de prix tracé à la règle, avec une courbe parfaitement régulière montant ou descendant doucement. C'est l'image idéale — et rarement celle de la réalité des marchés.
+:::
 
-### Mise à jour récursive
+---
 
-Lors de l'arrivée d'une nouvelle observation $X_{t+1}$, la SMA peut être mise à jour de façon efficace :
+### Ce que l'on observe réellement
 
-$$
-\text{SMA}(t+1) = \text{SMA}(t) - \frac{X_{t-n+1}}{n} + \frac{X_{t+1}}{n}
-$$
+En pratique, les données financières haute fréquence présentent des caractéristiques très différentes de ce modèle idéal.
 
-On soustrait la valeur la plus ancienne et on ajoute la nouvelle. Cela nécessite de **conserver en mémoire les $n$ dernières observations**.
+#### Structure bid/ask/mid
 
-### Schéma de pondération
+Les données de marché ne sont pas simplement un seul prix : elles se composent de trois composantes distinctes :
 
-Dans une SMA, **chaque observation reçoit un poids identique** de $\frac{1}{n}$, quelle que soit son ancienneté.
+- **Prix Ask (Ask Price)** : le prix auquel un vendeur est prêt à céder un actif.
+- **Prix Bid (Bid Price)** : le prix auquel un acheteur est prêt à acquérir cet actif.
+- **Prix Mid (Mid Price)** : la moyenne entre bid et ask, souvent utilisée comme approximation du "vrai" prix.
 
-💡 C'est à la fois sa force (simplicité) et sa faiblesse (manque de réactivité aux nouvelles informations).
+::: {.callout-note title="À retenir"}
+La différence entre le prix ask et le prix bid s'appelle le **spread bid-ask**. Ce spread est une mesure directe de la liquidité du marché : plus il est faible, plus le marché est liquide.
+:::
 
-### Limites de la SMA
+#### Trois caractéristiques clés des données réelles
 
-Deux problèmes principaux sont identifiés :
+Les observations sur données haute fréquence révèlent les propriétés suivantes :
 
-- **Équipondération temporelle** : une observation vieille de $n$ périodes a le même poids qu'une observation récente, ce qui est peu réaliste dans de nombreux contextes financiers
-- **Décalage temporel (time lag)** : la SMA "retarde" toujours par rapport à la série originale. Plus $n$ est grand, plus le lissage est fort, mais plus le décalage est important
+**1. Activité non équidistante dans le temps (Non time-equidistant activity)**
 
-⚠️ Le décalage temporel est **inhérent** à toute moyenne mobile. Il n'y a pas de moyen de l'éliminer complètement : plus le lissage est fort, plus le lag est long.
+Les transactions n'arrivent pas à intervalles réguliers. L'activité est intense pendant les heures d'ouverture des marchés (par exemple à l'ouverture de New York ou de Londres), et très faible la nuit ou les week-ends.
 
-## Moyenne mobile pondérée — WMA (Weighted Moving Average)
+**2. Comportement bruité (Noisy behaviour)**
 
-### Motivation
+Les prix oscillent continuellement autour d'une tendance, générant un signal très bruité. Ce bruit reflète les microstructures du marché (ordres d'achat et de vente, market making, etc.).
 
-Pour remédier au problème d'équipondération de la SMA, on peut attribuer **des poids plus élevés aux observations récentes** et des poids plus faibles aux observations anciennes.
+**3. Prix possiblement discontinus (Possibly non-continuous prices)**
 
-### Définition
+Des sauts de prix peuvent survenir lors d'événements majeurs (annonces macroéconomiques, publications de résultats, crises). Le prix peut donc ne pas être continu sur certaines plages temporelles.
 
-La **moyenne mobile pondérée** est définie comme :
+::: {.callout-tip title="Intuition"}
+Contrairement à un cours du soir présenté dans un manuel, les données réelles ressemblent davantage à un électrocardiogramme : irrégulières, parfois silencieuses, parfois très agitées, et sujettes à des discontinuités.
+:::
 
-$$
-\text{WMA}(t) = \frac{1 \cdot X_{t-n+1} + 2 \cdot X_{t-n+2} + \cdots + (n-1) \cdot X_{t-1} + n \cdot X_t}{n + (n-1) + \cdots + 2 + 1}
-$$
+---
 
-Le dénominateur est la somme des entiers de 1 à $n$ :
+### Comment gérer des données imparfaites ?
 
-$$
-n + (n-1) + \cdots + 1 = \frac{n(n+1)}{2}
-$$
+Face à ces caractéristiques, deux grandes approches existent pour travailler avec des données de marché brutes.
 
-### Mise à jour récursive
+#### Approche 1 : Discrétisation (Discretisation)
 
-La mise à jour est plus complexe. On définit d'abord la somme simple :
+C'est l'approche utilisée dans **99,9 % des cas** en pratique.
 
-$$
-\text{Total}(t) = X_{t-n+1} + X_{t-n+2} + \cdots + X_t
-$$
+On choisit une grille temporelle fixe (par exemple, toutes les minutes, heures, ou jours) et on associe à chaque instant le dernier prix observé avant cet instant.
 
-Qui se met à jour comme :
+**Avantage :** Simple, efficace, universellement adoptée.
 
-$$
-\text{Total}(t+1) = \text{Total}(t) - X_{t-n+1} + X_{t+1}
-$$
+**Inconvénients :**
 
-Puis la WMA est recalculée selon :
+- L'information entre deux ticks consécutifs est perdue (tick = arrivée d'une donnée).
+- Des tendances intra-période passent inaperçues.
+- Le prix observé est **instantané** : il ne représente qu'un instant figé, pas un comportement.
 
-$$
-\text{WMA}(t+1) = \frac{(1 \cdot X_{t-n+2} + \cdots + n \cdot X_{t+1}) + n \cdot X_{t+1} - \text{Total}(t)}{\frac{n(n+1)}{2}}
-$$
+::: {.callout-warning title="Point important"}
+La discrétisation est commode mais elle induit une perte d'information. Dans un contexte haute fréquence, cette perte peut être significative si la grille temporelle est trop grossière.
+:::
 
-⚠️ Le schéma de mise à jour de la WMA est **plus complexe** que celui de la SMA, ce qui représente un inconvénient pratique.
+#### Approche 2 : Interpolation (Interpolation)
 
-### Schéma de pondération comparé SMA vs WMA
+Moins fréquente, cette approche consiste à **reconstruire** des valeurs entre les ticks observés à l'aide d'une méthode d'interpolation (linéaire, spline, etc.).
 
-| Méthode | Poids de l'observation la plus ancienne | Poids de l'observation la plus récente |
-|---------|----------------------------------------|----------------------------------------|
-| SMA     | $\frac{1}{n}$                          | $\frac{1}{n}$                          |
-| WMA     | $\frac{2}{n(n+1)}$                     | $\frac{2}{n+1}$                        |
+**Avantage :** Permet d'utiliser l'information passée pour inférer de nouvelles valeurs.
 
-💡 Dans la WMA, l'observation la plus récente est $n$ fois plus pondérée que la plus ancienne.
+**Inconvénients :**
 
-## Moyenne mobile exponentielle — EMA (Exponential Moving Average)
+- Des hypothèses fortes sont nécessaires sur la forme du signal entre deux observations.
+- Le temps physique reste le cadre de référence, ce qui peut sembler arbitraire (pourquoi commencer à minuit ? à 17h ?).
+- Des approches alternatives peuvent être envisagées (voir la section sur le temps intrinsèque).
 
-### Motivation
+---
 
-La WMA améliore la réactivité mais reste complexe à mettre à jour. L'**EMA** propose une solution élégante : une pondération décroissante exponentiellement, avec une mise à jour extrêmement simple.
+## Moyennes Mobiles (Moving Averages)
 
-### Définition
+Qu'elles soient discrétisées ou non, les séries temporelles financières sont souvent bruitées. Pour en extraire la tendance sous-jacente, on utilise des **opérateurs de lissage**, dont les moyennes mobiles sont les plus répandus.
 
-L'EMA est initialement définie comme une somme pondérée infinie :
+::: {.callout-note title="À retenir"}
+Une moyenne mobile transforme une série bruitée en une série plus régulière, en agrégeant des observations passées. Elle introduit toujours un **décalage temporel (time lag)** : la valeur lissée reflète le passé, pas l'instant présent.
+:::
 
-$$
-\text{EMA}(t) = \frac{X_t + (1-\alpha)X_{t-1} + (1-\alpha)^2 X_{t-2} + \cdots}{1 + (1-\alpha) + (1-\alpha)^2 + \cdots}
-$$
+---
 
-On utilise le fait que $1 + (1-\alpha) + (1-\alpha)^2 + \cdots = \frac{1}{\alpha}$ pour simplifier :
+### Moyenne Mobile Simple — SMA (Simple Moving Average)
 
-$$
-\text{EMA}(t) = \alpha \left[ X_t + (1-\alpha)X_{t-1} + (1-\alpha)^2 X_{t-2} + \cdots \right]
-$$
+#### Définition
 
-### Forme récursive (clé de l'EMA)
-
-En factorisant, on obtient la **formule de mise à jour récursive** :
+Soit $X_t$ une série temporelle. La **Moyenne Mobile Simple** sur une fenêtre de taille $n$ est définie par :
 
 $$
-\boxed{\text{EMA}(t) = \alpha \cdot X_t + (1 - \alpha) \cdot \text{EMA}(t-1)}
+SMA(t) = \frac{X_{t-n+1} + X_{t-n+2} + \cdots + X_t}{n}
 $$
 
-🧠 **À retenir** : Cette formule est la définition pratique de l'EMA. Elle ne nécessite de stocker que la valeur précédente de l'EMA — aucun historique des $n$ observations n'est requis.
+Chaque observation dans la fenêtre reçoit un poids identique de $\frac{1}{n}$.
 
-### Interprétation intuitive
+#### Mise à jour incrémentale
 
-- $\alpha$ est le **paramètre de lissage** (*smoothing factor*), avec $0 < \alpha \leq 1$
-- Plus $\alpha$ est proche de 1 : l'EMA est très **réactive** aux nouvelles observations (peu de lissage)
-- Plus $\alpha$ est proche de 0 : l'EMA est très **lisse** mais présente un **décalage temporel** important
-
-💡 L'EMA peut être vue comme une moyenne pondérée de toutes les observations passées, où les poids décroissent exponentiellement avec l'âge de l'observation.
-
-### Schéma de pondération : SMA, WMA et EMA
-
-Les trois méthodes se distinguent par leur schéma de pondération en fonction de l'âge de l'observation :
-
-- **SMA** : poids constant $\frac{1}{n}$ pour toutes les observations dans la fenêtre, nul au-delà
-- **WMA** : poids linéairement croissant avec la récence, nul au-delà de la fenêtre
-- **EMA** : poids décroissant exponentiellement, non nul pour toutes les observations passées
-
-💡 L'EMA est la seule des trois à utiliser **toutes** les observations passées (avec des poids décroissants), sans fenêtre fixe.
-
-## Conditions initiales (Initial Conditions)
-
-Toute moyenne mobile doit être **initialisée** avant de produire des résultats fiables.
-
-- **SMA et WMA** : nécessitent $n$ observations pour être calculées
-- **EMA** : nécessite de choisir une condition initiale. Deux approches courantes :
-  - $\text{EMA}(1) = X_1$ (i.e., $\text{EMA}(0) = 0$) — simple mais crée un biais initial
-  - $\text{EMA}(n) = \text{SMA}(n)$ — initialisation avec la SMA après $n$ observations
-
-⚠️ Dans tous les cas, il faut une **période de chauffe** (*warm-up period*) pendant laquelle l'EMA n'est pas fiable. Plus $\alpha$ est petit (lissage fort), plus cette période est longue.
-
-🧠 **À retenir** : Plus $n$ est grand (ou plus $\alpha$ est petit), plus le décalage temporel est important.
-
-## Choisir le paramètre $\alpha$ de l'EMA
-
-### Méthode 1 : Equivalence avec une SMA de taille $n$
-
-On peut relier $\alpha$ à une taille de fenêtre $n$ en **égalant l'âge moyen** d'une EMA et d'une SMA :
+Une propriété cruciale pour l'efficacité computationnelle est la formule de mise à jour :
 
 $$
-\sum_{i=0}^{\infty} (1-\alpha)^i = \frac{1}{\alpha} \quad \longleftrightarrow \quad \frac{1 + 2 + \cdots + n}{n} = \frac{n+1}{2}
+SMA(t+1) = SMA(t) - \frac{X_{t-n+1}}{n} + \frac{X_{t+1}}{n}
 $$
 
-Ce qui donne :
+Cela signifie qu'à chaque pas de temps, on **retire** l'observation la plus ancienne et **ajoute** l'observation la plus récente.
+
+::: {.callout-warning title="Point important"}
+Pour calculer et mettre à jour la SMA, il est nécessaire de **conserver en mémoire les $n$ dernières observations**. Si $n$ est grand, cela peut représenter un coût mémoire non négligeable.
+:::
+
+#### Limites principales de la SMA
+
+La SMA présente deux défauts majeurs :
+
+**1. Poids uniforme indépendamment de l'âge**
+
+Une observation vieille de $n$ périodes a exactement le même poids ($\frac{1}{n}$) qu'une observation de la période précédente. Or, intuitivement, une information récente est souvent plus pertinente qu'une information ancienne.
+
+**2. Décalage temporel (Time Lag)**
+
+La SMA « retarde » par rapport à la série originale. Plus la fenêtre $n$ est grande, plus ce retard est important. Ce décalage est **irréductible** : plus on lisse, plus on retarde.
+
+::: {.callout-tip title="Intuition"}
+Imaginez que vous calculez la moyenne des températures des 100 derniers jours. Cette moyenne ne réagira que lentement à un changement brutal de température aujourd'hui — il faut attendre que les 99 jours précédents "sortent" de la fenêtre.
+:::
+
+#### Illustration du décalage temporel
+
+Le décalage est d'autant plus visible graphiquement qu'il crée un "retard" systématique : la courbe SMA suit la tendance originale avec un certain délai, et ce délai croît avec $n$.
+
+```{mermaid}
+%%{init: {"theme": "default"}}%%
+graph LR
+    A[Série originale X_t] --> B[SMA à fenêtre petite\nPeu de lissage\nDécalage court]
+    A --> C[SMA à fenêtre grande\nFort lissage\nDécalage long]
+```
+
+---
+
+### Moyenne Mobile Pondérée — WMA (Weighted Moving Average)
+
+#### Motivation
+
+Pour pallier le défaut d'uniformité de la SMA, on peut attribuer des poids **décroissants** aux observations passées : plus une observation est ancienne, plus son poids est faible.
+
+#### Définition
+
+La **Moyenne Mobile Pondérée** sur une fenêtre de taille $n$ est définie par :
+
+$$
+WMA(t) = \frac{1 \cdot X_{t-n+1} + 2 \cdot X_{t-n+2} + \cdots + (n-1) \cdot X_{t-1} + n \cdot X_t}{n + (n-1) + \cdots + 2 + 1}
+$$
+
+Le dénominateur vaut $\frac{n(n+1)}{2}$ (somme des entiers de 1 à $n$).
+
+L'observation la plus récente $X_t$ reçoit un poids de $n$, tandis que la plus ancienne $X_{t-n+1}$ reçoit un poids de $1$.
+
+#### Mise à jour incrémentale
+
+La mise à jour de la WMA est plus complexe. On définit d'abord une quantité auxiliaire :
+
+$$
+Total(t) = X_{t-n+1} + X_{t-n+2} + \cdots + X_{t-1} + X_t
+$$
+
+Sa mise à jour est :
+
+$$
+Total(t+1) = Total(t) - X_{t-n+1} + X_{t+1}
+$$
+
+Puis la WMA s'actualise comme :
+
+$$
+WMA(t+1) = \frac{(1 \cdot X_{t-n+1} + \cdots + n \cdot X_t) + n \cdot X_{t+1} - Total(t)}{\frac{n(n+1)}{2}}
+$$
+
+::: {.callout-warning title="Point important"}
+La mise à jour de la WMA est **plus coûteuse** que celle de la SMA, tant en termes de calcul que de mémoire (les $n$ dernières observations doivent toujours être stockées). Ce surcoût est le prix à payer pour un schéma de pondération plus pertinent.
+:::
+
+#### Schéma de pondération : SMA vs WMA
+
+| Indicateur | Poids de la plus ancienne | Poids de la plus récente | Forme |
+|---|---|---|---|
+| SMA | $\frac{1}{n}$ | $\frac{1}{n}$ | Uniforme |
+| WMA | $\frac{2}{n(n+1)}$ | $\frac{2}{n+1}$ | Linéairement décroissant vers le passé |
+
+::: {.callout-tip title="Intuition"}
+Dans la WMA, les poids décroissent linéairement : la dernière observation pèse $n$ fois plus que la plus ancienne. C'est comme si on donnait plus de crédit à ce qui s'est passé récemment.
+:::
+
+---
+
+### Moyenne Mobile Exponentielle — EMA (Exponential Moving Average)
+
+#### Motivation
+
+La WMA améliore la SMA mais reste lourde à calculer. La **Moyenne Mobile Exponentielle** offre un schéma de pondération décroissant — encore plus "naturel" que celui de la WMA — avec une mise à jour **extrêmement simple** à un seul paramètre.
+
+#### Dérivation formelle
+
+On définit d'abord la forme générale de l'EMA :
+
+$$
+EMA(t) = \frac{X_t + (1-\alpha) X_{t-1} + (1-\alpha)^2 X_{t-2} + \cdots}{1 + (1-\alpha) + (1-\alpha)^2 + \cdots}
+$$
+
+La série géométrique au dénominateur converge (pour $0 < \alpha < 1$) :
+
+$$
+1 + (1-\alpha) + (1-\alpha)^2 + \cdots = \frac{1}{\alpha}
+$$
+
+On peut alors réécrire :
+
+$$
+EMA(t) = \frac{X_t}{1/\alpha} + (1-\alpha) \cdot \frac{X_{t-1} + (1-\alpha) X_{t-2} + \cdots}{1 + (1-\alpha) + \cdots}
+$$
+
+Le second terme est exactement $\alpha \cdot (1-\alpha) \cdot \frac{1}{\alpha} \cdot EMA(t-1) = (1-\alpha) \cdot EMA(t-1)$.
+
+On obtient la **formule récursive fondamentale** :
+
+$$
+\boxed{EMA(t) = \alpha \cdot X_t + (1-\alpha) \cdot EMA(t-1)}
+$$
+
+#### Interprétation de la formule récursive
+
+Cette formule est remarquablement simple :
+
+- $\alpha$ : poids accordé à l'**observation courante**
+- $1-\alpha$ : poids accordé à l'**EMA précédente** (qui contient déjà toute l'histoire passée)
+
+::: {.callout-tip title="Intuition"}
+L'EMA est une **moyenne pondérée entre le présent et le passé résumé**. À chaque instant, on "oublie" un peu le passé (facteur $1-\alpha$) et on intègre la nouveauté (facteur $\alpha$). C'est analogue à comment notre mémoire fonctionne : les événements récents ont plus d'impact que les anciens.
+:::
+
+::: {.callout-note title="À retenir"}
+Contrairement à la SMA et à la WMA, l'EMA **n'a pas besoin de stocker les $n$ dernières observations**. Il suffit de connaître la valeur précédente de l'EMA. C'est son avantage computationnel majeur.
+:::
+
+#### Schéma de pondération de l'EMA
+
+Les poids des observations passées dans l'EMA décroissent exponentiellement :
+
+- Observation à $t$ : poids $\alpha$
+- Observation à $t-1$ : poids $\alpha(1-\alpha)$
+- Observation à $t-k$ : poids $\alpha(1-\alpha)^k$
+
+Plus $\alpha$ est petit, plus la décroissance est lente, et plus les observations passées gardent de l'influence.
+
+---
+
+### Comparaison des schémas de pondération
+
+| Indicateur | Forme du schéma | Mémoire nécessaire | Mise à jour |
+|---|---|---|---|
+| SMA | Uniforme | $n$ observations | Simple |
+| WMA | Linéairement décroissant | $n$ observations | Modérément complexe |
+| EMA | Exponentiellement décroissant | 1 valeur scalaire | Très simple |
+
+::: {.callout-tip title="Intuition"}
+L'EMA est le compromis idéal : elle pondère les observations de façon décroissante (comme la WMA), mais est aussi simple à calculer qu'une mise à jour scalaire. C'est pourquoi elle est de loin la plus utilisée en pratique.
+:::
+
+---
+
+### Conditions initiales des moyennes mobiles
+
+Toute moyenne mobile doit être **initialisée** avant de pouvoir produire des valeurs.
+
+#### Pour la SMA et la WMA
+
+Il faut disposer de $n$ observations pour calculer la première valeur. Pendant les $n$ premiers instants, la moyenne mobile n'est pas définie.
+
+#### Pour l'EMA
+
+Plusieurs stratégies d'initialisation existent :
+
+**Option 1 — Initialisation à la première observation :**
+
+$$
+EMA(1) = X_1 \quad \text{(équivalent à } EMA(0) = 0 \text{)}
+$$
+
+**Option 2 — Initialisation par une SMA :**
+
+$$
+EMA(n) = SMA(n)
+$$
+
+On calcule d'abord une SMA sur les $n$ premiers points, puis on lance la récursion EMA à partir de là.
+
+::: {.callout-warning title="Point important"}
+Quelle que soit la méthode d'initialisation, l'EMA a besoin d'un **temps de chauffe (warm-up period)** pour se stabiliser. Les premières valeurs calculées peuvent être peu représentatives. Il est courant d'attendre quelques multiples de $1/\alpha$ observations avant d'utiliser les valeurs.
+:::
+
+::: {.callout-note title="À retenir"}
+La règle générale est la suivante : **plus $n$ est grand, et plus $\alpha$ est petit, plus le décalage temporel est long**. Ce compromis entre lissage et réactivité est au cœur du choix des paramètres.
+:::
+
+---
+
+### Choix du paramètre $\alpha$ de l'EMA
+
+#### Méthode 1 : Équivalence avec une SMA de taille $n$
+
+On cherche $\alpha$ tel que l'**âge moyen** des observations dans l'EMA soit égal à celui dans une SMA de fenêtre $n$.
+
+L'âge moyen dans une SMA de taille $n$ est $\frac{n+1}{2}$.
+
+L'âge moyen dans une EMA est $\frac{1}{\alpha}$.
+
+En égalisant les deux :
+
+$$
+\frac{1}{\alpha} = \frac{n(n+1)/2}{n} = \frac{n+1}{2}
+$$
+
+Ce qui donne la formule classique :
 
 $$
 \boxed{\alpha = \frac{2}{n+1}}
 $$
 
-⚠️ Attention : avec cette valeur de $\alpha$, l'EMA et la SMA de taille $n$ **ne sont pas identiques** — leurs schémas de pondération restent différents. Seul l'âge moyen pondéré est équivalent.
+::: {.callout-warning title="Point important"}
+Attention : avec $\alpha = \frac{2}{n+1}$, l'EMA et la SMA ont le **même âge moyen**, mais leurs valeurs ne sont **pas identiques**. Elles se comportent de façon similaire mais ne coïncident pas.
+:::
 
-### Méthode 2 : Définir l'impact résiduel après $k$ pas
+#### Méthode 2 : Définition via l'impact résiduel d'une observation
 
-On peut choisir $\alpha$ en fixant l'impact résiduel $\epsilon_k$ d'une observation après $k$ étapes :
-
-$$
-(1-\alpha)^k = \epsilon_k \implies \alpha = 1 - e^{\frac{\log(\epsilon_k)}{k}}
-$$
-
-**Exemples numériques** :
-
-- Si $k = 100$ et $\epsilon_k = 1\%$ : $\alpha = 0{,}045$
-- Si $n = 100$ (méthode SMA) : $\alpha = \frac{2}{101} \approx 0{,}0198$
-
-💡 La méthode 2 est plus intuitive car elle permet de dire explicitement "après 100 observations, une donnée doit avoir moins de 1% d'influence".
-
-## Illustration comparative des moyennes mobiles
-
-Le graphique comparatif (cours original, slide 104) montre :
-
-- La série brute (noir) est bruitée
-- EMA avec $\alpha = 0{,}1$ (vert) : réactive, peu de lag
-- EMA avec $\alpha = 0{,}01$ (magenta) : très lisse, lag important
-- EMA avec $\alpha = \frac{2}{101}$ (bleu) et SMA(100) (rouge) : **proches mais non identiques**
-- Les EMA nécessitent une période initiale de 100 observations pour se stabiliser
-
-## EMA pour données asynchrones
-
-### Problème des données à fréquence irrégulière
-
-La formule standard de l'EMA suppose des observations équidistantes. Or, les données de marché haute fréquence arrivent de façon **asynchrone** (ex. : activité du teneur de marché).
-
-### Solution : EMA avec temps continu
-
-Une approche issue de l'ouvrage *"An Introduction to High Frequency Finance"* [1] propose un opérateur de base adapté :
+On peut définir $\alpha$ en imposant qu'une observation vieille de $k$ instants ait un impact résiduel de $\epsilon_k$ :
 
 $$
-\text{EMA}(\tau; x)(t_n) = \mu \cdot \text{EMA}(\tau; x)(t_{n-1}) + (\nu - \mu) \cdot x_{n-1} + (1 - \nu) \cdot x_n
+(1-\alpha)^k = \epsilon_k
 $$
 
-avec les paramètres suivants :
-
-| Paramètre | Définition | Rôle |
-|-----------|-----------|------|
-| $\alpha = \frac{t_n - t_{n-1}}{\tau}$ | Temps écoulé normalisé, sans dimension | Définit $\Delta t_n$ |
-| $\mu = e^{-\alpha}$ | Facteur de décroissance exponentielle | Introduit le temps dans l'opérateur |
-| $\nu = \frac{1 - \mu}{\alpha}$ | Facteur d'interpolation | Pondère entre $x_{n-1}$ et $x_n$ |
-
-💡 Ici, $\tau$ est un **horizon de temps caractéristique** (analogue à la fenêtre $n$), et l'opérateur tient compte du temps réellement écoulé entre deux ticks.
-
-### Opérateurs dérivés
-
-À partir de cet opérateur de base, on peut construire :
-
-**EMA itérative** :
+En prenant le logarithme :
 
 $$
-\text{EMA}(\tau, n; x) = \text{EMA}(\tau; \text{EMA}[\tau, n-1; x])
+\log(1-\alpha) = \frac{\log(\epsilon_k)}{k}
+\implies
+\alpha = 1 - e^{\frac{\log(\epsilon_k)}{k}}
 $$
 
-avec $\text{EMA}(\tau, 1; x) = \text{EMA}(\tau; x)$ — une EMA est appliquée $n$ fois successivement.
+**Exemples numériques :**
 
-**SMA asynchrone** :
+- Pour $k = 100$ et $\epsilon_k = 1\%$ : $\alpha \approx 0.045$
+- Pour $n = 100$ (méthode 1) : $\alpha = \frac{2}{101} \approx 0.0198$
 
-$$
-\text{SMA}(\tau, n) = \frac{1}{n} \sum_{k=1}^{n} \text{EMA}\left[\tau'; k\right]
-\quad \text{avec} \quad \tau' = \frac{2\tau}{n+1}
-$$
-
-⚠️ Ces opérateurs permettent de travailler rigoureusement avec des données irrégulièrement espacées, sans avoir à discrétiser préalablement.
+::: {.callout-tip title="Intuition"}
+La méthode 2 est plus intuitive : on se demande "combien d'influence doit avoir une observation vieille de 100 périodes ?" Si on veut qu'elle n'ait plus que 1% d'impact, on calcule $\alpha$ en conséquence. Cela permet un réglage fin selon le contexte économique.
+:::
 
 ---
 
-# Temps intrinsèque (Intrinsic Time)
+### Exemple graphique : comparaison des EMA
 
-## Limites du temps physique
+Le graphique de comparaison illustre le comportement de plusieurs EMA sur une même série :
 
-Le temps physique est la référence standard pour analyser les séries financières. Pourtant, cette convention pose plusieurs problèmes conceptuels :
+- **$\alpha = 0.1$ (large)** : réactif, suit de près la série, peu de lissage, court décalage.
+- **$\alpha = 0.01$ (petit)** : très lissé, long décalage — la courbe réagit lentement aux changements de tendance.
+- **$\alpha = \frac{2}{101}$** et **$SMA(100)$** : comportements proches mais non identiques, illustrant l'équivalence approximative des deux méthodes.
 
-- **Inégalité de l'information** : des événements importants peuvent survenir entre deux observations et passer inaperçus si la grille temporelle est trop grossière
-- **Arbitraire de l'origine** : quand commence-t-on à observer ? À minuit ? À l'ouverture des marchés ?
-- **Rythme inadapté** : le temps physique s'écoule à la même vitesse que le marché soit très actif ou totalement endormi
+::: {.callout-note title="À retenir"}
+Il n'existe pas de "bon" $\alpha$ universel. Le choix dépend du compromis souhaité entre **réactivité** (fort $\alpha$) et **lissage** (faible $\alpha$), en fonction de l'horizon de trading et des caractéristiques du marché.
+:::
 
-💡 Comme dans la vie humaine, le temps "ressenti" varie : une heure de sommeil semble courte, une heure d'événement intense semble longue. Les marchés ont un rythme propre.
+---
 
-## L'idée du temps intrinsèque
+### Extension aux données asynchrones
 
-Plutôt que d'imposer une grille temporelle externe, l'idée est de **laisser le marché dicter son propre rythme**.
+#### Problème
 
-Trois idées ont été explorées pour définir ce "temps de marché" :
+Jusqu'ici, les moyennes mobiles supposent implicitement que les données arrivent à intervalles réguliers. Mais sur les marchés haute fréquence, les ticks arrivent de façon irrégulière : l'activité varie fortement selon les heures.
 
-- **Temps en fonction du volume** : chaque unité de volume échangé fait avancer le temps d'un pas — pertinent mais le volume n'est connu qu'après coup
-- **Temps en fonction du nombre de transactions** : même problème de disponibilité de l'information
-- **Temps basé sur les prix** : la seule information dont on est certain disposer en temps réel est le prix. C'est l'approche retenue.
+#### Solution : EMA adaptée au temps continu
 
-## Définition formelle du temps intrinsèque
+D'après le livre *Introduction to High Frequency Finance* [1], un opérateur de base est défini comme suit.
 
-### Concept central : les changements directionnels (Directional Changes — DC)
-
-Le temps intrinsèque est défini par l'occurrence d'**événements discrets** : les **changements directionnels de prix** (*Directional Changes*, DC).
-
-Un changement directionnel est détecté lorsque le prix s'éloigne d'un extrême local d'un montant fixé $\delta$ (exprimé en pourcentage).
-
-### Propriétés
-
-- Le paramètre $\delta$ contrôle la **granularité temporelle** : un petit $\delta$ génère de nombreux événements (temps qui s'écoule vite), un grand $\delta$ en génère peu (temps qui s'écoule lentement)
-- Le temps devient **adaptatif** : il s'écoule plus vite en période volatile, plus lentement en période calme
-- Le **nombre de changements directionnels** par rapport au temps physique est une mesure de la **volatilité**
-- Entre deux changements directionnels, on observe un **dépassement** (*overshoot*, OS), dont la longueur est liée à la **liquidité** du marché
-
-### Décomposition d'un mouvement de prix
-
-Chaque segment de prix entre deux extrêmes locaux se décompose en deux parties :
-
-- **DC (Directional Change)** : le mouvement de prix correspondant au franchissement du seuil $\delta$
-- **OS (Overshoot)** : le mouvement supplémentaire au-delà du seuil, jusqu'à l'inversion suivante
+Étant donné deux observations consécutives arrivant aux instants $t_{n-1}$ et $t_n$, on définit :
 
 $$
-\text{Mouvement total (TM)} = \text{DC} + \text{OS}
+\alpha = \frac{t_n - t_{n-1}}{\tau}, \quad \mu = e^{-\alpha}, \quad \nu = \frac{1-\mu}{\alpha}
 $$
 
-💡 L'overshoot représente "l'élan" du marché après le signal directionnel — il est lié à la liquidité : un marché liquide revient vite, un marché illiquide continue dans la même direction.
+avec $\tau$ un paramètre de temps caractéristique.
 
-## Algorithme de détection des changements directionnels
+L'EMA adaptée au temps continu est alors :
 
-L'algorithme fonctionne avec deux variables principales :
+$$
+EMA(\tau; x)(t_n) = \mu \cdot EMA(\tau; x)(t_{n-1}) + (\nu - \mu) \cdot x_{n-1} + (1 - \nu) \cdot x_n
+$$
 
-- **mode** : état actuel du marché, initialement "up" (arbitraire)
-- **$x_\text{ext}$** : dernier extrême observé (maximum en mode "up", minimum en mode "down")
-- **$\delta > 0$** : seuil de détection du changement directionnel
+#### Interprétation des paramètres
+
+| Symbole | Rôle |
+|---|---|
+| $\mu = e^{-\alpha}$ | Facteur d'oubli dépendant du temps écoulé |
+| $\nu$ | Paramètre d'interpolation entre l'observation précédente et l'actuelle |
+| $x_{n-1}$ | Dernière observation |
+| $x_n$ | Observation courante |
+
+::: {.callout-tip title="Intuition"}
+L'introduction de $\mu = e^{-\alpha}$ est clé : si beaucoup de temps s'est écoulé depuis la dernière observation ($\alpha$ grand), $\mu$ est proche de 0, et l'EMA "oublie" rapidement le passé. Si peu de temps s'est écoulé ($\alpha$ petit), $\mu \approx 1$ et la mémoire est longue. Le temps est ainsi intégré naturellement dans l'opérateur.
+:::
+
+#### EMA itérative et SMA généralisée
+
+À partir de cet opérateur de base, on peut construire des opérateurs plus sophistiqués.
+
+**EMA itérative :**
+
+$$
+EMA(\tau, n; x) = EMA(\tau; EMA[\tau, n-1; x])
+$$
+
+avec $EMA(\tau, 1; x) = EMA(\tau; x)$.
+
+**SMA généralisée sur données asynchrones :**
+
+$$
+SMA(\tau, n) = \frac{1}{n} \sum_{k=1}^{n} EMA\left[\tau'; k\right], \quad \text{avec } \tau' = \frac{2\tau}{n+1}
+$$
+
+Ces opérateurs permettent de traiter des données de marché irrégulières avec la même rigueur que les opérateurs classiques.
+
+---
+
+## Temps Intrinsèque (Intrinsic Time)
+
+### Limites du temps physique
+
+Le temps physique — la montre qui tourne à vitesse constante — est le cadre de référence habituel pour l'analyse des séries temporelles.
+
+Pourtant, plusieurs observations invitent à le remettre en question :
+
+- **Le temps subjectif s'accélère et ralentit** : dans notre expérience quotidienne, le temps semble ralentir pendant le sommeil et s'accélérer lors d'événements importants.
+- **Des événements importants peuvent passer inaperçus** entre deux observations, si l'intervalle est trop long.
+- **Le point de départ est arbitraire** : pourquoi commencer à minuit ? À 17h00 ?
+- **Le temps physique est rigide** : il s'écoule à vitesse constante, indépendamment de l'activité du marché.
+
+::: {.callout-tip title="Intuition"}
+Pendant un week-end, les marchés de change (Forex) sont fermés. Le temps physique s'écoule, mais aucun événement de marché n'a lieu. Compter ces heures comme "du temps de marché" n'a pas de sens économique.
+:::
+
+### Alternatives au temps physique
+
+Plusieurs idées ont été explorées pour définir un temps "adaptatif" :
+
+**Temps basé sur les volumes (Volume Time)** : le temps avance d'une unité à chaque fois qu'un certain volume d'échanges est atteint.
+
+- *Avantage* : capture l'activité économique réelle.
+- *Inconvénient* : les volumes ne sont connus qu'après la transaction.
+
+**Temps basé sur le nombre de transactions (Transaction Time)** : similaire au volume time, mais en comptant les transactions.
+
+- *Inconvénient* : également connu a posteriori.
+
+**Temps basé sur les prix** : les prix sont **toujours observables en temps réel**. Pourquoi ne pas laisser le marché lui-même dicter son propre rythme, à travers les mouvements de prix ?
+
+---
+
+### Définition du temps intrinsèque
+
+Le **temps intrinsèque** est une mesure du temps dictée par l'occurrence d'**événements de changement directionnel (Directional Change Events)**.
+
+Un changement directionnel (DC) est défini par :
+
+- Un renversement de tendance du prix d'une amplitude minimale de $\delta$ (threshold).
+- Après une montée, si le prix baisse de $\delta$ en valeur relative → **DC à la baisse (DC down)**.
+- Après une baisse, si le prix monte de $\delta$ en valeur relative → **DC à la montée (DC up)**.
+
+::: {.callout-note title="À retenir"}
+Le paramètre $\delta$ contrôle la **résolution temporelle** : un $\delta$ petit génère de nombreux événements (temps intrinsèque "rapide") ; un $\delta$ grand génère peu d'événements (temps intrinsèque "lent"). Le temps devient ainsi **adaptatif et multiscalaire**.
+:::
+
+#### Propriétés fondamentales
+
+Le cadre du temps intrinsèque présente plusieurs propriétés remarquables :
+
+- **Le nombre de changements directionnels par rapport au temps physique** est lié à la **volatilité** du marché.
+- **Entre deux changements directionnels**, on observe ce qu'on appelle l'**overshoot (OS)** : le mouvement de prix qui dépasse le seuil de déclenchement du prochain DC. La longueur de l'overshoot est liée à la **liquidité** du marché.
+- **Le total d'un mouvement de prix** entre deux extrema est :
+
+$$
+TM = DC + OS
+$$
+
+où TM est le Total Move, DC est le Directional Change et OS est l'Overshoot.
+
+---
+
+### Algorithme du temps intrinsèque
+
+L'algorithme de détection des changements directionnels est défini avec les éléments suivants :
+
+- **Mode initial** : arbitrairement "up" (haussier).
+- **Paramètre** : $\delta > 0$, le seuil de changement directionnel.
+- **Variable** : $x_{ext}$, le prix extrême (maximum ou minimum) atteint dans le mode courant.
 
 ```
-Pour chaque observation x dans AllTicks :
+Pour chaque prix x dans AllTicks :
 
-  Si mode = "up" :
-    Si x < x_ext :
-      x_ext = x       (mise à jour du minimum local)
-    Sinon si (x_ext - x) / x_ext ≥ δ :
-      print("Nouveau DC up")
-      x_ext = x
-      mode = "down"
+    Si mode = "up" :
+        Si x < x_ext :
+            x_ext = x          // Mise à jour du minimum local
+        Sinon si (x_ext - x) / x_ext >= δ :
+            print("New DC up")    // Un DC à la baisse est détecté
+            x_ext = x
+            mode = "down"
 
-  Sinon (mode = "down") :
-    Si x > x_ext :
-      x_ext = x       (mise à jour du maximum local)
-    Sinon si (x - x_ext) / x_ext ≥ δ :
-      print("Nouveau DC down")
-      x_ext = x
-      mode = "up"
+    Sinon (mode = "down") :
+        Si x > x_ext :
+            x_ext = x          // Mise à jour du maximum local
+        Sinon si (x - x_ext) / x_ext >= δ :
+            print("New DC down")  // Un DC à la hausse est détecté
+            x_ext = x
+            mode = "up"
 ```
 
-### Lecture de l'algorithme
+::: {.callout-tip title="Intuition"}
+L'algorithme est un **détecteur de tendance locale**. En mode "up", on cherche un renversement à la baisse d'au moins $\delta\%$. Quand ce renversement est détecté, on bascule en mode "down" et on cherche le prochain retournement haussier. Le temps intrinsèque avance d'un cran à chaque détection.
+:::
 
-- En mode **"up"** : on surveille une chute de prix. Si le prix remonte suffisamment (≥ $\delta$) depuis son minimum local, c'est un changement directionnel **vers le bas** (*DC up* signifie que l'on était en tendance montante et qu'on détecte un retournement)
-- En mode **"down"** : on surveille une hausse de prix. Si le prix monte suffisamment (≥ $\delta$) depuis son minimum local, c'est un changement directionnel **vers le haut**
+::: {.callout-note title="À retenir"}
+Contrairement au temps physique, le temps intrinsèque **ne tient pas compte de la durée** entre les ticks. Deux DC séparés de 1 milliseconde et deux DC séparés de 1 heure comptent exactement de la même façon en temps intrinsèque.
+:::
 
-⚠️ Le mode initial est arbitraire — l'algorithme s'adapte rapidement aux données réelles.
+---
 
-💡 Visuellement, les changements directionnels sont représentés par des losanges (*diamonds*) sur les graphiques de prix, constituant des **points de dissection naturels** de la courbe de prix.
+### Lois d'échelle (Scaling Laws)
 
-## Lois d'échelle (Scaling Laws)
+#### Motivation
 
-### Objectif
+Le temps intrinsèque est un cadre alternatif au temps physique. Mais comment relier les deux ? Comment savoir, par exemple, combien de secondes dure en moyenne un changement directionnel pour un seuil $\delta$ donné ?
 
-Une fois le temps intrinsèque défini, on cherche à le **connecter au temps physique** par des relations empiriques robustes appelées **lois d'échelle** (*scaling laws*).
+Les **lois d'échelle** répondent à cette question. Elles établissent des relations empiriques entre des grandeurs mesurées dans le temps intrinsèque et des grandeurs du temps physique.
 
-Ces lois permettent de répondre à des questions concrètes :
+#### Exemples de lois d'échelle
 
-- Quelle est la durée moyenne d'un changement directionnel de taille $\delta$ ?
-- Quelle est la longueur moyenne d'un overshoot ?
-- Combien de ticks surviennent en moyenne lors d'un DC de taille $\delta$ ?
-
-### Exemples de lois d'échelle
-
-**Loi entre temps et mouvements de prix moyens** :
+**Loi 1 — Relation entre prix et temps :**
 
 $$
 \langle \Delta x \rangle \sim \Delta t^{\alpha}
 $$
 
-Plus l'intervalle de temps est long, plus le mouvement de prix moyen est grand — selon une loi de puissance.
+La variation de prix moyenne sur un intervalle $\Delta t$ suit une loi de puissance en $\Delta t$.
 
-**Durée moyenne d'un changement directionnel** en fonction du seuil $\delta$ :
+**Loi 2 — Durée moyenne d'un DC en fonction du seuil :**
 
 $$
-\langle \Delta t_\text{dc} \rangle \sim \left(\frac{\delta}{c}\right)^{\alpha}
+\langle \Delta t_{dc} \rangle \sim \left(\frac{\delta}{c}\right)^{\alpha}
 $$
 
-où $c$ et $\alpha$ sont des paramètres estimés empiriquement sur les données.
+La durée moyenne (en temps physique) d'un changement directionnel de seuil $\delta$ suit aussi une loi de puissance.
 
-### Loi du nombre de ticks (Tick-count Scaling Law)
+::: {.callout-tip title="Intuition"}
+Les lois d'échelle sont l'analogue financier des lois physiques d'universalité : elles montrent que les marchés obéissent à des régularités statistiques robustes, indépendamment du niveau de détail ($\delta$) auquel on les observe. Ce sont des **propriétés fractales** des marchés.
+:::
 
-Une des lois les mieux documentées relie le **nombre moyen de ticks** observé lors d'un DC au **seuil $\delta$** :
+#### Loi du nombre de ticks (Tick-Count Scaling Law)
 
-- L'axe des x représente le seuil de mouvement de prix $\Delta x$ (en %)
-- L'axe des y représente le nombre moyen de ticks
+Une des lois d'échelle les plus frappantes est celle du **nombre de ticks** : le nombre moyen de ticks observés entre deux DC consécutifs est une fonction de puissance du seuil $\delta$.
 
-Cette loi est **robuste à travers 13 paires de devises** (EUR/USD, GBP/USD, USD/JPY, etc.) sur des données haute fréquence FX, démontrant son caractère universel.
+Cette loi a été vérifiée empiriquement sur **13 paires de devises** différentes (EUR-USD, GBP-JPY, AUD-USD, etc.) et sur des données couvrant plusieurs années.
 
-💡 Un tick est défini comme un mouvement de prix de 0,02%. Les distributions (en insert) montrent la concentration des observations autour de la loi.
+La robustesse de ces lois sur des marchés si différents suggère qu'elles capturent une propriété fondamentale de la microstructure des marchés.
 
-### Universalité des lois d'échelle
+#### Panorama des lois d'échelle
 
-Pas moins de **20 lois d'échelle** ont été identifiées dans les données FX haute fréquence, couvrant notamment :
+Une étude systématique [2] a identifié **20 lois d'échelle** distinctes, couvrant notamment :
 
-- Mouvement de prix moyen et quadratique
-- Nombre de changements directionnels
-- Durée des changements directionnels et des overshoots
-- Mouvement de prix total et temps total
-- Nombre de ticks dans chaque composante (DC, OS, TM)
-- Changement cumulatif directionnel et overshoot cumulatif
+- Mouvement de prix moyen ($\langle \Delta x \rangle$)
+- Mouvement de prix moyen quadratique ($\langle \Delta x^2 \rangle$)
+- Nombre de DC directionnels
+- Nombre de mouvements de prix totaux
+- Durée moyenne d'un DC
+- Durée d'un overshoot
+- Nombre de ticks dans un DC ou un OS
+- Mouvement cumulatif de prix (coastline)
 
-🧠 **À retenir** : Ces lois d'échelle sont stables à travers différents marchés et différentes périodes, ce qui en fait des outils puissants pour modéliser et comparer des marchés.
+Tous ces indicateurs suivent des lois de puissance en $\delta$, et ce, de façon cohérente entre différentes paires de devises — y compris par rapport à un modèle de référence (marche aléatoire gaussienne).
 
-## Temps physique vs temps intrinsèque — synthèse visuelle
-
-```{mermaid}
-graph LR
-    A["Temps physique\n(Physical Time)"] -->|"s'écoule uniformément"| B["Observations régulières\nmais événements manqués"]
-    C["Temps intrinsèque\n(Intrinsic Time)"] -->|"se déclenche sur événements"| D["Observations adaptatives\ncorrélées à l'activité"]
-    E["Seuil δ\n(DC threshold)"] -->|"contrôle la granularité"| C
-    D -->|"plus δ est petit"| F["Plus de DCs\nTemps 'rapide'"]
-    D -->|"plus δ est grand"| G["Moins de DCs\nTemps 'lent'"]
-```
+::: {.callout-warning title="Point important"}
+La cohérence de ces lois d'échelle sur de nombreux actifs et périodes suggère qu'elles ne sont pas anecdotiques : elles reflètent une **structure universelle** des données de marché haute fréquence, indépendante de la paire de devises ou de la période observée.
+:::
 
 ---
 
-# Points clés à retenir (Key Takeaways)
+## Points clés du chapitre (Key Takeaways)
 
-## Sur les données financières
+### Données financières réelles
 
-- Les données réelles sont composées de **prix bid et ask** et sont généralement **bruitées et non équidistantes**
-- La discrétisation est l'approche standard mais présente des limites (informations perdues, choix arbitraire de la grille)
+Les données financières réelles sont composées de prix bid et ask, sont généralement non équidistantes dans le temps, et présentent un comportement bruité voire discontinu.
 
-## Sur les moyennes mobiles
+### Opérateurs de lissage
 
-| Opérateur | Avantages | Inconvénients |
-|-----------|-----------|---------------|
-| **SMA** | Simple, interprétable | Équipondération, lag important |
-| **WMA** | Pondération chronologique | Mise à jour complexe |
-| **EMA** | Simple à mettre à jour, mémoire infinie | Choix de $\alpha$, initialisation |
+Plusieurs opérateurs existent pour lisser les séries temporelles :
 
-- Tous les opérateurs induisent un **décalage temporel** (time lag) inévitable
-- Des extensions pour données **asynchrones** existent (EMA avec temps continu)
+- **SMA** : simple mais équipondère toutes les observations et induit un lag.
+- **WMA** : améliore la pondération au prix d'un calcul plus lourd.
+- **EMA** : optimal en pratique — pondération décroissante exponentiellement, mise à jour scalaire, paramètre $\alpha$ ajustable.
 
-## Sur le temps intrinsèque
+### Temps physique vs temps intrinsèque
 
-- Le temps physique est standard mais **arbitraire** et peut manquer des événements importants
-- Le **temps intrinsèque** est une alternative basée sur les changements directionnels de prix
-- Il est **adaptatif** : il s'accélère en période volatile, ralentit en période calme
-- Un grand nombre de **lois d'échelle** permettent de connecter temps intrinsèque et temps physique, offrant un cadre robuste pour l'analyse des marchés haute fréquence
+Le temps physique est le standard universel, mais il présente une limitation fondamentale : **il favorise la perte d'information** pendant les périodes de faible activité et traite uniformément des instants pourtant très différents en termes d'activité de marché.
+
+### Temps intrinsèque
+
+Le **temps intrinsèque** est une alternative basée sur les changements directionnels de prix :
+
+- Il est adaptatif et guidé par le marché lui-même.
+- Il permet d'analyser les marchés à différentes résolutions via le paramètre $\delta$.
+- Il révèle des propriétés cachées liées à la volatilité et à la liquidité.
+
+### Lois d'échelle
+
+Un grand nombre de **lois d'échelle** relient le temps intrinsèque au temps physique. Ces lois, robustes empiriquement sur de nombreux marchés, constituent un outil précieux pour la modélisation et la compréhension des marchés haute fréquence.
 
 ---
 
-# Références
+## Références
 
-- [1] Dacorogna, M. et al. *An Introduction to High Frequency Finance*. Academic Press, 2001.
-- [2] Glattfelder, J.B., Dupuis, A., Olsen, R.B. *Patterns in high-frequency FX data: Discovery of 12 empirical scaling laws*. Quantitative Finance, 2011.
+[1] Dacorogna, M. M., Gençay, R., Müller, U. A., Olsen, R. B., & Pictet, O. V. (2001). *An Introduction to High-Frequency Finance*. Academic Press.
+
+[2] Glattfelder, J. B., Dupuis, A., & Olsen, R. B. (2011). Patterns in high-frequency FX data: Discovery of 12 empirical scaling laws. *Quantitative Finance*, 11(4), 599–614.

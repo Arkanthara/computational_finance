@@ -1,0 +1,130 @@
+---
+title: "Exécution algorithmique — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Un cuisinier affamé doit manger **10 000 bouchées** (son ordre), mais le restaurant n'en sert que 10 000 par jour. Commander tout d'un coup fait flamber le prix — c'est l'**impact de marché**. Attendre trop longtemps et la pizza refroidit — c'est le **risque de timing**. La solution : un algorithme qui fractionne intelligemment les commandes pour manger sans se faire repérer, ni trop vite, ni trop tard.
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- Les gros ordres **déplacent les prix** à leur propre désavantage → fractionner obligatoirement.
+- Arbitrage fondamental : **impact de marché** (coût de la vitesse) ↔ **risque de timing** (coût de l'attente).
+- 9 algorithmes existent, chacun optimisant cet arbitrage différemment.
+- On choisit l'algo via la **frontière efficiente** (espace coût/risque) et $\lambda$ (aversion au risque).
+- Coût dominant : **risque de timing = 40 %** — pas les commissions.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale | Intuition |
+| ------- | ----------------- | --------- |
+| Impact temporaire | Perturbation du prix qui se résorbe après le trade. | Ressort : comprimé puis relâché. |
+| Impact permanent | Hausse du prix qui persiste — le marché a reçu un signal. | Le marché a « compris » l'intention. |
+| TWAP | Tranches égales dans le temps. | Minuterie toutes les 15 min. |
+| VWAP | Suivre le profil de volume historique intraday. | Nager avec le courant d'hier. |
+| POV | $w_i = \alpha \cdot v_i$ : proportionnel au volume réel. | Coller au rythme du marché aujourd'hui. |
+| MI | Dark pools + ordres cachés, impact quasi nul. | File secrète sans enseigne. |
+| IS | Minimise écart prix décision − prix exécution. | Payer au plus près de l'instant de décision. |
+| AS (AIM/PIM) | IS adaptatif : accélère selon hypothèse de tendance. | IS avec thermostat directionnel. |
+| MC | Cible le prix de clôture. | Vouloir payer le prix officiel du soir. |
+| LIQ | Trade si et seulement si liquidité + prix favorable. | N'ouvrir son portefeuille que dans les bonnes conditions. |
+| Frontière efficiente | Algos minimisant le coût pour chaque niveau de risque. | Frontière de Pareto du trading. |
+| $\lambda$ | Pente tangente à la frontière = ratio coût/risque. | Curseur entre sécurité chère et risque bon marché. |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+- Grand ordre → **impact de marché** → besoin de fractionnement
+- Fractionnement → arbitrage **impact ↔ risque timing** → **frontière efficiente**
+- Profil investisseur → **$\lambda$** → point de tangence = algo optimal
+- ↑ coût ↓ risque : **MC → IS → AS → POV → PI → VWAP → LIQ → MI** ↓ coût ↑ risque
+- **TWAP** → hors frontière (simple mais inefficace)
+- Volume historique → VWAP ; volume réel → POV ; dark pools → MI ; prix vs benchmark → PI / AS
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+| ------- | ------------- | --------- |
+| $\text{VWAP} = \dfrac{\sum p_i v_i}{\sum v_i}$ | Prix moyen pondéré par les volumes. | Grosses transactions pèsent plus. |
+| $n = \dfrac{t_1-t_0}{\Delta t}+1\;;\;w_i=\dfrac{w}{n}$ | TWAP : nombre de tranches et taille uniforme. | Division égale dans le temps. |
+| $w_i = \alpha \cdot v_i$ | POV : taille proportionnelle au volume observé. | $\alpha \in [1\%,20\%]$. |
+| $\tilde{\alpha} = \dfrac{\alpha}{1-\alpha}$ | POV : correction auto-participation. | $\alpha=5\%\Rightarrow\tilde{\alpha}=5.3\%$. |
+| $\lambda = \dfrac{\text{coût}}{\text{risque}}$ | Aversion au risque. | Grand $\lambda$ → algo sûr et cher (MC, IS). |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **TWAP prévisible** → front-running possible ; **hors frontière** → ne pas choisir par défaut.
+- **VWAP ≠ prix garanti** : suit le volume estimé, pas le prix.
+- **POV auto-impact** : corriger avec $\tilde{\alpha}$ si $\alpha$ élevé.
+- **MI : faible completion rate** → dark pool sans contrepartie = ordre non exécuté.
+- **MC double piège** : trop tôt = risque timing ; trop tard = fort impact.
+- **AIM vs PIM** : AIM accélère si prix *favorables* (mean-reversion) ; PIM accélère si prix *défavorables* (tendance persistante).
+- **Portfolio trading** : confier la liste complète au broker → risque de fuite d'information.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Différence entre impact temporaire et permanent ?
+
+**R courte :** Temporaire = perturbation réversible (le prix revient). Permanent = signal informationnel retenu durablement par le marché.
+
+---
+
+**Q :** Pourquoi TWAP est-il sous-optimal ?
+
+**R courte :** Prévisible (front-running) et hors frontière efficiente : même risque, coût plus élevé que les alternatives.
+
+---
+
+**Q :** Différence VWAP vs POV ?
+
+**R courte :** VWAP suit un profil de volume historique ; POV réagit au volume observé en temps réel — plus adaptatif, mais toujours prévisible.
+
+---
+
+**Q :** Comment utilise-t-on $\lambda$ pour choisir un algorithme ?
+
+**R courte :** $\lambda$ est la pente d'une droite depuis l'origine dans l'espace coût/risque. Le point de tangence avec la frontière efficiente donne l'algorithme optimal.
+
+---
+
+**Q :** Différence AIM / PIM dans l'AS ?
+
+**R courte :** AIM : agressif quand prix *favorables* (hypothèse retour à la moyenne). PIM : agressif quand prix *défavorables* (hypothèse de tendance persistante).
+
+---
+
+**Q :** Quel est le coût de transaction dominant ?
+
+**R courte :** Le risque de timing (40 %), loin devant l'impact de marché (6 %) et les commissions (1 %).
+
+---
+
+**Q :** Risque principal du portfolio trading externalisé ?
+
+**R courte :** La confidentialité : partager la composition complète du portefeuille avec un broker l'expose à une exploitation de ces informations.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+- Impact = **temporaire** (réversible) + **permanent** (signal).
+- Arbitrage clé : **impact de marché ↔ risque de timing**.
+- Frontière : $MC \to IS \to AS \to POV \to PI \to VWAP \to LIQ \to MI$.
+- **TWAP hors frontière** (simple ≠ optimal).
+- $\lambda = \text{coût}/\text{risque}$ → tangente → algo optimal.
+- **POV** : corriger $\alpha$ si fort ($\tilde{\alpha} = \alpha/(1-\alpha)$).
+- **MI** : dark pools → impact faible, completion faible, souvent hybride.
+- **AIM** = mean-reversion ; **PIM** = tendance persistante.
+- Coût dominant : **timing risk = 40 %**.
+- Portfolio trading : ordres **simultanés** + confidentialité à protéger.

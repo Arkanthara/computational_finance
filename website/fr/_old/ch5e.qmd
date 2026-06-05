@@ -1,0 +1,337 @@
+---
+title: "Le Carnet d'Ordres à Cours Limité — Révision orale"
+---
+
+## Introduction
+
+Imaginez un marché où, au lieu de crier dans tous les sens, tout le monde écrit ses intentions sur un grand tableau lumineux. C’est ça, l’idée du **carnet d’ordres à cours limité** : un marché qui organise la rencontre entre acheteurs et vendeurs sans arbitre humain au milieu.
+
+Ce chapitre sert à comprendre trois choses très concrètes : **comment un prix se forme**, **comment un ordre peut être exécuté ou rester en attente**, et **pourquoi les marchés ont souvent une dynamique plus étrange qu’une simple marche aléatoire**.
+
+## 1. Deux manières de faire un échange
+
+### Le marché OTC : la logique du teneur de marché
+
+Dans un marché **OTC** (*over the counter*), on échange directement avec un **teneur de marché**. Son rôle est simple à raconter : il affiche en permanence un prix d’achat, le **bid**, et un prix de vente, l’**ask**.
+
+L’intuition est celle d’un commerçant qui accepte d’acheter et de vendre en continu. Il rend le marché fluide, mais il prend un **risque d’inventaire** : s’il accumule trop d’actions dans un sens, il peut se retrouver exposé à une baisse ou à une hausse défavorable.
+
+Ce qu’il faut savoir à l’oral : le teneur de marché gagne surtout grâce au **spread**, c’est-à-dire l’écart entre ce qu’il paie et ce qu’il demande.
+
+::: {.callout-note collapse=true}
+**Définition formelle.**  
+Dans un schéma OTC, la contrepartie principale est le teneur de marché. Il assure la liquidité, mais doit gérer son stock d’actifs et souvent se couvrir ailleurs quand son exposition devient trop grande.
+
+L’idée clé est : **liquidité contre risque**.
+:::
+
+### Le carnet d’ordres : la logique du match automatique
+
+Dans un **LOB** (*Limit Order Book*), il n’y a pas de teneur de marché unique qui fait tout le travail. Les ordres arrivent dans un système centralisé, et le marché les apparie automatiquement.
+
+L’intuition est très simple : si le prix proposé par un acheteur rencontre le prix demandé par un vendeur, l’échange se fait. Sinon, l’ordre attend.
+
+À l’oral, il faut insister sur ce point : le carnet d’ordres n’est pas seulement une liste. C’est **la mémoire vivante du marché** à un instant donné.
+
+::: {.callout-note collapse=true}
+**Définition formelle.**  
+Le carnet d’ordres à cours limité à l’instant $t$ peut être vu comme l’ensemble des ordres **actifs**, c’est-à-dire soumis mais pas encore exécutés ni annulés.
+
+On note souvent cet ensemble $\mathcal{L}(t)$.
+:::
+
+## 2. Lire un carnet d’ordres
+
+Un carnet d’ordres ressemble à une frontière entre deux forces :
+
+- le côté **achat**, avec le meilleur prix d’achat, le **bid** ;
+- le côté **vente**, avec le meilleur prix de vente, l’**ask**.
+
+Le marché se lit à travers ces deux nombres. Le bid montre jusqu’où les acheteurs sont prêts à monter. L’ask montre jusqu’où les vendeurs sont prêts à descendre.
+
+L’intervalle entre les deux, le **spread**, mesure à la fois la tension du marché et le coût immédiat de la transaction.
+
+Le bon réflexe à l’oral : dire que **plus le spread est petit, plus le marché est liquide**.
+
+::: {.callout-note collapse=true}
+**Définitions utiles.**
+
+- $b(t)$ : meilleur prix d’achat actif
+- $a(t)$ : meilleur prix de vente actif
+- $s(t)=a(t)-b(t)$ : spread
+- $m(t)=\dfrac{a(t)+b(t)}{2}$ : mid-price
+
+Le mid-price est une référence pratique du “centre” du marché.
+:::
+
+### L’intuition du prix médian
+
+Le **mid-price** n’est ni le bid ni l’ask. C’est leur milieu. On l’utilise souvent comme proxy du “vrai” prix de l’actif, parce qu’il est moins sensible aux petites tensions du carnet.
+
+À l’oral, une bonne image consiste à dire : le bid et l’ask sont les deux bords d’un couloir ; le mid-price est le milieu du couloir.
+
+## 3. Deux types d’ordres, deux logiques
+
+### L’ordre à cours limité
+
+Un **ordre à cours limité** dit au marché : “je suis prêt à acheter ou vendre, mais pas à n’importe quel prix”.
+
+C’est l’ordre de celui qui privilégie le **prix** plutôt que la vitesse. Il peut offrir un meilleur tarif, mais il accepte un risque essentiel : **ne jamais être exécuté**.
+
+L’intuition est très importante à l’oral : un ordre limite est un ordre patient.
+
+### L’ordre au marché
+
+Un **ordre au marché** dit au contraire : “je veux exécuter tout de suite”.
+
+Ici, l’objectif est la certitude d’exécution. Le prix exact devient secondaire, ce qui expose à un **prix moins favorable**.
+
+À l’oral, la formule à retenir est simple :
+
+**ordre limite = meilleur prix, mais incertitude ; ordre au marché = exécution immédiate, mais prix potentiellement pire.**
+
+::: {.callout-note collapse=true}
+**Définitions formelles et logique de décision.**
+
+Un ordre peut être résumé par
+\[
+x=(p_x,w_x,t_x),
+\]
+où $p_x$ est son prix, $w_x$ sa taille et $t_x$ son horodatage.
+
+Pour un achat :
+- si $p_x \ge a(t)$, l’ordre est agressif et s’exécute immédiatement ;
+- si $b(t)<p_x<a(t)$, il entre dans le spread ;
+- si $p_x\le b(t)$, il attend dans le carnet.
+
+Le cas vendeur est symétrique.
+:::
+
+## 4. Comment le carnet évolue
+
+Quand un ordre arrive, le système fait toujours la même chose : il vérifie d’abord s’il peut être exécuté immédiatement. Sinon, il rejoint le carnet.
+
+Cette logique est très importante, car elle explique pourquoi le carnet évolue en permanence. Le marché n’est pas figé : chaque nouvel ordre peut soit **consommer** de la liquidité, soit **ajouter** de la liquidité.
+
+L’idée à retenir pour l’oral :  
+un ordre peut soit **manger** le carnet, soit **l’épaissir**.
+
+### L’exemple le plus simple
+
+Supposons un achat.
+
+- S’il est placé sous le bid, il attend.
+- S’il est entre le bid et l’ask, il rapproche le marché de lui.
+- S’il est au-dessus de l’ask, il devient un ordre au marché et se remplit tout de suite.
+
+Cette classification est utile parce qu’elle relie directement **le prix proposé** et **l’effet sur le carnet**.
+
+::: {.callout-note collapse=true}
+**Version technique.**  
+La dynamique du carnet dépend du niveau de prix relatif de l’ordre entrant par rapport au bid et à l’ask. Cette comparaison détermine s’il reste passif ou s’il déclenche une exécution.
+
+Le cas vendeur est obtenu par symétrie.
+:::
+
+## 5. Qui est servi en premier ?
+
+Quand plusieurs ordres attendent au même niveau de prix, il faut une règle de priorité. C’est un point classique à l’oral, parce qu’il montre que la microstructure n’est pas seulement une question de prix, mais aussi d’**organisation du temps** et de **taille**.
+
+### La priorité prix-temps
+
+C’est la règle la plus intuitive : le meilleur prix passe d’abord ; à prix égal, le premier arrivé est servi en premier.
+
+C’est la logique du FIFO. Elle récompense la rapidité et la patience.
+
+### La priorité prorata
+
+Ici, à prix égal, la quantité exécutée est répartie entre les ordres proportionnellement à leur taille.
+
+L’intuition : plus votre ordre est gros, plus vous avez de chances d’en recevoir une part importante.
+
+### La priorité prix-taille
+
+À prix égal, le plus gros ordre passe d’abord. Cette règle favorise la taille plutôt que l’ancienneté.
+
+À l’oral, le message à retenir est que **la manière de répartir l’exécution influence directement les stratégies des traders**.
+
+::: {.callout-note collapse=true}
+**Point technique.**  
+Les principales règles de priorité sont :
+
+- **prix-temps** : meilleur prix, puis ancienneté ;
+- **prorata** : meilleure qualité de prix, puis partage proportionnel ;
+- **prix-taille** : meilleur prix, puis plus gros volume.
+
+Elles modifient les incitations des participants et la forme du carnet.
+:::
+
+## 6. Tout est-il visible ?
+
+Le carnet d’ordres standard est relativement transparent : on voit le bid, l’ask, et souvent plusieurs niveaux de profondeur.
+
+Mais il existe des exceptions.
+
+Les **ordres iceberg** cachent une partie de leur taille. Les **dark pools** cachent encore davantage, parfois presque tout.
+
+L’idée importante à l’oral : le marché visible n’est pas forcément le marché réel dans sa totalité.
+
+### Pourquoi cette transparence compte
+
+La transparence donne de l’information sur la liquidité, la pression acheteuse ou vendeuse, et les intentions des traders. Mais elle ne révèle jamais parfaitement tout.
+
+Donc le carnet d’ordres est à la fois un outil de prévision et un objet partiellement opaque.
+
+::: {.callout-note collapse=true}
+**À connaître.**  
+Un carnet transparent permet d’observer :
+
+- le bid et l’ask ;
+- la profondeur à différents niveaux ;
+- les exécutions et annulations ;
+- des indices sur l’intention des participants.
+
+Mais les ordres cachés limitent toujours la lecture complète du marché.
+:::
+
+## 7. Ce que l’on observe vraiment sur les marchés
+
+Le chapitre insiste sur un point essentiel : les marchés réels ont des régularités empiriques fortes.
+
+### Les tailles d’ordres
+
+On observe souvent des tailles concentrées autour de nombres ronds. Cela traduit des comportements humains simples : on pense en 100, 500, 1000, plutôt qu’en nombres parfaitement continus.
+
+### Les prix relatifs
+
+Les prix relatifs suivent des distributions à **queues épaisses**. Cela veut dire qu’on trouve plus souvent que prévu des ordres très éloignés du prix courant.
+
+L’idée intuitive : les traders ne raisonnent pas tous sur le même horizon ; certains placent des ordres “de patience”, loin du marché.
+
+### Les annulations
+
+Une grande partie des ordres est annulée avant exécution. C’est un fait très important : le carnet n’est pas seulement un lieu de transactions, c’est aussi un lieu d’**expression d’intention provisoire**.
+
+### La profondeur
+
+La profondeur du carnet présente elle aussi des queues épaisses. Certains niveaux accumulent beaucoup de volume, ce qui façonne la résistance du prix.
+
+### L’impact sur les prix
+
+Un ordre important peut faire bouger les prix. Mais l’effet n’est pas linéaire : l’impact est souvent **concave**.
+
+Autrement dit, doubler la taille de l’ordre ne double pas forcément l’impact.
+
+C’est une idée centrale pour l’oral : le marché absorbe partiellement les gros ordres, mais pas de manière proportionnelle.
+
+::: {.callout-note collapse=true}
+**Lecture plus technique.**  
+On parle de :
+
+- **queues épaisses** pour les distributions des tailles, des prix relatifs et de la profondeur ;
+- **impact concave** pour décrire le fait que l’impact augmente de moins en moins vite avec la taille de l’ordre ;
+- **impact permanent** lorsqu’un ordre transmet une information durable ou déclenche une réaction en chaîne.
+
+La “master curve” regroupe certaines mesures après normalisation.
+:::
+
+## 8. Un modèle simple qui reproduit beaucoup de choses : Maslov
+
+Le modèle de **Maslov** est un excellent exemple à raconter à l’oral, parce qu’il est simple à expliquer mais riche en conséquences.
+
+### L’idée
+
+À chaque instant, un trader arrive :
+
+- avec probabilité $0{,}5$, il est acheteur ;
+- avec probabilité $0{,}5$, il est vendeur.
+
+Puis, il choisit :
+
+- soit un **ordre au marché** avec probabilité $1-r$ ;
+- soit un **ordre à cours limité** avec probabilité $r$.
+
+L’intuition est claire : parfois les agents veulent exécuter vite, parfois ils préfèrent attendre un meilleur prix.
+
+### Pourquoi ce modèle est intéressant
+
+Parce qu’avec très peu d’ingrédients, il produit des faits qu’on observe vraiment :
+
+- des incréments de prix non gaussiens ;
+- de la volatilité groupée ;
+- des trajectoires de prix irrégulières ;
+- une mémoire courte mais une structure statistique forte.
+
+::: {.callout-note collapse=true}
+**Version formelle du mécanisme.**  
+Dans la version de base du modèle :
+
+- il n’y a pas d’annulation ;
+- un ordre limite est placé autour du dernier prix observé ;
+- un ordre au marché consomme la liquidité disponible.
+
+Le modèle est volontairement minimaliste.
+:::
+
+## 9. Le message statistique : pourquoi ce modèle compte
+
+Le résultat le plus frappant est que les variations de prix ne ressemblent pas à une loi normale simple.
+
+### Volatility clustering
+
+Les grands mouvements ont tendance à se regrouper. On observe des phases agitées, puis des phases calmes.
+
+C’est un fait important à citer à l’oral, car il montre que le marché a une mémoire de la volatilité, même si les prix restent difficiles à prévoir dans le détail.
+
+### L’exposant de Hurst
+
+Dans ce type de modèle, on observe souvent un exposant de Hurst inférieur à $1/2$, typiquement autour de $1/4$ dans les résultats cités.
+
+Interprétation orale :
+
+- $H=1/2$ : marche aléatoire classique ;
+- $H<1/2$ : comportement anti-persistant ;
+- $H>1/2$ : comportement tendanciel.
+
+L’idée à retenir est que la dynamique du carnet peut produire des retours à la moyenne, ou du moins une forme d’anti-persistance.
+
+::: {.callout-note collapse=true}
+**Point technique.**  
+Le modèle de Maslov produit des incréments de prix aux queues épaisses et une volatilité clusterisée. L’exposant de Hurst sert à quantifier cette structure temporelle.
+
+C’est une manière simple de relier microstructure et statistique.
+:::
+
+## 10. Ce qu’il faut savoir dire à l’oral
+
+Le plus important n’est pas de réciter des formules, mais de raconter la logique du chapitre.
+
+Une bonne réponse orale peut suivre ce fil :
+
+Le marché peut fonctionner soit avec un teneur de marché, soit avec un carnet d’ordres.  
+Dans le LOB, les ordres arrivent, s’exécutent ou attendent.  
+Le bid, l’ask, le spread et le mid-price décrivent l’état instantané du marché.  
+Les ordres à cours limité offrent un meilleur prix mais un risque de non-exécution ; les ordres au marché garantissent l’exécution mais pas le prix.  
+Les règles de priorité déterminent qui est servi en premier.  
+Enfin, les observations empiriques montrent que les marchés réels ont des queues épaisses, beaucoup d’annulations, et une volatilité groupée.  
+Un modèle simple comme celui de Maslov reproduit déjà une partie de ces phénomènes.
+
+::: {.callout-tip collapse=true}
+**Mini-réponse d’oral prête à l’emploi.**
+
+> Le carnet d’ordres est le mécanisme qui organise la rencontre entre acheteurs et vendeurs.  
+> Il contient les ordres actifs, et son état instantané est résumé par le bid, l’ask, le spread et la profondeur.  
+> Un ordre limite cherche un bon prix, un ordre au marché cherche la vitesse.  
+> Les marchés réels montrent des régularités statistiques marquées, notamment des queues épaisses et de la volatilité clusterisée.  
+> Le modèle de Maslov est intéressant parce qu’il montre qu’une microstructure très simple peut déjà produire ces effets.
+
+:::
+
+## 11. À retenir en une minute
+
+Le carnet d’ordres, c’est le cœur du marché organisé.  
+Le spread mesure la friction immédiate.  
+Les ordres limite donnent de la liquidité ; les ordres au marché en consomment.  
+La priorité règle la concurrence entre ordres au même prix.  
+Les données réelles montrent que le marché n’est ni gaussien ni parfaitement lisse.  
+Et même un modèle minimal peut déjà faire apparaître des comportements collectifs très riches.
