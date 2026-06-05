@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Exécution algorithmique – Finance computationnelle</title>
+<title>Séries temporelles et modèles autorégressifs — Révision orale – Finance computationnelle</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -7446,7 +7446,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch6.html">6. Exécution algorithmique</a></li><li class="breadcrumb-item"><a href="./ch6.html">Détails</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch2.html">2. Séries temporelles et modèles autoregressifs</a></li><li class="breadcrumb-item"><a href="./ch2e.html">Examen</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -7512,13 +7512,13 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">2. Séries temporelles et modèles autoregressifs</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch2.html" class="sidebar-item-text sidebar-link">
@@ -7539,7 +7539,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch2e.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch2e.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Examen</span></a>
   </div>
 </li>
@@ -7652,16 +7652,16 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
  <span class="menu-text">6. Exécution algorithmique</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch6.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch6.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Détails</span></a>
   </div>
 </li>
@@ -7977,122 +7977,14 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction-et-motivation" id="toc-introduction-et-motivation" class="nav-link active" data-scroll-target="#introduction-et-motivation">Introduction et motivation</a>
-  <ul class="collapse">
-  <li><a href="#pourquoi-lexécution-algorithmique" id="toc-pourquoi-lexécution-algorithmique" class="nav-link" data-scroll-target="#pourquoi-lexécution-algorithmique">Pourquoi l’exécution algorithmique ?</a></li>
-  <li><a href="#un-exemple-concret" id="toc-un-exemple-concret" class="nav-link" data-scroll-target="#un-exemple-concret">Un exemple concret</a></li>
-  <li><a href="#référence-bibliographique" id="toc-référence-bibliographique" class="nav-link" data-scroll-target="#référence-bibliographique">Référence bibliographique</a></li>
-  </ul></li>
-  <li><a href="#impact-de-marché-market-impact" id="toc-impact-de-marché-market-impact" class="nav-link" data-scroll-target="#impact-de-marché-market-impact">Impact de marché (Market Impact)</a>
-  <ul class="collapse">
-  <li><a href="#définition" id="toc-définition" class="nav-link" data-scroll-target="#définition">Définition</a></li>
-  <li><a href="#impact-temporaire-temporary-market-impact" id="toc-impact-temporaire-temporary-market-impact" class="nav-link" data-scroll-target="#impact-temporaire-temporary-market-impact">Impact temporaire (Temporary Market Impact)</a></li>
-  <li><a href="#impact-permanent-permanent-market-impact" id="toc-impact-permanent-permanent-market-impact" class="nav-link" data-scroll-target="#impact-permanent-permanent-market-impact">Impact permanent (Permanent Market Impact)</a></li>
-  <li><a href="#difficulté-de-mesure" id="toc-difficulté-de-mesure" class="nav-link" data-scroll-target="#difficulté-de-mesure">Difficulté de mesure</a></li>
-  </ul></li>
-  <li><a href="#les-acteurs-autour-du-trading" id="toc-les-acteurs-autour-du-trading" class="nav-link" data-scroll-target="#les-acteurs-autour-du-trading">Les acteurs autour du trading</a>
-  <ul class="collapse">
-  <li><a href="#vue-densemble" id="toc-vue-densemble" class="nav-link" data-scroll-target="#vue-densemble">Vue d’ensemble</a></li>
-  <li><a href="#les-méthodes-dexécution" id="toc-les-méthodes-dexécution" class="nav-link" data-scroll-target="#les-méthodes-dexécution">Les méthodes d’exécution</a></li>
-  </ul></li>
-  <li><a href="#vue-densemble-des-algorithmes" id="toc-vue-densemble-des-algorithmes" class="nav-link" data-scroll-target="#vue-densemble-des-algorithmes">Vue d’ensemble des algorithmes</a>
-  <ul class="collapse">
-  <li><a href="#classification" id="toc-classification" class="nav-link" data-scroll-target="#classification">Classification</a></li>
-  <li><a href="#principes-généraux" id="toc-principes-généraux" class="nav-link" data-scroll-target="#principes-généraux">Principes généraux</a></li>
-  </ul></li>
-  <li><a href="#twap-time-weighted-average-price" id="toc-twap-time-weighted-average-price" class="nav-link" data-scroll-target="#twap-time-weighted-average-price">TWAP — Time Weighted Average Price</a>
-  <ul class="collapse">
-  <li><a href="#définition-1" id="toc-définition-1" class="nav-link" data-scroll-target="#définition-1">Définition</a></li>
-  <li><a href="#exemple-numérique" id="toc-exemple-numérique" class="nav-link" data-scroll-target="#exemple-numérique">Exemple numérique</a></li>
-  <li><a href="#avantages-et-inconvénients" id="toc-avantages-et-inconvénients" class="nav-link" data-scroll-target="#avantages-et-inconvénients">Avantages et inconvénients</a></li>
-  <li><a href="#variantes-courantes" id="toc-variantes-courantes" class="nav-link" data-scroll-target="#variantes-courantes">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#vwap-volume-weighted-average-price" id="toc-vwap-volume-weighted-average-price" class="nav-link" data-scroll-target="#vwap-volume-weighted-average-price">VWAP — Volume Weighted Average Price</a>
-  <ul class="collapse">
-  <li><a href="#le-benchmark-vwap" id="toc-le-benchmark-vwap" class="nav-link" data-scroll-target="#le-benchmark-vwap">Le benchmark VWAP</a></li>
-  <li><a href="#principe-de-lalgorithme" id="toc-principe-de-lalgorithme" class="nav-link" data-scroll-target="#principe-de-lalgorithme">Principe de l’algorithme</a></li>
-  <li><a href="#le-problème-du-volume-inconnu" id="toc-le-problème-du-volume-inconnu" class="nav-link" data-scroll-target="#le-problème-du-volume-inconnu">Le problème du volume inconnu</a></li>
-  <li><a href="#exemple-numérique-1" id="toc-exemple-numérique-1" class="nav-link" data-scroll-target="#exemple-numérique-1">Exemple numérique</a></li>
-  <li><a href="#avantages-et-inconvénients-1" id="toc-avantages-et-inconvénients-1" class="nav-link" data-scroll-target="#avantages-et-inconvénients-1">Avantages et inconvénients</a></li>
-  <li><a href="#variante-intégration-des-conditions-en-temps-réel" id="toc-variante-intégration-des-conditions-en-temps-réel" class="nav-link" data-scroll-target="#variante-intégration-des-conditions-en-temps-réel">Variante : intégration des conditions en temps réel</a></li>
-  </ul></li>
-  <li><a href="#pov-percentage-of-volume" id="toc-pov-percentage-of-volume" class="nav-link" data-scroll-target="#pov-percentage-of-volume">POV — Percentage of Volume</a>
-  <ul class="collapse">
-  <li><a href="#définition-2" id="toc-définition-2" class="nav-link" data-scroll-target="#définition-2">Définition</a></li>
-  <li><a href="#exemple-numérique-2" id="toc-exemple-numérique-2" class="nav-link" data-scroll-target="#exemple-numérique-2">Exemple numérique</a></li>
-  <li><a href="#correction-pour-sa-propre-participation" id="toc-correction-pour-sa-propre-participation" class="nav-link" data-scroll-target="#correction-pour-sa-propre-participation">Correction pour sa propre participation</a></li>
-  <li><a href="#avantages-et-inconvénients-2" id="toc-avantages-et-inconvénients-2" class="nav-link" data-scroll-target="#avantages-et-inconvénients-2">Avantages et inconvénients</a></li>
-  <li><a href="#variantes-courantes-1" id="toc-variantes-courantes-1" class="nav-link" data-scroll-target="#variantes-courantes-1">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#mi-minimal-impact-impact-minimal" id="toc-mi-minimal-impact-impact-minimal" class="nav-link" data-scroll-target="#mi-minimal-impact-impact-minimal">MI — Minimal Impact (Impact Minimal)</a>
-  <ul class="collapse">
-  <li><a href="#définition-et-philosophie" id="toc-définition-et-philosophie" class="nav-link" data-scroll-target="#définition-et-philosophie">Définition et philosophie</a></li>
-  <li><a href="#utilisation-des-dark-pools" id="toc-utilisation-des-dark-pools" class="nav-link" data-scroll-target="#utilisation-des-dark-pools">Utilisation des dark pools</a></li>
-  <li><a href="#structure-hybride" id="toc-structure-hybride" class="nav-link" data-scroll-target="#structure-hybride">Structure hybride</a></li>
-  <li><a href="#variantes-courantes-2" id="toc-variantes-courantes-2" class="nav-link" data-scroll-target="#variantes-courantes-2">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#is-implementation-shortfall-manque-à-exécution" id="toc-is-implementation-shortfall-manque-à-exécution" class="nav-link" data-scroll-target="#is-implementation-shortfall-manque-à-exécution">IS — Implementation Shortfall (Manque à exécution)</a>
-  <ul class="collapse">
-  <li><a href="#définition-3" id="toc-définition-3" class="nav-link" data-scroll-target="#définition-3">Définition</a></li>
-  <li><a href="#larbitrage-fondamental" id="toc-larbitrage-fondamental" class="nav-link" data-scroll-target="#larbitrage-fondamental">L’arbitrage fondamental</a></li>
-  <li><a href="#caractéristiques" id="toc-caractéristiques" class="nav-link" data-scroll-target="#caractéristiques">Caractéristiques</a></li>
-  <li><a href="#variantes-courantes-3" id="toc-variantes-courantes-3" class="nav-link" data-scroll-target="#variantes-courantes-3">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#as-adaptive-shortfall-manque-à-exécution-adaptatif" id="toc-as-adaptive-shortfall-manque-à-exécution-adaptatif" class="nav-link" data-scroll-target="#as-adaptive-shortfall-manque-à-exécution-adaptatif">AS — Adaptive Shortfall (Manque à exécution adaptatif)</a>
-  <ul class="collapse">
-  <li><a href="#définition-4" id="toc-définition-4" class="nav-link" data-scroll-target="#définition-4">Définition</a></li>
-  <li><a href="#deux-stratégies-antagonistes" id="toc-deux-stratégies-antagonistes" class="nav-link" data-scroll-target="#deux-stratégies-antagonistes">Deux stratégies antagonistes</a></li>
-  <li><a href="#variantes-courantes-4" id="toc-variantes-courantes-4" class="nav-link" data-scroll-target="#variantes-courantes-4">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#mc-market-close-clôture-de-marché" id="toc-mc-market-close-clôture-de-marché" class="nav-link" data-scroll-target="#mc-market-close-clôture-de-marché">MC — Market Close (Clôture de marché)</a>
-  <ul class="collapse">
-  <li><a href="#définition-et-contexte" id="toc-définition-et-contexte" class="nav-link" data-scroll-target="#définition-et-contexte">Définition et contexte</a></li>
-  <li><a href="#le-dilemme-du-timing" id="toc-le-dilemme-du-timing" class="nav-link" data-scroll-target="#le-dilemme-du-timing">Le dilemme du timing</a></li>
-  <li><a href="#variantes-courantes-5" id="toc-variantes-courantes-5" class="nav-link" data-scroll-target="#variantes-courantes-5">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#pi-price-inline-prix-aligné" id="toc-pi-price-inline-prix-aligné" class="nav-link" data-scroll-target="#pi-price-inline-prix-aligné">PI — Price Inline (Prix aligné)</a>
-  <ul class="collapse">
-  <li><a href="#définition-5" id="toc-définition-5" class="nav-link" data-scroll-target="#définition-5">Définition</a></li>
-  <li><a href="#fonctionnement" id="toc-fonctionnement" class="nav-link" data-scroll-target="#fonctionnement">Fonctionnement</a></li>
-  <li><a href="#stratégies-disponibles" id="toc-stratégies-disponibles" class="nav-link" data-scroll-target="#stratégies-disponibles">Stratégies disponibles</a></li>
-  <li><a href="#variantes-courantes-6" id="toc-variantes-courantes-6" class="nav-link" data-scroll-target="#variantes-courantes-6">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#liq-liquidity-driven-piloté-par-la-liquidité" id="toc-liq-liquidity-driven-piloté-par-la-liquidité" class="nav-link" data-scroll-target="#liq-liquidity-driven-piloté-par-la-liquidité">LIQ — Liquidity Driven (Piloté par la liquidité)</a>
-  <ul class="collapse">
-  <li><a href="#définition-6" id="toc-définition-6" class="nav-link" data-scroll-target="#définition-6">Définition</a></li>
-  <li><a href="#complexités-de-mise-en-œuvre" id="toc-complexités-de-mise-en-œuvre" class="nav-link" data-scroll-target="#complexités-de-mise-en-œuvre">Complexités de mise en œuvre</a></li>
-  <li><a href="#sources-dinformation" id="toc-sources-dinformation" class="nav-link" data-scroll-target="#sources-dinformation">Sources d’information</a></li>
-  <li><a href="#variantes-courantes-7" id="toc-variantes-courantes-7" class="nav-link" data-scroll-target="#variantes-courantes-7">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#les-coûts-de-transaction" id="toc-les-coûts-de-transaction" class="nav-link" data-scroll-target="#les-coûts-de-transaction">Les coûts de transaction</a>
-  <ul class="collapse">
-  <li><a href="#classification-des-coûts" id="toc-classification-des-coûts" class="nav-link" data-scroll-target="#classification-des-coûts">Classification des coûts</a></li>
-  <li><a href="#détail-des-catégories" id="toc-détail-des-catégories" class="nav-link" data-scroll-target="#détail-des-catégories">Détail des catégories</a></li>
-  <li><a href="#exemple-de-décomposition-typique" id="toc-exemple-de-décomposition-typique" class="nav-link" data-scroll-target="#exemple-de-décomposition-typique">Exemple de décomposition typique</a></li>
-  </ul></li>
-  <li><a href="#frontière-efficiente-efficient-frontier" id="toc-frontière-efficiente-efficient-frontier" class="nav-link" data-scroll-target="#frontière-efficiente-efficient-frontier">Frontière efficiente (Efficient Frontier)</a>
-  <ul class="collapse">
-  <li><a href="#concept" id="toc-concept" class="nav-link" data-scroll-target="#concept">Concept</a></li>
-  <li><a href="#définitions-sur-la-frontière" id="toc-définitions-sur-la-frontière" class="nav-link" data-scroll-target="#définitions-sur-la-frontière">Définitions sur la frontière</a></li>
-  <li><a href="#positionnement-des-algorithmes" id="toc-positionnement-des-algorithmes" class="nav-link" data-scroll-target="#positionnement-des-algorithmes">Positionnement des algorithmes</a></li>
-  <li><a href="#algorithmes-sur-la-frontière-du-plus-coûteuxmoins-risqué-au-moins-coûteuxplus-risqué" id="toc-algorithmes-sur-la-frontière-du-plus-coûteuxmoins-risqué-au-moins-coûteuxplus-risqué" class="nav-link" data-scroll-target="#algorithmes-sur-la-frontière-du-plus-coûteuxmoins-risqué-au-moins-coûteuxplus-risqué">Algorithmes sur la frontière (du plus coûteux/moins risqué au moins coûteux/plus risqué)</a></li>
-  </ul></li>
-  <li><a href="#aversion-au-risque-risk-aversion" id="toc-aversion-au-risque-risk-aversion" class="nav-link" data-scroll-target="#aversion-au-risque-risk-aversion">Aversion au risque (Risk Aversion)</a>
-  <ul class="collapse">
-  <li><a href="#définition-formelle" id="toc-définition-formelle" class="nav-link" data-scroll-target="#définition-formelle">Définition formelle</a></li>
-  <li><a href="#interprétation" id="toc-interprétation" class="nav-link" data-scroll-target="#interprétation">Interprétation</a></li>
-  <li><a href="#facteurs-influençant-laversion-au-risque" id="toc-facteurs-influençant-laversion-au-risque" class="nav-link" data-scroll-target="#facteurs-influençant-laversion-au-risque">Facteurs influençant l’aversion au risque</a></li>
-  </ul></li>
-  <li><a href="#trading-de-portefeuille-portfolio-trading" id="toc-trading-de-portefeuille-portfolio-trading" class="nav-link" data-scroll-target="#trading-de-portefeuille-portfolio-trading">Trading de portefeuille (Portfolio Trading)</a>
-  <ul class="collapse">
-  <li><a href="#au-delà-du-titre-unique" id="toc-au-delà-du-titre-unique" class="nav-link" data-scroll-target="#au-delà-du-titre-unique">Au-delà du titre unique</a></li>
-  <li><a href="#problème-de-la-diversification-en-temps-dalignement" id="toc-problème-de-la-diversification-en-temps-dalignement" class="nav-link" data-scroll-target="#problème-de-la-diversification-en-temps-dalignement">Problème de la diversification en temps d’alignement</a></li>
-  <li><a href="#solutions-disponibles" id="toc-solutions-disponibles" class="nav-link" data-scroll-target="#solutions-disponibles">Solutions disponibles</a></li>
-  </ul></li>
-  <li><a href="#synthèse-et-points-clés" id="toc-synthèse-et-points-clés" class="nav-link" data-scroll-target="#synthèse-et-points-clés">Synthèse et points clés</a>
-  <ul class="collapse">
-  <li><a href="#ce-quil-faut-retenir" id="toc-ce-quil-faut-retenir" class="nav-link" data-scroll-target="#ce-quil-faut-retenir">Ce qu’il faut retenir</a></li>
-  </ul></li>
+  <li><a href="#mise-en-contexte" id="toc-mise-en-contexte" class="nav-link active" data-scroll-target="#mise-en-contexte">🎭 Mise en contexte</a></li>
+  <li><a href="#idée-centrale" id="toc-idée-centrale" class="nav-link" data-scroll-target="#idée-centrale">🧠 Idée centrale</a></li>
+  <li><a href="#concepts-à-savoir-expliquer-à-loral" id="toc-concepts-à-savoir-expliquer-à-loral" class="nav-link" data-scroll-target="#concepts-à-savoir-expliquer-à-loral">⚡ Concepts à savoir expliquer à l’oral</a></li>
+  <li><a href="#carte-mentale-des-concepts" id="toc-carte-mentale-des-concepts" class="nav-link" data-scroll-target="#carte-mentale-des-concepts">🔗 Carte mentale des concepts</a></li>
+  <li><a href="#formules-indispensables" id="toc-formules-indispensables" class="nav-link" data-scroll-target="#formules-indispensables">📐 Formules indispensables</a></li>
+  <li><a href="#pièges-classiques" id="toc-pièges-classiques" class="nav-link" data-scroll-target="#pièges-classiques">⚠️ Pièges classiques</a></li>
+  <li><a href="#questions-doral-probables" id="toc-questions-doral-probables" class="nav-link" data-scroll-target="#questions-doral-probables">🎤 Questions d’oral probables</a></li>
+  <li><a href="#à-retenir-en-30-secondes" id="toc-à-retenir-en-30-secondes" class="nav-link" data-scroll-target="#à-retenir-en-30-secondes">🚀 À retenir en 30 secondes</a></li>
   </ul>
 </nav>
     </div>
@@ -8100,9 +7992,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch6.html">6. Exécution algorithmique</a></li><li class="breadcrumb-item"><a href="./ch6.html">Détails</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch2.html">2. Séries temporelles et modèles autoregressifs</a></li><li class="breadcrumb-item"><a href="./ch2e.html">Examen</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Exécution algorithmique</h1>
+<h1 class="title">Séries temporelles et modèles autorégressifs — Révision orale</h1>
 </div>
 
 
@@ -8119,968 +8011,214 @@ window.Quarto = {
 </header>
 
 
-<section id="introduction-et-motivation" class="level2">
-<h2 class="anchored" data-anchor-id="introduction-et-motivation">Introduction et motivation</h2>
-<section id="pourquoi-lexécution-algorithmique" class="level3">
-<h3 class="anchored" data-anchor-id="pourquoi-lexécution-algorithmique">Pourquoi l’exécution algorithmique ?</h3>
-<p>Dans les marchés financiers modernes, les ordres de grande taille ne peuvent pas être exécutés d’un seul coup sans conséquences importantes sur les prix. L’<strong>exécution algorithmique</strong> (Algorithmic Execution) désigne l’utilisation de programmes informatiques automatisés pour découper et exécuter des ordres de manière optimisée, en tenant compte du prix, du volume, du temps et d’autres paramètres de marché.</p>
-<p>💡 L’idée fondamentale est simple : <strong>ne pas perturber le marché avec ses propres transactions</strong>.</p>
-</section>
-<section id="un-exemple-concret" class="level3">
-<h3 class="anchored" data-anchor-id="un-exemple-concret">Un exemple concret</h3>
-<p>Imaginons qu’un investisseur A souhaite acquérir <strong>10 000 actions</strong> de la société XYZ, dont le volume moyen quotidien est justement de 10 000 actions.</p>
-<p>Cette situation soulève immédiatement plusieurs problèmes :</p>
-<ul>
-<li><strong>Impact de marché</strong> : Si A achète tout d’un coup, son propre ordre va faire monter le prix.</li>
-<li><strong>Calendrier d’exécution (Timing)</strong> : S’il fractionne l’ordre, quand doit-il acheter ?</li>
-<li><strong>Retard (Delay)</strong> : Plus l’exécution est longue, plus le signal d’investissement initial risque de devenir obsolète.</li>
-<li><strong>Coût d’opportunité</strong> : Peut-on réellement obtenir le bon nombre d’actions au bon prix ?</li>
-</ul>
-<p>⚠️ Dans cet exemple, l’investisseur représente à lui seul <strong>100 % du volume quotidien</strong>. Tout achat massif et immédiat aurait un impact considérable sur le prix.</p>
-</section>
-<section id="référence-bibliographique" class="level3">
-<h3 class="anchored" data-anchor-id="référence-bibliographique">Référence bibliographique</h3>
-<p>Le livre de référence pour ce domaine est :</p>
-<blockquote class="blockquote">
-<p><em>Algorithmic Trading and DMA</em>, Barry Johnson [8]</p>
-</blockquote>
+<section id="mise-en-contexte" class="level2">
+<h2 class="anchored" data-anchor-id="mise-en-contexte">🎭 Mise en contexte</h2>
+<p>Imaginez un médecin qui suit la tension artérielle d’un patient chaque jour. Pour établir un diagnostic valide, le patient doit être dans un <strong>état stable</strong> — c’est la <strong>stationnarité</strong>. Il peut alors demander : “Une tension élevée hier prédit-elle une tension élevée demain ?” → tendance (<span class="math inline">\(\varphi_1 &gt; 0\)</span>). Ou : “Prédit-elle un retour à la normale ?” → mean-reversion (<span class="math inline">\(\varphi_1 &lt; 0\)</span>). L’<strong>ACF</strong> mesure cette mémoire. Le modèle <strong>AR(1)</strong> la formalise en une seule équation. Si le patient prend un médicament (choc externe) dont l’effet se dissipe en <span class="math inline">\(q\)</span> jours — c’est la composante <strong>MA</strong>.</p>
 <hr>
 </section>
-</section>
-<section id="impact-de-marché-market-impact" class="level2">
-<h2 class="anchored" data-anchor-id="impact-de-marché-market-impact">Impact de marché (Market Impact)</h2>
-<section id="définition" class="level3">
-<h3 class="anchored" data-anchor-id="définition">Définition</h3>
-<p>L’<strong>impact de marché</strong> (Market Impact) est la variation de prix causée par l’exécution d’un ordre. Plus un ordre est important relativement au volume disponible, plus son impact potentiel est élevé.</p>
-<p>L’impact se décompose en deux composantes :</p>
-<p><span class="math display">\[\text{Impact de marché} = \text{Impact temporaire} + \text{Impact permanent}\]</span></p>
-</section>
-<section id="impact-temporaire-temporary-market-impact" class="level3">
-<h3 class="anchored" data-anchor-id="impact-temporaire-temporary-market-impact">Impact temporaire (Temporary Market Impact)</h3>
-<p>L’impact temporaire correspond à la perturbation transitoire du prix due à l’ordre. Une fois l’ordre exécuté et absorbé par le marché, le prix revient progressivement à son niveau normal.</p>
-<p>💡 Intuition : c’est comme appuyer momentanément sur un ressort — le prix monte pendant l’achat, puis redescend.</p>
-</section>
-<section id="impact-permanent-permanent-market-impact" class="level3">
-<h3 class="anchored" data-anchor-id="impact-permanent-permanent-market-impact">Impact permanent (Permanent Market Impact)</h3>
-<p>L’impact permanent correspond au déplacement définitif du prix induit par l’ordre. Même après la fin de l’exécution, le prix reste à un niveau plus élevé car le marché a reçu un signal informatif (quelqu’un veut vraiment acheter ces actions).</p>
-<p>💡 Intuition : la présence d’un gros acheteur révèle une information au marché, qui réévalue durablement le prix à la hausse.</p>
-</section>
-<section id="difficulté-de-mesure" class="level3">
-<h3 class="anchored" data-anchor-id="difficulté-de-mesure">Difficulté de mesure</h3>
-<p>L’impact est difficile à mesurer avec précision car il faut comparer l’évolution du prix <strong>avec et sans</strong> le trade. En pratique, on analyse conjointement :</p>
+<section id="idée-centrale" class="level2">
+<h2 class="anchored" data-anchor-id="idée-centrale">🧠 Idée centrale</h2>
 <ul>
-<li>L’évolution des prix sur la période</li>
-<li>L’évolution du carnet d’ordres (order book)</li>
+<li>Une série temporelle exploite l’<strong>ordre</strong> des observations : le passé informe sur le présent</li>
+<li>Prérequis absolu : la <strong>stationnarité</strong> — sinon les paramètres estimés sont sans sens</li>
+<li>L’<strong>ACF</strong> révèle la structure cachée (tendance, saisonnalité, mean-reversion)</li>
+<li><strong>AR(p)</strong> : <span class="math inline">\(X_t\)</span> s’explique par ses <span class="math inline">\(p\)</span> valeurs passées + bruit</li>
+<li><strong>Résultat clé AR(1)</strong> : <span class="math inline">\(\varphi_1 = \rho_1\)</span> — le paramètre <em>est</em> l’autocorrélation au lag 1</li>
+<li>Pour <span class="math inline">\(p &gt; 1\)</span> : estimation numérique, sélection de l’ordre par <strong>AIC / BIC</strong></li>
 </ul>
 <hr>
 </section>
-</section>
-<section id="les-acteurs-autour-du-trading" class="level2">
-<h2 class="anchored" data-anchor-id="les-acteurs-autour-du-trading">Les acteurs autour du trading</h2>
-<section id="vue-densemble" class="level3">
-<h3 class="anchored" data-anchor-id="vue-densemble">Vue d’ensemble</h3>
-<p>Le processus qui mène d’une idée d’investissement à une exécution réelle implique de nombreux acteurs :</p>
-<ul>
-<li><strong>Analyste</strong> (Analyst) : génère des idées d’achat/vente basées sur sa recherche</li>
-<li><strong>Gestionnaire de portefeuille</strong> (Portfolio Manager) : optimise le portefeuille et contrôle les risques</li>
-<li><strong>Trader interne</strong> (In-house Trader) : réalise l’analyse pré-trade, sélectionne les brokers et exécute</li>
-<li><strong>Vendeur côté vente</strong> (Salesperson, Sell-side) : analyse, surveille et produit des rapports</li>
-</ul>
-</section>
-<section id="les-méthodes-dexécution" class="level3">
-<h3 class="anchored" data-anchor-id="les-méthodes-dexécution">Les méthodes d’exécution</h3>
-<p>Plusieurs canaux d’exécution existent (notés A, B, C, D, E dans la figure de référence [8]) :</p>
-<ul>
-<li><strong>A — Trader manuel</strong> : exécution via un trader humain</li>
-<li><strong>B — Accès direct au marché</strong> (Direct Market Access, DMA) : le client envoie ses ordres directement au marché</li>
-<li><strong>C — Trading algorithmique</strong> (Algorithmic Trading) : exécution automatisée par des algorithmes</li>
-<li><strong>D — Combinaison</strong> : mix entre trader et algo</li>
-<li><strong>E — Accès sponsorisé</strong> (Sponsored Access) : accès direct ultra-rapide pour des clients qualifiés</li>
-</ul>
-<p>🧠 À retenir : le <strong>côté acheteur</strong> (Buy-side) prend les décisions d’investissement. Le <strong>côté vendeur</strong> (Sell-side) fournit les services d’exécution et de recherche.</p>
-<hr>
-</section>
-</section>
-<section id="vue-densemble-des-algorithmes" class="level2">
-<h2 class="anchored" data-anchor-id="vue-densemble-des-algorithmes">Vue d’ensemble des algorithmes</h2>
-<section id="classification" class="level3">
-<h3 class="anchored" data-anchor-id="classification">Classification</h3>
-<p>Les algorithmes d’exécution peuvent être regroupés selon leur objectif principal :</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Type</th>
-<th>Objectif clé</th>
-<th>Algorithme</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Impact temporel</td>
-<td>Temps</td>
-<td>TWAP (Time Weighted Average Price)</td>
-</tr>
-<tr class="even">
-<td>Impact volume</td>
-<td>Volume</td>
-<td>VWAP (Volume Weighted Average Price)</td>
-</tr>
-<tr class="odd">
-<td>Impact volume</td>
-<td>Volume</td>
-<td>POV (Percentage of Volume)</td>
-</tr>
-<tr class="even">
-<td>Impact minimal</td>
-<td>Impact</td>
-<td>MI (Minimal Impact)</td>
-</tr>
-<tr class="odd">
-<td>Coût / risque</td>
-<td>Prix / risque</td>
-<td>IS (Implementation Shortfall)</td>
-</tr>
-<tr class="even">
-<td>Coût / risque</td>
-<td>Prix / risque</td>
-<td>AS (Adaptive Shortfall)</td>
-</tr>
-<tr class="odd">
-<td>Coût / risque</td>
-<td>Prix / risque</td>
-<td>MC (Market Close)</td>
-</tr>
-<tr class="even">
-<td>Opportuniste</td>
-<td>Prix</td>
-<td>PI (Price Inline)</td>
-</tr>
-<tr class="odd">
-<td>Opportuniste</td>
-<td>Liquidité</td>
-<td>LIQ (Liquidity driven)</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="principes-généraux" class="level3">
-<h3 class="anchored" data-anchor-id="principes-généraux">Principes généraux</h3>
-<ul>
-<li>Ces algorithmes sont <strong>génériques</strong> — chaque broker dispose de ses propres implémentations.</li>
-<li>Les concepts d’un algorithme peuvent être <strong>combinés</strong> avec ceux d’un autre (approche <em>mix and match</em>).</li>
-<li>L’objectif commun reste de <strong>minimiser l’impact</strong> de marché, qu’il soit temporaire ou permanent.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="twap-time-weighted-average-price" class="level2">
-<h2 class="anchored" data-anchor-id="twap-time-weighted-average-price">TWAP — Time Weighted Average Price</h2>
-<section id="définition-1" class="level3">
-<h3 class="anchored" data-anchor-id="définition-1">Définition</h3>
-<p>Le <strong>TWAP</strong> (Time Weighted Average Price — Prix moyen pondéré par le temps) est l’algorithme d’exécution le plus simple. Il consiste à diviser un ordre en tranches égales réparties uniformément dans le temps.</p>
-<p>Les paramètres d’entrée sont :</p>
-<ul>
-<li><span class="math inline">\(t_0\)</span> : heure de début</li>
-<li><span class="math inline">\(t_1\)</span> : heure de fin</li>
-<li><span class="math inline">\(\Delta t\)</span> : intervalle de temps entre les tranches</li>
-<li><span class="math inline">\(w\)</span> : quantité totale à exécuter</li>
-</ul>
-<p>Le nombre de tranches est :</p>
-<p><span class="math display">\[n = \frac{t_1 - t_0}{\Delta t} + 1\]</span></p>
-<p>Chaque tranche représente <span class="math inline">\(\frac{w}{n}\)</span> actions.</p>
-</section>
-<section id="exemple-numérique" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-numérique">Exemple numérique</h3>
-<p>Paramètres :</p>
-<ul>
-<li><span class="math inline">\(w = 10\,000\)</span> actions</li>
-<li><span class="math inline">\(t_0 =\)</span> maintenant, <span class="math inline">\(t_1 = t_0 + 1h\)</span>, <span class="math inline">\(\Delta t = 15\)</span> minutes → 5 tranches</li>
-</ul>
-<p>Calendrier d’exécution :</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Heure</th>
-<th>Quantité</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(t_0\)</span></td>
-<td>2 000 actions</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(t_0 + 15\)</span> min</td>
-<td>2 000 actions</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(t_0 + 30\)</span> min</td>
-<td>2 000 actions</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(t_0 + 45\)</span> min</td>
-<td>2 000 actions</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(t_0 + 60\)</span> min</td>
-<td>2 000 actions</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="avantages-et-inconvénients" class="level3">
-<h3 class="anchored" data-anchor-id="avantages-et-inconvénients">Avantages et inconvénients</h3>
-<p><strong>Avantages :</strong></p>
-<ul>
-<li>Extrêmement simple à implémenter</li>
-<li>Comportement prévisible et facile à auditer</li>
-<li>Garantit l’exécution complète de l’ordre</li>
-</ul>
-<p><strong>Inconvénients :</strong></p>
-<ul>
-<li>N’utilise aucune information de marché (ni prix, ni volume)</li>
-<li><strong>Très prévisible</strong> : un concurrent peut anticiper les ordres et en profiter (front-running)</li>
-<li>Peut exécuter à des prix défavorables si le marché est particulièrement actif ou creux à certaines heures</li>
-</ul>
-<p>⚠️ La prévisibilité est un risque majeur : si un acteur malveillant sait qu’un algorithme TWAP va acheter à intervalles réguliers, il peut acheter juste avant et revendre juste après.</p>
-</section>
-<section id="variantes-courantes" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes">Variantes courantes</h3>
-<section id="ajout-de-bruit-randomisation" class="level4">
-<h4 class="anchored" data-anchor-id="ajout-de-bruit-randomisation">Ajout de bruit (Randomisation)</h4>
-<p>Pour réduire la prévisibilité, on peut ajouter du bruit aléatoire :</p>
-<ul>
-<li>Sur les intervalles de temps : <span class="math inline">\(t_i = t_{i-1} + \Delta t + \varepsilon\)</span></li>
-<li>Sur les tailles de tranches : la quantité par tranche varie aléatoirement autour de <span class="math inline">\(w/n\)</span></li>
-</ul>
-</section>
-<section id="profil-agressif-ou-passif" class="level4">
-<h4 class="anchored" data-anchor-id="profil-agressif-ou-passif">Profil agressif ou passif</h4>
-<p>On peut introduire un facteur d’urgence pour moduler le rythme d’exécution :</p>
-<ul>
-<li><strong>Profil agressif</strong> : on exécute davantage en début de période (utile si on veut réduire le risque de timing)</li>
-<li><strong>Profil passif</strong> : on exécute davantage en fin de période (utile si on anticipe des conditions favorables plus tard)</li>
-</ul>
-</section>
-<section id="twap-adaptatif-au-prix" class="level4">
-<h4 class="anchored" data-anchor-id="twap-adaptatif-au-prix">TWAP adaptatif au prix</h4>
-<p>Une variante intègre des ajustements dynamiques basés sur l’évolution du prix de marché, ce qui le rapproche alors de l’algorithme PI (Price Inline).</p>
-<hr>
-</section>
-</section>
-</section>
-<section id="vwap-volume-weighted-average-price" class="level2">
-<h2 class="anchored" data-anchor-id="vwap-volume-weighted-average-price">VWAP — Volume Weighted Average Price</h2>
-<section id="le-benchmark-vwap" class="level3">
-<h3 class="anchored" data-anchor-id="le-benchmark-vwap">Le benchmark VWAP</h3>
-<p>Le <strong>VWAP</strong> (Volume Weighted Average Price — Prix moyen pondéré par le volume) est à la fois un <strong>benchmark</strong> et un algorithme d’exécution.</p>
-<p>Le benchmark VWAP est défini comme :</p>
-<p><span class="math display">\[\text{VWAP} = \frac{\sum_i p_i v_i}{\sum_i v_i}\]</span></p>
-<p>où <span class="math inline">\(i\)</span> indexe les transactions entre <span class="math inline">\(t_0\)</span> et <span class="math inline">\(t_1\)</span> (typiquement le début et la fin d’une journée), <span class="math inline">\(p_i\)</span> sont les prix et <span class="math inline">\(v_i\)</span> les volumes.</p>
-<p>💡 Intuition : le VWAP donne une mesure des conditions moyennes de marché sur la journée, pondérée par l’activité réelle. Les grosses transactions pèsent plus que les petites.</p>
-</section>
-<section id="principe-de-lalgorithme" class="level3">
-<h3 class="anchored" data-anchor-id="principe-de-lalgorithme">Principe de l’algorithme</h3>
-<p>L’objectif est de <strong>suivre le benchmark VWAP</strong> : si on achète en dessous du VWAP de la journée, on a fait une bonne exécution.</p>
-<p>🧠 À retenir : un broker peut garantir contractuellement un prix VWAP à son client, moyennant commission. Il assume alors le risque d’exécution.</p>
-</section>
-<section id="le-problème-du-volume-inconnu" class="level3">
-<h3 class="anchored" data-anchor-id="le-problème-du-volume-inconnu">Le problème du volume inconnu</h3>
-<p>Le total <span class="math inline">\(\sum_i v_i\)</span> n’est connu qu’à la <strong>fin de la journée</strong>, ce qui pose un problème opérationnel : comment construire l’algorithme en temps réel ?</p>
-<p>La solution consiste à utiliser des <strong>données historiques</strong> pour estimer le profil de volume intraday.</p>
-</section>
-<section id="exemple-numérique-1" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-numérique-1">Exemple numérique</h3>
-<p>Paramètres :</p>
-<ul>
-<li><span class="math inline">\(w = 10\,000\)</span> actions à acheter</li>
-<li><span class="math inline">\(t_0 = 8\)</span>h<span class="math inline">\(00\)</span>, <span class="math inline">\(t_1 = 16\)</span>h<span class="math inline">\(30\)</span></li>
-<li><span class="math inline">\(H = 50\,000\)</span> actions (volume total historique estimé)</li>
-</ul>
+<section id="concepts-à-savoir-expliquer-à-loral" class="level2">
+<h2 class="anchored" data-anchor-id="concepts-à-savoir-expliquer-à-loral">⚡ Concepts à savoir expliquer à l’oral</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 7%">
-<col style="width: 27%">
-<col style="width: 21%">
-<col style="width: 43%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Heure</th>
-<th>Volume historique <span class="math inline">\(h_i\)</span></th>
-<th>Proportion <span class="math inline">\(h_i/H\)</span></th>
-<th>Quantité à trader <span class="math inline">\(h_i/H \times w\)</span></th>
+<th>Concept</th>
+<th>Explication orale en 1 phrase</th>
+<th>Intuition</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>8h00</td>
-<td>2 600</td>
-<td>5.2 %</td>
-<td>520 actions</td>
+<td>Lag <span class="math inline">\(\tau\)</span></td>
+<td>Décalage de <span class="math inline">\(\tau\)</span> périodes entre deux observations</td>
+<td>“Il y a <span class="math inline">\(\tau\)</span> jours”</td>
 </tr>
 <tr class="even">
-<td>8h15</td>
-<td>2 500</td>
-<td>5.0 %</td>
-<td>500 actions</td>
+<td>Stationnarité faible</td>
+<td>Moyenne constante et autocovariance fonction du lag seulement</td>
+<td>La série “se comporte pareil” dans le temps</td>
 </tr>
 <tr class="odd">
-<td>8h30</td>
-<td>2 700</td>
-<td>5.4 %</td>
-<td>540 actions</td>
+<td>Test ADF</td>
+<td>Teste si la série a une racine unitaire (non-stationnarité)</td>
+<td>p &lt; 0.05 → stationnaire</td>
 </tr>
 <tr class="even">
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
+<td>ACF</td>
+<td>Corrélation de la série avec elle-même à chaque lag</td>
+<td>Mesure la “mémoire” de la série</td>
+</tr>
+<tr class="odd">
+<td>AR(p)</td>
+<td><span class="math inline">\(X_t\)</span> est une combinaison linéaire de ses <span class="math inline">\(p\)</span> valeurs passées</td>
+<td>La série s’explique par elle-même</td>
+</tr>
+<tr class="even">
+<td>MA(q)</td>
+<td><span class="math inline">\(X_t\)</span> dépend des <span class="math inline">\(q\)</span> erreurs passées seulement</td>
+<td>La série se souvient de ses chocs, pas de ses niveaux</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\varphi_1 &gt; 0\)</span></td>
+<td>Comportement tendanciel (Trending)</td>
+<td>Hier haut → aujourd’hui haut</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\varphi_1 &lt; 0\)</span></td>
+<td>Comportement mean-reverting</td>
+<td>Hier haut → aujourd’hui bas</td>
+</tr>
+<tr class="odd">
+<td>AIC / BIC</td>
+<td>Critères de sélection de l’ordre — à minimiser</td>
+<td>Équilibre entre fit et parcimonie</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="avantages-et-inconvénients-1" class="level3">
-<h3 class="anchored" data-anchor-id="avantages-et-inconvénients-1">Avantages et inconvénients</h3>
-<p><strong>Avantages :</strong></p>
-<ul>
-<li>Simple à implémenter avec données historiques</li>
-<li>Garantit l’exécution complète de l’ordre (<span class="math inline">\(100\%\)</span> de <span class="math inline">\(w\)</span>)</li>
-<li>Bon comportement en moyenne sur des marchés stables</li>
-</ul>
-<p><strong>Inconvénients :</strong></p>
-<ul>
-<li>Le prix d’exécution <strong>n’est pas garanti</strong> : l’algo suit le volume estimé, pas le prix réel</li>
-<li>Les volumes réels peuvent s’écarter significativement des données historiques</li>
-<li>L’algo ne réagit pas aux conditions de marché actuelles en temps réel</li>
-</ul>
-</section>
-<section id="variante-intégration-des-conditions-en-temps-réel" class="level3">
-<h3 class="anchored" data-anchor-id="variante-intégration-des-conditions-en-temps-réel">Variante : intégration des conditions en temps réel</h3>
-<p>Pour réduire la dépendance aux données historiques (source de déviation importante), une variante surveille et incorpore les conditions de marché actuelles, en ajustant dynamiquement le profil d’exécution.</p>
 <hr>
 </section>
-</section>
-<section id="pov-percentage-of-volume" class="level2">
-<h2 class="anchored" data-anchor-id="pov-percentage-of-volume">POV — Percentage of Volume</h2>
-<section id="définition-2" class="level3">
-<h3 class="anchored" data-anchor-id="définition-2">Définition</h3>
-<p>Le <strong>POV</strong> (Percentage of Volume — Pourcentage du Volume) est une évolution naturelle du VWAP. Au lieu de se baser sur un profil de volume <em>historique</em>, il adapte la taille de chaque tranche au <strong>volume réel observé</strong> en temps réel.</p>
-<p>La formule est :</p>
-<p><span class="math display">\[w_i = \alpha \cdot v_i\]</span></p>
-<p>où :</p>
-<ul>
-<li><span class="math inline">\(v_i\)</span> est le volume échangé pendant l’intervalle <span class="math inline">\(i\)</span></li>
-<li><span class="math inline">\(\alpha\)</span> est un taux de participation fixé (typiquement entre <span class="math inline">\(1\%\)</span> et <span class="math inline">\(20\%\)</span>)</li>
-</ul>
-<p>💡 Intuition : on achète proportionnellement à ce que le marché échange. Quand le marché est actif, on achète plus ; quand il est calme, on achète moins.</p>
-</section>
-<section id="exemple-numérique-2" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-numérique-2">Exemple numérique</h3>
-<p>Paramètres :</p>
-<ul>
-<li><span class="math inline">\(w = 10\,000\)</span> actions au total</li>
-<li><span class="math inline">\(\alpha = 5\%\)</span></li>
-<li>Début : 8h00, fin optionnelle à 16h00</li>
-</ul>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 28%">
-<col style="width: 56%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Intervalle</th>
-<th>Volume observé <span class="math inline">\(v_i\)</span></th>
-<th>Quantité achetée <span class="math inline">\(w_i = 0.05 \times v_i\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>8h00–8h15</td>
-<td>3 000</td>
-<td>150 actions</td>
-</tr>
-<tr class="even">
-<td>8h15–8h30</td>
-<td>2 700</td>
-<td>135 actions</td>
-</tr>
-<tr class="odd">
-<td>…</td>
-<td>…</td>
-<td>…</td>
-</tr>
-</tbody>
-</table>
-<p>L’algorithme se termine soit quand les <span class="math inline">\(10\,000\)</span> actions ont été achetées, soit à <span class="math inline">\(t_1\)</span> si fixé.</p>
-</section>
-<section id="correction-pour-sa-propre-participation" class="level3">
-<h3 class="anchored" data-anchor-id="correction-pour-sa-propre-participation">Correction pour sa propre participation</h3>
-<p>Lorsque <span class="math inline">\(\alpha\)</span> est élevé, les propres ordres de l’algorithme influencent le volume observé <span class="math inline">\(v_i\)</span>. Pour corriger cela, on calcule un taux de participation ajusté <span class="math inline">\(\tilde{\alpha}\)</span> :</p>
-<p><span class="math display">\[\tilde{\alpha} = \alpha \cdot \frac{1}{1 - \alpha}\]</span></p>
-<p><strong>Exemple</strong> avec <span class="math inline">\(\alpha = 5\%\)</span> :</p>
-<p><span class="math display">\[\tilde{\alpha} = 0.05 \times \frac{1}{1 - 0.05} = 5.3\%\]</span></p>
-</section>
-<section id="avantages-et-inconvénients-2" class="level3">
-<h3 class="anchored" data-anchor-id="avantages-et-inconvénients-2">Avantages et inconvénients</h3>
-<p><strong>Avantages :</strong></p>
-<ul>
-<li>S’adapte dynamiquement aux conditions de marché réelles</li>
-<li>Similaire au VWAP mais sans dépendance aux données historiques</li>
-<li>Contrôle naturel de l’impact (on ne représente jamais plus de <span class="math inline">\(\alpha\%\)</span> du marché)</li>
-</ul>
-<p><strong>Inconvénients :</strong></p>
-<ul>
-<li>Toujours prévisible (même rythme proportionnel)</li>
-<li>Aucune sensibilité au prix</li>
-<li>L’exécution peut être très lente si le marché est peu actif</li>
-</ul>
-</section>
-<section id="variantes-courantes-1" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-1">Variantes courantes</h3>
-<ul>
-<li><strong>Intégration de prévisions de volume</strong> : anticiper les pics de liquidité à venir</li>
-<li><strong>Versions adaptatives au prix</strong> : ajuster <span class="math inline">\(\alpha\)</span> en fonction du prix courant par rapport à un benchmark</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="mi-minimal-impact-impact-minimal" class="level2">
-<h2 class="anchored" data-anchor-id="mi-minimal-impact-impact-minimal">MI — Minimal Impact (Impact Minimal)</h2>
-<section id="définition-et-philosophie" class="level3">
-<h3 class="anchored" data-anchor-id="définition-et-philosophie">Définition et philosophie</h3>
-<p>L’algorithme <strong>MI</strong> (Minimal Impact — Impact Minimal) constitue la progression logique de VWAP et POV. Son objectif principal est de <strong>minimiser l’impact de marché</strong>, plutôt que de suivre un profil de volume ou de temps.</p>
-</section>
-<section id="utilisation-des-dark-pools" class="level3">
-<h3 class="anchored" data-anchor-id="utilisation-des-dark-pools">Utilisation des dark pools</h3>
-<p>Le MI s’appuie sur des <strong>dark pools</strong> (marchés opaques) et des types d’ordres cachés pour réduire le risque d’impact.</p>
-<p>Les dark pools :</p>
-<ul>
-<li>Sont des marchés non transparents (voir le cours sur le Carnet d’ordres, Limit Order Book)</li>
-<li>Permettent d’exécuter à des prix mid (entre bid et ask)</li>
-<li>Réduisent la visibilité des ordres aux autres participants</li>
-</ul>
-<p>⚠️ La contrepartie est un risque élevé de <strong>faible taux de remplissage</strong> (low completion rate) : si personne ne vend dans le dark pool, l’ordre n’est pas exécuté.</p>
-</section>
-<section id="structure-hybride" class="level3">
-<h3 class="anchored" data-anchor-id="structure-hybride">Structure hybride</h3>
-<p>Pour pallier le risque de non-exécution, une portion de l’ordre (typiquement <span class="math inline">\(20\%\)</span>) peut être exécutée via un algorithme VWAP ou POV passif sur le marché public.</p>
-</section>
-<section id="variantes-courantes-2" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-2">Variantes courantes</h3>
-<ul>
-<li>Estimation de la <strong>probabilité d’être rempli</strong> dans le dark pool</li>
-<li>Estimation d’un <strong>modèle de coût d’impact</strong> utilisé comme benchmark de référence</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="is-implementation-shortfall-manque-à-exécution" class="level2">
-<h2 class="anchored" data-anchor-id="is-implementation-shortfall-manque-à-exécution">IS — Implementation Shortfall (Manque à exécution)</h2>
-<section id="définition-3" class="level3">
-<h3 class="anchored" data-anchor-id="définition-3">Définition</h3>
-<p>L’<strong>IS</strong> (Implementation Shortfall — Manque à exécution, ou écart d’implémentation) se concentre sur la minimisation de l’écart entre :</p>
-<ul>
-<li>Le <strong>prix de décision</strong> (decision price) : le prix au moment où l’investisseur décide d’acheter</li>
-<li>Le <strong>prix d’exécution</strong> (execution price) : le prix effectivement obtenu lors du trade</li>
-</ul>
-</section>
-<section id="larbitrage-fondamental" class="level3">
-<h3 class="anchored" data-anchor-id="larbitrage-fondamental">L’arbitrage fondamental</h3>
-<p>L’IS cherche l’équilibre optimal entre deux forces opposées :</p>
-<ul>
-<li><strong>Impact de marché</strong> : plus on exécute vite, plus on perturbe le marché et le prix monte</li>
-<li><strong>Risque de timing</strong> : plus on attend, plus le prix peut évoluer défavorablement</li>
-</ul>
+<section id="carte-mentale-des-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="carte-mentale-des-concepts">🔗 Carte mentale des concepts</h2>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">graph LR
-    A[Décision d&#39;achat] --&gt; B{Arbitrage IS}
-    B --&gt; C[Exécution rapide\nCoût d&#39;impact élevé\nRisque timing faible]
-    B --&gt; D[Exécution lente\nCoût d&#39;impact faible\nRisque timing élevé]
+<pre class="mermaid mermaid-js">flowchart LR
+    A[Prix bruts\nnon stationnaires] --&gt;|Rendements / différences| B[Série stationnaire\nADF p ≤ 0.05]
+    B --&gt; C[ACF]
+    C --&gt;|Lag significatif| D[Choix du modèle\nAR / MA / ARMA]
+    C --&gt;|Ordre p| E[AIC / BIC\nMinimiser]
+    D --&gt; F[Paramètres\nφ₁ = ρ₁ pour AR 1]
+    F --&gt;|φ₁ &gt; 0| G[Tendance]
+    F --&gt;|φ₁ &lt; 0| H[Mean-reversion]
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
+<hr>
 </section>
-<section id="caractéristiques" class="level3">
-<h3 class="anchored" data-anchor-id="caractéristiques">Caractéristiques</h3>
-<ul>
-<li>Souvent implémenté comme un <strong>VWAP ou POV enrichi</strong> qui favorise le trading en début de session (pour capturer rapidement le signal d’investissement)</li>
-<li>Les paramètres clés sont la <strong>volatilité</strong> et le <strong>type d’actif</strong></li>
-<li>L’<strong>aversion au risque</strong> de l’investisseur est un input important : un investisseur plus risquophobe acceptera un coût d’impact plus élevé pour réduire le risque de timing</li>
-</ul>
+<section id="formules-indispensables" class="level2">
+<h2 class="anchored" data-anchor-id="formules-indispensables">📐 Formules indispensables</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Formule</th>
+<th>Signification</th>
+<th>À retenir</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\varphi_1 = \rho_1\)</span></td>
+<td>Paramètre AR(1) = autocorrélation lag 1</td>
+<td><strong>Résultat fondamental</strong></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\sigma^2 = \sigma_\varepsilon^2\,/\,(1 - \varphi_1^2)\)</span></td>
+<td>Variance AR(1)</td>
+<td>Implique <span class="math inline">\(\lvert\varphi_1\rvert &lt; 1\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mu = c\,/\,(1 - \varphi_1)\)</span></td>
+<td>Moyenne AR(1)</td>
+<td>Si <span class="math inline">\(c = 0\)</span> alors <span class="math inline">\(\mu = 0\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\text{AIC} = 2p - 2\ln L\)</span></td>
+<td>Critère d’Akaike</td>
+<td>Minimiser — tolérant</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\text{BIC} = \ln(n)\,p - 2\ln L\)</span></td>
+<td>Critère Bayésien</td>
+<td>Minimiser — strict</td>
+</tr>
+</tbody>
+</table>
+<hr>
 </section>
-<section id="variantes-courantes-3" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-3">Variantes courantes</h3>
+<section id="pièges-classiques" class="level2">
+<h2 class="anchored" data-anchor-id="pièges-classiques">⚠️ Pièges classiques</h2>
 <ul>
-<li>Utilisation de la <strong>volatilité à court terme</strong></li>
-<li>Utilisation de la <strong>volatilité implicite</strong> (voir le cours sur les Options)</li>
+<li><strong>Prix ≠ stationnaires</strong> — transformer systématiquement en rendements avant de modéliser</li>
+<li><strong>Test ADF inversé</strong> : p-value &gt; 0.05 = <em>non</em> stationnaire (piège de lecture)</li>
+<li><strong><span class="math inline">\(\lvert\varphi_1\rvert \geq 1\)</span></strong> → non stationnaire (<span class="math inline">\(= 1\)</span> : marche aléatoire) ou explosif (<span class="math inline">\(&gt; 1\)</span>)</li>
+<li><strong>Bon fit in-sample ≠ bonne prédiction</strong> — marche aléatoire : fit parfait, prédiction nulle</li>
+<li><strong>AIC vs BIC</strong> : BIC pénalise plus (<span class="math inline">\(\ln n &gt; 2\)</span> si <span class="math inline">\(n &gt; 8\)</span>) → ordres plus faibles sélectionnés</li>
+<li><strong>Stationnarité stricte ≠ faible</strong> : la faible suffit en pratique, la stricte est rarement vérifiable</li>
 </ul>
 <hr>
 </section>
-</section>
-<section id="as-adaptive-shortfall-manque-à-exécution-adaptatif" class="level2">
-<h2 class="anchored" data-anchor-id="as-adaptive-shortfall-manque-à-exécution-adaptatif">AS — Adaptive Shortfall (Manque à exécution adaptatif)</h2>
-<section id="définition-4" class="level3">
-<h3 class="anchored" data-anchor-id="définition-4">Définition</h3>
-<p>L’<strong>AS</strong> (Adaptive Shortfall) est dérivé de l’IS avec un comportement <strong>adaptatif</strong> : l’algorithme réagit en temps réel à l’évolution du prix de marché.</p>
-</section>
-<section id="deux-stratégies-antagonistes" class="level3">
-<h3 class="anchored" data-anchor-id="deux-stratégies-antagonistes">Deux stratégies antagonistes</h3>
-<p>L’AS se décline en deux approches (la terminologie est empruntée aux options) :</p>
-<section id="aim-aggressive-in-the-money-agressif-favorable" class="level4">
-<h4 class="anchored" data-anchor-id="aim-aggressive-in-the-money-agressif-favorable">AIM — Aggressive In-the-Money (Agressif favorable)</h4>
-<ul>
-<li><strong>Comportement</strong> : trade plus agressivement quand les prix sont favorables, moins agressivement quand ils sont défavorables</li>
-<li><strong>Hypothèse sous-jacente</strong> : les tendances de court terme sont <strong>éphémères</strong> et vont bientôt se retourner (hypothèse de retour à la moyenne)</li>
-</ul>
-<p>💡 Exemple : le prix baisse (favorable pour l’acheteur) → l’algo achète plus vite car il anticipe une remontée rapide.</p>
-</section>
-<section id="pim-passive-in-the-money-passif-favorable" class="level4">
-<h4 class="anchored" data-anchor-id="pim-passive-in-the-money-passif-favorable">PIM — Passive In-the-Money (Passif favorable)</h4>
-<ul>
-<li><strong>Comportement</strong> : trade moins agressivement quand les prix sont favorables, plus agressivement quand ils sont défavorables</li>
-<li><strong>Hypothèse sous-jacente</strong> : les tendances <strong>persistent</strong> — si le prix évolue défavorablement, il faut agir vite pour éviter des pertes plus importantes</li>
-</ul>
-<p>💡 Exemple : le prix monte (défavorable pour l’acheteur) → l’algo achète plus vite car il craint que ça continue à monter.</p>
-</section>
-</section>
-<section id="variantes-courantes-4" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-4">Variantes courantes</h3>
-<ul>
-<li>Réaction à la <strong>profondeur du carnet d’ordres</strong> (order book depth)</li>
-<li>Intégration de toute mesure de liquidité disponible</li>
-</ul>
+<section id="questions-doral-probables" class="level2">
+<h2 class="anchored" data-anchor-id="questions-doral-probables">🎤 Questions d’oral probables</h2>
+<p><strong>Q :</strong> Pourquoi a-t-on besoin de stationnarité ?</p>
+<p><strong>R courte :</strong> Pour que les paramètres estimés soient valides dans le temps et éviter des corrélations fallacieuses entre séries sans relation réelle.</p>
+<p><strong>Q :</strong> Quelle est la différence entre stationnarité stricte et faible ?</p>
+<p><strong>R courte :</strong> La stricte exige l’invariance de toute la distribution jointe ; la faible exige seulement une moyenne constante et une autocovariance fonction du lag seulement.</p>
+<p><strong>Q :</strong> Pourquoi les prix ne sont-ils pas stationnaires mais les rendements le sont ?</p>
+<p><strong>R courte :</strong> Les prix dérivent à la hausse — leur moyenne et leur variance changent dans le temps. Les rendements oscillent autour de zéro sans dérive systématique.</p>
+<p><strong>Q :</strong> Comment interpréter <span class="math inline">\(\varphi_1\)</span> dans un AR(1) ?</p>
+<p><strong>R courte :</strong> C’est l’autocorrélation au lag 1. Positif → tendance, négatif → mean-reversion, nul → bruit blanc. Sa valeur absolue doit être strictement inférieure à 1.</p>
+<p><strong>Q :</strong> À quoi sert l’ACF et comment s’en sert-on ?</p>
+<p><strong>R courte :</strong> Elle mesure la mémoire de la série à chaque lag. Les barres significatives (hors intervalles de confiance) indiquent les lags pertinents et orientent le choix du modèle.</p>
+<p><strong>Q :</strong> Quelle est la différence entre AR et MA ?</p>
+<p><strong>R courte :</strong> AR dépend des <em>valeurs</em> passées (mémoire infinie si <span class="math inline">\(\lvert\varphi\rvert &lt; 1\)</span>) ; MA dépend des <em>erreurs</em> passées (mémoire finie, exactement <span class="math inline">\(q\)</span> périodes).</p>
+<p><strong>Q :</strong> Comment choisit-on l’ordre <span class="math inline">\(p\)</span> d’un AR ?</p>
+<p><strong>R courte :</strong> On minimise l’AIC ou le BIC qui pénalisent l’ajout de paramètres inutiles. Le BIC est plus parcimonieux et retrouve souvent le vrai ordre.</p>
 <hr>
 </section>
-</section>
-<section id="mc-market-close-clôture-de-marché" class="level2">
-<h2 class="anchored" data-anchor-id="mc-market-close-clôture-de-marché">MC — Market Close (Clôture de marché)</h2>
-<section id="définition-et-contexte" class="level3">
-<h3 class="anchored" data-anchor-id="définition-et-contexte">Définition et contexte</h3>
-<p>L’algorithme <strong>MC</strong> (Market Close — Clôture de marché) cible le <strong>prix de clôture</strong> comme prix de référence.</p>
-<p>La clôture de marché est un prix de référence largement utilisé par les investisseurs institutionnels pour :</p>
-<ul>
-<li>Valoriser leurs portefeuilles (NAV — Net Asset Value)</li>
-<li>Évaluer la performance des gestionnaires</li>
-<li>Calculer les indices boursiers</li>
-</ul>
-</section>
-<section id="le-dilemme-du-timing" class="level3">
-<h3 class="anchored" data-anchor-id="le-dilemme-du-timing">Le dilemme du timing</h3>
-<p>L’exécution autour de la clôture est délicate :</p>
-<ul>
-<li><strong>Commencer trop tôt</strong> : risque de timing significatif (le prix peut évoluer avant la clôture)</li>
-<li><strong>Commencer trop tard</strong> : impact de marché significatif (tout le monde trade en même temps)</li>
-</ul>
-<p>L’<strong>horizon temporel optimal</strong> peut être estimé à partir de :</p>
-<ul>
-<li>La <strong>volatilité de l’actif</strong> (possiblement via un modèle)</li>
-<li>Le <strong>volume d’échanges</strong> habituel autour de la clôture</li>
-</ul>
-</section>
-<section id="variantes-courantes-5" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-5">Variantes courantes</h3>
-<ul>
-<li>Possibilité de cibler <strong>n’importe quelle heure de la journée</strong> comme référence (exemple : le prix de midi)</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="pi-price-inline-prix-aligné" class="level2">
-<h2 class="anchored" data-anchor-id="pi-price-inline-prix-aligné">PI — Price Inline (Prix aligné)</h2>
-<section id="définition-5" class="level3">
-<h3 class="anchored" data-anchor-id="définition-5">Définition</h3>
-<p>L’algorithme <strong>PI</strong> (Price Inline — Prix aligné) adapte son activité de trading à l’<strong>évolution du prix de marché</strong>, de manière similaire à POV mais sur la dimension prix plutôt que volume.</p>
-</section>
-<section id="fonctionnement" class="level3">
-<h3 class="anchored" data-anchor-id="fonctionnement">Fonctionnement</h3>
-<p>Un <strong>prix de référence</strong> (benchmark price) est défini. L’algorithme ajuste son activité en fonction de l’écart entre le prix courant et ce benchmark.</p>
-</section>
-<section id="stratégies-disponibles" class="level3">
-<h3 class="anchored" data-anchor-id="stratégies-disponibles">Stratégies disponibles</h3>
-<p>Deux orientations sont possibles :</p>
-<ul>
-<li><strong>Stratégie A (counter-trend)</strong> : plus agressif quand les prix sont favorables, en anticipant un retour à la moyenne</li>
-<li><strong>Stratégie P (trend-following)</strong> : moins agressif quand les prix sont défavorables, en suivant la tendance</li>
-</ul>
-<p>PI est généralement attendu en mode <strong>stratégie A</strong> (contre-tendance), ce qui lui permet de capter des opportunités de prix.</p>
-</section>
-<section id="variantes-courantes-6" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-6">Variantes courantes</h3>
-<ul>
-<li>Utilisation des <strong>prix d’autres actifs</strong> pour piloter l’algorithme (stratégies cross-asset)</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="liq-liquidity-driven-piloté-par-la-liquidité" class="level2">
-<h2 class="anchored" data-anchor-id="liq-liquidity-driven-piloté-par-la-liquidité">LIQ — Liquidity Driven (Piloté par la liquidité)</h2>
-<section id="définition-6" class="level3">
-<h3 class="anchored" data-anchor-id="définition-6">Définition</h3>
-<p>L’algorithme <strong>LIQ</strong> (Liquidity Driven — Piloté par la liquidité) trade uniquement lorsque <strong>deux conditions sont simultanément réunies</strong> :</p>
+<section id="à-retenir-en-30-secondes" class="level2">
+<h2 class="anchored" data-anchor-id="à-retenir-en-30-secondes">🚀 À retenir en 30 secondes</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="L&#39;essentiel du chapitre">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>L’essentiel du chapitre
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ol type="1">
-<li>Il y a de la <strong>liquidité</strong> suffisante</li>
-<li>Le <strong>prix est favorable</strong></li>
+<li>Série temporelle : l’ordre compte — le passé informe sur le présent</li>
+<li>Stationnarité faible = moyenne constante + autocovariance dépendant du lag seulement</li>
+<li><strong>En pratique</strong> : prix → non stationnaire / rendements → stationnaire</li>
+<li><strong>ADF</strong> : p-value &lt; 0.05 → stationnaire (sens inversé !)</li>
+<li><strong>ACF</strong> mesure la mémoire et guide le choix du modèle</li>
+<li><strong>AR(1)</strong> : <span class="math inline">\(X_t = c + \varphi_1 X_{t-1} + \varepsilon_t\)</span> avec <span class="math inline">\(\varphi_1 = \rho_1\)</span> et <span class="math inline">\(\lvert\varphi_1\rvert &lt; 1\)</span></li>
+<li><span class="math inline">\(\varphi_1 &gt; 0\)</span> → tendance ; <span class="math inline">\(\varphi_1 &lt; 0\)</span> → mean-reversion</li>
+<li>Variance AR(1) : <span class="math inline">\(\sigma_\varepsilon^2\,/\,(1 - \varphi_1^2)\)</span> — explose si <span class="math inline">\(\lvert\varphi_1\rvert \geq 1\)</span></li>
+<li>Ordre <span class="math inline">\(p &gt; 1\)</span> → MLE + AIC/BIC à minimiser (BIC plus strict)</li>
+<li><strong>Piège central</strong> : excellent fit in-sample ≠ bonne prédiction out-of-sample</li>
 </ol>
-<p>💡 Intuition : les phases très liquides sont associées à des coûts de transaction réduits (spread plus fin). Trouver de la liquidité est donc un levier majeur de réduction des coûts.</p>
-</section>
-<section id="complexités-de-mise-en-œuvre" class="level3">
-<h3 class="anchored" data-anchor-id="complexités-de-mise-en-œuvre">Complexités de mise en œuvre</h3>
-<p>La mise en œuvre est plus complexe que les autres algorithmes car :</p>
-<ul>
-<li>Les marchés sont de plus en plus <strong>fragmentés</strong> (multiple venues, dark pools, ECNs)</li>
-<li>Les <strong>ordres cachés</strong> (hidden orders) et les <strong>annulations</strong> rendent difficile l’évaluation de la liquidité réelle</li>
-<li>Une erreur sur un <strong>actif illiquide</strong> peut déplacer le prix de façon significative</li>
-</ul>
-</section>
-<section id="sources-dinformation" class="level3">
-<h3 class="anchored" data-anchor-id="sources-dinformation">Sources d’information</h3>
-<ul>
-<li><strong>Données historiques</strong> sur les profils de liquidité intraday</li>
-<li><strong>Faits stylisés</strong> des marchés (voir le cours Marchés et comportements)</li>
-</ul>
-</section>
-<section id="variantes-courantes-7" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-7">Variantes courantes</h3>
-<ul>
-<li>Spécifier des <strong>venues particulières</strong> où trader de manière préférentielle</li>
-<li>Catégoriser ses propres ordres comme <strong>cachés</strong> pour éviter de signaler ses intentions</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="les-coûts-de-transaction" class="level2">
-<h2 class="anchored" data-anchor-id="les-coûts-de-transaction">Les coûts de transaction</h2>
-<section id="classification-des-coûts" class="level3">
-<h3 class="anchored" data-anchor-id="classification-des-coûts">Classification des coûts</h3>
-<p>Les coûts de transaction se décomposent selon plusieurs axes :</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Catégorie</th>
-<th>Type</th>
-<th>Explicite</th>
-<th>Implicite</th>
-<th>Fixe</th>
-<th>Variable</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Investissement</td>
-<td>Taxes</td>
-<td>✓</td>
-<td></td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="even">
-<td>Investissement</td>
-<td>Coûts de retard</td>
-<td>✓</td>
-<td></td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="odd">
-<td>Trading</td>
-<td>Commission broker</td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Trading</td>
-<td>Frais de marché</td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Trading</td>
-<td>Spreads</td>
-<td></td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="even">
-<td>Trading</td>
-<td>Impact de marché</td>
-<td></td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="odd">
-<td>Trading</td>
-<td>Tendance de prix</td>
-<td></td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="even">
-<td>Trading</td>
-<td>Risque de timing</td>
-<td></td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="odd">
-<td>Trading</td>
-<td>Coût d’opportunité</td>
-<td></td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="détail-des-catégories" class="level3">
-<h3 class="anchored" data-anchor-id="détail-des-catégories">Détail des catégories</h3>
-<section id="coûts-explicites" class="level4">
-<h4 class="anchored" data-anchor-id="coûts-explicites">Coûts explicites</h4>
-<p>Les coûts <strong>explicites</strong> (Explicit Costs) sont directement visibles et mesurables :</p>
-<ul>
-<li><strong>Taxes</strong> : impôts sur les transactions financières (ex : TTF en France)</li>
-<li><strong>Commissions broker</strong> : rémunération du broker pour le service d’exécution</li>
-<li><strong>Frais de marché</strong> (Fees) : frais facturés par les plateformes de trading</li>
-</ul>
-</section>
-<section id="coûts-implicites" class="level4">
-<h4 class="anchored" data-anchor-id="coûts-implicites">Coûts implicites</h4>
-<p>Les coûts <strong>implicites</strong> (Implicit Costs) sont plus difficiles à mesurer mais souvent plus importants :</p>
-<ul>
-<li><strong>Spreads</strong> : différence entre le prix d’achat (ask) et le prix de vente (bid). On achète au ask, on vend au bid — l’écart est un coût.</li>
-<li><strong>Impact de marché</strong> : déplacement du prix causé par son propre ordre</li>
-<li><strong>Tendance de prix</strong> (Price Trend) : évolution défavorable du prix pendant l’exécution</li>
-<li><strong>Risque de timing</strong> : incertitude sur le prix final due à la durée d’exécution</li>
-<li><strong>Coût d’opportunité</strong> : coût lié à la non-exécution totale de l’ordre</li>
-</ul>
-</section>
-<section id="coût-de-retard-delay-cost" class="level4">
-<h4 class="anchored" data-anchor-id="coût-de-retard-delay-cost">Coût de retard (Delay Cost)</h4>
-<p>Le <strong>coût de retard</strong> survient entre le moment de la décision d’investissement et la réception de l’ordre par le broker. Le prix peut avoir bougé dans l’intervalle.</p>
-<p>⚠️ Ce coût est souvent sous-estimé mais peut être très significatif.</p>
-</section>
-</section>
-<section id="exemple-de-décomposition-typique" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-de-décomposition-typique">Exemple de décomposition typique</h3>
-<p>Une décomposition indicative des coûts selon [8] :</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Type de coût</th>
-<th>Part approximative</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Taxes</td>
-<td>0 %</td>
-</tr>
-<tr class="even">
-<td>Coût de retard</td>
-<td>24 %</td>
-</tr>
-<tr class="odd">
-<td>Commission</td>
-<td>1 %</td>
-</tr>
-<tr class="even">
-<td>Frais</td>
-<td>2 %</td>
-</tr>
-<tr class="odd">
-<td>Spreads</td>
-<td>4 %</td>
-</tr>
-<tr class="even">
-<td>Impact de marché</td>
-<td>6 %</td>
-</tr>
-<tr class="odd">
-<td>Tendance de prix</td>
-<td>14 %</td>
-</tr>
-<tr class="even">
-<td>Risque de timing</td>
-<td><strong>40 %</strong></td>
-</tr>
-<tr class="odd">
-<td>Coût d’opportunité</td>
-<td>9 %</td>
-</tr>
-<tr class="even">
-<td><strong>Total</strong></td>
-<td><strong>100 %</strong></td>
-</tr>
-</tbody>
-</table>
-<p>🧠 À retenir : le <strong>risque de timing</strong> représente la plus grande part des coûts (40 %). La <strong>liquidité</strong> et la <strong>volatilité</strong> sont les variables les plus difficiles à estimer.</p>
-<hr>
-</section>
-</section>
-<section id="frontière-efficiente-efficient-frontier" class="level2">
-<h2 class="anchored" data-anchor-id="frontière-efficiente-efficient-frontier">Frontière efficiente (Efficient Frontier)</h2>
-<section id="concept" class="level3">
-<h3 class="anchored" data-anchor-id="concept">Concept</h3>
-<p>Face à la diversité des algorithmes disponibles, comment choisir le bon ? La réponse passe par le concept de <strong>frontière efficiente</strong> (Efficient Frontier), emprunté à la théorie moderne du portefeuille.</p>
-<p>Sur un graphique <strong>coût vs risque</strong>, chaque algorithme occupe une position spécifique.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph LR
-    subgraph &quot;Espace des algorithmes possibles&quot;
-    MC --&gt; IS
-    IS --&gt; AS
-    AS --&gt; POV
-    POV --&gt; PI
-    PI --&gt; VWAP
-    VWAP --&gt; LIQ
-    LIQ --&gt; MI
-    end
-</pre>
-</div>
-<p></p></figure><p></p>
 </div>
 </div>
-</div>
-</section>
-<section id="définitions-sur-la-frontière" class="level3">
-<h3 class="anchored" data-anchor-id="définitions-sur-la-frontière">Définitions sur la frontière</h3>
-<ul>
-<li>L’axe des <strong>coûts</strong> représente les coûts de transaction tels que définis précédemment</li>
-<li>L’axe du <strong>risque</strong> représente la <strong>variation des coûts</strong> (essentiellement le risque de timing)</li>
-</ul>
-<p>La <strong>frontière efficiente</strong> regroupe les algorithmes qui minimisent le coût pour un niveau de risque donné. Les algorithmes en dehors de la frontière (au-dessus) sont <strong>inefficaces</strong> : il en existe d’autres moins coûteux au même niveau de risque.</p>
-</section>
-<section id="positionnement-des-algorithmes" class="level3">
-<h3 class="anchored" data-anchor-id="positionnement-des-algorithmes">Positionnement des algorithmes</h3>
-<ul>
-<li><strong>MC (Market Close)</strong> : faible risque (la clôture est une cible précise), mais coût élevé pour l’atteindre</li>
-<li><strong>MI (Minimal Impact)</strong> : risque élevé de variation du prix d’exécution, mais impact (coût) faible</li>
-<li><strong>TWAP</strong> : se retrouve souvent <strong>hors de la frontière efficiente</strong> — il existe des algorithmes moins chers pour le même risque</li>
-</ul>
-<p>⚠️ TWAP est donc <strong>sous-optimal</strong> dans la plupart des cas. Sa seule vertu est sa simplicité.</p>
-</section>
-<section id="algorithmes-sur-la-frontière-du-plus-coûteuxmoins-risqué-au-moins-coûteuxplus-risqué" class="level3">
-<h3 class="anchored" data-anchor-id="algorithmes-sur-la-frontière-du-plus-coûteuxmoins-risqué-au-moins-coûteuxplus-risqué">Algorithmes sur la frontière (du plus coûteux/moins risqué au moins coûteux/plus risqué)</h3>
-<p>Selon la figure de référence [8] :</p>
-<p><span class="math display">\[MC \rightarrow IS \rightarrow AS \rightarrow POV \rightarrow PI \rightarrow VWAP \rightarrow LIQ \rightarrow MI\]</span></p>
-<hr>
-</section>
-</section>
-<section id="aversion-au-risque-risk-aversion" class="level2">
-<h2 class="anchored" data-anchor-id="aversion-au-risque-risk-aversion">Aversion au risque (Risk Aversion)</h2>
-<section id="définition-formelle" class="level3">
-<h3 class="anchored" data-anchor-id="définition-formelle">Définition formelle</h3>
-<p>L’<strong>aversion au risque</strong> (Risk Aversion) <span class="math inline">\(\lambda\)</span> est définie comme le ratio entre le coût et le risque :</p>
-<p><span class="math display">\[\lambda = \frac{\text{coût}}{\text{risque}}\]</span></p>
-<p>Ce paramètre représente <strong>la pente de la droite tangente à la frontière efficiente</strong> depuis l’origine. Le point de tangence indique l’algorithme optimal pour cet investisseur.</p>
-</section>
-<section id="interprétation" class="level3">
-<h3 class="anchored" data-anchor-id="interprétation">Interprétation</h3>
-<ul>
-<li><strong><span class="math inline">\(\lambda\)</span> élevé (forte aversion)</strong> : l’investisseur préfère payer plus pour réduire le risque → on sélectionne un algorithme avec risque faible et coût plus élevé (ex : MC ou IS)</li>
-<li><strong><span class="math inline">\(\lambda\)</span> faible (faible aversion)</strong> : l’investisseur accepte plus de risque pour réduire les coûts → on sélectionne un algorithme avec coût faible et risque plus élevé (ex : MI ou LIQ)</li>
-</ul>
-<p>💡 Intuition géométrique : <span class="math inline">\(\lambda\)</span> est la pente d’une droite passant par l’origine. Plus <span class="math inline">\(\lambda\)</span> est grand, plus la droite est verticale (on monte vite en coût par unité de risque). L’algorithme optimal est le point où cette droite est tangente à la frontière efficiente.</p>
-</section>
-<section id="facteurs-influençant-laversion-au-risque" class="level3">
-<h3 class="anchored" data-anchor-id="facteurs-influençant-laversion-au-risque">Facteurs influençant l’aversion au risque</h3>
-<p>L’aversion au risque d’un investisseur dépend de :</p>
-<ul>
-<li>La <strong>nature de l’investisseur</strong> (hedge fund vs fonds de pension)</li>
-<li>L’<strong>urgence du signal d’investissement</strong> (alpha à courte durée de vie → forte aversion)</li>
-<li>La <strong>taille de la position</strong> relative au portefeuille</li>
-<li>Les <strong>contraintes réglementaires</strong> ou contractuelles</li>
-</ul>
-<p>🧠 À retenir : pour un niveau de risque donné, il faut choisir l’algorithme sur la frontière efficiente dont la position correspond au rapport coût/risque souhaité.</p>
-<hr>
-</section>
-</section>
-<section id="trading-de-portefeuille-portfolio-trading" class="level2">
-<h2 class="anchored" data-anchor-id="trading-de-portefeuille-portfolio-trading">Trading de portefeuille (Portfolio Trading)</h2>
-<section id="au-delà-du-titre-unique" class="level3">
-<h3 class="anchored" data-anchor-id="au-delà-du-titre-unique">Au-delà du titre unique</h3>
-<p>Jusqu’ici, nous avons considéré l’exécution d’un ordre sur <strong>un seul actif</strong>. En pratique, la gestion de portefeuille implique des dizaines, voire des centaines d’actifs simultanément.</p>
-</section>
-<section id="problème-de-la-diversification-en-temps-dalignement" class="level3">
-<h3 class="anchored" data-anchor-id="problème-de-la-diversification-en-temps-dalignement">Problème de la diversification en temps d’alignement</h3>
-<p>Quand un portefeuille doit être <strong>réaligné</strong> (alignment) — par exemple lors d’un rééquilibrage —, de nombreux ordres doivent être exécutés <strong>simultanément</strong> pour :</p>
-<ul>
-<li>Conserver la <strong>diversification</strong> du portefeuille pendant l’exécution</li>
-<li>Maintenir l’<strong>exposition au benchmark</strong> tout au long du processus</li>
-<li>Limiter le <strong>risque de trading</strong> lié aux positions partiellement exécutées</li>
-</ul>
-<p>⚠️ Si les ordres sont exécutés séquentiellement, le portefeuille peut être temporairement mal exposé.</p>
-</section>
-<section id="solutions-disponibles" class="level3">
-<h3 class="anchored" data-anchor-id="solutions-disponibles">Solutions disponibles</h3>
-<section id="exécution-en-interne-in-house" class="level4">
-<h4 class="anchored" data-anchor-id="exécution-en-interne-in-house">Exécution en interne (In-house)</h4>
-<p>Les gestionnaires sophistiqués intègrent les mesures de <strong>risque de portefeuille</strong> directement dans leurs algorithmes d’exécution. Cela peut nécessiter des <strong>algorithmes d’algorithmes</strong> (meta-algorithms) pour orchestrer l’ensemble.</p>
-</section>
-<section id="externalisation-à-un-broker-portfolio-trading" class="level4">
-<h4 class="anchored" data-anchor-id="externalisation-à-un-broker-portfolio-trading">Externalisation à un broker (Portfolio trading)</h4>
-<p>On peut confier l’alignement complet du portefeuille à un broker spécialisé. Ce dernier reçoit l’information sur le portefeuille actuel et cible, et se charge de l’exécution optimale.</p>
-<p>⚠️ <strong>Risque de confidentialité</strong> : partager l’information complète sur son portefeuille avec un broker expose l’investisseur au risque que le broker (ou un de ses traders) exploite cette information.</p>
-<hr>
-</section>
-</section>
-</section>
-<section id="synthèse-et-points-clés" class="level2">
-<h2 class="anchored" data-anchor-id="synthèse-et-points-clés">Synthèse et points clés</h2>
-<section id="ce-quil-faut-retenir" class="level3">
-<h3 class="anchored" data-anchor-id="ce-quil-faut-retenir">Ce qu’il faut retenir</h3>
-<p>Les points essentiels de ce chapitre sur l’exécution algorithmique sont :</p>
-<p><strong>Impact de marché :</strong></p>
-<ul>
-<li>Un grand impact de marché doit absolument être évité</li>
-<li>Les ordres de grande taille requièrent une attention particulière pour minimiser l’impact permanent</li>
-</ul>
-<p><strong>Diversité des algorithmes :</strong></p>
-<ul>
-<li>Il existe de nombreux algorithmes exploitant différentes variables : temps (TWAP), volume (VWAP, POV), prix (PI, AS), liquidité (LIQ, MI)</li>
-<li>Chaque algorithme vise un objectif différent : simplicité, prix moyen, impact minimal, coût/risque optimisé</li>
-</ul>
-<p><strong>Frontière efficiente :</strong></p>
-<ul>
-<li>Une frontière efficiente existe pour ces algorithmes</li>
-<li>Elle identifie les algorithmes de coût minimal pour un niveau de risque donné</li>
-<li>TWAP est généralement hors de cette frontière → inefficace</li>
-</ul>
-<p><strong>Aversion au risque :</strong></p>
-<ul>
-<li>Le paramètre d’aversion au risque <span class="math inline">\(\lambda\)</span> permet d’identifier l’algorithme approprié en fonction du profil de l’investisseur</li>
-<li><span class="math inline">\(\lambda\)</span> élevé → algorithmes à faible risque (MC, IS)</li>
-<li><span class="math inline">\(\lambda\)</span> faible → algorithmes à faible coût (MI, LIQ)</li>
-</ul>
-<p><strong>Trading de portefeuille :</strong></p>
-<ul>
-<li>Les portefeuilles multi-actifs requièrent une approche spécifique pour maintenir la diversification pendant l’exécution</li>
-<li>Le choix entre exécution interne et externalisation dépend de la sophistication de l’investisseur et des enjeux de confidentialité</li>
-</ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

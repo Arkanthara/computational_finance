@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Exécution algorithmique – Finance computationnelle</title>
+<title>Rendements et valeur temporelle de l’argent – Finance computationnelle</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -7446,7 +7446,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch6.html">6. Exécution algorithmique</a></li><li class="breadcrumb-item"><a href="./ch6.html">Détails</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch1.html">1. Système Suisse et Returns</a></li><li class="breadcrumb-item"><a href="./ch1.html">Détails</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -7477,16 +7477,16 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">1. Système Suisse et Returns</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch1.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch1.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Détails</span></a>
   </div>
 </li>
@@ -7652,16 +7652,16 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
  <span class="menu-text">6. Exécution algorithmique</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch6.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch6.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Détails</span></a>
   </div>
 </li>
@@ -7977,122 +7977,57 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction-et-motivation" id="toc-introduction-et-motivation" class="nav-link active" data-scroll-target="#introduction-et-motivation">Introduction et motivation</a>
+  <li><a href="#sec-trois-piliers" id="toc-sec-trois-piliers" class="nav-link active" data-scroll-target="#sec-trois-piliers">Le système Suisse des trois piliers (The Swiss 3-Pillar System)</a>
   <ul class="collapse">
-  <li><a href="#pourquoi-lexécution-algorithmique" id="toc-pourquoi-lexécution-algorithmique" class="nav-link" data-scroll-target="#pourquoi-lexécution-algorithmique">Pourquoi l’exécution algorithmique ?</a></li>
-  <li><a href="#un-exemple-concret" id="toc-un-exemple-concret" class="nav-link" data-scroll-target="#un-exemple-concret">Un exemple concret</a></li>
-  <li><a href="#référence-bibliographique" id="toc-référence-bibliographique" class="nav-link" data-scroll-target="#référence-bibliographique">Référence bibliographique</a></li>
+  <li><a href="#contexte-et-objectif" id="toc-contexte-et-objectif" class="nav-link" data-scroll-target="#contexte-et-objectif">Contexte et objectif</a></li>
+  <li><a href="#les-trois-piliers" id="toc-les-trois-piliers" class="nav-link" data-scroll-target="#les-trois-piliers">Les trois piliers</a></li>
+  <li><a href="#synthèse-des-trois-piliers" id="toc-synthèse-des-trois-piliers" class="nav-link" data-scroll-target="#synthèse-des-trois-piliers">Synthèse des trois piliers</a></li>
   </ul></li>
-  <li><a href="#impact-de-marché-market-impact" id="toc-impact-de-marché-market-impact" class="nav-link" data-scroll-target="#impact-de-marché-market-impact">Impact de marché (Market Impact)</a>
+  <li><a href="#sec-intro-rendements" id="toc-sec-intro-rendements" class="nav-link" data-scroll-target="#sec-intro-rendements">Introduction aux rendements (Returns)</a>
   <ul class="collapse">
-  <li><a href="#définition" id="toc-définition" class="nav-link" data-scroll-target="#définition">Définition</a></li>
-  <li><a href="#impact-temporaire-temporary-market-impact" id="toc-impact-temporaire-temporary-market-impact" class="nav-link" data-scroll-target="#impact-temporaire-temporary-market-impact">Impact temporaire (Temporary Market Impact)</a></li>
-  <li><a href="#impact-permanent-permanent-market-impact" id="toc-impact-permanent-permanent-market-impact" class="nav-link" data-scroll-target="#impact-permanent-permanent-market-impact">Impact permanent (Permanent Market Impact)</a></li>
-  <li><a href="#difficulté-de-mesure" id="toc-difficulté-de-mesure" class="nav-link" data-scroll-target="#difficulté-de-mesure">Difficulté de mesure</a></li>
+  <li><a href="#quest-ce-quun-rendement" id="toc-quest-ce-quun-rendement" class="nav-link" data-scroll-target="#quest-ce-quun-rendement">Qu’est-ce qu’un rendement ?</a></li>
+  <li><a href="#notations-et-conventions" id="toc-notations-et-conventions" class="nav-link" data-scroll-target="#notations-et-conventions">Notations et conventions</a></li>
   </ul></li>
-  <li><a href="#les-acteurs-autour-du-trading" id="toc-les-acteurs-autour-du-trading" class="nav-link" data-scroll-target="#les-acteurs-autour-du-trading">Les acteurs autour du trading</a>
+  <li><a href="#sec-rendements-simples" id="toc-sec-rendements-simples" class="nav-link" data-scroll-target="#sec-rendements-simples">Rendements simples (Simple Returns)</a>
   <ul class="collapse">
-  <li><a href="#vue-densemble" id="toc-vue-densemble" class="nav-link" data-scroll-target="#vue-densemble">Vue d’ensemble</a></li>
-  <li><a href="#les-méthodes-dexécution" id="toc-les-méthodes-dexécution" class="nav-link" data-scroll-target="#les-méthodes-dexécution">Les méthodes d’exécution</a></li>
+  <li><a href="#rendement-sur-une-seule-période" id="toc-rendement-sur-une-seule-période" class="nav-link" data-scroll-target="#rendement-sur-une-seule-période">Rendement sur une seule période</a></li>
+  <li><a href="#rendement-sur-plusieurs-périodes" id="toc-rendement-sur-plusieurs-périodes" class="nav-link" data-scroll-target="#rendement-sur-plusieurs-périodes">Rendement sur plusieurs périodes</a></li>
+  <li><a href="#exemple-numérique-complet" id="toc-exemple-numérique-complet" class="nav-link" data-scroll-target="#exemple-numérique-complet">Exemple numérique complet</a></li>
   </ul></li>
-  <li><a href="#vue-densemble-des-algorithmes" id="toc-vue-densemble-des-algorithmes" class="nav-link" data-scroll-target="#vue-densemble-des-algorithmes">Vue d’ensemble des algorithmes</a>
+  <li><a href="#sec-portefeuille" id="toc-sec-portefeuille" class="nav-link" data-scroll-target="#sec-portefeuille">Rendements de portefeuille (Portfolio Returns)</a>
   <ul class="collapse">
-  <li><a href="#classification" id="toc-classification" class="nav-link" data-scroll-target="#classification">Classification</a></li>
-  <li><a href="#principes-généraux" id="toc-principes-généraux" class="nav-link" data-scroll-target="#principes-généraux">Principes généraux</a></li>
+  <li><a href="#définition-dun-portefeuille" id="toc-définition-dun-portefeuille" class="nav-link" data-scroll-target="#définition-dun-portefeuille">Définition d’un portefeuille</a></li>
+  <li><a href="#rendement-du-portefeuille" id="toc-rendement-du-portefeuille" class="nav-link" data-scroll-target="#rendement-du-portefeuille">Rendement du portefeuille</a></li>
   </ul></li>
-  <li><a href="#twap-time-weighted-average-price" id="toc-twap-time-weighted-average-price" class="nav-link" data-scroll-target="#twap-time-weighted-average-price">TWAP — Time Weighted Average Price</a>
+  <li><a href="#sec-annualisation" id="toc-sec-annualisation" class="nav-link" data-scroll-target="#sec-annualisation">Annualisation des rendements (Annualisation)</a>
   <ul class="collapse">
-  <li><a href="#définition-1" id="toc-définition-1" class="nav-link" data-scroll-target="#définition-1">Définition</a></li>
-  <li><a href="#exemple-numérique" id="toc-exemple-numérique" class="nav-link" data-scroll-target="#exemple-numérique">Exemple numérique</a></li>
-  <li><a href="#avantages-et-inconvénients" id="toc-avantages-et-inconvénients" class="nav-link" data-scroll-target="#avantages-et-inconvénients">Avantages et inconvénients</a></li>
-  <li><a href="#variantes-courantes" id="toc-variantes-courantes" class="nav-link" data-scroll-target="#variantes-courantes">Variantes courantes</a></li>
+  <li><a href="#pourquoi-annualiser" id="toc-pourquoi-annualiser" class="nav-link" data-scroll-target="#pourquoi-annualiser">Pourquoi annualiser ?</a></li>
+  <li><a href="#formules-dannualisation" id="toc-formules-dannualisation" class="nav-link" data-scroll-target="#formules-dannualisation">Formules d’annualisation</a></li>
   </ul></li>
-  <li><a href="#vwap-volume-weighted-average-price" id="toc-vwap-volume-weighted-average-price" class="nav-link" data-scroll-target="#vwap-volume-weighted-average-price">VWAP — Volume Weighted Average Price</a>
+  <li><a href="#sec-valeur-temporelle" id="toc-sec-valeur-temporelle" class="nav-link" data-scroll-target="#sec-valeur-temporelle">Valeur temporelle de l’argent (Time Value of Money)</a>
   <ul class="collapse">
-  <li><a href="#le-benchmark-vwap" id="toc-le-benchmark-vwap" class="nav-link" data-scroll-target="#le-benchmark-vwap">Le benchmark VWAP</a></li>
-  <li><a href="#principe-de-lalgorithme" id="toc-principe-de-lalgorithme" class="nav-link" data-scroll-target="#principe-de-lalgorithme">Principe de l’algorithme</a></li>
-  <li><a href="#le-problème-du-volume-inconnu" id="toc-le-problème-du-volume-inconnu" class="nav-link" data-scroll-target="#le-problème-du-volume-inconnu">Le problème du volume inconnu</a></li>
-  <li><a href="#exemple-numérique-1" id="toc-exemple-numérique-1" class="nav-link" data-scroll-target="#exemple-numérique-1">Exemple numérique</a></li>
-  <li><a href="#avantages-et-inconvénients-1" id="toc-avantages-et-inconvénients-1" class="nav-link" data-scroll-target="#avantages-et-inconvénients-1">Avantages et inconvénients</a></li>
-  <li><a href="#variante-intégration-des-conditions-en-temps-réel" id="toc-variante-intégration-des-conditions-en-temps-réel" class="nav-link" data-scroll-target="#variante-intégration-des-conditions-en-temps-réel">Variante : intégration des conditions en temps réel</a></li>
+  <li><a href="#principe-fondamental" id="toc-principe-fondamental" class="nav-link" data-scroll-target="#principe-fondamental">Principe fondamental</a></li>
+  <li><a href="#capitalisation-discrète" id="toc-capitalisation-discrète" class="nav-link" data-scroll-target="#capitalisation-discrète">Capitalisation discrète</a></li>
+  <li><a href="#capitalisation-continue" id="toc-capitalisation-continue" class="nav-link" data-scroll-target="#capitalisation-continue">Capitalisation continue</a></li>
+  <li><a href="#exemple-numérique-impact-de-la-fréquence" id="toc-exemple-numérique-impact-de-la-fréquence" class="nav-link" data-scroll-target="#exemple-numérique-impact-de-la-fréquence">Exemple numérique — Impact de la fréquence</a></li>
+  <li><a href="#lien-entre-rendement-continu-et-rendement-simple" id="toc-lien-entre-rendement-continu-et-rendement-simple" class="nav-link" data-scroll-target="#lien-entre-rendement-continu-et-rendement-simple">Lien entre rendement continu et rendement simple</a></li>
   </ul></li>
-  <li><a href="#pov-percentage-of-volume" id="toc-pov-percentage-of-volume" class="nav-link" data-scroll-target="#pov-percentage-of-volume">POV — Percentage of Volume</a>
+  <li><a href="#sec-rendements-continus" id="toc-sec-rendements-continus" class="nav-link" data-scroll-target="#sec-rendements-continus">Rendements continus (Continuous Returns / Log Returns)</a>
   <ul class="collapse">
-  <li><a href="#définition-2" id="toc-définition-2" class="nav-link" data-scroll-target="#définition-2">Définition</a></li>
-  <li><a href="#exemple-numérique-2" id="toc-exemple-numérique-2" class="nav-link" data-scroll-target="#exemple-numérique-2">Exemple numérique</a></li>
-  <li><a href="#correction-pour-sa-propre-participation" id="toc-correction-pour-sa-propre-participation" class="nav-link" data-scroll-target="#correction-pour-sa-propre-participation">Correction pour sa propre participation</a></li>
-  <li><a href="#avantages-et-inconvénients-2" id="toc-avantages-et-inconvénients-2" class="nav-link" data-scroll-target="#avantages-et-inconvénients-2">Avantages et inconvénients</a></li>
-  <li><a href="#variantes-courantes-1" id="toc-variantes-courantes-1" class="nav-link" data-scroll-target="#variantes-courantes-1">Variantes courantes</a></li>
+  <li><a href="#définition-du-rendement-logarithmique" id="toc-définition-du-rendement-logarithmique" class="nav-link" data-scroll-target="#définition-du-rendement-logarithmique">Définition du rendement logarithmique</a></li>
+  <li><a href="#propriétés-clés-des-rendements-logarithmiques" id="toc-propriétés-clés-des-rendements-logarithmiques" class="nav-link" data-scroll-target="#propriétés-clés-des-rendements-logarithmiques">Propriétés clés des rendements logarithmiques</a></li>
+  <li><a href="#rendements-continus-multi-périodes" id="toc-rendements-continus-multi-périodes" class="nav-link" data-scroll-target="#rendements-continus-multi-périodes">Rendements continus multi-périodes</a></li>
+  <li><a href="#rendements-continus-dun-portefeuille" id="toc-rendements-continus-dun-portefeuille" class="nav-link" data-scroll-target="#rendements-continus-dun-portefeuille">Rendements continus d’un portefeuille</a></li>
+  <li><a href="#tableau-récapitulatif-simples-vs-continus" id="toc-tableau-récapitulatif-simples-vs-continus" class="nav-link" data-scroll-target="#tableau-récapitulatif-simples-vs-continus">Tableau récapitulatif — Simples vs Continus</a></li>
   </ul></li>
-  <li><a href="#mi-minimal-impact-impact-minimal" id="toc-mi-minimal-impact-impact-minimal" class="nav-link" data-scroll-target="#mi-minimal-impact-impact-minimal">MI — Minimal Impact (Impact Minimal)</a>
+  <li><a href="#sec-comptabilite" id="toc-sec-comptabilite" class="nav-link" data-scroll-target="#sec-comptabilite">Exemples de comptabilité (Bookkeeping Examples)</a>
   <ul class="collapse">
-  <li><a href="#définition-et-philosophie" id="toc-définition-et-philosophie" class="nav-link" data-scroll-target="#définition-et-philosophie">Définition et philosophie</a></li>
-  <li><a href="#utilisation-des-dark-pools" id="toc-utilisation-des-dark-pools" class="nav-link" data-scroll-target="#utilisation-des-dark-pools">Utilisation des dark pools</a></li>
-  <li><a href="#structure-hybride" id="toc-structure-hybride" class="nav-link" data-scroll-target="#structure-hybride">Structure hybride</a></li>
-  <li><a href="#variantes-courantes-2" id="toc-variantes-courantes-2" class="nav-link" data-scroll-target="#variantes-courantes-2">Variantes courantes</a></li>
+  <li><a href="#sec-chf-chf" id="toc-sec-chf-chf" class="nav-link" data-scroll-target="#sec-chf-chf">Investisseur CHF dans un actif CHF</a></li>
+  <li><a href="#sec-chf-usd-statique" id="toc-sec-chf-usd-statique" class="nav-link" data-scroll-target="#sec-chf-usd-statique">Investisseur CHF dans un actif USD — USDCHF statique, sans carry</a></li>
+  <li><a href="#sec-chf-usd-nocarry" id="toc-sec-chf-usd-nocarry" class="nav-link" data-scroll-target="#sec-chf-usd-nocarry">Investisseur CHF dans un actif USD — sans carry, avec variation de change</a></li>
+  <li><a href="#sec-chf-usd-hedge" id="toc-sec-chf-usd-hedge" class="nav-link" data-scroll-target="#sec-chf-usd-hedge">Investisseur CHF dans un actif USD — couvert, sans carry</a></li>
   </ul></li>
-  <li><a href="#is-implementation-shortfall-manque-à-exécution" id="toc-is-implementation-shortfall-manque-à-exécution" class="nav-link" data-scroll-target="#is-implementation-shortfall-manque-à-exécution">IS — Implementation Shortfall (Manque à exécution)</a>
-  <ul class="collapse">
-  <li><a href="#définition-3" id="toc-définition-3" class="nav-link" data-scroll-target="#définition-3">Définition</a></li>
-  <li><a href="#larbitrage-fondamental" id="toc-larbitrage-fondamental" class="nav-link" data-scroll-target="#larbitrage-fondamental">L’arbitrage fondamental</a></li>
-  <li><a href="#caractéristiques" id="toc-caractéristiques" class="nav-link" data-scroll-target="#caractéristiques">Caractéristiques</a></li>
-  <li><a href="#variantes-courantes-3" id="toc-variantes-courantes-3" class="nav-link" data-scroll-target="#variantes-courantes-3">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#as-adaptive-shortfall-manque-à-exécution-adaptatif" id="toc-as-adaptive-shortfall-manque-à-exécution-adaptatif" class="nav-link" data-scroll-target="#as-adaptive-shortfall-manque-à-exécution-adaptatif">AS — Adaptive Shortfall (Manque à exécution adaptatif)</a>
-  <ul class="collapse">
-  <li><a href="#définition-4" id="toc-définition-4" class="nav-link" data-scroll-target="#définition-4">Définition</a></li>
-  <li><a href="#deux-stratégies-antagonistes" id="toc-deux-stratégies-antagonistes" class="nav-link" data-scroll-target="#deux-stratégies-antagonistes">Deux stratégies antagonistes</a></li>
-  <li><a href="#variantes-courantes-4" id="toc-variantes-courantes-4" class="nav-link" data-scroll-target="#variantes-courantes-4">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#mc-market-close-clôture-de-marché" id="toc-mc-market-close-clôture-de-marché" class="nav-link" data-scroll-target="#mc-market-close-clôture-de-marché">MC — Market Close (Clôture de marché)</a>
-  <ul class="collapse">
-  <li><a href="#définition-et-contexte" id="toc-définition-et-contexte" class="nav-link" data-scroll-target="#définition-et-contexte">Définition et contexte</a></li>
-  <li><a href="#le-dilemme-du-timing" id="toc-le-dilemme-du-timing" class="nav-link" data-scroll-target="#le-dilemme-du-timing">Le dilemme du timing</a></li>
-  <li><a href="#variantes-courantes-5" id="toc-variantes-courantes-5" class="nav-link" data-scroll-target="#variantes-courantes-5">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#pi-price-inline-prix-aligné" id="toc-pi-price-inline-prix-aligné" class="nav-link" data-scroll-target="#pi-price-inline-prix-aligné">PI — Price Inline (Prix aligné)</a>
-  <ul class="collapse">
-  <li><a href="#définition-5" id="toc-définition-5" class="nav-link" data-scroll-target="#définition-5">Définition</a></li>
-  <li><a href="#fonctionnement" id="toc-fonctionnement" class="nav-link" data-scroll-target="#fonctionnement">Fonctionnement</a></li>
-  <li><a href="#stratégies-disponibles" id="toc-stratégies-disponibles" class="nav-link" data-scroll-target="#stratégies-disponibles">Stratégies disponibles</a></li>
-  <li><a href="#variantes-courantes-6" id="toc-variantes-courantes-6" class="nav-link" data-scroll-target="#variantes-courantes-6">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#liq-liquidity-driven-piloté-par-la-liquidité" id="toc-liq-liquidity-driven-piloté-par-la-liquidité" class="nav-link" data-scroll-target="#liq-liquidity-driven-piloté-par-la-liquidité">LIQ — Liquidity Driven (Piloté par la liquidité)</a>
-  <ul class="collapse">
-  <li><a href="#définition-6" id="toc-définition-6" class="nav-link" data-scroll-target="#définition-6">Définition</a></li>
-  <li><a href="#complexités-de-mise-en-œuvre" id="toc-complexités-de-mise-en-œuvre" class="nav-link" data-scroll-target="#complexités-de-mise-en-œuvre">Complexités de mise en œuvre</a></li>
-  <li><a href="#sources-dinformation" id="toc-sources-dinformation" class="nav-link" data-scroll-target="#sources-dinformation">Sources d’information</a></li>
-  <li><a href="#variantes-courantes-7" id="toc-variantes-courantes-7" class="nav-link" data-scroll-target="#variantes-courantes-7">Variantes courantes</a></li>
-  </ul></li>
-  <li><a href="#les-coûts-de-transaction" id="toc-les-coûts-de-transaction" class="nav-link" data-scroll-target="#les-coûts-de-transaction">Les coûts de transaction</a>
-  <ul class="collapse">
-  <li><a href="#classification-des-coûts" id="toc-classification-des-coûts" class="nav-link" data-scroll-target="#classification-des-coûts">Classification des coûts</a></li>
-  <li><a href="#détail-des-catégories" id="toc-détail-des-catégories" class="nav-link" data-scroll-target="#détail-des-catégories">Détail des catégories</a></li>
-  <li><a href="#exemple-de-décomposition-typique" id="toc-exemple-de-décomposition-typique" class="nav-link" data-scroll-target="#exemple-de-décomposition-typique">Exemple de décomposition typique</a></li>
-  </ul></li>
-  <li><a href="#frontière-efficiente-efficient-frontier" id="toc-frontière-efficiente-efficient-frontier" class="nav-link" data-scroll-target="#frontière-efficiente-efficient-frontier">Frontière efficiente (Efficient Frontier)</a>
-  <ul class="collapse">
-  <li><a href="#concept" id="toc-concept" class="nav-link" data-scroll-target="#concept">Concept</a></li>
-  <li><a href="#définitions-sur-la-frontière" id="toc-définitions-sur-la-frontière" class="nav-link" data-scroll-target="#définitions-sur-la-frontière">Définitions sur la frontière</a></li>
-  <li><a href="#positionnement-des-algorithmes" id="toc-positionnement-des-algorithmes" class="nav-link" data-scroll-target="#positionnement-des-algorithmes">Positionnement des algorithmes</a></li>
-  <li><a href="#algorithmes-sur-la-frontière-du-plus-coûteuxmoins-risqué-au-moins-coûteuxplus-risqué" id="toc-algorithmes-sur-la-frontière-du-plus-coûteuxmoins-risqué-au-moins-coûteuxplus-risqué" class="nav-link" data-scroll-target="#algorithmes-sur-la-frontière-du-plus-coûteuxmoins-risqué-au-moins-coûteuxplus-risqué">Algorithmes sur la frontière (du plus coûteux/moins risqué au moins coûteux/plus risqué)</a></li>
-  </ul></li>
-  <li><a href="#aversion-au-risque-risk-aversion" id="toc-aversion-au-risque-risk-aversion" class="nav-link" data-scroll-target="#aversion-au-risque-risk-aversion">Aversion au risque (Risk Aversion)</a>
-  <ul class="collapse">
-  <li><a href="#définition-formelle" id="toc-définition-formelle" class="nav-link" data-scroll-target="#définition-formelle">Définition formelle</a></li>
-  <li><a href="#interprétation" id="toc-interprétation" class="nav-link" data-scroll-target="#interprétation">Interprétation</a></li>
-  <li><a href="#facteurs-influençant-laversion-au-risque" id="toc-facteurs-influençant-laversion-au-risque" class="nav-link" data-scroll-target="#facteurs-influençant-laversion-au-risque">Facteurs influençant l’aversion au risque</a></li>
-  </ul></li>
-  <li><a href="#trading-de-portefeuille-portfolio-trading" id="toc-trading-de-portefeuille-portfolio-trading" class="nav-link" data-scroll-target="#trading-de-portefeuille-portfolio-trading">Trading de portefeuille (Portfolio Trading)</a>
-  <ul class="collapse">
-  <li><a href="#au-delà-du-titre-unique" id="toc-au-delà-du-titre-unique" class="nav-link" data-scroll-target="#au-delà-du-titre-unique">Au-delà du titre unique</a></li>
-  <li><a href="#problème-de-la-diversification-en-temps-dalignement" id="toc-problème-de-la-diversification-en-temps-dalignement" class="nav-link" data-scroll-target="#problème-de-la-diversification-en-temps-dalignement">Problème de la diversification en temps d’alignement</a></li>
-  <li><a href="#solutions-disponibles" id="toc-solutions-disponibles" class="nav-link" data-scroll-target="#solutions-disponibles">Solutions disponibles</a></li>
-  </ul></li>
-  <li><a href="#synthèse-et-points-clés" id="toc-synthèse-et-points-clés" class="nav-link" data-scroll-target="#synthèse-et-points-clés">Synthèse et points clés</a>
-  <ul class="collapse">
-  <li><a href="#ce-quil-faut-retenir" id="toc-ce-quil-faut-retenir" class="nav-link" data-scroll-target="#ce-quil-faut-retenir">Ce qu’il faut retenir</a></li>
-  </ul></li>
+  <li><a href="#sec-cles" id="toc-sec-cles" class="nav-link" data-scroll-target="#sec-cles">Points clés à retenir (Key Takeaways)</a></li>
   </ul>
 </nav>
     </div>
@@ -8100,9 +8035,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch6.html">6. Exécution algorithmique</a></li><li class="breadcrumb-item"><a href="./ch6.html">Détails</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch1.html">1. Système Suisse et Returns</a></li><li class="breadcrumb-item"><a href="./ch1.html">Détails</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Exécution algorithmique</h1>
+<h1 class="title">Rendements et valeur temporelle de l’argent</h1>
 </div>
 
 
@@ -8119,968 +8054,1138 @@ window.Quarto = {
 </header>
 
 
-<section id="introduction-et-motivation" class="level2">
-<h2 class="anchored" data-anchor-id="introduction-et-motivation">Introduction et motivation</h2>
-<section id="pourquoi-lexécution-algorithmique" class="level3">
-<h3 class="anchored" data-anchor-id="pourquoi-lexécution-algorithmique">Pourquoi l’exécution algorithmique ?</h3>
-<p>Dans les marchés financiers modernes, les ordres de grande taille ne peuvent pas être exécutés d’un seul coup sans conséquences importantes sur les prix. L’<strong>exécution algorithmique</strong> (Algorithmic Execution) désigne l’utilisation de programmes informatiques automatisés pour découper et exécuter des ordres de manière optimisée, en tenant compte du prix, du volume, du temps et d’autres paramètres de marché.</p>
-<p>💡 L’idée fondamentale est simple : <strong>ne pas perturber le marché avec ses propres transactions</strong>.</p>
+<section id="sec-trois-piliers" class="level2">
+<h2 class="anchored" data-anchor-id="sec-trois-piliers">Le système Suisse des trois piliers (The Swiss 3-Pillar System)</h2>
+<section id="contexte-et-objectif" class="level3">
+<h3 class="anchored" data-anchor-id="contexte-et-objectif">Contexte et objectif</h3>
+<p>La Suisse a mis en place un système de prévoyance retraite structuré autour de <strong>trois piliers complémentaires</strong>. Ce système vise à garantir la sécurité financière des personnes âgées tout en combinant solidarité collective, prévoyance professionnelle et épargne individuelle.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir — Impact social">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir — Impact social
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le système des trois piliers a permis de faire passer la proportion de personnes âgées de plus de 65 ans menacées de pauvreté de <strong>51 % en 1979</strong> à environ <strong>15 à 20 % aujourd’hui</strong>. À titre de comparaison, cette proportion dans la population active n’est que de 4,3 %.</p>
+</div>
+</div>
 </section>
-<section id="un-exemple-concret" class="level3">
-<h3 class="anchored" data-anchor-id="un-exemple-concret">Un exemple concret</h3>
-<p>Imaginons qu’un investisseur A souhaite acquérir <strong>10 000 actions</strong> de la société XYZ, dont le volume moyen quotidien est justement de 10 000 actions.</p>
-<p>Cette situation soulève immédiatement plusieurs problèmes :</p>
+<section id="les-trois-piliers" class="level3">
+<h3 class="anchored" data-anchor-id="les-trois-piliers">Les trois piliers</h3>
+<section id="premier-pilier-prévoyance-étatique-state-pension" class="level4">
+<h4 class="anchored" data-anchor-id="premier-pilier-prévoyance-étatique-state-pension">Premier pilier — Prévoyance étatique (State Pension)</h4>
+<p>Le premier pilier est la <strong>prévoyance étatique</strong>, obligatoire pour l’ensemble des résidents en Suisse. Il repose sur la solidarité entre les générations : les actifs financent directement les retraités.</p>
+<p>Il comprend trois composantes :</p>
 <ul>
-<li><strong>Impact de marché</strong> : Si A achète tout d’un coup, son propre ordre va faire monter le prix.</li>
-<li><strong>Calendrier d’exécution (Timing)</strong> : S’il fractionne l’ordre, quand doit-il acheter ?</li>
-<li><strong>Retard (Delay)</strong> : Plus l’exécution est longue, plus le signal d’investissement initial risque de devenir obsolète.</li>
-<li><strong>Coût d’opportunité</strong> : Peut-on réellement obtenir le bon nombre d’actions au bon prix ?</li>
+<li><strong>AVS</strong> — Assurance vieillesse et survivants : couvre les risques liés à la vieillesse et au décès</li>
+<li><strong>IAI</strong> — Assurance invalidité : couvre les risques d’incapacité de travail durable</li>
+<li><strong>PC</strong> — Prestations complémentaires : complètent les rentes insuffisantes pour couvrir le minimum vital</li>
 </ul>
-<p>⚠️ Dans cet exemple, l’investisseur représente à lui seul <strong>100 % du volume quotidien</strong>. Tout achat massif et immédiat aurait un impact considérable sur le prix.</p>
+<p><strong>Objectif principal</strong> : assurer la <strong>couverture du minimum vital</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le premier pilier est un système de répartition (<em>pay-as-you-go</em>) : il ne s’agit pas d’une épargne individuelle, mais d’un mécanisme collectif de redistribution. Il garantit un revenu de base minimal mais ne prétend pas maintenir le niveau de vie antérieur à la retraite.</p>
+</div>
+</div>
 </section>
-<section id="référence-bibliographique" class="level3">
-<h3 class="anchored" data-anchor-id="référence-bibliographique">Référence bibliographique</h3>
-<p>Le livre de référence pour ce domaine est :</p>
-<blockquote class="blockquote">
-<p><em>Algorithmic Trading and DMA</em>, Barry Johnson [8]</p>
-</blockquote>
+<section id="deuxième-pilier-prévoyance-professionnelle-occupational-pension" class="level4">
+<h4 class="anchored" data-anchor-id="deuxième-pilier-prévoyance-professionnelle-occupational-pension">Deuxième pilier — Prévoyance professionnelle (Occupational Pension)</h4>
+<p>Le deuxième pilier est la <strong>prévoyance professionnelle</strong>, obligatoire pour les salariés dépassant un certain seuil de revenu. Il fonctionne selon un système de capitalisation : les cotisations sont épargnées et investies.</p>
+<p>Il repose sur deux lois fédérales :</p>
+<ul>
+<li><strong>LPP</strong> — Loi fédérale sur la prévoyance professionnelle : régit l’assurance vieillesse liée à l’emploi</li>
+<li><strong>LAA</strong> — Loi fédérale sur l’assurance accidents : couvre les accidents professionnels et non professionnels</li>
+</ul>
+<p><strong>Objectif principal</strong> : <strong>maintenir le niveau de vie habituel</strong> à la retraite, en complément du premier pilier.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Combinés, les premier et deuxième piliers visent à assurer environ 60 à 70 % du dernier salaire. Le deuxième pilier joue un rôle central dans la stabilité financière de la retraite en Suisse.</p>
+</div>
+</div>
+</section>
+<section id="troisième-pilier-prévoyance-privée-private-pension" class="level4">
+<h4 class="anchored" data-anchor-id="troisième-pilier-prévoyance-privée-private-pension">Troisième pilier — Prévoyance privée (Private Pension)</h4>
+<p>Le troisième pilier est la <strong>prévoyance privée</strong>, facultative, permettant à chaque individu d’adapter son épargne retraite à ses besoins et objectifs personnels.</p>
+<p>Il se divise en deux sous-catégories :</p>
+<ul>
+<li><strong>3a — Prévoyance liée</strong> : épargne avec avantages fiscaux significatifs, soumise à des conditions et plafonds de versement annuels</li>
+<li><strong>3b — Prévoyance libre</strong> : épargne sans contrainte particulière, mais sans avantages fiscaux spécifiques</li>
+</ul>
+<p><strong>Objectif principal</strong> : répondre aux <strong>besoins supplémentaires</strong> et personnaliser la planification de la retraite.</p>
+</section>
+</section>
+<section id="synthèse-des-trois-piliers" class="level3">
+<h3 class="anchored" data-anchor-id="synthèse-des-trois-piliers">Synthèse des trois piliers</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[&quot;Système Suisse des 3 piliers&quot;] --&gt; B[&quot;1er Pilier\nPrévoyance étatique&quot;]
+    A --&gt; C[&quot;2e Pilier\nPrévoyance professionnelle&quot;]
+    A --&gt; D[&quot;3e Pilier\nPrévoyance privée&quot;]
+    B --&gt; E[&quot;AVS · IAI · PC&quot;]
+    C --&gt; F[&quot;LPP · LAA&quot;]
+    D --&gt; G[&quot;3a liée · 3b libre&quot;]
+    E --&gt; H[&quot;Minimum vital&quot;]
+    F --&gt; I[&quot;Maintien du niveau de vie&quot;]
+    G --&gt; J[&quot;Besoins supplémentaires&quot;]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <hr>
 </section>
 </section>
-<section id="impact-de-marché-market-impact" class="level2">
-<h2 class="anchored" data-anchor-id="impact-de-marché-market-impact">Impact de marché (Market Impact)</h2>
-<section id="définition" class="level3">
-<h3 class="anchored" data-anchor-id="définition">Définition</h3>
-<p>L’<strong>impact de marché</strong> (Market Impact) est la variation de prix causée par l’exécution d’un ordre. Plus un ordre est important relativement au volume disponible, plus son impact potentiel est élevé.</p>
-<p>L’impact se décompose en deux composantes :</p>
-<p><span class="math display">\[\text{Impact de marché} = \text{Impact temporaire} + \text{Impact permanent}\]</span></p>
-</section>
-<section id="impact-temporaire-temporary-market-impact" class="level3">
-<h3 class="anchored" data-anchor-id="impact-temporaire-temporary-market-impact">Impact temporaire (Temporary Market Impact)</h3>
-<p>L’impact temporaire correspond à la perturbation transitoire du prix due à l’ordre. Une fois l’ordre exécuté et absorbé par le marché, le prix revient progressivement à son niveau normal.</p>
-<p>💡 Intuition : c’est comme appuyer momentanément sur un ressort — le prix monte pendant l’achat, puis redescend.</p>
-</section>
-<section id="impact-permanent-permanent-market-impact" class="level3">
-<h3 class="anchored" data-anchor-id="impact-permanent-permanent-market-impact">Impact permanent (Permanent Market Impact)</h3>
-<p>L’impact permanent correspond au déplacement définitif du prix induit par l’ordre. Même après la fin de l’exécution, le prix reste à un niveau plus élevé car le marché a reçu un signal informatif (quelqu’un veut vraiment acheter ces actions).</p>
-<p>💡 Intuition : la présence d’un gros acheteur révèle une information au marché, qui réévalue durablement le prix à la hausse.</p>
-</section>
-<section id="difficulté-de-mesure" class="level3">
-<h3 class="anchored" data-anchor-id="difficulté-de-mesure">Difficulté de mesure</h3>
-<p>L’impact est difficile à mesurer avec précision car il faut comparer l’évolution du prix <strong>avec et sans</strong> le trade. En pratique, on analyse conjointement :</p>
+<section id="sec-intro-rendements" class="level2">
+<h2 class="anchored" data-anchor-id="sec-intro-rendements">Introduction aux rendements (Returns)</h2>
+<section id="quest-ce-quun-rendement" class="level3">
+<h3 class="anchored" data-anchor-id="quest-ce-quun-rendement">Qu’est-ce qu’un rendement ?</h3>
+<p>Un <strong>rendement</strong> (ou <em>yield</em> en anglais) mesure le <strong>profit ou la perte</strong> générés par un investissement sur une période donnée. Les rendements sont habituellement exprimés <strong>en pourcentage (%)</strong>, ce qui permet de comparer des investissements de montants ou d’horizons de temps différents.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Deux questions fondamentales guident ce chapitre :</p>
 <ul>
-<li>L’évolution des prix sur la période</li>
-<li>L’évolution du carnet d’ordres (order book)</li>
+<li>Comment calculer un rendement entre deux observations ?</li>
+<li>Comment calculer et combiner une série de rendements sur une période ?</li>
 </ul>
+<p>Et une question plus avancée : que signifient les <strong>rendements continus</strong> (logarithmiques) ?</p>
+</div>
+</div>
+</section>
+<section id="notations-et-conventions" class="level3">
+<h3 class="anchored" data-anchor-id="notations-et-conventions">Notations et conventions</h3>
+<p>On travaille avec une <strong>série temporelle de prix</strong> (<em>price timeseries</em>) :</p>
+<ul>
+<li><span class="math inline">\(P(t)\)</span> désigne le prix d’un actif au temps <span class="math inline">\(t\)</span></li>
+<li><span class="math inline">\(t\)</span> représente des <strong>pas de temps équidistants</strong> : journaliers, hebdomadaires, mensuels, etc.</li>
+</ul>
+<p><strong>Exemple</strong> :</p>
+<p><span class="math display">\[P(t) = \{100,\ 100.4,\ 102,\ 101.3,\ 102.8,\ \ldots\}\]</span></p>
+<p>Cette convention s’applique uniformément à tous les types de rendements présentés dans ce chapitre.</p>
 <hr>
 </section>
 </section>
-<section id="les-acteurs-autour-du-trading" class="level2">
-<h2 class="anchored" data-anchor-id="les-acteurs-autour-du-trading">Les acteurs autour du trading</h2>
-<section id="vue-densemble" class="level3">
-<h3 class="anchored" data-anchor-id="vue-densemble">Vue d’ensemble</h3>
-<p>Le processus qui mène d’une idée d’investissement à une exécution réelle implique de nombreux acteurs :</p>
+<section id="sec-rendements-simples" class="level2">
+<h2 class="anchored" data-anchor-id="sec-rendements-simples">Rendements simples (Simple Returns)</h2>
+<section id="rendement-sur-une-seule-période" class="level3">
+<h3 class="anchored" data-anchor-id="rendement-sur-une-seule-période">Rendement sur une seule période</h3>
+<p>Le <strong>rendement simple sur une période</strong> entre <span class="math inline">\(t-1\)</span> et <span class="math inline">\(t\)</span> est défini par :</p>
+<p><span class="math display">\[R_1(t) = \frac{P(t) - P(t-1)}{P(t-1)}\]</span></p>
+<p>Ce qui se réécrit de manière équivalente :</p>
+<p><span class="math display">\[R_1(t) = \frac{P(t)}{P(t-1)} - 1\]</span></p>
+<p>Ou encore, sous la forme dite <em>gross return</em> (rendement brut) :</p>
+<p><span class="math display">\[1 + R_1(t) = \frac{P(t)}{P(t-1)}\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le rendement simple mesure la <strong>variation relative</strong> du prix. En normalisant par le prix initial, on rend les comparaisons possibles entre actifs de valeurs très différentes. Un gain de 10 CHF sur un actif à 100 CHF (+10 %) est plus significatif que le même gain sur un actif à 1 000 CHF (+1 %).</p>
+</div>
+</div>
+<section id="asymétrie-des-rendements-simples" class="level4">
+<h4 class="anchored" data-anchor-id="asymétrie-des-rendements-simples">Asymétrie des rendements simples</h4>
+<p>Les rendements simples présentent une <strong>asymétrie fondamentale</strong> illustrée par l’exemple suivant :</p>
 <ul>
-<li><strong>Analyste</strong> (Analyst) : génère des idées d’achat/vente basées sur sa recherche</li>
-<li><strong>Gestionnaire de portefeuille</strong> (Portfolio Manager) : optimise le portefeuille et contrôle les risques</li>
-<li><strong>Trader interne</strong> (In-house Trader) : réalise l’analyse pré-trade, sélectionne les brokers et exécute</li>
-<li><strong>Vendeur côté vente</strong> (Salesperson, Sell-side) : analyse, surveille et produit des rapports</li>
+<li>Si <span class="math inline">\(P(t-1) = 50\)</span> et <span class="math inline">\(P(t) = 60\)</span> : <span class="math display">\[R_1(t) = \frac{60}{50} - 1 = +20\%\]</span></li>
+<li>Si <span class="math inline">\(P(t-1) = 60\)</span> et <span class="math inline">\(P(t) = 50\)</span> : <span class="math display">\[R_1(t) = \frac{50}{60} - 1 \approx -16.7\%\]</span></li>
 </ul>
+<div class="callout callout-style-default callout-warning callout-titled" title="Asymétrie — Point important">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Asymétrie — Point important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une hausse de +20 % n’est pas compensée par une baisse de −20 %. Pour revenir au prix initial après une hausse de 20 %, il faudrait une baisse de <span class="math inline">\(1 - 1/1.2 \approx 16.7\%\)</span> seulement. Cette asymétrie est une propriété structurelle des rendements simples, corrigée par les rendements logarithmiques.</p>
+</div>
+</div>
 </section>
-<section id="les-méthodes-dexécution" class="level3">
-<h3 class="anchored" data-anchor-id="les-méthodes-dexécution">Les méthodes d’exécution</h3>
-<p>Plusieurs canaux d’exécution existent (notés A, B, C, D, E dans la figure de référence [8]) :</p>
-<ul>
-<li><strong>A — Trader manuel</strong> : exécution via un trader humain</li>
-<li><strong>B — Accès direct au marché</strong> (Direct Market Access, DMA) : le client envoie ses ordres directement au marché</li>
-<li><strong>C — Trading algorithmique</strong> (Algorithmic Trading) : exécution automatisée par des algorithmes</li>
-<li><strong>D — Combinaison</strong> : mix entre trader et algo</li>
-<li><strong>E — Accès sponsorisé</strong> (Sponsored Access) : accès direct ultra-rapide pour des clients qualifiés</li>
-</ul>
-<p>🧠 À retenir : le <strong>côté acheteur</strong> (Buy-side) prend les décisions d’investissement. Le <strong>côté vendeur</strong> (Sell-side) fournit les services d’exécution et de recherche.</p>
-<hr>
+</section>
+<section id="rendement-sur-plusieurs-périodes" class="level3">
+<h3 class="anchored" data-anchor-id="rendement-sur-plusieurs-périodes">Rendement sur plusieurs périodes</h3>
+<p>Pour calculer le rendement simple sur <strong>deux périodes</strong> (de <span class="math inline">\(t-2\)</span> à <span class="math inline">\(t\)</span>) :</p>
+<p><span class="math display">\[R_2(t) = \frac{P(t) - P(t-2)}{P(t-2)} = \frac{P(t)}{P(t-2)} - 1\]</span></p>
+<p>En décomposant le ratio de prix :</p>
+<p><span class="math display">\[R_2(t) = \frac{P(t)}{P(t-1)} \cdot \frac{P(t-1)}{P(t-2)} - 1\]</span></p>
+<p>On obtient la <strong>relation de composition</strong> fondamentale :</p>
+<p><span class="math display">\[1 + R_2(t) = \bigl(1 + R_1(t)\bigr) \cdot \bigl(1 + R_1(t-1)\bigr)\]</span></p>
+<section id="généralisation-à-n-périodes" class="level4">
+<h4 class="anchored" data-anchor-id="généralisation-à-n-périodes">Généralisation à <span class="math inline">\(n\)</span> périodes</h4>
+<p>Pour <span class="math inline">\(n\)</span> périodes consécutives, le rendement se calcule par un <strong>produit</strong> :</p>
+<p><span class="math display">\[1 + R_n(t) = \prod_{i=0}^{n-1} \bigl(1 + R_1(t-i)\bigr)\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Règle d&#39;or — Ne pas sommer les rendements simples">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Règle d’or — Ne pas sommer les rendements simples
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On <strong>ne somme pas</strong> les rendements simples sur plusieurs périodes. On les <strong>compose par multiplication</strong>. La somme des rendements individuels constitue une approximation acceptable uniquement pour de très petits rendements. Pour des calculs rigoureux, la formule multiplicative est obligatoire.</p>
+</div>
+</div>
 </section>
 </section>
-<section id="vue-densemble-des-algorithmes" class="level2">
-<h2 class="anchored" data-anchor-id="vue-densemble-des-algorithmes">Vue d’ensemble des algorithmes</h2>
-<section id="classification" class="level3">
-<h3 class="anchored" data-anchor-id="classification">Classification</h3>
-<p>Les algorithmes d’exécution peuvent être regroupés selon leur objectif principal :</p>
+<section id="exemple-numérique-complet" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-numérique-complet">Exemple numérique complet</h3>
+<p>Supposons l’évolution de prix suivante pour un actif donné :</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Type</th>
-<th>Objectif clé</th>
-<th>Algorithme</th>
+<th>Temps</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Impact temporel</td>
-<td>Temps</td>
-<td>TWAP (Time Weighted Average Price)</td>
-</tr>
-<tr class="even">
-<td>Impact volume</td>
-<td>Volume</td>
-<td>VWAP (Volume Weighted Average Price)</td>
-</tr>
-<tr class="odd">
-<td>Impact volume</td>
-<td>Volume</td>
-<td>POV (Percentage of Volume)</td>
-</tr>
-<tr class="even">
-<td>Impact minimal</td>
-<td>Impact</td>
-<td>MI (Minimal Impact)</td>
-</tr>
-<tr class="odd">
-<td>Coût / risque</td>
-<td>Prix / risque</td>
-<td>IS (Implementation Shortfall)</td>
-</tr>
-<tr class="even">
-<td>Coût / risque</td>
-<td>Prix / risque</td>
-<td>AS (Adaptive Shortfall)</td>
-</tr>
-<tr class="odd">
-<td>Coût / risque</td>
-<td>Prix / risque</td>
-<td>MC (Market Close)</td>
-</tr>
-<tr class="even">
-<td>Opportuniste</td>
 <td>Prix</td>
-<td>PI (Price Inline)</td>
+<td>10</td>
+<td>12</td>
+<td>14</td>
+<td>16</td>
 </tr>
-<tr class="odd">
-<td>Opportuniste</td>
-<td>Liquidité</td>
-<td>LIQ (Liquidity driven)</td>
+<tr class="even">
+<td><span class="math inline">\(R_1\)</span></td>
+<td>—</td>
+<td>20%</td>
+<td>16,7%</td>
+<td>14,3%</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="principes-généraux" class="level3">
-<h3 class="anchored" data-anchor-id="principes-généraux">Principes généraux</h3>
-<ul>
-<li>Ces algorithmes sont <strong>génériques</strong> — chaque broker dispose de ses propres implémentations.</li>
-<li>Les concepts d’un algorithme peuvent être <strong>combinés</strong> avec ceux d’un autre (approche <em>mix and match</em>).</li>
-<li>L’objectif commun reste de <strong>minimiser l’impact</strong> de marché, qu’il soit temporaire ou permanent.</li>
-</ul>
+<p>Le rendement total de <span class="math inline">\(t=1\)</span> à <span class="math inline">\(t=4\)</span> vaut :</p>
+<p><span class="math display">\[R_4(4) = \frac{16 - 10}{10} = 60\%\]</span></p>
+<p><strong>Vérification par la somme</strong> (méthode incorrecte) :</p>
+<p><span class="math display">\[20\% + 16.7\% + 14.3\% = 50.9\% \neq 60\%\]</span></p>
+<p><strong>Vérification par le produit</strong> (méthode correcte) :</p>
+<p><span class="math display">\[(1 + 20\%) \times (1 + 16.7\%) \times (1 + 14.3\%) - 1 = 60\% \checkmark\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition — Intérêts composés">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition — Intérêts composés
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La différence entre 50,9 % et 60 % illustre l’effet des <strong>intérêts composés</strong> (<em>compounding</em>) : à chaque période, le rendement est appliqué sur un capital déjà valorisé par les périodes précédentes. Plus les rendements sont élevés et la période longue, plus cet écart est significatif.</p>
+</div>
+</div>
 <hr>
 </section>
 </section>
-<section id="twap-time-weighted-average-price" class="level2">
-<h2 class="anchored" data-anchor-id="twap-time-weighted-average-price">TWAP — Time Weighted Average Price</h2>
-<section id="définition-1" class="level3">
-<h3 class="anchored" data-anchor-id="définition-1">Définition</h3>
-<p>Le <strong>TWAP</strong> (Time Weighted Average Price — Prix moyen pondéré par le temps) est l’algorithme d’exécution le plus simple. Il consiste à diviser un ordre en tranches égales réparties uniformément dans le temps.</p>
-<p>Les paramètres d’entrée sont :</p>
+<section id="sec-portefeuille" class="level2">
+<h2 class="anchored" data-anchor-id="sec-portefeuille">Rendements de portefeuille (Portfolio Returns)</h2>
+<section id="définition-dun-portefeuille" class="level3">
+<h3 class="anchored" data-anchor-id="définition-dun-portefeuille">Définition d’un portefeuille</h3>
+<p>Un <strong>portefeuille</strong> (<em>portfolio</em>) est une collection de <span class="math inline">\(n\)</span> actifs. Chaque actif <span class="math inline">\(i\)</span> est caractérisé par :</p>
 <ul>
-<li><span class="math inline">\(t_0\)</span> : heure de début</li>
-<li><span class="math inline">\(t_1\)</span> : heure de fin</li>
-<li><span class="math inline">\(\Delta t\)</span> : intervalle de temps entre les tranches</li>
-<li><span class="math inline">\(w\)</span> : quantité totale à exécuter</li>
+<li>un rendement individuel <span class="math inline">\(R_i\)</span></li>
+<li>une <strong>allocation</strong> (ou pondération) <span class="math inline">\(\alpha_i\)</span> représentant la fraction du capital investi dans cet actif</li>
 </ul>
-<p>Le nombre de tranches est :</p>
-<p><span class="math display">\[n = \frac{t_1 - t_0}{\Delta t} + 1\]</span></p>
-<p>Chaque tranche représente <span class="math inline">\(\frac{w}{n}\)</span> actions.</p>
+<p>La contrainte de normalisation impose que les allocations somment à 1 :</p>
+<p><span class="math display">\[\sum_{i=1}^{n} \alpha_i = 1\]</span></p>
+<p>Cette contrainte signifie que l’intégralité du capital est allouée (pas de levier, pas de liquidité résiduelle non comptée).</p>
 </section>
-<section id="exemple-numérique" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-numérique">Exemple numérique</h3>
-<p>Paramètres :</p>
+<section id="rendement-du-portefeuille" class="level3">
+<h3 class="anchored" data-anchor-id="rendement-du-portefeuille">Rendement du portefeuille</h3>
+<p>Le rendement du portefeuille est défini comme la <strong>moyenne pondérée</strong> des rendements individuels :</p>
+<p><span class="math display">\[R_p = \sum_{i=1}^{n} \alpha_i R_i\]</span></p>
+<section id="vérification-de-cohérence" class="level4">
+<h4 class="anchored" data-anchor-id="vérification-de-cohérence">Vérification de cohérence</h4>
+<p>On vérifie que cette définition est cohérente en développant la valeur finale du portefeuille :</p>
+<p><span class="math display">\[\sum_{i=1}^{n} \alpha_i (1 + R_i) = \sum_{i=1}^{n} \alpha_i + \sum_{i=1}^{n} \alpha_i R_i = 1 + R_p\]</span></p>
+<p>Ce résultat confirme que le rendement de portefeuille, défini comme une <strong>combinaison linéaire</strong> des rendements individuels, est bien cohérent avec la définition économique de la valeur du portefeuille.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition — Exemple concret">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition — Exemple concret
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un portefeuille composé à 60 % d’actions (rendement 10 %) et 40 % d’obligations (rendement 3 %) génère :</p>
+<p><span class="math display">\[R_p = 0.60 \times 10\% + 0.40 \times 3\% = 7.2\%\]</span></p>
+<p>La pondération reflète directement la part de capital allouée à chaque actif.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir — Limitation sur plusieurs périodes">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir — Limitation sur plusieurs périodes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La formule de rendement de portefeuille <span class="math inline">\(R_p = \sum \alpha_i R_i\)</span> est <strong>valide pour une seule période</strong>. Pour des rendements multi-périodes (simples), la composition n’est plus linéaire. Cette propriété d’additivité est en revanche conservée pour les rendements continus, comme nous le verrons.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="sec-annualisation" class="level2">
+<h2 class="anchored" data-anchor-id="sec-annualisation">Annualisation des rendements (Annualisation)</h2>
+<section id="pourquoi-annualiser" class="level3">
+<h3 class="anchored" data-anchor-id="pourquoi-annualiser">Pourquoi annualiser ?</h3>
+<p>L’annualisation permet de <strong>comparer des rendements mesurés sur des horizons différents</strong> en les ramenant à une base commune annuelle. Sans cette standardisation, il est impossible de comparer un fonds mensuel à un fonds journalier.</p>
+</section>
+<section id="formules-dannualisation" class="level3">
+<h3 class="anchored" data-anchor-id="formules-dannualisation">Formules d’annualisation</h3>
+<p>Soient les notations suivantes :</p>
 <ul>
-<li><span class="math inline">\(w = 10\,000\)</span> actions</li>
-<li><span class="math inline">\(t_0 =\)</span> maintenant, <span class="math inline">\(t_1 = t_0 + 1h\)</span>, <span class="math inline">\(\Delta t = 15\)</span> minutes → 5 tranches</li>
+<li><span class="math inline">\(R_a\)</span> : rendement annuel (<em>annual return</em>)</li>
+<li><span class="math inline">\(R_m\)</span> : rendement mensuel (<em>monthly return</em>)</li>
+<li><span class="math inline">\(R_d\)</span> : rendement journalier (<em>daily return</em>)</li>
 </ul>
-<p>Calendrier d’exécution :</p>
+<p>En appliquant la formule de composition sur 12 mois :</p>
+<p><span class="math display">\[1 + R_a = \bigl(1 + R_m\bigr)^{12}\]</span></p>
+<p><span class="math display">\[R_a = \bigl(1 + R_m\bigr)^{12} - 1\]</span></p>
+<p>Pour les rendements journaliers, en supposant <strong>256 jours ouvrables</strong> par an :</p>
+<p><span class="math display">\[R_a = \bigl(1 + R_d\bigr)^{256} - 1\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir — Convention sur les jours ouvrables">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir — Convention sur les jours ouvrables
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le nombre de jours ouvrables utilisé pour l’annualisation varie selon les conventions de marché : <strong>250, 256 ou 300 jours</strong> selon les institutions et les marchés. Il est important de préciser quelle convention est adoptée pour garantir la comparabilité des résultats.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Erreur fréquente — Ne pas multiplier simplement">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Erreur fréquente — Ne pas multiplier simplement
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’annualisation <strong>ne se fait pas</strong> en multipliant le rendement mensuel par 12. La multiplication est une approximation valable uniquement pour de très petits rendements :</p>
+<p><span class="math display">\[R_a \approx 12 \times R_m \quad \text{(approximation, petits rendements)}\]</span> <span class="math display">\[R_a = (1 + R_m)^{12} - 1 \quad \text{(formule exacte)}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition — Effet de la composition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition — Effet de la composition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un rendement mensuel de 1 % ne donne pas 12 % annuels. En réalité : <span class="math inline">\((1.01)^{12} - 1 \approx 12.68\%\)</span>. L’écart vient des intérêts appliqués sur les intérêts accumulés chaque mois. Plus le rendement mensuel est élevé, plus l’écart avec la multiplication simple est important.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="sec-valeur-temporelle" class="level2">
+<h2 class="anchored" data-anchor-id="sec-valeur-temporelle">Valeur temporelle de l’argent (Time Value of Money)</h2>
+<section id="principe-fondamental" class="level3">
+<h3 class="anchored" data-anchor-id="principe-fondamental">Principe fondamental</h3>
+<p>La <strong>valeur temporelle de l’argent</strong> est l’un des principes fondateurs de la finance : <strong>1 CHF disponible aujourd’hui vaut davantage que 1 CHF disponible dans le futur</strong>, car l’argent présent peut être investi pour générer un rendement.</p>
+<p>Ce principe justifie l’utilisation de taux d’actualisation pour comparer des flux financiers à des dates différentes.</p>
+</section>
+<section id="capitalisation-discrète" class="level3">
+<h3 class="anchored" data-anchor-id="capitalisation-discrète">Capitalisation discrète</h3>
+<p>Si <span class="math inline">\(R\)</span> est le rendement par période et <span class="math inline">\(PV\)</span> la valeur présente (<em>Present Value</em>), la <strong>valeur future</strong> (<em>Future Value</em>) à l’horizon <span class="math inline">\(n\)</span> est :</p>
+<p><span class="math display">\[FV_n^1 = PV \cdot (1 + R)^n\]</span></p>
+<p>La progression dans le temps est la suivante :</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Heure</th>
-<th>Quantité</th>
+<th>Temps</th>
+<th>Valeur future</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(t_0\)</span></td>
-<td>2 000 actions</td>
+<td><span class="math inline">\(t = 1\)</span></td>
+<td><span class="math inline">\(PV \cdot (1+R)\)</span></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(t_0 + 15\)</span> min</td>
-<td>2 000 actions</td>
+<td><span class="math inline">\(t = 2\)</span></td>
+<td><span class="math inline">\(PV \cdot (1+R)^2\)</span></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(t_0 + 30\)</span> min</td>
-<td>2 000 actions</td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(t_0 + 45\)</span> min</td>
-<td>2 000 actions</td>
+<td><span class="math inline">\(t = n\)</span></td>
+<td><span class="math inline">\(PV \cdot (1+R)^n\)</span></td>
+</tr>
+</tbody>
+</table>
+<section id="fréquence-de-capitalisation-plus-élevée" class="level4">
+<h4 class="anchored" data-anchor-id="fréquence-de-capitalisation-plus-élevée">Fréquence de capitalisation plus élevée</h4>
+<p>Si le paiement des intérêts est effectué <span class="math inline">\(m\)</span> fois par an sur <span class="math inline">\(n\)</span> années :</p>
+<p><span class="math display">\[FV_n^m = PV \cdot \left(1 + \frac{R}{m}\right)^{m \cdot n}\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition — Fréquence et valeur finale">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition — Fréquence et valeur finale
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Plus la capitalisation est fréquente (mensuelle, hebdomadaire, journalière), plus la valeur future croît, car les intérêts sont réinvestis et produisent eux-mêmes des intérêts plus tôt. C’est l’effet des intérêts composés.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="capitalisation-continue" class="level3">
+<h3 class="anchored" data-anchor-id="capitalisation-continue">Capitalisation continue</h3>
+<p>En faisant tendre le nombre de paiements par an vers l’infini (<span class="math inline">\(m \to \infty\)</span>), on obtient la <strong>capitalisation continue</strong> (<em>continuous compounding</em>) :</p>
+<p><span class="math display">\[FV_n^\infty = \lim_{m \to \infty} PV \cdot \left(1 + \frac{R}{m}\right)^{m \cdot n} = PV \cdot e^{Rn}\]</span></p>
+<p>Ce résultat découle de la définition même du nombre d’Euler <span class="math inline">\(e\)</span> :</p>
+<p><span class="math display">\[\lim_{m \to \infty} \left(1 + \frac{R}{m}\right)^m = e^R\]</span></p>
+</section>
+<section id="exemple-numérique-impact-de-la-fréquence" class="level3">
+<h3 class="anchored" data-anchor-id="exemple-numérique-impact-de-la-fréquence">Exemple numérique — Impact de la fréquence</h3>
+<p>Avec <span class="math inline">\(PV = 1\,000\)</span> CHF, <span class="math inline">\(R = 10\%\)</span> et <span class="math inline">\(n = 1\)</span> an :</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 58%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fréquence</th>
+<th>Calcul</th>
+<th>Valeur (CHF)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Annuelle</td>
+<td><span class="math inline">\(1000 \cdot (1 + 0.1)^1\)</span></td>
+<td>1 100,0</td>
+</tr>
+<tr class="even">
+<td>Trimestrielle</td>
+<td><span class="math inline">\(1000 \cdot (1 + 0.1/4)^4\)</span></td>
+<td>1 103,8</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(t_0 + 60\)</span> min</td>
-<td>2 000 actions</td>
+<td>Hebdomadaire</td>
+<td><span class="math inline">\(1000 \cdot (1 + 0.1/52)^{52}\)</span></td>
+<td>1 105,1</td>
+</tr>
+<tr class="even">
+<td>Journalière</td>
+<td><span class="math inline">\(1000 \cdot (1 + 0.1/365)^{365}\)</span></td>
+<td>1 105,2</td>
+</tr>
+<tr class="odd">
+<td>Continue</td>
+<td><span class="math inline">\(1000 \cdot e^{0.1}\)</span></td>
+<td>1 105,2</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir — Rôle théorique de la capitalisation continue">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir — Rôle théorique de la capitalisation continue
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La capitalisation continue donne la <strong>valeur future maximale théorique</strong> pour un taux <span class="math inline">\(R\)</span> donné. En pratique, elle n’est pas réaliste mais sert de cadre mathématique privilégié dans les modèles théoriques, car l’exponentielle est plus simple à différencier et à intégrer que les puissances de fractions.</p>
+</div>
+</div>
+</section>
+<section id="lien-entre-rendement-continu-et-rendement-simple" class="level3">
+<h3 class="anchored" data-anchor-id="lien-entre-rendement-continu-et-rendement-simple">Lien entre rendement continu et rendement simple</h3>
+<p>En posant l’équivalence entre capitalisation discrète et continue :</p>
+<p><span class="math display">\[PV \cdot (1+R)^n = FV_n = PV \cdot e^{rn}\]</span></p>
+<p>On déduit la <strong>relation fondamentale</strong> entre le taux continu <span class="math inline">\(r\)</span> et le taux simple <span class="math inline">\(R\)</span> :</p>
+<p><span class="math display">\[\ln(1 + R) = r \quad \Longrightarrow \quad r &lt; R\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition — Pourquoi $r &lt; R$ ?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition — Pourquoi <span class="math inline">\(r &lt; R\)</span> ?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le logarithme est une fonction concave : <span class="math inline">\(\ln(1+x) &lt; x\)</span> pour tout <span class="math inline">\(x &gt; 0\)</span>. Le taux continu <span class="math inline">\(r\)</span> est donc toujours inférieur au taux simple <span class="math inline">\(R\)</span> correspondant. La différence est faible pour de petits rendements mais peut devenir significative pour des taux élevés.</p>
+</div>
+</div>
+<p><strong>Exemple numérique</strong> : Si <span class="math inline">\(R = 10\%\)</span>, alors <span class="math inline">\(r = \ln(1.10) \approx 9.53\%\)</span>.</p>
+<p>Vérification : <span class="math inline">\(1000 \cdot e^{0.0953} \approx 1100\)</span> CHF <span class="math inline">\(\checkmark\)</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Passage entre les deux conventions">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Passage entre les deux conventions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La relation de passage est simple et doit être maîtrisée :</p>
+<p><span class="math display">\[r = \ln(1 + R) \quad \text{et} \quad R = e^r - 1\]</span></p>
+<p>Elle permet de convertir un taux simple en taux continu et vice versa.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="sec-rendements-continus" class="level2">
+<h2 class="anchored" data-anchor-id="sec-rendements-continus">Rendements continus (Continuous Returns / Log Returns)</h2>
+<section id="définition-du-rendement-logarithmique" class="level3">
+<h3 class="anchored" data-anchor-id="définition-du-rendement-logarithmique">Définition du rendement logarithmique</h3>
+<p>Le <strong>rendement continu</strong> sur une période, également appelé <strong>rendement logarithmique</strong> (<em>log return</em>), est défini par :</p>
+<p><span class="math display">\[r(t) = \ln\!\left(1 + R(t)\right) = \ln\!\left(\frac{P_t}{P_{t-1}}\right) = \ln P_t - \ln P_{t-1}\]</span></p>
+<p>Il s’agit d’une <strong>différence de logarithmes de prix</strong> consécutifs.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition — Pourquoi les log-rendements ?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition — Pourquoi les log-rendements ?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le rendement logarithmique est la version continue du rendement simple. Il mesure la variation relative du prix dans un cadre continu. Ses propriétés mathématiques (symétrie, additivité) en font l’outil de prédilection en modélisation financière théorique et en statistiques des actifs financiers.</p>
+</div>
+</div>
+</section>
+<section id="propriétés-clés-des-rendements-logarithmiques" class="level3">
+<h3 class="anchored" data-anchor-id="propriétés-clés-des-rendements-logarithmiques">Propriétés clés des rendements logarithmiques</h3>
+<section id="symétrie" class="level4">
+<h4 class="anchored" data-anchor-id="symétrie">Symétrie</h4>
+<p>Contrairement aux rendements simples, les rendements logarithmiques sont <strong>parfaitement symétriques</strong> :</p>
+<p>Si un actif passe de 100 à 110 puis revient à 100 :</p>
+<ul>
+<li>Rendement simple : <span class="math inline">\(+10\%\)</span> puis <span class="math inline">\(-9.09\%\)</span> (asymétrique)</li>
+<li>Log-rendement : <span class="math inline">\(+\ln(1.1) \approx +9.53\%\)</span> puis <span class="math inline">\(-\ln(1.1) \approx -9.53\%\)</span> (symétrique)</li>
+</ul>
+</section>
+<section id="facilité-de-manipulation-analytique" class="level4">
+<h4 class="anchored" data-anchor-id="facilité-de-manipulation-analytique">Facilité de manipulation analytique</h4>
+<p>La présence de logarithmes simplifie considérablement :</p>
+<ul>
+<li>Les calculs de calcul stochastique (mouvement brownien géométrique)</li>
+<li>Les démonstrations analytiques impliquant des produits de rendements</li>
+<li>L’estimation statistique (distributions normales, etc.)</li>
+</ul>
+</section>
+</section>
+<section id="rendements-continus-multi-périodes" class="level3">
+<h3 class="anchored" data-anchor-id="rendements-continus-multi-périodes">Rendements continus multi-périodes</h3>
+<p>Pour <strong>deux périodes</strong> :</p>
+<p><span class="math display">\[r_2(t) = \ln\!\left(\frac{P_t}{P_{t-2}}\right) = \ln\!\left(\frac{P_t}{P_{t-1}} \cdot \frac{P_{t-1}}{P_{t-2}}\right)\]</span></p>
+<p>En utilisant la propriété <span class="math inline">\(\ln(a \cdot b) = \ln a + \ln b\)</span> :</p>
+<p><span class="math display">\[r_2(t) = \ln\frac{P_t}{P_{t-1}} + \ln\frac{P_{t-1}}{P_{t-2}} = r_1(t) + r_1(t-1)\]</span></p>
+<section id="généralisation-à-n-périodes-1" class="level4">
+<h4 class="anchored" data-anchor-id="généralisation-à-n-périodes-1">Généralisation à <span class="math inline">\(n\)</span> périodes</h4>
+<p><span class="math display">\[r_n(t) = \sum_{i=0}^{n-1} r_1(t-i)\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Additivité des rendements continus multi-périodes">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Additivité des rendements continus multi-périodes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les rendements logarithmiques sur <span class="math inline">\(n\)</span> périodes sont <strong>additifs</strong> : on les <strong>somme</strong> simplement. C’est un avantage majeur par rapport aux rendements simples qui nécessitent une multiplication. Cette propriété facilite grandement l’analyse statistique de séries temporelles financières.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="rendements-continus-dun-portefeuille" class="level3">
+<h3 class="anchored" data-anchor-id="rendements-continus-dun-portefeuille">Rendements continus d’un portefeuille</h3>
+<p>En revanche, l’additivité <strong>ne s’applique pas</strong> à la dimension transversale (portefeuille). Avec les mêmes notations (<span class="math inline">\(n\)</span> actifs, allocations <span class="math inline">\(\alpha_i\)</span>, <span class="math inline">\(\sum \alpha_i = 1\)</span>) :</p>
+<p><span class="math display">\[r_p = \ln(1 + R_p) = \ln\!\left(1 + \sum_{i=1}^{n} \alpha_i R_i\right) \neq \sum_{i=1}^{n} \alpha_i r_i\]</span></p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Attention — Portefeuille et rendements continus">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Attention — Portefeuille et rendements continus
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le rendement continu d’un portefeuille n’est <strong>pas</strong> la moyenne pondérée des rendements continus individuels. L’additivité des log-rendements ne vaut que pour l’agrégation <strong>temporelle</strong> (séries de périodes successives), pas pour l’agrégation <strong>transversale</strong> (combinaison d’actifs simultanément détenus).</p>
+<p>En pratique, on utilise souvent l’approximation <span class="math inline">\(r_p \approx \sum \alpha_i r_i\)</span> pour de petits rendements.</p>
+</div>
+</div>
+</section>
+<section id="tableau-récapitulatif-simples-vs-continus" class="level3">
+<h3 class="anchored" data-anchor-id="tableau-récapitulatif-simples-vs-continus">Tableau récapitulatif — Simples vs Continus</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 33%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Propriété</th>
+<th>Rendements simples</th>
+<th>Rendements logarithmiques</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Définition</td>
+<td><span class="math inline">\(R = P_t/P_{t-1} - 1\)</span></td>
+<td><span class="math inline">\(r = \ln(P_t/P_{t-1})\)</span></td>
+</tr>
+<tr class="even">
+<td>Multi-périodes</td>
+<td>Produit <span class="math inline">\((1+R_n) = \prod(1+R_i)\)</span></td>
+<td>Somme <span class="math inline">\(r_n = \sum r_i\)</span></td>
+</tr>
+<tr class="odd">
+<td>Portefeuille</td>
+<td><span class="math inline">\(R_p = \sum \alpha_i R_i\)</span></td>
+<td><span class="math inline">\(r_p \neq \sum \alpha_i r_i\)</span></td>
+</tr>
+<tr class="even">
+<td>Symétrie</td>
+<td>Non</td>
+<td>Oui</td>
+</tr>
+<tr class="odd">
+<td>Plage de valeurs</td>
+<td><span class="math inline">\(]-1, +\infty[\)</span></td>
+<td><span class="math inline">\(]-\infty, +\infty[\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="sec-comptabilite" class="level2">
+<h2 class="anchored" data-anchor-id="sec-comptabilite">Exemples de comptabilité (Bookkeeping Examples)</h2>
+<p>Les exemples suivants illustrent comment calculer la <strong>valeur nette d’inventaire</strong> (<em>Net Asset Value</em>, NAV) d’un portefeuille et décomposer sa performance selon les sources de risque.</p>
+<section id="sec-chf-chf" class="level3">
+<h3 class="anchored" data-anchor-id="sec-chf-chf">Investisseur CHF dans un actif CHF</h3>
+<section id="mise-en-situation" class="level4">
+<h4 class="anchored" data-anchor-id="mise-en-situation">Mise en situation</h4>
+<p>Un investisseur dont la devise de référence est le <strong>franc suisse (CHF)</strong> achète <strong>15 actions UBS</strong>, cotées en CHF, au temps <span class="math inline">\(t=1\)</span>. Il ferme sa position au temps <span class="math inline">\(t=3\)</span>. Son capital initial est de 1 000 CHF.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Temps</th>
+<th>Prix UBS (CHF)</th>
+<th>Position (actions)</th>
+<th>Cash (CHF)</th>
+<th>NAV (CHF)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>50</td>
+<td>0</td>
+<td>1 000</td>
+<td>1 000</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>55</td>
+<td>15</td>
+<td>175</td>
+<td>1 000</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>60</td>
+<td>15</td>
+<td>175</td>
+<td>1 075</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>62</td>
+<td>0</td>
+<td>1 105</td>
+<td>1 105</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>55</td>
+<td>0</td>
+<td>1 105</td>
+<td>1 105</td>
+</tr>
+</tbody>
+</table>
+<p><em>Au temps <span class="math inline">\(t=1\)</span> : achat de 15 actions à 55 CHF = 825 CHF investis, cash résiduel = 1 000 − 825 = 175 CHF.</em></p>
+</section>
+<section id="analyse-de-la-performance" class="level4">
+<h4 class="anchored" data-anchor-id="analyse-de-la-performance">Analyse de la performance</h4>
+<ul>
+<li><strong>P&amp;L (Profit &amp; Loss)</strong> : <span class="math inline">\(1\,105 - 1\,000 = +105\)</span> CHF</li>
+<li><strong>Rendement de la NAV</strong> : <span class="math inline">\(1105/1000 - 1 = 10.5\%\)</span></li>
+<li><strong>Rendement du prix UBS</strong> (de <span class="math inline">\(t=1\)</span> à <span class="math inline">\(t=3\)</span>) : <span class="math inline">\(62/55 - 1 = 12.7\%\)</span></li>
+</ul>
+<p><strong>Décomposition du rendement de la NAV par source</strong> :</p>
+<p><span class="math display">\[\frac{1000 - 175}{1000} \times 12.7\% + \frac{175}{1000} \times 0\% = 82.5\% \times 12.7\% \approx 10.5\%\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans ce cas simple (actif et investisseur dans la même devise), la performance est <strong>entièrement expliquée</strong> par l’évolution du cours d’UBS. Il n’existe aucun risque de change. Le cash résiduel (175 CHF) ne rapporte rien (rendement 0 % supposé) et dilue légèrement la performance globale.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-chf-usd-statique" class="level3">
+<h3 class="anchored" data-anchor-id="sec-chf-usd-statique">Investisseur CHF dans un actif USD — USDCHF statique, sans carry</h3>
+<section id="mise-en-situation-1" class="level4">
+<h4 class="anchored" data-anchor-id="mise-en-situation-1">Mise en situation</h4>
+<p>Un investisseur CHF achète <strong>10 actions Apple</strong> (AAPL, cotées en USD). Le taux de change USD/CHF reste constant à 0,90. Le rendement sur le cash en USD est nul (sans <em>carry</em>).</p>
+<p>La <strong>formule de NAV</strong> devient :</p>
+<p><span class="math display">\[\text{NAV} = \text{position\_AAPL} \times \text{prix\_AAPL} \times \text{USDCHF} + \text{Cash}\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 21%">
+<col style="width: 26%">
+<col style="width: 10%">
+<col style="width: 16%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Temps</th>
+<th>Prix AAPL (USD)</th>
+<th>Position (actions)</th>
+<th>USDCHF</th>
+<th>Cash (CHF)</th>
+<th>NAV (CHF)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>45</td>
+<td>0</td>
+<td>0,90</td>
+<td>1 000,0</td>
+<td>1 000,0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>48</td>
+<td>10</td>
+<td>0,90</td>
+<td>568,0</td>
+<td>1 000,0</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>49</td>
+<td>10</td>
+<td>0,90</td>
+<td>568,0</td>
+<td>1 009,0</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>48</td>
+<td>10</td>
+<td>0,90</td>
+<td>568,0</td>
+<td>1 000,0</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>49</td>
+<td>0</td>
+<td>0,90</td>
+<td>1 009,0</td>
+<td>1 009,0</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="avantages-et-inconvénients" class="level3">
-<h3 class="anchored" data-anchor-id="avantages-et-inconvénients">Avantages et inconvénients</h3>
-<p><strong>Avantages :</strong></p>
+<section id="analyse-des-risques-et-de-la-performance" class="level4">
+<h4 class="anchored" data-anchor-id="analyse-des-risques-et-de-la-performance">Analyse des risques et de la performance</h4>
+<p>L’investisseur est exposé à <strong>deux risques</strong> :</p>
+<ol type="1">
+<li><strong>Risque action</strong> (<em>equity risk</em>) : évolution du prix d’AAPL en USD</li>
+<li><strong>Risque de change</strong> (<em>FX risk</em>, <em>Foreign Exchange risk</em>) : évolution du taux USD/CHF</li>
+</ol>
+<p>Dans ce cas, le taux de change est stable <span class="math inline">\(\rightarrow\)</span> la <strong>P&amp;L de CHF 9,0</strong> est entièrement expliquée par la performance positive d’AAPL sur la période <span class="math inline">\([t=1, t=4]\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition — Deux sources de risque imbriquées">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition — Deux sources de risque imbriquées
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Même si l’investisseur ne s’intéresse qu’aux actions Apple, sa performance en CHF dépend de <em>deux</em> facteurs : la valeur d’AAPL en dollars <em>et</em> la valeur du dollar en francs suisses. Ces deux risques peuvent se compenser ou s’amplifier mutuellement.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-chf-usd-nocarry" class="level3">
+<h3 class="anchored" data-anchor-id="sec-chf-usd-nocarry">Investisseur CHF dans un actif USD — sans carry, avec variation de change</h3>
+<section id="mise-en-situation-2" class="level4">
+<h4 class="anchored" data-anchor-id="mise-en-situation-2">Mise en situation</h4>
+<p>Même configuration que précédemment, mais cette fois le <strong>taux USD/CHF varie</strong> à la baisse.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 21%">
+<col style="width: 26%">
+<col style="width: 10%">
+<col style="width: 16%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Temps</th>
+<th>Prix AAPL (USD)</th>
+<th>Position (actions)</th>
+<th>USDCHF</th>
+<th>Cash (CHF)</th>
+<th>NAV (CHF)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>45</td>
+<td>0</td>
+<td>0,89</td>
+<td>1 000,0</td>
+<td>1 000,0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>48</td>
+<td>10</td>
+<td>0,90</td>
+<td>568,0</td>
+<td>1 000,0</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>49</td>
+<td>10</td>
+<td>0,90</td>
+<td>568,0</td>
+<td>1 009,0</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>48</td>
+<td>10</td>
+<td>0,89</td>
+<td>568,0</td>
+<td>995,2</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>49</td>
+<td>0</td>
+<td>0,88</td>
+<td>999,2</td>
+<td>999,2</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="analyse" class="level4">
+<h4 class="anchored" data-anchor-id="analyse">Analyse</h4>
 <ul>
-<li>Extrêmement simple à implémenter</li>
-<li>Comportement prévisible et facile à auditer</li>
-<li>Garantit l’exécution complète de l’ordre</li>
+<li>En <span class="math inline">\(t=4\)</span>, le prix d’AAPL est de nouveau à 49 USD (comme en <span class="math inline">\(t=2\)</span>), mais la NAV est de 999,2 CHF au lieu de 1 009,0 CHF.</li>
+<li>L’explication : le taux USDCHF a <strong>baissé</strong> de 0,90 à 0,88 entre <span class="math inline">\(t=2\)</span> et <span class="math inline">\(t=4\)</span>.</li>
+<li>La <strong>P&amp;L totale est de −0,8 CHF</strong> : la performance positive d’AAPL_USD est plus que compensée par la dépréciation du dollar américain.</li>
 </ul>
-<p><strong>Inconvénients :</strong></p>
-<ul>
-<li>N’utilise aucune information de marché (ni prix, ni volume)</li>
-<li><strong>Très prévisible</strong> : un concurrent peut anticiper les ordres et en profiter (front-running)</li>
-<li>Peut exécuter à des prix défavorables si le marché est particulièrement actif ou creux à certaines heures</li>
-</ul>
-<p>⚠️ La prévisibilité est un risque majeur : si un acteur malveillant sait qu’un algorithme TWAP va acheter à intervalles réguliers, il peut acheter juste avant et revendre juste après.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Risque de change — Impact négatif potentiel">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Risque de change — Impact négatif potentiel
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le risque de change peut <strong>éroder voire inverser</strong> la performance d’un investissement étranger. Un investisseur CHF qui détient des actifs en USD est négativement impacté lorsque le dollar se déprécie face au franc suisse, indépendamment de la performance de l’actif sous-jacent.</p>
+</div>
+</div>
 </section>
-<section id="variantes-courantes" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes">Variantes courantes</h3>
-<section id="ajout-de-bruit-randomisation" class="level4">
-<h4 class="anchored" data-anchor-id="ajout-de-bruit-randomisation">Ajout de bruit (Randomisation)</h4>
-<p>Pour réduire la prévisibilité, on peut ajouter du bruit aléatoire :</p>
-<ul>
-<li>Sur les intervalles de temps : <span class="math inline">\(t_i = t_{i-1} + \Delta t + \varepsilon\)</span></li>
-<li>Sur les tailles de tranches : la quantité par tranche varie aléatoirement autour de <span class="math inline">\(w/n\)</span></li>
-</ul>
-</section>
-<section id="profil-agressif-ou-passif" class="level4">
-<h4 class="anchored" data-anchor-id="profil-agressif-ou-passif">Profil agressif ou passif</h4>
-<p>On peut introduire un facteur d’urgence pour moduler le rythme d’exécution :</p>
-<ul>
-<li><strong>Profil agressif</strong> : on exécute davantage en début de période (utile si on veut réduire le risque de timing)</li>
-<li><strong>Profil passif</strong> : on exécute davantage en fin de période (utile si on anticipe des conditions favorables plus tard)</li>
-</ul>
-</section>
-<section id="twap-adaptatif-au-prix" class="level4">
-<h4 class="anchored" data-anchor-id="twap-adaptatif-au-prix">TWAP adaptatif au prix</h4>
-<p>Une variante intègre des ajustements dynamiques basés sur l’évolution du prix de marché, ce qui le rapproche alors de l’algorithme PI (Price Inline).</p>
-<hr>
+<section id="peut-on-éliminer-le-risque-de-change" class="level4">
+<h4 class="anchored" data-anchor-id="peut-on-éliminer-le-risque-de-change">Peut-on éliminer le risque de change ?</h4>
+<p>Oui, en recourant à une stratégie de <strong>couverture de change</strong> (<em>FX hedging</em>), mais cette couverture a un coût.</p>
 </section>
 </section>
-</section>
-<section id="vwap-volume-weighted-average-price" class="level2">
-<h2 class="anchored" data-anchor-id="vwap-volume-weighted-average-price">VWAP — Volume Weighted Average Price</h2>
-<section id="le-benchmark-vwap" class="level3">
-<h3 class="anchored" data-anchor-id="le-benchmark-vwap">Le benchmark VWAP</h3>
-<p>Le <strong>VWAP</strong> (Volume Weighted Average Price — Prix moyen pondéré par le volume) est à la fois un <strong>benchmark</strong> et un algorithme d’exécution.</p>
-<p>Le benchmark VWAP est défini comme :</p>
-<p><span class="math display">\[\text{VWAP} = \frac{\sum_i p_i v_i}{\sum_i v_i}\]</span></p>
-<p>où <span class="math inline">\(i\)</span> indexe les transactions entre <span class="math inline">\(t_0\)</span> et <span class="math inline">\(t_1\)</span> (typiquement le début et la fin d’une journée), <span class="math inline">\(p_i\)</span> sont les prix et <span class="math inline">\(v_i\)</span> les volumes.</p>
-<p>💡 Intuition : le VWAP donne une mesure des conditions moyennes de marché sur la journée, pondérée par l’activité réelle. Les grosses transactions pèsent plus que les petites.</p>
-</section>
-<section id="principe-de-lalgorithme" class="level3">
-<h3 class="anchored" data-anchor-id="principe-de-lalgorithme">Principe de l’algorithme</h3>
-<p>L’objectif est de <strong>suivre le benchmark VWAP</strong> : si on achète en dessous du VWAP de la journée, on a fait une bonne exécution.</p>
-<p>🧠 À retenir : un broker peut garantir contractuellement un prix VWAP à son client, moyennant commission. Il assume alors le risque d’exécution.</p>
-</section>
-<section id="le-problème-du-volume-inconnu" class="level3">
-<h3 class="anchored" data-anchor-id="le-problème-du-volume-inconnu">Le problème du volume inconnu</h3>
-<p>Le total <span class="math inline">\(\sum_i v_i\)</span> n’est connu qu’à la <strong>fin de la journée</strong>, ce qui pose un problème opérationnel : comment construire l’algorithme en temps réel ?</p>
-<p>La solution consiste à utiliser des <strong>données historiques</strong> pour estimer le profil de volume intraday.</p>
-</section>
-<section id="exemple-numérique-1" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-numérique-1">Exemple numérique</h3>
-<p>Paramètres :</p>
-<ul>
-<li><span class="math inline">\(w = 10\,000\)</span> actions à acheter</li>
-<li><span class="math inline">\(t_0 = 8\)</span>h<span class="math inline">\(00\)</span>, <span class="math inline">\(t_1 = 16\)</span>h<span class="math inline">\(30\)</span></li>
-<li><span class="math inline">\(H = 50\,000\)</span> actions (volume total historique estimé)</li>
-</ul>
+<section id="sec-chf-usd-hedge" class="level3">
+<h3 class="anchored" data-anchor-id="sec-chf-usd-hedge">Investisseur CHF dans un actif USD — couvert, sans carry</h3>
+<section id="mise-en-situation-3" class="level4">
+<h4 class="anchored" data-anchor-id="mise-en-situation-3">Mise en situation</h4>
+<p>Même configuration, mais l’investisseur met en place une <strong>couverture sur le risque de change</strong> (position courte en USD) avec un différentiel d’intérêt (<em>interest rate differential</em>) de 2 %.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 7%">
-<col style="width: 27%">
+<col style="width: 17%">
+<col style="width: 20%">
+<col style="width: 8%">
 <col style="width: 21%">
-<col style="width: 43%">
+<col style="width: 12%">
+<col style="width: 11%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Heure</th>
-<th>Volume historique <span class="math inline">\(h_i\)</span></th>
-<th>Proportion <span class="math inline">\(h_i/H\)</span></th>
-<th>Quantité à trader <span class="math inline">\(h_i/H \times w\)</span></th>
+<th>Temps</th>
+<th>Prix AAPL (USD)</th>
+<th>Position (actions)</th>
+<th>USDCHF</th>
+<th>Position USD (hedge)</th>
+<th>Cash (CHF)</th>
+<th>NAV (CHF)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>8h00</td>
-<td>2 600</td>
-<td>5.2 %</td>
-<td>520 actions</td>
+<td>0</td>
+<td>45</td>
+<td>0</td>
+<td>0,89</td>
+<td>0</td>
+<td>1 000,0</td>
+<td>1 000,0</td>
 </tr>
 <tr class="even">
-<td>8h15</td>
-<td>2 500</td>
-<td>5.0 %</td>
-<td>500 actions</td>
+<td>1</td>
+<td>48</td>
+<td>10</td>
+<td>0,90</td>
+<td>−480</td>
+<td>568,0</td>
+<td>1 000,0</td>
 </tr>
 <tr class="odd">
-<td>8h30</td>
-<td>2 700</td>
-<td>5.4 %</td>
-<td>540 actions</td>
+<td>2</td>
+<td>49</td>
+<td>10</td>
+<td>0,90</td>
+<td>−490</td>
+<td>567,2</td>
+<td>1 008,2</td>
 </tr>
 <tr class="even">
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
+<td>3</td>
+<td>48</td>
+<td>10</td>
+<td>0,89</td>
+<td>−480</td>
+<td>571,8</td>
+<td>999,0</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>49</td>
+<td>0</td>
+<td>0,88</td>
+<td>0</td>
+<td>1 007,6</td>
+<td>1 007,6</td>
 </tr>
 </tbody>
 </table>
+<p><em>La position de couverture (colonne “Position USD”) est <strong>négative</strong> car on vend du dollar à terme pour se protéger contre sa dépréciation.</em></p>
 </section>
-<section id="avantages-et-inconvénients-1" class="level3">
-<h3 class="anchored" data-anchor-id="avantages-et-inconvénients-1">Avantages et inconvénients</h3>
-<p><strong>Avantages :</strong></p>
+<section id="analyse-1" class="level4">
+<h4 class="anchored" data-anchor-id="analyse-1">Analyse</h4>
 <ul>
-<li>Simple à implémenter avec données historiques</li>
-<li>Garantit l’exécution complète de l’ordre (<span class="math inline">\(100\%\)</span> de <span class="math inline">\(w\)</span>)</li>
-<li>Bon comportement en moyenne sur des marchés stables</li>
+<li>La couverture est <strong>adaptée dynamiquement</strong> à la valeur de la position principale (delta hedging)</li>
+<li><strong>P&amp;L finale</strong> : CHF +7,6</li>
+<li>Décomposition : performance positive d’AAPL_USD, partiellement absorbée par la dépréciation USD/CHF, moins un <strong>coût de couverture de CHF 2,4</strong></li>
 </ul>
-<p><strong>Inconvénients :</strong></p>
-<ul>
-<li>Le prix d’exécution <strong>n’est pas garanti</strong> : l’algo suit le volume estimé, pas le prix réel</li>
-<li>Les volumes réels peuvent s’écarter significativement des données historiques</li>
-<li>L’algo ne réagit pas aux conditions de marché actuelles en temps réel</li>
-</ul>
-</section>
-<section id="variante-intégration-des-conditions-en-temps-réel" class="level3">
-<h3 class="anchored" data-anchor-id="variante-intégration-des-conditions-en-temps-réel">Variante : intégration des conditions en temps réel</h3>
-<p>Pour réduire la dépendance aux données historiques (source de déviation importante), une variante surveille et incorpore les conditions de marché actuelles, en ajustant dynamiquement le profil d’exécution.</p>
-<hr>
-</section>
-</section>
-<section id="pov-percentage-of-volume" class="level2">
-<h2 class="anchored" data-anchor-id="pov-percentage-of-volume">POV — Percentage of Volume</h2>
-<section id="définition-2" class="level3">
-<h3 class="anchored" data-anchor-id="définition-2">Définition</h3>
-<p>Le <strong>POV</strong> (Percentage of Volume — Pourcentage du Volume) est une évolution naturelle du VWAP. Au lieu de se baser sur un profil de volume <em>historique</em>, il adapte la taille de chaque tranche au <strong>volume réel observé</strong> en temps réel.</p>
-<p>La formule est :</p>
-<p><span class="math display">\[w_i = \alpha \cdot v_i\]</span></p>
-<p>où :</p>
-<ul>
-<li><span class="math inline">\(v_i\)</span> est le volume échangé pendant l’intervalle <span class="math inline">\(i\)</span></li>
-<li><span class="math inline">\(\alpha\)</span> est un taux de participation fixé (typiquement entre <span class="math inline">\(1\%\)</span> et <span class="math inline">\(20\%\)</span>)</li>
-</ul>
-<p>💡 Intuition : on achète proportionnellement à ce que le marché échange. Quand le marché est actif, on achète plus ; quand il est calme, on achète moins.</p>
-</section>
-<section id="exemple-numérique-2" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-numérique-2">Exemple numérique</h3>
-<p>Paramètres :</p>
-<ul>
-<li><span class="math inline">\(w = 10\,000\)</span> actions au total</li>
-<li><span class="math inline">\(\alpha = 5\%\)</span></li>
-<li>Début : 8h00, fin optionnelle à 16h00</li>
-</ul>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 28%">
-<col style="width: 56%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Intervalle</th>
-<th>Volume observé <span class="math inline">\(v_i\)</span></th>
-<th>Quantité achetée <span class="math inline">\(w_i = 0.05 \times v_i\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>8h00–8h15</td>
-<td>3 000</td>
-<td>150 actions</td>
-</tr>
-<tr class="even">
-<td>8h15–8h30</td>
-<td>2 700</td>
-<td>135 actions</td>
-</tr>
-<tr class="odd">
-<td>…</td>
-<td>…</td>
-<td>…</td>
-</tr>
-</tbody>
-</table>
-<p>L’algorithme se termine soit quand les <span class="math inline">\(10\,000\)</span> actions ont été achetées, soit à <span class="math inline">\(t_1\)</span> si fixé.</p>
-</section>
-<section id="correction-pour-sa-propre-participation" class="level3">
-<h3 class="anchored" data-anchor-id="correction-pour-sa-propre-participation">Correction pour sa propre participation</h3>
-<p>Lorsque <span class="math inline">\(\alpha\)</span> est élevé, les propres ordres de l’algorithme influencent le volume observé <span class="math inline">\(v_i\)</span>. Pour corriger cela, on calcule un taux de participation ajusté <span class="math inline">\(\tilde{\alpha}\)</span> :</p>
-<p><span class="math display">\[\tilde{\alpha} = \alpha \cdot \frac{1}{1 - \alpha}\]</span></p>
-<p><strong>Exemple</strong> avec <span class="math inline">\(\alpha = 5\%\)</span> :</p>
-<p><span class="math display">\[\tilde{\alpha} = 0.05 \times \frac{1}{1 - 0.05} = 5.3\%\]</span></p>
-</section>
-<section id="avantages-et-inconvénients-2" class="level3">
-<h3 class="anchored" data-anchor-id="avantages-et-inconvénients-2">Avantages et inconvénients</h3>
-<p><strong>Avantages :</strong></p>
-<ul>
-<li>S’adapte dynamiquement aux conditions de marché réelles</li>
-<li>Similaire au VWAP mais sans dépendance aux données historiques</li>
-<li>Contrôle naturel de l’impact (on ne représente jamais plus de <span class="math inline">\(\alpha\%\)</span> du marché)</li>
-</ul>
-<p><strong>Inconvénients :</strong></p>
-<ul>
-<li>Toujours prévisible (même rythme proportionnel)</li>
-<li>Aucune sensibilité au prix</li>
-<li>L’exécution peut être très lente si le marché est peu actif</li>
-</ul>
-</section>
-<section id="variantes-courantes-1" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-1">Variantes courantes</h3>
-<ul>
-<li><strong>Intégration de prévisions de volume</strong> : anticiper les pics de liquidité à venir</li>
-<li><strong>Versions adaptatives au prix</strong> : ajuster <span class="math inline">\(\alpha\)</span> en fonction du prix courant par rapport à un benchmark</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="mi-minimal-impact-impact-minimal" class="level2">
-<h2 class="anchored" data-anchor-id="mi-minimal-impact-impact-minimal">MI — Minimal Impact (Impact Minimal)</h2>
-<section id="définition-et-philosophie" class="level3">
-<h3 class="anchored" data-anchor-id="définition-et-philosophie">Définition et philosophie</h3>
-<p>L’algorithme <strong>MI</strong> (Minimal Impact — Impact Minimal) constitue la progression logique de VWAP et POV. Son objectif principal est de <strong>minimiser l’impact de marché</strong>, plutôt que de suivre un profil de volume ou de temps.</p>
-</section>
-<section id="utilisation-des-dark-pools" class="level3">
-<h3 class="anchored" data-anchor-id="utilisation-des-dark-pools">Utilisation des dark pools</h3>
-<p>Le MI s’appuie sur des <strong>dark pools</strong> (marchés opaques) et des types d’ordres cachés pour réduire le risque d’impact.</p>
-<p>Les dark pools :</p>
-<ul>
-<li>Sont des marchés non transparents (voir le cours sur le Carnet d’ordres, Limit Order Book)</li>
-<li>Permettent d’exécuter à des prix mid (entre bid et ask)</li>
-<li>Réduisent la visibilité des ordres aux autres participants</li>
-</ul>
-<p>⚠️ La contrepartie est un risque élevé de <strong>faible taux de remplissage</strong> (low completion rate) : si personne ne vend dans le dark pool, l’ordre n’est pas exécuté.</p>
-</section>
-<section id="structure-hybride" class="level3">
-<h3 class="anchored" data-anchor-id="structure-hybride">Structure hybride</h3>
-<p>Pour pallier le risque de non-exécution, une portion de l’ordre (typiquement <span class="math inline">\(20\%\)</span>) peut être exécutée via un algorithme VWAP ou POV passif sur le marché public.</p>
-</section>
-<section id="variantes-courantes-2" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-2">Variantes courantes</h3>
-<ul>
-<li>Estimation de la <strong>probabilité d’être rempli</strong> dans le dark pool</li>
-<li>Estimation d’un <strong>modèle de coût d’impact</strong> utilisé comme benchmark de référence</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="is-implementation-shortfall-manque-à-exécution" class="level2">
-<h2 class="anchored" data-anchor-id="is-implementation-shortfall-manque-à-exécution">IS — Implementation Shortfall (Manque à exécution)</h2>
-<section id="définition-3" class="level3">
-<h3 class="anchored" data-anchor-id="définition-3">Définition</h3>
-<p>L’<strong>IS</strong> (Implementation Shortfall — Manque à exécution, ou écart d’implémentation) se concentre sur la minimisation de l’écart entre :</p>
-<ul>
-<li>Le <strong>prix de décision</strong> (decision price) : le prix au moment où l’investisseur décide d’acheter</li>
-<li>Le <strong>prix d’exécution</strong> (execution price) : le prix effectivement obtenu lors du trade</li>
-</ul>
-</section>
-<section id="larbitrage-fondamental" class="level3">
-<h3 class="anchored" data-anchor-id="larbitrage-fondamental">L’arbitrage fondamental</h3>
-<p>L’IS cherche l’équilibre optimal entre deux forces opposées :</p>
-<ul>
-<li><strong>Impact de marché</strong> : plus on exécute vite, plus on perturbe le marché et le prix monte</li>
-<li><strong>Risque de timing</strong> : plus on attend, plus le prix peut évoluer défavorablement</li>
-</ul>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph LR
-    A[Décision d&#39;achat] --&gt; B{Arbitrage IS}
-    B --&gt; C[Exécution rapide\nCoût d&#39;impact élevé\nRisque timing faible]
-    B --&gt; D[Exécution lente\nCoût d&#39;impact faible\nRisque timing élevé]
-</pre>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir — Couverture et volatilité de la NAV">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p></p></figure><p></p>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir — Couverture et volatilité de la NAV
 </div>
 </div>
-</div>
-</section>
-<section id="caractéristiques" class="level3">
-<h3 class="anchored" data-anchor-id="caractéristiques">Caractéristiques</h3>
-<ul>
-<li>Souvent implémenté comme un <strong>VWAP ou POV enrichi</strong> qui favorise le trading en début de session (pour capturer rapidement le signal d’investissement)</li>
-<li>Les paramètres clés sont la <strong>volatilité</strong> et le <strong>type d’actif</strong></li>
-<li>L’<strong>aversion au risque</strong> de l’investisseur est un input important : un investisseur plus risquophobe acceptera un coût d’impact plus élevé pour réduire le risque de timing</li>
-</ul>
-</section>
-<section id="variantes-courantes-3" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-3">Variantes courantes</h3>
-<ul>
-<li>Utilisation de la <strong>volatilité à court terme</strong></li>
-<li>Utilisation de la <strong>volatilité implicite</strong> (voir le cours sur les Options)</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="as-adaptive-shortfall-manque-à-exécution-adaptatif" class="level2">
-<h2 class="anchored" data-anchor-id="as-adaptive-shortfall-manque-à-exécution-adaptatif">AS — Adaptive Shortfall (Manque à exécution adaptatif)</h2>
-<section id="définition-4" class="level3">
-<h3 class="anchored" data-anchor-id="définition-4">Définition</h3>
-<p>L’<strong>AS</strong> (Adaptive Shortfall) est dérivé de l’IS avec un comportement <strong>adaptatif</strong> : l’algorithme réagit en temps réel à l’évolution du prix de marché.</p>
-</section>
-<section id="deux-stratégies-antagonistes" class="level3">
-<h3 class="anchored" data-anchor-id="deux-stratégies-antagonistes">Deux stratégies antagonistes</h3>
-<p>L’AS se décline en deux approches (la terminologie est empruntée aux options) :</p>
-<section id="aim-aggressive-in-the-money-agressif-favorable" class="level4">
-<h4 class="anchored" data-anchor-id="aim-aggressive-in-the-money-agressif-favorable">AIM — Aggressive In-the-Money (Agressif favorable)</h4>
-<ul>
-<li><strong>Comportement</strong> : trade plus agressivement quand les prix sont favorables, moins agressivement quand ils sont défavorables</li>
-<li><strong>Hypothèse sous-jacente</strong> : les tendances de court terme sont <strong>éphémères</strong> et vont bientôt se retourner (hypothèse de retour à la moyenne)</li>
-</ul>
-<p>💡 Exemple : le prix baisse (favorable pour l’acheteur) → l’algo achète plus vite car il anticipe une remontée rapide.</p>
-</section>
-<section id="pim-passive-in-the-money-passif-favorable" class="level4">
-<h4 class="anchored" data-anchor-id="pim-passive-in-the-money-passif-favorable">PIM — Passive In-the-Money (Passif favorable)</h4>
-<ul>
-<li><strong>Comportement</strong> : trade moins agressivement quand les prix sont favorables, plus agressivement quand ils sont défavorables</li>
-<li><strong>Hypothèse sous-jacente</strong> : les tendances <strong>persistent</strong> — si le prix évolue défavorablement, il faut agir vite pour éviter des pertes plus importantes</li>
-</ul>
-<p>💡 Exemple : le prix monte (défavorable pour l’acheteur) → l’algo achète plus vite car il craint que ça continue à monter.</p>
-</section>
-</section>
-<section id="variantes-courantes-4" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-4">Variantes courantes</h3>
-<ul>
-<li>Réaction à la <strong>profondeur du carnet d’ordres</strong> (order book depth)</li>
-<li>Intégration de toute mesure de liquidité disponible</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="mc-market-close-clôture-de-marché" class="level2">
-<h2 class="anchored" data-anchor-id="mc-market-close-clôture-de-marché">MC — Market Close (Clôture de marché)</h2>
-<section id="définition-et-contexte" class="level3">
-<h3 class="anchored" data-anchor-id="définition-et-contexte">Définition et contexte</h3>
-<p>L’algorithme <strong>MC</strong> (Market Close — Clôture de marché) cible le <strong>prix de clôture</strong> comme prix de référence.</p>
-<p>La clôture de marché est un prix de référence largement utilisé par les investisseurs institutionnels pour :</p>
-<ul>
-<li>Valoriser leurs portefeuilles (NAV — Net Asset Value)</li>
-<li>Évaluer la performance des gestionnaires</li>
-<li>Calculer les indices boursiers</li>
-</ul>
-</section>
-<section id="le-dilemme-du-timing" class="level3">
-<h3 class="anchored" data-anchor-id="le-dilemme-du-timing">Le dilemme du timing</h3>
-<p>L’exécution autour de la clôture est délicate :</p>
-<ul>
-<li><strong>Commencer trop tôt</strong> : risque de timing significatif (le prix peut évoluer avant la clôture)</li>
-<li><strong>Commencer trop tard</strong> : impact de marché significatif (tout le monde trade en même temps)</li>
-</ul>
-<p>L’<strong>horizon temporel optimal</strong> peut être estimé à partir de :</p>
-<ul>
-<li>La <strong>volatilité de l’actif</strong> (possiblement via un modèle)</li>
-<li>Le <strong>volume d’échanges</strong> habituel autour de la clôture</li>
-</ul>
-</section>
-<section id="variantes-courantes-5" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-5">Variantes courantes</h3>
-<ul>
-<li>Possibilité de cibler <strong>n’importe quelle heure de la journée</strong> comme référence (exemple : le prix de midi)</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="pi-price-inline-prix-aligné" class="level2">
-<h2 class="anchored" data-anchor-id="pi-price-inline-prix-aligné">PI — Price Inline (Prix aligné)</h2>
-<section id="définition-5" class="level3">
-<h3 class="anchored" data-anchor-id="définition-5">Définition</h3>
-<p>L’algorithme <strong>PI</strong> (Price Inline — Prix aligné) adapte son activité de trading à l’<strong>évolution du prix de marché</strong>, de manière similaire à POV mais sur la dimension prix plutôt que volume.</p>
-</section>
-<section id="fonctionnement" class="level3">
-<h3 class="anchored" data-anchor-id="fonctionnement">Fonctionnement</h3>
-<p>Un <strong>prix de référence</strong> (benchmark price) est défini. L’algorithme ajuste son activité en fonction de l’écart entre le prix courant et ce benchmark.</p>
-</section>
-<section id="stratégies-disponibles" class="level3">
-<h3 class="anchored" data-anchor-id="stratégies-disponibles">Stratégies disponibles</h3>
-<p>Deux orientations sont possibles :</p>
-<ul>
-<li><strong>Stratégie A (counter-trend)</strong> : plus agressif quand les prix sont favorables, en anticipant un retour à la moyenne</li>
-<li><strong>Stratégie P (trend-following)</strong> : moins agressif quand les prix sont défavorables, en suivant la tendance</li>
-</ul>
-<p>PI est généralement attendu en mode <strong>stratégie A</strong> (contre-tendance), ce qui lui permet de capter des opportunités de prix.</p>
-</section>
-<section id="variantes-courantes-6" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-6">Variantes courantes</h3>
-<ul>
-<li>Utilisation des <strong>prix d’autres actifs</strong> pour piloter l’algorithme (stratégies cross-asset)</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="liq-liquidity-driven-piloté-par-la-liquidité" class="level2">
-<h2 class="anchored" data-anchor-id="liq-liquidity-driven-piloté-par-la-liquidité">LIQ — Liquidity Driven (Piloté par la liquidité)</h2>
-<section id="définition-6" class="level3">
-<h3 class="anchored" data-anchor-id="définition-6">Définition</h3>
-<p>L’algorithme <strong>LIQ</strong> (Liquidity Driven — Piloté par la liquidité) trade uniquement lorsque <strong>deux conditions sont simultanément réunies</strong> :</p>
-<ol type="1">
-<li>Il y a de la <strong>liquidité</strong> suffisante</li>
-<li>Le <strong>prix est favorable</strong></li>
-</ol>
-<p>💡 Intuition : les phases très liquides sont associées à des coûts de transaction réduits (spread plus fin). Trouver de la liquidité est donc un levier majeur de réduction des coûts.</p>
-</section>
-<section id="complexités-de-mise-en-œuvre" class="level3">
-<h3 class="anchored" data-anchor-id="complexités-de-mise-en-œuvre">Complexités de mise en œuvre</h3>
-<p>La mise en œuvre est plus complexe que les autres algorithmes car :</p>
-<ul>
-<li>Les marchés sont de plus en plus <strong>fragmentés</strong> (multiple venues, dark pools, ECNs)</li>
-<li>Les <strong>ordres cachés</strong> (hidden orders) et les <strong>annulations</strong> rendent difficile l’évaluation de la liquidité réelle</li>
-<li>Une erreur sur un <strong>actif illiquide</strong> peut déplacer le prix de façon significative</li>
-</ul>
-</section>
-<section id="sources-dinformation" class="level3">
-<h3 class="anchored" data-anchor-id="sources-dinformation">Sources d’information</h3>
-<ul>
-<li><strong>Données historiques</strong> sur les profils de liquidité intraday</li>
-<li><strong>Faits stylisés</strong> des marchés (voir le cours Marchés et comportements)</li>
-</ul>
-</section>
-<section id="variantes-courantes-7" class="level3">
-<h3 class="anchored" data-anchor-id="variantes-courantes-7">Variantes courantes</h3>
-<ul>
-<li>Spécifier des <strong>venues particulières</strong> où trader de manière préférentielle</li>
-<li>Catégoriser ses propres ordres comme <strong>cachés</strong> pour éviter de signaler ses intentions</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="les-coûts-de-transaction" class="level2">
-<h2 class="anchored" data-anchor-id="les-coûts-de-transaction">Les coûts de transaction</h2>
-<section id="classification-des-coûts" class="level3">
-<h3 class="anchored" data-anchor-id="classification-des-coûts">Classification des coûts</h3>
-<p>Les coûts de transaction se décomposent selon plusieurs axes :</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Catégorie</th>
-<th>Type</th>
-<th>Explicite</th>
-<th>Implicite</th>
-<th>Fixe</th>
-<th>Variable</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Investissement</td>
-<td>Taxes</td>
-<td>✓</td>
-<td></td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="even">
-<td>Investissement</td>
-<td>Coûts de retard</td>
-<td>✓</td>
-<td></td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="odd">
-<td>Trading</td>
-<td>Commission broker</td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Trading</td>
-<td>Frais de marché</td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Trading</td>
-<td>Spreads</td>
-<td></td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="even">
-<td>Trading</td>
-<td>Impact de marché</td>
-<td></td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="odd">
-<td>Trading</td>
-<td>Tendance de prix</td>
-<td></td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="even">
-<td>Trading</td>
-<td>Risque de timing</td>
-<td></td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="odd">
-<td>Trading</td>
-<td>Coût d’opportunité</td>
-<td></td>
-<td>✓</td>
-<td></td>
-<td>✓</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="détail-des-catégories" class="level3">
-<h3 class="anchored" data-anchor-id="détail-des-catégories">Détail des catégories</h3>
-<section id="coûts-explicites" class="level4">
-<h4 class="anchored" data-anchor-id="coûts-explicites">Coûts explicites</h4>
-<p>Les coûts <strong>explicites</strong> (Explicit Costs) sont directement visibles et mesurables :</p>
-<ul>
-<li><strong>Taxes</strong> : impôts sur les transactions financières (ex : TTF en France)</li>
-<li><strong>Commissions broker</strong> : rémunération du broker pour le service d’exécution</li>
-<li><strong>Frais de marché</strong> (Fees) : frais facturés par les plateformes de trading</li>
-</ul>
-</section>
-<section id="coûts-implicites" class="level4">
-<h4 class="anchored" data-anchor-id="coûts-implicites">Coûts implicites</h4>
-<p>Les coûts <strong>implicites</strong> (Implicit Costs) sont plus difficiles à mesurer mais souvent plus importants :</p>
-<ul>
-<li><strong>Spreads</strong> : différence entre le prix d’achat (ask) et le prix de vente (bid). On achète au ask, on vend au bid — l’écart est un coût.</li>
-<li><strong>Impact de marché</strong> : déplacement du prix causé par son propre ordre</li>
-<li><strong>Tendance de prix</strong> (Price Trend) : évolution défavorable du prix pendant l’exécution</li>
-<li><strong>Risque de timing</strong> : incertitude sur le prix final due à la durée d’exécution</li>
-<li><strong>Coût d’opportunité</strong> : coût lié à la non-exécution totale de l’ordre</li>
-</ul>
-</section>
-<section id="coût-de-retard-delay-cost" class="level4">
-<h4 class="anchored" data-anchor-id="coût-de-retard-delay-cost">Coût de retard (Delay Cost)</h4>
-<p>Le <strong>coût de retard</strong> survient entre le moment de la décision d’investissement et la réception de l’ordre par le broker. Le prix peut avoir bougé dans l’intervalle.</p>
-<p>⚠️ Ce coût est souvent sous-estimé mais peut être très significatif.</p>
-</section>
-</section>
-<section id="exemple-de-décomposition-typique" class="level3">
-<h3 class="anchored" data-anchor-id="exemple-de-décomposition-typique">Exemple de décomposition typique</h3>
-<p>Une décomposition indicative des coûts selon [8] :</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Type de coût</th>
-<th>Part approximative</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Taxes</td>
-<td>0 %</td>
-</tr>
-<tr class="even">
-<td>Coût de retard</td>
-<td>24 %</td>
-</tr>
-<tr class="odd">
-<td>Commission</td>
-<td>1 %</td>
-</tr>
-<tr class="even">
-<td>Frais</td>
-<td>2 %</td>
-</tr>
-<tr class="odd">
-<td>Spreads</td>
-<td>4 %</td>
-</tr>
-<tr class="even">
-<td>Impact de marché</td>
-<td>6 %</td>
-</tr>
-<tr class="odd">
-<td>Tendance de prix</td>
-<td>14 %</td>
-</tr>
-<tr class="even">
-<td>Risque de timing</td>
-<td><strong>40 %</strong></td>
-</tr>
-<tr class="odd">
-<td>Coût d’opportunité</td>
-<td>9 %</td>
-</tr>
-<tr class="even">
-<td><strong>Total</strong></td>
-<td><strong>100 %</strong></td>
-</tr>
-</tbody>
-</table>
-<p>🧠 À retenir : le <strong>risque de timing</strong> représente la plus grande part des coûts (40 %). La <strong>liquidité</strong> et la <strong>volatilité</strong> sont les variables les plus difficiles à estimer.</p>
-<hr>
-</section>
-</section>
-<section id="frontière-efficiente-efficient-frontier" class="level2">
-<h2 class="anchored" data-anchor-id="frontière-efficiente-efficient-frontier">Frontière efficiente (Efficient Frontier)</h2>
-<section id="concept" class="level3">
-<h3 class="anchored" data-anchor-id="concept">Concept</h3>
-<p>Face à la diversité des algorithmes disponibles, comment choisir le bon ? La réponse passe par le concept de <strong>frontière efficiente</strong> (Efficient Frontier), emprunté à la théorie moderne du portefeuille.</p>
-<p>Sur un graphique <strong>coût vs risque</strong>, chaque algorithme occupe une position spécifique.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">graph LR
-    subgraph &quot;Espace des algorithmes possibles&quot;
-    MC --&gt; IS
-    IS --&gt; AS
-    AS --&gt; POV
-    POV --&gt; PI
-    PI --&gt; VWAP
-    VWAP --&gt; LIQ
-    LIQ --&gt; MI
-    end
-</pre>
-</div>
-<p></p></figure><p></p>
+<div class="callout-body-container callout-body">
+<p>La couverture de change réduit la <strong>volatilité de la NAV</strong> car le portefeuille n’est plus exposé qu’à un seul risque dominant (le risque action). En contrepartie, elle engendre un <strong>coût lié au différentiel de taux d’intérêt</strong> entre les deux devises et nécessite un suivi et un rééquilibrage réguliers.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition — Coût de la couverture">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-</section>
-<section id="définitions-sur-la-frontière" class="level3">
-<h3 class="anchored" data-anchor-id="définitions-sur-la-frontière">Définitions sur la frontière</h3>
-<ul>
-<li>L’axe des <strong>coûts</strong> représente les coûts de transaction tels que définis précédemment</li>
-<li>L’axe du <strong>risque</strong> représente la <strong>variation des coûts</strong> (essentiellement le risque de timing)</li>
-</ul>
-<p>La <strong>frontière efficiente</strong> regroupe les algorithmes qui minimisent le coût pour un niveau de risque donné. Les algorithmes en dehors de la frontière (au-dessus) sont <strong>inefficaces</strong> : il en existe d’autres moins coûteux au même niveau de risque.</p>
-</section>
-<section id="positionnement-des-algorithmes" class="level3">
-<h3 class="anchored" data-anchor-id="positionnement-des-algorithmes">Positionnement des algorithmes</h3>
-<ul>
-<li><strong>MC (Market Close)</strong> : faible risque (la clôture est une cible précise), mais coût élevé pour l’atteindre</li>
-<li><strong>MI (Minimal Impact)</strong> : risque élevé de variation du prix d’exécution, mais impact (coût) faible</li>
-<li><strong>TWAP</strong> : se retrouve souvent <strong>hors de la frontière efficiente</strong> — il existe des algorithmes moins chers pour le même risque</li>
-</ul>
-<p>⚠️ TWAP est donc <strong>sous-optimal</strong> dans la plupart des cas. Sa seule vertu est sa simplicité.</p>
-</section>
-<section id="algorithmes-sur-la-frontière-du-plus-coûteuxmoins-risqué-au-moins-coûteuxplus-risqué" class="level3">
-<h3 class="anchored" data-anchor-id="algorithmes-sur-la-frontière-du-plus-coûteuxmoins-risqué-au-moins-coûteuxplus-risqué">Algorithmes sur la frontière (du plus coûteux/moins risqué au moins coûteux/plus risqué)</h3>
-<p>Selon la figure de référence [8] :</p>
-<p><span class="math display">\[MC \rightarrow IS \rightarrow AS \rightarrow POV \rightarrow PI \rightarrow VWAP \rightarrow LIQ \rightarrow MI\]</span></p>
-<hr>
-</section>
-</section>
-<section id="aversion-au-risque-risk-aversion" class="level2">
-<h2 class="anchored" data-anchor-id="aversion-au-risque-risk-aversion">Aversion au risque (Risk Aversion)</h2>
-<section id="définition-formelle" class="level3">
-<h3 class="anchored" data-anchor-id="définition-formelle">Définition formelle</h3>
-<p>L’<strong>aversion au risque</strong> (Risk Aversion) <span class="math inline">\(\lambda\)</span> est définie comme le ratio entre le coût et le risque :</p>
-<p><span class="math display">\[\lambda = \frac{\text{coût}}{\text{risque}}\]</span></p>
-<p>Ce paramètre représente <strong>la pente de la droite tangente à la frontière efficiente</strong> depuis l’origine. Le point de tangence indique l’algorithme optimal pour cet investisseur.</p>
-</section>
-<section id="interprétation" class="level3">
-<h3 class="anchored" data-anchor-id="interprétation">Interprétation</h3>
-<ul>
-<li><strong><span class="math inline">\(\lambda\)</span> élevé (forte aversion)</strong> : l’investisseur préfère payer plus pour réduire le risque → on sélectionne un algorithme avec risque faible et coût plus élevé (ex : MC ou IS)</li>
-<li><strong><span class="math inline">\(\lambda\)</span> faible (faible aversion)</strong> : l’investisseur accepte plus de risque pour réduire les coûts → on sélectionne un algorithme avec coût faible et risque plus élevé (ex : MI ou LIQ)</li>
-</ul>
-<p>💡 Intuition géométrique : <span class="math inline">\(\lambda\)</span> est la pente d’une droite passant par l’origine. Plus <span class="math inline">\(\lambda\)</span> est grand, plus la droite est verticale (on monte vite en coût par unité de risque). L’algorithme optimal est le point où cette droite est tangente à la frontière efficiente.</p>
-</section>
-<section id="facteurs-influençant-laversion-au-risque" class="level3">
-<h3 class="anchored" data-anchor-id="facteurs-influençant-laversion-au-risque">Facteurs influençant l’aversion au risque</h3>
-<p>L’aversion au risque d’un investisseur dépend de :</p>
-<ul>
-<li>La <strong>nature de l’investisseur</strong> (hedge fund vs fonds de pension)</li>
-<li>L’<strong>urgence du signal d’investissement</strong> (alpha à courte durée de vie → forte aversion)</li>
-<li>La <strong>taille de la position</strong> relative au portefeuille</li>
-<li>Les <strong>contraintes réglementaires</strong> ou contractuelles</li>
-</ul>
-<p>🧠 À retenir : pour un niveau de risque donné, il faut choisir l’algorithme sur la frontière efficiente dont la position correspond au rapport coût/risque souhaité.</p>
-<hr>
-</section>
-</section>
-<section id="trading-de-portefeuille-portfolio-trading" class="level2">
-<h2 class="anchored" data-anchor-id="trading-de-portefeuille-portfolio-trading">Trading de portefeuille (Portfolio Trading)</h2>
-<section id="au-delà-du-titre-unique" class="level3">
-<h3 class="anchored" data-anchor-id="au-delà-du-titre-unique">Au-delà du titre unique</h3>
-<p>Jusqu’ici, nous avons considéré l’exécution d’un ordre sur <strong>un seul actif</strong>. En pratique, la gestion de portefeuille implique des dizaines, voire des centaines d’actifs simultanément.</p>
-</section>
-<section id="problème-de-la-diversification-en-temps-dalignement" class="level3">
-<h3 class="anchored" data-anchor-id="problème-de-la-diversification-en-temps-dalignement">Problème de la diversification en temps d’alignement</h3>
-<p>Quand un portefeuille doit être <strong>réaligné</strong> (alignment) — par exemple lors d’un rééquilibrage —, de nombreux ordres doivent être exécutés <strong>simultanément</strong> pour :</p>
-<ul>
-<li>Conserver la <strong>diversification</strong> du portefeuille pendant l’exécution</li>
-<li>Maintenir l’<strong>exposition au benchmark</strong> tout au long du processus</li>
-<li>Limiter le <strong>risque de trading</strong> lié aux positions partiellement exécutées</li>
-</ul>
-<p>⚠️ Si les ordres sont exécutés séquentiellement, le portefeuille peut être temporairement mal exposé.</p>
-</section>
-<section id="solutions-disponibles" class="level3">
-<h3 class="anchored" data-anchor-id="solutions-disponibles">Solutions disponibles</h3>
-<section id="exécution-en-interne-in-house" class="level4">
-<h4 class="anchored" data-anchor-id="exécution-en-interne-in-house">Exécution en interne (In-house)</h4>
-<p>Les gestionnaires sophistiqués intègrent les mesures de <strong>risque de portefeuille</strong> directement dans leurs algorithmes d’exécution. Cela peut nécessiter des <strong>algorithmes d’algorithmes</strong> (meta-algorithms) pour orchestrer l’ensemble.</p>
-</section>
-<section id="externalisation-à-un-broker-portfolio-trading" class="level4">
-<h4 class="anchored" data-anchor-id="externalisation-à-un-broker-portfolio-trading">Externalisation à un broker (Portfolio trading)</h4>
-<p>On peut confier l’alignement complet du portefeuille à un broker spécialisé. Ce dernier reçoit l’information sur le portefeuille actuel et cible, et se charge de l’exécution optimale.</p>
-<p>⚠️ <strong>Risque de confidentialité</strong> : partager l’information complète sur son portefeuille avec un broker expose l’investisseur au risque que le broker (ou un de ses traders) exploite cette information.</p>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition — Coût de la couverture
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Couvrir le risque de change, c’est comme souscrire une assurance : on paye une prime pour se protéger contre un risque indésirable. Le coût de la couverture dépend principalement du différentiel de taux d’intérêt entre les deux devises (ici, 2 % par an entre USD et CHF).</p>
+</div>
+</div>
 <hr>
 </section>
 </section>
 </section>
-<section id="synthèse-et-points-clés" class="level2">
-<h2 class="anchored" data-anchor-id="synthèse-et-points-clés">Synthèse et points clés</h2>
-<section id="ce-quil-faut-retenir" class="level3">
-<h3 class="anchored" data-anchor-id="ce-quil-faut-retenir">Ce qu’il faut retenir</h3>
-<p>Les points essentiels de ce chapitre sur l’exécution algorithmique sont :</p>
-<p><strong>Impact de marché :</strong></p>
+<section id="sec-cles" class="level2">
+<h2 class="anchored" data-anchor-id="sec-cles">Points clés à retenir (Key Takeaways)</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Rendements simples — Composition multiplicative">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Rendements simples — Composition multiplicative
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li>Un grand impact de marché doit absolument être évité</li>
-<li>Les ordres de grande taille requièrent une attention particulière pour minimiser l’impact permanent</li>
+<li>Rendement sur une période : <span class="math inline">\(R_1(t) = P(t)/P(t-1) - 1\)</span></li>
+<li>Sur plusieurs périodes : composition par <strong>multiplication</strong> — <span class="math inline">\(1 + R_n = \prod (1 + R_i)\)</span></li>
+<li>Rendement de portefeuille : <strong>combinaison linéaire</strong> <span class="math inline">\(R_p = \sum \alpha_i R_i\)</span></li>
+<li>Présentent une <strong>asymétrie</strong> intrinsèque</li>
 </ul>
-<p><strong>Diversité des algorithmes :</strong></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Rendements continus (logarithmiques) — Composition additive">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Rendements continus (logarithmiques) — Composition additive
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li>Il existe de nombreux algorithmes exploitant différentes variables : temps (TWAP), volume (VWAP, POV), prix (PI, AS), liquidité (LIQ, MI)</li>
-<li>Chaque algorithme vise un objectif différent : simplicité, prix moyen, impact minimal, coût/risque optimisé</li>
+<li>Définition : <span class="math inline">\(r(t) = \ln(P_t / P_{t-1})\)</span></li>
+<li>Sur plusieurs périodes : <strong>sommation</strong> — <span class="math inline">\(r_n = \sum r_i\)</span></li>
+<li>Sont <strong>symétriques</strong> et plus simples à manipuler analytiquement</li>
+<li>Le rendement continu d’un portefeuille ne se simplifie pas : <span class="math inline">\(r_p \neq \sum \alpha_i r_i\)</span></li>
 </ul>
-<p><strong>Frontière efficiente :</strong></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Valeur temporelle de l&#39;argent">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Valeur temporelle de l’argent
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li>Une frontière efficiente existe pour ces algorithmes</li>
-<li>Elle identifie les algorithmes de coût minimal pour un niveau de risque donné</li>
-<li>TWAP est généralement hors de cette frontière → inefficace</li>
+<li>Capitalisation discrète : <span class="math inline">\(FV = PV \cdot (1+R)^n\)</span></li>
+<li>Capitalisation continue (limite) : <span class="math inline">\(FV = PV \cdot e^{rn}\)</span></li>
+<li>Relation entre taux continu et simple : <span class="math inline">\(r = \ln(1+R) &lt; R\)</span></li>
+<li>La capitalisation continue est un cadre théorique commode mais non réaliste en pratique</li>
 </ul>
-<p><strong>Aversion au risque :</strong></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Comptabilité et gestion de portefeuille">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Comptabilité et gestion de portefeuille
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li>Le paramètre d’aversion au risque <span class="math inline">\(\lambda\)</span> permet d’identifier l’algorithme approprié en fonction du profil de l’investisseur</li>
-<li><span class="math inline">\(\lambda\)</span> élevé → algorithmes à faible risque (MC, IS)</li>
-<li><span class="math inline">\(\lambda\)</span> faible → algorithmes à faible coût (MI, LIQ)</li>
+<li>La NAV d’un portefeuille doit toujours être exprimée dans la <strong>devise de référence</strong> de l’investisseur</li>
+<li>Un actif étranger expose à un <strong>risque de change</strong> (FX risk) en plus du risque propre à l’actif</li>
+<li>Ce risque peut être <strong>couvert</strong> par une position inverse en devises, mais la couverture a un <strong>coût</strong></li>
+<li>La couverture réduit la volatilité de la NAV mais ne l’annule pas complètement</li>
 </ul>
-<p><strong>Trading de portefeuille :</strong></p>
-<ul>
-<li>Les portefeuilles multi-actifs requièrent une approche spécifique pour maintenir la diversification pendant l’exécution</li>
-<li>Le choix entre exécution interne et externalisation dépend de la sophistication de l’investisseur et des enjeux de confidentialité</li>
-</ul>
+</div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
