@@ -1,0 +1,142 @@
+---
+title: "Forward Contracts: Futures and Forwards — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+A farmer sows wheat in March and trembles at the thought that the price may collapse in September.
+Solution: he calls his banker and says "I sell at 200 €/tonne in 6 months, whatever happens".
+Contract signed. Irrevocable agreement. No one can back out.
+This is a **forward**: firm commitment on both sides, no premium, no emergency exit.
+The **futures** is the same thing but in industrial version: standardized, exchange-traded, with a controller (the clearing house) who watches everyone every evening.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- Fix today the **price of a future transaction** → eliminates price uncertainty.
+- Unlike options: **obligation** of both parties (no premium, no choice at maturity).
+- The **fair price** of a futures = replication cost = spot price *carried through time* at the risk-free rate.
+- The **value** of an already open contract = latent gain/loss discounted.
+- The **margin mechanism** eliminates counterparty risk in futures (daily, *marking to market*).
+- The term structure can be in **contango** or **backwardation**, but always converges to spot at maturity.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | 1-sentence oral explanation | Intuition |
+|---|---|---|
+| **Forward** | OTC tailor-made contract: buy/sell at $T$ at price $K$, irrevocable. | Farmer who sells his harvest before reaping it. |
+| **Futures** | Same principle but standardized, exchange-traded, settled every evening. | Industrial version of the forward, more liquid. |
+| **Roll-over** | Close the contract before maturity and open a new, more distant one. | Stay exposed to gold without ever receiving bars. |
+| **Initial margin** | Collateral deposited at opening, fraction of the total contract value. | Proof of solvency, not the price of the contract. |
+| **Maintenance margin** | Floor threshold below which a margin call is triggered. | Account alarm level. |
+| **Margin call** | Replenish the account up to the *initial* margin (not just maintenance). | We reset the counters to zero, not to halfway. |
+| **Futures price $F_t$** | Current market delivery price, determined by no-arbitrage. | Spot + financing cost until $T$. |
+| **Futures value $f_t$** | Latent gain/loss of an already open contract relative to the initial $K$. | Worth 0 at opening, then evolves. |
+| **Contango** | $F_t >$ expected spot: upward-sloping curve with maturity. | Market anticipates rise or high carrying cost. |
+| **Backwardation** | $F_t <$ expected spot: downward-sloping curve with maturity. | Strong immediate demand, high *convenience yield*. |
+
+---
+
+## 🔗 Concept Mind Map
+
+- Forward contract → **obligation** (≠ option = right)
+- Forward (OTC) → high counterparty risk
+- Futures (exchange) → clearing house → near-zero risk
+- Futures → daily settlement (*marking to market*) → requires **margin** system
+- Initial margin → threshold = maintenance margin → exceeded → **margin call** → replenishment to initial margin
+- Spot price $S_t$ + rate $r$ + maturity $T$ → **futures price** $F_t$ by no-arbitrage
+- Discrete income $I$ or continuous yield $q$ → **adjustment** of $F_t$
+- Current $F_t$ vs initial $K$ → **value** $f_t$ (discounted)
+- $F_t$ vs $E[S_T]$ → **contango** or **backwardation**
+- Approach of $T$ → $F_t \to S_T$ (**universal convergence**)
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+|---|---|---|
+| $F_t = S_t \cdot e^{r(T-t)}$ | Futures price with no income or cost | Base: spot + financing |
+| $F_t = (S_t - I) \cdot e^{r(T-t)}$ | With discrete income $I$ (discounted dividend) | $I$ reduces $F_t$ |
+| $F_t = S_t \cdot e^{(r-q)(T-t)}$ | With continuous yield/cost $q$ | $q>0$ income → $F_t$ ↓ ; $q<0$ storage cost → $F_t$ ↑ |
+| $f_t = (F_t - K) \cdot e^{-r(T-t)}$ | Value of an existing contract | Discount the expected gain/loss |
+| $f_t = S_t - K \cdot e^{-r(T-t)}$ | Simplified value (no dividend) | $f_0 = 0$ always at opening |
+| Daily gain $= \Delta F_t \times$ size | Daily *marking to market* | Basis of the margin mechanism |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- **Futures ≠ Options**: no premium, no choice — firm obligation on both sides.
+- **Margin call** → replenishment up to the **initial** margin, not just up to maintenance.
+- **$q$ represents income** → $F_t$ decreases; **$q$ represents storage cost** → $F_t$ increases. Do not confuse the sign.
+- **$f_0 = 0$ at opening**: no premium exchanged, $K = F_0$ by construction.
+- **$F_t \ne$ value $f_t$**: $F_t$ is the market price today; $f_t$ is the economic value of a contract already open with strike $K$ fixed in the past.
+- **Convergence at maturity**: $F_T = S_T$ always, whether in contango or backwardation.
+- **Forward OTC ≠ Futures**: the forward settles only at maturity; the futures settles every day.
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** What is the fundamental difference between a futures and an option?
+
+**Short answer:** The futures is a bilateral **obligation**; the option is a **right** (buyer only). No premium in a futures.
+
+---
+
+**Q:** Why is the price of a futures $S_t \cdot e^{r(T-t)}$ and not simply $S_t$?
+
+**Short answer:** Because holding the underlying until $T$ costs the **financing** of the position. If that were not the case, there would be an arbitrage opportunity.
+
+---
+
+**Q:** Explain the arbitrage argument if $F_t > S_t \cdot e^{r(T-t)}$.
+
+**Short answer:** Borrow $S_t$, buy spot, short the futures → at maturity, deliver and repay → risk-free profit. Selling pressure brings $F_t$ back to its equilibrium value.
+
+---
+
+**Q:** What is the purpose of the margin mechanism?
+
+**Short answer:** Eliminate counterparty risk by materializing gains and losses every day. If an investor can no longer pay, they are liquidated before the loss becomes irrecoverable.
+
+---
+
+**Q:** What is the value of a futures at opening? Why?
+
+**Short answer:** $f_0 = 0$. At opening, $K = F_0$, so the latent gain is zero: neither party has an advantage over the other.
+
+---
+
+**Q:** What is contango? And backwardation?
+
+**Short answer:** Contango: $F_t >$ expected spot (upward-sloping curve). Backwardation: $F_t <$ expected spot (downward-sloping curve). In both cases, $F_T \to S_T$ at maturity.
+
+---
+
+**Q:** How can an investor stay exposed to a commodity indefinitely without ever receiving it physically?
+
+**Short answer:** Via **roll-over**: close the contract before maturity and reopen a more distant contract on the same delivery.
+
+---
+
+**Q:** What is the impact of a dividend on the price of a futures?
+
+**Short answer:** The discounted dividend $I$ **reduces** $F_t$: holding the asset directly provides an advantage (dividend) that the futures does not provide → $F_t = (S_t - I) \cdot e^{r(T-t)}$.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+- **Obligation** firm on both sides (≠ option).
+- Futures = Forward but standardized, listed, settled **daily**.
+- Daily settlement → **margins** (initial, maintenance, call).
+- Margin call → replenishment to **initial** margin.
+- Price: $F_t = S_t \cdot e^{r(T-t)}$ — adjust with $I$ (discrete) or $q$ (continuous).
+- Value: $f_t = S_t - K \cdot e^{-r(T-t)}$ — worth **0 at opening**.
+- Contango: $F_t >$ expected spot. Backwardation: $F_t <$ expected spot.
+- **Universal convergence**: $F_T = S_T$ always.

@@ -1,0 +1,130 @@
+---
+title: "Algorithmic Execution — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+A starving chef must eat **10,000 bites** (his order), but the restaurant only serves 10,000 per day. Ordering everything at once sends the price soaring — that's **market impact**. Waiting too long and the pizza gets cold — that's **timing risk**. The solution: an algorithm that intelligently splits the orders to eat without being noticed, neither too fast nor too late.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- Large orders **move prices** to their own disadvantage → splitting is mandatory.
+- Fundamental trade-off: **market impact** (cost of speed) ↔ **timing risk** (cost of waiting).
+- 9 algorithms exist, each optimising this trade-off differently.
+- We choose the algo via the **efficient frontier** (cost/risk space) and $\lambda$ (risk aversion).
+- Dominant cost: **timing risk = 40%** — not commissions.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | Oral explanation | Intuition |
+| ------- | ----------------- | --------- |
+| Temporary impact | Price perturbation that dissipates after the trade. | Spring: compressed then released. |
+| Permanent impact | Price rise that persists — the market has received a signal. | The market has "understood" the intention. |
+| TWAP | Equal slices in time. | Timer every 15 min. |
+| VWAP | Follow the historical intraday volume profile. | Swim with yesterday's current. |
+| POV | $w_i = \alpha \cdot v_i$: proportional to actual volume. | Stick to today's market pace. |
+| MI | Dark pools + hidden orders, quasi-zero impact. | Secret queue without a sign. |
+| IS | Minimises gap between decision price and execution price. | Pay as close as possible to the decision instant. |
+| AS (AIM/PIM) | Adaptive IS: accelerates according to trend hypothesis. | IS with a directional thermostat. |
+| MC | Targets the closing price. | Wanting to pay the official evening price. |
+| LIQ | Trades if and only if liquidity + price are favourable. | Only opening your wallet in good conditions. |
+| Efficient frontier | Algorithms minimising cost for each risk level. | Pareto frontier of trading. |
+| $\lambda$ | Tangent slope to the frontier = cost/risk ratio. | Slider between expensive safety and cheap risk. |
+
+---
+
+## 🔗 Concept Mind Map
+
+- Large order → **market impact** → need for splitting
+- Splitting → trade-off **impact ↔ timing risk** → **efficient frontier**
+- Investor profile → **$\lambda$** → tangency point = optimal algo
+- ↑ cost ↓ risk : **MC → IS → AS → POV → PI → VWAP → LIQ → MI** ↓ cost ↑ risk
+- **TWAP** → off frontier (simple but inefficient)
+- Historical volume → VWAP; actual volume → POV; dark pools → MI; price vs benchmark → PI / AS
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+| ------- | ------- | ----------- |
+| $\text{VWAP} = \dfrac{\sum p_i v_i}{\sum v_i}$ | Volume-weighted average price. | Large transactions weigh more. |
+| $n = \dfrac{t_1-t_0}{\Delta t}+1\;;\;w_i=\dfrac{w}{n}$ | TWAP: number of slices and uniform size. | Equal division in time. |
+| $w_i = \alpha \cdot v_i$ | POV: size proportional to observed volume. | $\alpha \in [1\%,20\%]$. |
+| $\tilde{\alpha} = \dfrac{\alpha}{1-\alpha}$ | POV: self-participation correction. | $\alpha=5\%\Rightarrow\tilde{\alpha}=5.3\%$. |
+| $\lambda = \dfrac{\text{cost}}{\text{risk}}$ | Risk aversion. | Large $\lambda$ → safe and expensive algo (MC, IS). |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- **TWAP predictable** → front-running possible; **off frontier** → do not choose by default.
+- **VWAP ≠ guaranteed price**: follows estimated volume, not price.
+- **POV self-impact**: correct with $\tilde{\alpha}$ if $\alpha$ is high.
+- **MI: low completion rate** → dark pool without counterparty = unexecuted order.
+- **MC double trap**: too early = timing risk; too late = high impact.
+- **AIM vs PIM**: AIM accelerates if prices are *favourable* (mean-reversion); PIM accelerates if prices are *unfavourable* (persistent trend).
+- **Portfolio trading**: entrusting the full list to the broker → information leakage risk.
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** Difference between temporary and permanent impact?
+
+**Short answer:** Temporary = reversible perturbation (price comes back). Permanent = informational signal retained durably by the market.
+
+---
+
+**Q:** Why is TWAP suboptimal?
+
+**Short answer:** Predictable (front-running) and off the efficient frontier: same risk, higher cost than alternatives.
+
+---
+
+**Q:** Difference VWAP vs POV?
+
+**Short answer:** VWAP follows a historical volume profile; POV reacts to real-time observed volume — more adaptive, but still predictable.
+
+---
+
+**Q:** How do we use $\lambda$ to choose an algorithm?
+
+**Short answer:** $\lambda$ is the slope of a line from the origin in cost/risk space. The tangency point with the efficient frontier gives the optimal algorithm.
+
+---
+
+**Q:** Difference AIM / PIM in AS?
+
+**Short answer:** AIM: aggressive when prices are *favourable* (mean-reversion hypothesis). PIM: aggressive when prices are *unfavourable* (persistent trend hypothesis).
+
+---
+
+**Q:** What is the dominant transaction cost?
+
+**Short answer:** Timing risk (40%), far ahead of market impact (6%) and commissions (1%).
+
+---
+
+**Q:** Main risk of outsourced portfolio trading?
+
+**Short answer:** Confidentiality: sharing the full portfolio composition with a broker exposes it to exploitation of that information.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+- Impact = **temporary** (reversible) + **permanent** (signal).
+- Key trade-off: **market impact ↔ timing risk**.
+- Frontier: $MC \to IS \to AS \to POV \to PI \to VWAP \to LIQ \to MI$.
+- **TWAP off frontier** (simple ≠ optimal).
+- $\lambda = \text{cost}/\text{risk}$ → tangent → optimal algo.
+- **POV**: correct $\alpha$ if large ($\tilde{\alpha} = \alpha/(1-\alpha)$).
+- **MI**: dark pools → low impact, low completion, often hybrid.
+- **AIM** = mean-reversion; **PIM** = persistent trend.
+- Dominant cost: **timing risk = 40%**.
+- Portfolio trading: **simultaneous** orders + confidentiality to protect.

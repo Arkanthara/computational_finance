@@ -1,0 +1,158 @@
+---
+title: "Financial Markets and Behaviors — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+Imagine a planetary flea market open 24/7, where millions of participants simultaneously shout their prices.
+Some think they know the true value of objects (the "efficientists"), others simply watch them sell faster and faster and conclude they should buy (the "chartists").
+Suddenly, for no apparent reason, everyone panics and throws their belongings on the ground in 5 minutes — then comes to their senses and picks everything up. That's the *Flash Crash*.
+
+This chapter answers a simple question: **are markets smart, or just restless?**
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- Markets exist to exchange assets in an organized way (or not).
+- The EMH asserts that prices are always "fair" — but reality often says the opposite.
+- Markets are **not random walks**: they have repeatable structures called **stylised facts**.
+- Volatility clusters, tails are fat, seasonal patterns are stable.
+- Market events can come from inside (endogenous) or outside (exogenous).
+- Market size is staggering: FX trades ~5,000 bn USD **per day**.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | One-sentence oral explanation | Intuition |
+|---------|-------------------------------|-----------|
+| **EMH** (*Efficient Market Hypothesis*) | Prices reflect all available information → impossible to beat the market sustainably | If it were 100% true, Buffett and Soros would just be lucky |
+| **Weak form** (*Forme faible*) | Past prices do not predict the future → technical analysis is useless | Yesterday's price says nothing about tomorrow's price |
+| **Semi-strong form** (*Semi-forte*) | All public information is already in the price → reading the news is useless | The market has already read the newspaper before you |
+| **Strong form** (*Forte*) | Even insiders cannot beat the market | Theoretically perfect, empirically absurd |
+| **Regulated market** (*Exchange*) | Centralised, strict venue with a clearing house | NYSE, LSE, SIX — the rules of the game are clear |
+| **OTC** (*Over The Counter*) | Direct transactions between parties, without a central exchange | More flexible, but riskier |
+| ***Market maker*** | Market maker who holds inventory and profits from the spread | They assume risk in exchange for the spread |
+| **Volatility clustering** | Large variations followed by large variations, small by small | Volatility arrives in episodes, not at random |
+| **Fat tails** (*queues épaisses*) | Extreme events are far more frequent than the normal law predicts | Crashes are "impossible" according to Gauss, but they happen all the time |
+| **Stylised facts** (*Faits stylisés*) | Universal empirical regularities of financial markets | What every market has in common, regardless of the era |
+| **Seasonality** (*Saisonnalité*) | Repeatable patterns over time (intraday, weekly, annual) | In FX: peak at the London–New York overlap |
+| **Endogenous event** | Shock born from the market itself (e.g. lack of liquidity) | The market panics on its own |
+| **Exogenous event** | Shock coming from outside (news, central bank...) | The real world knocks on the market's door |
+| **Futures** | Standardised contract to buy/sell an asset at a future date | Forward + exchange + clearing house |
+| **Option** | Right (not obligation) to buy (*call*) or sell (*put*) at a fixed price | You pay a premium for the right to choose |
+
+---
+
+## 🔗 Concept Mind Map
+
+```{mermaid}
+graph TD
+    A["Financial markets"] --> B["Efficiency?"]
+    A --> C["Structure"]
+    A --> D["Empirical behaviour"]
+
+    B --> B1["EMH — 3 forms"]
+    B1 --> B2["Weak → past prices"]
+    B1 --> B3["Semi-strong → public info"]
+    B1 --> B4["Strong → private info"]
+    B --> B5["Critiques: bubbles, Flash Crash, Buffett"]
+
+    C --> C1["Venues: Exchange vs OTC"]
+    C --> C2["Assets: equity, bonds, FX, commodities"]
+    C --> C3["Instruments: spot, forward, futures, options"]
+
+    D --> D1["Stylised facts"]
+    D1 --> D2["Volatility clustering → GARCH"]
+    D1 --> D3["Fat tails → non-Gaussian"]
+    D1 --> D4["Scaling laws"]
+    D1 --> D5["Seasonality"]
+    D --> D6["Events: endogenous / exogenous"]
+```
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+|---------|---------|-------------|
+| $\mathbb{E}[\|r\|] \sim \Delta t^{\alpha}$ | Scaling law of returns | $\alpha \neq 0.5$ in practice (random walk = 0.5) |
+| $\frac{5 \times 10^{12} \times 0.25 \times 0.5}{86\,400 \times 2} \approx 3.6 \text{ M USD/s}$ | EUR/USD flow per second | FX = most liquid market in the world |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- **The EMH does not say markets never make mistakes** — it just says you cannot exploit them systematically.
+- **The strong form is the least empirically accepted** — insider trading exists and is profitable (if illegal).
+- **It is not the NFP figure that moves the market, it is the surprise**: published figure − expected consensus.
+- **A futures ≠ Forward**: the futures is standardised, cleared, with daily margin calls.
+- **Forgetting the roll over of a futures** = taking physical delivery (barrels of oil, tonnes of wheat...).
+- **Fat tails ≠ bug**: it is a structural property. Modelling returns with a normal law **systematically underestimates** extreme risks.
+- **Volatility clustering ≠ predictability of direction**: you can predict that volatility will be high, not whether the market will rise or fall.
+- **OTC = less protection**: without a clearing house, counterparty risk is real.
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** What is the EMH and why is it controversial?
+
+**Short answer:** Fama's theory (1960) that prices reflect all available information. Controversial because speculative bubbles, the Flash Crash and the sustained performance of some managers contradict it empirically.
+
+---
+
+**Q:** What are the 3 forms of the EMH?
+
+**Short answer:** Weak (past prices), semi-strong (all public information), strong (all information including private). The weakest is the most plausible, the strong form is empirically rejected.
+
+---
+
+**Q:** What is a stylised fact? Name 3.
+
+**Short answer:** Universal empirical regularity in markets. Examples: volatility clustering, fat tails, intraday seasonality.
+
+---
+
+**Q:** Why is volatility clustering important in finance?
+
+**Short answer:** It shows that volatility is not constant (heteroscedasticity). It is the basis of GARCH models, essential in risk management.
+
+---
+
+**Q:** What is the difference between a futures and a forward?
+
+**Short answer:** Same principle (deferred buy/sell at a fixed price), but the futures is standardised, exchange-traded, and cleared by a clearing house. The forward is OTC and flexible.
+
+---
+
+**Q:** Why do Gaussian models underestimate risk?
+
+**Short answer:** Real returns have fat tails: extreme events are much more frequent than a normal law predicts. Using Gauss is to ignore crashes.
+
+---
+
+**Q:** What is the difference between an endogenous and an exogenous event?
+
+**Short answer:** Endogenous = born from the market itself (e.g. lack of liquidity, flash crash). Exogenous = external shock (scheduled news like NFP, or unscheduled like a surprise central bank decision).
+
+---
+
+**Q:** Why is the FX market so particular?
+
+**Short answer:** It is the largest market in the world (~5,000 bn USD/day), open 24/7, fully decentralised (OTC), with seasonality driven by global sessions. EUR/USD alone represents 25% of volume.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+::: {.callout-note title="Chapter Essentials"}
+- **EMH**: prices reflect all info → 3 forms (weak / semi-strong / strong) → widely criticised
+- **Exchange vs OTC**: clearing house vs counterparty risk
+- **Instruments**: spot · forward · futures (standardised, roll over!) · option (right ≠ obligation)
+- **Stylised facts**: volatility clustering (→ GARCH) · fat tails (→ not Gaussian) · scaling laws · seasonality
+- **Events**: endogenous (internal) vs exogenous (scheduled or surprise)
+- **FX market**: ~5,000 bn USD/day · EUR/USD = 25% · peak at London–New York overlap
+- **Markets ≠ random walk**: repeatable structure, predictable in volatility, not in direction
+:::

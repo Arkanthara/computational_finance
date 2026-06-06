@@ -1,0 +1,160 @@
+---
+title: "Options — Fundamental Notions — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+Imagine you buy an inverse lottery ticket: you pay **€5** for the *right* to sell your apartment for €300,000 in 6 months, even if the market collapses to €200,000. If the market rises to €400,000, you throw the ticket away and sell at market price. If it falls, you exercise your right and prevent the disaster. This is a **put**: insurance against a decline. Chapter 9 lays the foundations of these contracts, their price, and the models to value them.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- An option is an **asymmetric right**: the buyer chooses whether to exercise or not, the seller bears the obligation.
+- The **price** of this right (the premium) depends on $S_0$, $K$, $T$, $\sigma$, $r$ and dividends.
+- **No-arbitrage** bounds always frame this price.
+- **Put-call parity** links the two option types through a fundamental equilibrium equation.
+- **Pricing** rests on the idea of perfectly hedging risk (*delta-hedging*) and using risk-neutral probabilities.
+- The **binomial tree** discretizes prices; **Black-Scholes** is its continuous analytical limit.
+- In practice, **implied volatility** is not constant: the *smile* reveals the limits of BS.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | 1-sentence oral explanation | Intuition |
+| ------- | --------------------------- | --------- |
+| **Call** | Right to buy at price $K$ at maturity $T$ | Bet on a rise, loss limited to the premium |
+| **Put** | Right to sell at price $K$ at maturity $T$ | Insurance against a decline |
+| **Premium** | Price paid to acquire the right | Cost of the insurance |
+| **European vs American** | European = exercise only at $T$ ; American = at any time | American more flexible, therefore more expensive or equal |
+| **Moneyness** | Relationship between $S_0$ and $K$ indicating whether the option has intrinsic value | ITM = already in the right direction, OTM = not yet |
+| **No-arbitrage** | Any price outside bounds allows a guaranteed risk-free profit | The market corrects immediately |
+| **Put-call parity** | Call + discounted cash = Put + underlying asset | One can synthesize any instrument from the other three |
+| **Delta ($\Delta$)** | Number of assets to hold to neutralize the option position risk | The closer $\Delta$ is to 1, the more the call behaves like the asset |
+| **Risk-neutral probability** | Artificial probability that makes the asset just earn the risk-free rate | Allows discounting payoffs without risk premium |
+| **Implied volatility** | Value of $\sigma$ that BS should have to reproduce the observed price | Barometer of market expectations |
+| **Volatility smile** | U-shaped curve of implied vol. according to strike | The market fears fat tails that BS ignores |
+
+---
+
+## 🔗 Concept Mind Map
+
+- **Option** → right to buy (call) or sell (put) → payoff at maturity
+- **Payoff** + premium → **Profit** (can be negative)
+- $S_0$, $K$, $T$, $\sigma$, $r$ → determine the **price** of the option
+- Price → framed by **no-arbitrage bounds**
+- Call and put (same $K$, same $T$) → linked by **put-call parity**
+- Put-call parity → allows building **synthetic strategies** (bull spread, butterfly, protective put)
+- **Binomial tree** → price via $\Delta$ and risk-neutral probability $p$ → converges to **Black-Scholes**
+- BS price observed on the market → inversion → **implied volatility**
+- Implied vol. ≠ constant according to $K$ → **smile** → limits of the BS model
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+| ------- | ------- | ----------- |
+| $\max(S_T - K,\ 0)$ | Long call payoff | Exercised only if $S_T > K$ |
+| $\max(K - S_T,\ 0)$ | Long put payoff | Exercised only if $S_T < K$ |
+| $S_0 - Ke^{-rT} \leq c \leq S_0$ | Call bounds | No-arbitrage |
+| $Ke^{-rT} - S_0 \leq p \leq K$ | Put bounds | No-arbitrage |
+| $c + Ke^{-rT} = p + S_0$ | Put-call parity | Fundamental equilibrium relation |
+| $\Delta = \dfrac{f_u - f_d}{S_0 u - S_0 d}$ | Hedge delta | Neutralizes risk (1 step) |
+| $p = \dfrac{e^{rT} - d}{u - d}$ | Risk-neutral probability | Not the real probability! |
+| $f = e^{-rT}\bigl[p\, f_u + (1-p)\, f_d\bigr]$ | Binomial price | Risk-neutral discounted expectation under $\mathbb{Q}$ |
+| $u = e^{\sigma\sqrt{T}},\ d = e^{-\sigma\sqrt{T}}$ | Tree calibration | Link $\sigma$ ↔ branch amplitude |
+| $c = S_0 N(d_1) - Ke^{-rT}N(d_2)$ | Black-Scholes call | Closed-form analytical formula |
+| $p = Ke^{-rT}N(-d_2) - S_0 N(-d_1)$ | Black-Scholes put | Symmetric via $N(-x) = 1 - N(x)$ |
+| $d_1 = \dfrac{\ln(S_0/K)+(r+\sigma^2/2)T}{\sigma\sqrt{T}}$, $\ d_2 = d_1 - \sigma\sqrt{T}$ | BS terms | $N(d_2)$ ≈ risk-neutral prob. of being ITM |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- **Short call ≠ short put**: the short call is the only position with **theoretically unlimited** loss (the price can rise indefinitely).
+- **Volatility** increases the value of calls *and* puts: counter-intuitive but logical (more dispersion = more chances of being ITM).
+- **Risk-neutral probability $p$ ≠ real probability**: it is used only for pricing, not for predicting.
+- **Bounds**: if the lower bound gives a negative number, the true lower bound remains **0** (an option cannot be worth less than zero).
+- **Put-call parity** applies only to **European** options on a non-dividend-paying asset.
+- **1-step binomial tree**: the obtained price differs from BS because discretization is coarse; with $n \to \infty$, it converges to BS.
+- **Implied volatility ≠ historical volatility**: one is forward-looking (market), the other backward-looking (data).
+- **Smile** does not mean BS is useless: it remains the traders' *lingua franca* — but its assumptions are violated in practice.
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** What is the difference between a call and a put?
+
+**Short answer:** The call gives the right to buy (bet on a rise), the put gives the right to sell (protection against a decline). Both have loss limited to the premium for the buyer.
+
+---
+
+**Q:** Why does volatility increase the value of both types of options?
+
+**Short answer:** High volatility widens the distribution of future prices, increasing the probability that the option will be ITM at maturity, for both a call and a put.
+
+---
+
+**Q:** Prove the lower bound of the call: $c \geq S_0 - Ke^{-rT}$.
+
+**Short answer:** Compare two portfolios: A = call + cash $Ke^{-rT}$, B = asset $S$. A is always worth at least as much as B at maturity → $c + Ke^{-rT} \geq S_0$.
+
+---
+
+**Q:** What is put-call parity and how is it proven?
+
+**Short answer:** $c + Ke^{-rT} = p + S_0$. We show that two portfolios (A = call + cash, C = put + asset) have exactly the same payoff $\max(S_T, K)$ at maturity → same value today by no-arbitrage.
+
+---
+
+**Q:** What is the risk-neutral probability and why do we use it?
+
+**Short answer:** It is an artificial probability $p = (e^{rT}-d)/(u-d)$ under which the asset grows at the risk-free rate. It allows discounting payoffs without risk premium, simplifying pricing.
+
+---
+
+**Q:** What is the intuition behind the hedge delta?
+
+**Short answer:** $\Delta$ is the number of units of the asset that the option issuer must hold so that his portfolio is risk-neutral: whatever the scenario, its value is identical.
+
+---
+
+**Q:** How does Black-Scholes relate to the binomial tree?
+
+**Short answer:** BS is the limit of the binomial tree when the number of steps $n \to \infty$ and the duration of each step $\to 0$. The binomial price converges to the BS price.
+
+---
+
+**Q:** What is the volatility smile and what does it reveal?
+
+**Short answer:** The implied vol. calculated via BS varies according to the strike (U-shape). This reveals that real assets have fatter distribution tails than the log-normal law assumed by BS.
+
+---
+
+**Q:** When should one prefer the binomial tree to Black-Scholes?
+
+**Short answer:** For **exotic** options (barrier, binary, American) where no analytical formula exists. BS applies only to European vanillas.
+
+---
+
+**Q:** What is the VIX and what is its link to this chapter?
+
+**Short answer:** The VIX is the implied volatility index of the S&P 500, built from option prices. It is a direct barometer of market fear, based on the notion of implied vol.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+- **Call** = right to buy at $K$ ; **Put** = right to sell at $K$ ; the buyer pays the premium, his risk is limited.
+- **Short call** = only position with unlimited loss.
+- **Volatility** ↑ → call value ↑ and put value ↑ (both!).
+- **Bounds**: $S_0 - Ke^{-rT} \leq c \leq S_0$ and $Ke^{-rT} - S_0 \leq p \leq K$.
+- **Put-call parity**: $c + Ke^{-rT} = p + S_0$ (no-arbitrage, European options).
+- **Binomial tree**: price = $e^{-rT}[p\,f_u + (1-p)\,f_d]$ with $p$ risk-neutral.
+- **$p$ risk-neutral ≠ real probability** ; $u = e^{\sigma\sqrt{T}}$, $d = e^{-\sigma\sqrt{T}}$.
+- **Black-Scholes** = continuous limit of the tree; closed formula for vanillas only.
+- **Implied volatility** = $\sigma$ that BS must have to reproduce the market price.
+- **Smile** = implied vol. not constant according to $K$ → proof of BS limits (fat tails).

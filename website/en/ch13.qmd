@@ -1,0 +1,392 @@
+---
+title: "Forward Contracts: Futures and Forwards"
+---
+
+## Introduction to Forward Contracts
+
+A **forward contract** (Forward / Futures) is an agreement between two parties to buy or sell an asset at a specific future date (the **maturity**, denoted $T$) at a price agreed upon today (the **strike price** or **strike**, denoted $K$).
+
+Unlike options, forward contracts confer an **obligation** rather than a right: both parties *must* honor the transaction at expiration.
+
+::: {.callout-note title="Key takeaway"}
+In a forward contract, the buyer and the seller commit irrevocably. There is no premium to pay as with options.
+:::
+
+### Historical origin
+
+Forward contracts were originally created by and for **farmers**. The goal was to let them lock in the sale price of their crop in advance, thereby eliminating the uncertainty associated with fluctuations in agricultural commodity prices.
+
+::: {.callout-tip title="Intuition"}
+Imagine a farmer who sows wheat in March. He does not know what the price of wheat will be in September at harvest time. By entering into a forward contract in March at a fixed price, he secures a predictable income, regardless of market conditions at harvest.
+:::
+
+### Underlying instruments covered
+
+Forward contracts cover a wide variety of underlyings:
+
+- **Commodities**: precious metals (gold, silver), grains (wheat, corn), energy (oil, natural gas)
+
+- **Equity**: contracts on an index such as the S&P 500
+
+- **Currencies**: for example EUR/USD
+
+- **Treasury bonds**: contracts on U.S. Treasury bonds
+
+### Practical uses
+
+Forward contracts serve two main purposes:
+
+1. **Exposure to an asset without physical delivery**: an investor can gain exposure to gold or oil without ever taking delivery of the metal or the barrel. He simply needs to *roll* (renew) his position before expiration.
+
+2. **Hedging**: a company exposed to foreign-exchange or commodity-price risk can use futures to neutralize that risk.
+
+::: {.callout-tip title="Intuition"}
+The *roll* of a contract consists of closing the contract approaching expiration and simultaneously opening a new one on the same delivery but with a more distant maturity. This allows continuous exposure to be maintained without ever taking delivery of the underlying.
+:::
+
+---
+
+## Forwards versus Futures
+
+Although based on the same fundamental principle, **forwards** and **futures** differ on several important aspects.
+
+### Comparison table
+
+| Characteristic | Forward | Futures |
+|---|---|---|
+| Trading venue | Over-the-counter (OTC) market | Organized market (exchange) |
+| Standardization | Non-standardized | Standardized |
+| Delivery dates | Specific dates | Range of delivery dates |
+| Settlement | At contract expiration | Daily (*daily settlement*) |
+| Close-out | Physical delivery or cash settlement | Generally closed before maturity |
+
+### Explanation of key differences
+
+**Standardization and exchange**
+
+Futures are traded on organized markets such as the **CME (Chicago Mercantile Exchange)**. Contracts are fully standardized: lot size, expiration date, precise underlying asset. This facilitates liquidity and price transparency.
+
+Forwards, on the other hand, are **bespoke** contracts negotiated over the counter (OTC, *Over The Counter*) between two parties. They offer more flexibility but are less liquid and carry **counterparty risk** (the risk that the other party does not honor its commitments).
+
+**Daily settlement of futures**
+
+Daily settlement (*daily settlement* or *marking to market*) is a fundamental characteristic of futures: every day, gains and losses are calculated and credited or debited directly to the investor's account. This mechanism is closely linked to the margin system, detailed in the next section.
+
+::: {.callout-note title="Key takeaway"}
+Counterparty risk is virtually nil for futures thanks to the *clearing house*, which guarantees transactions. By contrast, this risk is fully present for OTC forwards.
+:::
+
+---
+
+## Operation of Margins
+
+### The counterparty-risk problem
+
+When an investor enters into a futures contract, there is a risk that the counterparty may not be able to honor its financial obligations at expiration. To guard against this risk, organized exchanges have established a **margin system** managed by the clearing house.
+
+This system rests on three mechanisms:
+
+- Depositing an **initial margin** when the contract is opened
+
+- Maintaining a minimum **maintenance margin**
+
+- **Margin calls** when the balance falls below the maintenance threshold
+
+### The three components of the margin system
+
+#### Initial Margin
+
+When a futures contract is opened, the investor must deposit a guarantee with his broker. This sum, the **initial margin**, represents a fraction of the total contract value.
+
+::: {.callout-tip title="Intuition"}
+The initial margin works like a deposit: it shows that the investor has the resources needed to cope with short-term losses. It does not represent the price of the contract, but a good-faith guarantee.
+:::
+
+#### Maintenance Margin
+
+The **maintenance margin** is the minimum balance below which the investor's account must not fall. It is generally lower than the initial margin.
+
+#### Margin Call
+
+When accumulated losses drive the account balance below the maintenance margin, a **margin call** is triggered. The investor must then restore his balance up to the level of the **initial margin** (and not merely up to the maintenance margin).
+
+Conversely, if the balance exceeds the initial margin because of cumulative gains, the excess may be **freely withdrawn** by the investor.
+
+### Detailed numerical example
+
+Consider the following example (taken from the course):
+
+- An investor opens **2 futures contracts** on June 5 to buy **200 ounces of gold** in June of the following year.
+- Initial futures price: **400 USD/ounce**
+- Contract size: **100 ounces**
+- **Initial margin**: 2,000 USD per contract → **4,000 USD in total**
+- **Maintenance margin**: 1,500 USD per contract → **3,000 USD in total**
+
+| Day | Futures price (USD) | Daily gain (USD) | Cumulative gain (USD) | Margin balance (USD) | Margin call (USD) |
+|---|---|---|---|---|---|
+| — | 400.00 | — | — | 4,000 | — |
+| June 5 | 397.00 | −600 | −600 | 3,400 | — |
+| June 6 | 396.10 | −180 | −780 | 3,220 | — |
+| June 9 | 393.30 | −560 | −1,340 | 2,660 | **+1,340** |
+| June 10 | 393.60 | +60 | −1,280 | 4,060 | — |
+| … | … | … | … | … | — |
+
+**Daily gain calculation**: the daily gain is calculated as the change in the futures price multiplied by the total contract size.
+
+For June 5: $(397{,}00 - 400{,}00) \times 200 = -600$ USD
+
+For June 9: $(393{,}30 - 396{,}10) \times 200 = -560$ USD, which drives the balance down to 2,660 USD, **below** the maintenance margin of 3,000 USD → margin call of 1,340 USD to return to 4,000 USD.
+
+::: {.callout-warning title="Important point"}
+A margin call always brings the balance back to the level of the **initial margin**, not merely to the maintenance margin level. The investor must respond to the margin call within the deadlines imposed by the broker, or his position will be forcibly liquidated.
+:::
+
+---
+
+## Futures Pricing
+
+### Notation and theoretical framework
+
+To value the price of a futures contract, we define the following variables:
+
+- $t$ : current date
+
+- $T$ : maturity of the contract (in years)
+
+- $S_t$ : price of the underlying at date $t$
+
+- $F_t$ : price of the futures contract today
+
+- $r$ : annual risk-free interest rate (continuously compounded)
+
+We assume for the moment that the underlying pays **no income, dividend, or yield**.
+
+### Economic intuition of the futures price
+
+The central valuation logic rests on the **cost of replication**: what is the cost of ending up in possession of the underlying at date $T$?
+
+The simple replication strategy is as follows:
+
+1. Borrow $S_t$ dollars today at the risk-free rate $r$
+
+2. Immediately buy one unit of the underlying at price $S_t$
+
+3. At maturity $T$, repay the loan, whose value has become $S_t \cdot e^{r(T-t)}$
+
+Since this strategy exactly replicates what a futures contract would provide, the fair futures price is:
+
+$$F_t = S_t \cdot e^{r(T-t)}$$
+
+::: {.callout-tip title="Intuition"}
+The price of a futures contract is the spot price *carried forward in time* at the risk-free rate. In other words, it incorporates the **cost of financing** (cost of capital tied up) to hold the asset until maturity. If you could buy gold today at 400 USD and finance it at the risk-free rate for 4 months, the total forward cost is $400 \cdot e^{r \cdot 4/12}$.
+:::
+
+### Proof by arbitrage argument
+
+The arbitrage argument is a rigorous way to prove that $F_t = S_t \cdot e^{r(T-t)}$ is the only coherent price.
+
+#### Case 1: the futures price is too high
+
+Suppose $F_t' > S_t \cdot e^{r(T-t)}$.
+
+An arbitrageur can then:
+
+1. Borrow $S_t$ at rate $r$
+
+2. Buy one unit of the underlying at $S_t$
+
+3. Sell (short) a futures contract at price $F_t'$
+
+4. At maturity, deliver the underlying and collect $F_t'$, then repay the loan $S_t \cdot e^{r(T-t)}$
+
+Risk-free profit: $F_t' - S_t \cdot e^{r(T-t)} > 0$
+
+#### Case 2: the futures price is too low
+
+Suppose $F_t'' < S_t \cdot e^{r(T-t)}$.
+
+An arbitrageur can then:
+
+1. Short sell the underlying and collect $S_t$
+
+2. Invest $S_t$ at the risk-free rate $r$
+
+3. Buy a futures contract at price $F_t''$
+
+4. At maturity, use the accumulated $S_t \cdot e^{r(T-t)}$, pay $F_t''$ to receive the underlying and return it to the lender
+
+Risk-free profit: $S_t \cdot e^{r(T-t)} - F_t'' > 0$
+
+::: {.callout-note title="Key takeaway"}
+The conclusion is that any deviation from $F_t = S_t \cdot e^{r(T-t)}$ creates an arbitrage opportunity. Assuming markets are efficient and no arbitrage opportunity persists, this price is the only possible one.
+:::
+
+### Adjustments: income, dividends, and yields
+
+In practice, many underlyings generate intermediate income that modifies the base formula.
+
+#### Case with discrete income or dividend $I$
+
+If the underlying pays an income or dividend $I$ (discounted to date $t$), the investor who holds the underlying benefits from this income. The replication cost is reduced accordingly:
+
+$$F_t = (S_t - I) \cdot e^{r(T-t)}$$
+
+::: {.callout-tip title="Intuition"}
+Holding the asset directly provides an advantage (the dividend $I$) compared with simply holding the futures contract. The futures price must therefore be lowered to compensate for this advantage.
+:::
+
+#### Case with continuous yield or storage cost $q$
+
+If the underlying offers a **continuous yield** $q$ (for example, a dividend yield on a stock, or a coupon on a Treasury bond) or incurs a **carrying cost** $q$ (for example, storage costs for oil or grains):
+
+$$F_t = S_t \cdot e^{(r-q)(T-t)}$$
+
+- If $q > 0$ corresponds to **income** (dividend, coupon), the futures price is reduced
+
+- If $q < 0$ corresponds to a **cost** (storage), the futures price is increased
+
+::: {.callout-note title="Key takeaway"}
+Without loss of generality, the course focuses on futures **with no income, dividend, or yield**, which corresponds to the base formula $F_t = S_t \cdot e^{r(T-t)}$.
+:::
+
+### Numerical example (Hull, Example 3.5)
+
+**Statement**: Consider a **4-month** forward contract to buy a **zero-coupon bond** maturing in one year from today.
+
+- Current bond price: $S_0 = 930$ USD
+
+- At contract maturity (in 4 months), the bond will still have **8 months** remaining
+
+- 4-month risk-free rate: $r = 6\%$ per annum
+
+**Calculation**: Because the zero-coupon bond pays no coupon, we use the base formula directly:
+
+$$F_0 = 930 \cdot e^{0{,}06 \times \frac{4}{12}} = 930 \cdot e^{0{,}02} \approx 948{,}79 \text{ USD}$$
+
+**Interpretation**: The delivery price negotiated today to buy the bond in 4 months would be **948.79 USD**. This price simply compensates for the cost of financing the position over 4 months.
+
+---
+
+## Valuation of a Futures Contract During Its Life
+
+### Distinction between price and value
+
+It is essential to distinguish two quantities:
+
+- $F_t$ : the **futures price** at date $t$ — this is the current market delivery price, determined by supply and demand
+
+- $f_t$ : the **value of the futures** at date $t$ — this is the economic value (unrealized gain or loss) of an already-open contract, relative to the price initially agreed
+
+### Initial strike price $K$
+
+When the contract is opened, the delivery price $K$ is set equal to the market price $F_0$. At that moment, the value of the contract is **zero**: $f_0 = 0$.
+
+Over time, the market price $F_t$ evolves (supply/demand, new information), while $K$ remains fixed. A gap appears between $F_t$ and $K$, giving the contract a non-zero value.
+
+### Valuation formula
+
+The value of a futures contract at date $t$, for a contract whose strike price is $K$ and maturity is $T$, is written:
+
+$$f_t = (F_t - K) \cdot e^{-r(T-t)}$$
+
+This is simply the discounting of the **expected gain or loss** at maturity (cash flow at $T$: $F_t - K$), brought back to date $t$ by discounting at the risk-free rate.
+
+::: {.callout-tip title="Intuition"}
+If the market price $F_t$ is higher than the agreed price $K$, the futures buyer is in a winning position: he has locked in an advantageous purchase price. The value $f_t$ is therefore positive. Conversely, if $F_t < K$, the buyer is in a losing position and $f_t$ is negative.
+:::
+
+### Value in the absence of dividend or yield
+
+By substituting the price formula $F_t = S_t \cdot e^{r(T-t)}$ into the expression for $f_t$:
+
+$$f_t = \left(S_t \cdot e^{r(T-t)} - K\right) \cdot e^{-r(T-t)} = S_t - K \cdot e^{-r(T-t)}$$
+
+This formula reveals three sources of exposure for the holder of a futures contract:
+
+1. **Exposure to the underlying**: $S_t$ directly influences $f_t$. Holding a futures contract means being partially exposed to the underlying itself.
+
+2. **Exposure to expectations on $S_T$**: $F_t$ (and therefore $f_t$) reflects the market's expectations of the future value of the underlying.
+
+3. **Exposure to the risk-free rate**: The present value of $K$, namely $K \cdot e^{-r(T-t)}$, depends on $r$. A rise in interest rates increases the value of the futures for the buyer (by reducing the present value of the price to be paid $K$).
+
+::: {.callout-warning title="Important point"}
+At contract opening, $K = F_0$ and therefore $f_0 = S_0 - F_0 \cdot e^{-r(T-0)} = S_0 - S_0 = 0$. The initial value is indeed zero, which is consistent: neither party pays a premium to the other at opening.
+:::
+
+---
+
+## Contango and Backwardation
+
+### Definitions
+
+The **term structure** of futures prices (the relationship between the futures price and maturity) can take two opposite forms.
+
+**Contango**: The futures price $F_t$ is **higher** than the expected spot price $E[S_T]$. The futures price curve is upward sloping.
+
+**Backwardation** (or normal backwardation): The futures price $F_t$ is **lower** than the expected spot price $E[S_T]$. The futures price curve is downward sloping.
+
+::: {.callout-tip title="Intuition"}
+In contango, the market anticipates rising prices (or reflects a high carrying cost, such as storage or interest). In backwardation, the market anticipates falling prices or reflects a high **convenience yield** — that is, market participants place a high value on having physical possession of the asset right now.
+:::
+
+### Economic interpretation
+
+| Situation | Market signal |
+|---|---|
+| **Contango** | Expected prices rising; high carrying or interest cost; little immediate demand |
+| **Backwardation** | Expected prices falling; strong immediate demand; high *convenience yield* |
+
+These two states are not permanent: a market can **switch from contango to backwardation** (and vice versa) during the life of a contract, depending on the evolution of expectations and supply/demand conditions.
+
+::: {.callout-warning title="Important point — Convergence at maturity"}
+Whatever the initial structure (contango or backwardation), the futures price $F_T$ **must necessarily converge** toward the spot price $S_T$ as maturity approaches.
+
+This convergence is a fundamental property: if $F_T \neq S_T$ at maturity, there would be a trivial arbitrage opportunity (buy the cheaper, sell the dearer).
+:::
+
+### Graphical representation
+
+The graph below (taken from the course) illustrates the two cases:
+
+```{mermaid}
+graph LR
+    A["Today\n(F_0)"] -->|Contango : F_t > Expected Spot| B["Maturity\n(F_T = S_T)"]
+    A -->|Backwardation : F_t < Expected Spot| B
+```
+
+In contango, the futures price curve *descends* toward $S_T$ over time.
+In backwardation, the curve *rises* toward $S_T$ over time.
+
+---
+
+## Key Takeaways
+
+### Global summary
+
+::: {.callout-note title="Key takeaway — Chapter synthesis"}
+- **Forward contracts** (Futures / Forwards) allow one to buy or sell an asset in the future at a price fixed today.
+
+- The commitment is **obligatory** (no choice as with options).
+
+- A **roll-over** mechanism allows exposure to be maintained without ever taking physical delivery.
+
+- **Futures** are regulated and standardized (organized exchanges); **forwards** are less regulated (OTC).
+
+- The **margin mechanism** protects both parties against counterparty risk.
+
+- The **price of a futures contract** is derived by a no-arbitrage argument: $F_t = S_t \cdot e^{r(T-t)}$ (with no income or yield).
+
+- The **value of a futures contract** reflects market expectations and is $f_t = S_t - K \cdot e^{-r(T-t)}$.
+
+- The term structure can be in **contango** or **backwardation**, but always converges to the spot at maturity.
+:::
+
+### Summary table of formulas
+
+| Context | Formula |
+|---|---|
+| No income, dividend, or yield | $F_t = S_t \cdot e^{r(T-t)}$ |
+| With discrete income or dividend $I$ | $F_t = (S_t - I) \cdot e^{r(T-t)}$ |
+| With continuous yield or cost $q$ | $F_t = S_t \cdot e^{(r-q)(T-t)}$ |
+| Value of an existing contract | $f_t = (F_t - K) \cdot e^{-r(T-t)}$ |
+| Simplified value (no dividend) | $f_t = S_t - K \cdot e^{-r(T-t)}$ |

@@ -1,0 +1,177 @@
+---
+title: "Bonds — Review"
+---
+
+## Essential Definitions
+
+| Term | Definition |
+|-------|-----------|
+| **Bond** (Bond) | Debt instrument : issuer borrows, investor lends |
+| **Coupon** (Coupon) | Fixed periodic payment = lender's reward |
+| **Principal** (Face Value) | Amount repaid at maturity |
+| **Maturity** (Maturity) | Date of principal repayment |
+| **Yield** (Yield) $y$ | Rate of return required by the investor |
+| **Default Risk** (Default Risk) | Risk of partial or total non-repayment |
+| **Credit Spread** | $y_{\text{corporate}} - y_{\text{sovereign}}$ |
+| **Zero-coupon** (Zero Coupon) | Bond without coupon, sold below par |
+
+---
+
+## Price Formula (key !)
+
+$$\boxed{B(t) = \sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)} + P \cdot e^{-y(T-t)}}$$
+
+- $c_i$ : coupon at $t_i$ — $P$ : principal — $y$ : yield — $T$ : maturity
+
+::: {.callout-important title="Price ↔ yield relation"}
+**Inverse and convex** : $y \uparrow \Rightarrow B \downarrow$ and $y \downarrow \Rightarrow B \uparrow$
+:::
+
+---
+
+## Price vs Face Value
+
+| Situation | Condition | Cause |
+|-----------|-----------|-------|
+| **Premium** (Premium) | $B > 100$ | Coupon > market rate |
+| **At Par** (At Par) | $B = 100$ | Coupon = market rate |
+| **Discount** (Discount) | $B < 100$ | Coupon < market rate |
+
+---
+
+## Quick Numerical Example
+
+> Bond : $c = 5$ CHF × 4 payments, $P = 100$, $y = 5\%$
+
+| Cash Flow | Present Value |
+|------|----------------|
+| $c_1$ at $t=0.5$ | $5 \cdot e^{-0.05 \times 0.5} = 4.88$ |
+| $c_2$ at $t=1.0$ | $5 \cdot e^{-0.05 \times 1.0} = 4.76$ |
+| $c_3$ at $t=1.5$ | $5 \cdot e^{-0.05 \times 1.5} = 4.64$ |
+| $c_4$ at $t=2.0$ | $5 \cdot e^{-0.05 \times 2.0} = 4.52$ |
+| $P$ at $t=2.0$ | $100 \cdot e^{-0.05 \times 2.0} = 90.48$ |
+| **Total** | **$B = 109.28$ → at premium** |
+
+---
+
+## Trial & Error Procedure
+
+**Objective** : find $y$ knowing $B$ (inverse problem, no analytical solution).
+
+**Residual** :
+
+$$\text{residual}(y) = B_{\text{observed}} - B_{\text{calculated}}(y)$$
+
+**Algorithm** :
+
+1. Start from very high $y$ ($y = 100$)
+2. Residual > 0 → $y \leftarrow y/2$
+3. Residual < 0 → $y \leftarrow (y_{\text{previous}} + y)/2$
+4. Repeat until $|\text{residual}| < 10^{-3}$
+
+---
+
+## Zero-Coupon Yield Curve (Bootstrap)
+
+**Why ?** Bonds with different coupons are not comparable → zero-coupon standard.
+
+**Bootstrap — logic** : extract zero rates one by one, from shortest to longest.
+
+### Formulas by case
+
+**Short-term zero-coupon** (0.25 year) :
+
+$$r_{0.25} = 4 \cdot \ln\!\left(1 + \frac{\text{quarterly gain}}{4}\right)$$
+
+**1-year zero-coupon** :
+
+$$r_{1.0} = \ln\!\left(1 + \frac{P - B}{B}\right)$$
+
+**With coupons** (1.5 year) : isolate $r_{1.5}$ in :
+
+$$\sum_i c_i \cdot e^{-r_{t_i} \cdot t_i} + (P + c_{\text{last}}) \cdot e^{-r_{1.5} \cdot 1.5} = B$$
+
+### Example result
+
+| Maturity (years) | $r$ (%) |
+|---------------|---------|
+| 0.25 | 10.127 |
+| 0.50 | 10.469 |
+| 1.0 | 10.536 |
+| 1.5 | 10.681 |
+| 2.0 | 10.808 |
+
+---
+
+## Types of Bonds
+
+```{mermaid}
+graph TD
+    A[Bonds] --> B[Government / Sovereign\nGovies / Treasuries]
+    A --> C[Corporates\nCorporate Bonds]
+    B --> D[Best rating AAA\nLowest yield]
+    C --> E[Investment Grade BBB+\nModerate spread]
+    C --> F[High Yield / Junk BB-\nHigh spread]
+```
+
+**Agencies** : S&P (AAA → D) | Moody's (Aaa → C) | Fitch (AAA → D)
+
+::: {.callout-note title="Key formula"}
+$y_{\text{corporate}} = y_{\text{sovereign}} + \text{Credit Spread}$
+:::
+
+---
+
+## 5 Bond Risks
+
+| Risk | Mechanism | Protection |
+|--------|-----------|------------|
+| **Interest Rate** (Interest Rate) | $y \uparrow \Rightarrow B \downarrow$ | Short duration |
+| **Credit** (Credit) | Issuer default | High rating |
+| **Inflation** (Inflation) | Purchasing power erosion : $r_{\text{real}} = r_{\text{nom}} - \pi$ | TIPS, gold |
+| **Liquidity** (Liquidity) | Sale at discounted price | Liquid bonds |
+| **Reinvestment** (Reinvestment) | Coupons reinvested at lower rates | Avoid callables |
+
+::: {.callout-warning title="Pitfall — Callable Bonds"}
+If rates fall → issuer calls the bond → forced reinvestment at lower rates.
+:::
+
+---
+
+## Role in a Portfolio
+
+| Role | Detail |
+|------|--------|
+| **Diversification** | Negative correlation with equities (except 2022 !) |
+| **Income** | Regular and predictable coupons |
+| **Capital preservation** | Principal guaranteed at maturity (if no default) |
+| **Strategic allocation** | Increasing share with age (life-cycle investing) |
+
+::: {.callout-important title="2022 Exception"}
+Brutal rate hike → bonds **and** equities down simultaneously → **positive** correlation.
+:::
+
+---
+
+## Synthesis of Key Relationships
+
+```{mermaid}
+graph LR
+    Y[Yield y ↑] -->|inverse| B[Price B ↓]
+    B -->|bootstrap| ZC[Zero-coupon curve]
+    ZC -->|reference| COMP[Bond comparison]
+    RISK[Issuer risk ↑] -->|+| CS[Credit Spread ↑]
+    CS -->|+| Y
+```
+
+---
+
+## Revision Checklist
+
+- [ ] I can calculate $B(t)$ from $y$, $c_i$, $P$, $T$
+- [ ] I can interpret premium / discount / at par
+- [ ] I understand the Trial & Error algorithm (search direction)
+- [ ] I can apply Bootstrap on a coupon-bearing example
+- [ ] I know the 5 risks and their protections
+- [ ] I know that $y_{\text{corp}} = y_{\text{gov}} + \text{spread}$
+- [ ] I understand why 2022 broke diversification

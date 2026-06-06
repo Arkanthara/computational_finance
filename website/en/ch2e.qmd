@@ -1,0 +1,140 @@
+---
+title: "Time Series and Autoregressive Models — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+Imagine a doctor tracking a patient's blood pressure every day.
+To establish a valid diagnosis, the patient must be in a **stable state** — this is **stationarity**.
+He can then ask: "Does high blood pressure yesterday predict high blood pressure tomorrow?" → trending ($\varphi_1 > 0$).
+Or: "Does it predict a return to normal?" → mean-reversion ($\varphi_1 < 0$).
+The **ACF** measures this memory. The **AR(1)** model formalizes it in a single equation.
+If the patient takes a drug (external shock) whose effect dissipates in $q$ days — this is the **MA** component.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- A time series exploits the **order** of observations: the past informs the present
+- Absolute prerequisite: **stationarity** — otherwise estimated parameters are meaningless
+- The **ACF** reveals hidden structure (trend, seasonality, mean-reversion)
+- **AR(p)**: $X_t$ is explained by its $p$ past values + noise
+- **Key AR(1) result**: $\varphi_1 = \rho_1$ — the parameter *is* the lag-1 autocorrelation
+- For $p > 1$: numerical estimation, order selection by **AIC / BIC**
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | Oral explanation in 1 sentence | Intuition |
+|---|---|---|
+| Lag $\tau$ | Shift of $\tau$ periods between two observations | "$\tau$ days ago" |
+| Weak stationarity | Constant mean and autocovariance function of lag only | The series "behaves the same" over time |
+| ADF test | Tests whether the series has a unit root (non-stationarity) | p < 0.05 → stationary |
+| ACF | Correlation of the series with itself at each lag | Measures the series' "memory" |
+| AR(p) | $X_t$ is a linear combination of its $p$ past values | The series explains itself |
+| MA(q) | $X_t$ depends on the $q$ past errors only | The series remembers its shocks, not its levels |
+| $\varphi_1 > 0$ | Trending behavior | Yesterday high → today high |
+| $\varphi_1 < 0$ | Mean-reverting behavior | Yesterday high → today low |
+| AIC / BIC | Order selection criteria — to minimize | Balance between fit and parsimony |
+
+---
+
+## 🔗 Concept Mind Map
+
+```{mermaid}
+flowchart LR
+    A[Raw prices\nnon-stationary] -->|Returns / differences| B[Stationary series\nADF p ≤ 0.05]
+    B --> C[ACF]
+    C -->|Significant lag| D[Model choice\nAR / MA / ARMA]
+    C -->|Order p| E[AIC / BIC\nMinimize]
+    D --> F[Parameters\nφ₁ = ρ₁ for AR 1]
+    F -->|φ₁ > 0| G[Trend]
+    F -->|φ₁ < 0| H[Mean-reversion]
+```
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+|---|---|---|
+| $\varphi_1 = \rho_1$ | AR(1) parameter = lag-1 autocorrelation | **Fundamental result** |
+| $\sigma^2 = \sigma_\varepsilon^2\,/\,(1 - \varphi_1^2)$ | AR(1) variance | Implies $\lvert\varphi_1\rvert < 1$ |
+| $\mu = c\,/\,(1 - \varphi_1)$ | AR(1) mean | If $c = 0$ then $\mu = 0$ |
+| $\text{AIC} = 2p - 2\ln L$ | Akaike criterion | Minimize — tolerant |
+| $\text{BIC} = \ln(n)\,p - 2\ln L$ | Bayesian criterion | Minimize — strict |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- **Prices ≠ stationary** — systematically transform to returns before modeling
+- **ADF test inverted**: p-value > 0.05 = *not* stationary (reading trap)
+- **$\lvert\varphi_1\rvert \geq 1$** → non-stationary ($= 1$: random walk) or explosive ($> 1$)
+- **Good in-sample fit ≠ good prediction** — random walk: perfect fit, null prediction
+- **AIC vs BIC**: BIC penalizes more ($\ln n > 2$ if $n > 8$) → lower orders selected
+- **Strict stationarity ≠ weak**: weak suffices in practice, strict is rarely verifiable
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** Why do we need stationarity?
+
+**Short answer:** So that estimated parameters remain valid over time and to avoid spurious correlations between series with no real relationship.
+
+---
+
+**Q:** What is the difference between strict and weak stationarity?
+
+**Short answer:** Strict requires invariance of the entire joint distribution; weak only requires a constant mean and autocovariance function of lag only.
+
+---
+
+**Q:** Why are prices not stationary but returns are?
+
+**Short answer:** Prices drift upward — their mean and variance change over time. Returns oscillate around zero without systematic drift.
+
+---
+
+**Q:** How do you interpret $\varphi_1$ in an AR(1)?
+
+**Short answer:** It is the lag-1 autocorrelation. Positive → trend, negative → mean-reversion, zero → white noise. Its absolute value must be strictly less than 1.
+
+---
+
+**Q:** What is the ACF for and how do you use it?
+
+**Short answer:** It measures the series' memory at each lag. Significant bars (outside confidence intervals) indicate relevant lags and guide model choice.
+
+---
+
+**Q:** What is the difference between AR and MA?
+
+**Short answer:** AR depends on past *values* (infinite memory if $\lvert\varphi\rvert < 1$); MA depends on past *errors* (finite memory, exactly $q$ periods).
+
+---
+
+**Q:** How do you choose the order $p$ of an AR?
+
+**Short answer:** Minimize AIC or BIC which penalize adding useless parameters. BIC is more parsimonious and often recovers the true order.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+::: {.callout-note title="Chapter Essentials"}
+
+1. Time series: order matters — the past informs the present
+2. Weak stationarity = constant mean + autocovariance depending on lag only
+3. **In practice**: prices → non-stationary / returns → stationary
+4. **ADF**: p-value < 0.05 → stationary (inverted sense!)
+5. **ACF** measures memory and guides model choice
+6. **AR(1)**: $X_t = c + \varphi_1 X_{t-1} + \varepsilon_t$ with $\varphi_1 = \rho_1$ and $\lvert\varphi_1\rvert < 1$
+7. $\varphi_1 > 0$ → trend ; $\varphi_1 < 0$ → mean-reversion
+8. AR(1) variance: $\sigma_\varepsilon^2\,/\,(1 - \varphi_1^2)$ — explodes if $\lvert\varphi_1\rvert \geq 1$
+9. Order $p > 1$ → MLE + AIC/BIC to minimize (BIC stricter)
+10. **Central pitfall**: excellent in-sample fit ≠ good out-of-sample prediction
+
+:::

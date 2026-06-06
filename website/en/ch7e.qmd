@@ -1,0 +1,140 @@
+---
+title: "Portfolio Construction — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+Imagine you are a chef and you have to prepare a dish with several ingredients.
+If you use 100% chili peppers, you risk ruining everything.
+If you skillfully mix chili peppers, rice, and vegetables — some spicy, some mild — the result is stable even if one ingredient fails.
+That is exactly what a **portfolio** is: mixing assets that do not all react the same way to market shocks.
+Markowitz formalized this intuition in 1952, and received the Nobel Prize for it.
+The moral: never put all your eggs in one basket — it is the only *free lunch* in finance.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- **Problem**: a single asset is too volatile/risky; how to combine $N$ assets to do better?
+- **Solution**: diversification — choosing low-correlation assets so that their risks offset each other.
+- **Risk measure**: the variance (or volatility) of the portfolio, governed by the covariances between assets.
+- **Return**: linear combination of individual returns (no diversification gain here).
+- **Tool**: the efficient frontier (set of optimal risk/return portfolios).
+- **Extension**: add a risk-free asset → the CML (*Capital Market Line*) dominates everything.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | 1-sentence oral explanation | Intuition |
+| ------- | --------------------------- | --------- |
+| Diversification | Combining low-correlation assets reduces overall risk without sacrificing return. | If one falls, the other compensates. |
+| Portfolio variance | It depends not only on individual risks, but especially on the **covariances** between assets. | Correlation is the key, not just the volatility of each asset. |
+| Efficient Frontier (*Efficient Frontier*) | Set of portfolios that maximize return for a given risk. | Any portfolio below is suboptimal — one can do better. |
+| Covariance matrix $\mathbf{C}$ | Encodes all co-movement relationships between assets. | Without it, impossible to calculate portfolio risk. |
+| CML (*Capital Market Line*) | Straight line tangent to the efficient frontier from the risk-free rate. | It dominates the efficient frontier alone — best possible risk/return pair. |
+| Tangency portfolio | Contact point between the CML and the efficient frontier — the optimal risky portfolio. | Every rational investor combines this portfolio with the risk-free asset. |
+| Parameter $q$ | Controls the risk/return trade-off in numerical optimization. | $q=0$ → minimum risk ; $q\to\infty$ → maximum return. |
+
+---
+
+## 🔗 Concept Mind Map
+
+- Individual assets ($E[R_i]$, $\sigma_i$) → **Covariance matrix $\mathbf{C}$**
+- Weights $\mathbf{w}$ + $\mathbf{C}$ → **Portfolio variance** $\sigma_p^2 = \mathbf{w}^T \mathbf{C}\, \mathbf{w}$
+- Weights $\mathbf{w}$ + $E[R_i]$ → **Expected return** $E[R_p] = \sum w_i E[R_i]$
+- ($\sigma_p$, $E[R_p]$) for all $\mathbf{w}$ → **Efficient frontier**
+- Efficient frontier + risk-free asset → **CML** → **Optimal portfolio**
+- Correlation $\rho \downarrow$ → frontier curvature $\uparrow$ → diversification gain $\uparrow$
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+| ------- | ------- | ----------- |
+| $E[R_p] = \sum_i w_i E[R_i]$ | Expected portfolio return | Linear — no magic here |
+| $\sigma_p^2 = \mathbf{w}^T \mathbf{C}\, \mathbf{w}$ | Portfolio variance (matrix form) | The magic is here |
+| $\sigma_p^2 = \sum_i\sum_j w_i w_j\,\text{Cov}(R_i,R_j)$ | Same, expanded | Involves all pairs |
+| $\rho_{ij} = \frac{\text{Cov}(R_i,R_j)}{\sigma_i\,\sigma_j}$ | Normalized correlation $\in [-1,+1]$ | Links covariance and correlation |
+| $\sigma_P = \sqrt{w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1 w_2\rho_{12}\sigma_1\sigma_2}$ | Volatility for 2 assets | Reference pedagogical case |
+| $\sigma_{P_1} = (1-w_{rf})\,\sigma_{P_0}$ | Risk: risk-free asset + portfolio combo | Linear → straight line in $(\sigma, E[R])$ space |
+| $\min_{\mathbf{w}}\;\mathbf{w}^T\mathbf{C}\mathbf{w} - q\,\mathbf{w}^T\boldsymbol{\mu}$ | Numerical optimization problem | Varying $q$ traces the frontier |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- **Expected returns**: difficult to estimate ("art rather than science") — small error → very bad allocation.
+- **Correlations in crisis**: all tend toward $+1$ during shock periods → diversification disappears exactly when it is most needed.
+- **$\rho = -1$**: theoretical only; almost nonexistent in practice.
+- **If $\sigma_1 \neq \sigma_2$**, even with $\rho = -1$, risk is not zero: $\sigma_P = |w_1\sigma_1 - w_2\sigma_2|$.
+- **Sample size**: estimating $\mathbf{C}$ reliably requires at least $N^2/2$ observations.
+- **Negative weights** (closed-form solution): imply short selling, often unrealistic.
+- **Weight constraints**: any constraint lowers the efficient frontier — less freedom = less efficiency.
+- **Monte-Carlo**: never finds exactly the true frontier — only an approximation.
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** What is diversification and why does it work?
+
+**Short answer:** Combining low-correlation assets makes their fluctuations offset each other. Expected return remains the weighted average, but risk decreases — it is the only *free lunch* in finance.
+
+---
+
+**Q:** Why is portfolio variance more complex than its return?
+
+**Short answer:** Return is a linear sum of individual returns. Variance involves all pairs of covariances $\text{Cov}(R_i, R_j)$ — hence the double-sum formula $\mathbf{w}^T\mathbf{C}\mathbf{w}$.
+
+---
+
+**Q:** What happens when $\rho = 1$ vs $\rho = -1$ for a 2-asset portfolio?
+
+**Short answer:** $\rho = 1$: volatility is the weighted average of individual volatilities, no gain. $\rho = -1$ with equal weights and volatilities: zero risk. This is the extreme theoretical case.
+
+---
+
+**Q:** What is the efficient frontier?
+
+**Short answer:** The set of portfolios that maximize return for a given risk level. Any portfolio off the frontier is dominated: there exists something better for the same risk or the same return.
+
+---
+
+**Q:** Compare the three methods for computing the efficient frontier.
+
+**Short answer:** Monte-Carlo: intuitive but slow and approximate. Closed form (Lagrange): exact and fast but negative weights possible, few constraints. Numerical optimization (`scipy`): standard method — flexible, realistic constraints, slight risk of local optimum.
+
+---
+
+**Q:** What is the role of the risk-free asset and the CML?
+
+**Short answer:** The risk-free asset ($\sigma=0$, $\rho=0$ with any other asset) allows drawing the CML, a straight line tangent to the efficient frontier. The CML dominates the frontier alone: for any risk level, one can do better by combining the risk-free asset and the tangency portfolio.
+
+---
+
+**Q:** How does the parameter $q$ allow tracing the efficient frontier?
+
+**Short answer:** $q$ weights the risk/return trade-off in the problem $\min \mathbf{w}^T\mathbf{C}\mathbf{w} - q\,\mathbf{w}^T\boldsymbol{\mu}$. By varying $q$ from 0 to $+\infty$, one traverses the frontier from the minimum-variance portfolio to the maximum-return portfolio.
+
+---
+
+**Q:** Why are correlations a pitfall during crisis periods?
+
+**Short answer:** During crises, correlations between assets tend toward $+1$ (all assets fall together). Diversification disappears exactly when the investor needs it most.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+- **Diversification** reduces risk without reducing expected return — the only *free lunch* in finance.
+- Portfolio return is linear in weights; **variance** involves covariances.
+- Key formula: $\sigma_p^2 = \mathbf{w}^T\mathbf{C}\mathbf{w}$.
+- The lower $\rho$, the greater the diversification gain.
+- The **efficient frontier**: set of dominant allocations (minimum risk for fixed return).
+- Practical method: **numerical optimization** with parameter $q$ swept from 0 to $+\infty$.
+- The **CML** dominates the efficient frontier as soon as a risk-free asset is added.
+- Major pitfall: correlations rise toward $+1$ in crisis — diversification vanishes.
+- Estimating $\mathbf{C}$ reliably requires $\geq N^2/2$ observations.
+- **Expected returns** are more art than science — they are the weak link of the model.

@@ -1,0 +1,520 @@
+---
+title: "The Limit Order Book"
+---
+
+## Introduction
+
+Modern financial markets rely on precise mechanisms that allow millions of participants to exchange assets in an organized, transparent, and efficient manner. This chapter explores the **Limit Order Book** (LOB), the central tool that structures the vast majority of trading on the world's major stock exchanges.
+
+Understanding the LOB means understanding:
+
+- how prices are formed at every instant,
+- how orders interact with one another,
+- why certain execution strategies are more effective than others.
+
+---
+
+## With Whom Do We Trade?
+
+Before addressing the LOB in detail, it is essential to understand the two major exchange models that coexist in financial markets.
+
+### The Market Maker — Over The Counter (OTC)
+
+#### Definition
+
+A **market maker** is a financial intermediary that commits to continuously buying and selling an asset, permanently publishing a bid price and an ask price.
+
+Trades executed directly with a market maker, without going through an organized exchange, are referred to as **Over The Counter** (OTC) trades.
+
+#### How It Works
+
+The market maker:
+
+- **holds an inventory** (stock of assets it owns or owes),
+- **takes a risk** related to the price evolution of that inventory,
+- **matches buyers and sellers** as much as possible,
+- **hedges** periodically with other market makers when its exposure becomes too large.
+
+💡 **Intuition:** Imagine a second-hand bookseller who buys used books and resells them. If too many people sell him the same book, he ends up with excess stock and a risk that the price of that book will drop. He must then offload that surplus.
+
+#### Concrete Example
+
+Consider a sequence of orders submitted by participants:
+
+```
+x = {+1, +1, −1, −1, −1, −1, −1, −1, −1, …}
+```
+
+From the market maker's point of view, each participant's order generates an opposite order:
+
+```
+Market maker: {−1, −1, +1, +1, +1, +1, +1, +1, +1, …}
+```
+
+Quickly, the market maker accumulates a net position of **−5** (it is massively net short). Its exposure becomes too risky, and it must hedge by trading with another market maker.
+
+#### The Market Maker's Source of Profit
+
+The market maker earns its revenue from the **bid-ask spread**: it buys cheaper (bid) than it sells (ask). Even without any price movement, it makes a profit on every round trip.
+
+🧠 **Key takeaway:** The market maker takes an inventory risk in exchange for a profit on the spread. This model is typical of OTC markets such as the foreign exchange market (Forex).
+
+---
+
+### The Limit Order Book (LOB)
+
+The alternative to the OTC model is the **limit order book**, used on the vast majority of organized exchanges (NYSE, SIX Swiss Exchange, Euronext, etc.).
+
+In this model, participants do not trade directly with a market maker. They place their orders in a centralized system that matches them automatically according to precise rules.
+
+💡 **Intuition:** Think of an auction room where buyers and sellers display their offers on a board. The LOB is that board, managed by an algorithm.
+
+---
+
+## LOB Behaviour
+
+### Operating Principle
+
+When an order $x$ is submitted to the LOB, an algorithm immediately performs the following checks:
+
+1. **Can the order be matched immediately?**
+   - Example: a seller offers 100 units at 50 USD and a buyer is waiting to buy 100 units at 50 USD → immediate match.
+
+2. **If not**, the order becomes **active**: it is recorded in the LOB and waits to be matched or cancelled.
+
+### Formal Definition
+
+The LOB $\mathcal{L}(t)$ is **the set of active orders at time $t$**, that is, orders submitted but not yet executed or cancelled.
+
+### Why Study LOB Dynamics?
+
+Understanding how the LOB evolves is crucial for several practical reasons:
+
+- **Improve execution**: choose the right moment and the right order type to minimize costs.
+- **Minimize market impact**: avoid moving prices too strongly with a large order.
+- **Design better trading algorithms**: automate execution decisions.
+- **Assess market stability and liquidity**: a deep LOB (with many orders) indicates a liquid market.
+
+---
+
+## Formal Definitions
+
+### The Order
+
+An order is defined by three characteristics:
+
+$$x = (p_x,\ w_x,\ t_x)$$
+
+where:
+
+- $p_x$ : **the price** at which the order is submitted,
+- $w_x$ : **the size** of the order, expressed in multiples of the minimum lot $\sigma$ ; $w_x \in \{\pm k\sigma \mid k = 1, 2, \ldots\}$,
+- $t_x$ : **the timestamp** (time of order insertion).
+
+### The Price Tick
+
+The **tick** $\pi$ is the smallest possible price increment between two consecutive orders.
+
+**Example:** If $\pi = 0{,}00001$, then the price directly below $1{,}00000$ is $0{,}99999$.
+
+### The Bid and the Ask
+
+- **Bid** $b(t)$ : the best active buy price, that is, the maximum price among all active buy orders:
+
+$$b(t) = \max_{x \in B(t)} p_x$$
+
+  where $B(t)$ is the set of active buy orders.
+
+- **Ask** $a(t)$ : the best active sell price, that is, the minimum price among all active sell orders:
+
+$$a(t) = \min_{x \in A(t)} p_x$$
+
+  where $A(t)$ is the set of active sell orders.
+
+### The Bid-Ask Spread
+
+$$s(t) = a(t) - b(t)$$
+
+⚠️ The spread is always positive: the ask is always greater than or equal to the bid. If this were not the case, a match would have occurred.
+
+### The Mid-Price
+
+$$m(t) = \frac{a(t) + b(t)}{2}$$
+
+The mid-price is often used as a reference for the "true" price of the asset, as it is less sensitive to fluctuations in the individual bid or ask.
+
+### Relative Price
+
+The **relative price** $\delta^x$ measures the distance of an order from the best price on its side:
+
+$$\delta^x = \begin{cases} b(t) - p_x & \text{if buy order} \\ p_x - a(t) & \text{if sell order} \end{cases}$$
+
+💡 **Intuition:** A relative price $\delta^x = 0$ means that the order is placed exactly at the best price (at the bid for a buy, at the ask for a sell). A $\delta^x > 0$ means that the order is placed less aggressively (further from the market).
+
+### Depth of the LOB
+
+The **depth** of the LOB measures the available volume at each price level:
+
+- **Buy side (bid side):**
+
+$$N^b(p, t) = \sum_{\{x \in B(t) \mid \delta^x = p\}} w_x$$
+
+- **Sell side (ask side):**
+
+$$N^a(p, t) = \sum_{\{x \in A(t) \mid \delta^x = p\}} w_x$$
+
+🧠 **Key takeaway:** Depth indicates how much volume is available at each relative price level. A deep LOB offers more liquidity.
+
+---
+
+## Order Types
+
+### Limit Order
+
+A **limit order** is an order that cannot be executed immediately at the desired price. It enters the LOB and waits for a counterparty.
+
+- For a **buy** order: the proposed price is less than or equal to the current bid ($p_x \leq b(t)$), or between the bid and the ask ($b(t) < p_x < a(t)$).
+- For a **sell** order: symmetric logic.
+
+⚠️ **Associated risk:** A limit order is **never guaranteed to be executed**. If the market does not return to the desired price, the order remains inactive. This is called **opportunity risk**.
+
+### Market Order
+
+A **market order** is an order executed immediately at the best available price in the LOB.
+
+- For a **buy** order: the proposed price is greater than or equal to the ask ($p_x \geq a(t)$). The order is matched with the best active seller.
+
+💡 **Intuition:** A market order says "I want to buy now, regardless of the exact price". A limit order says "I want to buy, but only at this exact price".
+
+🧠 **Key takeaway:** There is a fundamental trade-off between the two order types:
+
+- **Limit order** → potentially better price, but **risk of non-execution**.
+- **Market order** → guaranteed execution, but **less favorable price**.
+
+---
+
+## Evolution of the LOB
+
+### The Three Cases for a Buy Order
+
+Let $x = (p_x, w_x, t_x)$ be a buy order submitted to the LOB. Three situations are possible:
+
+1. **$p_x \leq b(t)$** : the order is a **limit order**, placed below the bid. It enters the LOB without modifying the bid.
+
+2. **$b(t) < p_x < a(t)$** : the order is a **limit order**, placed inside the spread. It enters the LOB and **raises the bid** to $p_x$.
+
+3. **$p_x \geq a(t)$** : the order is a **market order**, it is immediately matched with the best active seller at price $a(t)$.
+
+For **sell** orders, the logic is symmetric.
+
+### Detailed Numerical Example
+
+Consider an initial LOB with:
+
+- Bid : $b(t) = 1{,}50$
+- Ask : $a(t) = 1{,}53$
+- Mid-price : $m(t) = 1{,}515$
+- Spread : $s(t) = 0{,}03$
+
+| Submitted Order | Type | $b(t)$ | $a(t)$ | $m(t)$ | $s(t)$ |
+|---|---|---|---|---|---|
+| Initial | — | 1,50 | 1,53 | 1,515 | 0,03 |
+| $(1{,}48,\ +3\sigma,\ t_1)$ | Limit (L) | 1,50 | 1,53 | 1,515 | 0,03 |
+| $(1{,}51,\ +3\sigma,\ t_2)$ | Limit (L) | **1,51** | 1,53 | **1,52** | **0,02** |
+| $(1{,}53,\ +3\sigma,\ t_3)$ | Market (M) | 1,51 | **1,54** | **1,525** | **0,03** |
+
+**Analysis:**
+
+- The order at 1.48 is placed below the bid → limit order, no change to the bid.
+- The order at 1.51 is inside the spread → new bid at 1.51, spread reduced to 0.02.
+- The order at 1.53 hits the ask → immediate execution at the best available ask, which moves to 1.54.
+
+### Important Remarks
+
+- Sell orders generate symmetric observations.
+- Limit orders are **cheaper** (better price obtained), but expose to a risk of non-execution.
+- ⚠️ Why not always use limit orders? Because in a fast-moving market, waiting for the desired price can mean **missing an opportunity** or worse, leaving a losing position open.
+
+---
+
+## Priority Management
+
+### The Problem
+
+When several orders arrive at the same price, or when orders at the same price level coexist, a **priority policy** is needed to decide which one will be executed first.
+
+### The Three Main Rules
+
+#### Price-Time Priority
+
+- **First criterion:** the best price is served first.
+- **In case of price tie:** first come, first served (FIFO — First In, First Out).
+
+✅ **Advantage:** Favors those who post their orders early. Encourages rapid order submission.
+
+#### Pro-Rata Priority
+
+- **First criterion:** the best price.
+- **In case of tie:** the executed quantity is distributed proportionally to the order sizes ($w / \sum w$).
+
+✅ **Advantage:** Favors large-size orders.
+
+#### Price-Size Priority
+
+- **First criterion:** the best price.
+- **In case of tie:** the largest order is served first.
+
+✅ **Advantage:** Rewards participants who take the most size risk.
+
+### Illustrative Example (pro-rata rule)
+
+Suppose three orders at the same price $p_0$:
+
+- $w_0 = 4$, $w_1 = 2$, $w_2 = 4$ (with $w_0 = 2w_1 = w_2$)
+
+An order $w = -2$ arrives. Under the pro-rata rule:
+
+- Share of $w_0$ : $2 \times \frac{4}{10} = 0{,}8$ → **about half of $w_0$**
+- Share of $w_1$ : $2 \times \frac{2}{10} = 0{,}4$ → **about half of $w_1$**
+- Share of $w_2$ : $2 \times \frac{4}{10} = 0{,}8$ → **about half of $w_2$**
+
+---
+
+## Visibility
+
+### The General Principle
+
+Most organized exchanges publish their LOB in real time (or with a slight delay), offering all participants visibility on active orders, not just on the bid and ask.
+
+### Complexities and Exceptions
+
+Not all orders are visible. Several mechanisms reduce transparency:
+
+#### Iceberg Orders
+
+An **iceberg** order displays only a portion of its true size in the LOB. The visible portion is executed, then a new tranche is revealed.
+
+💡 **Intuition:** Like an iceberg, only the emerged part is visible. Large players use this mechanism to avoid revealing the extent of their intentions.
+
+#### Dark Pools
+
+**Dark pools** are alternative trading systems where **all active orders are hidden**.
+
+- Only partial information on executions is disclosed.
+- They allow large institutional investors to exchange large volumes without visibly impacting the market.
+
+⚠️ **Limitations:** Dark pools are not always as efficient as advertised. Scandals have emerged (e.g. Goldman Sachs fined 800,000 USD by US regulators for failing best-execution obligations in its dark pool).
+
+### What the LOB Reveals
+
+With a transparent LOB, one has access to:
+
+- The bid $b(t)$ and the ask $a(t)$,
+- The depth at each price level,
+- The history of submitted, executed, and cancelled orders,
+- Information on participants' intentions.
+
+🧠 **Key takeaway:** Despite the richness of this data, **we still know very little** about how to fully read and interpret LOB dynamics. This is an active research area.
+
+---
+
+## Empirical Facts
+
+Numerous empirical studies have analyzed the statistical properties of LOBs across different markets and assets. Although some results vary by context (commodities do not behave like stocks, and the NYSE may differ from the SIX Swiss Exchange), several **robust properties** emerge consistently.
+
+### a) Order Size
+
+**Observation:**
+
+- Order sizes are **uniformly distributed** at large scale.
+- They tend to **cluster around round values** (100, 500, 1000 units…).
+
+💡 **Intuition:** Traders have a natural preference for round numbers, creating concentrations at these levels.
+
+### b) Relative Price ($\delta$)
+
+**Observation:**
+
+- The distribution of relative prices follows a **scaling law**, with **fat tails**.
+- This implies that a non-negligible number of orders is placed **very far** from the current bid/ask.
+
+⚠️ **Implication:** Contrary to what a normal distribution would predict, extremely distant orders from the current price are much more frequent than expected.
+
+### c) Order Cancellation
+
+**Observation:**
+
+- **70% to 80% of orders are cancelled** before being executed.
+
+🧠 **Key takeaway:** The vast majority of orders submitted to the LOB never lead to a transaction. This reflects price exploration strategies, algorithmic orders that constantly adjust, and changes in participants' intentions.
+
+### d) Depth of the Book
+
+**Observation:**
+
+- LOB depth is also distributed with **fat tails**.
+- The exact shape of the distribution varies by market (variable $\Delta p$ parameter).
+
+💡 **Intuition:** Close to the best price, many orders accumulate. But one also finds — more rarely — significant concentrations at prices far from the market.
+
+### e) Market and Price Impact
+
+#### Definitions
+
+- **Price impact**: modification of $a(t)$ and $b(t)$ caused by an order (may be temporary).
+- **Market impact**: deeper modification of the LOB, potentially triggering a cascade of other orders.
+- **Instantaneous impact**: immediate effect on the price.
+- **Permanent impact**: durable effect on the price, even after the order has been executed.
+
+#### Why a Permanent Impact?
+
+An order can have a durable impact for two main reasons:
+
+1. **Information transmission**: a large buy order may signal that the buyer has positive information on the asset. Other traders adjust their prices accordingly.
+2. **Cascade of actions**: an order may trigger stop orders, algorithms, or reactions from other participants.
+
+#### Shape of the Instantaneous Impact
+
+**Empirical observation (Lillo et al.):**
+
+- The instantaneous impact $I(|w|)$ is a **concave function** of the order size $|w|$:
+
+$$I(|w|) \text{ concave in } |w|$$
+
+💡 **Intuition:** Doubling the size of an order does not double the price impact. The impact increases, but at a decreasing rate. This phenomenon is explained by the increasing depth of the book: as a large order "consumes" liquidity, it must reach orders increasingly far from the best price.
+
+#### The Master Curve
+
+Lillo et al. showed that by **normalizing** the impact by the company's market capitalization, one obtains a **universal master curve** for all capitalization groups.
+
+This curve follows a **power law**, suggesting that identical statistical mechanisms govern market impact for very different assets.
+
+⚠️ **Practical implication:** This universality is crucial for designing optimal execution algorithms, regardless of the traded asset.
+
+---
+
+## LOB Modelling
+
+### Two Major Approaches
+
+LOB modelling is a domain where two major scientific traditions compete:
+
+| Approach | School | Assumptions | Strengths |
+|---|---|---|---|
+| **Economists** | Financial microstructure | Rational traders, utility functions | Strong theoretical foundations |
+| **Physicists** | Econophysics | Simplified models, physics inspiration | Captures emergent properties |
+
+In practice, the choice depends on the objective:
+
+- To understand **fundamental mechanisms** → physical approach.
+- For **policy recommendations** or **price theory** → economic approach.
+- For **algorithmic execution** → both, combined with agent models.
+
+### The Maslov Model
+
+#### Presentation
+
+The model proposed by physicist **Sergei Maslov** [7] is one of the simplest, and yet one of the richest, for simulating LOB dynamics.
+
+#### Algorithm
+
+At each time step, a single trader arrives on the market. The process is as follows:
+
+1. **Side:** with probability 0.5, the trader is a buyer; otherwise, a seller.
+
+2. **Order type:**
+   - With probability $1 - r$ : **market order** $x = (\text{bid/ask},\ \sigma,\ t_x)$.
+   - With probability $r$ : **limit order** $x = (p_x,\ \sigma,\ t_x)$, with:
+     - For a buyer: $p_x = p' - k$ (below the last price)
+     - For a seller: $p_x = p' + k$ (above the last price)
+     - $p'$ is the last transaction price.
+     - $k$ is a random variable following a given distribution.
+
+3. **No cancellation** in the basic version.
+
+#### Simple Example
+
+With 1000 iterations, $r = 0{,}5$, and $k = 1$ with probability 1, the model generates:
+
+- A **fat-tailed distribution** of price changes.
+- A **negative anti-correlation** of short-term price changes.
+
+🧠 **Key takeaway:** These properties, observed in real markets, emerge from an extremely simple model. This is the power of the physical approach: reproducing complex behaviors from elementary rules.
+
+---
+
+## Results of the Maslov Model
+
+### Price Dynamics
+
+The model generates a price trajectory **very different from an ordinary random walk**:
+
+- Large price increments are **clustered** in regions of high volatility, separated by relatively calm periods.
+- This phenomenon is called **volatility clustering** and is well documented in real markets.
+
+### The Hurst Exponent
+
+The model produces a **Hurst exponent** measured at **1/4**, far from the value 1/2 expected for a random walk.
+
+The Hurst exponent $H$ is a measure of the **long-term memory** of a time series:
+
+- $H = 0{,}5$ → no memory (random walk).
+- $H > 0{,}5$ → persistent trend (trending).
+- $H < 0{,}5$ → **anti-persistence** (mean-reverting), as here.
+
+⚠️ This result implies that price changes in the Maslov model are **anti-persistent**: an uptick tends to be followed by a downtick, and vice versa.
+
+### Distribution of Price Increments
+
+The model produces **strongly non-Gaussian** distributions of price increments $p(t + \delta t) - p(t)$:
+
+- For short time lags ($\delta t = 1, 10, 100$), the distribution is **tent-shaped** (Laplace-like), with tails much fatter than the normal law.
+- As the lag $\delta t$ increases, the central peak gradually softens, but the wings remain non-Gaussian.
+
+💡 **Intuition:** This behavior is directly observed in real markets. The Maslov model, despite its simplicity, reproduces it remarkably well.
+
+---
+
+## Extensions: Agent-Based Models
+
+The Maslov model assumes that all traders are identical (**homogeneous**). To introduce **heterogeneity** (traders with different strategies, time horizons, and information), one uses **Agent-Based Models** (ABM).
+
+These models are addressed in a dedicated chapter. The key idea is that complex collective behaviors (bubbles, crashes, asymmetric liquidity) can emerge from the interaction of simple but heterogeneous agents.
+
+---
+
+## Key Takeaways
+
+### Structured Summary
+
+🧠 What to remember from this chapter:
+
+**On exchange mechanisms:**
+
+- Trading occurs either with a market maker (OTC), or via an LOB (organized exchanges).
+- The market maker earns revenue via the spread, but takes an inventory risk.
+- The LOB is the dominant exchange mechanism on major stock exchanges.
+
+**On LOB structure:**
+
+- An LOB is the set of active orders at a given instant.
+- Limit orders wait for a counterparty; market orders execute immediately.
+- Depth, spread, bid, and ask summarize the instantaneous state of the LOB.
+
+**On empirical facts:**
+
+- Order sizes are uniform and concentrated on round values.
+- Relative prices follow a fat-tailed scaling law.
+- 70–80% of orders are cancelled before execution.
+- Price impact is a concave function of order size.
+
+**On modelling:**
+
+- A very simple model (Maslov) reproduces key statistical properties of real markets.
+- The distribution of price increments is strongly non-Gaussian.
+- The measured Hurst exponent ($H \approx 1/4$) indicates marked anti-persistence.
+
+**On current limitations:**
+
+- The LOB contains much more information than just the bid/ask, but we do not yet fully know how to exploit it.
+- This is a very active research area, at the intersection of finance, statistical physics, and computer science.

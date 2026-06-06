@@ -1,0 +1,254 @@
+---
+title: "Time Series and Autoregressive Models — Review"
+---
+
+## Time Series
+
+**Definition :** ordered sequence of observations $X(t_i) \in \mathbb{R}$
+
+- **Lag** $\tau$ : shift between two observations — $X_{t-\tau}$ = Lagged Variable
+- The **temporal order** carries information (≠ information theory)
+
+**Basic statistics :** $\mathbb{E}[X]$ (mean), $\text{Var}[X]$ (variance), $\sqrt{\text{Var}[X]}$ (volatility)
+
+---
+
+## Possible Objectives
+
+| Objective | Description |
+|---|---|
+| Identification | Trends, seasonalities, breaks |
+| Explanation | How the past influences the present |
+| Modelling | Formal representation of the process |
+| Prediction | Anticipate future values |
+
+::: {.callout-warning title="Trap"}
+Good explanatory model ≠ good predictive model. Clarify the objective **before** choosing a model.
+:::
+
+---
+
+## Stationarity
+
+### Why it is necessary
+
+- Consistency of relationships over time
+- Reliable parameter estimation
+- Simplified analysis
+- Avoid spurious correlations (Spurious Results)
+
+### Sources of non-stationarity
+
+| Source | Description | Example |
+|---|---|---|
+| Trend | Drifting mean | Rising asset price |
+| Seasonality | Periodic variations | January effect, temperatures |
+| Heteroskedasticity | Non-constant volatility | Markets in crisis |
+
+### Formal definitions
+
+**Strict Stationarity :**
+
+$$
+F(X_{t_1+\tau}, \ldots, X_{t_n+\tau}) = F(X_{t_1}, \ldots, X_{t_n}) \quad \forall\, \tau, n
+$$
+
+→ The entire joint distribution is invariant under time translation. Difficult to verify.
+
+**Weak Stationarity — used in practice :**
+
+$$
+\text{a) } \mathbb{E}[X_t] = \mu = \text{cte} \quad \text{b) } \text{Cov}(X_t, X_{t+\tau}) = \gamma(\tau)
+$$
+
+→ Constant mean + autocovariance depending only on lag $\tau$.
+
+### ADF Test (Augmented Dickey-Fuller)
+
+- $H_0$ : unit root → **non-stationary**
+- $H_1$ : **stationary**
+
+| p-value | Decision |
+|---|---|
+| > 0.05 | Non-stationary — do not reject $H_0$ |
+| ≤ 0.05 | Stationary — reject $H_0$ |
+
+### How to make a series stationary
+
+| Method | Formula / Action |
+|---|---|
+| Differencing | $\Delta X_t = X_t - X_{t-1}$ |
+| Log returns | $r_t = \ln(X_t / X_{t-1})$ |
+| Simple returns | $r_t = (X_t - X_{t-1})\,/\,X_{t-1}$ |
+| Log transform | $\ln(X_t)$ — attenuates heteroskedasticity |
+| Decomposition | Remove trend and seasonality |
+
+::: {.callout-note title="Practical rule"}
+**Prices → non-stationary** (p-value > 0.05) | **Returns → stationary** (p-value ≈ 0.00)
+
+Systematically work with **returns** in finance.
+:::
+
+---
+
+## Autocorrelation
+
+### Definitions
+
+**Correlation :**
+
+$$
+\text{Cor}(X, Y) = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\,\text{Var}(Y)}}
+$$
+
+**Autocorrelation at lag $\tau$** (under stationarity) :
+
+$$
+\rho_\tau = \frac{\mathbb{E}[(X_t - \mu)(X_{t+\tau} - \mu)]}{\sigma^2}
+$$
+
+**ACF (Autocorrelation Function) :** $\text{ACF}(\tau) = \rho_\tau$ — represented by a correlogram.
+
+### Reading the correlogram
+
+| ACF signal | Interpretation |
+|---|---|
+| Slow, positive decay | Trend |
+| Alternating +/− | Counter-trend / Mean-reversion |
+| Peaks at regular intervals | Seasonality |
+| All within CIs | White Noise |
+
+**95 % Confidence Intervals (CI) :** $\pm\, 1.96\,/\,\sqrt{n}$
+
+::: {.callout-tip title="Rule"}
+Bar **exceeding** the CIs → **statistically significant** autocorrelation at this lag.
+:::
+
+---
+
+## Autoregressive Models
+
+### Three fundamental models
+
+**AR(p) — Autoregressive of order p :**
+
+$$
+X_t = c + \sum_{i=1}^{p} \varphi_i\, X_{t-i} + \varepsilon_t
+$$
+
+**MA(q) — Moving Average of order q :**
+
+$$
+X_t = \mu + \varepsilon_t + \theta_1\,\varepsilon_{t-1} + \cdots + \theta_q\,\varepsilon_{t-q}
+$$
+
+**ARMA(p,q) :**
+
+$$
+X_t = c + \varepsilon_t + \sum_{i=1}^{p} \varphi_i\, X_{t-i} + \sum_{i=1}^{q} \theta_i\, \varepsilon_{t-i}
+$$
+
+### AR vs MA Comparison
+
+| | AR(p) | MA(q) |
+|---|---|---|
+| Depends on | Past values $X_{t-i}$ | Past errors $\varepsilon_{t-i}$ |
+| Memory | Infinite (if $|\varphi| < 1$) | Finite (exactly $q$ periods) |
+| Estimation | Analytical for $p=1$ | Numerical (MLE) |
+
+---
+
+## AR(1) Model — Analytical Results
+
+**Model :**
+
+$$
+X_t = c + \varphi_1\, X_{t-1} + \varepsilon_t, \quad \varepsilon_t \sim \mathcal{N}(0,\,\sigma_\varepsilon^2)
+$$
+
+### Key formulas
+
+| Property | Formula | Key derivation |
+|---|---|---|
+| Mean | $\mu = c\,/\,(1-\varphi_1)$ | $\mathbb{E}[X_t] = \mathbb{E}[X_{t-1}]$ under stationarity |
+| Variance | $\sigma^2 = \sigma_\varepsilon^2\,/\,(1-\varphi_1^2)$ | $\text{Var}[X_t] = \text{Var}[X_{t-1}]$ under stationarity |
+| Autocorrelation lag 1 | $\rho_1 = \varphi_1$ | Independence of $X_t$ and $\varepsilon_{t+1}$ |
+| Stationarity | $|\varphi_1| < 1$ | Necessary for $\sigma^2 > 0$ |
+
+### Interpretation of $\varphi_1$
+
+| Value of $\varphi_1$ | Behaviour | Application |
+|---|---|---|
+| $\varphi_1 > 0$ | Trending | Momentum strategies |
+| $\varphi_1 < 0$ | Counter-trend (Mean-reverting) | Mean-reversion strategies |
+| $\varphi_1 = 0$ | White noise | No predictability |
+| $\varphi_1 = 1$ | Random walk | **Non-stationary** |
+| $|\varphi_1| > 1$ | Explosive process | Invalid |
+
+::: {.callout-warning title="Trap — Random walk"}
+$\varphi_1 = 1$ → perfect **in-sample** fit, but **out-of-sample** prediction catastrophic.
+
+**Good fit ≠ good predictive power.**
+:::
+
+---
+
+## Order Selection (Model Order Selection)
+
+### Information Criteria
+
+$$
+\text{AIC} = 2p - 2\ln(L) \qquad \text{BIC} = \ln(n)\cdot p - 2\ln(L)
+$$
+
+| Criterion | Penalty | Tendency | Usage |
+|---|---|---|---|
+| AIC | $2p$ | Higher orders | Prediction |
+| BIC | $\ln(n)\cdot p$ | Lower orders | Identifying the true model |
+
+**Rule :** **minimise** AIC or BIC. BIC stricter because $\ln(n) > 2$ if $n > 8$.
+
+### Estimation for $p > 1$
+
+- No analytical formula → **MLE** (Maximum Likelihood Estimation)
+
+---
+
+## Empirical Examples
+
+| Series | ACF | $\varphi_1$ | Interpretation |
+|---|---|---|---|
+| Random walk | Strong, all lags | ≈ 1 | Non-stationary, unpredictable |
+| EUR/USD returns | Weak, CIs not exceeded | −0.125 | Efficient market |
+| VIX returns | Significantly negative | < 0 | Mean-reversion of fear |
+| S&P 500 returns | Weak | ≈ 0 | Little AR structure |
+| Swiss GDP (quarterly) | Moderate | > 0 | Economic persistence |
+
+---
+
+## Pitfalls and Critical Points
+
+::: {.callout-warning title="Do not forget"}
+
+- **Prices ≠ stationary** — always work with returns in finance
+- **Strict stationarity** ≠ weak stationarity — weak suffices in practice
+- **ADF : p-value > 0.05** = non-stationary (reversed-sense trap)
+- **AR(1), $|\varphi_1| \geq 1$** = non-stationary — the condition $|\varphi_1| < 1$ is imperative
+- **Good in-sample fit** ≠ good out-of-sample prediction
+- **ACF + BIC** → complementary tools for choosing order $p$
+
+:::
+
+---
+
+## Relations between concepts
+
+```{mermaid}
+flowchart LR
+    A[Raw series] -->|ADF p>0.05| B[Non-stationary]
+    B -->|Returns / Differences| C[Stationary series]
+    C --> D[ACF]
+    D -->|ρ₁ > 0| E[Trending AR\nφ₁ > 0]
+    D -->|ρ₁ < 0| F[Counter-trend AR\nφ₁ < 0]
+    D -->|Choice of p| G[AR p / AIC / BIC]
+```

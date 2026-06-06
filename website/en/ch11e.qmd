@@ -1,0 +1,154 @@
+---
+title: "Bonds — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+Imagine you are a pizzeria that needs an oven. You ask your neighbor to lend you 1,000 CHF. In exchange, you promise 50 CHF per semester for 2 years (the *coupons*), then you return the 1,000 CHF (the *principal*). You write a signed, immutable paper — that's your **bond**. Your neighbor can then resell that paper on the market. If in the meantime pizzerias have become very risky, no one will want to pay 1,000 CHF for your promise: the **price falls**. If you have become very popular, everyone wants your paper: the **price rises**. The *yield* is what your neighbor expects to earn by buying that paper today.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- A bond = fixed contract between borrower (issuer) and lender (investor).
+- The **price** is the present value of all future cash flows (coupons + principal).
+- The **price ↔ yield relationship is inverse and convex**: this is THE fundamental property.
+- The implicit yield cannot be read directly → numerical **trial and error**.
+- Different coupon yields are not comparable → **zero-coupon standard**.
+- The **yield curve** (zero-coupon) is reconstructed by **Bootstrap** from observed prices.
+- The **credit spread** measures the risk premium of an issuer over the sovereign.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | 1-sentence oral explanation | Intuition |
+|---------|-----------------------------|-----------|
+| **Coupon** | Fixed periodic payment made to the investor. | The interest on a standard loan. |
+| **Principal** (Face Value) | Amount repaid at maturity. | The initial capital returned at maturity. |
+| **Yield** $y$ | Rate of return required by the market. | The degree of freedom that balances the price. |
+| **Above par** (Premium) | $B > 100$: the coupon is more attractive than the market. | The market pays more for generous coupons. |
+| **Zero-coupon** | Bond with no coupon, sold at a discount, redeemed at par. | Zero intermediary = 1 single cash flow at maturity. |
+| **Yield Curve** | Graph of zero-coupon rates as a function of maturity. | The "price of time" for each horizon. |
+| **Bootstrap** | Algorithm that extracts zero-coupon rates in cascade from the shortest to the longest. | We solve one unknown at a time using already calculated rates. |
+| **Credit Spread** | Yield difference between a corporate bond and a sovereign bond of the same maturity. | The issuer's credit risk premium. |
+| **Convexity** | Curvature of the price-yield relationship, favorable to the investor. | Price gain > price loss for the same rate change. |
+| **Callable Bond** | Bond that the issuer can redeem before maturity. | Forced reinvestment risk at unfavorable rates. |
+
+---
+
+## 🔗 Concept Mind Map
+
+```{mermaid}
+graph LR
+    A[Issuer risk ↑] -->|increases| CS[Credit Spread ↑]
+    CS -->|adds to| Y[Yield y ↑]
+    Y -->|inverse| B[Price B ↓]
+    B -->|Bootstrap| ZC[Zero-coupon curve]
+    ZC -->|allows comparison of| OBL[All bonds]
+    ZC -->|discounts| VP[Present value of cash flows]
+    Y -->|unknown if B observed| TE[Trial & Error]
+    TE -->|recovers| Y
+```
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+|---------|---------|-------------|
+| $B(t) = \sum_{i=1}^{n} c_i \cdot e^{-y(t_i - t)} + P \cdot e^{-y(T-t)}$ | Price = sum of cash flows discounted at yield $y$. | Central formula, everything follows from it. |
+| $y_{\text{corp}} = y_{\text{sov}} + \text{CS}$ | Corporate yield = risk-free rate + credit premium. | The spread is always positive. |
+| $r_{\text{real}} \approx r_{\text{nom}} - \pi$ | Real yield adjusted for inflation. | Inflation risk = silent erosion. |
+| $\text{residual}(y) = B_{\text{obs}} - B_{\text{calc}}(y)$ | Error to cancel out in trial and error. | We seek $y$ such that residual $= 0$. |
+| Bootstrap: $\sum c_i e^{-r_{t_i} t_i} + (P + c) e^{-r_T \cdot T} = B$ | Isolate $r_T$ with short rates already known. | Cascade resolution, from short to long. |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- Confusing **price** and **face value**: a bond can be worth 109 even if par is 100.
+- Believing the price-yield relationship is linear: it is **convex** (curvature favorable to the investor).
+- Forgetting that **capital preservation is conditional**: valid only if held to maturity AND no default.
+- Thinking that bonds and stocks are always uncorrelated: **2022 showed the opposite** (brutal rate hike → both fall together).
+- Confusing **interest rate risk** and **reinvestment risk**: they work in opposite directions (rate rise → price falls BUT coupon reinvestment improves).
+- On Bootstrap: forgetting to use the **already calculated rates** to discount intermediate coupons.
+- **Callable bonds**: the issuer exercises its call right when rates fall → always at the worst time for the investor.
+- Rating agencies do **not incorporate ESG criteria** into their rating.
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** What is a bond and how is it structured?
+
+**Short answer:** Debt contract between issuer and investor, with fixed periodic coupons and principal repayment at maturity. The contract is immutable.
+
+---
+
+**Q:** How is the price of a bond calculated?
+
+**Short answer:** Present value of all future cash flows, discounted at yield $y$: $B = \sum c_i e^{-y(t_i-t)} + P e^{-y(T-t)}$.
+
+---
+
+**Q:** Why do price and yield move in opposite directions?
+
+**Short answer:** If rates rise, future cash flows are more heavily discounted → present value decreases. If the coupon is fixed, only the price can adjust the effective yield.
+
+---
+
+**Q:** What is convexity and why is it favorable?
+
+**Short answer:** The curvature of the price-yield relationship means that the price gain from a rate fall is greater than the loss from a rate rise of the same magnitude.
+
+---
+
+**Q:** How does the trial and error (Trial & Error) algorithm work?
+
+**Short answer:** Start from a very high $y$, compute the residual $B_{\text{obs}} - B_{\text{calc}}$. If positive divide $y$ by 2, if negative take the average with the previous $y$. Iterate until convergence.
+
+---
+
+**Q:** Why do we use zero-coupon rates rather than raw yields?
+
+**Short answer:** Yields depend on the coupon structure → not comparable across different bonds. Zero-coupon rates normalize to a common standard.
+
+---
+
+**Q:** Explain Bootstrap in one sentence.
+
+**Short answer:** We extract zero-coupon rates from the shortest to the longest, using at each step the already calculated rates to isolate the remaining unknown.
+
+---
+
+**Q:** What is the credit spread and what does it reflect?
+
+**Short answer:** Yield difference between a corporate bond and a sovereign bond of the same maturity; it reflects the issuer's additional credit risk.
+
+---
+
+**Q:** List the 5 bond risks and their main protection.
+
+**Short answer:** Rates (short duration), credit (high rating), inflation (TIPS), liquidity (liquid bonds), reinvestment (avoid callables).
+
+---
+
+**Q:** Why did 2022 challenge bond diversification?
+
+**Short answer:** Central banks raised rates brutally → bond and stock prices fell simultaneously → correlation turned positive, canceling the diversification effect.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+- **Price = PV of future cash flows** discounted at yield $y$.
+- **Price ↑ ⟺ yield ↓**: inverse and convex relationship.
+- **Above par** if coupon > market rate; **below** if coupon < market rate.
+- **Trial & Error**: inverse problem, numerical bisection to find $y$ from $B$.
+- **Zero-coupon** = universal comparison standard.
+- **Bootstrap**: cascade from shortest to longest to reconstruct the yield curve.
+- **Credit Spread** = risk premium over the sovereign rate.
+- **Reinvestment risk** ≠ **interest rate risk**: they oppose each other.
+- **2022**: exception to the stock/bond decorrelation.
+- **Callable** = forced reinvestment risk for the investor.

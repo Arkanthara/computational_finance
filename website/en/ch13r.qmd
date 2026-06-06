@@ -1,0 +1,129 @@
+---
+title: "Futures and Forwards — Review"
+---
+
+## Essential Definitions
+
+| Term | Definition |
+|---|---|
+| **Futures / Forward** | Agreement to buy/sell an asset at maturity $T$ at price $K$ |
+| **Strike $K$** | Delivery price fixed at inception |
+| **Maturity $T$** | Mandatory execution date of the contract |
+| **Roll-over** | Renewal of the contract before expiry to avoid delivery |
+| **Contango** | $F_t >$ expected spot → upward-sloping curve |
+| **Backwardation** | $F_t <$ expected spot → downward-sloping curve |
+
+::: {.callout-warning title="Key Pitfall"}
+Futures ≠ Options → **obligation** to buy/sell (no choice).
+:::
+
+---
+
+## Forwards vs Futures
+
+| Criterion | Forward | Futures |
+|---|---|---|
+| Market | OTC (bilateral) | Exchange (e.g. CME) |
+| Standardisation | No | Yes |
+| Delivery dates | Specific | Range of dates |
+| Settlement | At maturity | **Daily** |
+| Counterparty risk | High | Near zero (clearing house) |
+| Close-out | Delivery / cash | Offset before maturity |
+
+---
+
+## Margin Mechanism
+
+**3 components:**
+
+- **Initial margin** — deposit at inception (e.g. 2,000 USD/contract)
+
+- **Maintenance margin** — minimum threshold (e.g. 1,500 USD/contract)
+
+- **Margin call** — if balance < maintenance → top up to **initial** margin
+
+**Daily gain** = $\Delta F_t \times$ contract size
+
+::: {.callout-note title="Example — 2 gold contracts (100 oz), $F_0 = 400$"}
+Initial margin: 4,000 USD | Maintenance: 3,000 USD
+
+Day 9 June: balance 2,660 USD < 3,000 → margin call **+1,340 USD**
+:::
+
+---
+
+## Pricing Formulas
+
+| Context | Formula |
+|---|---|
+| No income / dividend / yield | $F_t = S_t \cdot e^{r(T-t)}$ |
+| With discrete income $I$ | $F_t = (S_t - I)\cdot e^{r(T-t)}$ |
+| With continuous yield $q$ | $F_t = S_t \cdot e^{(r-q)(T-t)}$ |
+| Value of an existing contract | $f_t = (F_t - K)\cdot e^{-r(T-t)}$ |
+| Simplified value (no dividend) | $f_t = S_t - K\cdot e^{-r(T-t)}$ |
+
+::: {.callout-tip title="Pricing intuition"}
+$F_t$ = **replication** cost = spot price carried at the risk-free rate until $T$.
+:::
+
+---
+
+## Arbitrage Argument
+
+**If $F_t' > S_t e^{r(T-t)}$** → borrow, buy spot, short futures → profit $F_t' - S_t e^{r(T-t)} > 0$
+
+**If $F_t'' < S_t e^{r(T-t)}$** → short spot, invest, buy futures → profit $S_t e^{r(T-t)} - F_t'' > 0$
+
+→ Conclusion: only $F_t = S_t \cdot e^{r(T-t)}$ eliminates all arbitrage.
+
+---
+
+## Value of a Futures $f_t$
+
+**3 sources of exposure:**
+
+- $S_t$ → direct exposure to the underlying
+
+- $F_t$ → expectations on $S_T$
+
+- $r$ → risk-free rate (via $K \cdot e^{-r(T-t)}$)
+
+::: {.callout-note title="At inception"}
+$K = F_0$ → $f_0 = 0$: no premium exchanged at inception.
+:::
+
+---
+
+## Contango / Backwardation
+
+| | Contango | Backwardation |
+|---|---|---|
+| $F_t$ vs expected spot | $F_t >$ spot | $F_t <$ spot |
+| Market signal | Expected price ↑, high carry | Expected price ↓, immediate demand ↑ |
+| Curve | Upward-sloping | Downward-sloping |
+
+::: {.callout-warning title="Universal property"}
+In **all** cases: $F_T \xrightarrow[]{t \to T} S_T$ (convergence at maturity).
+:::
+
+---
+
+## Numerical Example — Zero-Coupon Bond (Hull 3.5)
+
+- $S_0 = 930$ USD, $r = 6\%$, $T = 4/12$ year
+
+$$F_0 = 930 \cdot e^{0{,}06 \times \frac{4}{12}} \approx 948{,}79 \text{ USD}$$
+
+---
+
+## Pitfalls & Critical Points
+
+- **Futures ≠ Option**: no choice, firm obligation
+
+- **Margin call** → top up to *initial* margin (not maintenance)
+
+- **$q > 0$ income** → $F_t$ decreases; **$q > 0$ storage cost** → $F_t$ increases
+
+- **$f_0 = 0$** always at inception
+
+- **Convergence** $F_T = S_T$ always holds at maturity

@@ -1,0 +1,192 @@
+---
+title: "Financial Markets and Behaviors — Review"
+---
+
+## Efficient Market Hypothesis (EMH)
+
+**Author** : E. Fama, 1960 · Nobel 2013
+
+**Principle** : prices reflect **all** available information → impossible to beat the market consistently.
+
+### The 3 forms
+
+| Form | Information incorporated | Consequence |
+|------|--------------------------|-------------|
+| **Weak** (*Weak*) | Past prices only | Technical analysis ineffective |
+| **Semi-strong** (*Semi-strong*) | All public information | Fundamental analysis ineffective |
+| **Strong** (*Strong*) | Public + private information | Even insiders cannot beat the market |
+
+### Critiques of EMH
+
+- Equities persistently overvalued relative to fundamentals
+- Soros, Buffett : too consistent to be just lucky
+- **Herding behaviour** (*herding behaviour*)
+- **Algorithmic trading** (*algorithmic trading*) amplifies inefficiencies
+- **Speculative bubbles** (*speculative bubbles*)
+
+::: {.callout-warning title="Traps — Two emblematic examples"}
+**Bitcoin bubble (2013)** : price went from ~\$0 to +\$1 000 in one year → pure speculation, incompatible with EMH
+
+**Flash Crash (May 6, 2010)** : Dow Jones −9,2 % (−998 pts) then full recovery in a few minutes, with no fundamental news
+:::
+
+::: {.callout-note title="Nobel Paradox 2013"}
+Fama (pro-EMH) and Shiller (anti-EMH) shared the same Nobel → **no consensus** on market efficiency.
+:::
+
+---
+
+## Where Do We Exchange?
+
+### Regulated Markets (Exchanges) vs OTC
+
+| Criterion | Regulated market | OTC (*Over The Counter*) |
+|-----------|------------------|--------------------------|
+| Examples | NYSE, LSE, CME, SIX | Oanda, bond markets |
+| Regulation | Strict | Light |
+| Clearing | Clearing house ✅ | No clearing ❌ |
+| Transparency | High | Low |
+| Counterparty risk | Low | Higher |
+
+### Broker vs Market Maker
+
+| Role | *Market Maker* | *Broker* |
+|------|---------------|----------|
+| Example | Oanda | Dukascopy |
+| Inventory | ✅ Yes | ❌ No |
+| Risk taken | ✅ Yes | ❌ No |
+| Compensation | Bid/ask spread | Commission |
+
+---
+
+## Financial Assets
+
+| Asset | Key characteristics |
+|-------|---------------------|
+| **Equity** (*Equity*) | Periodic dividends · residual risk |
+| **Bonds** (*Bonds*) | Loan to a state or company · price ∝ 1/rate · coupons + maturity |
+| **Commodities** (*Commodities*) | Wheat, oil, gold · traded via **futures** |
+| **Currencies** (*Currencies / FX*) | Quoted in **pairs** · interest rate differential · backbone of markets |
+
+::: {.callout-note title="Bonds — Key relation"}
+Bond price ↑ when rates ↓ · Bond price ↓ when rates ↑
+:::
+
+---
+
+## Trading Volumes
+
+### World Stock Exchanges (2013)
+
+| Exchange | Volume (Bn USD) |
+|----------|-----------------|
+| NYSE Euronext US | 6 920 |
+| NASDAQ OMX US | 4 748 |
+| Tokyo SE | 3 429 |
+
+### Foreign Exchange Market (FX)
+
+- Daily global volume : **~5 000 billion USD/day**
+- EUR/USD : **25 %** of volume · USD/JPY : 18 % · GBP/USD : 9 %
+- 50 % of transactions = **FX swaps** (*FX swaps*)
+
+EUR/USD flow per second :
+
+$$\frac{5 \times 10^{12} \times 0.25 \times 0.5}{86\,400 \times 2} \approx 3.6 \text{ M USD/s}$$
+
+---
+
+## Financial Instruments
+
+| Instrument | Definition | Feature |
+|------------|-----------|---------|
+| **Spot** | Real asset, immediate delivery | Reference base |
+| **Forward** | Future agreement at price fixed today · OTC | Counterparty risk |
+| **Futures** | Standardised forward · exchange | Clearing house · margin calls |
+| **Option** | **Right** (not obligation) to buy (*call*) or sell (*put*) | Premium to pay · leverage |
+| **Index** (*Index*) | Basket of assets (S&P 500, CAC 40...) | Diversification |
+
+::: {.callout-warning title="Trap — Futures Roll Over"}
+A futures has an expiration date. Without **roll over** (close + reopen on next contract) →
+physical delivery possible (e.g. tons of wheat or barrels of oil !).
+:::
+
+---
+
+## Stylised Facts
+
+**Definition** : robust empirical regularities that distinguish real markets from a simple random walk (*random walk*).
+
+| Stylised fact | Description | Implication |
+|-------------|-------------|-------------|
+| **Volatility clustering** (*Volatility clustering*) | Large variations → large variations · small → small | → **GARCH** models |
+| **Negative autocorrelation** (*Negative autocorrelation*) | At high frequency, negative lag 1 | Due to *bid-ask bounce* |
+| **Scaling laws** (*Scaling laws*) | $\mathbb{E}[\|r\|] \sim \Delta t^{\alpha}$ | Multi-scale self-similarity |
+| **Fat tails** (*Fat tails*) | Extreme events far more frequent than normal law | Risk underestimated by Gaussian models |
+| **Seasonality** (*Seasonality*) | Daily, weekly, monthly, yearly | Cyclical non-stationarity |
+| **Asymmetry** (*Asymmetry*) | Equity markets fall faster than they rise | Negative skewness |
+| **Spread / volume correlation** | Spread ↓ when volume ↑ | More liquidity → better prices |
+| **Volume / volatility correlation** | Volume ↑ when volatility ↑ | Uncertainty → activity |
+
+::: {.callout-important title="GARCH — The H comes from stylised facts"}
+**H** = *Heteroskedasticity* = non-constant variance = volatility clustering. This is precisely what GARCH models.
+:::
+
+::: {.callout-warning title="Trap — Fat tails and Gaussian models"}
+Using the normal distribution to model returns **strongly underestimates** the probability of extreme events.
+Empirical distributions resemble **Lévy** distributions (*Lévy distributions*) more closely.
+:::
+
+---
+
+## Seasonality
+
+### Equities — U-shape profile
+
+- **Peak at open** : reaction to overnight news
+- **Mid-day trough** : low activity
+- **Peak at close** : closing of daily positions
+
+### Currencies — Global sessions
+
+| Session | GMT Hours | Activity |
+|---------|-----------|----------|
+| Sydney | 22h – 07h | Low |
+| Tokyo | 00h – 09h | Moderate |
+| London | 08h – 17h | **Maximum** |
+| New York | 13h – 22h | Strong |
+
+**Absolute peak** : **London + New York** overlap (13h–17h GMT)
+
+---
+
+## Market Events
+
+### Classification
+
+| Type | Origin | Example |
+|------|--------|---------|
+| **Endogenous** (*Endogenous*) | Inside the market | Liquidity crunch (*liquidity crunch*) |
+| **Scheduled exogenous** (*Scheduled*) | External + known date | NFP, GDP, rate decisions |
+| **Unscheduled exogenous** (*Unscheduled*) | External + surprise | Attacks, SNB decision 2011 |
+
+### Key scheduled news
+
+- **Non-Farm Payrolls (NFP)** : 1st Friday of the month · 8:30 EST (14:30 CH) · US employment
+- **GDP** (*GDP*) : quarterly · economic growth
+- **Rate decisions** : Fed, ECB, SNB
+
+::: {.callout-warning title="Trap — The deviation from expectations, not the absolute figure"}
+What moves the market = **surprise** = published figure − expected consensus.
+A good figure *below expectations* can make the market **fall**.
+:::
+
+---
+
+## Summary — What markets are NOT
+
+::: {.callout-note title="Markets ≠ random walk"}
+Markets exhibit : volatility clustering · fat tails · seasonality · autocorrelation · scaling laws.
+
+Causes : human interactions · herding behaviour · institutional constraints · algorithmic trading.
+:::

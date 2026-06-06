@@ -1,0 +1,661 @@
+---
+title: "Data, Moving Averages and Intrinsic Time"
+---
+
+## Chapter Plan
+
+This chapter addresses three fundamental themes in computational finance:
+
+- The real nature of financial data and the challenges they pose
+- Smoothing operators: simple, weighted and exponential moving averages (SMA, WMA, EMA)
+- Intrinsic Time: an alternative framework to physical time, with its scaling laws
+
+---
+
+## Data in Real Life
+
+### What We Imagine
+
+When we think of a financial time series, we often picture an ideal mathematical object, characterized by three properties:
+
+- **Equidistant** : observations arrive at regular and predictable time intervals.
+- **Smooth** : prices evolve continuously, without noise or parasitic fluctuations.
+- **Continuous** : there are no abrupt jumps between two consecutive instants.
+
+This vision corresponds to that of a clean signal, as one might produce in a theoretical framework or in simulation.
+
+::: {.callout-tip title="Intuition"}
+Imagine a price chart drawn with a ruler, with a perfectly regular curve rising or falling gently. This is the ideal image — and rarely the reality of markets.
+:::
+
+---
+
+### What We Actually Observe
+
+In practice, high-frequency financial data present very different characteristics from this ideal model.
+
+#### Bid/Ask/Mid Structure
+
+Market data are not simply a single price: they consist of three distinct components:
+
+- **Ask Price** : the price at which a seller is willing to part with an asset.
+- **Bid Price** : the price at which a buyer is willing to acquire that asset.
+- **Mid Price** : the average between bid and ask, often used as an approximation of the "true" price.
+
+::: {.callout-note title="Key Takeaway"}
+The difference between the ask price and the bid price is called the **bid-ask spread**. This spread is a direct measure of market liquidity: the tighter it is, the more liquid the market.
+:::
+
+#### Three Key Characteristics of Real Data
+
+Observations on real high-frequency data reveal the following properties:
+
+**1. Non time-equidistant activity (Non time-equidistant activity)**
+
+Transactions do not arrive at regular intervals. Activity is intense during market opening hours (for example at the opening of New York or London), and very low at night or on weekends.
+
+**2. Noisy behaviour (Noisy behaviour)**
+
+Prices oscillate continuously around a trend, generating a very noisy signal. This noise reflects market microstructures (buy and sell orders, market making, etc.).
+
+**3. Possibly non-continuous prices (Possibly non-continuous prices)**
+
+Price jumps can occur during major events (macroeconomic announcements, earnings releases, crises). The price may therefore not be continuous over certain time ranges.
+
+::: {.callout-tip title="Intuition"}
+Unlike an evening course presented in a textbook, real data more closely resemble an electrocardiogram: irregular, sometimes silent, sometimes very agitated, and subject to discontinuities.
+:::
+
+---
+
+### How to Handle Imperfect Data?
+
+Faced with these characteristics, two major approaches exist for working with raw market data.
+
+#### Approach 1 : Discretisation (Discretisation)
+
+This is the approach used in **99.9 % of cases** in practice.
+
+We choose a fixed time grid (for example, every minute, hour, or day) and associate to each instant the last price observed before that instant.
+
+**Advantage:** Simple, efficient, universally adopted.
+
+**Disadvantages:**
+
+- Information between two consecutive ticks is lost (tick = arrival of a data point).
+- Intra-period trends go unnoticed.
+- The observed price is **instantaneous** : it represents only a frozen instant, not a behavior.
+
+::: {.callout-warning title="Important Point"}
+Discretisation is convenient but induces a loss of information. In a high-frequency context, this loss can be significant if the time grid is too coarse.
+:::
+
+#### Approach 2 : Interpolation (Interpolation)
+
+Less frequent, this approach consists in **reconstructing** values between observed ticks using an interpolation method (linear, spline, etc.).
+
+**Advantage:** Makes it possible to use past information to infer new values.
+
+**Disadvantages:**
+
+- Strong assumptions are necessary about the shape of the signal between two observations.
+- Physical time remains the reference framework, which may seem arbitrary (why start at midnight? at 5 PM?).
+- Alternative approaches can be envisaged (see the section on intrinsic time).
+
+---
+
+## Moving Averages
+
+Whether discretized or not, financial time series are often noisy. To extract the underlying trend, we use **smoothing operators**, of which moving averages are the most widespread.
+
+::: {.callout-note title="Key Takeaway"}
+A moving average transforms a noisy series into a more regular series, by aggregating past observations. It always introduces a **time lag** : the smoothed value reflects the past, not the present instant.
+:::
+
+---
+
+### Simple Moving Average — SMA (Simple Moving Average)
+
+#### Definition
+
+Let $X_t$ be a time series. The **Simple Moving Average** over a window of size $n$ is defined by:
+
+$$
+SMA(t) = \frac{X_{t-n+1} + X_{t-n+2} + \cdots + X_t}{n}
+$$
+
+Each observation in the window receives an identical weight of $\frac{1}{n}$.
+
+#### Incremental Update
+
+A crucial property for computational efficiency is the update formula:
+
+$$
+SMA(t+1) = SMA(t) - \frac{X_{t-n+1}}{n} + \frac{X_{t+1}}{n}
+$$
+
+This means that at each time step, we **remove** the oldest observation and **add** the most recent observation.
+
+::: {.callout-warning title="Important Point"}
+To calculate and update the SMA, it is necessary to **keep in memory the $n$ most recent observations**. If $n$ is large, this can represent a non-negligible memory cost.
+:::
+
+#### Main Limitations of the SMA
+
+The SMA presents two major flaws:
+
+**1. Uniform weight regardless of age**
+
+An observation $n$ periods old has exactly the same weight ($\frac{1}{n}$) as an observation from the previous period. Yet, intuitively, recent information is often more relevant than old information.
+
+**2. Time lag (Time Lag)**
+
+The SMA "lags" behind the original series. The larger the window $n$, the more important this lag is. This lag is **irreducible** : the more we smooth, the more we delay.
+
+::: {.callout-tip title="Intuition"}
+Imagine that you calculate the average temperature over the last 100 days. This average will react only slowly to a brutal temperature change today — you have to wait for the previous 99 days to "exit" the window.
+:::
+
+#### Illustration of Time Lag
+
+The lag is all the more visible graphically as it creates a systematic "delay": the SMA curve follows the original trend with a certain delay, and this delay increases with $n$.
+
+```{mermaid}
+%%{init: {"theme": "default"}}%%
+graph LR
+    A[Original series X_t] --> B[SMA with small window\nLittle smoothing\nShort lag]
+    A --> C[SMA with large window\nStrong smoothing\nLong lag]
+```
+
+---
+
+### Weighted Moving Average — WMA (Weighted Moving Average)
+
+#### Motivation
+
+To remedy the uniformity flaw of the SMA, we can assign **decreasing** weights to past observations: the older an observation, the lower its weight.
+
+#### Definition
+
+The **Weighted Moving Average** over a window of size $n$ is defined by:
+
+$$
+WMA(t) = \frac{1 \cdot X_{t-n+1} + 2 \cdot X_{t-n+2} + \cdots + (n-1) \cdot X_{t-1} + n \cdot X_t}{n + (n-1) + \cdots + 2 + 1}
+$$
+
+The denominator is $\frac{n(n+1)}{2}$ (sum of integers from 1 to $n$).
+
+The most recent observation $X_t$ receives a weight of $n$, while the oldest $X_{t-n+1}$ receives a weight of 1.
+
+#### Incremental Update
+
+The update of the WMA is more complex. We first define an auxiliary quantity:
+
+$$
+Total(t) = X_{t-n+1} + X_{t-n+2} + \cdots + X_{t-1} + X_t
+$$
+
+Its update is:
+
+$$
+Total(t+1) = Total(t) - X_{t-n+1} + X_{t+1}
+$$
+
+Then the WMA updates as:
+
+$$
+WMA(t+1) = \frac{(1 \cdot X_{t-n+1} + \cdots + n \cdot X_t) + n \cdot X_{t+1} - Total(t)}{\frac{n(n+1)}{2}}
+$$
+
+::: {.callout-warning title="Important Point"}
+The update of the WMA is **more costly** than that of the SMA, both in terms of computation and memory (the $n$ most recent observations must still be stored). This overhead is the price to pay for a more relevant weighting scheme.
+:::
+
+#### Weighting Scheme: SMA vs WMA
+
+| Indicator | Weight of the oldest | Weight of the most recent | Shape |
+|---|---|---|---|
+| SMA | $\frac{1}{n}$ | $\frac{1}{n}$ | Uniform |
+| WMA | $\frac{2}{n(n+1)}$ | $\frac{2}{n+1}$ | Linearly decreasing towards the past |
+
+::: {.callout-tip title="Intuition"}
+In the WMA, weights decrease linearly: the last observation weighs $n$ times more than the oldest. It's as if we give more credit to what happened recently.
+:::
+
+---
+
+### Exponential Moving Average — EMA (Exponential Moving Average)
+
+#### Motivation
+
+The WMA improves the SMA but remains heavy to compute. The **Exponential Moving Average** offers a decreasing weighting scheme — even more "natural" than that of the WMA — with an **extremely simple** update using a single parameter.
+
+#### Formal Derivation
+
+We first define the general form of the EMA:
+
+$$
+EMA(t) = \frac{X_t + (1-\alpha) X_{t-1} + (1-\alpha)^2 X_{t-2} + \cdots}{1 + (1-\alpha) + (1-\alpha)^2 + \cdots}
+$$
+
+The geometric series in the denominator converges (for $0 < \alpha < 1$):
+
+$$
+1 + (1-\alpha) + (1-\alpha)^2 + \cdots = \frac{1}{\alpha}
+$$
+
+We can then rewrite:
+
+$$
+EMA(t) = \frac{X_t}{1/\alpha} + (1-\alpha) \cdot \frac{X_{t-1} + (1-\alpha) X_{t-2} + \cdots}{1 + (1-\alpha) + \cdots}
+$$
+
+The second term is exactly $\alpha \cdot (1-\alpha) \cdot \frac{1}{\alpha} \cdot EMA(t-1) = (1-\alpha) \cdot EMA(t-1)$.
+
+We obtain the **fundamental recursive formula**:
+
+$$
+\boxed{EMA(t) = \alpha \cdot X_t + (1-\alpha) \cdot EMA(t-1)}
+$$
+
+#### Interpretation of the Recursive Formula
+
+This formula is remarkably simple:
+
+- $\alpha$ : weight given to the **current observation**
+- $1-\alpha$ : weight given to the **previous EMA** (which already contains all past history)
+
+::: {.callout-tip title="Intuition"}
+The EMA is a **weighted average between the present and the summarized past**. At each instant, we "forget" a bit of the past (factor $1-\alpha$) and integrate the novelty (factor $\alpha$). It is analogous to how our memory works: recent events have more impact than old ones.
+:::
+
+::: {.callout-note title="Key Takeaway"}
+Unlike the SMA and WMA, the EMA **does not need to store the $n$ most recent observations**. It suffices to know the previous value of the EMA. This is its major computational advantage.
+:::
+
+#### Weighting Scheme of the EMA
+
+The weights of past observations in the EMA decrease exponentially:
+
+- Observation at $t$ : weight $\alpha$
+- Observation at $t-1$ : weight $\alpha(1-\alpha)$
+- Observation at $t-k$ : weight $\alpha(1-\alpha)^k$
+
+The smaller $\alpha$ is, the slower the decay, and the more past observations retain influence.
+
+---
+
+### Comparison of Weighting Schemes
+
+| Indicator | Scheme shape | Memory required | Update |
+|---|---|---|---|
+| SMA | Uniform | $n$ observations | Simple |
+| WMA | Linearly decreasing | $n$ observations | Moderately complex |
+| EMA | Exponentially decreasing | 1 scalar value | Very simple |
+
+::: {.callout-tip title="Intuition"}
+The EMA is the ideal compromise: it weights observations in a decreasing manner (like the WMA), but is as simple to calculate as a scalar update. This is why it is by far the most used in practice.
+:::
+
+---
+
+### Initial Conditions of Moving Averages
+
+Any moving average must be **initialized** before it can produce values.
+
+#### For SMA and WMA
+
+We need $n$ observations to calculate the first value. During the first $n$ instants, the moving average is not defined.
+
+#### For EMA
+
+Several initialization strategies exist:
+
+**Option 1 — Initialization to the first observation:**
+
+$$
+EMA(1) = X_1 \quad \text{(equivalent to } EMA(0) = 0 \text{)}
+$$
+
+**Option 2 — Initialization by an SMA:**
+
+$$
+EMA(n) = SMA(n)
+$$
+
+We first calculate an SMA over the first $n$ points, then launch the EMA recursion from there.
+
+::: {.callout-warning title="Important Point"}
+Whatever the initialization method, the EMA needs a **warm-up period** to stabilize. The first calculated values may be poorly representative. It is common to wait a few multiples of $1/\alpha$ observations before using the values.
+:::
+
+::: {.callout-note title="Key Takeaway"}
+The general rule is as follows: **the larger $n$ is, and the smaller $\alpha$ is, the longer the time lag**. This trade-off between smoothing and reactivity is at the heart of parameter choice.
+:::
+
+---
+
+### Choice of EMA Parameter $\alpha$
+
+#### Method 1 : Equivalence with an SMA of size $n$
+
+We seek $\alpha$ such that the **average age** of observations in the EMA is equal to that in an SMA of window $n$.
+
+The average age in an SMA of size $n$ is $\frac{n+1}{2}$.
+
+The average age in an EMA is $\frac{1}{\alpha}$.
+
+By equating the two:
+
+$$
+\frac{1}{\alpha} = \frac{n(n+1)/2}{n} = \frac{n+1}{2}
+$$
+
+Which gives the classic formula:
+
+$$
+\boxed{\alpha = \frac{2}{n+1}}
+$$
+
+::: {.callout-warning title="Important Point"}
+Attention: with $\alpha = \frac{2}{n+1}$, the EMA and the SMA have the **same average age**, but their values are **not identical**. They behave similarly but do not coincide.
+:::
+
+#### Method 2 : Definition via the residual impact of an observation
+
+We can define $\alpha$ by imposing that an observation $k$ instants old has a residual impact of $\epsilon_k$:
+
+$$
+(1-\alpha)^k = \epsilon_k
+$$
+
+Taking the logarithm:
+
+$$
+\log(1-\alpha) = \frac{\log(\epsilon_k)}{k}
+\implies
+\alpha = 1 - e^{\frac{\log(\epsilon_k)}{k}}
+$$
+
+**Numerical examples:**
+
+- For $k = 100$ and $\epsilon_k = 1\%$ : $\alpha \approx 0.045$
+- For $n = 100$ (method 1) : $\alpha = \frac{2}{101} \approx 0.0198$
+
+::: {.callout-tip title="Intuition"}
+Method 2 is more intuitive: we ask "how much influence should an observation 100 periods old have?" If we want it to have only 1% impact, we calculate $\alpha$ accordingly. This allows fine-tuning according to the economic context.
+:::
+
+---
+
+### Graphical Example: Comparison of EMAs
+
+The comparison graph illustrates the behavior of several EMAs on the same series:
+
+- **$\alpha = 0.1$ (large)** : reactive, closely follows the series, little smoothing, short lag.
+- **$\alpha = 0.01$ (small)** : very smooth, long lag — the curve reacts slowly to trend changes.
+- **$\alpha = \frac{2}{101}$** and **$SMA(100)$** : similar but non-identical behaviors, illustrating the approximate equivalence of the two methods.
+
+::: {.callout-note title="Key Takeaway"}
+There is no universal "good" $\alpha$. The choice depends on the desired trade-off between **reactivity** (high $\alpha$) and **smoothing** (low $\alpha$), according to the trading horizon and market characteristics.
+:::
+
+---
+
+### Extension to Asynchronous Data
+
+#### Problem
+
+Until now, moving averages implicitly assume that data arrive at regular intervals. But on high-frequency markets, ticks arrive irregularly: activity varies strongly according to the hours.
+
+#### Solution: EMA Adapted to Continuous Time
+
+According to the book *Introduction to High Frequency Finance* [1], a basic operator is defined as follows.
+
+Given two consecutive observations arriving at times $t_{n-1}$ and $t_n$, we define:
+
+$$
+\alpha = \frac{t_n - t_{n-1}}{\tau}, \quad \mu = e^{-\alpha}, \quad \nu = \frac{1-\mu}{\alpha}
+$$
+
+with $\tau$ a characteristic time parameter.
+
+The EMA adapted to continuous time is then:
+
+$$
+EMA(\tau; x)(t_n) = \mu \cdot EMA(\tau; x)(t_{n-1}) + (\nu - \mu) \cdot x_{n-1} + (1 - \nu) \cdot x_n
+$$
+
+#### Interpretation of Parameters
+
+| Symbol | Role |
+|---|---|
+| $\mu = e^{-\alpha}$ | Forgetting factor depending on elapsed time |
+| $\nu$ | Interpolation parameter between the previous and current observation |
+| $x_{n-1}$ | Last observation |
+| $x_n$ | Current observation |
+
+::: {.callout-tip title="Intuition"}
+The introduction of $\mu = e^{-\alpha}$ is key: if a lot of time has elapsed since the last observation ($\alpha$ large), $\mu$ is close to 0, and the EMA "forgets" the past quickly. If little time has elapsed ($\alpha$ small), $\mu \approx 1$ and memory is long. Time is thus naturally integrated into the operator.
+:::
+
+#### Iterative EMA and Generalized SMA
+
+From this basic operator, more sophisticated operators can be constructed.
+
+**Iterative EMA:**
+
+$$
+EMA(\tau, n; x) = EMA(\tau; EMA[\tau, n-1; x])
+$$
+
+with $EMA(\tau, 1; x) = EMA(\tau; x)$.
+
+**Generalized SMA on asynchronous data:**
+
+$$
+SMA(\tau, n) = \frac{1}{n} \sum_{k=1}^{n} EMA\left[\tau'; k\right], \quad \text{with } \tau' = \frac{2\tau}{n+1}
+$$
+
+These operators make it possible to treat irregular market data with the same rigor as classical operators.
+
+---
+
+## Intrinsic Time
+
+### Limits of Physical Time
+
+Physical time — the watch that runs at constant speed — is the usual reference framework for time series analysis.
+
+Yet, several observations invite us to question it:
+
+- **Subjective time accelerates and slows down** : in our daily experience, time seems to slow down during sleep and accelerate during important events.
+- **Important events can go unnoticed** between two observations, if the interval is too long.
+- **The starting point is arbitrary** : why start at midnight? At 5 PM?
+- **Physical time is rigid** : it flows at constant speed, independently of market activity.
+
+::: {.callout-tip title="Intuition"}
+During a weekend, foreign exchange markets (Forex) are closed. Physical time flows, but no market event takes place. Counting these hours as "market time" makes no economic sense.
+:::
+
+### Alternatives to Physical Time
+
+Several ideas have been explored to define an "adaptive" time:
+
+**Volume Time** : time advances by one unit each time a certain trading volume is reached.
+
+- *Advantage* : captures real economic activity.
+- *Disadvantage* : volumes are only known after the transaction.
+
+**Transaction Time** : similar to volume time, but counting transactions.
+
+- *Disadvantage* : also known a posteriori.
+
+**Price-Based Time** : prices are **always observable in real time**. Why not let the market itself dictate its own rhythm, through price movements?
+
+---
+
+### Definition of Intrinsic Time
+
+**Intrinsic time** is a measure of time dictated by the occurrence of **Directional Change Events**.
+
+A directional change (DC) is defined by:
+
+- A trend reversal of the price of a minimum amplitude of $\delta$ (threshold).
+- After a rise, if the price falls by $\delta$ in relative value → **DC down**.
+- After a fall, if the price rises by $\delta$ in relative value → **DC up**.
+
+::: {.callout-note title="Key Takeaway"}
+The parameter $\delta$ controls the **temporal resolution** : a small $\delta$ generates many events ("fast" intrinsic time) ; a large $\delta$ generates few events ("slow" intrinsic time). Time thus becomes **adaptive and multiscale**.
+:::
+
+#### Fundamental Properties
+
+The intrinsic time framework presents several remarkable properties:
+
+- **The number of directional changes relative to physical time** is linked to market **volatility**.
+- **Between two directional changes**, we observe what is called the **overshoot (OS)** : the price movement that exceeds the threshold triggering the next DC. The length of the overshoot is linked to market **liquidity**.
+- **The total price movement** between two extrema is:
+
+$$
+TM = DC + OS
+$$
+
+where TM is the Total Move, DC is the Directional Change and OS is the Overshoot.
+
+---
+
+### Intrinsic Time Algorithm
+
+The directional change detection algorithm is defined with the following elements:
+
+- **Initial mode** : arbitrarily "up" (bullish).
+- **Parameter** : $\delta > 0$, the directional change threshold.
+- **Variable** : $x_{ext}$, the extreme price (maximum or minimum) reached in the current mode.
+
+```
+For each price x in AllTicks :
+
+    If mode = "up" :
+        If x < x_ext :
+            x_ext = x          // Update local minimum
+        Else if (x_ext - x) / x_ext >= δ :
+            print("New DC up")    // A DC down is detected
+            x_ext = x
+            mode = "down"
+
+    Else (mode = "down") :
+        If x > x_ext :
+            x_ext = x          // Update local maximum
+        Else if (x - x_ext) / x_ext >= δ :
+            print("New DC down")  // A DC up is detected
+            x_ext = x
+            mode = "up"
+```
+
+::: {.callout-tip title="Intuition"}
+The algorithm is a **local trend detector**. In "up" mode, we look for a downward reversal of at least $\delta\%$. When this reversal is detected, we switch to "down" mode and look for the next upward reversal. Intrinsic time advances by one notch at each detection.
+:::
+
+::: {.callout-note title="Key Takeaway"}
+Unlike physical time, intrinsic time **does not take into account the duration** between ticks. Two DCs separated by 1 millisecond and two DCs separated by 1 hour count exactly the same way in intrinsic time.
+:::
+
+---
+
+### Scaling Laws
+
+#### Motivation
+
+Intrinsic time is an alternative framework to physical time. But how to relate the two? How to know, for example, how many seconds a directional change lasts on average for a given threshold $\delta$?
+
+**Scaling laws** answer this question. They establish empirical relationships between quantities measured in intrinsic time and quantities in physical time.
+
+#### Examples of Scaling Laws
+
+**Law 1 — Relationship between price and time:**
+
+$$
+\langle \Delta x \rangle \sim \Delta t^{\alpha}
+$$
+
+The average price variation over an interval $\Delta t$ follows a power law in $\Delta t$.
+
+**Law 2 — Average duration of a DC as a function of threshold:**
+
+$$
+\langle \Delta t_{dc} \rangle \sim \left(\frac{\delta}{c}\right)^{\alpha}
+$$
+
+The average duration (in physical time) of a directional change of threshold $\delta$ also follows a power law.
+
+::: {.callout-tip title="Intuition"}
+Scaling laws are the financial analogue of physical universality laws: they show that markets obey robust statistical regularities, independently of the level of detail ($\delta$) at which they are observed. These are **fractal properties** of markets.
+:::
+
+#### Tick-Count Scaling Law
+
+One of the most striking scaling laws is that of the **number of ticks** : the average number of ticks observed between two consecutive DCs is a power function of the threshold $\delta$.
+
+This law has been empirically verified on **13 different currency pairs** (EUR-USD, GBP-JPY, AUD-USD, etc.) and on data covering several years.
+
+The robustness of these laws on such different markets suggests that they capture a fundamental property of market microstructure.
+
+#### Overview of Scaling Laws
+
+A systematic study [2] identified **20 distinct scaling laws**, covering notably:
+
+- Average price move ($\langle \Delta x \rangle$)
+- Average quadratic price move ($\langle \Delta x^2 \rangle$)
+- Number of directional DCs
+- Number of total price moves
+- Average duration of a DC
+- Duration of an overshoot
+- Number of ticks in a DC or an OS
+- Cumulative price move (coastline)
+
+All these indicators follow power laws in $\delta$, and this, consistently across different currency pairs — including relative to a reference model (Gaussian random walk).
+
+::: {.callout-warning title="Important Point"}
+The consistency of these scaling laws across many assets and periods suggests that they are not anecdotal: they reflect a **universal structure** of high-frequency market data, independent of the currency pair or period observed.
+:::
+
+---
+
+## Chapter Key Takeaways
+
+### Real Financial Data
+
+Real financial data are composed of bid and ask prices, are generally non-equidistant in time, and exhibit noisy or even discontinuous behavior.
+
+### Smoothing Operators
+
+Several operators exist to smooth time series:
+
+- **SMA** : simple but equally weights all observations and induces a lag.
+- **WMA** : improves weighting at the cost of heavier computation.
+- **EMA** : optimal in practice — exponentially decreasing weighting, scalar update, adjustable parameter $\alpha$.
+
+### Physical Time vs Intrinsic Time
+
+Physical time is the universal standard, but it presents a fundamental limitation: **it favors information loss** during periods of low activity and treats uniformly instants that are nonetheless very different in terms of market activity.
+
+### Intrinsic Time
+
+**Intrinsic time** is an alternative based on directional price changes:
+
+- It is adaptive and guided by the market itself.
+- It allows analyzing markets at different resolutions via the parameter $\delta$.
+- It reveals hidden properties linked to volatility and liquidity.
+
+### Scaling Laws
+
+A large number of **scaling laws** relate intrinsic time to physical time. These laws, empirically robust across many markets, constitute a valuable tool for modeling and understanding high-frequency markets.
+
+---
+
+## References
+
+[1] Dacorogna, M. M., Gençay, R., Müller, U. A., Olsen, R. B., & Pictet, O. V. (2001). *An Introduction to High-Frequency Finance*. Academic Press.
+
+[2] Glattfelder, J. B., Dupuis, A., & Olsen, R. B. (2011). Patterns in high-frequency FX data: Discovery of 12 empirical scaling laws. *Quantitative Finance*, 11(4), 599–614.

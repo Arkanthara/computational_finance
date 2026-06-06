@@ -1,0 +1,151 @@
+---
+title: "Data, Moving Averages and Intrinsic Time — Review"
+---
+
+# Real-life Data
+
+## Ideal vs Reality
+
+| Expected | Reality |
+|----------|---------|
+| Equidistant | Irregular activity |
+| Smooth | Noisy |
+| Continuous | Possible jumps |
+| Single price | Bid / Ask / Mid |
+
+## Data processing
+
+| Approach | Usage | Limitation |
+|----------|-------|------------|
+| **Discretisation** | 99,9% of cases | Information lost between ticks |
+| **Interpolation** | Rare | Strong assumptions, arbitrary physical time |
+
+---
+
+# Moving Averages
+
+## Comparison of the three operators
+
+| | **SMA** | **WMA** | **EMA** |
+|---|---|---|---|
+| Weights | Equal $\frac{1}{n}$ | Linearly increasing | Exponential decay |
+| Memory | $n$ observations | $n$ observations | 1 value only |
+| Update | Simple | Complex | Very simple |
+| Infinite memory | ✗ | ✗ | ✓ |
+
+## Key formulas
+
+**SMA** — window $n$ :
+
+$$\text{SMA}(t) = \frac{1}{n}\sum_{i=0}^{n-1} X_{t-i}$$
+
+Update : $\text{SMA}(t+1) = \text{SMA}(t) - \dfrac{X_{t-n+1}}{n} + \dfrac{X_{t+1}}{n}$
+
+**WMA** — denominator $= \dfrac{n(n+1)}{2}$ :
+
+$$\text{WMA}(t) = \frac{\sum_{i=1}^{n} i \cdot X_{t-n+i}}{\frac{n(n+1)}{2}}$$
+
+**EMA** — recursive form (**central formula**) :
+
+$$\boxed{\text{EMA}(t) = \alpha \cdot X_t + (1-\alpha) \cdot \text{EMA}(t-1)}$$
+
+## Choice of $\alpha$ for the EMA
+
+| Method | Formula | Remark |
+|---------|---------|--------|
+| SMA($n$) equivalence | $\alpha = \dfrac{2}{n+1}$ | Same average age, **not identical** |
+| Residual impact $\epsilon_k$ after $k$ steps | $\alpha = 1 - e^{\log(\epsilon_k)/k}$ | Ex : $k=100$, $\epsilon=1\%$ $\Rightarrow \alpha=0{,}045$ |
+
+## Initialisation (Initial Conditions)
+
+- $\text{EMA}(1) = X_1$ — simple, possible initial bias
+- $\text{EMA}(n) = \text{SMA}(n)$ — more robust
+
+⚠️ **Warm-up period required** — the smaller $\alpha$, the longer it is.
+
+## Pitfalls to avoid
+
+- ⚠️ $\alpha = \frac{2}{n+1}$ **≠** SMA($n$) — only the average age is equivalent
+- ⚠️ The stronger the smoothing → the greater the **time lag** — **inevitable**
+- ⚠️ Small $\alpha$ = strong smoothing = long lag ; large $\alpha$ = reactive = little smoothing
+
+## Asynchronous EMA (irregular data)
+
+$$\text{EMA}(\tau; x)(t_n) = \mu \cdot \text{EMA}(t_{n-1}) + (\nu - \mu) \cdot x_{n-1} + (1-\nu) \cdot x_n$$
+
+| Parameter | Definition |
+|-----------|-----------|
+| $\alpha = (t_n - t_{n-1})/\tau$ | Normalised elapsed time |
+| $\mu = e^{-\alpha}$ | Exponential decay |
+| $\nu = (1-\mu)/\alpha$ | Interpolation between $x_{n-1}$ and $x_n$ |
+
+---
+
+# Intrinsic Time
+
+## Why go beyond physical time?
+
+- Important events can occur **between** two observations
+- Observation start **arbitrary** (midnight, 5am...)
+- Physical time **insensitive** to actual market activity
+
+💡 Solution : let the **market dictate its own rhythm**
+
+## Fundamental concepts
+
+| Term | Definition |
+|------|-----------|
+| **DC** (Directional Change) | Price reversal ≥ threshold $\delta$ since last extreme |
+| **OS** (Overshoot) | Movement beyond the DC until next reversal |
+| **TM** (Total Move) | $\text{TM} = \text{DC} + \text{OS}$ |
+| **$\delta$** | Detection threshold — controls temporal granularity |
+
+## Properties of intrinsic time
+
+- $\delta$ small → many DCs → **fast** time (volatile market)
+- $\delta$ large → few DCs → **slow** time (calm market)
+- Number of DCs / physical time ∝ **volatility**
+- Length of OS ∝ **liquidity**
+
+## DC detection algorithm
+
+```
+mode = "up", x_ext = first price, δ fixed
+
+For each price x :
+  If mode = "up" :
+    If x < x_ext  →  x_ext = x
+    If (x_ext - x) / x_ext ≥ δ  →  DC up detected, x_ext = x, mode = "down"
+
+  If mode = "down" :
+    If x > x_ext  →  x_ext = x
+    If (x - x_ext) / x_ext ≥ δ  →  DC down detected, x_ext = x, mode = "up"
+```
+
+⚠️ The initial mode is **arbitrary** — the algorithm converges quickly.
+
+## Scaling Laws
+
+Empirical relations linking intrinsic time and physical time :
+
+| Law | Formula |
+|-----|---------|
+| Price move vs time | $\langle \Delta x \rangle \sim \Delta t^{\alpha}$ |
+| Average duration of a DC | $\langle \Delta t_\text{dc} \rangle \sim (\delta/c)^{\alpha}$ |
+| Number of ticks vs $\delta$ | Decreasing power law |
+
+🧠 **20 scaling laws** identified on 13 FX currency pairs — **universal and stable**.
+
+---
+
+# Global summary
+
+| Concept | Keyword | Formula / Rule |
+|---------|---------|----------------|
+| SMA | Equal-weighted | $\frac{1}{n}\sum X_i$ |
+| WMA | Linear | Weights $\propto$ recency |
+| EMA | Exponential | $\alpha X_t + (1-\alpha)\text{EMA}(t-1)$ |
+| Lag | Inevitable | $\uparrow n$ or $\downarrow \alpha$ $\Rightarrow$ $\uparrow$ lag |
+| DC | Key event | Reversal $\geq \delta$ |
+| Intrinsic time | Adaptive | Triggered by prices, not time |
+| Scaling laws | Universal | Power law between DC and physical time |

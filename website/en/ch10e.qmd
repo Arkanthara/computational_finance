@@ -1,0 +1,152 @@
+---
+title: "Option Greeks — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+Imagine you are piloting a plane (your options portfolio) in a turbulent sky.
+
+- **Delta** is your altimeter: it tells how much the plane climbs if you pull the stick.
+- **Gamma** tells how fast this altimeter itself gets out of calibration when the weather changes.
+- **Theta** is the fuel gauge: it drops inexorably, no matter what you do.
+- **Vega** measures atmospheric turbulence (volatility).
+- **Rho** captures the slope of the landing runway (interest rate).
+
+Managing options is keeping all these dials stable at the same time — without losing track.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- An option is exposed to **several risks simultaneously**: underlying price, time, volatility, rates.
+- The **Greeks** decompose these risks into independent and actionable metrics.
+- Naive strategies (naked, covered, stop-loss) are insufficient: too risky, too costly, or too expensive in transaction fees.
+- The rigorous answer is **Delta hedging** (continuous dynamic hedging).
+- **Gamma** measures the imperfection of the Delta hedge; neutralizing it requires other options.
+- **Θ–Γ triangle**: long Gamma costs Theta. There is no free lunch.
+- Black-Scholes has its limits; alternative models and advanced numerical methods exist.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | 1-sentence oral explanation | Intuition |
+| ------- | --------------------------- | --------- |
+| Delta (Δ) | Change in option price for +1 USD in the underlying. | Transmission coefficient between underlying and option; also ≈ risk-neutral prob. of exercise. |
+| Gamma (Γ) | Speed at which Delta itself evolves. | Curvature; indicates whether the Delta hedge will quickly become obsolete. |
+| Theta (Θ) | Loss of option value each passing day. | Buyer's enemy, seller's ally; not hedgeable. |
+| Vega (ν) | Sensitivity of price to +1% implied volatility. | Captures uncertainty about uncertainty. |
+| Rho (ρ) | Impact of a change in risk-free rates. | Less critical short-term; important for long-dated options. |
+| Delta hedge | Hold Δ shares per option to neutralize directional risk. | Makes the portfolio insensitive to small underlying moves. |
+| Gamma hedge | Add options to neutralize residual curvature. | Corrects the linear approximation error of Delta. |
+| Naked option | Sell an option without any hedge. | Simple but theoretically unlimited loss if S rises sharply. |
+| Stop-loss | Buy if $S > K$, sell if $S < K$. | Dynamic but high transaction costs and ambiguity at $K$. |
+| AD (automatic differentiation) | Exact derivative calculation in a single code pass. | O(1) vs O(n) for finite differences. |
+
+---
+
+## 🔗 Concept Mind Map
+
+- **Option price** → partial derivative in $S$ → **Delta (Δ)**
+- **Delta** → partial derivative in $S$ → **Gamma (Γ)**
+- **Option price** → partial derivative in $t$ → **Theta (Θ)**
+- **High Γ** → Delta changes fast → frequent rebalancing needed
+- **Long Γ** ↔ **Very negative Θ** (fundamental trade-off, imposed by the Black-Scholes PDE)
+- **Delta hedge** neutralizes $Δ\,δS$ but leaves $\frac{1}{2}Γ\,δS^2$
+- **Gamma hedge** → trade **options** (underlying has $Γ = 0$)
+- **Delta adjust** after Gamma hedge → trade the **underlying**
+- **Δ call** = $N(d_1)$ ≈ risk-neutral probability of exercise
+- **Δ put** = $N(d_1) - 1$ = **Δ call − 1** (call-put parity)
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+| ------- | ------- | ----------- |
+| $\Delta_c = N(d_1)$ | Call delta | Always in $[0, 1]$ |
+| $\Delta_p = N(d_1) - 1$ | Put delta | Always in $[-1, 0]$ |
+| $\Delta_c - \Delta_p = 1$ | Delta parity | Consistent with put-call parity |
+| $\Gamma = \dfrac{N'(d_1)}{S_0\,\sigma\,\sqrt{T}}$ | Gamma (call = put) | Always $> 0$, max ATM |
+| $\Theta_c = -\dfrac{S_0 N'(d_1)\sigma}{2\sqrt{T}} - rKe^{-rT}N(d_2)$ | Call theta | Generally negative |
+| $\delta c \approx \Theta\,\delta t + \Delta\,\delta S + \tfrac{1}{2}\Gamma\,\delta S^2$ | 2nd-order Taylor | The 3 Greeks in action |
+| $w_T = -\Gamma_\Pi / \Gamma_T$ | Quantity of options for Gamma hedge | Then adjust Δ via underlying |
+| $d_1 = \dfrac{\ln(S_0/K) + (r + \sigma^2/2)T}{\sigma\sqrt{T}}$ | Black-Scholes parameter | $d_2 = d_1 - \sigma\sqrt{T}$ |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- **Theta ATM diverges**: when $T \to 0$ and option ATM, Theta tends to $-\infty$. Do not ignore it near expiration.
+- **Negative Gamma = option seller**: a large move (up or down) is always unfavorable; the Delta hedge quickly becomes obsolete.
+- **Stop-loss ≠ Black-Scholes**: the theoretical cost $\max(S_0 - K, 0)$ differs from $c_{BS}$ because one must discount cash flows and manage the ambiguity at $K$.
+- **One does not hedge Theta**: time is certain, no strategy avoids it.
+- **Gamma hedge order**: neutralize Γ first (via options), then restore Δ (via underlying) — not the reverse.
+- **American put < European call** in the course example: early exercise with dividends gives a counter-intuitive result.
+- **AD ≠ finite differences**: AD gives exact derivatives in $O(1)$, not approximations.
+- **Confusing Vega and Gamma**: Vega = sensitivity to $\sigma$ (volatility), Gamma = curvature in $S$.
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** What is the Delta of an option and how is it used to hedge?
+
+**Short answer:** $\Delta = \partial c / \partial S$ ; to hedge a call sale, one buys $\Delta \times N_{\text{options}}$ shares. The portfolio is then insensitive to small underlying moves.
+
+---
+
+**Q:** Why is Delta hedging alone insufficient?
+
+**Short answer:** Delta approximates the option-underlying relationship linearly, but the true relationship is convex. The quadratic term $\frac{1}{2}\Gamma\,\delta S^2$ is ignored, creating a gap for large moves.
+
+---
+
+**Q:** How does one make a portfolio Gamma-neutral?
+
+**Short answer:** Add $w_T = -\Gamma_\Pi / \Gamma_T$ hedge options to cancel Gamma, then restore Delta neutrality by trading the underlying.
+
+---
+
+**Q:** Why can Theta not be hedged?
+
+**Short answer:** The passage of time is certain and non-random; no financial asset protects against it. It is simply the daily cost of holding an option.
+
+---
+
+**Q:** What is the link between Theta and Gamma for a Delta-neutral portfolio?
+
+**Short answer:** The Black-Scholes PDE imposes a strict trade-off: long Gamma implies very negative Theta. Benefiting from curvature has a daily cost.
+
+---
+
+**Q:** Why is the stop-loss strategy suboptimal?
+
+**Short answer:** It generates high transaction costs (especially if the underlying oscillates around $K$) and its theoretical cost does not coincide with the Black-Scholes price because of discounting and ambiguity at $K$.
+
+---
+
+**Q:** What is the difference between finite differences and automatic differentiation for computing the Greeks?
+
+**Short answer:** Finite differences require $O(n)$ model evaluations (one per parameter) and give approximate results. AD calculates all exact derivatives in $O(1)$ by automatic backpropagation.
+
+---
+
+**Q:** What are the limits of Black-Scholes and how are they addressed?
+
+**Short answer:** Constant volatility (→ Heston), no jumps (→ Merton), American options (→ binomial trees). For complex relationships or optimal hedging, neural networks or Reinforcement Learning are used.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+- **5 Greeks**: Δ (direction), Γ (curvature), Θ (time), ν (vol), ρ (rates).
+- **Δ call** = $N(d_1) \in [0,1]$ ; **Δ put** = $N(d_1)-1 \in [-1,0]$.
+- **Γ > 0** always (long position); max ATM; explodes ATM when $T \to 0$.
+- **Θ < 0** generally; ATM diverges to $-\infty$ near expiration.
+- **Delta hedge** = hold Δ shares per option; daily rebalancing.
+- **Gamma hedge** = options first (Γ), then underlying (Δ).
+- **Θ–Γ triangle**: long Γ = very negative Θ; no free lunch.
+- **Θ cannot be hedged**; Γ can only be neutralized with options.
+- **Taylor**: $\delta c \approx \Theta\,\delta t + \Delta\,\delta S + \frac{1}{2}\Gamma\,\delta S^2$.
+- **AD**: exact derivatives in $O(1)$ — best method for large portfolios.

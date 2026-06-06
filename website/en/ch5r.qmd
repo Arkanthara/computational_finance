@@ -1,0 +1,133 @@
+---
+title: "The Limit Order Book — Review"
+---
+
+## Trading Mechanisms
+
+| Mechanism | Counterparty | Profit | Risk |
+|---|---|---|---|
+| **OTC / Market Maker** | Market Maker | Bid-ask spread | Inventory |
+| **LOB** (Limit Order Book) | Other participants | — | Opportunity |
+
+> **LOB** $\mathcal{L}(t)$ = set of **active** orders (submitted, not executed, not cancelled) at time $t$.
+
+---
+
+## Key Definitions
+
+An order: $x = (p_x,\ w_x,\ t_x)$ — price, size, timestamp
+
+| Symbol | Definition | Formula |
+|---|---|---|
+| $b(t)$ | **Bid** — best buy price | $\max_{x \in B(t)} p_x$ |
+| $a(t)$ | **Ask** — best sell price | $\min_{x \in A(t)} p_x$ |
+| $s(t)$ | **Spread** | $a(t) - b(t) \geq 0$ |
+| $m(t)$ | **Mid-price** | $\dfrac{a(t)+b(t)}{2}$ |
+| $\delta^x$ | **Relative Price** | $b(t)-p_x$ (buy) / $p_x - a(t)$ (sell) |
+| $\pi$ | **Tick** — smallest price increment | — |
+| $N^b(p,t)$ | **Bid depth** | $\sum_{\{x \in B(t)\mid\delta^x=p\}} w_x$ |
+| $N^a(p,t)$ | **Ask depth** | $\sum_{\{x \in A(t)\mid\delta^x=p\}} w_x$ |
+
+---
+
+## Order Types
+
+| Type | Condition (buy) | Execution | Risk |
+|---|---|---|---|
+| **Limit Order** | $p_x \leq b(t)$ or inside the spread | ❌ Deferred | Non-execution (opportunity) |
+| **Market Order** | $p_x \geq a(t)$ | ✅ Immediate | Unfavorable price |
+
+⚠️ **Fundamental arbitrage:** better price ↔ non-execution risk
+
+---
+
+## LOB Evolution — 3 cases (buy)
+
+| Condition | Type | Effect on $b(t)$ |
+|---|---|---|
+| $p_x \leq b(t)$ | Limit | Unchanged |
+| $b(t) < p_x < a(t)$ | Limit | $b(t) \uparrow$ towards $p_x$ |
+| $p_x \geq a(t)$ | Market | Execution at best ask |
+
+---
+
+## Priority Rules
+
+| Rule | Criterion 1 | Criterion 2 | Favors |
+|---|---|---|---|
+| **Price-Time** | Best price | FIFO | Early orders |
+| **Pro-Rata** | Best price | $w / \sum w$ | Large orders |
+| **Price-Size** | Best price | Largest $w$ | Large orders |
+
+---
+
+## Visibility
+
+- **Standard LOB**: published by most exchanges
+- **Iceberg Orders**: partially hidden size
+- **Dark pools**: opaque LOB, fully hidden orders
+
+⚠️ A transparent LOB provides access to far more than $a(t)$ and $b(t)$ — but the dynamics remain poorly understood.
+
+---
+
+## Empirical Facts
+
+| Property | Observation |
+|---|---|
+| **Order Size** | Uniform + concentrated on round values |
+| **Relative Price** $\delta$ | Power law, **fat tails** |
+| **Cancellations** | **70–80 %** of orders cancelled |
+| **Depth** | Fat-tailed distribution |
+| **Price Impact** | $I(\|w\|)$ **concave** in $\|w\|$ |
+
+> **Permanent impact** ← information transmitted to other traders or triggered order cascade.
+
+> **Master Curve** (Lillo et al.): after normalization by market capitalization → universal power law.
+
+---
+
+## Maslov Model
+
+**Algorithm (at each step):**
+
+- Buyer or seller with $p = 0{,}5$
+- Prob. $1-r$ → **market order** $(bid/ask,\ \sigma,\ t_x)$
+- Prob. $r$ → **limit order** $p_x = p' \mp k$ ($k$ random, $p'$ = last price)
+- No cancellation
+
+**Key results:**
+
+| Property | Value / Observation |
+|---|---|
+| Increment distribution | **Non-Gaussian**, fat tails |
+| Volatility | **Clustering** |
+| Hurst exponent $H$ | $\approx 1/4$ (vs $1/2$ for random walk) |
+| Autocorrelation | **Negative** (anti-persistence) |
+
+> $H < 0{,}5$ → **mean-reverting** (anti-persistent) · $H = 0{,}5$ → random walk · $H > 0{,}5$ → trending
+
+---
+
+## Relations between concepts
+
+```{mermaid}
+flowchart LR
+  A[Order submitted] --> B{Matched ?}
+  B -- Yes --> C[Market Order]
+  B -- No --> D[Limit Order]
+  D --> E[Active LOB]
+  E --> F{Cancelled ?}
+  F -- 70-80% --> G[Cancellation]
+  F -- 20-30% --> H[Execution]
+```
+
+---
+
+## Pitfalls to avoid ⚠️
+
+- $s(t) \geq 0$ **always** — if $a(t) < b(t)$, a match would have occurred
+- Limit order ≠ guaranteed execution → **opportunity risk**
+- Price impact **concave**: doubling $|w|$ does **not** double the impact
+- Maslov: homogeneous model → for heterogeneity → **ABM** (Agent-Based Models)
+- Dark pools: opacity ≠ guaranteed efficiency

@@ -1,0 +1,162 @@
+---
+title: "Bonds : Time and Rate Sensitivity — Review"
+---
+
+# Forward Rates (Forward Rates)
+
+## Definition & Key Formula
+
+**Forward rate** : interest rate implicitly contained in the zero-coupon curve for a future period.
+
+$$\boxed{r_{T_1, T_2} = \frac{R_2 T_2 - R_1 T_1}{T_2 - T_1}}$$
+
+- $R_1, R_2$ : zero-coupon rates at maturities $T_1 < T_2$
+- Convention : **continuous compounding**
+
+## No-Arbitrage Logic
+
+Two equivalent strategies over 2 years → same final result :
+
+| Strategy | Calculation |
+|:----------|:-------|
+| Invest 2 years directly | $100 \cdot e^{R_2 \cdot 2}$ |
+| Invest 1 year + forward 1y1 | $100 \cdot e^{R_1} \cdot e^{r_{1,2}}$ |
+
+→ If $r_{1,2}$ deviates → **arbitrage possible** (risk-free profit).
+
+## Numerical Example
+
+| Maturity | Zero rate (%) | Forward rate next year (%) |
+|:--------:|:-------------:|:-------------------------------:|
+| 1 year     | 10,0          | —                               |
+| 2 years    | 10,5          | **11,0**                        |
+| 3 years    | 10,8          | **11,4**                        |
+
+Calculation 1y1 : $\frac{0{,}105 \times 2 - 0{,}10 \times 1}{1} = 11\%$
+
+::: {.callout-tip title="Practical application"}
+**Future mortgage** : loan in 1 year for 10 years → banker uses rates at **1 year** and **11 years**.
+:::
+
+---
+
+# Yield Curve Evolution (Yield Curve Evolution)
+
+| Movement | Description | Economic Signal |
+|:----------|:------------|:------------------|
+| **Parallel shift** (Parallel shift) | All rates move by the same amount | Uniform monetary policy |
+| **Flattening** (Flattening) | Short rates ↑ and/or long rates ↓ | Slowdown anticipated |
+| **Steepening** (Steepening) | Short rates ↓ and/or long rates ↑ | Recovery anticipated |
+
+::: {.callout-note title="Key takeaway"}
+- **Short** end of the curve → driven by **central banks**
+- **Long** end → driven by the **market**
+:::
+
+---
+
+# Duration (Duration)
+
+## Definition — Macaulay Duration
+
+$$\boxed{D = \sum_{i=1}^{n} (t_i - t) \cdot \frac{c_i \, e^{-y(t_i-t)}}{B(t)}}$$
+
+→ Weighted average of payment dates (weights = relative present value of each cash flow).
+
+| Bond Type | Duration |
+|:------------------|:---------|
+| Zero-coupon, maturity $n$ | $D = n$ |
+| Coupon-bearing bond, maturity $n$ | $D < n$ |
+
+## Duration–price relation ⚠️
+
+$$\boxed{\frac{\delta B}{B} \approx -D \cdot \delta y}$$
+
+- Rate rise ($\delta y > 0$) → **price fall**
+- High duration → **strong sensitivity**
+
+## Numerical Validation (example 10 %, 3 years, yield 12 %)
+
+| Parameter | Value |
+|:----------|:------:|
+| Price $B$ | 94,213 USD |
+| Duration $D$ | 2,653 years |
+
+For $\delta y = 0{,}1\%$ → estimate = reality = **−0,250 USD** ✓
+
+For $\delta y = 1{,}0\%$ → estimate = −2,499 USD ≠ actual = −2,464 USD ⚠️
+
+---
+
+# Convexity (Convexity)
+
+## Formula
+
+$$\boxed{C = \frac{1}{B}\frac{\partial^2 B}{\partial y^2} = \sum_{i=1}^{n} \frac{c_i \, t_i^2 \, e^{-y(t_i-t)}}{B}}$$
+
+## 2nd-order approximation
+
+$$\boxed{\frac{\delta B}{B} \approx -D \cdot \delta y + \frac{1}{2} C \cdot (\delta y)^2}$$
+
+For $\delta y = 1\%$, $C = 7{,}570$ → exact result = **−2,464 USD** ✓
+
+::: {.callout-important title="Common pitfall"}
+**Duration alone underestimates** the impact of a large rate shock. Always add convexity for $|\delta y| \geq 0{,}5\%$.
+
+Convexity is **favorable** to the holder : smaller losses / larger gains than linearly predicted.
+:::
+
+---
+
+# Types of Duration
+
+| Type | Formula | Usage |
+|:-----|:--------|:------|
+| **Macaulay** | $D = \sum w_i \cdot t_i$ | Interest rate risk measure |
+| **Modified** (Modified) | $D_{\text{mod}} = \dfrac{D}{1 + y/n_c}$ | Relative rate sensitivity |
+| **Dollar / DV01** | $\text{DV01} = \dfrac{D_{\text{mod}} \cdot B}{100}$ | Portfolio management |
+| **Effective** | Adjusted for embedded options | Callable / putable bonds |
+| **Key Rate** (Key Rate) | Sensitivity by curve segment | Non-parallel shocks |
+
+---
+
+# Portfolio Management
+
+$$D_{\text{portfolio}} = \sum_k w_k \cdot D_k$$
+
+- **Rising rates** → reduce duration (sell long, buy short)
+- **Falling rates** → increase duration
+- Duration ≈ good **volatility proxy** of the portfolio
+- Multi-currency portfolio → duration calculated **by currency**
+
+---
+
+# Relations Between Concepts
+
+```{mermaid}
+graph TD
+    A[Zero-coupon curve] --> B[Forward rates]
+    A --> C[Macaulay duration]
+    C --> D[Modified duration]
+    D --> E[DV01]
+    C --> F[1st-order approximation]
+    G[Convexity] --> H[2nd-order approximation]
+    F --> H
+    A --> I[Curve evolution]
+    I --> J[Parallel shift]
+    I --> K[Flattening]
+    I --> L[Steepening]
+```
+
+---
+
+# Formulas to Remember Absolutely
+
+| Formula | Meaning |
+|:--------|:--------------|
+| $r = \dfrac{R_2 T_2 - R_1 T_1}{T_2 - T_1}$ | Forward rate between $T_1$ and $T_2$ |
+| $\dfrac{\partial B}{\partial y} = -B \cdot D$ | Price/rate derivative |
+| $\dfrac{\delta B}{B} \approx -D \cdot \delta y$ | 1st-order approximation |
+| $\dfrac{\delta B}{B} \approx -D \cdot \delta y + \dfrac{1}{2}C(\delta y)^2$ | 2nd-order approximation |
+| $D_{\text{mod}} = \dfrac{D}{1 + y/n_c}$ | Modified duration |
+| $\text{DV01} = \dfrac{D_{\text{mod}} \cdot B}{100}$ | Dollar duration |

@@ -1,0 +1,236 @@
+---
+title: "Sustainable Investing and ESG — Review"
+---
+
+## Context & Motivation
+
+::: {.callout-warning title="Key figures to remember"}
+- **−69 %**: drop in the Living Planet Index (*Global Living Planet Index*) between 1970 and 2020
+- **+1 °C**: rise in global temperatures above the 1951–1980 baseline
+- Heat records: **2016** and **2020**
+:::
+
+**Central question**: Faced with crises (climate, biodiversity, inequality, governance), can finance help through **capital allocation**?
+
+---
+
+## Terminology — Synonyms
+
+| French term | English term |
+|---|---|
+| Finance durable | Sustainable Finance |
+| Investissement ESG | ESG Investing |
+| Investissement socialement responsable (ISR) | Socially Responsible Investing (SRI) |
+| Finance verte | Green Finance |
+| Investissement responsable | Responsible Investment |
+| Risque climatique | Climate Risk |
+| Développement durable | Sustainable Development |
+
+::: {.callout-note title="To remember"}
+All these terms converge towards the same concept: integrating **non-financial** criteria into investment decisions.
+:::
+
+---
+
+## The 3 ESG Pillars (MSCI 2023)
+
+### Structure: 3 pillars → 10 themes → 37 key issues
+
+| Pillar | Themes |
+|---|---|
+| **E — Environmental** | Climate change · Natural resources · Pollution & Waste · Environmental opportunities |
+| **S — Social** | Human capital · Product responsibility · Stakeholder opposition · Social opportunities |
+| **G — Governance** | Corporate governance ★★ · Corporate behaviour |
+
+**★** = universal issue (all companies in the MSCI index)
+
+**★★** = Board, Pay, Ownership, Accounting → directly contribute to the G score
+
+### Selected key issues
+
+**E**: Carbon emissions ★, Water Stress ★, Toxic Emissions ★, Clean Tech, Green Building
+
+**S**: Labor Management ★, Health & Safety ★, Product Safety, Privacy & Data Security
+
+**G**: Board ★★, Pay ★★, Business Ethics ★, Anti-Competitive Practices ★, Tax Transparency ★
+
+---
+
+## ESG Scoring
+
+### Principles
+
+- **Numerous systems**: MSCI, Sustainalytics, S&P Global, Refinitiv, Bloomberg, ISS ESG
+- **Positive correlation** but **real divergence** between raters (*rating disagreement*)
+- Example: R² ≈ **0.32** between Sustainalytics and MSCI (S&P 1200, Jan. 2016)
+
+### MSCI Scale (since 2023)
+
+$$\text{ESG Score} = \text{weighted average}(E,\ S,\ G)$$
+
+| Rating | Meaning |
+|---|---|
+| **AAA / AA** | ESG Leader |
+| **A / BBB / BB** | Average |
+| **B / CCC** | ESG Laggard |
+
+::: {.callout-warning title="Pitfall"}
+The score corresponds to a **relative ranking** within the sector — not an absolute measure of environmental virtue.
+:::
+
+- **Trend**: ESG scores increase over time (Lundström 2021) → real improvement + reporting effect
+
+### Carbon Emissions — Scopes
+
+| Scope | Content | Example |
+|---|---|---|
+| **1** | Direct emissions | Boilers, vehicle fleet |
+| **2** | Indirect energy consumed | Purchased electricity |
+| **3** | All other upstream/downstream emissions | Product use by customers |
+
+::: {.callout-warning title="Pitfall"}
+Scope 3 is often the largest but the hardest to measure — ignoring it skews the analysis.
+:::
+
+### ITR Score (*Implied Temperature Rise*)
+
+- Implied temperature rise if all companies behaved like the one analysed
+- **Target**: ≤ 1.5 °C (Paris Agreement)
+- High score (3–4 °C) = very concerning
+
+### SDGs (*Sustainable Development Goals*)
+
+17 UN objectives (2015, horizon 2030) — now **quantified** in portfolio analyses
+
+| No. | Objective | No. | Objective |
+|---|---|---|---|
+| 1 | No poverty | 10 | Reduced inequalities |
+| 2 | Zero hunger | 11 | Sustainable cities |
+| 3 | Good health & well-being | 12 | Responsible consumption |
+| 4 | Quality education | 13 | Climate action |
+| 5 | Gender equality | 14 | Life below water |
+| 6 | Clean water | 15 | Life on land |
+| 7 | Clean energy | 16 | Peace & justice |
+| 8 | Decent work | 17 | Partnerships |
+| 9 | Industry & innovation | | |
+
+---
+
+## The 7 ESG Strategies (Eurosif, 2019)
+
+| # | Strategy | Short description |
+|---|---|---|
+| 1 | **Exclusion** | Exclude sectors / normative / worst-in-class |
+| 2 | **Values** (*Norms-based*) | Filter according to international standards (UN, ILO) |
+| 3 | **Positive selection** (*Best-in-class*) | Overweight ESG leaders by sector |
+| 4 | **Thematic** | Steer towards sustainable themes (e.g. green bonds) |
+| 5 | **Integration** | ESG integrated into the entire management process |
+| 6 | **Engagement** | Voting at AGMs + dialogue with management |
+| 7 | **Impact** | Measurable, intentional and additional impact |
+
+### Key points by strategy
+
+**Exclusion** → simple to implement · does not change the company · possible sector bias
+
+**Best-in-class** → maintains diversification · a company can be "better" while still polluting
+
+**Integration** → ESG = long-term financial risk · ESG benchmarks · dashboards
+
+**Engagement** → resource-intensive · often mutualised (coalitions) · long-term results
+
+**Impact** → 3 conditions: **intentionality** + **measurability** + **additionality**
+
+---
+
+## Practical case: compenswiss (end 2022)
+
+### The 4 axes
+
+| Axis | Concrete actions |
+|---|---|
+| **1. Integration** | ESG benchmarks · ESG Dashboard · Swiss Climate Scores |
+| **2. Voting** | ~100 AGMs/year in Switzerland · external consultant · defined voting rules |
+| **3. Engagement** | Via ASIR (co-founded) · 150+ issuers · themes: human rights, labour, environment |
+| **4. Exclusions** | ~100 companies · normative + coal (threshold lowered 50 % → 30 %) |
+
+### Carbon footprint analysis (June 2020 – Dec. 2022)
+
+- Unit: **tCO₂e / M$ invested**
+- Trajectories: Portfolio > Benchmark > Ideal benchmark
+- General trend: **decreasing** for all three curves
+- Visible impact of lowering the coal threshold
+
+::: {.callout-note title="Key lesson"}
+Without ESG data and tools → no steering possible. **Coverage** (% of assets with ESG data) and **time traversal** are critical operational issues.
+:::
+
+### Engagement via ASIR
+
+- Total number of cases: **rising** (driven by human rights)
+- Thematic distribution: **stable** (ethics, environment, labour)
+- Engagement = **long-term** process
+
+### Voting in Switzerland
+
+- Share "all motions accepted": **rising** (law on abusive remuneration)
+- Share "one motion rejected": **stable** (mainly executive remuneration)
+
+---
+
+## Relations between concepts
+
+```{mermaid}
+flowchart LR
+    A[Global crises
+Climate · Biodiversity · Social] --> B[Sustainable finance]
+    B --> C[Measurement: ESG / SDGs / ITR / Scope 1-2-3]
+    C --> D[Data & Tools]
+    D --> E[Strategies]
+    E --> E1[Exclusion]
+    E --> E2[Best-in-class]
+    E --> E3[Integration]
+    E --> E4[Engagement]
+    E --> E5[Impact]
+```
+
+---
+
+## Critical Points / Pitfalls
+
+::: {.callout-warning title="Pitfalls to avoid"}
+
+- **Rater divergence**: an ESG score varies by provider → do not treat a single score as absolute truth
+
+- **Relative ≠ Absolute**: being "best-in-class" in a polluting sector does not mean being virtuous in absolute terms
+
+- **Greenwashing**: a company can communicate on SDGs without real action — validate with third-party data
+
+- **Scope 3 ignored**: often the most important perimeter, but also the hardest to measure
+
+- **Rising scores over time**: may reflect real improvement OR simply better reporting
+
+- **Engagement ≠ immediate result**: the impact of shareholder dialogue is measured over several years
+
+:::
+
+---
+
+## Final Summary
+
+::: {.callout-note title="Essential messages"}
+
+1. Current human activities **are not sustainable**
+
+2. Finance **cannot solve everything** but can steer capital
+
+3. **ESG** = 3 pillars · 10 themes · 37 issues · relative sector-based scoring
+
+4. **Scopes 1/2/3** and **ITR** = tools for measuring climate impact
+
+5. **7 strategies** exist, often combined in practice
+
+6. **ESG data** is central: coverage, quality, temporality
+
+7. Sustainable finance = **young, growing, standardising** field
+
+:::

@@ -1,9 +1,13 @@
 project:
   type: website
   title: "Computational Finance"
-  output-dir: ../_site
+  output-dir: ../_site/en
 
 website:
+  title: "Computational Finance"
+  page-footer:
+    center: "Copyright © 2026 University of Geneva"
+
   navbar:
     search: true
     right:
@@ -13,30 +17,165 @@ website:
           - text: "English"
             href: index.html
           - text: "French"
-            href: fr/index.html
+            href: ../fr/index.html
+
   sidebar:
     style: docked
     search: true
     
     contents:
       - section: "Course"
-        contents: "ch*.qmd"
-      - section: "Exercises"
-        contents: "ex*.qmd"
+        contents: 
+          - section: "1. Swiss System and Returns"
+            contents:
+              - text: "Details"
+                href: ch1.qmd
+              - text: "Review"
+                href: ch1r.qmd
+              - text: "Quiz"
+                href: ch1q.qmd
+              - text: "Exam"
+                href: ch1e.qmd
+          - section: "2. Time Series and Autoregressive Models"
+            contents:
+              - text: "Details"
+                href: ch2.qmd
+              - text: "Review"
+                href: ch2r.qmd
+              - text: "Quiz"
+                href: ch2q.qmd
+              - text: "Exam"
+                href: ch2e.qmd
+          - section: "3. Markets and Behaviors"
+            contents:
+              - text: "Details"
+                href: ch3.qmd
+              - text: "Review"
+                href: ch3r.qmd
+              - text: "Quiz"
+                href: ch3q.qmd
+              - text: "Exam"
+                href: ch3e.qmd
+          - section: "4. Data, Moving Average and Intrinsic Time"
+            contents:
+              - text: "Details"
+                href: ch4.qmd
+              - text: "Review"
+                href: ch4r.qmd
+              - text: "Quiz"
+                href: ch4q.qmd
+              - text: "Exam"
+                href: ch4e.qmd
+          - section: "5. Limit Order Book"
+            contents:
+              - text: "Details"
+                href: ch5.qmd
+              - text: "Review"
+                href: ch5r.qmd
+              - text: "Quiz"
+                href: ch5q.qmd
+              - text: "Exam"
+                href: ch5e.qmd
+          - section: "6. Algorithmic Execution"
+            contents:
+              - text: "Details"
+                href: ch6.qmd
+              - text: "Review"
+                href: ch6r.qmd
+              - text: "Quiz"
+                href: ch6q.qmd
+              - text: "Exam"
+                href: ch6e.qmd
+          - section: "7. Portfolio Construction"
+            contents:
+              - text: "Details"
+                href: ch7.qmd
+              - text: "Review"
+                href: ch7r.qmd
+              - text: "Quiz"
+                href: ch7q.qmd
+              - text: "Exam"
+                href: ch7e.qmd
+          - section: "8. Agent-Based Models"
+            contents:
+              - text: "Details"
+                href: ch8.qmd
+              - text: "Review"
+                href: ch8r.qmd
+              - text: "Quiz"
+                href: ch8q.qmd
+              - text: "Exam"
+                href: ch8e.qmd
+          - section: "9. Options — Basic Concepts"
+            contents:
+              - text: "Details"
+                href: ch9.qmd
+              - text: "Review"
+                href: ch9r.qmd
+              - text: "Quiz"
+                href: ch9q.qmd
+              - text: "Exam"
+                href: ch9e.qmd
+          - section: "10. Options — Greeks"
+            contents:
+              - text: "Details"
+                href: ch10.qmd
+              - text: "Review"
+                href: ch10r.qmd
+              - text: "Quiz"
+                href: ch10q.qmd
+              - text: "Exam"
+                href: ch10e.qmd
+          - section: "11. Bonds — Basic Concepts"
+            contents:
+              - text: "Details"
+                href: ch11.qmd
+              - text: "Review"
+                href: ch11r.qmd
+              - text: "Quiz"
+                href: ch11q.qmd
+              - text: "Exam"
+                href: ch11e.qmd
+          - section: "12. Bonds — Time and Rate Sensitivities"
+            contents:
+              - text: "Details"
+                href: ch12.qmd
+              - text: "Review"
+                href: ch12r.qmd
+              - text: "Quiz"
+                href: ch12q.qmd
+              - text: "Exam"
+                href: ch12e.qmd
+          - section: "13. Futures, Forwards and ESG"
+            contents:
+              - text: "Details"
+                href: ch13.qmd
+              - text: "Review"
+                href: ch13r.qmd
+              - text: "Quiz"
+                href: ch13q.qmd
+              - text: "Exam"
+                href: ch13e.qmd
+          - section: "14. Alternative Data and Retrospective"
+            contents:
+              - text: "Details"
+                href: ch14.qmd
+              - text: "Review"
+                href: ch14r.qmd
+              - text: "Quiz"
+                href: ch14q.qmd
+              - text: "Exam"
+                href: ch14e.qmd
 
 format:
   html:
     theme:
-      light: flatly
-      dark: darkly
+      dark: ../macchiato.scss
+      light: ../latte.scss
     toc: true
     embed-resources: true
-  # pdf:
-  #   toc: true
-  # docx:
-  #   toc: true
 
+# execute:
+#   enabled: false
 
-
-# filters:
-#   - diagram
+# Mermaid diagrams are rendered natively by Quarto; no external filter needed.

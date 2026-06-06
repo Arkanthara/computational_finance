@@ -1,0 +1,158 @@
+---
+title: "Returns and Time Value of Money — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+You invest 1 000 CHF in January. In December, you have 1 100 CHF.
+Great! But your friend says he earned "10 % per month" — should you believe him?
+And your bank advertises "10 % annual, compounded daily" — how much is that, exactly?
+
+This chapter answers a single obsession: **how to measure, compare and compound monetary gains over time** — without getting trapped by numbers that seem simple but aren't.
+The golden rule: **we don't sum, we multiply** (for simple returns) — and we take the log to make life easier.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- A **return** measures a relative price variation — always in %.
+- Simple returns over multiple periods **compound** (multiplication), they do not sum.
+- **Logarithmic** (continuous) returns are additive over time — but not across assets in a portfolio.
+- Money has a **time value**: 1 CHF today is worth more than 1 CHF tomorrow.
+- The more frequent the compounding, the higher the future value — the limit being **continuous** compounding ($e^{rn}$).
+- The continuous rate $r$ is **always lower** than the corresponding simple rate $R$.
+- Investing abroad exposes to **FX risk** on top of the asset's risk.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | Oral explanation in 1 sentence | Intuition |
+|---------|----------------------------------|-----------|
+| **Simple return** (*Simple return*) | Relative price variation between two dates | $(60 - 50) / 50 = 20\%$ |
+| **Compounding** (*Compounding*) | Multi-period returns multiply, not add | Each period, you earn on an already increased capital |
+| **Portfolio return** (*Portfolio return*) | Weighted average of individual returns | $R_p = \sum \alpha_i R_i$ with $\sum \alpha_i = 1$ |
+| **Annualization** (*Annualisation*) | Convert any return to an annual basis to compare | $(1 + R_m)^{12} - 1$, not $12 \times R_m$ |
+| **Time value** (*Time value of money*) | 1 CHF today is worth more than 1 CHF tomorrow | Available money can be invested |
+| **Continuous compounding** (*Continuous compounding*) | Mathematical limit when compounding infinitely often | $PV \cdot e^{Rn}$ — theoretical tool, not realistic |
+| **Continuous rate** (*Continuous rate*) | Logarithmic equivalent of the simple rate | $r = \ln(1+R)$ → always $r < R$ |
+| **Log return** (*Log return*) | Difference of consecutive price logarithms | Symmetric and additive over time |
+| **FX risk** (*FX risk*) | Exchange rate variation affecting NAV in local currency | A USD asset can lose value in CHF even if its price rises in USD |
+| **FX hedging** (*FX hedging*) | Opposite currency position to neutralize FX risk | Like insurance — reduces volatility but has a cost |
+| **NAV** (*Net Asset Value*) | Total portfolio value: positions × price × FX + cash | The thermometer of portfolio health |
+
+---
+
+## 🔗 Concept Mind Map
+
+```{mermaid}
+graph TD
+    A["Price P(t)"] --> B["Simple return R"]
+    A --> C["Log return r"]
+    B --> D["Multi-period → PRODUCT"]
+    C --> E["Multi-period → SUM"]
+    B --> F["Portfolio → Σ αᵢRᵢ ✅"]
+    C --> G["Portfolio → Σ αᵢrᵢ ❌"]
+    B --> H["Annualization → (1+Rm)^12 - 1"]
+    B <--> C
+    C --> I["r = ln(1+R) → r < R"]
+    J["Time value"] --> K["Discrete: PV·(1+R)^n"]
+    J --> L["Continuous: PV·e^rn"]
+    K <--> L
+    M["FX investment"] --> N["NAV = position × price × FX + cash"]
+    N --> O["Equity risk + FX risk"]
+    O --> P["Hedging possible but costly"]
+```
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+|---------|---------|-------------|
+| $R_1(t) = \dfrac{P(t)}{P(t-1)} - 1$ | 1-period simple return | Foundation of everything |
+| $1 + R_n = \displaystyle\prod_{i=0}^{n-1}(1+R_i)$ | Compounding over $n$ periods | **Product**, never sum |
+| $R_p = \displaystyle\sum_{i=1}^{n} \alpha_i R_i$ | Portfolio return | Linear in $R$, not in $r$ |
+| $R_a = (1+R_m)^{12} - 1$ | Annualization from monthly | Exponent 12, not ×12 |
+| $FV = PV \cdot (1+R)^n$ | Future value — discrete | Classic compounding |
+| $FV = PV \cdot e^{rn}$ | Future value — continuous | Mathematical limit |
+| $r = \ln(1+R)$ | Simple rate → continuous | $r < R$ always |
+| $r(t) = \ln P_t - \ln P_{t-1}$ | 1-period log-return | Difference of logs |
+| $r_n(t) = \displaystyle\sum_{i=0}^{n-1} r_i$ | $n$-period log-return | **Sum** (not product) |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- **Summing simple returns**: $20\% + 16.7\% + 14.3\% = 50.9\%$ ≠ $60\%$ — always compound.
+- **Asymmetry of simple returns**: $+20\%$ then $-20\%$ does **not** bring back to the initial price ($100 \to 120 \to 96$).
+- **Annualization by multiplication**: $R_a \neq 12 \times R_m$ — use $(1+R_m)^{12}-1$.
+- **Confusing $r$ and $R$**: $r = \ln(1+R) < R$ — the continuous rate is always smaller.
+- **Additivity of log-returns for portfolios**: $r_p \neq \sum \alpha_i r_i$ — additivity is **temporal**, not cross-sectional.
+- **Ignoring FX risk**: a USD asset that rises can yield a falling CHF NAV if the dollar depreciates.
+- **FX hedging eliminates all risk**: false — it has a cost (rate differential) and does not eliminate equity risk.
+- **Continuous compounding is realistic**: no — it's a theoretical mathematical tool, the limit of infinite frequency.
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** Why can't we simply add simple returns over multiple periods?
+
+**Short answer:** Because each return applies to a different capital — already revalued by previous periods. The correct operation is the product: $1 + R_n = \prod(1 + R_i)$.
+
+---
+
+**Q:** What is the difference between simple return and log-return?
+
+**Short answer:** The simple return $R = P_t/P_{t-1} - 1$ is asymmetric and compounds by product. The log-return $r = \ln(P_t/P_{t-1})$ is symmetric and adds over time. Relation: $r = \ln(1+R) < R$.
+
+---
+
+**Q:** Why is $r < R$?
+
+**Short answer:** Because the logarithm is a concave function: $\ln(1+x) < x$ for all $x > 0$. Example: $R = 10\%$, $r = \ln(1.1) \approx 9.53\%$.
+
+---
+
+**Q:** What is the time value of money?
+
+**Short answer:** 1 CHF today is worth more than 1 CHF tomorrow, because it can be invested. The future value is $FV = PV \cdot (1+R)^n$ in discrete, $PV \cdot e^{rn}$ in continuous.
+
+---
+
+**Q:** How do you annualize a monthly return?
+
+**Short answer:** By compounding: $R_a = (1+R_m)^{12} - 1$. Multiplying by 12 is only an approximation valid for very small returns.
+
+---
+
+**Q:** A CHF investor buys AAPL shares (in USD). What risks is he exposed to?
+
+**Short answer:** Two risks: equity risk (variation of AAPL price in USD) and FX risk (USD/CHF variation). The CHF NAV depends on both simultaneously.
+
+---
+
+**Q:** Can FX risk be eliminated? At what price?
+
+**Short answer:** Yes, by hedging with an opposite USD position. The cost is the interest rate differential between the two currencies. Advantage: less volatile NAV because only one risk remains.
+
+---
+
+**Q:** Is the continuous return of a portfolio the weighted average of individual log-returns?
+
+**Short answer:** No. $r_p = \ln(1 + \sum \alpha_i R_i) \neq \sum \alpha_i r_i$. The additivity of log-returns applies to time (successive periods), not to assets in a portfolio.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+::: {.callout-note title="Chapter Essentials"}
+- **Simple returns** → multi-period = **product** ($\prod$) · portfolio = $\sum \alpha_i R_i$ ✅
+- **Log-returns** → multi-period = **sum** ($\sum$) · portfolio ≠ $\sum \alpha_i r_i$ ❌
+- **Annualization** → $(1+R_m)^{12} - 1$ · never $\times 12$
+- **Time value** → discrete : $(1+R)^n$ · continuous : $e^{rn}$ · relation : $r = \ln(1+R) < R$
+- **Simple asymmetry**: $+20\%$ then $-20\%$ ≠ back to zero
+- **FX investment** → NAV = position × price × exchange rate + cash · 2 risks : equity + FX
+- **FX hedging** → reduces volatility · cost = rate differential · equity risk remains
+:::

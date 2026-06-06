@@ -1,0 +1,713 @@
+---
+title: "Portfolio Construction"
+---
+
+# Introduction
+
+A **portfolio** is a set of financial assets of potentially different natures — stocks, bonds, real estate, commodities, etc. — held simultaneously by an investor.
+
+## Why Build a Portfolio?
+
+The fundamental objective is to create an **investment vehicle more robust than an isolated asset**.
+
+The notion of "robustness" varies according to the investor's profile. It may designate:
+
+- The maximization of the return/risk ratio (Sharpe ratio or information ratio)
+- The minimization of the *drawdown* (maximum loss observed over a period)
+- The minimization of the recovery time after a loss (*time-to-recovery*), linked to liquidity
+- Other investor-specific objectives
+
+::: {.callout-tip title="Intuition"}
+Holding several different assets allows smoothing fluctuations: when one loses value, another may gain or remain stable. This is the principle of **diversification**.
+:::
+
+## The Challenges of Portfolio Construction
+
+Building a good portfolio is not trivial. The main challenges are:
+
+- **Characterizing assets**: identifying relevant risk measures for each asset
+- **Modeling future returns**: forecasting expected returns is notoriously difficult
+- **Managing changing correlations**: in crisis periods, correlations between assets tend to increase sharply, reducing the diversification effect when it is most needed
+- **Taking investor behaviors into account**: psychological biases influence decisions
+
+---
+
+# Modern Portfolio Theory (MPT)
+
+## Origins and Context
+
+**Modern Portfolio Theory (MPT)**, known in French as *Théorie Moderne du Portefeuille (TPM)*, was introduced by **Harry Markowitz** in **1952** in his seminal article.
+
+This contribution earned him the **Nobel Prize in Economics in 1990**, jointly with Merton Miller and William Sharpe.
+
+::: {.callout-note title="Key takeaway"}
+MPT remains today one of the reference theoretical frameworks for portfolio management, despite its simplifying assumptions (normality of returns, stability of correlations, etc.).
+:::
+
+## The Central Idea: Diversification
+
+The key concept of MPT is **diversification**.
+
+By selecting assets of **different natures** — that is, whose returns do not vary identically — an investor can:
+
+- **Partially offset the risk** of one asset with another
+- **Preserve the returns** of each
+
+::: {.callout-tip title="Intuition"}
+If asset A falls during a recession but asset B remains stable or rises (for example, gold in a crisis), holding them together reduces the overall volatility of the portfolio without necessarily sacrificing the average return.
+:::
+
+---
+
+# Asset Return and Risk
+
+## Expected Return of an Asset
+
+The **expected return** of an asset $i$, denoted $E[R_i]$, is an estimate of the future return of that asset.
+
+There are several methods to estimate it:
+
+### Historical Approach
+
+The simplest method consists in calculating the **arithmetic mean of past returns** over a time window $T$:
+
+$$
+E[R_i] = \frac{1}{T} \sum_{t=1}^{T} R_i(t)
+$$
+
+This approach relies on the assumption that **history repeats itself**, which is a strong and often debatable assumption.
+
+### Model-Based Approaches
+
+More sophisticated models allow integrating more information:
+
+**Fundamental models**: they use the nature of the asset (dividends, coupons, financial ratios) and macroeconomic variables to estimate **long-term** returns.
+
+**Opportunistic models**: in addition to macro variables, they incorporate **short-term subjective views** on market evolution.
+
+::: {.callout-warning title="Attention — Art or science?"}
+Practitioners often say: *"Expected returns are more an art than a science."*
+
+This step is nonetheless crucial: a poor estimation of expected returns can lead to very suboptimal allocations. It is the most delicate part of the entire process.
+:::
+
+## Variance and Volatility of an Asset
+
+The **risk** of an asset is measured by its **variance**, or its **volatility** which is its square root.
+
+Variance is generally calculated from historical data:
+
+$$
+\text{Var}(R_i) = \frac{1}{T} \sum_{t=1}^{T} \left( R_i(t) - E[R_i] \right)^2
+$$
+
+::: {.callout-tip title="Intuition"}
+Variance measures how much an asset's returns deviate from their average. The larger the variance, the riskier the asset (its returns are unpredictable).
+:::
+
+Models can also be used to estimate future volatility (e.g. GARCH), but the historical approach remains the most widespread in practice.
+
+---
+
+# Portfolio Return and Variance
+
+## Asset Weights
+
+A portfolio of $N$ assets is defined by a **weight vector** $\mathbf{w} = (w_1, w_2, \ldots, w_N)^T$ such that:
+
+$$
+\sum_{i=1}^{N} w_i = 1
+$$
+
+Each $w_i$ represents the **fraction of capital invested** in asset $i$.
+
+::: {.callout-note title="Key takeaway"}
+Weights can be positive (long position) or negative (short selling). In the simplest case, one imposes $0 \leq w_i \leq 1$.
+:::
+
+## Portfolio Return
+
+The portfolio return at date $t$ is the **weighted linear combination** of the asset returns:
+
+$$
+R_p(t) = \sum_{i=1}^{N} w_i R_i(t)
+$$
+
+Its **expected return** is then, thanks to the linearity of expectation:
+
+$$
+E[R_p] = \sum_{i=1}^{N} w_i E[R_i]
+$$
+
+This relation follows directly from the property:
+
+$$
+E[aX + bY] = aE[X] + bE[Y]
+$$
+
+::: {.callout-tip title="Intuition"}
+The expected portfolio return is simply the weighted average of the expected returns of its components. This is intuitive — but the magic of diversification operates on **risk**, not on return.
+:::
+
+## Portfolio Variance
+
+The **portfolio variance** is more complex. It involves the **covariances between assets**:
+
+$$
+\text{Var}(R_p) = \sigma_p^2 = \sum_{i=1}^{N} \sum_{j=1}^{N} w_i w_j \, \text{Cov}(R_i, R_j)
+$$
+
+The **covariance** between two assets is defined as:
+
+$$
+\text{Cov}(X, Y) = E\left[(X - E[X])(Y - E[Y])\right]
+$$
+
+This formula generalizes the property:
+
+$$
+\text{Var}(aX + bY) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab\,\text{Cov}(X, Y)
+$$
+
+::: {.callout-tip title="Intuition"}
+The portfolio variance depends not only on the individual risks of each asset, but also on how their returns evolve **together**. If two assets rise and fall at the same time (positive covariance), they offer no diversification. If they move in opposite directions (negative covariance), they offset each other.
+:::
+
+### Required Data
+
+The **covariance matrix** is generally estimated from historical data.
+
+::: {.callout-warning title="Attention — Sample size"}
+To statistically reliably estimate a covariance matrix of $N$ assets, one needs **at least $N^2 / 2$ observations**. For 20 assets, this represents a minimum of 200 data points per asset. A history that is too short makes the estimation unreliable.
+:::
+
+## Compact Matrix Form
+
+In matrix notation, the portfolio variance is written very compactly:
+
+$$
+\sigma_p^2 = \mathbf{w}^T \mathbf{C} \, \mathbf{w}
+$$
+
+where $\mathbf{C}$ is the **covariance matrix**.
+
+### Example for $N = 2$ assets
+
+For two assets, we develop explicitly:
+
+$$
+\sigma_p^2 =
+\begin{pmatrix} w_1 & w_2 \end{pmatrix}
+\begin{pmatrix} \sigma_{11} & \sigma_{12} \\ \sigma_{21} & \sigma_{22} \end{pmatrix}
+\begin{pmatrix} w_1 \\ w_2 \end{pmatrix}
+= w_1^2 \sigma_1^2 + w_1 w_2(\sigma_{12} + \sigma_{21}) + w_2^2 \sigma_2^2
+$$
+
+where $\sigma_{ii} = \sigma_i^2$ is the variance of asset $i$.
+
+---
+
+# Correlation
+
+## Definition
+
+The **correlation** between two assets $i$ and $j$ is defined as the normalized covariance:
+
+$$
+\rho_{ij} = \frac{\text{Cov}(R_i, R_j)}{\sigma_i \sigma_j} = \frac{E\left[(R_i - E[R_i])(R_j - E[R_j])\right]}{\sqrt{\text{Var}(R_i)} \sqrt{\text{Var}(R_j)}}
+$$
+
+By definition, the correlation of an asset with itself is:
+
+$$
+\rho_{ii} = 1
+$$
+
+And one can express the covariance from the correlation:
+
+$$
+\text{Cov}(R_i, R_j) = \rho_{ij} \sigma_i \sigma_j
+$$
+
+## Interpretation
+
+The correlation is always between $-1$ and $+1$:
+
+- $\rho = +1$ : the assets move **perfectly together** (no diversification)
+- $\rho = 0$ : the assets are **independent** (partial diversification)
+- $\rho = -1$ : the assets move in **perfectly opposite directions** (maximum diversification, possible risk cancellation)
+
+::: {.callout-tip title="Intuition"}
+The covariance matrix encodes all the relationships between assets. Combined with expected returns and individual volatilities, it contains all the information necessary to search for optimal allocations.
+:::
+
+---
+
+# 2-Asset Portfolio — Diversification Analysis
+
+## Reference Case: Same Risk, Same Return, Same Weights
+
+Let us start with a simple case to illustrate the effect of correlation.
+
+We fix:
+
+- $E[R_1] = E[R_2] = 0.20$ (identical expected return)
+- $\sigma_1 = \sigma_2 = 0.10$ (identical volatility)
+- $w_1 = w_2 = 0.50$ (equal weights)
+
+Only the correlation $\rho_{12}$ varies.
+
+The portfolio volatility is given by:
+
+$$
+\sigma_P = \sqrt{w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2 w_1 w_2 \rho_{12} \sigma_1 \sigma_2}
+$$
+
+### Results by Correlation
+
+**a) $\rho_{12} = 1$**
+
+$$
+\sigma_P = \sqrt{(w_1 \sigma_1 + w_2 \sigma_2)^2} = w_1 \sigma_1 + w_2 \sigma_2 = 0.10
+$$
+
+The portfolio volatility is equal to the **weighted average** of the volatilities. Combining the two assets brings **no diversification benefit**.
+
+**b) $\rho_{12} = 0.5$**
+
+$$
+\sigma_P \approx 0.0866
+$$
+
+**c) $\rho_{12} = 0$**
+
+$$
+\sigma_P \approx 0.0707
+$$
+
+**d) $\rho_{12} = -0.5$**
+
+$$
+\sigma_P = 0.05
+$$
+
+**e) $\rho_{12} = -1$**
+
+$$
+\sigma_P = |w_1 \sigma_1 - w_2 \sigma_2| = 0.0
+$$
+
+With perfectly negatively correlated assets and the same weights/volatility, the portfolio risk is **completely cancelled**!
+
+::: {.callout-warning title="Attention — Ideal case and real case"}
+A correlation of $-1$ is extremely rare in practice. It remains a theoretical limit case to illustrate the maximum potential of diversification.
+:::
+
+## General Case: Asymmetric Assets
+
+Let us now consider two assets with different characteristics:
+
+- $E[R_1] = 0.10$, $E[R_2] = 0.20$
+- $\sigma_1 = 0.07$, $\sigma_2 = 0.10$
+- $w_1 = w_2 = 0.50$
+
+The portfolio expected return is fixed: $E[R_P] = 0.15$.
+
+The volatilities by correlation are:
+
+| Correlation | Volatility $\sigma_P$ |
+|:-----------:|:--------------------:|
+| $\rho = 1$ | 0.085 |
+| $\rho = 0.5$ | 0.074 |
+| $\rho = 0$ | 0.061 |
+| $\rho = -0.5$ | 0.044 |
+| $\rho = -1$ | 0.015 |
+
+::: {.callout-note title="Key takeaway"}
+Even with a correlation of $-1$, if the volatilities of the two assets are different, the portfolio risk is **not entirely cancelled**. A residual risk remains proportional to $|w_1 \sigma_1 - w_2 \sigma_2|$.
+:::
+
+## Effect of Variable Weights
+
+When **varying the weights** $w_1$ and $w_2$ (while maintaining $w_1 + w_2 = 1$), the portfolio describes a **curve in the (risk, return) space**.
+
+These curves form **ellipses** linking the two pure assets through the different correlation levels:
+
+- For $\rho = 1$ : the curve is a straight line (no diversification)
+- For decreasing $\rho$ : the curve bends to the left, revealing portfolios with less risk for the same return
+
+::: {.callout-tip title="Intuition"}
+The lower the correlation (even negative), the more the curve bends to the left. It is this curvature that represents the **diversification gain**: one can obtain the same return with less risk, or more return for the same risk.
+:::
+
+---
+
+# The Efficient Frontier
+
+## From a 2-Asset Portfolio to an $N$-Asset Portfolio
+
+Generalizing to $N$ assets, one can build **all possible combinations** of asset pairs, then triplets, etc.
+
+The set of all feasible portfolios forms a **cloud of points** in the (risk, return) space. The upper-left envelope of this cloud is called the **efficient frontier**.
+
+::: {.callout-note title="Key takeaway"}
+The **efficient frontier** is the set of portfolios that **maximize expected return for a given level of risk** — or equivalently, that **minimize risk for a given level of return**.
+:::
+
+## Graphical Interpretation
+
+Consider three portfolios A, B, and C in the (risk, return) space:
+
+- **A** is on the efficient frontier (low risk)
+- **B** is on the efficient frontier (high return)
+- **C** is inside the cloud (suboptimal portfolio)
+
+**A is better than C** : A offers the same return as C, but with **less risk** ($\sigma_P$ lower).
+
+**B is better than C** : B offers the same risk as C, but with **more return** ($E[R_p]$ higher).
+
+::: {.callout-tip title="Intuition"}
+No rational investor would choose C if he can obtain A or B. The choice between A and B depends on the investor's **risk tolerance**:
+- A conservative investor will prefer A (less risk, less return)
+- An aggressive investor will prefer B (more return, more risk)
+:::
+
+---
+
+# Methods for Calculating the Efficient Frontier
+
+## Overview of Approaches
+
+Three major families of methods allow calculating the efficient frontier:
+
+1. **Monte-Carlo** : brute-force approach
+2. **Closed-Form** : exact mathematical solution
+3. **Numerical Optimisation** : the most widespread practical approach
+
+## Monte-Carlo Method
+
+### Principle
+
+The Monte-Carlo approach consists in:
+
+1. Randomly drawing weight vectors $\mathbf{w}$ whose components sum to 1
+2. Calculating the return and risk of the corresponding portfolio
+3. Placing the point $(\sigma_P, E[R_P])$ on a graph
+4. Repeating a very large number of times
+
+### Results and Limits
+
+Applying this to 4 fictitious assets with **5 million draws** shows that:
+
+- The cloud of points reveals the general shape of the feasible region
+- Asset 4 (the riskiest) is at the rightmost end of the cloud
+- Less risky assets are inefficient at 100% allocation (visible by the ellipses around them)
+
+::: {.callout-warning title="Limits of the Monte-Carlo approach"}
+This method has several major drawbacks:
+
+- It is **very computationally expensive**: millions of draws are necessary, and this number grows with the number of assets
+- It is **inefficient**: extreme risk zones (very low or very high) are under-represented
+- It **does not guarantee** finding the true efficient frontier — it only approximates the feasible region
+:::
+
+## Closed-Form Solution
+
+### Problem Formulation
+
+By minimizing $\mathbf{w}^T \mathbf{C} \mathbf{w}$ under the constraint $\sum_i w_i = 1$, one can derive an **exact analytical solution** via Lagrange multipliers.
+
+One defines the following scalars:
+
+$$
+a = \mathbf{1}^T \mathbf{C}^{-1} \mathbf{1}, \quad b = \mathbf{1}^T \mathbf{C}^{-1} \boldsymbol{\mu}
+$$
+
+$$
+c = \boldsymbol{\mu}^T \mathbf{C}^{-1} \boldsymbol{\mu}, \quad d = a \cdot c - b^2
+$$
+
+where $\boldsymbol{\mu} = (E[R_1], E[R_2], \ldots)^T$ and $\mathbf{1} = (1, 1, \ldots)^T$.
+
+### Lagrange Multipliers
+
+$$
+\lambda_1 = \frac{c - b \cdot \mu_P}{d}, \quad \lambda_2 = \frac{a \cdot \mu_P - b}{d}
+$$
+
+### Optimal Weight Solution
+
+$$
+\mathbf{w} = \mathbf{C}^{-1}(\lambda_1 \mathbf{1} + \lambda_2 \boldsymbol{\mu})
+$$
+
+The associated minimum variance is:
+
+$$
+\sigma^2 = \mathbf{w}^T \mathbf{C} \mathbf{w} = \lambda_1 + \lambda_2 \mu_P
+$$
+
+where $\mu_P$ is the target expected return of the portfolio.
+
+### Practical Observations
+
+The analytical solution produces:
+
+- An efficient frontier that **passes above** the Monte-Carlo cloud
+- Weights that can be **negative or greater than 1** (short selling, leverage), leading to portfolios with even higher returns
+- If one **caps allocations** between 0 and 1, the frontier becomes more constrained and cannot reach high risk levels
+
+::: {.callout-warning title="Sign constraints"}
+Allowing negative weights amounts to permitting **short selling**, which is not always feasible in practice (regulation, costs). Constraining weights between 0 and 1 represents a *long only* portfolio.
+:::
+
+## Numerical Optimisation
+
+### Why Numerical Optimisation?
+
+It is the most used method in practice, because it is:
+
+- **Simple to implement** with standard libraries (e.g. `scipy.optimize`)
+- **Flexible** : it allows easily adding realistic constraints
+- **Efficient** : it requires only a small number of calls to the objective function
+
+### Problem Formulation
+
+One solves the following minimization problem:
+
+$$
+\min_{\mathbf{w}} \left[ \mathbf{w}^T \mathbf{C} \mathbf{w} - q \mathbf{w}^T \boldsymbol{\mu} \right]
+$$
+
+under the constraints:
+
+$$
+\mathbf{1}^T \mathbf{w} = 1 \quad \text{and} \quad 0 \leq w_i \leq 1
+$$
+
+where $q \in [0, +\infty)$ is a **risk parameter** that allows navigating along the efficient frontier:
+
+- $q = 0$ : one minimizes only risk → **minimum variance** portfolio
+- $q \to \infty$ : one maximizes only return → **maximum return** portfolio
+
+::: {.callout-tip title="Intuition"}
+By varying $q$ from 0 to $+\infty$, one progressively traces the **efficient frontier** from the least risky portfolio to the maximum return portfolio.
+:::
+
+### Implementation in Python
+
+The code uses:
+
+- `sci.Bounds` to impose $0 \leq w_i \leq 1$
+- `sci.LinearConstraint` to impose $\mathbf{1}^T \mathbf{w} = 1$
+- `sci.minimize` with the `'trust-constr'` method
+- A loop over $q \in \{0, 0.5, 1, \ldots, 50\}$
+
+```python
+import scipy.optimize as sci
+import numpy as np
+
+# Definition of bounds and linear constraint
+bounds = sci.Bounds([0, 0, 0, 0], [1.0, 1.0, 1.0, 1.0])
+linear_constraint = sci.LinearConstraint([1, 1, 1, 1], [1], [1])
+
+# Objective function
+def to_minimise(x, q):
+    return cov.dot(x).dot(x) - q * er.dot(x)
+
+# Calculation of the efficient frontier
+eff_risk = []
+eff_ret = []
+w_optim = []
+
+for q in np.arange(0, 50, 0.5):
+    x0 = np.array([1, 1, 1, 1]) / 3
+    res = sci.minimize(to_minimise, x0, method='trust-constr',
+                       bounds=bounds,
+                       constraints=linear_constraint,
+                       options={'verbose': 0},
+                       args=(q))
+    eff_risk += [np.sqrt(cov.dot(res.x).dot(res.x))]
+    eff_ret += [er.dot(res.x)]
+    w_optim += [res.x]
+```
+
+### Results Without Constraints
+
+Without additional constraints (only $\sum w_i = 1$ and $0 \leq w_i \leq 1$):
+
+- The efficient frontier coincides with the upper boundary of the Monte-Carlo cloud
+- It goes from the **minimum risk** portfolio to the riskiest asset (here asset 4 at 100%)
+- Allocations to less risky assets progressively decrease as risk increases
+
+### Results With Constraints
+
+One can impose more realistic constraints, for example:
+
+- $10\% \leq w_1 \leq 100\%$
+- $5\% \leq w_2 \leq 100\%$
+- $0\% \leq w_3 \leq 25\%$
+- $0\% \leq w_4 \leq 90\%$
+
+Observed effects:
+
+- The **constrained efficient frontier is lower** than the unconstrained frontier
+- It cannot reach very high risk levels (those of pure asset 4 at 100%)
+- The constraints reflect realistic limits imposed by regulation or investment policy
+
+::: {.callout-note title="Key takeaway — Advantage of numerical optimisation"}
+Numerical optimisation allows very easily integrating complex constraints:
+per-asset bound constraints, sector constraints, liquidity constraints, etc. This is why it is the reference method in the industry.
+:::
+
+---
+
+# Risk-Free Asset and Capital Market Line (CML)
+
+## The Risk-Free Asset
+
+A **risk-free asset** is a financial instrument whose return is certain, without volatility.
+
+In practice, these are **short-term sovereign bonds** issued by a central bank (e.g. US Treasury bills, German Bundesanleihen). The default risk of a State is considered **negligible** and approximated to zero.
+
+::: {.callout-note title="Key takeaway"}
+The risk-free asset serves as a base reference. Its return $r$ is low but guaranteed. It is not correlated with the other assets ($\rho_{rf, P} = 0$) and its variance is zero ($\sigma_{rf}^2 = 0$).
+:::
+
+## Combining the Risk-Free Asset with a Portfolio
+
+By combining the risk-free asset (weight $w_{rf}$) and a risky portfolio $P_0$ (weight $1 - w_{rf}$), one obtains a new portfolio $P_1$.
+
+### Expected Return of $P_1$
+
+$$
+E[R_{P_1}] = w_{rf} \, E[r] + (1 - w_{rf}) \, E[R_{P_0}]
+$$
+
+### Risk of $P_1$
+
+By developing the variance:
+
+$$
+\sigma_{P_1}^2 = w_{rf}^2 \underbrace{\sigma_{rf}^2}_{=0} + (1 - w_{rf})^2 \sigma_{P_0}^2 + 2 w_{rf}(1 - w_{rf}) \underbrace{\rho_{rf, P_0}}_{=0} \sigma_{rf} \sigma_{P_0}
+$$
+
+Only remains:
+
+$$
+\sigma_{P_1} = (1 - w_{rf}) \, \sigma_{P_0}
+$$
+
+::: {.callout-tip title="Intuition"}
+The **risk** and the **return** of $P_1$ are both **linear combinations** of those of the risk-free asset and portfolio $P_0$. In the (risk, return) space, the combined portfolios lie on a **straight line** linking the risk-free asset to portfolio $P_0$.
+:::
+
+## The Capital Market Line (CML)
+
+The **CML (Capital Market Line)** is the tangent line to the efficient frontier passing through the risk-free asset point.
+
+The tangent portfolio (the tangency point) is called the **market portfolio**.
+
+::: {.callout-note title="Key takeaway"}
+The CML represents the best possible combination between return and risk:
+
+- **Below the CML** : suboptimal portfolios (one can do better)
+- **On the CML** : optimal combinations risk-free asset + market portfolio
+- **Beyond the tangent portfolio** : use of leverage (borrowing to invest more)
+:::
+
+### Investment Decision
+
+The choice of portfolio on the CML depends on:
+
+- The investor's **risk appetite**
+- The **level of $r$** (the risk-free return)
+- The investor's ability to **hold cash** (position below the tangent portfolio)
+- The ability to use **leverage** (position beyond the tangent portfolio)
+
+::: {.callout-tip title="Intuition"}
+A conservative investor will place part of his capital in the risk-free asset and the rest in the tangent portfolio. An aggressive investor can borrow to invest more than 100% in the tangent portfolio — which amplifies both return and risk.
+:::
+
+---
+
+# Typical Allocation of a Swiss Pension Fund
+
+## Institutional Context
+
+A **pension fund** is an institutional investor that manages the retirement savings of its members.
+
+Unlike an ordinary investment fund, a Swiss pension fund is subject to strict **regulatory constraints** (notably OPP2 — Ordinance on Occupational Pension) which dictate the maximum allocation limits by asset class.
+
+Moreover, the relative size of the Swiss market obliges a significant **geographic diversification**.
+
+## Simplified Typical Allocation
+
+A typical allocation of a Swiss pension fund decomposes as follows:
+
+| Asset Class | Allocation |
+|:----------------|:----------:|
+| CH Bonds | 10% |
+| Foreign Bonds | 35% |
+| Equities | 25% |
+| Real Estate | 15% |
+| Commodities | 10% |
+| Alternatives | 5% |
+| **Total** | **100%** |
+
+### Equity Breakdown
+
+The 25% equity pocket subdivides by geographic zone:
+
+| Zone | Allocation |
+|:-----|:----------:|
+| CH Equities | 4% |
+| EU Equities | 8% |
+| Emerging Markets Equities | 3% |
+| US Equities | 10% |
+| **Total** | **25%** |
+
+### Foreign Exchange Exposure Management
+
+Geographic diversification generates **foreign currency exposures**, which can be partially hedged:
+
+| Currency | Gross Exposure | Residual Exposure (after hedging) |
+|:-------|:----------------:|:----------------------------------------:|
+| EUR | 25% | 3% |
+| USD | 35% | 8% |
+| Emerging Markets | 20% | 4% |
+| **Total** | **80%** | **15%** |
+
+::: {.callout-note title="Key takeaway"}
+Foreign exchange exposures **add on top** of the 100% allocation (they are not part of the 100% — they are managed separately via hedging instruments). FX hedging can be optimized or applied according to empirical rules.
+:::
+
+### Alternative Assets and Commodities
+
+- **Commodities** : may include gold, precious metals, oil, or agricultural products. Their low correlation with traditional assets makes them good diversifiers.
+
+- **Alternatives** : allocations to hedge funds, venture capital, infrastructure, etc.
+
+---
+
+# Key Takeaways
+
+::: {.callout-note title="Chapter summary"}
+
+- A **portfolio** groups several assets to create an investment vehicle more robust than a single asset.
+
+- **Diversification** is the central concept: combining weakly correlated assets reduces overall risk without necessarily reducing expected return.
+
+- **Markowitz's Modern Portfolio Theory** (1952) remains the reference framework for portfolio construction.
+
+- The **efficient frontier** represents the set of allocations that maximize return for a given risk (or minimize risk for a given return).
+
+- The efficient frontier is generally calculated by **numerical optimisation**, which allows easily integrating realistic constraints on weights.
+
+- The introduction of a **risk-free asset** and the **CML** allows identifying the tangent portfolio and guiding the investor's choice according to his risk appetite.
+
+:::
+
+::: {.callout-tip title="Final intuition"}
+Diversification is the only "free lunch" in finance. It allows reducing risk at no cost in expected return — provided one chooses assets sufficiently weakly correlated with each other.
+:::

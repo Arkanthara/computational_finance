@@ -1,0 +1,191 @@
+---
+title: "Options — Review"
+---
+
+## Essential Definitions
+
+| Term | Definition |
+|---|---|
+| **Option** | Right (not obligation) to buy or sell an asset at a fixed price (*strike* $K$) until *maturity* $T$ |
+| **Call** | Right to **buy** at strike $K$ |
+| **Put** | Right to **sell** at strike $K$ |
+| **Premium** | Price of the option (cost of insurance) |
+| **European** | Exercise **only at** $T$ |
+| **American** | Exercise **at any time** until $T$ |
+
+---
+
+## The 4 Positions
+
+| Position | Pays | Receives | Max Loss | Max Gain |
+|---|---|---|---|---|
+| **Long call** | Premium $c$ | — | $c$ | Unlimited |
+| **Short call** | — | Premium $c$ | **Unlimited** ⚠️ | $c$ |
+| **Long put** | Premium $p$ | — | $p$ | $K - p$ |
+| **Short put** | — | Premium $p$ | $K - p$ | $p$ |
+
+::: {.callout-warning title="Pitfall"}
+The **short call** is the only position with **theoretically unlimited** loss.
+:::
+
+---
+
+## Payoffs at Maturity
+
+| Position | Payoff |
+|---|---|
+| Long call | $\max(S_T - K,\ 0)$ |
+| Short call | $-\max(S_T - K,\ 0)$ |
+| Long put | $\max(K - S_T,\ 0)$ |
+| Short put | $-\max(K - S_T,\ 0)$ |
+
+**Profit = Payoff − Premium**
+
+---
+
+## Moneyness
+
+| State | Call | Put |
+|---|---|---|
+| **In the money (ITM)** | $S_0 > K$ | $S_0 < K$ |
+| **At the money (ATM)** | $S_0 = K$ | $S_0 = K$ |
+| **Out of the money (OTM)** | $S_0 < K$ | $S_0 > K$ |
+
+---
+
+## Variables Influencing the Price
+
+| Variable | ↑ Call | ↑ Put |
+|---|---|---|
+| Current price $S_0$ ↑ | ↑ | ↓ |
+| Strike $K$ ↑ | ↓ | ↑ |
+| Maturity $T$ ↑ | ↑ | ↑ |
+| Volatility $\sigma$ ↑ | ↑ | ↑ |
+| Rate $r$ ↑ | ↑ | ↓ |
+| Dividend ↑ | ↓ | ↑ |
+
+::: {.callout-tip title="Key takeaway"}
+Volatility $\sigma$ increases the value of **both types** of options.
+:::
+
+---
+
+## Price Bounds (No-Arbitrage)
+
+$$S_0 - Ke^{-rT} \leq c \leq S_0$$
+
+$$Ke^{-rT} - S_0 \leq p \leq K$$
+
+**Discounting reminder :** $p_0 = p_T \cdot e^{-rT}$
+
+---
+
+## Put-Call Parity
+
+$$\boxed{c + Ke^{-rT} = p + S_0}$$
+
+- No-arbitrage equilibrium condition
+- Allows synthesizing one instrument from the other three
+- **Long put + asset = call-like** (illustrates parity)
+
+---
+
+## Key Strategies
+
+| Strategy | Construction | Expectation |
+|---|---|---|
+| **Bull spread (calls)** | Long call $K_1$ + Short call $K_2$, $K_2 > K_1$ | Moderate rise |
+| **Bull spread (puts)** | Long put $K_1$ + Short put $K_2$, $K_2 > K_1$ | Moderate rise |
+| **Long butterfly** | Long $K_1$ + 2 Short $K_2$ + Long $K_3$ | Low volatility, stability |
+| **Protective put** | Long asset + Long put | Protection against decline |
+
+---
+
+## Pricing — Binomial Tree
+
+**1-step structure :**
+
+- $S_0 \cdot u$ (up) with probability $p$
+- $S_0 \cdot d$ (down) with probability $1-p$, $u = 1/d$
+
+**Hedge delta :**
+
+$$\Delta = \frac{f_u - f_d}{S_0 u - S_0 d}$$
+
+**Risk-Neutral Probability :**
+
+$$p = \frac{e^{rT} - d}{u - d}$$
+
+**Option price :**
+
+$$\boxed{f = e^{-rT}\left[p \cdot f_u + (1-p) \cdot f_d\right]}$$
+
+**Calibration :**
+
+$$u = e^{\sigma\sqrt{T}}, \quad d = e^{-\sigma\sqrt{T}}$$
+
+::: {.callout-warning title="Complexity"}
+$n$ steps → $2^n$ paths. At 30 steps : $\approx 10^9$ paths → memory intensive.
+:::
+
+---
+
+## Pricing — Black-Scholes (BS)
+
+**Call :**
+
+$$c = S_0 N(d_1) - Ke^{-rT} N(d_2)$$
+
+**Put :**
+
+$$p = Ke^{-rT} N(-d_2) - S_0 N(-d_1)$$
+
+**With :**
+
+$$d_1 = \frac{\ln(S_0/K) + (r + \sigma^2/2)T}{\sigma\sqrt{T}}, \quad d_2 = d_1 - \sigma\sqrt{T}$$
+
+$N(x)$ = standard normal cumulative distribution function $\mathcal{N}(0,1)$
+
+| BS Assumption | Reality |
+|---|---|
+| $\sigma$ constant | Varies with $K$ and $T$ |
+| Log-normal returns | Fat tails |
+
+---
+
+## Binomial vs Black-Scholes
+
+| Criterion | Binomial | Black-Scholes |
+|---|---|---|
+| Option type | Vanilla **and** exotic | Vanilla only |
+| Formula | Numerical / recursive | Closed-form analytical |
+| Convergence | → BS as $n \to \infty$ | Reference |
+| Complexity | Exponential in $n$ | Instantaneous |
+
+---
+
+## Implied Volatility & Smile
+
+- **Implied Volatility** : $\sigma$ extracted from BS by fixing the market price.
+- Theoretically constant per BS → **in practice : no**.
+- **Smile** : implied $\sigma$ higher for deeply OTM or ITM options.
+- **Volatility surface** : smile as a function of $K$ **and** $T$.
+
+::: {.callout-warning title="Pitfall"}
+The volatility smile is proof that BS is a **model**, not reality. Never forget its limits.
+:::
+
+---
+
+## Reference Numerical Example
+
+**Data :** $S_0 = 20$, $K = 21$, $T = 3/12$, $u = 1.1$, $d = 0.909$, $r = 12\%$
+
+| Calculation | Value |
+|---|---|
+| $f_u = \max(22-21, 0)$ | $1$ USD |
+| $f_d = \max(18.2-21, 0)$ | $0$ USD |
+| $p = (e^{0.03} - 0.909) / 0.191$ | $\approx 0.636$ |
+| $f = e^{-0.03}(0.636 \times 1)$ | $\approx 0.617$ USD |
+| $\Delta = 1/(22-18.2)$ | $\approx 0.262$ |
+| BS : $c$ | $\approx 0.593$ USD |

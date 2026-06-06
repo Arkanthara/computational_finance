@@ -1,0 +1,194 @@
+---
+title: "Algorithmic Execution — Review"
+---
+
+## Fundamental Concepts
+
+**Market Impact** = price disturbance caused by one's own order
+
+$$\text{Impact} = \underbrace{\text{Temporary Impact}}_{\text{reversible}} + \underbrace{\text{Permanent Impact}}_{\text{permanent}}$$
+
+**Golden rule**: do not disturb the market with your own activity.
+
+---
+
+## Key Actors
+
+| Actor | Role |
+|--------|------|
+| Analyst | Generates buy/sell ideas |
+| Portfolio Manager | Optimization, risk control |
+| In-house Trader | Pre-trade, broker selection, execution |
+| Broker / Sell-side | Execution, reporting |
+
+**Execution channels**: A = Manual Trader · B = DMA · C/D = Algo · E = Sponsored Access
+
+---
+
+## The 9 Algorithms — Synthetic View
+
+| Algo | Focus | Risk | Cost |
+|------|-------|--------|------|
+| **MC** Market Close | Closing price | ↓ low | ↑ high |
+| **IS** Implementation Shortfall | Decision/execution gap | ↓ | ↑ |
+| **AS** Adaptive Shortfall | IS + price reaction | ↓↑ | ↑↓ |
+| **POV** Percentage of Volume | % of actual volume | ↕ | ↕ |
+| **PI** Price Inline | Price vs benchmark | ↕ | ↕ |
+| **TWAP** Time Weighted Avg Price | Regular time | ↑ | ↕ |
+| **VWAP** Volume Weighted Avg Price | Historical intraday volume profile | ↑ | ↕ |
+| **LIQ** Liquidity Driven | Liquidity + favorable price | ↑ | ↓ |
+| **MI** Minimal Impact | Dark pools, minimal impact | ↑↑ high | ↓ low |
+
+---
+
+## Essential Formulas
+
+**VWAP benchmark**:
+
+$$\text{VWAP} = \frac{\sum_i p_i v_i}{\sum_i v_i}$$
+
+**TWAP** — number of slices:
+
+$$n = \frac{t_1 - t_0}{\Delta t} + 1 \quad \Rightarrow \quad w_i = \frac{w}{n}$$
+
+**POV** — slice size:
+
+$$w_i = \alpha \cdot v_i$$
+
+**POV** — self-participation correction:
+
+$$\tilde{\alpha} = \frac{\alpha}{1 - \alpha} \quad \text{ex: } \alpha=5\% \Rightarrow \tilde{\alpha}=5.3\%$$
+
+**Risk aversion**:
+
+$$\lambda = \frac{\text{cost}}{\text{risk}}$$
+
+---
+
+## Algorithms — Quick Reference Cards
+
+### TWAP
+
+- **Equal** slices in time, independent of price and volume
+- ✅ Simple · ❌ Predictable · ❌ Ignores the market
+- Variants: **+noise** on time/sizes · **aggressive** (start) or **passive** (end) profile
+
+### VWAP
+
+- Follows **historical** intraday volume profile
+- Buying **below VWAP** = good execution
+- ❌ Total volume known only at end of day → uses historical data
+- ❌ Price not guaranteed · ❌ No real-time reaction
+
+### POV
+
+- Size proportional to **observed actual volume**
+- Typical $\alpha$: 1 % (small) to 20 % (large)
+- Similar to VWAP but **dynamic** · Always predictable
+
+### MI
+
+- Uses **dark pools** (opaque markets) + hidden orders
+- Risk: low **completion rate**
+- Often hybrid: 20 % via public VWAP/POV + remainder in dark pool
+
+### IS
+
+- Minimizes: **execution price − decision price**
+- Arbitrage: market impact ↔ timing risk
+- Favors execution **early** in session · Inputs: volatility, risk aversion
+
+### AS
+
+| Type | Behavior | Assumption |
+|------|-------------|-----------|
+| **AIM** Aggressive In-the-Money | Aggressive if prices favorable | **Ephemeral** trend → mean reversion |
+| **PIM** Passive In-the-Money | Aggressive if prices unfavorable | **Persistent** trend → act fast |
+
+### MC
+
+- Target: **closing price** (widely used as benchmark)
+- Too early → timing risk · Too late → high impact
+- Optimal horizon = f(volatility, volume)
+
+### PI
+
+- Adapts activity according to **current price / benchmark gap**
+- Strategy A (counter-trend) · Strategy P (trend-following)
+- Generally used in **A** mode (counter-trend)
+
+### LIQ
+
+- Trades **only** if: liquidity available **AND** favorable price
+- Fragmented markets → difficult evaluation
+- ⚠️ Illiquid assets: risk of price displacement
+
+---
+
+## Transaction Costs
+
+### Typical Decomposition
+
+| Cost | Explicit | Implicit | Typical share |
+|------|-----------|-----------|-----------|
+| Taxes | ✓ | | 0 % |
+| Delay cost | | ✓ | 24 % |
+| Broker commission | ✓ | | 1 % |
+| Fees | ✓ | | 2 % |
+| Bid-ask spread | | ✓ | 4 % |
+| Market impact | | ✓ | 6 % |
+| Price trend | | ✓ | 14 % |
+| **Timing risk** | | ✓ | **40 %** |
+| Opportunity cost | | ✓ | 9 % |
+
+⚠️ **Timing risk = dominant cost (40 %)** · Liquidity and volatility = hardest variables to estimate.
+
+---
+
+## Efficient Frontier
+
+- Algorithms plotted in **cost vs risk** space
+- Frontier = set of algos **minimizing cost for a given risk**
+- Algorithms **above the frontier** = inefficient
+
+**Order on the frontier** (↑ cost, ↓ risk → ↓ cost, ↑ risk):
+
+$$MC \to IS \to AS \to POV \to PI \to VWAP \to LIQ \to MI$$
+
+⚠️ **TWAP is off the frontier** → inefficient in most cases.
+
+---
+
+## Risk Aversion — Algorithm Choice
+
+$$\lambda = \frac{\text{cost}}{\text{risk}} \quad \text{(slope of the line tangent to the frontier)}$$
+
+| $\lambda$ | Profile | Preferred algorithms |
+|-----------|--------|----------------------|
+| ↑ high | High risk aversion | MC, IS |
+| ↕ medium | Balanced | AS, POV, PI |
+| ↓ low | Low risk aversion | LIQ, MI |
+
+💡 The optimal algorithm = **tangency point** between the line of slope $\lambda$ and the efficient frontier.
+
+---
+
+## Portfolio Trading — Key Points
+
+- **Simultaneous** orders on multiple assets to maintain diversification
+- ⚠️ Sequential execution → temporary incorrect exposure to benchmark
+- **In-house**: integrated portfolio risk algorithms (meta-algorithms)
+- **Via broker**: risk of **confidentiality** (exposure of portfolio composition)
+
+---
+
+## Pitfalls and Critical Points
+
+| ⚠️ Pitfall | Explanation |
+|----------|-------------|
+| TWAP predictable | Front-running possible if regular intervals |
+| VWAP unknown volume | Uses historical data → possible deviation |
+| MI low completion | Dark pool may not fill the order |
+| MC delicate timing | Neither too early (timing risk) nor too late (impact) |
+| POV self-impact | Correct with $\tilde{\alpha}$ if $\alpha$ high |
+| TWAP off frontier | Do not use by default without a reason for simplicity |

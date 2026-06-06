@@ -1,0 +1,153 @@
+---
+title: "Returns and Time Value of Money — Review"
+---
+
+## 3-Pillar System
+
+| Pillar | Name | Components | Objective |
+|--------|------|------------|-----------|
+| **1st** | State pension | AVS · IAI · PC | Minimum subsistence |
+| **2nd** | Occupational pension | LPP · LAA | Maintaining standard of living |
+| **3rd** | Private pension | 3a (linked) · 3b (free) | Supplementary needs |
+
+::: {.callout-note title="Key figure"}
+Elderly >65 years threatened by poverty : **51 % in 1979 → ~15–20 % today**
+:::
+
+---
+
+## Simple Returns
+
+### Fundamental Formulas
+
+**1 period :**
+
+$$R_1(t) = \frac{P(t)}{P(t-1)} - 1 \qquad \Leftrightarrow \qquad 1 + R_1(t) = \frac{P(t)}{P(t-1)}$$
+
+**$n$ periods — multiplicative compounding :**
+
+$$1 + R_n(t) = \prod_{i=0}^{n-1}\bigl(1 + R_1(t-i)\bigr)$$
+
+**Portfolio ($n$ assets, $\sum\alpha_i = 1$) :**
+
+$$R_p = \sum_{i=1}^{n} \alpha_i R_i$$
+
+### Numerical Example
+
+| Time | 1 | 2 | 3 | 4 |
+|------|---|---|---|---|
+| Price | 10 | 12 | 14 | 16 |
+| $R_1$ | — | 20% | 16,7% | 14,3% |
+
+- **Sum** : $20\% + 16.7\% + 14.3\% = 50.9\%$ ❌
+- **Product** : $(1.20)(1.167)(1.143) - 1 = 60\%$ ✅
+
+::: {.callout-warning title="Trap — Never sum simple returns"}
+Multi-period simple returns **compound** (product), they do **not sum**.
+:::
+
+::: {.callout-warning title="Trap — Asymmetry"}
+$+20\%$ then $-20\%$ **≠** back to starting point. Rise from 50 → 60 (+20%), return : 60 → 50 (−16,7%).
+:::
+
+---
+
+## Annualisation
+
+| Base | Formula |
+|------|---------|
+| Monthly → Annual | $R_a = (1 + R_m)^{12} - 1$ |
+| Daily → Annual | $R_a = (1 + R_d)^{256} - 1$ |
+
+::: {.callout-warning title="Trap — Do not simply multiply"}
+$R_a \neq 12 \times R_m$ · Always use compounding · Convention : 250 / 256 / 300 days depending on markets.
+:::
+
+---
+
+## Time Value of Money
+
+### Discrete vs Continuous Compounding
+
+| Frequency | Formula | Value (PV=1000, R=10%, n=1) |
+|-----------|---------|------------------------------|
+| Annual | $PV(1+R)^n$ | 1 100,0 CHF |
+| Quarterly | $PV(1+R/4)^{4n}$ | 1 103,8 CHF |
+| Daily | $PV(1+R/365)^{365n}$ | 1 105,2 CHF |
+| **Continuous** | $PV \cdot e^{Rn}$ | **1 105,2 CHF** |
+
+### Simple rate ↔ continuous rate relation
+
+$$r = \ln(1+R) \quad \Longrightarrow \quad r < R$$
+
+$$R = e^r - 1$$
+
+**Example :** $R = 10\%$ → $r = \ln(1.10) = 9.53\%$
+
+::: {.callout-note title="Key takeaway"}
+Continuous compounding = **theoretical** tool (exponential more convenient analytically), not realistic in practice.
+:::
+
+---
+
+## Continuous / Logarithmic Returns
+
+### Formula
+
+$$r(t) = \ln\!\left(\frac{P_t}{P_{t-1}}\right) = \ln P_t - \ln P_{t-1}$$
+
+### Simple vs logarithmic comparison
+
+| Property | Simple returns | Log returns |
+|----------|----------------|-------------|
+| Multi-period | **Product** $\prod(1+R_i)$ | **Sum** $\sum r_i$ |
+| Portfolio | $R_p = \sum\alpha_i R_i$ ✅ | $r_p \neq \sum\alpha_i r_i$ ⚠️ |
+| Symmetry | ❌ Asymmetric | ✅ Symmetric |
+| Range | $]-1,+\infty[$ | $]-\infty,+\infty[$ |
+
+::: {.callout-important title="Temporal additivity of log-returns"}
+$r_n(t) = \displaystyle\sum_{i=0}^{n-1} r_1(t-i)$ — valid **only** for temporal aggregation, **not** for portfolios.
+:::
+
+---
+
+## Bookkeeping
+
+### NAV formula with foreign asset
+
+$$\text{NAV (CHF)} = \text{position} \times \text{price (USD)} \times \text{USDCHF} + \text{Cash (CHF)}$$
+
+### Summary of 4 cases
+
+| Case | Fixed FX ? | Hedged ? | P&L | Risks exposed |
+|------|-----------|----------|-----|---------------|
+| CHF → CHF asset | — | — | +105 CHF | Equity only |
+| CHF → USD asset, fixed FX | ✅ | ❌ | +9 CHF | Equity only |
+| CHF → USD asset, variable FX | ❌ | ❌ | −0,8 CHF | Equity **+** FX |
+| CHF → USD asset, variable FX | ❌ | ✅ | +7,6 CHF | Equity only (hedge cost = 2,4 CHF) |
+
+::: {.callout-warning title="Trap — Currency risk"}
+Even if the asset price in USD returns to its initial level, the **NAV in CHF can be lower** if the dollar depreciated in the meantime.
+:::
+
+::: {.callout-note title="FX Hedging"}
+- **Principle** : short USD position to neutralise FX risk
+- **Advantage** : reduces NAV volatility
+- **Cost** : interest rate differential between the two currencies
+:::
+
+---
+
+## Summary of key formulas
+
+| Concept | Formula |
+|---------|---------|
+| Simple return 1 period | $R_1(t) = P(t)/P(t-1) - 1$ |
+| Simple return $n$ periods | $1 + R_n = \prod(1+R_i)$ |
+| Portfolio return | $R_p = \sum\alpha_i R_i$ |
+| Annualisation (monthly) | $R_a = (1+R_m)^{12} - 1$ |
+| Discrete compounding | $FV = PV(1+R)^n$ |
+| Continuous compounding | $FV = PV \cdot e^{Rn}$ |
+| Continuous ↔ simple rate | $r = \ln(1+R)$ |
+| Log-return 1 period | $r(t) = \ln(P_t/P_{t-1})$ |
+| Log-return $n$ periods | $r_n(t) = \sum r_i(t)$ |

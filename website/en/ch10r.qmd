@@ -1,0 +1,194 @@
+---
+title: "Option Greeks — Review"
+---
+
+## Greeks — Overview
+
+| Greek | Symbol | Definition | BS Formula (call) |
+|---------|---------|-----------|-------------------|
+| Delta | Δ | $\partial c / \partial S$ | $N(d_1)$ |
+| Gamma | Γ | $\partial \Delta / \partial S = \partial^2 c / \partial S^2$ | $N'(d_1) / (S_0 \sigma \sqrt{T})$ |
+| Theta | Θ | $\partial c / \partial t$ | $-\frac{S_0 N'(d_1)\sigma}{2\sqrt{T}} - rKe^{-rT}N(d_2)$ |
+| Vega | ν | $\partial c / \partial \sigma$ | — |
+| Rho | ρ | $\partial c / \partial r$ | — |
+
+::: {.callout-note title="Put vs. Call"}
+$\Delta_p = N(d_1) - 1$ | $\Theta_p = -\frac{S_0 N'(d_1)\sigma}{2\sqrt{T}} + rKe^{-rT}N(-d_2)$ | $\Gamma$ **identical** for call and put
+:::
+
+---
+
+## Black-Scholes Reminder
+
+$$c = S_0 N(d_1) - Ke^{-rT}N(d_2) \qquad p = Ke^{-rT}N(-d_2) - S_0 N(-d_1)$$
+
+$$d_1 = \frac{\ln(S_0/K) + (r + \sigma^2/2)T}{\sigma\sqrt{T}} \qquad d_2 = d_1 - \sigma\sqrt{T}$$
+
+$$N'(x) = \frac{1}{\sqrt{2\pi}}e^{-x^2/2}$$
+
+---
+
+## Hedging Strategies — Comparison
+
+| Strategy | Principle | Main Risk |
+|-----------|---------|-----------------|
+| Naked (Naked) | Do nothing | Unlimited loss if $S_T \gg K$ |
+| Covered (Covered) | Buy shares at $t=0$ | Capital tied up, loss if $S_T \ll S_0$ |
+| Stop-loss | Buy if $S_t > K$, sell if $S_t < K$ | High transaction costs, oscillations around $K$ |
+| **Delta hedge** | Hold $\Delta$ shares per option | Continuous rebalancing required |
+
+::: {.callout-important title="Pitfall — Stop-loss"}
+$\text{stop-loss cost} = \max(S_0 - K, 0) \neq c_{\text{BS}}$ because : (1) discounting of cash flows, (2) ambiguity at point $S_t = K$.
+:::
+
+---
+
+## Delta (Δ)
+
+**Value ranges :**
+
+- Call : $\Delta_c \in [0, 1]$
+- Put : $\Delta_p \in [-1, 0]$
+- Relation : $\Delta_c - \Delta_p = 1$
+
+**Behavior by moneyness :**
+
+| Moneyness | $\Delta_c$ (approx.) |
+|-----------|---------------------|
+| OTM ($S \ll K$) | $\approx 0$ |
+| ATM ($S \approx K$) | $\approx 0{,}5$ |
+| ITM ($S \gg K$) | $\approx 1$ |
+
+**Delta Hedge — shares to trade :**
+
+| Position | Buy | Sell |
+|----------|---------|--------|
+| Short call | — | $\Delta_c \times N_{\text{options}}$ |
+| Long call | $\Delta_c \times N_{\text{options}}$ | — |
+| Short put | $|\Delta_p| \times N_{\text{options}}$ | — |
+| Long put | — | $|\Delta_p| \times N_{\text{options}}$ |
+
+::: {.callout-tip title="Quick example"}
+Short 2 000 calls, $\Delta_c = 0{,}6$ → buy $1\,200$ shares.
+If $S : 100 \to 101$ → $c : 10 \to 10{,}6$ → profit $= 1200 \times 1 - 2000 \times 0{,}6 = 0$ ✓
+:::
+
+---
+
+## Theta (Θ)
+
+**General rule :** $\Theta < 0$ (time decay)
+
+**Exceptions** (Θ can be > 0) :
+
+- European put without dividend (deep ITM option)
+- Call with very high rate $r$
+
+**Behavior by moneyness ($T \to 0$) :**
+
+| Moneyness | $\Theta$ as $T \to 0$ |
+|-----------|------------------------|
+| OTM | $\to 0$ |
+| ITM | Plateau (intrinsic value dominates) |
+| ATM | **Diverges to $-\infty$** ⚠️ |
+
+::: {.callout-important title="Θ cannot be hedged"}
+Time is certain → no hedging possible. Θ is the **daily cost** of holding a long option.
+:::
+
+---
+
+## Gamma (Γ)
+
+**Key property :** $\Gamma > 0$ **always** (long position)
+
+**Behavior :**
+
+- **Maximum** when ATM
+- **Explodes** when ATM and $T \to 0$ ⚠️
+- $\to 0$ at maturity for ITM/OTM
+
+**Taylor expansion (price approximation) :**
+
+$$\boxed{\delta c \approx \Theta\,\delta t + \Delta\,\delta S + \tfrac{1}{2}\Gamma\,\delta S^2}$$
+
+- $\Delta\,\delta S$ : linear term → hedged by Delta hedge
+- $\frac{1}{2}\Gamma\,\delta S^2$ : quadratic term → **residual gap** after Delta hedge
+
+---
+
+## Portfolio and Greeks
+
+**Additivity :**
+
+$$\Delta_\Pi = \sum_i w_i \Delta_i \qquad \Theta_\Pi = \sum_i w_i \Theta_i \qquad \Gamma_\Pi = \sum_i w_i \Gamma_i$$
+
+**Making a portfolio Gamma-neutral :**
+
+1. Choose a hedging option with $\Gamma_T$
+2. Add $w_T = -\Gamma_\Pi / \Gamma_T$ options → $\Gamma$ neutralized
+3. Recalculate $\Delta_\Pi$ → Delta has changed
+4. Trade the **underlying** to restore $\Delta$-neutrality
+
+::: {.callout-tip title="Example"}
+$\Gamma_\Pi = -3\,000$, hedging option : $\Delta_T = 0{,}62$, $\Gamma_T = 1{,}5$
+
+→ Buy $3000/1{,}5 = 2\,000$ options → $\Delta_\Pi$ becomes $2000 \times 0{,}62 = 1\,240$
+
+→ Sell $1\,240$ shares to restore $\Delta$-neutrality
+:::
+
+::: {.callout-important title="Golden rule"}
+**Modify Γ** → trade **options** (the underlying has $\Gamma = 0$)
+
+**Modify Δ** → trade the **underlying** or options
+:::
+
+---
+
+## Θ–Γ Triangle
+
+::: {.callout-warning title="Fundamental trade-off"}
+**Long Gamma** portfolio (Γ > 0) → **very negative Θ** (high daily cost)
+
+**Short Gamma** portfolio (Γ < 0) → **positive Θ** (collects time value) but risk on large moves
+:::
+
+---
+
+## Practical Management
+
+- **Delta** : **daily** rebalancing
+- **Gamma, Theta, Vega** : calculated and monitored, action if thresholds exceeded
+
+---
+
+## Black-Scholes Limits & Extensions
+
+| Limit | Alternative Model |
+|--------|------------------|
+| Constant volatility (smile ignored) | **Heston** (stochastic vol) |
+| No jumps | **Merton** Jump-Diffusion |
+| American options (early exercise) | **Binomial/trinomial trees** |
+| Complex relationships | **Neural networks, LSTM** |
+| Optimal dynamic hedging | **Reinforcement Learning** |
+
+**Greek Computation Methods :**
+
+| Method | Cost | Precision |
+|---------|------|----------|
+| Finite differences | $O(n)$ evaluations | Approximate |
+| Monte Carlo (LRM, Adjoint) | Variable | Good |
+| **Automatic Differentiation (AD)** | $O(1)$ (adjoint mode) | **Exact** |
+
+---
+
+## American Put — Comparison Example
+
+Parameters : $S_0 = K = 100$, $r = 5\%$, $\sigma = 20\%$, $T = 1$ year, $q = 2\%$
+
+| Method | Price | Delta |
+|---------|------|-------|
+| Black-Scholes (European) | 9,23 USD | 0,587 |
+| Binomial tree (American) | 7,50 USD | 0,530 |
+| Monte Carlo (American) | 7,55 USD | 0,520 |

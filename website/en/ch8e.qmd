@@ -1,0 +1,147 @@
+---
+title: "Agent-Based Models (ABM) — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+Imagine a Parisian nightclub on Saturday night. If **everyone** goes: impossible to dance, lousy evening. If **no one** goes: crypt-like atmosphere. The winning strategy? Be in the **minority** — go when others stay home. Financial markets are the same: buying when everyone sells (and vice versa) is often the real opportunity. ABMs model exactly this tension between individual behavior and collective outcome, starting from simple microscopic rules — like simulating each car to make traffic jams emerge.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- Markets produce **stylized facts** (fat tails, volatility clustering) that classical Gaussian models fail to reproduce.
+- The **bottom-up (ABM)** approach: simple local rules → complex **emergent** macroscopic behavior.
+- Each ABM targets **one or a few** stylized facts — no model reproduces everything.
+- The three course models illustrate three philosophies: physics-herding, economics-heterogeneity, and analytical minority game.
+- The **Minority Game** is the richest model: it admits analytical results and a phase transition.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | 1-sentence oral explanation | Intuition |
+|---|---|---|
+| **Stylized facts** (Stylised Facts) | Universally observed statistical regularities on real markets. | Fat tails, volatility clustering — the market is not Gaussian. |
+| **ABM** (Agent Based Model) | We simulate each agent with simple rules and observe what emerges collectively. | Stupid ants build an intelligent anthill. |
+| **Herding** | Agents imitate each other, forming clusters that amplify price movements. | If everyone sells at the same time, the price collapses. |
+| **Fundamentalists** | Agents who compare market price to fundamental value and trade the gap. | Stabilizers: they bring the price back to reality. |
+| **Chartists** | Agents who follow the trend (or contradict it) without looking at fundamentals. | Destabilizers: they amplify bubbles and crashes. |
+| **Minority Game** | Game where the one who chooses the least populated side wins. | Being in the minority = being right. |
+| **Parameter $\alpha = P/N$** | Ratio available information / number of agents — governs the system regime. | Too many agents for little info → chaos; few agents → predictable order. |
+| **Phase transition** | At threshold $\alpha_c$, the system switches from symmetric to asymmetric regime. | Like water freezing: one variable, a sharp qualitative change. |
+| **Predictability $H$** | Measure of whether certain historical patterns systematically predict the future. | $H \approx 0$ → efficient market ; $H > 0$ → exploitable signal. |
+
+---
+
+## 🔗 Concept Mind Map
+
+- $M$ (history length) → $P = 2^M$ patterns → $\alpha = P/N$
+- $N$ (agents, **odd**) → $\alpha = P/N$
+- $S$ (strategies/agent) → $\alpha_c(S)$
+- $\alpha$ vs $\alpha_c$ → symmetric or asymmetric phase
+- Symmetric phase → $H \approx 0$, $\sigma^2/N > 1$ (herding, worse than random)
+- Asymmetric phase → $H$ rises, $\sigma^2/N < 1$ (effective diversification)
+- Optimal zone: **just before** $\alpha_c$ (minimum of $\sigma^2/N$)
+- $A(t)$ (attendance) → $r(t) = A(t)/\lambda$ → price dynamics $P(t)$
+- Cont-Bouchaud: $a \ll 0.5$ → clusters → fat tails
+- Lux-Marchesi: fundamentalists ↔ chartists migration → endogenous dynamics
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+|---|---|---|
+| $P = 2^M$ | Number of history patterns | Grows exponentially in $M$ |
+| $\alpha = 2^M / N$ | Control parameter info/agents | Governs the system phase |
+| $A(t) = \sum_{i=1}^{N} a_i^{\mu(t), s_i}$ | Aggregate presence (attendance) | $>0$: buyer majority ; $<0$: seller majority |
+| $U_{i,s}(t+1) = U_{i,s}(t) - a_{i,s}^{\mu(t)} \cdot \frac{A(t)}{\beta}$ | Virtual score update | Score ↑ if the strategy was in the minority |
+| $P(s_j) = \dfrac{e^{\lambda U_{s_j}}}{\sum_k e^{\lambda U_{s_k}}}$ | Boltzmann selection (Softmax) | $\lambda \to \infty$: deterministic ; low $\lambda$: random |
+| $H = \dfrac{1}{P}\sum_{\mu} \langle A \vert \mu \rangle^2$ | Predictability | $H=0$: efficient market |
+| $r(t) = A(t)/\lambda$, $P(t) = P(t-1)\cdot e^{A(t)/\gamma}$ | From game to prices | $\gamma$ is a multiple of $N$ (liquidity) |
+| $\alpha_c(S) \approx 0.3374 + \frac{S-2}{2}$ | Transition threshold (approximation) | $\alpha_{c,S=2} \approx 0.3374$ |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- **$N$ must be odd**: otherwise one can have a tie — no strict minority.
+- **$2^M$ ≠ $2^{2^M}$**: $P = 2^M$ is the number of patterns ; $2^{2^M}$ is the total number of strategies (combinatorial explosion — we store bit vectors, not indices).
+- **Virtual score ≠ real score**: all strategies are evaluated every round, even those not played — this is *virtual scoring*.
+- **Optimal zone ≠ asymmetric phase**: the minimum of $\sigma^2/N$ is in the **symmetric phase**, just before $\alpha_c$.
+- **$\lambda \to \infty$** does not mean "irrational agents" — it is the **most rational** behavior (best score always chosen).
+- **Cont-Bouchaud**: $a = 0.5$ gives a Gaussian, NOT fat tails. Fat tails appear for $a \ll 0.5$.
+- **Lux-Marchesi**: do not forget that agents **change type** — this is the heart of the model, not just the coexistence of two types.
+- **$\sigma^2/N = 1$** is the random benchmark (independent agents) — reference value for judging system performance.
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** Why model markets with ABMs rather than with global equations?
+
+**Short answer:** ABMs allow **emergent** macroscopic properties (fat tails, herding) to arise from simple microscopic rules, without assuming them a priori.
+
+---
+
+**Q:** In Cont-Bouchaud, what mechanism produces fat tails?
+
+**Short answer:** Agents group into **clusters** that decide collectively. Large clusters generate massive synchronized orders → more frequent extreme movements → fat tails.
+
+---
+
+**Q:** What is the fundamental difference between fundamentalists and chartists in Lux-Marchesi?
+
+**Short answer:** Fundamentalists trade the price/fundamental-value gap (**stabilizers**) ; chartists follow the trend or their neighbors (**destabilizers**). Migration between the two creates the dynamics.
+
+---
+
+**Q:** Why must $N$ be odd in the Minority Game?
+
+**Short answer:** To guarantee that there is always a **strict minority** — if $N$ is even, one can have $N/2$ on each side: a draw, no winner.
+
+---
+
+**Q:** What is $\alpha$ and why is it important?
+
+**Short answer:** $\alpha = 2^M/N$ measures the information/agents ratio. It determines the system **phase** — below $\alpha_c$: herding and high volatility ; above: diversification and predictability.
+
+---
+
+**Q:** Describe the two phases of the Minority Game.
+
+**Short answer:** **Symmetric** phase ($\alpha < \alpha_c$): $H \approx 0$, unpredictable market, $\sigma^2/N > 1$ — worse than random. **Asymmetric** phase ($\alpha > \alpha_c$): $H$ non-zero, exploitable patterns, $\sigma^2/N < 1$ — better than random.
+
+---
+
+**Q:** Where is the optimal zone and why?
+
+**Short answer:** **Just before** $\alpha_c$ (symmetric phase), where the variance $\sigma^2/N$ is minimal — perfect balance between information richness and number of agents.
+
+---
+
+**Q:** How does the Minority Game connect to real prices?
+
+**Short answer:** We set $r(t) = A(t)/\lambda$ — excess buyers push prices up. This link makes it possible to generate time series comparable to real markets.
+
+---
+
+**Q:** What is the role of parameter $\lambda$ in strategy selection?
+
+**Short answer:** $\lambda$ controls the **rationality** of agents. $\lambda \to \infty$: the agent always chooses its best strategy (deterministic). Low $\lambda$: quasi-random choice.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+- **ABM = simple micro rules → complex emergent macro behaviors.**
+- **Cont-Bouchaud**: herding clusters → fat tails if $a \ll 0.5$.
+- **Lux-Marchesi**: fundamentalists (stabilizers) + chartists (destabilizers) + migration between types.
+- **Minority Game**: $\alpha = 2^M/N$ is the key ; $\alpha_c \approx 0.3374$ ($S=2$).
+- **Symmetric** phase ($\alpha < \alpha_c$): unpredictable, high vol., herding.
+- **Asymmetric** phase ($\alpha > \alpha_c$): predictable, low vol.
+- Optimal zone: **just before $\alpha_c$**, minimum of $\sigma^2/N$.
+- $\sigma^2/N = 1$ = random benchmark.
+- Virtual score $U$ evaluates **all** strategies every round.
+- No ABM reproduces **all** stylized facts — each model illuminates one aspect.

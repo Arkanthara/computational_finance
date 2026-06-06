@@ -1,0 +1,144 @@
+---
+title: "Data, Moving Averages and Intrinsic Time — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+You are the on-call nurse in the financial emergency room. The patient's vital signs (prices) arrive irregularly — sometimes every millisecond, sometimes nothing for hours. The measurements are noisy, with three thermometers in disagreement (bid, ask, mid), and occasionally the patient faints (discontinuity).
+
+To avoid panicking: we smooth (moving averages) and, rather than looking at the clock, we count the fever episodes (intrinsic time). Clever.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- Real data are **irregular, noisy, discontinuous** — nothing like theoretical series.
+- They are almost always processed by **discretisation** (fixed grid + last known price).
+- **Moving averages** smooth noise but introduce an **inevitable lag**.
+- The **EMA** is the optimal compromise: decreasing weighting + update with a single scalar.
+- **Intrinsic time** replaces the clock with **price events** (directional changes).
+- **Universal scaling laws** link intrinsic time and physical time across 13 FX pairs.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | One-sentence oral explanation | Intuition |
+| ------- | ----------------------------- | --------- |
+| Bid-ask spread | Gap between purchase price (bid) and sale price (ask), measure of liquidity | The lower it is, the more liquid the market |
+| Discretisation | Fixed time grid, we keep the last price before each node | We read the clock every hour, we ignore the in-between |
+| SMA | Moving average with equal weights over a window of $n$ observations | The observation from $n$ days ago weighs as much as yesterday's |
+| WMA | Linearly decreasing weights towards the past | We give more credit to the recent |
+| EMA | Exponentially decreasing weighting, recursive update on 1 value | We gradually forget the past via $(1-\alpha)$ |
+| Time lag | Systematic delay of the smoothed series relative to the original signal | Inevitable: more smoothing = more delay |
+| Intrinsic time | Time measured by price reversals, not by the clock | The market clock only ticks when something happens |
+| DC (Directional Change) | Price reversal of amplitude $\geq \delta$ since the last extreme | A true trend reversal according to a threshold $\delta$ |
+| Overshoot (OS) | Price movement after the DC until the next reversal | The market overshoots the threshold before turning back |
+| Scaling laws | Power-law relations between intrinsic time and physical time magnitudes | Universal fractal structure of markets |
+
+---
+
+## 🔗 Concept Mind Map
+
+- Real data → non-equidistant + noisy + bid/ask/mid
+- Non-equidistant → Discretisation (99.9%) or Interpolation (rare)
+- Noisy data → SMA → WMA → EMA (optimal compromise)
+- Smoothing → Time lag inevitable (↑ $n$ or ↓ $\alpha$ ⟹ ↑ lag)
+- EMA → $\alpha$ calibrated by SMA($n$) equivalence or by residual impact
+- Asynchronous data → Generalised EMA with $\mu = e^{-\alpha}$ and $\nu$
+- Physical time → limits (arbitrary, insensitive to activity)
+- Intrinsic time → DC (threshold $\delta$) → Overshoot → TM = DC + OS
+- Number of DC ∝ Volatility; Length of OS ∝ Liquidity
+- Intrinsic time → 20 universal scaling laws
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+| ------- | ------- | ----------- |
+| $\text{SMA}(t+1) = \text{SMA}(t) - \frac{X_{t-n+1}}{n} + \frac{X_{t+1}}{n}$ | Incremental SMA update | Remove the oldest, add the most recent |
+| $\text{WMA}(t) = \frac{\sum_{i=1}^n i \cdot X_{t-n+i}}{n(n+1)/2}$ | Linearly increasing weights towards the recent | Denominator = $n(n+1)/2$ |
+| $\text{EMA}(t) = \alpha X_t + (1-\alpha)\,\text{EMA}(t-1)$ | EMA recursion | **Absolute central formula** |
+| $\alpha = \frac{2}{n+1}$ | Average age equivalence EMA ↔ SMA($n$) | Same average age ≠ same values |
+| $\alpha = 1 - e^{\log(\epsilon_k)/k}$ | Residual impact $\epsilon_k$ after $k$ steps | Ex: $k=100$, $\epsilon=1\% \Rightarrow \alpha \approx 0{,}045$ |
+| $\text{TM} = \text{DC} + \text{OS}$ | Total movement = DC + overshoot | Fundamental decomposition |
+| $\langle \Delta t_{\text{dc}} \rangle \sim (\delta/c)^{\alpha}$ | Average duration of a DC | Power law in $\delta$ |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- **EMA ≠ SMA** with $\alpha = 2/(n+1)$ — only the **average age** is equivalent, not the numerical values.
+- **Lag is inevitable**: you cannot smooth strongly and be perfectly reactive — it is a choice, not a bug.
+- **EMA: theoretically infinite memory** — it is not a window of $n$ points, but a weight $(1-\alpha)^k$ that tends to 0.
+- **Warm-up period**: the first EMA values are biased by the initialisation, wait before using them.
+- **Arbitrary initial mode** in the DC algorithm — converges quickly but should be mentioned if asked.
+- **Discretisation = loss of information** between ticks — too coarse a grid ⟹ intra-period events invisible.
+- **Confusing DC and OS**: DC triggers the mode change, OS is the movement in the new mode.
+- Trick question: *"How many observations does the EMA store?"* → **Only 1 value** (the previous EMA).
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** What are the 3 ideal properties of a time series and why does reality differ?
+
+**Short answer:** Equidistant, smooth, continuous — in practice: irregular activity, noise, jumps, and price decomposed into bid/ask/mid.
+
+---
+
+**Q:** What is the essential difference between SMA, WMA and EMA?
+
+**Short answer:** SMA = equal weights; WMA = linearly decreasing weights; EMA = exponentially decreasing weights with only 1 value in memory.
+
+---
+
+**Q:** Why is the EMA preferred in practice?
+
+**Short answer:** Scalar update (1 value), naturally decreasing weighting, parameter $\alpha$ simple to interpret and calibrate.
+
+---
+
+**Q:** How do we calibrate $\alpha$ for an EMA?
+
+**Short answer:** Either equivalence with SMA($n$): $\alpha = 2/(n+1)$. Or by residual impact: we impose that an observation $k$ steps old has a weight $\leq \epsilon_k$.
+
+---
+
+**Q:** What is intrinsic time and why introduce it?
+
+**Short answer:** Time defined by directional changes (DC $\geq \delta$), not by the clock. Advantage: adaptive to activity, avoids the bias of quiet periods.
+
+---
+
+**Q:** What do the number of DCs and the length of OSs measure?
+
+**Short answer:** Number of DCs / physical time ∝ volatility; length of OSs ∝ liquidity.
+
+---
+
+**Q:** What is a scaling law and why is it remarkable?
+
+**Short answer:** Empirical power-law relation between intrinsic time and physical time. 20 laws identified, universal across 13 FX pairs — fractal structure of markets.
+
+---
+
+**Q:** How is the EMA adapted to asynchronous data?
+
+**Short answer:** We replace fixed $\alpha$ by $\alpha = \Delta t / \tau$ and $\mu = e^{-\alpha}$: the longer the interval, the larger the forgetting factor. Time is naturally integrated.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+- Real data: **bid/ask/mid**, irregular, noisy, discontinuous.
+- Processing: **discretisation** (99.9%), interpolation (rare).
+- **SMA** = equal weights, lag; **WMA** = linear weights; **EMA** = exponential weights, only 1 value.
+- EMA: $\text{EMA}(t) = \alpha X_t + (1-\alpha)\,\text{EMA}(t-1)$ — **formula to know by heart**.
+- Lag **inevitable**: ↑ smoothing ⟹ ↑ delay.
+- $\alpha = 2/(n+1)$ → same average age as SMA($n$), **not** the same values.
+- **Intrinsic time** = time dictated by DC (reversals $\geq \delta$).
+- DC ∝ volatility; OS ∝ liquidity; TM = DC + OS.
+- **20 scaling laws** robust across 13 FX pairs → universal fractal.
+- Small $\delta$ → fast time (volatile market); large $\delta$ → slow time (calm market).

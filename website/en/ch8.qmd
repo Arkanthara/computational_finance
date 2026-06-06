@@ -1,0 +1,502 @@
+---
+title: "Agent Based Models"
+---
+
+## Introduction: Understanding Markets from the Bottom Up
+
+### Why Model Markets?
+
+Financial markets are not purely random phenomena. They result from complex interactions between many participants with varied behaviors. These interactions produce **stylised facts** — statistical regularities observed empirically on almost all markets — such as fat-tailed distributions, volatility clustering, or autocorrelation of absolute returns.
+
+Faced with these observations, several fundamental questions arise:
+
+- How to **explain** the emergence of these phenomena?
+- How to **model** them realistically?
+- How to **predict** market evolution?
+
+### Two Major Families of Approaches
+
+There are two opposing philosophies for approaching market modelling:
+
+**Top-Down Approach**
+
+One starts from equations describing the global dynamics of the system. These models are often analytically tractable but may mask the underlying mechanisms.
+
+**Bottom-Up Approach**
+
+One defines simple local rules for each participant (agent), and observes how their collective interaction produces a complex global dynamics. This is the approach of **Agent Based Models** (ABM).
+
+::: {.callout-tip title="Intuition"}
+The key idea is that simple microscopic behavior can generate macroscopic complexity that is difficult to model otherwise. The classic example is **urban traffic**: simulating each car with simple rules (accelerate, brake, change lane) allows reproducing traffic jams, congestion waves, and other phenomena that global equations struggle to capture.
+:::
+
+::: {.callout-note title="Key takeaway"}
+ABMs do not necessarily claim to reproduce **all** stylized facts with a single model. Each model targets one or more particular properties of the market.
+:::
+
+---
+
+## Overview of Three Famous ABMs
+
+This chapter presents three representative ABMs, each with a different philosophy.
+
+---
+
+### The Cont-Bouchaud Model
+
+#### Context and Objective
+
+The **Cont and Bouchaud** model [11] comes from statistical physics. Its main objective is to reproduce the **fat-tailed distributions** of financial returns from a mechanism of **herding behaviour**.
+
+#### Central Mechanism: Cluster Formation
+
+In this model, agents do not decide individually and independently. They group into **random clusters**. Each cluster makes a collective decision:
+
+- **Sell** with probability $a$
+- **Buy** with probability $a$
+- **Do nothing** with probability $1 - 2a$
+
+The constraint $a \leq 0.5$ is imposed to guarantee the coherence of the model.
+
+#### Key Results According to the Value of $a$
+
+The parameter $a$ entirely controls the nature of the return distribution:
+
+- When $a = 0.5$ → the return distribution is **Gaussian**, as in a perfectly random market.
+
+- When $a \ll 0.5$ → the distribution becomes **fat-tailed**, close to what is observed in real markets.
+
+::: {.callout-tip title="Intuition"}
+When agents group into large clusters (herding phenomenon), massive buy or sell orders can appear simultaneously. These episodes create extreme price movements much more frequent than a normal law would predict — hence the fat tails.
+:::
+
+#### Extensibility of the Model
+
+One of the strengths of the Cont-Bouchaud model is its **modularity**: extensions can be grafted to study additional policies or mechanisms, such as adding a **Tobin Tax** on financial transactions.
+
+::: {.callout-note title="Key takeaway"}
+A simple herding mechanism suffices to reproduce fat-tailed return distributions — a fundamental property of real markets absent from classical Gaussian models.
+:::
+
+---
+
+### The Lux-Marchesi Model
+
+#### Context and Objective
+
+The **Lux and Marchesi** model [12] adopts a more economic perspective. It seeks to reproduce market properties by simulating the interaction between **two types of participants** with radically different behaviors.
+
+#### The Two Types of Agents
+
+**The Fundamentalists**
+
+These agents compare the current market price to what they estimate to be the **true price** of the asset:
+
+- If the price is too low relative to the fundamental value → they **buy** (they anticipate a return to intrinsic value).
+- If the price is too high → they **sell**.
+
+Their behavior is stabilizing and anchored on economic fundamentals.
+
+**The Chartists**
+
+These agents are not interested in fundamentals. They observe the **recent price evolution** and the actions of their neighbors. Among them, two sub-categories coexist:
+
+- The **optimists**: they follow the trend (Trend Followers). If the market rises, they buy.
+- The **pessimists**: they go against the trend (Counter-Trend). They anticipate a reversal.
+
+#### Dynamics and Category Change
+
+A crucial element of the model is that agents can **change category** depending on market conditions. A chartist agent can become a fundamentalist, and vice versa.
+
+::: {.callout-tip title="Intuition"}
+This migration mechanism between categories creates a realistic endogenous dynamic: during a bubble, many agents become optimistic chartists and amplify the rise; when the market crashes, the fundamentalists regain the upper hand and anchor the price.
+:::
+
+#### Model Results
+
+The model uses a parameter $\tau$ representing the **price time-lag**:
+
+- Low values of $\tau$ correspond to short horizons (order of **days**).
+- High values of $\tau$ correspond to long horizons (order of **months**).
+
+The results show that the diversity of market participants allows reproducing **fat-tailed distributions**, and that the model behavior is **partially in contradiction with the Efficient Market Hypothesis (EMH)**, notably concerning the reaction to incoming news.
+
+::: {.callout-note title="Key takeaway"}
+The Lux-Marchesi model illustrates how the coexistence of heterogeneous strategies — stabilizing fundamentalists and destabilizing chartists — naturally produces complex market behaviors, including fat tails and volatility clustering.
+:::
+
+---
+
+## The Minority Game: In-Depth Exploration
+
+### The El Farol Bar Problem
+
+#### Presentation of the Problem
+
+The **Minority Game** (MG) is directly inspired by the **El Farol Bar problem**, proposed by economist W. Brian Arthur. The scenario is as follows:
+
+- A finite population of $N$ people wants to go to the only bar in town: the **El Farol Bar**.
+- If **less than 60%** of the population goes there → the evening is better than at home.
+- If **more than 60%** go there → the crowd is too dense and the evening is less pleasant than at home.
+- Each individual must decide **in advance** and **simultaneously**, without direct coordination.
+
+#### The Tension Between Individual and Collective Interest
+
+This problem highlights a fundamental tension between two levels of optimization:
+
+**At the individual level**: each agent seeks to maximize his personal pleasure. The best strategy depends on what the others do — a problem of circular anticipation.
+
+**At the collective level**: the global objective is to reach a **frequency of exactly 60%**. Any deviation — too many people or too few — generates dissatisfaction.
+
+::: {.callout-tip title="Intuition"}
+This problem captures the essence of financial markets: if everyone anticipates a rise and buys, the price rises too much — and no one really benefits from the opportunity. Being in the **minority** (buying when others sell, and vice versa) is often the winning strategy.
+:::
+
+#### The Dynamics of Fluctuations
+
+In practice, attendance oscillates around the 60% threshold without ever stabilizing perfectly. These fluctuations produce alternately:
+
+- Periods where too many people come (above 60%) → dissatisfied participants.
+- Periods where too few come (below 60%) → some agents could have enjoyed the evening.
+
+This oscillating dynamic is a direct reflection of the **market cycles** observed in finance.
+
+---
+
+### Formal Definitions of the Minority Game
+
+#### Proposed by Challet and Zhang
+
+The **Minority Game** was formalized by **Challet and Zhang** [13] (University of Fribourg). Since the seminal paper, very many variants have been developed.
+
+#### Fundamental Parameters
+
+The model relies on four essential parameters:
+
+- $N$ : the number of agents (always **odd** to guarantee the existence of a strict minority at each turn).
+- $M$ : the length of the **history** $\mu(t)$, coded in bits (0 and 1).
+- $S$ : the number of **strategies** per agent.
+- $P = 2^M$ : the number of possible **history patterns**.
+
+#### The Strategy Space
+
+The total number of available strategies is $2^{2^M}$, which grows extremely rapidly:
+
+| $M$ | Number of strategies $2^{2^M}$ |
+|-----|-------------------------------|
+| 2   | 16                            |
+| 3   | 256                           |
+| 4   | 65,536                        |
+| 5   | 4,294,967,296                 |
+
+::: {.callout-warning title="Attention: combinatorial explosion"}
+As soon as $M = 5$, the number of strategies exceeds 4 billion. In practice, **strategies are not stored as numbers**, but as **vectors of $2^M$ bits** chosen randomly.
+:::
+
+A strategy can be seen as a **lookup table**: to each history $\mu \in \{0, 1, \ldots, 2^M - 1\}$, it associates an action (+1 or -1).
+
+---
+
+### Strategy Selection
+
+#### The Probabilistic Choice Mechanism
+
+At each period $t$, each agent $i$ has $S$ strategies. He chooses his strategy $s_j$ with a probability given by the **Boltzmann distribution** (Softmax):
+
+$$P(s_j^t) = \frac{\exp(\lambda \, U_{s_j}(t))}{\sum_{k=1}^{S} \exp(\lambda \, U_{s_k}(t))}, \quad 1 \leq j \leq S, \quad \lambda > 0$$
+
+where $U_{s_j}(t)$ is the **utility function** (virtual score) of strategy $s_j$ at time $t$.
+
+::: {.callout-tip title="Intuition"}
+The parameter $\lambda$ controls the degree of **rationality** of the agents:
+
+- If $\lambda \to \infty$ → the agent **always** chooses the strategy with the highest score (deterministic and rational behavior).
+- If $\lambda$ is low → the choice is more random, underperforming strategies still have a chance of being selected.
+:::
+
+#### Definition of the History $\mu(t)$
+
+The history can be constructed in three different ways:
+
+**Random history**: at each step, a random number $\pi$ is drawn:
+
+- If $\pi < 0.5$ → bit = 0
+- If $\pi \geq 0.5$ → bit = 1
+
+**Endogenous history**: generated by the model's own dynamics (the game result determines the next bit).
+
+**Empirical history**: built from observed real prices:
+
+- If the return is negative → bit = 0
+- If the return is positive → bit = 1
+
+---
+
+### Actions and Aggregate Attendance
+
+#### Individual Action
+
+For each agent $i$, the current strategy $s_i$ and the history $\mu(t)$ determine his **action**:
+
+$$a_{i, s_i(t)}^{\mu(t)} = a_i(t) \in \{+1, -1\}$$
+
+where $+1$ corresponds to **buy** and $-1$ to **sell**.
+
+**Concrete example** (M=2, 2-bit history):
+
+Suppose a strategy defined by the table:
+
+| History $\mu$ | Action |
+|:-:|:-:|
+| 00 | 0 |
+| 01 | 1 |
+| 10 | -1 |
+| 11 | 0 |
+
+If the current history is $\mu(t) = 01$ → the agent chooses $a_i(t) = +1$ (buy).
+
+If $\mu(t) = 10$ → the agent chooses $a_i(t) = -1$ (sell).
+
+#### Aggregate Attendance
+
+The **aggregate attendance** $A(t)$ is the sum of the actions of all agents:
+
+$$A(t) = \sum_{i=1}^{N} a_i^{\mu(t), s_i}$$
+
+$A(t) > 0$ means a majority of buyers, $A(t) < 0$ a majority of sellers. The agents in the **minority** are those whose action has the **opposite** sign to $A(t)$ — they are the winners of the turn.
+
+---
+
+### Utility Function and Predictability
+
+#### Strategic Score Update
+
+The virtual score of strategy $s$ of agent $i$ is updated after each turn according to:
+
+$$U_{i,s}(t+1) = U_{i,s}(t) - a_{i,s}^{\mu(t)} \cdot \frac{A(t)}{\beta}$$
+
+where $\beta$ is a **normalization factor** that can take the values:
+
+- $\beta = 1$ (no normalization)
+- $\beta = N$ (normalization by the number of agents)
+- $\beta = 2^M$ (normalization by the number of patterns)
+
+::: {.callout-tip title="Intuition"}
+This update rule is intuitive: if the action prescribed by strategy $s$ is of **opposite sign** to $A(t)$, it means that the strategy was in the minority — it won. Its score **increases**. Conversely, a strategy that prescribed the majority action sees its score **decrease**.
+:::
+
+#### The Control Parameter $\alpha$
+
+A key parameter for analyzing the model behavior is defined as:
+
+$$\alpha = \frac{P}{N} = \frac{2^M}{N}$$
+
+This ratio measures the **information complexity** available relative to the number of agents. It plays a central role in characterizing the phases of the system.
+
+#### Predictability $H$
+
+**Predictability** is defined as the quadratic mean of the conditional attendance:
+
+$$H = \frac{1}{P} \sum_{\mu=0}^{2^M - 1} \langle A | \mu \rangle^2$$
+
+where $\langle \cdot \rangle$ denotes the **time average**.
+
+- If $\langle A | \mu \rangle \approx 0$ for all $\mu$ → history brings no information on the next movement → **unpredictable** market.
+- If $\langle A | \mu \rangle \neq 0$ for some $\mu$ → some historical patterns systematically predict a movement in one direction → **partially predictable** market.
+
+---
+
+### The Two Phases of the Minority Game
+
+#### Symmetric Phase vs Asymmetric Phase
+
+The analysis of the Minority Game reveals the existence of **two distinct regimes**, separated by a critical value $\alpha_c$:
+
+**Symmetric Phase** — regime $\alpha < \alpha_c$
+
+In this phase:
+
+- The predictability $H$ is **close to zero**.
+- For each history $\mu$, the probability $P(1|\mu)$ that the winning action is $+1$ is **close to 0.5** for all $\mu$.
+- The market is **essentially unpredictable**: history does not allow predicting the next movement.
+- One is in a regime of **high volatility** (agents step too much on each other's toes).
+
+**Asymmetric Phase** — regime $\alpha > \alpha_c$
+
+In this phase:
+
+- The predictability $H$ **increases** significantly.
+- The probabilities $P(1|\mu)$ vary strongly depending on $\mu$: some patterns systematically predict a movement in one direction.
+- The market exhibits **predictable structures** that can be exploited.
+- Volatility is **lower** than in the random reference case.
+
+::: {.callout-tip title="Intuition"}
+The phase transition resembles a **phase transition** in statistical physics. Below $\alpha_c$, agents are too numerous relative to the available information: they involuntarily coordinate and create erratic movements. Above $\alpha_c$, information is sufficiently rich for strategies to diversify effectively.
+:::
+
+::: {.callout-note title="Key takeaway"}
+For $S = 2$, the critical value is $\alpha_c \approx 0.3374$.
+
+For a general number of strategies $S$, one has the approximation:
+
+$$\alpha_c(S) \approx \alpha_{c, S=2} + \frac{S-2}{2}$$
+
+**Master curves** appear: for a given $S$, the curves obtained for different values of $N$ superimpose when plotted as a function of $\alpha$.
+:::
+
+---
+
+### Volatility of Attendance
+
+#### Calculation of the Variance of $A$
+
+The variance (volatility) of the aggregate attendance $A$ is defined as:
+
+$$\sigma^2 = \text{Var}(A) = \frac{1}{T} \sum_{t=0}^{T} A(t)^2$$
+
+The simplification $\langle A(t) \rangle = 0$ is used (the time average of $A$ is zero by symmetry).
+
+#### Reference: Random and Independent Agents
+
+If all agents choose their action **randomly and independently**, with probability 1/2 of choosing $+1$ or $-1$, then:
+
+- $\mathbb{E}[a_i(t)] = 0.5 \cdot 1 + 0.5 \cdot (-1) = 0$
+- $\text{Var}(a_i(t)) = 0.5 \cdot 1^2 + 0.5 \cdot (-1)^2 = 1$
+- By independence: $\text{Var}(A(t)) = \sum_{i=1}^N \text{Var}(a_i) = N$
+
+Thus, the **random benchmark** gives $\sigma^2 / N = 1$.
+
+#### The Four Zones of Behavior
+
+By plotting $\sigma^2/N$ as a function of $\alpha$, one distinguishes **four remarkable zones**:
+
+**Zone 1 — Symmetric, worse than random** ($\alpha < \alpha_c$, $\sigma^2/N > 1$):
+
+Too many agents for little information. Herding behavior amplifies fluctuations beyond the random level.
+
+**Zone 2 — Symmetric, better than random** ($\alpha$ close to $\alpha_c$ from below):
+
+The **optimal** zone: variance is minimized just before the phase transition. Agents effectively exploit the available information without excess coordination.
+
+**Zone 3 — Asymmetric, better than random** ($\alpha$ slightly above $\alpha_c$):
+
+Volatility remains below the random level. Strategies diversify naturally.
+
+**Zone 4 — Asymmetric, close to random** ($\alpha \gg \alpha_c$):
+
+Too few agents relative to the strategy space. Each agent plays practically alone — behavior close to pure randomness.
+
+::: {.callout-tip title="Intuition"}
+The **optimal zone** corresponds to the point where the number of agents and the richness of information are in perfect balance. It is there that collective coordination is most effective — a lesson potentially applicable to market design.
+:::
+
+---
+
+### Connection with Financial Markets
+
+#### From the Minority Game to Asset Prices
+
+The link between the model and real financial markets is established via the relation between the aggregate attendance $A(t)$ and price returns:
+
+$$r(t) = \ln\frac{P(t)}{P(t-1)} = \frac{A(t)}{\lambda}$$
+
+which implies a price dynamics:
+
+$$P(t) = P(t-1) \cdot \exp\!\left(\frac{A(t)}{\gamma}\right)$$
+
+where $\gamma$ is typically a multiple of $N$ (market liquidity parameter).
+
+::: {.callout-tip title="Intuition"}
+An excess of buyers ($A(t) > 0$) pushes the price up, and an excess of sellers ($A(t) < 0$) makes it fall. This mechanism is analogous to the real functioning of an order book.
+:::
+
+#### Extensions to Enrich the Model
+
+Several extensions allow bringing the Minority Game closer to real empirical data:
+
+- **Contrarian vs trend-following agents**: modify the utility function to produce two different types of behaviors.
+- **Autocorrelation**: introduce terms in the utility that generate temporal dependencies.
+- **Selective participation**: allow agents to **abstain from playing** when their strategies are poorly performing. This extension is particularly important because it allows reproducing properties of the **return distribution** close to those observed in real markets.
+
+---
+
+### Minority Game Algorithm
+
+#### Description of the Implementation
+
+The basic Minority Game algorithm proceeds as follows:
+
+**Initialization:**
+
+1. Define $N$, $M$, $S$ and $\gamma$.
+2. Choose an initial random history $\mu$ (ex.: $\mu = 00101$ for $M = 5$).
+3. Create $N$ agents, each with $S$ strategies. Each strategy is represented as a **vector of $2^M$ bits** drawn randomly (avoid storing strategies by their numerical index given the combinatorial explosion).
+
+**Main loop (T iterations):**
+
+```
+For t = 1 to T:
+    1. Calculate A = sum of agents' actions
+    2. Update scores: U(t+1) = U(t) - a * A / beta
+    3. Select the active strategy of each agent
+    4. Add a new bit to history mu (possibly delete the oldest)
+    5. Update price: p = p * exp(A / gamma)
+```
+
+::: {.callout-note title="Key takeaway"}
+The history update is **crucial**: it ensures that the informational context evolves over time, allowing the model to generate a non-trivial dynamic. It is the **memory of the system**.
+:::
+
+---
+
+### Conclusions on the Minority Game
+
+#### Richness of a Minimalist Model
+
+The **Minority Game** is remarkable for its **economy of means**: with only a few parameters ($N$, $M$, $S$), it generates a very rich phenomenology.
+
+The essential properties of the model can be summarized as follows:
+
+At each turn:
+
+- Agents choose between two decisions (+1 or -1) according to their current best strategy.
+- The **minority wins** the turn.
+- Strategies that predicted the winning side are **rewarded**.
+- The attendance history guides the evolution of strategies.
+
+The remarkable **emergent behaviors** include:
+
+- **Herding behaviour** — visible in the symmetric phase.
+- A **price return distribution** close to what is observed in reality.
+- **Analytical results** derivable thanks to the mathematical structure of the model.
+- An **extensible framework** allowing many variants to be derived.
+
+::: {.callout-tip title="Intuition"}
+The Minority Game is a microcosm of the market: heterogeneous agents, limited and shared information, competition to be in the minority. The richness of emergent behaviors — phase transition, master curves, predictability — shows that minimalist modelling can capture the essence of complex dynamics.
+:::
+
+---
+
+## Key Takeaways
+
+### What ABMs Teach Us
+
+**Bottom-Up** modelling offers a complementary perspective to classical approaches in finance:
+
+- Complex macroscopic market behaviors can **emerge** from simple microscopic rules.
+- **Stylized facts** — fat-tailed distributions, volatility clustering — are reproducible from simple individual behaviors.
+- ABMs allow exploring the impact of **policies** (e.g. Tobin tax) or **structural changes** on market dynamics.
+
+### The Three Models in Brief
+
+The three models presented each illustrate a different facet of markets:
+
+**Cont-Bouchaud** — Physicists' model focusing on **herding behaviour**. A simple clustering mechanism reproduces fat-tailed distributions.
+
+**Lux-Marchesi** — Economists' model simulating the interaction between **fundamentalists** and **chartists**. The diversity of participants produces realistic dynamics.
+
+**Minority Game** (Challet-Zhang) — Physicists' model where agents seek to be in the **minority** to win. Allows analytical results and many extensions towards real markets.
+
+::: {.callout-important title="Central message"}
+There is no single ABM capable of reproducing **all** stylized facts simultaneously. Each model illuminates a particular dimension of market behavior. The value of these approaches lies in their ability to **link microscopic mechanisms and macroscopic properties** observed empirically.
+:::

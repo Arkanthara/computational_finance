@@ -1,0 +1,140 @@
+---
+title: "Sustainable Investing and ESG — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+Imagine you manage a huge communal water reservoir. Some neighbors draw from it massively, throw waste into it, and leave the pump running at night. You can decide to whom you lend money to buy pumps. Does lending more cheaply to thrifty neighbors and more expensively to polluters change anything? Yes — that is exactly what sustainable finance is: using **capital allocation** as a lever to steer behaviors. It does not solve everything, but it no longer finances problems with eyes closed.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- Current human activities are **not sustainable** (climate, biodiversity, inequalities).
+- Finance allocates trillions every year → powerful lever but not sufficient alone.
+- **ESG** = framework for integrating **non-financial** criteria into investment decisions.
+- Measuring impact requires **data**, **indicators**, and specific **tools**.
+- There is a **spectrum** of strategies, from the most passive (exclusion) to the most active (impact).
+- ESG scoring is **relative** (sector-based), not absolute — major pitfall.
+- The field is young, undergoing standardization, and regulation is intensifying.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | 1-sentence oral explanation | Intuition |
+| ------- | ----------------------------- | --------- |
+| **ESG** | 3-pillar framework (Environmental, Social, Governance) for measuring a company's sustainability. | The non-financial report card of a company. |
+| **ESG rating** | Relative score within a sector, aggregated by a weighted E, S, G average. | Like a graded-on-a-curve score: being AA in oil does not mean being virtuous in absolute terms. |
+| **Scope 1/2/3** | Three carbon emission scopes, from the most direct (Scope 1) to the most indirect (Scope 3). | Scope 3 = everything your customers and suppliers emit because of you. |
+| **ITR** (*Implied Temperature Rise*) | Temperature rise implied if all companies behaved like the one analyzed. | Translates a carbon trajectory into degrees Celsius to compare with the Paris Agreement. |
+| **SDG** | 17 UN global goals (2015, horizon 2030) now quantified in portfolios. | The planetary sustainable development shopping list. |
+| **Best-in-class** | Overweight the best ESG students by sector, without excluding polluting sectors. | We keep the least bad oil companies to push them to do better. |
+| **Shareholder engagement** | Dialogue with management + voting at AGMs to influence ESG practices. | The shareholder speaks up instead of slamming the door. |
+| **Impact Investing** | Investing while seeking a measurable, intentional, and additional social/environmental impact. | Not just avoiding harm: proving we do good, with figures to back it up. |
+| **Greenwashing** | Sustainability communication that exceeds actual actions. | Shell claiming to contribute to environmental SDGs — to be verified with third-party data. |
+| **Rater divergence** | Two ESG providers can give very different scores for the same company. | R² ≈ 0.32 between MSCI and Sustainalytics: agreement on trend, divergence in details. |
+
+---
+
+## 🔗 Concept Mind Map
+
+- Global crises (climate, biodiversity, inequalities) → need for **sustainable finance**
+- Sustainable finance → requires **measurement**: ESG, SDG, ITR, Scopes 1/2/3
+- Measurement → relies on **data** (MSCI, Sustainalytics…) + **tools** (dashboards, ESG benchmarks)
+- Data → feed the **7 ESG strategies** (Eurosif 2019)
+- Strategies → from least to most engaged: Exclusion → Norms-based → Best-in-class → Thematic → Integration → Engagement → Impact
+- Engagement + Voting → pressure on companies → improvement of practices
+- Integration → ESG risks = **long-term financial risks**
+- Impact → triple condition: intentionality + measurability + **additionality**
+- Compenswiss → simultaneously combines the 4 axes: Integration, Voting, Engagement (ASIR), Exclusions
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+| ------- | ------------- | --------- |
+| $\text{ESG Score} = \sum_i w_i \cdot s_i$ | Weighted average of E, S, G scores according to sector materiality | Weighting ≠ fixed: depends on sector |
+| **R² ≈ 0.32** | Correlation between MSCI and Sustainalytics on S&P 1200 (2016) | Low → significant divergence between raters |
+| **ITR** (°C) | Implicit rise if behavior generalized to all companies | Target: ≤ 1.5 °C (Paris Agreement) |
+| **tCO₂e / M$ invested** | Carbon footprint unit of a portfolio | Allows comparing portfolio vs. benchmark over time |
+| **3 pillars → 10 themes → 37 issues** | MSCI 2023 structure | Figures to cite orally |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- **Relative ≠ Absolute**: a AA score in a very polluting sector does not mean the company is virtuous in absolute terms.
+- **Rater divergence**: never treat a single provider's ESG score as an objective truth.
+- **Scope 3 ignored**: it is often the most important scope (e.g.: automobiles, oil) — omitting it skews the entire analysis.
+- **Rising scores over time**: may mean real improvement *or* simply better reporting — distinguish the two.
+- **Exclusion ≠ impact**: excluding a company does not push it to change; only engagement dialogue does.
+- **Best-in-class ≠ absolute virtue**: a coal producer can be best in its category while remaining very polluting.
+- **Additionality** (Impact Investing): if the impact would have happened without the investment, it is not *impact investing*.
+- **Greenwashing**: company claims on SDGs must be validated by independent third-party data.
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** What is ESG and why did it emerge?
+
+**Short answer:** 3-pillar framework (Environmental, Social, Governance) for integrating non-financial risks into investment. It responds to climate, social, and governance crises — finance must reflect these risks.
+
+---
+
+**Q:** What is the difference between Scope 1, 2 and 3?
+
+**Short answer:** Scope 1 = direct emissions. Scope 2 = indirect purchased energy. Scope 3 = all other indirect upstream (suppliers) and downstream (customers) emissions. Scope 3 is often the largest but the hardest to measure.
+
+---
+
+**Q:** Why do ESG ratings from different providers diverge?
+
+**Short answer:** Each provider uses its own methodologies, sources, weightings. R² ≈ 0.32 between MSCI and Sustainalytics — non-financial data are far less standardized than accounting data.
+
+---
+
+**Q:** What is the difference between exclusion and best-in-class?
+
+**Short answer:** Exclusion bans entire sectors. Best-in-class keeps all sectors but overweights the best ESG students in each sector, incentivizing a *race to the top*.
+
+---
+
+**Q:** What are the three conditions of impact investing?
+
+**Short answer:** Intentionality (the impact is intended), measurability (it is quantified), additionality (it would not have happened without this investment).
+
+---
+
+**Q:** What does compenswiss concretely do in terms of ESG?
+
+**Short answer:** Four combined axes: ESG integration in benchmarks and dashboards, AGM voting (~100 meetings/year in Switzerland), engagement via ASIR (150+ issuers), and exclusions (~100 companies — normative + coal with threshold lowered to 30%).
+
+---
+
+**Q:** What is the ITR score and what is the target?
+
+**Short answer:** The *Implied Temperature Rise* is the temperature rise implied if all companies behaved like the one analyzed. Target: ≤ 1.5 °C to be aligned with the Paris Agreement.
+
+---
+
+**Q:** Why do ESG scores tend to rise over time?
+
+**Short answer:** Double possible cause: real improvement of practices AND improvement of reporting. One must distinguish the two, otherwise real progress is overestimated.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+1. **ESG** = 3 pillars, 10 themes, 37 issues (MSCI 2023) → **relative** sector-based rating, scale CCC to AAA.
+2. **Scopes 1/2/3**: direct emissions → indirect energy → everything else (often the largest).
+3. **ITR** translates carbon trajectory into °C → target ≤ 1.5 °C.
+4. **7 strategies** (Eurosif): Exclusion · Norms-based · Best-in-class · Thematic · Integration · Engagement · Impact.
+5. **Impact investing** = intentionality + measurability + additionality.
+6. **Rater divergence**: R² ≈ 0.32 → a single ESG score is not an absolute truth.
+7. **Compenswiss**: 4 axes = Integration + Voting (~100 AGMs/year) + ASIR Engagement (150+ issuers) + Exclusions (~100 companies).
+8. **Greenwashing**: always validate company claims with third-party data.
+9. Sustainable finance **steers** capital but does **not replace** public policy.
+10. **Young and moving** field: growing regulation (SFDR, green taxonomy, FINMA).

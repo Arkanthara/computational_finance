@@ -1,0 +1,697 @@
+---
+title: "Algorithmic Execution"
+---
+
+## Introduction and Motivation
+
+### Why Algorithmic Execution?
+
+In modern financial markets, large orders cannot be executed all at once without significant consequences on prices. **Algorithmic Execution** refers to the use of automated computer programs to slice and execute orders in an optimized manner, taking into account price, volume, time, and other market parameters.
+
+💡 The fundamental idea is simple: **do not disturb the market with your own transactions**.
+
+### A Concrete Example
+
+Imagine that investor A wishes to acquire **10,000 shares** of company XYZ, whose average daily volume is precisely 10,000 shares.
+
+This situation immediately raises several problems:
+
+- **Market impact**: If A buys everything at once, his own order will drive the price up.
+- **Execution timing**: If he splits the order, when should he buy?
+- **Delay**: The longer the execution takes, the more the initial investment signal risks becoming obsolete.
+- **Opportunity cost**: Can he really obtain the right number of shares at the right price?
+
+⚠️ In this example, the investor represents **100% of the daily volume** on his own. Any massive and immediate purchase would have a considerable impact on the price.
+
+### Bibliographic Reference
+
+The reference book for this field is:
+
+> *Algorithmic Trading and DMA*, Barry Johnson [8]
+
+---
+
+## Market Impact
+
+### Definition
+
+**Market Impact** is the price change caused by the execution of an order. The larger an order is relative to the available volume, the higher its potential impact.
+
+The impact decomposes into two components:
+
+$$\text{Market Impact} = \text{Temporary Impact} + \text{Permanent Impact}$$
+
+### Temporary Market Impact
+
+Temporary impact corresponds to the transient price disturbance caused by the order. Once the order is executed and absorbed by the market, the price gradually returns to its normal level.
+
+💡 Intuition: it is like momentarily pressing on a spring — the price rises during the purchase, then falls back down.
+
+### Permanent Market Impact
+
+Permanent impact corresponds to the definitive price shift induced by the order. Even after the execution ends, the price remains at a higher level because the market has received an informative signal (someone really wants to buy these shares).
+
+💡 Intuition: the presence of a large buyer reveals information to the market, which durably revalues the price upward.
+
+### Difficulty of Measurement
+
+Impact is difficult to measure precisely because one must compare the price evolution **with and without** the trade. In practice, one analyzes jointly:
+
+- The price evolution over the period
+- The evolution of the order book
+
+---
+
+## The Actors Around Trading
+
+### Overview
+
+The process that leads from an investment idea to an actual execution involves many actors:
+
+- **Analyst**: generates buy/sell ideas based on his research
+- **Portfolio Manager**: optimizes the portfolio and controls risks
+- **In-house Trader**: performs pre-trade analysis, selects brokers, and executes
+- **Salesperson (Sell-side)**: analyzes, monitors, and produces reports
+
+### Execution Methods
+
+Several execution channels exist (denoted A, B, C, D, E in the reference figure [8]):
+
+- **A — Manual trader**: execution via a human trader
+- **B — Direct Market Access (DMA)**: the client sends his orders directly to the market
+- **C — Algorithmic Trading**: automated execution by algorithms
+- **D — Combination**: mix between trader and algo
+- **E — Sponsored Access**: ultra-fast direct access for qualified clients
+
+🧠 Key takeaway: the **buy-side** makes the investment decisions. The **sell-side** provides execution and research services.
+
+---
+
+## Overview of Algorithms
+
+### Classification
+
+Execution algorithms can be grouped according to their main objective:
+
+| Type | Key Objective | Algorithm |
+|------|-------------|-----------|
+| Time impact | Time | TWAP (Time Weighted Average Price) |
+| Volume impact | Volume | VWAP (Volume Weighted Average Price) |
+| Volume impact | Volume | POV (Percentage of Volume) |
+| Minimal impact | Impact | MI (Minimal Impact) |
+| Cost / risk | Price / risk | IS (Implementation Shortfall) |
+| Cost / risk | Price / risk | AS (Adaptive Shortfall) |
+| Cost / risk | Price / risk | MC (Market Close) |
+| Opportunistic | Price | PI (Price Inline) |
+| Opportunistic | Liquidity | LIQ (Liquidity driven) |
+
+### General Principles
+
+- These algorithms are **generic** — each broker has its own implementations.
+- The concepts of one algorithm can be **combined** with those of another (*mix and match* approach).
+- The common objective remains to **minimize market impact**, whether temporary or permanent.
+
+---
+
+## TWAP — Time Weighted Average Price
+
+### Definition
+
+**TWAP** (Time Weighted Average Price) is the simplest execution algorithm. It consists in dividing an order into equal slices distributed uniformly over time.
+
+The input parameters are:
+
+- $t_0$ : start time
+- $t_1$ : end time
+- $\Delta t$ : time interval between slices
+- $w$ : total quantity to execute
+
+The number of slices is:
+
+$$n = \frac{t_1 - t_0}{\Delta t} + 1$$
+
+Each slice represents $\frac{w}{n}$ shares.
+
+### Numerical Example
+
+Parameters:
+
+- $w = 10\,000$ shares
+- $t_0 =$ now, $t_1 = t_0 + 1h$, $\Delta t = 15$ minutes → 5 slices
+
+Execution schedule:
+
+| Time | Quantity |
+|------|----------|
+| $t_0$ | 2,000 shares |
+| $t_0 + 15$ min | 2,000 shares |
+| $t_0 + 30$ min | 2,000 shares |
+| $t_0 + 45$ min | 2,000 shares |
+| $t_0 + 60$ min | 2,000 shares |
+
+### Advantages and Disadvantages
+
+**Advantages:**
+
+- Extremely simple to implement
+- Predictable behavior and easy to audit
+- Guarantees complete order execution
+
+**Disadvantages:**
+
+- Uses no market information (neither price nor volume)
+- **Very predictable**: a competitor can anticipate the orders and exploit them (front-running)
+- May execute at unfavorable prices if the market is particularly active or quiet at certain times
+
+⚠️ Predictability is a major risk: if a malicious actor knows that a TWAP algorithm will buy at regular intervals, he can buy just before and resell just after.
+
+### Common Variants
+
+#### Adding Noise (Randomisation)
+
+To reduce predictability, one can add random noise:
+
+- On time intervals: $t_i = t_{i-1} + \Delta t + \varepsilon$
+- On slice sizes: the quantity per slice varies randomly around $w/n$
+
+#### Aggressive or Passive Profile
+
+One can introduce an urgency factor to modulate the execution pace:
+
+- **Aggressive profile**: more execution early in the period (useful if one wants to reduce timing risk)
+- **Passive profile**: more execution late in the period (useful if one anticipates favorable conditions later)
+
+#### Price-Adaptive TWAP
+
+A variant incorporates dynamic adjustments based on the evolution of the market price, bringing it closer to the PI (Price Inline) algorithm.
+
+---
+
+## VWAP — Volume Weighted Average Price
+
+### The VWAP Benchmark
+
+**VWAP** (Volume Weighted Average Price) is both a **benchmark** and an execution algorithm.
+
+The VWAP benchmark is defined as:
+
+$$\text{VWAP} = \frac{\sum_i p_i v_i}{\sum_i v_i}$$
+
+where $i$ indexes the transactions between $t_0$ and $t_1$ (typically the beginning and end of a day), $p_i$ are the prices and $v_i$ the volumes.
+
+💡 Intuition: VWAP gives a measure of average market conditions over the day, weighted by actual activity. Large transactions weigh more than small ones.
+
+### Principle of the Algorithm
+
+The objective is to **track the VWAP benchmark**: if one buys below the day's VWAP, it is a good execution.
+
+🧠 Key takeaway: a broker can contractually guarantee a VWAP price to his client, for a commission. He then assumes the execution risk.
+
+### The Problem of Unknown Volume
+
+The total $\sum_i v_i$ is only known at the **end of the day**, which poses an operational problem: how to build the algorithm in real time?
+
+The solution is to use **historical data** to estimate the intraday volume profile.
+
+### Numerical Example
+
+Parameters:
+
+- $w = 10\,000$ shares to buy
+- $t_0 = 8$:00, $t_1 = 16$:30
+- $H = 50\,000$ shares (estimated total historical volume)
+
+| Time | Historical volume $h_i$ | Proportion $h_i/H$ | Quantity to trade $h_i/H \times w$ |
+|------|------------------------|-------------------|--------------------------------------|
+| 8:00 | 2,600 | 5.2 % | 520 shares |
+| 8:15 | 2,500 | 5.0 % | 500 shares |
+| 8:30 | 2,700 | 5.4 % | 540 shares |
+| … | … | … | … |
+
+### Advantages and Disadvantages
+
+**Advantages:**
+
+- Simple to implement with historical data
+- Guarantees complete order execution ($100\%$ of $w$)
+- Good average behavior on stable markets
+
+**Disadvantages:**
+
+- The execution price **is not guaranteed**: the algo follows the estimated volume, not the actual price
+- Actual volumes can deviate significantly from historical data
+- The algo does not react to current market conditions in real time
+
+### Variant: Integration of Real-Time Conditions
+
+To reduce dependence on historical data (a significant source of deviation), a variant monitors and incorporates current market conditions, dynamically adjusting the execution profile.
+
+---
+
+## POV — Percentage of Volume
+
+### Definition
+
+**POV** (Percentage of Volume) is a natural evolution of VWAP. Instead of relying on a *historical* volume profile, it adapts the size of each slice to the **real observed volume** in real time.
+
+The formula is:
+
+$$w_i = \alpha \cdot v_i$$
+
+where:
+
+- $v_i$ is the volume traded during interval $i$
+- $\alpha$ is a fixed participation rate (typically between $1\%$ and $20\%$)
+
+💡 Intuition: we buy proportionally to what the market trades. When the market is active, we buy more; when it is quiet, we buy less.
+
+### Numerical Example
+
+Parameters:
+
+- $w = 10\,000$ shares in total
+- $\alpha = 5\%$
+- Start: 8:00, optional end at 16:00
+
+| Interval | Observed volume $v_i$ | Quantity bought $w_i = 0.05 \times v_i$ |
+|------------|---------------------|------------------------------------------|
+| 8:00–8:15 | 3,000 | 150 shares |
+| 8:15–8:30 | 2,700 | 135 shares |
+| … | … | … |
+
+The algorithm ends either when the 10,000 shares have been bought, or at $t_1$ if set.
+
+### Correction for Own Participation
+
+When $\alpha$ is high, the algorithm's own orders influence the observed volume $v_i$. To correct for this, one computes an adjusted participation rate $\tilde{\alpha}$:
+
+$$\tilde{\alpha} = \alpha \cdot \frac{1}{1 - \alpha}$$
+
+**Example** with $\alpha = 5\%$:
+
+$$\tilde{\alpha} = 0.05 \times \frac{1}{1 - 0.05} = 5.3\%$$
+
+### Advantages and Disadvantages
+
+**Advantages:**
+
+- Dynamically adapts to real market conditions
+- Similar to VWAP but without dependence on historical data
+- Natural impact control (we never represent more than $\alpha\%$ of the market)
+
+**Disadvantages:**
+
+- Still predictable (same proportional rhythm)
+- No price sensitivity
+- Execution can be very slow if the market is inactive
+
+### Common Variants
+
+- **Integration of volume forecasts**: anticipate upcoming liquidity spikes
+- **Price-adaptive versions**: adjust $\alpha$ based on the current price relative to a benchmark
+
+---
+
+## MI — Minimal Impact
+
+### Definition and Philosophy
+
+The **MI** (Minimal Impact) algorithm constitutes the logical progression from VWAP and POV. Its main objective is to **minimize market impact**, rather than following a volume or time profile.
+
+### Use of Dark Pools
+
+MI relies on **dark pools** (opaque markets) and hidden order types to reduce the risk of impact.
+
+Dark pools:
+
+- Are non-transparent markets (see the course on the Limit Order Book)
+- Allow execution at mid prices (between bid and ask)
+- Reduce the visibility of orders to other participants
+
+⚠️ The trade-off is a high risk of **low completion rate**: if no one is selling in the dark pool, the order is not executed.
+
+### Hybrid Structure
+
+To mitigate the risk of non-execution, a portion of the order (typically $20\%$) can be executed via a passive VWAP or POV algorithm on the public market.
+
+### Common Variants
+
+- Estimation of the **probability of being filled** in the dark pool
+- Estimation of a **cost of impact model** used as a reference benchmark
+
+---
+
+## IS — Implementation Shortfall
+
+### Definition
+
+**IS** (Implementation Shortfall) focuses on minimizing the gap between:
+
+- The **decision price**: the price at the moment the investor decides to buy
+- The **execution price**: the price actually obtained in the trade
+
+### The Fundamental Trade-Off
+
+IS seeks the optimal balance between two opposing forces:
+
+- **Market impact**: the faster we execute, the more we disturb the market and the price rises
+- **Timing risk**: the longer we wait, the more the price may evolve unfavorably
+
+```{mermaid}
+graph LR
+    A[Buy decision] --> B{IS trade-off}
+    B --> C[Fast execution\nHigh impact cost\nLow timing risk]
+    B --> D[Slow execution\nLow impact cost\nHigh timing risk]
+```
+
+### Characteristics
+
+- Often implemented as an **enriched VWAP or POV** that favors trading early in the session (to quickly capture the investment signal)
+- The key parameters are **volatility** and the **asset type**
+- The investor's **risk aversion** is an important input: a more risk-averse investor will accept a higher impact cost to reduce timing risk
+
+### Common Variants
+
+- Use of **short-term volatility**
+- Use of **implied volatility** (see the course on Options)
+
+---
+
+## AS — Adaptive Shortfall
+
+### Definition
+
+**AS** (Adaptive Shortfall) is derived from IS with **adaptive** behavior: the algorithm reacts in real time to the evolution of the market price.
+
+### Two Antagonistic Strategies
+
+AS comes in two approaches (the terminology is borrowed from options):
+
+#### AIM — Aggressive In-the-Money
+
+- **Behavior**: trades more aggressively when prices are favorable, less aggressively when they are unfavorable
+- **Underlying hypothesis**: short-term trends are **ephemeral** and will soon reverse (mean-reversion hypothesis)
+
+💡 Example: the price falls (favorable for the buyer) → the algo buys faster because it anticipates a quick rebound.
+
+#### PIM — Passive In-the-Money
+
+- **Behavior**: trades less aggressively when prices are favorable, more aggressively when they are unfavorable
+- **Underlying hypothesis**: trends **persist** — if the price moves unfavorably, one must act quickly to avoid larger losses
+
+💡 Example: the price rises (unfavorable for the buyer) → the algo buys faster because it fears it will continue to rise.
+
+### Common Variants
+
+- Reaction to **order book depth**
+- Integration of any available liquidity measure
+
+---
+
+## MC — Market Close
+
+### Definition and Context
+
+The **MC** (Market Close) algorithm targets the **closing price** as the reference price.
+
+The market close is a widely used reference price by institutional investors for:
+
+- Valuing their portfolios (NAV — Net Asset Value)
+- Evaluating manager performance
+- Calculating stock indices
+
+### The Timing Dilemma
+
+Execution around the close is delicate:
+
+- **Starting too early**: significant timing risk (the price may evolve before the close)
+- **Starting too late**: significant market impact (everyone trades at the same time)
+
+The **optimal time horizon** can be estimated from:
+
+- The **asset volatility** (possibly via a model)
+- The usual **trading volume** around the close
+
+### Common Variants
+
+- Possibility of targeting **any time of day** as a reference (example: the noon price)
+
+---
+
+## PI — Price Inline
+
+### Definition
+
+The **PI** (Price Inline) algorithm adapts its trading activity to the **evolution of the market price**, in a manner similar to POV but on the price dimension rather than volume.
+
+### How It Works
+
+A **reference price** (benchmark price) is defined. The algorithm adjusts its activity based on the deviation between the current price and this benchmark.
+
+### Available Strategies
+
+Two orientations are possible:
+
+- **Strategy A (counter-trend)**: more aggressive when prices are favorable, anticipating mean reversion
+- **Strategy P (trend-following)**: less aggressive when prices are unfavorable, following the trend
+
+PI is generally expected in **strategy A** (counter-trend) mode, which allows it to capture price opportunities.
+
+### Common Variants
+
+- Use of **prices of other assets** to drive the algorithm (cross-asset strategies)
+
+---
+
+## LIQ — Liquidity Driven
+
+### Definition
+
+The **LIQ** (Liquidity Driven) algorithm trades only when **two conditions are simultaneously met**:
+
+1. There is sufficient **liquidity**
+2. The **price is favorable**
+
+💡 Intuition: highly liquid phases are associated with reduced transaction costs (tighter spread). Finding liquidity is therefore a major lever for cost reduction.
+
+### Implementation Complexities
+
+Implementation is more complex than other algorithms because:
+
+- Markets are increasingly **fragmented** (multiple venues, dark pools, ECNs)
+- **Hidden orders** and **cancellations** make it difficult to assess real liquidity
+- An error on an **illiquid asset** can move the price significantly
+
+### Sources of Information
+
+- **Historical data** on intraday liquidity profiles
+- **Stylized facts** of markets (see the course Markets and Behaviours)
+
+### Common Variants
+
+- Specifying **particular venues** to trade on preferentially
+- Categorizing one's own orders as **hidden** to avoid signaling intentions
+
+---
+
+## Transaction Costs
+
+### Classification of Costs
+
+Transaction costs decompose along several axes:
+
+| Category | Type | Explicit | Implicit | Fixed | Variable |
+|-----------|------|-----------|-----------|------|----------|
+| Investment | Taxes | ✓ | | | ✓ |
+| Investment | Delay costs | ✓ | | | ✓ |
+| Trading | Broker commission | ✓ | | ✓ | |
+| Trading | Market fees | ✓ | | ✓ | |
+| Trading | Spreads | | ✓ | | ✓ |
+| Trading | Market impact | | ✓ | | ✓ |
+| Trading | Price trend | | ✓ | | ✓ |
+| Trading | Timing risk | | ✓ | | ✓ |
+| Trading | Opportunity cost | | ✓ | | ✓ |
+
+### Detail of Categories
+
+#### Explicit Costs
+
+**Explicit** costs are directly visible and measurable:
+
+- **Taxes**: financial transaction taxes (e.g. FTT in France)
+- **Broker commissions**: broker's remuneration for the execution service
+- **Market fees**: fees charged by trading platforms
+
+#### Implicit Costs
+
+**Implicit** costs are more difficult to measure but often more important:
+
+- **Spreads**: difference between the ask price and the bid price. We buy at the ask, we sell at the bid — the spread is a cost.
+- **Market impact**: price displacement caused by one's own order
+- **Price trend**: unfavorable price evolution during execution
+- **Timing risk**: uncertainty about the final price due to execution duration
+- **Opportunity cost**: cost related to the incomplete execution of the order
+
+#### Delay Cost
+
+**Delay cost** occurs between the moment of the investment decision and the receipt of the order by the broker. The price may have moved in the interval.
+
+⚠️ This cost is often underestimated but can be very significant.
+
+### Typical Decomposition Example
+
+An indicative cost decomposition according to [8]:
+
+| Cost Type | Approximate Share |
+|---|---|
+| Taxes | 0 % |
+| Delay cost | 24 % |
+| Commission | 1 % |
+| Fees | 2 % |
+| Spreads | 4 % |
+| Market impact | 6 % |
+| Price trend | 14 % |
+| Timing risk | **40 %** |
+| Opportunity cost | 9 % |
+| **Total** | **100 %** |
+
+🧠 Key takeaway: **timing risk** represents the largest share of costs (40%). **Liquidity** and **volatility** are the most difficult variables to estimate.
+
+---
+
+## Efficient Frontier
+
+### Concept
+
+Faced with the diversity of available algorithms, how to choose the right one? The answer lies in the concept of **efficient frontier**, borrowed from modern portfolio theory.
+
+On a **cost vs risk** graph, each algorithm occupies a specific position.
+
+```{mermaid}
+graph LR
+    subgraph "Space of possible algorithms"
+    MC --> IS
+    IS --> AS
+    AS --> POV
+    POV --> PI
+    PI --> VWAP
+    VWAP --> LIQ
+    LIQ --> MI
+    end
+```
+
+### Definitions on the Frontier
+
+- The **cost** axis represents transaction costs as defined above
+- The **risk** axis represents the **variation of costs** (essentially timing risk)
+
+The **efficient frontier** groups the algorithms that minimize cost for a given level of risk. Algorithms outside the frontier (above) are **inefficient**: there exist others that are less costly at the same level of risk.
+
+### Positioning of Algorithms
+
+- **MC (Market Close)**: low risk (the close is a precise target), but high cost to reach it
+- **MI (Minimal Impact)**: high risk of execution price variation, but low impact (cost)
+- **TWAP**: often found **outside the efficient frontier** — there exist cheaper algorithms for the same risk
+
+⚠️ TWAP is therefore **suboptimal** in most cases. Its only virtue is its simplicity.
+
+### Algorithms on the Frontier (from most costly/least risky to least costly/most risky)
+
+According to the reference figure [8]:
+
+$$MC \rightarrow IS \rightarrow AS \rightarrow POV \rightarrow PI \rightarrow VWAP \rightarrow LIQ \rightarrow MI$$
+
+---
+
+## Risk Aversion
+
+### Formal Definition
+
+**Risk aversion** $\lambda$ is defined as the ratio between cost and risk:
+
+$$\lambda = \frac{\text{cost}}{\text{risk}}$$
+
+This parameter represents **the slope of the tangent line to the efficient frontier** from the origin. The tangency point indicates the optimal algorithm for that investor.
+
+### Interpretation
+
+- **High $\lambda$ (high aversion)**: the investor prefers to pay more to reduce risk → one selects an algorithm with low risk and higher cost (e.g. MC or IS)
+- **Low $\lambda$ (low aversion)**: the investor accepts more risk to reduce costs → one selects an algorithm with low cost and higher risk (e.g. MI or LIQ)
+
+💡 Geometric intuition: $\lambda$ is the slope of a line passing through the origin. The larger $\lambda$, the more vertical the line (cost rises quickly per unit of risk). The optimal algorithm is the point where this line is tangent to the efficient frontier.
+
+### Factors Influencing Risk Aversion
+
+An investor's risk aversion depends on:
+
+- The **nature of the investor** (hedge fund vs pension fund)
+- The **urgency of the investment signal** (short-lived alpha → high aversion)
+- The **size of the position** relative to the portfolio
+- **Regulatory or contractual** constraints
+
+🧠 Key takeaway: for a given level of risk, one must choose the algorithm on the efficient frontier whose position corresponds to the desired cost/risk ratio.
+
+---
+
+## Portfolio Trading
+
+### Beyond the Single Security
+
+Until now, we have considered the execution of an order on **a single asset**. In practice, portfolio management involves dozens, even hundreds of assets simultaneously.
+
+### The Diversification-in-Alignment Problem
+
+When a portfolio must be **realigned** — for example during a rebalancing — many orders must be executed **simultaneously** in order to:
+
+- Preserve the **diversification** of the portfolio during execution
+- Maintain **benchmark exposure** throughout the process
+- Limit the **trading risk** related to partially executed positions
+
+⚠️ If orders are executed sequentially, the portfolio may be temporarily poorly exposed.
+
+### Available Solutions
+
+#### In-house Execution
+
+Sophisticated managers integrate **portfolio risk** measures directly into their execution algorithms. This may require **algorithms of algorithms** (meta-algorithms) to orchestrate the whole.
+
+#### Outsourcing to a Broker (Portfolio trading)
+
+One can entrust the complete realignment of the portfolio to a specialized broker. The latter receives information on the current and target portfolio, and handles optimal execution.
+
+⚠️ **Confidentiality risk**: sharing complete information on one's portfolio with a broker exposes the investor to the risk that the broker (or one of its traders) exploits this information.
+
+---
+
+## Synthesis and Key Points
+
+### What to Remember
+
+The essential points of this chapter on algorithmic execution are:
+
+**Market impact:**
+
+- A large market impact must absolutely be avoided
+- Large orders require particular attention to minimize permanent impact
+
+**Diversity of algorithms:**
+
+- There exist many algorithms exploiting different variables: time (TWAP), volume (VWAP, POV), price (PI, AS), liquidity (LIQ, MI)
+- Each algorithm targets a different objective: simplicity, average price, minimal impact, cost/risk optimization
+
+**Efficient frontier:**
+
+- An efficient frontier exists for these algorithms
+- It identifies the algorithms of minimal cost for a given level of risk
+- TWAP is generally outside this frontier → inefficient
+
+**Risk aversion:**
+
+- The risk aversion parameter $\lambda$ allows identifying the appropriate algorithm based on the investor's profile
+- High $\lambda$ → low-risk algorithms (MC, IS)
+- Low $\lambda$ → low-cost algorithms (MI, LIQ)
+
+**Portfolio trading:**
+
+- Multi-asset portfolios require a specific approach to maintain diversification during execution
+- The choice between in-house execution and outsourcing depends on the investor's sophistication and confidentiality stakes

@@ -1,0 +1,200 @@
+---
+title: "Portfolio Construction — Review"
+---
+
+# Fundamental Concepts
+
+**Portfolio**: set of assets held simultaneously.
+
+**Diversification**: combining low-correlation assets to reduce risk without sacrificing return → the only "free lunch" in finance.
+
+**MPT — Modern Portfolio Theory**: Markowitz framework (1952), Nobel Prize 1990.
+
+---
+
+# Asset Return and Risk
+
+| Measure | Formula |
+|:---|:---|
+| Historical expected return | $E[R_i] = \frac{1}{T}\sum_{t=1}^{T} R_i(t)$ |
+| Variance | $\text{Var}(R_i) = \frac{1}{T}\sum_{t=1}^{T}(R_i(t) - E[R_i])^2$ |
+| Volatility | $\sigma_i = \sqrt{\text{Var}(R_i)}$ |
+
+::: {.callout-warning title="Pitfall"}
+Expected returns are more an **art than a science** — this is the most uncertain and most influential step.
+:::
+
+---
+
+# Portfolio of $N$ Assets
+
+**Weight constraint**: $\sum_{i=1}^{N} w_i = 1$
+
+| Measure | Formula |
+|:---|:---|
+| Return | $R_p(t) = \sum_i w_i R_i(t)$ |
+| Expected return | $E[R_p] = \sum_i w_i E[R_i]$ |
+| Variance (double sum) | $\sigma_p^2 = \sum_i \sum_j w_i w_j \text{Cov}(R_i, R_j)$ |
+| Variance (matrix form) | $\sigma_p^2 = \mathbf{w}^T \mathbf{C}\, \mathbf{w}$ |
+
+**Covariance**: $\text{Cov}(X,Y) = E[(X-E[X])(Y-E[Y])]$
+
+**Covariance matrix $\mathbf{C}$**: complete encoding of relationships between assets.
+
+::: {.callout-warning title="Pitfall — Sample Size"}
+Minimum **$N^2/2$ observations** to estimate $\mathbf{C}$ reliably.
+:::
+
+---
+
+# Correlation
+
+$$
+\rho_{ij} = \frac{\text{Cov}(R_i, R_j)}{\sigma_i \sigma_j} \in [-1, +1]
+\quad\Rightarrow\quad
+\text{Cov}(R_i, R_j) = \rho_{ij}\,\sigma_i\sigma_j
+$$
+
+| Value of $\rho$ | Interpretation |
+|:---:|:---|
+| $+1$ | Identical evolution — **no diversification** |
+| $0$ | Independence — partial diversification |
+| $-1$ | Opposite direction — **maximum diversification** |
+
+---
+
+# 2-Asset Portfolio — Impact of $\rho$
+
+$$
+\sigma_P = \sqrt{w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1 w_2 \rho_{12}\sigma_1\sigma_2}
+$$
+
+Example: $\sigma_1 = \sigma_2 = 0.10$, $w_1 = w_2 = 0.5$
+
+| $\rho_{12}$ | $\sigma_P$ | Remark |
+|:---:|:---:|:---|
+| $+1$ | $0.100$ | Weighted average — no gain |
+| $+0.5$ | $0.087$ | |
+| $0$ | $0.071$ | |
+| $-0.5$ | $0.050$ | |
+| $-1$ | $0.000$ | Risk cancelled (ideal case) |
+
+::: {.callout-warning title="Pitfall"}
+If $\sigma_1 \neq \sigma_2$, even with $\rho = -1$ the risk is **not zero**: $\sigma_P = |w_1\sigma_1 - w_2\sigma_2|$.
+:::
+
+---
+
+# Efficient Frontier
+
+**Definition**: set of portfolios that maximize $E[R_p]$ for a given $\sigma_P$ (or minimize $\sigma_P$ for a given $E[R_p]$).
+
+**Dominance**: portfolio A dominates C if same return and lower risk, or same risk and higher return.
+
+---
+
+# Calculation Methods
+
+| Method | Principle | Advantages | Limitations |
+|:---|:---|:---|:---|
+| Monte-Carlo | Random draws of $\mathbf{w}$ | Intuitive | Slow, inefficient, $\nearrow$ with $N$ |
+| Closed-form (Lagrange) | Exact analytical solution | Exact, fast | Negative weights possible, no complex constraints |
+| Numerical optimization | `scipy.minimize` | Flexible, constraints | Local optimum possible |
+
+### Closed-form — Key Scalars
+
+$$
+a = \mathbf{1}^T\mathbf{C}^{-1}\mathbf{1},\quad
+b = \mathbf{1}^T\mathbf{C}^{-1}\boldsymbol{\mu},\quad
+c = \boldsymbol{\mu}^T\mathbf{C}^{-1}\boldsymbol{\mu},\quad
+d = ac - b^2
+$$
+
+$$
+\lambda_1 = \frac{c - b\mu_P}{d},\quad
+\lambda_2 = \frac{a\mu_P - b}{d},\quad
+\mathbf{w}^* = \mathbf{C}^{-1}(\lambda_1\mathbf{1} + \lambda_2\boldsymbol{\mu})
+$$
+
+### Numerical Optimization — Problem
+
+$$
+\min_{\mathbf{w}}\;\mathbf{w}^T\mathbf{C}\mathbf{w} - q\,\mathbf{w}^T\boldsymbol{\mu}
+\quad\text{s.t.}\quad
+\mathbf{1}^T\mathbf{w}=1,\quad 0\leq w_i\leq 1
+$$
+
+- $q = 0$ → minimum variance
+- $q \to \infty$ → maximum return
+- Varying $q$ traces the entire efficient frontier
+
+::: {.callout-warning title="Effect of constraints"}
+Weight constraints **lower** the efficient frontier and **reduce** the attainable risk region.
+:::
+
+---
+
+# Risk-Free Asset & CML
+
+**Risk-Free Asset**: short-term sovereign bond, $\sigma_{rf} = 0$, $\rho_{rf,P} = 0$.
+
+Combination risk-free asset ($w_{rf}$) + portfolio $P_0$:
+
+| Measure | Formula |
+|:---|:---|
+| Return | $E[R_{P_1}] = w_{rf}\,r + (1-w_{rf})\,E[R_{P_0}]$ |
+| Risk | $\sigma_{P_1} = (1-w_{rf})\,\sigma_{P_0}$ |
+
+→ **Linear** relationship in $(\sigma_P, E[R_p])$ space.
+
+**CML (Capital Market Line)**: tangent line to the efficient frontier passing through $r$.
+
+- On the CML → optimal
+- Below → suboptimal
+- Beyond the tangency point → **leverage** (borrowing)
+
+---
+
+# Swiss Pension Fund Allocation (typical)
+
+| Asset Class | Allocation |
+|:---|:---:|
+| CH Bonds | 10% |
+| Foreign Bonds | 35% |
+| Equities | 25% |
+| Real Estate | 15% |
+| Commodities | 10% |
+| Alternatives | 5% |
+
+::: {.callout-note title="Institutional key points"}
+- **Regulatory** constraints (OPP2) on each class
+- Need for **geographic diversification** (CH market too small)
+- **Currency** exposures managed separately (partial hedging)
+- Alternatives = hedge funds, venture capital ; Commodities = gold, oil, agriculture
+:::
+
+---
+
+# Relations between concepts
+
+```{mermaid}
+flowchart LR
+    A[Assets\nE[Ri], σi] --> B[Covariance\nMatrix C]
+    B --> C[Portfolio\nVariance\nwᵀCw]
+    A --> D[Expected\nReturn\nΣwi·E[Ri]]
+    C --> E[Efficient\nFrontier]
+    D --> E
+    E --> F[CML + Risk-\nFree Asset r]
+    F --> G[Optimal\nPortfolio]
+```
+
+---
+
+# Pitfalls & Critical Points
+
+- **Expected returns**: difficult to estimate, very influential on the final result
+- **Correlations in crisis**: tend towards $+1$ → diversification reduced at the worst moment
+- **Sample size**: too short → covariance matrix $\mathbf{C}$ unreliable
+- **Negative weights** (closed-form): imply short selling, often unrealistic
+- **Constraints**: always reduce the efficient frontier (less freedom = less efficiency)
+- **$\rho = -1$**: theoretical, almost nonexistent in practice

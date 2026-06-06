@@ -1,0 +1,147 @@
+---
+title: "Bonds: Sensitivity to Time and Rates — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+Imagine you are skiing on the snowy slope of the yield curve.
+The **forward rates** tell you the steepness you will encounter further down the
+slope — even if you are not there yet. **Duration** measures how much your
+speed (the bond price) will drop if the slope changes abruptly.
+And **convexity**? It is the curvature of the slope itself: thanks to it,
+the fall in case of a shock is less catastrophic than predicted, and the rebound is more
+generous. A true structural advantage for the Geneva investor-skier.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- The zero-coupon curve implicitly contains all **future rates** → forward rates.
+- In the absence of arbitrage (no-arbitrage), two equivalent strategies must produce the same result: they determine the forward rate.
+- **Duration** (double role): time-weighted average of cash flows AND price sensitivity to rates.
+- For small shocks: the linear approximation by duration is sufficient.
+- For large shocks: we must add **convexity** (2nd-order term).
+- Convexity is always favorable to the holder of a standard bond.
+- Portfolio duration is additive (weighted) → active risk management tool.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | 1-sentence oral explanation | Intuition |
+| :------ | :---------------------------- | :-------- |
+| Forward rate | Rate implicitly contained in the zero-coupon curve for a future period | Two investment paths = same result → no arbitrage |
+| No-arbitrage | If the forward deviates from its equilibrium value, a risk-free profit becomes possible | "Free lunch" eliminated by the market |
+| Parallel shift | All rates move by the same amount, regardless of maturity | Central bank changes rates uniformly |
+| Flattening | The short–long rate spread narrows | Early signal of economic slowdown |
+| Steepening | The short–long rate spread widens | Anticipation of recovery or inflation |
+| Macaulay duration | Weighted average of an bond's payment dates | Time center of gravity of cash flows |
+| Convexity | Measures the curvature (non-linearity) of the price–rate relationship | Favorable asymmetry: smaller losses / larger gains |
+| Modified duration | Duration adjusted for discrete compounding convention | Direct price elasticity to rates |
+| DV01 / Dollar duration | Absolute price change in dollars for 1 basis point | Universal currency of risk management |
+| Key rate duration | Price sensitivity to a shock on a specific segment of the curve | Essential for non-parallel shocks |
+
+---
+
+## 🔗 Concept Mind Map
+
+- Zero-coupon curve → **forward rates** (no-arbitrage condition)
+- Zero-coupon curve → **bond price** (discounting cash flows)
+- Price → **Macaulay duration** (normalized first derivative)
+- Macaulay duration → **modified duration** (discrete compounding adjustment)
+- Modified duration → **DV01** (× market price / 100)
+- Duration → **1st-order approximation**: $\delta B / B \approx -D \cdot \delta y$
+- Convexity → **2nd-order approximation**: add $\frac{1}{2} C (\delta y)^2$
+- 3 curve movements → **key rate duration** for non-parallel shocks
+- Portfolio duration = $\sum w_k D_k$ → active management according to expectations
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+| :------ | :------------ | :-------- |
+| $r = \dfrac{R_2 T_2 - R_1 T_1}{T_2 - T_1}$ | Forward rate between $T_1$ and $T_2$ | Weighted interpolation, continuous compounding |
+| $D = \sum_i (t_i - t)\,\dfrac{c_i\,e^{-y(t_i-t)}}{B}$ | Macaulay duration | Weighted average of payment dates |
+| $\dfrac{\delta B}{B} \approx -D\,\delta y$ | 1st-order approximation | Small shocks ($|\delta y| < 0{,}5\,\%$) |
+| $\dfrac{\delta B}{B} \approx -D\,\delta y + \dfrac{1}{2}C\,(\delta y)^2$ | 2nd-order approximation | Large shocks — always more accurate |
+| $D_{\text{mod}} = \dfrac{D}{1 + y/n_c}$ | Modified duration | In continuous time: $D_{\text{mod}} = D$ |
+| $\text{DV01} = \dfrac{D_{\text{mod}}\cdot B}{100}$ | Dollar duration (DV01) | Absolute change for 1 bp |
+| $D_{\text{ptf}} = \sum_k w_k\,D_k$ | Portfolio duration | Weighted additivity by market value |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- **Forward ≠ actual future spot rate**: the forward rate is implicit in today's curve, not a certain prediction.
+- **$D <$ maturity** for a coupon bond (intermediate coupons pull the center of gravity forward); $D =$ maturity only for a zero-coupon.
+- **Duration alone insufficient** for $|\delta y| \geq 0{,}5\,\%$: overestimates losses and underestimates gains — always add convexity.
+- **Macaulay vs. modified**: under continuous compounding they are equal; in discrete, $D_{\text{mod}} = D\,/\,(1 + y/n_c)$ — do not confuse.
+- **Convexity always positive** for a standard bond (no option) — it is structurally an advantage, never a risk.
+- **Multi-currency portfolio**: compute one duration *per currency*, never a single global duration.
+- **Do not neglect non-parallel shocks**: classical duration is not enough — use key rate duration.
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** What is a forward rate and how is it derived?
+
+**Short answer:** Rate implicit in the zero-coupon curve for a future period. Formula: $r = (R_2 T_2 - R_1 T_1)/(T_2 - T_1)$. Derived from the no-arbitrage condition between two equivalent investment strategies.
+
+---
+
+**Q:** Why is the duration of a coupon bond less than its maturity?
+
+**Short answer:** Intermediate coupons produce cash flows before the final maturity, pulling the time center of gravity toward the present.
+
+---
+
+**Q:** What is the difference between Macaulay duration and modified duration?
+
+**Short answer:** Under continuous compounding, they are identical. Under discrete compounding ($n_c$ periods/year): $D_{\text{mod}} = D\,/\,(1 + y/n_c)$. Modified duration is directly a price–rate elasticity.
+
+---
+
+**Q:** Why is convexity said to be "favorable" to the holder?
+
+**Short answer:** The price–rate relationship is convex (bulging upward): in case of a rate rise, the actual loss is smaller than linearly predicted; in case of a rate fall, the gain is larger.
+
+---
+
+**Q:** An examiner gives you $\delta y = 1\,\%$, duration = 2,653, $C = 7{,}570$, $B = 94{,}21$. Estimate $\delta B$.
+
+**Short answer:** $\delta B \approx -94{,}21 \times 2{,}653 \times 0{,}01 + \frac{1}{2}\times 94{,}21 \times 7{,}570 \times (0{,}01)^2 \approx -2{,}464$ USD.
+
+---
+
+**Q:** How does one steer portfolio duration in the face of an anticipated rate rise?
+
+**Short answer:** We reduce duration by selling long-maturity bonds and buying short-maturity bonds.
+
+---
+
+**Q:** What is the purpose of DV01 compared to Macaulay duration?
+
+**Short answer:** DV01 expresses sensitivity in absolute value ($) for 1 basis point — directly comparable across bonds of different sizes, used in risk management.
+
+---
+
+**Q:** What are the three typical yield curve movements?
+
+**Short answer:** Parallel shift (all rates move by the same amount), flattening (short–long spread narrows), steepening (short–long spread widens).
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+- Forward rate = implicit future rate extracted from the zero-coupon curve by no-arbitrage.
+- Formula: $r = (R_2 T_2 - R_1 T_1)/(T_2 - T_1)$ — continuous compounding mandatory.
+- Duration = time center of gravity of cash flows = rate sensitivity ($\delta B / B \approx -D\,\delta y$).
+- Zero-coupon: $D =$ maturity. Coupon bond: $D <$ maturity.
+- Large shock → add convexity: $+\frac{1}{2}C\,(\delta y)^2$.
+- Positive convexity → always favorable to the holder (gain/loss asymmetry).
+- $D_{\text{mod}} = D/(1+y/n_c)$ ; $\text{DV01} = D_{\text{mod}} \cdot B / 100$.
+- Portfolio duration = $\sum w_k D_k$ → steer according to rate expectations.
+- 3 curve movements: parallel / flattening / steepening.
+- Key rate duration for non-parallel shocks (flattening, steepening).

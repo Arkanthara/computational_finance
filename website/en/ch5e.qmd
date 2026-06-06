@@ -1,0 +1,153 @@
+---
+title: "The Limit-Order Book — Oral Review"
+---
+
+## 🎭 Setting the Scene
+
+Imagine a giant flea market: thousands of sellers stick post-its on a board ("I sell at €50"), buyers add theirs ("I buy at max €48"). No one is matched yet. Then someone shouts: "I buy now!" — boom, the cheapest seller's post-it disappears. That's the LOB. And the juicy detail: **75% of the post-its are torn off before ever being used**. The OTC market maker, meanwhile, is the junk dealer who buys and resells himself — convenient, but he keeps the difference (the spread) and takes the risk of ending up with unsold stock.
+
+---
+
+## 🧠 Chapter's Central Idea
+
+- **Problem:** organise millions of simultaneous exchanges in a transparent and fair way.
+- **Two models:** OTC (via market maker, spread = remuneration, inventory risk) vs. LOB (centralised book, direct participants).
+- **Fundamental trade-off:** limit order (better price, not guaranteed) ↔ market order (guaranteed execution, less favourable price).
+- **LOB dynamics:** 3 cases depending on the price position relative to bid/ask.
+- **Statistical reality:** 70–80% cancellations, concave price impact, fat-tailed distributions.
+- **Physical modelling:** a minimalist model (Maslov) reproduces the key statistical properties of real markets.
+
+---
+
+## ⚡ Concepts to Be Able to Explain Orally
+
+| Concept | One-sentence oral explanation | Intuition |
+| ------- | ----------------------------- | --------- |
+| **LOB** $\mathcal{L}(t)$ | Set of submitted, unexecuted and uncancelled orders at time $t$ | The "order book" on hold |
+| **Bid** $b(t)$ | Maximum price among all active buy orders | The highest bidder on the buy side |
+| **Ask** $a(t)$ | Minimum price among all active sell orders | The lowest asker on the sell side |
+| **Spread** $s(t)$ | Ask − bid gap, always $\geq 0$ | No-deal zone: no crossing possible |
+| **Mid-price** $m(t)$ | Average of bid and ask, proxy of the "true price" | Neutral reference point |
+| **Relative price** $\delta^x$ | Distance of an order to the best price on its side | $\delta^x = 0$ = at best; $\delta^x > 0$ = less aggressive |
+| **Depth** $N^b, N^a$ | Total volume available at each relative price level | Measures liquidity at each rung of the book |
+| **Limit order** | Not immediately executable → enters the LOB and waits | "I want, but only at this price" |
+| **Market order** | Executed immediately at the best available price | "I want now, regardless of the exact price" |
+| **Tick** $\pi$ | Smallest possible price gap between two consecutive orders | Minimum granularity of the book |
+| **Hurst exponent** $H$ | Measures the long-term memory of a time series | $H < 0{,}5$ = mean-reverting; $H = 0{,}5$ = random walk |
+| **Market impact** | LOB modification caused by an order, potentially permanent | A large order leaves a lasting "footprint" |
+
+---
+
+## 🔗 Concept Mind Map
+
+- Order submitted → compared to bid/ask → **Market order** if $p_x \geq a(t)$, **Limit order** otherwise
+- Limit order below bid → LOB unchanged
+- Limit order inside spread → bid $\uparrow$ (or ask $\downarrow$) → spread reduced
+- Market order → consumes depth → price impact **concave** in $|w|$
+- Impact normalised by market cap → **Master Curve** (Lillo et al.) → universal power law
+- LOB → 70–80% of orders cancelled before execution
+- Maslov model (homogeneous) → $H \approx 1/4$, non-Gaussian, volatility clustering
+- Heterogeneity → **ABM** (Agent-Based Models)
+
+---
+
+## 📐 Essential Formulas
+
+| Formula | Meaning | To remember |
+| ------- | ------- | ----------- |
+| $b(t) = \max_{x \in B(t)} p_x$ | Best bid | Max price among active buy orders |
+| $a(t) = \min_{x \in A(t)} p_x$ | Best ask | Min price among active sell orders |
+| $s(t) = a(t) - b(t) \geq 0$ | Spread | Always positive or zero |
+| $m(t) = \dfrac{a(t)+b(t)}{2}$ | Mid-price | Proxy of the "fair" price |
+| $\delta^x = b(t) - p_x$ (buy) / $p_x - a(t)$ (sell) | Relative price | $\delta^x = 0$ = best price; $> 0$ = far from market |
+| $N^b(p,t) = \sum_{\{x \in B(t) \mid \delta^x = p\}} w_x$ | Bid depth | Volume available at distance $p$ from bid |
+| $I(|w|)$ concave in $|w|$ | Instantaneous impact | Decreasing returns — splitting orders costs less |
+
+---
+
+## ⚠️ Classic Pitfalls
+
+- $s(t) \geq 0$ **always** — if ask < bid, there would have been immediate matching.
+- Limit order ≠ guaranteed execution → **opportunity risk** (the market may never come back to the desired price).
+- Doubling $|w|$ does **not double** the impact — impact is **concave**, not linear.
+- $H \approx 1/4$ in Maslov → **anti-persistent** (mean-reverting), not trending ($H > 0{,}5$).
+- Dark pool opacity ≠ guaranteed efficiency (scandals and regulatory fines documented).
+- Maslov = **homogeneous** traders → does not reproduce heterogeneity → requires ABM.
+- The Master Curve is universal **after normalisation** by market capitalisation — not raw.
+
+---
+
+## 🎤 Likely Oral Exam Questions
+
+**Q:** What is the difference between OTC and LOB?
+
+**Short answer:** In OTC, you trade with a market maker who is remunerated via the spread and bears inventory risk. In LOB, you trade with other participants via a centralised and automatic book.
+
+---
+
+**Q:** Why is the spread always positive?
+
+**Short answer:** If ask < bid, there would be immediate matching. By definition, the remaining orders in the LOB cannot cross.
+
+---
+
+**Q:** When does a limit order inside the spread modify the bid?
+
+**Short answer:** When $b(t) < p_x < a(t)$ for a buy: this order becomes the new bid, reducing the spread.
+
+---
+
+**Q:** Why use a market order rather than a limit order?
+
+**Short answer:** To guarantee execution when speed matters more than price — for example during a strong trend or to close a position quickly.
+
+---
+
+**Q:** What does a concave market impact concretely imply?
+
+**Short answer:** Splitting a large order into small pieces costs less than a single massive order — this is the basis of optimal execution algorithms (VWAP, TWAP, etc.).
+
+---
+
+**Q:** What is $H$ in Maslov and what does it mean?
+
+**Short answer:** $H \approx 1/4 < 0{,}5$ → anti-persistence: a rise tends to be followed by a fall (mean-reverting), unlike a random walk ($H = 0{,}5$).
+
+---
+
+**Q:** Why are 70–80% of orders cancelled?
+
+**Short answer:** Price exploration, continuous algorithmic adjustments, changes of intention — the majority of limit orders never find a counterparty at the desired price.
+
+---
+
+**Q:** What is the Master Curve of Lillo et al.?
+
+**Short answer:** By normalising market impact by market capitalisation, we obtain a universal curve (power law) valid for all assets — regardless of their size or sector.
+
+---
+
+**Q:** What are the three priority rules and how do they differ?
+
+**Short answer:** Price-Time (FIFO at equality) favours early orders; Prorata ($w / \sum w$) favours large orders by proportional allocation; Price-Size serves the largest order first at equal price.
+
+---
+
+**Q:** What is the difference between an iceberg order and a dark pool?
+
+**Short answer:** Iceberg = partially hidden size in a visible LOB. Dark pool = fully opaque LOB, no order visible before execution.
+
+---
+
+## 🚀 Key Takeaways in 30 Seconds
+
+- **LOB** = set of active orders (submitted, unexecuted, uncancelled).
+- **Spread** $s = a - b \geq 0$ always; **mid-price** $m = (a+b)/2$.
+- **Limit order**: better price, risk of non-execution. **Market order**: guaranteed execution, worse price.
+- **3 cases (buy)**: below bid → unchanged; inside spread → new bid; above ask → immediate execution.
+- **Priorities**: Price-Time (FIFO) / Prorata / Price-Size.
+- **70–80% of orders are cancelled** before execution.
+- **Price impact concave** in $|w|$ → splitting orders is less costly.
+- **Master Curve** = universal power law after normalisation by market capitalisation.
+- **Maslov** → minimalist model → $H \approx 1/4$ (anti-persistent), non-Gaussian, volatility clustering.
+- **ABM** (Agent-Based Models) = extension for heterogeneous and emergent behaviours.
