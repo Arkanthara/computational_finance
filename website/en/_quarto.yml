@@ -1,7 +1,7 @@
 project:
   type: website
   title: "Computational Finance"
-  output-dir: ../_site/en
+  output-dir: ../_site
 
 website:
   title: "Computational Finance"
