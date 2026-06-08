@@ -17,7 +17,7 @@ website:
           - text: "English"
             href: index.html
           - text: "French"
-            href: ../fr/index.html
+            href: fr/index.html
 
   sidebar:
     style: docked
