@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Investissement durable et ESG — Révision – Finance computationnelle</title>
+<title>Données alternatives (Alternative Data) – Finance computationnelle</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -7446,7 +7446,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch14.html">14. ESG</a></li><li class="breadcrumb-item"><a href="./ch14r.html">Synthèse</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch15.html">15. Données alternatives</a></li><li class="breadcrumb-item"><a href="./ch15.html">Détails</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -7932,13 +7932,13 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
  <span class="menu-text">14. ESG</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ch14.html" class="sidebar-item-text sidebar-link">
@@ -7947,7 +7947,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch14r.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch14r.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Synthèse</span></a>
   </div>
 </li>
@@ -7967,16 +7967,16 @@ window.Quarto = {
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="true">
  <span class="menu-text">15. Données alternatives</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth2 ">  
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth2 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch15.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch15.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Détails</span></a>
   </div>
 </li>
@@ -8012,35 +8012,34 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#contexte-motivation" id="toc-contexte-motivation" class="nav-link active" data-scroll-target="#contexte-motivation">Contexte &amp; Motivation</a></li>
-  <li><a href="#terminologie-synonymes" id="toc-terminologie-synonymes" class="nav-link" data-scroll-target="#terminologie-synonymes">Terminologie — Synonymes</a></li>
-  <li><a href="#les-3-piliers-esg-msci-2023" id="toc-les-3-piliers-esg-msci-2023" class="nav-link" data-scroll-target="#les-3-piliers-esg-msci-2023">Les 3 Piliers ESG (MSCI 2023)</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#partie-a-introduction-et-théorie" id="toc-partie-a-introduction-et-théorie" class="nav-link" data-scroll-target="#partie-a-introduction-et-théorie">Partie A — Introduction et théorie</a>
   <ul class="collapse">
-  <li><a href="#structure-3-piliers-10-thèmes-37-enjeux-clés" id="toc-structure-3-piliers-10-thèmes-37-enjeux-clés" class="nav-link" data-scroll-target="#structure-3-piliers-10-thèmes-37-enjeux-clés">Structure : 3 piliers → 10 thèmes → 37 enjeux clés</a></li>
-  <li><a href="#enjeux-clés-sélectionnés" id="toc-enjeux-clés-sélectionnés" class="nav-link" data-scroll-target="#enjeux-clés-sélectionnés">Enjeux clés sélectionnés</a></li>
+  <li><a href="#panorama-du-domaine-the-lay-of-the-land" id="toc-panorama-du-domaine-the-lay-of-the-land" class="nav-link" data-scroll-target="#panorama-du-domaine-the-lay-of-the-land">Panorama du domaine (The Lay of the Land)</a></li>
+  <li><a href="#la-valeur-des-données-alternatives" id="toc-la-valeur-des-données-alternatives" class="nav-link" data-scroll-target="#la-valeur-des-données-alternatives">La valeur des données alternatives</a></li>
+  <li><a href="#risques-et-défis" id="toc-risques-et-défis" class="nav-link" data-scroll-target="#risques-et-défis">Risques et défis</a></li>
+  <li><a href="#techniques-dapprentissage-automatique-machine-learning-techniques" id="toc-techniques-dapprentissage-automatique-machine-learning-techniques" class="nav-link" data-scroll-target="#techniques-dapprentissage-automatique-machine-learning-techniques">Techniques d’apprentissage automatique (Machine Learning Techniques)</a></li>
+  <li><a href="#le-processus-dutilisation-the-usage-process" id="toc-le-processus-dutilisation-the-usage-process" class="nav-link" data-scroll-target="#le-processus-dutilisation-the-usage-process">Le processus d’utilisation (The Usage Process)</a></li>
   </ul></li>
-  <li><a href="#notation-esg-scoring" id="toc-notation-esg-scoring" class="nav-link" data-scroll-target="#notation-esg-scoring">Notation ESG (<em>Scoring</em>)</a>
+  <li><a href="#partie-b-applications-pratiques" id="toc-partie-b-applications-pratiques" class="nav-link" data-scroll-target="#partie-b-applications-pratiques">Partie B — Applications pratiques</a>
   <ul class="collapse">
-  <li><a href="#principes" id="toc-principes" class="nav-link" data-scroll-target="#principes">Principes</a></li>
-  <li><a href="#échelle-msci-depuis-2023" id="toc-échelle-msci-depuis-2023" class="nav-link" data-scroll-target="#échelle-msci-depuis-2023">Échelle MSCI (depuis 2023)</a></li>
-  <li><a href="#émissions-carbone-scopes" id="toc-émissions-carbone-scopes" class="nav-link" data-scroll-target="#émissions-carbone-scopes">Émissions carbone — Scopes</a></li>
-  <li><a href="#score-itr-implied-temperature-rise" id="toc-score-itr-implied-temperature-rise" class="nav-link" data-scroll-target="#score-itr-implied-temperature-rise">Score ITR (<em>Implied Temperature Rise</em>)</a></li>
-  <li><a href="#odd-sustainable-development-goals-sdgs" id="toc-odd-sustainable-development-goals-sdgs" class="nav-link" data-scroll-target="#odd-sustainable-development-goals-sdgs">ODD (<em>Sustainable Development Goals — SDGs</em>)</a></li>
+  <li><a href="#données-manquantes-missing-data" id="toc-données-manquantes-missing-data" class="nav-link" data-scroll-target="#données-manquantes-missing-data">Données manquantes (Missing Data)</a></li>
+  <li><a href="#valeurs-aberrantes-outliers" id="toc-valeurs-aberrantes-outliers" class="nav-link" data-scroll-target="#valeurs-aberrantes-outliers">Valeurs aberrantes (Outliers)</a></li>
+  <li><a href="#données-fondamentales-automobiles-automotive-fundamental-data" id="toc-données-fondamentales-automobiles-automotive-fundamental-data" class="nav-link" data-scroll-target="#données-fondamentales-automobiles-automotive-fundamental-data">Données fondamentales automobiles (Automotive Fundamental Data)</a></li>
+  <li><a href="#enquêtes-et-données-participatives-survey-and-crowdsourced-data" id="toc-enquêtes-et-données-participatives-survey-and-crowdsourced-data" class="nav-link" data-scroll-target="#enquêtes-et-données-participatives-survey-and-crowdsourced-data">Enquêtes et données participatives (Survey and Crowdsourced Data)</a></li>
+  <li><a href="#imagerie-satellite-satellite-imagery" id="toc-imagerie-satellite-satellite-imagery" class="nav-link" data-scroll-target="#imagerie-satellite-satellite-imagery">Imagerie satellite (Satellite Imagery)</a></li>
+  <li><a href="#données-de-localisation-location-data" id="toc-données-de-localisation-location-data" class="nav-link" data-scroll-target="#données-de-localisation-location-data">Données de localisation (Location Data)</a></li>
+  <li><a href="#texte-web-réseaux-sociaux-et-actualités" id="toc-texte-web-réseaux-sociaux-et-actualités" class="nav-link" data-scroll-target="#texte-web-réseaux-sociaux-et-actualités">Texte, web, réseaux sociaux et actualités</a></li>
+  <li><a href="#attention-des-investisseurs-investor-attention" id="toc-attention-des-investisseurs-investor-attention" class="nav-link" data-scroll-target="#attention-des-investisseurs-investor-attention">Attention des investisseurs (Investor Attention)</a></li>
+  <li><a href="#transactions-de-consommateurs-consumer-transactions" id="toc-transactions-de-consommateurs-consumer-transactions" class="nav-link" data-scroll-target="#transactions-de-consommateurs-consumer-transactions">Transactions de consommateurs (Consumer Transactions)</a></li>
   </ul></li>
-  <li><a href="#les-7-stratégies-esg-eurosif-2019" id="toc-les-7-stratégies-esg-eurosif-2019" class="nav-link" data-scroll-target="#les-7-stratégies-esg-eurosif-2019">Les 7 Stratégies ESG (Eurosif, 2019)</a>
+  <li><a href="#conclusion-et-perspectives" id="toc-conclusion-et-perspectives" class="nav-link" data-scroll-target="#conclusion-et-perspectives">Conclusion et perspectives</a>
   <ul class="collapse">
-  <li><a href="#points-clés-par-stratégie" id="toc-points-clés-par-stratégie" class="nav-link" data-scroll-target="#points-clés-par-stratégie">Points clés par stratégie</a></li>
+  <li><a href="#bilan-du-chapitre" id="toc-bilan-du-chapitre" class="nav-link" data-scroll-target="#bilan-du-chapitre">Bilan du chapitre</a></li>
+  <li><a href="#stade-dadoption-actuel" id="toc-stade-dadoption-actuel" class="nav-link" data-scroll-target="#stade-dadoption-actuel">Stade d’adoption actuel</a></li>
+  <li><a href="#perspectives-et-enjeux-stratégiques" id="toc-perspectives-et-enjeux-stratégiques" class="nav-link" data-scroll-target="#perspectives-et-enjeux-stratégiques">Perspectives et enjeux stratégiques</a></li>
+  <li><a href="#vers-une-finance-augmentée" id="toc-vers-une-finance-augmentée" class="nav-link" data-scroll-target="#vers-une-finance-augmentée">Vers une finance augmentée</a></li>
   </ul></li>
-  <li><a href="#cas-pratique-compenswiss-fin-2022" id="toc-cas-pratique-compenswiss-fin-2022" class="nav-link" data-scroll-target="#cas-pratique-compenswiss-fin-2022">Cas pratique : compenswiss (fin 2022)</a>
-  <ul class="collapse">
-  <li><a href="#les-4-axes" id="toc-les-4-axes" class="nav-link" data-scroll-target="#les-4-axes">Les 4 axes</a></li>
-  <li><a href="#analyse-empreinte-carbone-juin-2020-déc.-2022" id="toc-analyse-empreinte-carbone-juin-2020-déc.-2022" class="nav-link" data-scroll-target="#analyse-empreinte-carbone-juin-2020-déc.-2022">Analyse empreinte carbone (juin 2020 – déc. 2022)</a></li>
-  <li><a href="#engagement-via-asir" id="toc-engagement-via-asir" class="nav-link" data-scroll-target="#engagement-via-asir">Engagement via ASIR</a></li>
-  <li><a href="#vote-en-suisse" id="toc-vote-en-suisse" class="nav-link" data-scroll-target="#vote-en-suisse">Vote en Suisse</a></li>
-  </ul></li>
-  <li><a href="#relations-entre-concepts" id="toc-relations-entre-concepts" class="nav-link" data-scroll-target="#relations-entre-concepts">Relations entre concepts</a></li>
-  <li><a href="#points-critiques-pièges" id="toc-points-critiques-pièges" class="nav-link" data-scroll-target="#points-critiques-pièges">Points critiques / Pièges</a></li>
-  <li><a href="#synthèse-finale" id="toc-synthèse-finale" class="nav-link" data-scroll-target="#synthèse-finale">Synthèse finale</a></li>
   </ul>
 </nav>
     </div>
@@ -8048,9 +8047,9 @@ window.Quarto = {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch14.html">14. ESG</a></li><li class="breadcrumb-item"><a href="./ch14r.html">Synthèse</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Cours</li><li class="breadcrumb-item"><a href="./ch15.html">15. Données alternatives</a></li><li class="breadcrumb-item"><a href="./ch15.html">Détails</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Investissement durable et ESG — Révision</h1>
+<h1 class="title">Données alternatives (Alternative Data)</h1>
 </div>
 
 
@@ -8067,72 +8066,77 @@ window.Quarto = {
 </header>
 
 
-<section id="contexte-motivation" class="level2">
-<h2 class="anchored" data-anchor-id="contexte-motivation">Contexte &amp; Motivation</h2>
-<div class="callout callout-style-default callout-warning callout-titled" title="Chiffres clés à retenir">
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Les marchés financiers modernes génèrent et consomment une quantité colossale d’informations. Pendant longtemps, l’analyse financière s’est appuyée sur des sources de données <strong>conventionnelles</strong> : prix de marché, volumes d’échanges, rapports financiers trimestriels, données macroéconomiques officielles. Or, dans un contexte de concurrence accrue entre acteurs financiers, l’avantage informationnel (<em>informational edge</em>) est devenu un enjeu stratégique majeur.</p>
+<p>C’est dans ce contexte qu’émergent les <strong>données alternatives (Alternative Data)</strong> : des sources d’information non traditionnelles, exploitables pour prendre de meilleures décisions d’investissement ou de gestion du risque.</p>
+<p>Ce chapitre s’appuie sur l’ouvrage <em>The Book of Alternative Data</em> (2020) d’Alexander Denev et Saeed Amen, publié chez Wiley. Il propose un panorama complet du domaine, depuis les fondements théoriques jusqu’aux applications pratiques les plus concrètes.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Objectifs pédagogiques">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Chiffres clés à retenir
+<span class="screen-reader-only">Note</span>Objectifs pédagogiques
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>À l’issue de ce chapitre, vous serez en mesure de répondre aux questions suivantes :</p>
 <ul>
-<li><strong>−69 %</strong> : chute de l’Indice Planète Vivante (<em>Global Living Planet Index</em>) entre 1970 et 2020</li>
-<li><strong>+1 °C</strong> : hausse des températures mondiales au-dessus de la référence 1951–1980</li>
-<li>Records de chaleur : <strong>2016</strong> et <strong>2020</strong></li>
+<li><strong>Quoi ?</strong> Qu’est-ce qu’une donnée alternative ?</li>
+<li><strong>Pourquoi ?</strong> Quelle valeur ajoutée ces données apportent-elles ?</li>
+<li><strong>Comment ?</strong> Comment les traiter et les intégrer dans un processus ?</li>
+<li><strong>Combien ?</strong> Quel est le coût d’adoption ?</li>
+<li><strong>Lesquelles ?</strong> Quelles catégories de données alternatives privilégier ?</li>
 </ul>
 </div>
 </div>
-<p><strong>Question centrale</strong> : Face aux crises (climat, biodiversité, inégalités, gouvernance), la finance peut-elle aider via l’<strong>allocation du capital</strong> ?</p>
 <hr>
 </section>
-<section id="terminologie-synonymes" class="level2">
-<h2 class="anchored" data-anchor-id="terminologie-synonymes">Terminologie — Synonymes</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Terme français</th>
-<th>Terme anglais</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Finance durable</td>
-<td>Sustainable Finance</td>
-</tr>
-<tr class="even">
-<td>Investissement ESG</td>
-<td>ESG Investing</td>
-</tr>
-<tr class="odd">
-<td>Investissement socialement responsable (ISR)</td>
-<td>Socially Responsible Investing (SRI)</td>
-</tr>
-<tr class="even">
-<td>Finance verte</td>
-<td>Green Finance</td>
-</tr>
-<tr class="odd">
-<td>Investissement responsable</td>
-<td>Responsible Investment</td>
-</tr>
-<tr class="even">
-<td>Risque climatique</td>
-<td>Climate Risk</td>
-</tr>
-<tr class="odd">
-<td>Développement durable</td>
-<td>Sustainable Development</td>
-</tr>
-</tbody>
-</table>
+<section id="partie-a-introduction-et-théorie" class="level2">
+<h2 class="anchored" data-anchor-id="partie-a-introduction-et-théorie">Partie A — Introduction et théorie</h2>
+<section id="panorama-du-domaine-the-lay-of-the-land" class="level3">
+<h3 class="anchored" data-anchor-id="panorama-du-domaine-the-lay-of-the-land">Panorama du domaine (The Lay of the Land)</h3>
+<section id="définition-des-données-alternatives" class="level4">
+<h4 class="anchored" data-anchor-id="définition-des-données-alternatives">Définition des données alternatives</h4>
+<p>Il n’existe pas de définition universellement acceptée des données alternatives. On les caractérise le plus souvent par <strong>opposition aux données conventionnelles (Standard Data)</strong> que constituent les prix de clôture boursiers, les données macroéconomiques publiées par les gouvernements, les bilans comptables standardisés ou les taux directeurs des banques centrales.</p>
+<p>Une donnée est dite alternative lorsqu’elle présente <strong>au moins une</strong> des caractéristiques suivantes :</p>
+<ul>
+<li>Elle est <strong>moins communément utilisée</strong> par les participants de marché</li>
+<li>Elle tend à être <strong>plus coûteuse</strong> à acquérir et à maintenir</li>
+<li>Elle provient généralement de <strong>sources extérieures aux marchés financiers</strong></li>
+<li>Elle dispose d’un <strong>historique plus court</strong> que les données traditionnelles</li>
+<li>Elle est <strong>plus difficile à exploiter</strong> (formats non structurés, qualité variable)</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition : l&#39;avantage informationnel">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition : l’avantage informationnel
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Imaginez deux analystes cherchant à évaluer les ventes d’un grand distributeur. Le premier attend la publication du rapport trimestriel officiel. Le second analyse en temps réel le flux de voitures sur les parkings via des images satellites. Le second dispose d’une information <strong>en avance sur le marché</strong> — c’est précisément là que réside la valeur des données alternatives.</p>
+</div>
+</div>
+</section>
+<section id="taxonomie-des-données-alternatives" class="level4">
+<h4 class="anchored" data-anchor-id="taxonomie-des-données-alternatives">Taxonomie des données alternatives</h4>
+<p>Les données alternatives couvrent un spectre très large de sources et de formats :</p>
+<ul>
+<li><strong>Imagerie satellite (Satellite Imagery)</strong> : suivi de parkings, ports, champs agricoles, réservoirs de stockage</li>
+<li><strong>Réseaux sociaux (Social Media)</strong> : sentiment Twitter/X, Reddit, forums spécialisés, avis clients</li>
+<li><strong>Données de localisation (Location Data)</strong> : flux piétons, mouvements de navires, déplacements routiers</li>
+<li><strong>Internet des objets (Internet of Things – IoT)</strong> : capteurs industriels, compteurs intelligents, thermostats connectés</li>
+<li><strong>Web scraping</strong> : extraction automatisée de prix, offres d’emploi, avis consommateurs</li>
+<li><strong>Transactions financières (Transaction Data)</strong> : données de cartes bancaires, reçus anonymisés</li>
+<li><strong>Données gouvernementales et corporatives</strong> : registres d’entreprises, données douanières, permis de construire</li>
+<li><strong>Données fondamentales sectorielles</strong> : statistiques automobiles, données agricoles, données immobilières</li>
+<li><strong>Flux d’actualités (News Data)</strong> : analyse de sentiment sur flux d’actualités financières</li>
+</ul>
+<p>On distingue également les <strong>données d’échappement (Exhaust Data)</strong> : des données produites comme sous-produit d’une activité principale. Les logs de transactions haute fréquence générés par les market-makers en sont un exemple typique.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="À retenir">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -8143,442 +8147,926 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Tous ces termes convergent vers le même concept : intégrer des critères <strong>non-financiers</strong> dans les décisions d’investissement.</p>
+<p>Les données alternatives ne sont pas nécessairement exotiques. Des données de bilan comptable (Balance Sheet) peuvent être considérées comme alternatives lorsqu’elles sont exploitées selon une méthodologie non conventionnelle ou combinées de manière originale à d’autres sources.</p>
 </div>
 </div>
-<hr>
 </section>
-<section id="les-3-piliers-esg-msci-2023" class="level2">
-<h2 class="anchored" data-anchor-id="les-3-piliers-esg-msci-2023">Les 3 Piliers ESG (MSCI 2023)</h2>
-<section id="structure-3-piliers-10-thèmes-37-enjeux-clés" class="level3">
-<h3 class="anchored" data-anchor-id="structure-3-piliers-10-thèmes-37-enjeux-clés">Structure : 3 piliers → 10 thèmes → 37 enjeux clés</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Pilier</th>
-<th>Thèmes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>E — Environnemental</strong></td>
-<td>Changement climatique · Ressources naturelles · Pollution &amp; Déchets · Opportunités environnementales</td>
-</tr>
-<tr class="even">
-<td><strong>S — Social</strong></td>
-<td>Capital humain · Responsabilité produit · Opposition parties prenantes · Opportunités sociales</td>
-</tr>
-<tr class="odd">
-<td><strong>G — Gouvernance</strong></td>
-<td>Gouvernance d’entreprise ★★ · Comportement de l’entreprise</td>
-</tr>
-</tbody>
-</table>
-<p><strong>★</strong> = enjeu universel (toutes sociétés de l’indice MSCI)</p>
-<p><strong>★★</strong> = Board, Pay, Ownership, Accounting → contribuent directement au score G</p>
-</section>
-<section id="enjeux-clés-sélectionnés" class="level3">
-<h3 class="anchored" data-anchor-id="enjeux-clés-sélectionnés">Enjeux clés sélectionnés</h3>
-<p><strong>E</strong> : Émissions carbone ★, Water Stress ★, Toxic Emissions ★, Clean Tech, Green Building</p>
-<p><strong>S</strong> : Labor Management ★, Health &amp; Safety ★, Product Safety, Privacy &amp; Data Security</p>
-<p><strong>G</strong> : Board ★★, Pay ★★, Business Ethics ★, Anti-Competitive Practices ★, Tax Transparency ★</p>
-<hr>
-</section>
-</section>
-<section id="notation-esg-scoring" class="level2">
-<h2 class="anchored" data-anchor-id="notation-esg-scoring">Notation ESG (<em>Scoring</em>)</h2>
-<section id="principes" class="level3">
-<h3 class="anchored" data-anchor-id="principes">Principes</h3>
-<ul>
-<li><strong>Nombreux systèmes</strong> : MSCI, Sustainalytics, S&amp;P Global, Refinitiv, Bloomberg, ISS ESG</li>
-<li><strong>Corrélation positive</strong> mais <strong>divergence réelle</strong> entre notateurs (<em>rating disagreement</em>)</li>
-<li>Exemple : R² ≈ <strong>0,32</strong> entre Sustainalytics et MSCI (S&amp;P 1200, jan. 2016)</li>
-</ul>
-</section>
-<section id="échelle-msci-depuis-2023" class="level3">
-<h3 class="anchored" data-anchor-id="échelle-msci-depuis-2023">Échelle MSCI (depuis 2023)</h3>
-<p><span class="math display">\[\text{Score ESG} = \text{moyenne pondérée}(E,\ S,\ G)\]</span></p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Note</th>
-<th>Signification</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>AAA / AA</strong></td>
-<td>Leader ESG</td>
-</tr>
-<tr class="even">
-<td><strong>A / BBB / BB</strong></td>
-<td>Moyen</td>
-</tr>
-<tr class="odd">
-<td><strong>B / CCC</strong></td>
-<td>Retardataire ESG (Laggard)</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-warning callout-titled" title="Piège">
+<section id="pourquoi-utiliser-des-données-alternatives" class="level4">
+<h4 class="anchored" data-anchor-id="pourquoi-utiliser-des-données-alternatives">Pourquoi utiliser des données alternatives ?</h4>
+<p>L’utilisation de données alternatives répond à une logique d’<strong>avantage informationnel (Informational Edge)</strong> dans un environnement ultra-compétitif. Ces données apportent trois types de valeur distincte.</p>
+<p><strong>Orthogonalité (Orthogonality)</strong></p>
+<p>Elles apportent une information <strong>indépendante</strong> de celle déjà intégrée dans les prix de marché, offrant une vision différente et complémentaire de la réalité économique. Deux signaux orthogonaux sont plus robustes combinés que pris séparément.</p>
+<p><strong>Anticipation (Anticipatory Power)</strong></p>
+<p>Certaines données précèdent les publications officielles. L’indice PMI (Purchasing Managers’ Index), par exemple, est publié <strong>avant les données officielles du PIB</strong> et constitue un indicateur avancé (Leading Indicator) reconnu par les économistes.</p>
+<p><strong>Complémentarité (Complementarity)</strong></p>
+<p>Certaines données enrichissent l’analyse existante sans la remplacer. Les données d’émissions de CO₂, par exemple, peuvent affiner l’évaluation extra-financière (ESG) d’une entreprise en complément des métriques financières traditionnelles.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition : l&#39;hypothèse d&#39;efficience des marchés">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Piège
+<span class="screen-reader-only">Tip</span>Intuition : l’hypothèse d’efficience des marchés
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Le score correspond à un <strong>classement relatif</strong> au sein du secteur — pas une mesure absolue de vertu environnementale.</p>
+<p>La théorie des marchés efficients (Efficient Market Hypothesis – EMH) postule que les prix reflètent déjà toute l’information publiquement disponible. Les données alternatives ouvrent la possibilité d’exploiter des informations <strong>non encore intégrées dans les prix</strong>, car elles sont trop coûteuses à acquérir ou trop complexes à analyser pour la majorité des acteurs.</p>
 </div>
 </div>
+</section>
+<section id="état-actuel-du-marché" class="level4">
+<h4 class="anchored" data-anchor-id="état-actuel-du-marché">État actuel du marché</h4>
+<p>Selon une étude McKinsey (2016), seul <strong>1 % des données disponibles</strong> font l’objet d’une analyse approfondie dans le secteur financier. Ce faible taux d’adoption s’explique par trois freins principaux :</p>
 <ul>
-<li><strong>Tendance</strong> : les scores ESG augmentent avec le temps (Lundström 2021) → amélioration réelle + effet reporting</li>
+<li>Les <strong>coûts élevés</strong> d’acquisition, de nettoyage et de maintenance des données</li>
+<li>La <strong>nécessité de changements organisationnels</strong> profonds dans les processus d’investissement</li>
+<li>Les <strong>besoins spécifiques en recrutement</strong> de profils hybrides (data scientists, ingénieurs data, analystes quantitatifs)</li>
+</ul>
+<p>En termes de dépenses, le marché des données alternatives côté acheteur (Buy Side) a connu une croissance explosive : d’environ 200 millions de dollars en 2016 à des estimations supérieures à <strong>1,5 milliard de dollars en 2020</strong>.</p>
+<p>Parmi les types de données les plus utilisés par les fonds d’investissement, on trouve par ordre décroissant de popularité :</p>
+<ul>
+<li>Le <strong>web scraping</strong> (environ 45 % des fonds)</li>
+<li>Les données de <strong>cartes de crédit/débit</strong></li>
+<li>L’analyse de <strong>sentiment social et médiatique</strong></li>
+<li>Les données d’<strong>utilisation d’applications mobiles</strong></li>
+<li>Le <strong>trafic web</strong></li>
+<li>L’<strong>imagerie satellite</strong></li>
+<li>Les données de <strong>géolocalisation</strong></li>
+<li>Les <strong>reçus électroniques (Email Receipt)</strong></li>
 </ul>
 </section>
-<section id="émissions-carbone-scopes" class="level3">
-<h3 class="anchored" data-anchor-id="émissions-carbone-scopes">Émissions carbone — Scopes</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Scope</th>
-<th>Contenu</th>
-<th>Exemple</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>1</strong></td>
-<td>Émissions directes</td>
-<td>Chaudières, flotte véhicules</td>
-</tr>
-<tr class="even">
-<td><strong>2</strong></td>
-<td>Énergie indirecte consommée</td>
-<td>Électricité achetée</td>
-</tr>
-<tr class="odd">
-<td><strong>3</strong></td>
-<td>Toutes autres émissions amont/aval</td>
-<td>Utilisation produits par clients</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-warning callout-titled" title="Piège">
+</section>
+<section id="la-valeur-des-données-alternatives" class="level3">
+<h3 class="anchored" data-anchor-id="la-valeur-des-données-alternatives">La valeur des données alternatives</h3>
+<p>La valeur d’une donnée alternative repose sur sa capacité à générer un <strong>signal (Signal)</strong> statistiquement significatif et économiquement exploitable. On distingue trois dimensions de valeur complémentaires.</p>
+<p><strong>Valeur prédictive (Predictive Value)</strong></p>
+<p>Une donnée est précieuse si elle permet d’anticiper un événement financier avant qu’il se reflète dans les prix. Le comptage de voitures sur les parkings d’un distributeur permet, par exemple, d’anticiper ses revenus trimestriels avant toute publication officielle.</p>
+<p><strong>Diversification du signal (Signal Diversification)</strong></p>
+<p>Dans un portefeuille de stratégies quantitatives, l’ajout de sources décorrélées améliore la robustesse globale. Même un signal statistiquement faible peut apporter de la valeur s’il est <strong>orthogonal</strong> aux signaux existants — il réduit la variance totale du portefeuille de stratégies.</p>
+<p><strong>Réduction du bruit (Noise Reduction)</strong></p>
+<p>Certaines données alternatives permettent de confirmer ou d’infirmer des signaux déjà présents. Le sentiment agrégé via les réseaux sociaux peut, par exemple, servir de filtre de conviction sur des signaux techniques ou fondamentaux.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Attention au surapprentissage (Overfitting)">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Piège
+<span class="screen-reader-only">Warning</span>Attention au surapprentissage (Overfitting)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Le Scope 3 est souvent le plus important mais le plus difficile à mesurer — l’ignorer fausse l’analyse.</p>
+<p>La recherche de signal dans les données alternatives est particulièrement exposée au risque de surapprentissage. Avec des historiques courts et une multitude de variables disponibles, il est facile de trouver des corrélations <strong>spurieuses</strong> (fortuites) qui ne se maintiennent pas en dehors de l’échantillon d’entraînement (Out-of-Sample). La validation hors échantillon est non négociable.</p>
 </div>
 </div>
 </section>
-<section id="score-itr-implied-temperature-rise" class="level3">
-<h3 class="anchored" data-anchor-id="score-itr-implied-temperature-rise">Score ITR (<em>Implied Temperature Rise</em>)</h3>
+<section id="risques-et-défis" class="level3">
+<h3 class="anchored" data-anchor-id="risques-et-défis">Risques et défis</h3>
+<section id="risques-juridiques-et-réglementaires-legal-risks" class="level4">
+<h4 class="anchored" data-anchor-id="risques-juridiques-et-réglementaires-legal-risks">Risques juridiques et réglementaires (Legal Risks)</h4>
+<p><strong>Protection des données personnelles (Personal Data)</strong></p>
+<p>Les législations sur la protection des données varient fortement selon les régions :</p>
 <ul>
-<li>Hausse de température implicite si toutes les entreprises se comportaient comme celle analysée</li>
-<li><strong>Cible</strong> : ≤ 1,5 °C (Accord de Paris)</li>
-<li>Score élevé (3–4 °C) = très préoccupant</li>
+<li><strong>RGPD (General Data Protection Regulation – GDPR)</strong> en Europe</li>
+<li><strong>CCPA (California Consumer Privacy Act)</strong> aux États-Unis</li>
+<li>Réglementations nationales dans de nombreux autres pays, aux contraintes variables</li>
 </ul>
-</section>
-<section id="odd-sustainable-development-goals-sdgs" class="level3">
-<h3 class="anchored" data-anchor-id="odd-sustainable-development-goals-sdgs">ODD (<em>Sustainable Development Goals — SDGs</em>)</h3>
-<p>17 objectifs ONU (2015, horizon 2030) — désormais <strong>quantifiés</strong> dans les analyses de portefeuille</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>N°</th>
-<th>Objectif</th>
-<th>N°</th>
-<th>Objectif</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Pas de pauvreté</td>
-<td>10</td>
-<td>Inégalités réduites</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>Faim zéro</td>
-<td>11</td>
-<td>Villes durables</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>Santé &amp; bien-être</td>
-<td>12</td>
-<td>Consommation responsable</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>Éducation de qualité</td>
-<td>13</td>
-<td>Lutte contre le climat</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>Égalité des genres</td>
-<td>14</td>
-<td>Vie aquatique</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>Eau propre</td>
-<td>15</td>
-<td>Vie terrestre</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td>Énergie propre</td>
-<td>16</td>
-<td>Paix &amp; justice</td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>Travail décent</td>
-<td>17</td>
-<td>Partenariats</td>
-</tr>
-<tr class="odd">
-<td>9</td>
-<td>Industrie &amp; innovation</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-</section>
-<section id="les-7-stratégies-esg-eurosif-2019" class="level2">
-<h2 class="anchored" data-anchor-id="les-7-stratégies-esg-eurosif-2019">Les 7 Stratégies ESG (Eurosif, 2019)</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>#</th>
-<th>Stratégie</th>
-<th>Description courte</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td><strong>Exclusion</strong></td>
-<td>Exclure secteurs / normative / worst-in-class</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td><strong>Valeurs</strong> (<em>Norms-based</em>)</td>
-<td>Filtrer selon normes internationales (ONU, OIT)</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td><strong>Sélection positive</strong> (<em>Best-in-class</em>)</td>
-<td>Surpondérer les leaders ESG par secteur</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td><strong>Thématique</strong></td>
-<td>Flécher vers thèmes durables (ex. obligations vertes)</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td><strong>Intégration</strong></td>
-<td>ESG intégré dans tout le processus de gestion</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td><strong>Engagement</strong></td>
-<td>Vote en AG + dialogue avec les directions</td>
-</tr>
-<tr class="odd">
-<td>7</td>
-<td><strong>Impact</strong></td>
-<td>Impact mesurable, intentionnel et additionnel</td>
-</tr>
-</tbody>
-</table>
-<section id="points-clés-par-stratégie" class="level3">
-<h3 class="anchored" data-anchor-id="points-clés-par-stratégie">Points clés par stratégie</h3>
-<p><strong>Exclusion</strong> → simple à implémenter · ne change pas l’entreprise · biais sectoriel possible</p>
-<p><strong>Best-in-class</strong> → maintient diversification · une entreprise peut être “meilleure” tout en restant polluante</p>
-<p><strong>Intégration</strong> → ESG = risque financier long terme · benchmarks ESG · dashboards</p>
-<p><strong>Engagement</strong> → coûteux en ressources · souvent mutualisé (coalitions) · résultats à long terme</p>
-<p><strong>Impact</strong> → 3 conditions : <strong>intentionnalité</strong> + <strong>mesurabilité</strong> + <strong>additionnalité</strong></p>
-<hr>
-</section>
-</section>
-<section id="cas-pratique-compenswiss-fin-2022" class="level2">
-<h2 class="anchored" data-anchor-id="cas-pratique-compenswiss-fin-2022">Cas pratique : compenswiss (fin 2022)</h2>
-<section id="les-4-axes" class="level3">
-<h3 class="anchored" data-anchor-id="les-4-axes">Les 4 axes</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Axe</th>
-<th>Actions concrètes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>1. Intégration</strong></td>
-<td>Benchmarks ESG · Dashboard ESG · Swiss Climate Scores</td>
-</tr>
-<tr class="even">
-<td><strong>2. Vote</strong></td>
-<td>~100 AG/an en Suisse · consultant externe · règles de vote définies</td>
-</tr>
-<tr class="odd">
-<td><strong>3. Engagement</strong></td>
-<td>Via ASIR (cofondé) · 150+ émetteurs · thèmes : droits humains, travail, environnement</td>
-</tr>
-<tr class="even">
-<td><strong>4. Exclusions</strong></td>
-<td>~100 sociétés · normatives + charbon (seuil abaissé 50 % → 30 %)</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="analyse-empreinte-carbone-juin-2020-déc.-2022" class="level3">
-<h3 class="anchored" data-anchor-id="analyse-empreinte-carbone-juin-2020-déc.-2022">Analyse empreinte carbone (juin 2020 – déc. 2022)</h3>
-<ul>
-<li>Unité : <strong>tCO₂e / M$ investi</strong></li>
-<li>Trajectoires : Portfolio &gt; Benchmark &gt; Benchmark idéal</li>
-<li>Tendance générale : <strong>décroissante</strong> pour les trois courbes</li>
-<li>Impact visible de l’abaissement du seuil charbon</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled" title="Leçon clé">
+<p>Pour mitiger ce risque, les données sont souvent <strong>anonymisées</strong> ou <strong>agrégées</strong> avant d’être commercialisées.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Responsabilité de l&#39;acheteur (Buyer Beware)">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Leçon clé
+<span class="screen-reader-only">Important</span>Responsabilité de l’acheteur (Buyer Beware)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Sans données et outils ESG → pas de pilotage possible. La <strong>couverture</strong> (% d’actifs avec données ESG) et la <strong>traversée dans le temps</strong> sont des enjeux opérationnels critiques.</p>
+<p>Le fait que le vendeur ait anonymisé les données ne protège pas automatiquement l’acheteur en cas de non-conformité. Ce dernier doit effectuer sa propre <strong>diligence raisonnable (Due Diligence)</strong> sur les pratiques du fournisseur et assumer la responsabilité d’un usage non conforme à la réglementation applicable.</p>
+</div>
+</div>
+<p><strong>Web Scraping</strong></p>
+<p>Bien qu’une donnée soit publiquement accessible en ligne, son extraction automatisée n’est pas nécessairement légale. Trois problèmes se posent :</p>
+<ul>
+<li>Violation potentielle des <strong>conditions générales d’utilisation (Terms of Service)</strong> du site</li>
+<li>Existence de <strong>limitations contractuelles</strong> restreignant les usages autorisés</li>
+<li>Distinction subtile entre donnée <em>publiquement accessible</em> et donnée <em>librement utilisable</em> à des fins commerciales</li>
+</ul>
+<p><strong>Qualité et validité</strong></p>
+<ul>
+<li>La <strong>qualité</strong> des données peut être médiocre : bots et spams sur les réseaux sociaux, tweets générés par des comptes automatisés</li>
+<li>La <strong>validité</strong> peut être compromise : capteurs IoT défaillants, biais d’échantillonnage dans les enquêtes, erreurs de collecte</li>
+</ul>
+<p><strong>Risque fournisseur</strong></p>
+<p>Les fournisseurs de données alternatives peuvent <strong>cesser leur activité</strong> suite à des pressions réglementaires, des difficultés financières ou des évolutions de leur modèle économique — entraînant une interruption des flux de données et une discontinuité des stratégies qui en dépendent.</p>
+</section>
+<section id="défis-opérationnels-operational-challenges" class="level4">
+<h4 class="anchored" data-anchor-id="défis-opérationnels-operational-challenges">Défis opérationnels (Operational Challenges)</h4>
+<p><strong>Format non structuré (Unstructured Format)</strong></p>
+<p>Les données alternatives se présentent rarement sous forme tabulaire classique. Elles apparaissent sous de nombreuses formes difficiles à traiter automatiquement :</p>
+<ul>
+<li>Texte libre (actualités, tweets, avis clients, transcriptions d’appels)</li>
+<li>Images et vidéos (satellite, caméras de surveillance)</li>
+<li>Audio (podcasts financiers, earnings calls)</li>
+<li>Écriture manuscrite (formulaires anciens numérisés)</li>
+<li>Absence de <em>timestamp</em> cohérent ou standardisé</li>
+</ul>
+<p><strong>Problèmes de qualité des données</strong></p>
+<ul>
+<li><strong>Valeurs manquantes (Missing Values)</strong> : bien plus fréquentes que dans les données conventionnelles</li>
+<li><strong>Valeurs aberrantes (Outliers)</strong> : perturbations pouvant être réelles ou artificielles — et la distinction est cruciale</li>
+<li><strong>Anomalies (Anomalies)</strong> : données corrompues, doublons, erreurs de format</li>
+</ul>
+<p><strong>Correspondance d’entités (Entity Matching)</strong></p>
+<p>Une même entreprise peut être référencée différemment selon les sources : “Apple Inc.”, “AAPL”, “Apple Computer”, “Apple”. La résolution de cette ambiguïté (<strong>Entity Resolution</strong>) est critique et souvent sous-estimée dans les projets de données alternatives.</p>
+<p><strong>Mise en série temporelle régulière</strong></p>
+<p>Transformer des données brutes hétérogènes en séries temporelles de fréquence régulière (journalière, hebdomadaire) par ticker ou par catégorie est un défi technique majeur. Il faut décider de la <strong>fréquence d’agrégation</strong>, de la <strong>méthode d’agrégation</strong> (somme, moyenne, médiane) et gérer les trous temporels de façon cohérente.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir : la règle des 80/20">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir : la règle des 80/20
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En pratique, environ 80 % du temps de travail sur un projet de données alternatives est consacré au <strong>prétraitement (Data Preprocessing)</strong> — nettoyage, standardisation, gestion des valeurs manquantes — et seulement 20 % à la modélisation et à l’extraction de signal. Ne pas l’anticiper est une erreur classique.</p>
 </div>
 </div>
 </section>
-<section id="engagement-via-asir" class="level3">
-<h3 class="anchored" data-anchor-id="engagement-via-asir">Engagement via ASIR</h3>
-<ul>
-<li>Nombre de cas total : <strong>en hausse</strong> (tiré par droits de l’homme)</li>
-<li>Distribution thématique : <strong>stable</strong> (éthique, environnement, travail)</li>
-<li>Engagement = processus <strong>long terme</strong></li>
-</ul>
 </section>
-<section id="vote-en-suisse" class="level3">
-<h3 class="anchored" data-anchor-id="vote-en-suisse">Vote en Suisse</h3>
-<ul>
-<li>Part “toutes motions acceptées” : <strong>en hausse</strong> (loi sur rémunérations abusives)</li>
-<li>Part “une motion rejetée” : <strong>stable</strong> (surtout rémunération dirigeants)</li>
-</ul>
-<hr>
+<section id="techniques-dapprentissage-automatique-machine-learning-techniques" class="level3">
+<h3 class="anchored" data-anchor-id="techniques-dapprentissage-automatique-machine-learning-techniques">Techniques d’apprentissage automatique (Machine Learning Techniques)</h3>
+<p>Les données alternatives nécessitent des outils adaptés à leur nature non structurée et volumineuse. On distingue trois grandes familles d’approches en apprentissage automatique (Machine Learning – ML).</p>
+<p><strong>Apprentissage supervisé (Supervised Learning)</strong></p>
+<p>Utilisé lorsqu’on dispose de données labellisées. Applications typiques : classification de sentiment (positif/négatif/neutre), détection de fraude, prédiction de résultats financiers. Exemples d’algorithmes : forêts aléatoires (Random Forests), réseaux de neurones, machines à vecteurs de support (SVM).</p>
+<p><strong>Apprentissage non supervisé (Unsupervised Learning)</strong></p>
+<p>Utilisé pour l’exploration de données sans labels : clustering de patterns de données manquantes, détection d’anomalies, réduction de dimensionnalité. Exemples : k-means, DBSCAN, autoencodeurs, décomposition en valeurs singulières (SVD).</p>
+<p><strong>Apprentissage par renforcement (Reinforcement Learning)</strong></p>
+<p>Utilisé pour l’optimisation dynamique de stratégies de trading, en particulier lorsque les données alternatives servent de signal d’état de l’environnement marché.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition : NLP en finance">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition : NLP en finance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le <strong>traitement du langage naturel (Natural Language Processing – NLP)</strong> occupe une place centrale dans l’exploitation des données textuelles alternatives. Des modèles comme BERT ou les LLMs permettent de capturer des nuances sémantiques et contextuelles inatteignables par les méthodes traditionnelles de comptage de mots (Bag of Words).</p>
+</div>
+</div>
 </section>
-</section>
-<section id="relations-entre-concepts" class="level2">
-<h2 class="anchored" data-anchor-id="relations-entre-concepts">Relations entre concepts</h2>
+<section id="le-processus-dutilisation-the-usage-process" class="level3">
+<h3 class="anchored" data-anchor-id="le-processus-dutilisation-the-usage-process">Le processus d’utilisation (The Usage Process)</h3>
+<p>L’intégration de données alternatives dans une organisation financière suit un processus structuré en <strong>dix étapes</strong>. Ce processus mobilise des profils variés dont la demande est en forte croissance : chasseurs de données (Data Scouts), stratèges en données (Data Strategists), ingénieurs données (Data Engineers) et data scientists.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    A[Crises globales\nClimat · Biodiversité · Social] --&gt; B[Finance durable]
-    B --&gt; C[Mesure : ESG / ODD / ITR / Scope 1-2-3]
-    C --&gt; D[Données &amp; Outils]
-    D --&gt; E[Stratégies]
-    E --&gt; E1[Exclusion]
-    E --&gt; E2[Best-in-class]
-    E --&gt; E3[Intégration]
-    E --&gt; E4[Engagement]
-    E --&gt; E5[Impact]
+    A[&quot;1. Vision\n&amp; Stratégie&quot;] --&gt; B[&quot;2. Identification\n(Data Scouting)&quot;]
+    B --&gt; C[&quot;3. Due Diligence\nFournisseurs&quot;]
+    C --&gt; D[&quot;4. Risques\nTech / Légal / Cyber&quot;]
+    D --&gt; E[&quot;5. POC\nsur échantillon&quot;]
+    E --&gt; F[&quot;6. Intégration\n(Onboarding)&quot;]
+    F --&gt; G[&quot;7. Prétraitement\n(Preprocessing)&quot;]
+    G --&gt; H[&quot;8. Extraction\ndu signal&quot;]
+    H --&gt; I[&quot;9. Mise en\nproduction&quot;]
+    I --&gt; J[&quot;10. Maintenance&quot;]
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
+<p><strong>Étape 1 — Définir la vision et la stratégie</strong></p>
+<p>Avant d’acquérir toute donnée, il faut définir l’objectif stratégique précis : améliorer la prédiction de revenus ? Réduire le drawdown maximal ? Identifier de nouvelles sources d’alpha décorrélées ? Des revues de littérature académique et de petites preuves de concept (POC – Proof of Concept) permettent d’orienter cette réflexion.</p>
+<p><strong>Étape 2 — Identifier les datasets (Data Scouting)</strong></p>
+<p>La recherche de sources pertinentes est un métier à part entière. Elle implique une veille active sur les nouveaux fournisseurs, les publications académiques, les conférences spécialisées (Alternative Data Summit, etc.) et les retours d’expérience de pairs.</p>
+<p><strong>Étape 3 — Due diligence des fournisseurs</strong></p>
+<p>Avant tout engagement contractuel, évaluer la solidité financière du fournisseur, la robustesse de ses processus de collecte, sa conformité réglementaire et la pérennité de ses données. La disparition d’un fournisseur peut mettre fin à une stratégie entière du jour au lendemain.</p>
+<p><strong>Étape 4 — Pré-évaluation des risques</strong></p>
+<p>Identification et quantification des risques technologiques (latence d’intégration, fiabilité de l’API), juridiques (droits d’utilisation, conformité RGPD) et de cybersécurité (données sensibles, pipelines exposés).</p>
+<p><strong>Étape 5 — Pré-évaluation du signal sur échantillon</strong></p>
+<p>Avant tout investissement massif, tester sur un échantillon si un signal exploitable existe. Cette étape, souvent négligée, évite des dépenses importantes pour une donnée qui ne présente aucune valeur prédictive réelle.</p>
+<p><strong>Étape 6 — Intégration des données (Data Onboarding)</strong></p>
+<p>Mise en place des pipelines d’ingestion : connexion aux APIs, téléchargements en lot (batch), normalisation des formats et stockage sécurisé dans l’infrastructure data de l’entreprise.</p>
+<p><strong>Étape 7 — Prétraitement des données (Data Preprocessing)</strong></p>
+<p>Nettoyage, traitement des valeurs manquantes, détection des anomalies, normalisation, construction des séries temporelles. C’est typiquement l’étape la plus chronophage — et la plus sous-estimée — de tout le processus.</p>
+<p><strong>Étape 8 — Extraction du signal (Signal Extraction)</strong></p>
+<p>Application des modèles statistiques ou d’apprentissage automatique pour extraire un signal exploitable à partir des données prétraitées. Inclut la validation hors échantillon et les tests de robustesse.</p>
+<p><strong>Étape 9 — Mise en production (Production)</strong></p>
+<p>Déploiement du signal dans l’infrastructure de trading ou de gestion de portefeuille, avec les contrôles de risque, les mécanismes de validation en temps réel et la surveillance des performances.</p>
+<p><strong>Étape 10 — Maintenance</strong></p>
+<p>Surveillance continue de la qualité des données et de la stabilité du signal. Les données alternatives peuvent se dégrader rapidement (distribution drift, changements de pratiques chez le fournisseur, évolution réglementaire).</p>
 <hr>
 </section>
-<section id="points-critiques-pièges" class="level2">
-<h2 class="anchored" data-anchor-id="points-critiques-pièges">Points critiques / Pièges</h2>
-<div class="callout callout-style-default callout-warning callout-titled" title="Pièges à éviter">
+</section>
+<section id="partie-b-applications-pratiques" class="level2">
+<h2 class="anchored" data-anchor-id="partie-b-applications-pratiques">Partie B — Applications pratiques</h2>
+<section id="données-manquantes-missing-data" class="level3">
+<h3 class="anchored" data-anchor-id="données-manquantes-missing-data">Données manquantes (Missing Data)</h3>
+<section id="importance-et-spécificité-dans-les-données-alternatives" class="level4">
+<h4 class="anchored" data-anchor-id="importance-et-spécificité-dans-les-données-alternatives">Importance et spécificité dans les données alternatives</h4>
+<p>Le traitement des données manquantes est une <strong>étape indispensable et prioritaire</strong> dans tout pipeline de données alternatives. Sans ce traitement préalable, les données sont simplement inutilisables pour la modélisation.</p>
+<p>Les données alternatives présentent <strong>davantage de valeurs manquantes</strong> que les données conventionnelles pour plusieurs raisons :</p>
+<ul>
+<li>Historiques plus courts et couverture géographique ou sectorielle souvent incomplète</li>
+<li>Pannes techniques récurrentes (capteurs IoT, connexions API intermittentes)</li>
+<li>Discontinuités dans les pratiques de publication ou de collecte</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled" title="Règle d&#39;or : traiter en premier">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Pièges à éviter
+<span class="screen-reader-only">Warning</span>Règle d’or : traiter en premier
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>Le traitement des données manquantes doit être effectué <strong>avant tout autre traitement ou modélisation</strong>. Une imputation réalisée après d’autres transformations peut introduire des biais supplémentaires, difficiles à détecter et à corriger a posteriori.</p>
+</div>
+</div>
+</section>
+<section id="les-trois-mécanismes-de-manquement" class="level4">
+<h4 class="anchored" data-anchor-id="les-trois-mécanismes-de-manquement">Les trois mécanismes de manquement</h4>
+<p>En statistique, on distingue trois types fondamentaux de mécanismes de manquement (<em>Missing Data Mechanisms</em>). Cette distinction est essentielle car elle conditionne le choix de la méthode de traitement.</p>
+<p><strong>MCAR — Missing Completely At Random (Manquant Complètement Aléatoirement)</strong></p>
+<p>La probabilité de manquement est <strong>indépendante de toutes les variables</strong>, observées ou manquantes. Exemple : une panne aléatoire de capteur. C’est le cas le plus favorable : les observations complètes restent représentatives de la population entière.</p>
+<p><strong>MAR — Missing At Random (Manquant Aléatoirement)</strong></p>
+<p>La probabilité de manquement <strong>dépend des variables observées</strong> mais pas des valeurs manquantes elles-mêmes. Exemple : davantage de données manquantes pour les petites entreprises (taille est observable). L’imputation reste possible sous condition.</p>
+<p><strong>MNAR — Missing Not At Random (Manquant Non Aléatoirement)</strong></p>
+<p>La probabilité de manquement <strong>dépend des valeurs manquantes elles-mêmes</strong>. Exemple : les entreprises en difficulté financière ne publient pas certains indicateurs précisément parce qu’ils sont mauvais. C’est le cas le plus problématique : l’absence d’information est elle-même informative.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Le cas MNAR en finance">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Le cas MNAR en finance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En finance alternative, le MNAR est fréquent. Une enseigne dont les ventes chutent peut cesser de publier certaines données opérationnelles. Traiter ces manquements comme s’ils étaient aléatoires (MCAR) introduit un biais de sélection (Survivorship Bias) potentiellement sévère.</p>
+</div>
+</div>
+</section>
+<section id="méthodes-de-traitement" class="level4">
+<h4 class="anchored" data-anchor-id="méthodes-de-traitement">Méthodes de traitement</h4>
+<p><strong>1. Suppression (Deletion)</strong></p>
+<p>Supprimer les lignes ou colonnes contenant des valeurs manquantes. Simple et rapide, mais potentiellement très coûteux en information — inacceptable avec des taux de manquement élevés.</p>
+<p><strong>2. Remplacement simple (Simple Replacement)</strong></p>
+<p>Remplacer par la moyenne, la médiane, la dernière valeur connue (<em>forward fill</em>) ou la valeur suivante (<em>backward fill</em>). Rapide, mais peut réduire artificiellement la variance et introduire des biais systématiques.</p>
+<p><strong>3. Imputation prédictive (Predictive Imputation)</strong></p>
+<p>Utilisation de modèles statistiques ou d’apprentissage automatique pour estimer les valeurs manquantes à partir des variables disponibles. La littérature est abondante : régressions multiples, k-NN, décomposition en facteurs, réseaux de neurones, modèles d’espace d’états. Plus coûteux computationnellement, mais généralement plus précis.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition : exploiter la structure de corrélation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition : exploiter la structure de corrélation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’imputation prédictive repose sur un principe simple : les valeurs manquantes ne sont pas indépendantes des autres variables. Le prix d’une obligation à 30 ans est fortement corrélé avec celui à 20 ans. On peut donc estimer la valeur manquante en exploitant cette <strong>structure de corrélation</strong> entre séries.</p>
+</div>
+</div>
+</section>
+<section id="exemple-clustering-de-patterns-sur-données-cds" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-clustering-de-patterns-sur-données-cds">Exemple : Clustering de patterns sur données CDS</h4>
+<p>Les données de <strong>Credit Default Swaps (CDS)</strong> illustrent parfaitement la diversité des patterns de données manquantes. Une analyse de clustering révèle <strong>cinq groupes distincts</strong> de comportement selon la nature des manquements :</p>
 <ul>
-<li><p><strong>Divergence des notateurs</strong> : un score ESG varie selon le fournisseur → ne pas traiter un seul score comme une vérité absolue</p></li>
-<li><p><strong>Relatif ≠ Absolu</strong> : être “best-in-class” dans un secteur polluant ne signifie pas être vertueux en absolu</p></li>
-<li><p><strong>Greenwashing</strong> : une entreprise peut communiquer sur les ODD sans actions réelles — valider avec des données tierces</p></li>
-<li><p><strong>Scope 3 ignoré</strong> : souvent le périmètre le plus important, mais aussi le plus difficile à mesurer</p></li>
-<li><p><strong>Hausse des scores dans le temps</strong> : peut refléter amélioration réelle OU simplement meilleur reporting</p></li>
-<li><p><strong>Engagement ≠ résultat immédiat</strong> : l’impact d’un dialogue actionnaire se mesure sur plusieurs années</p></li>
+<li><strong>Cluster 1</strong> : Très faible taux de manquement, données quasi-complètes (méthodes simples suffisantes)</li>
+<li><strong>Cluster 2</strong> : Manquements principalement sur les longues maturités, en courtes séquences consécutives</li>
+<li><strong>Cluster 3</strong> : Manquements en longues séquences pour les longues maturités</li>
+<li><strong>Cluster 4</strong> : Quantité considérable de données manquantes avec forte variation temporelle</li>
+<li><strong>Cluster 5</strong> : Grandes quantités de données manquantes sur toutes les maturités, en longues séquences uniformes (méthodes sophistiquées indispensables)</li>
+</ul>
+<p>Cette classification préalable est cruciale : elle permet de choisir la méthode d’imputation la plus adaptée à chaque groupe de séries, plutôt qu’une approche unique pour toutes les données.</p>
+<p>La comparaison visuelle de différentes techniques d’imputation sur des séries CDS de maturités Y15, Y20 et Y30 confirme que les méthodes avancées (décomposition en facteurs, modèles d’espace d’états) produisent des reconstructions plus lisses et plus fidèles à la dynamique sous-jacente que les méthodes simples.</p>
+</section>
+<section id="exemple-débruitage-dune-image-satellite-dineof" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-débruitage-dune-image-satellite-dineof">Exemple : Débruitage d’une image satellite (DINEOF)</h4>
+<p>Un exemple illustratif concerne l’imagerie satellite. Lorsque <strong>50 % des pixels</strong> d’une image de parking sont artificiellement supprimés — simulant la présence de nuages ou une panne de capteur — la technique <strong>DINEOF (Data Interpolating Empirical Orthogonal Functions)</strong> permet de reconstruire les zones manquantes avec une qualité visuelle remarquable.</p>
+<p>DINEOF exploite la <strong>structure de covariance spatiale et temporelle</strong> de l’image pour interpoler les zones manquantes. Le résultat post-DINEOF est visuellement très proche de l’image originale complète, validant l’efficacité de cette approche pour les données spatiales de haute dimension.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir : choisir la bonne méthode">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir : choisir la bonne méthode
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le choix de la technique d’imputation doit être guidé par quatre critères principaux :</p>
+<ul>
+<li>Le <strong>taux de manquement</strong> (faible → méthodes simples acceptables)</li>
+<li>Le <strong>mécanisme sous-jacent</strong> (MCAR, MAR ou MNAR)</li>
+<li>La <strong>structure des données</strong> (temporelle, spatiale, transversale)</li>
+<li>Le <strong>coût computationnel</strong> acceptable dans le contexte de production</li>
 </ul>
 </div>
 </div>
-<hr>
 </section>
-<section id="synthèse-finale" class="level2">
-<h2 class="anchored" data-anchor-id="synthèse-finale">Synthèse finale</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Messages essentiels">
+</section>
+<section id="valeurs-aberrantes-outliers" class="level3">
+<h3 class="anchored" data-anchor-id="valeurs-aberrantes-outliers">Valeurs aberrantes (Outliers)</h3>
+<section id="définition-et-ambiguïté-fondamentale" class="level4">
+<h4 class="anchored" data-anchor-id="définition-et-ambiguïté-fondamentale">Définition et ambiguïté fondamentale</h4>
+<p>Une valeur aberrante (Outlier) est une observation qui s’écarte significativement du comportement habituel de la distribution. Cependant, une formule résume bien le défi du problème :</p>
+<blockquote class="blockquote">
+<p><em>“Le bruit d’un analyste est le signal d’un autre.”</em></p>
+</blockquote>
+<p>Dans les données de cartes de crédit, un pic de transactions anormal peut être soit un <strong>bruit</strong> (erreur de saisie, fraude ponctuelle), soit un <strong>signal réel</strong> (début d’une tendance de consommation à venir). Supprimer cet outlier peut détruire l’information la plus précieuse du dataset.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Cas réel : le franc suisse (EUR/CHF) — 15 janvier 2015">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Messages essentiels
+<span class="screen-reader-only">Important</span>Cas réel : le franc suisse (EUR/CHF) — 15 janvier 2015
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<ol type="1">
-<li><p>Les activités humaines actuelles <strong>ne sont pas soutenables</strong></p></li>
-<li><p>La finance <strong>ne peut pas tout résoudre</strong> mais peut orienter le capital</p></li>
-<li><p><strong>ESG</strong> = 3 piliers · 10 thèmes · 37 enjeux · notation relative par secteur</p></li>
-<li><p><strong>Scopes 1/2/3</strong> et <strong>ITR</strong> = outils de mesure de l’impact climatique</p></li>
-<li><p><strong>7 stratégies</strong> ESG existent, souvent combinées en pratique</p></li>
-<li><p>La <strong>donnée ESG</strong> est centrale : couverture, qualité, temporalité</p></li>
-<li><p>Finance durable = domaine <strong>jeune, en croissance, en cours de standardisation</strong></p></li>
-</ol>
+<p>Le 15 janvier 2015, la Banque Nationale Suisse (BNS) a abandonné subitement son plancher de change EUR/CHF à 1,20. Le cours a chuté d’environ <strong>15 % en quelques minutes</strong>. Ces observations statistiquement extrêmes, que des modèles naïfs auraient classifiées comme outliers à supprimer, étaient en réalité le signal d’un <strong>changement de régime (Regime Change)</strong> majeur. Les ignorer aurait conduit à manquer l’événement le plus important de la journée.</p>
 </div>
 </div>
+</section>
+<section id="relativité-contextuelle" class="level4">
+<h4 class="anchored" data-anchor-id="relativité-contextuelle">Relativité contextuelle</h4>
+<p>Un outlier est toujours défini <strong>par rapport à une population de référence</strong>. Un salaire annuel de 500 000 € est statistiquement normal dans une population de dirigeants du CAC 40, mais statistiquement extrême dans une population de salariés âgés de 18 ans.</p>
+<p>Cette relativité impose que le traitement des outliers tienne systématiquement compte du <strong>contexte de la donnée</strong> et de la population à laquelle elle appartient. Une approche uniforme est une erreur méthodologique.</p>
+</section>
+<section id="techniques-didentification-non-supervisées" class="level4">
+<h4 class="anchored" data-anchor-id="techniques-didentification-non-supervisées">Techniques d’identification non supervisées</h4>
+<p>Ces méthodes ne nécessitent pas d’exemples labellisés d’anomalies connues — elles sont donc particulièrement adaptées au contexte des données alternatives.</p>
+<section id="knn-k-plus-proches-voisins-k-nearest-neighbors" class="level5">
+<h5 class="anchored" data-anchor-id="knn-k-plus-proches-voisins-k-nearest-neighbors">KNN — K Plus Proches Voisins (K-Nearest Neighbors)</h5>
+<p>L’algorithme KNN calcule la <strong>distance géométrique</strong> d’un point à ses k plus proches voisins dans l’espace des features. Un point dont la distance moyenne aux voisins est anormalement grande par rapport au reste de la distribution est identifié comme outlier.</p>
+</section>
+<section id="lof-facteur-de-densité-locale-local-outlier-factor" class="level5">
+<h5 class="anchored" data-anchor-id="lof-facteur-de-densité-locale-local-outlier-factor">LOF — Facteur de Densité Locale (Local Outlier Factor)</h5>
+<p>LOF compare la <strong>densité locale</strong> d’un point à celle de ses voisins immédiats. Un point situé dans une région peu dense, entouré de voisins en région dense, reçoit un score LOF élevé signalant une anomalie locale — même si ce point n’est pas le plus éloigné globalement.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition : KNN vs LOF">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition : KNN vs LOF
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>KNN détecte les points <strong>globalement</strong> isolés : loin de tout le monde. LOF détecte les points <strong>localement</strong> isolés : dans un voisinage peu peuplé, même s’ils ne sont pas les plus éloignés du centre. LOF est donc plus robuste pour des distributions multi-modales ou hétérogènes, caractéristiques fréquentes des données alternatives.</p>
+</div>
+</div>
+<p>La visualisation du LOF en deux dimensions illustre ce principe : chaque point est représenté par un cercle dont le <strong>rayon est proportionnel à son score d’anomalie</strong>. Les grands cercles isolés correspondent aux outliers les plus probables.</p>
+</section>
+<section id="hbos-score-danomalie-par-histogramme-histogram-based-outlier-score" class="level5">
+<h5 class="anchored" data-anchor-id="hbos-score-danomalie-par-histogramme-histogram-based-outlier-score">HBOS — Score d’Anomalie par Histogramme (Histogram-Based Outlier Score)</h5>
+<p>HBOS construit un histogramme pour chaque dimension et calcule un score basé sur la <strong>fréquence de chaque observation dans son bin</strong>. Les observations dans des bins peu fréquentés reçoivent un score d’anomalie élevé. Cette méthode est très rapide mais suppose l’indépendance des features.</p>
+</section>
+</section>
+<section id="techniques-supervisées" class="level4">
+<h4 class="anchored" data-anchor-id="techniques-supervisées">Techniques supervisées</h4>
+<section id="autoencodeur-autoencoder" class="level5">
+<h5 class="anchored" data-anchor-id="autoencodeur-autoencoder">Autoencodeur (Autoencoder)</h5>
+<p>Un autoencodeur est un réseau de neurones entraîné à <strong>reconstruire son entrée</strong> après l’avoir compressée dans un espace latent de dimension réduite. L’<strong>erreur de reconstruction</strong> sert de score d’anomalie : un point que le modèle ne parvient pas à reconstruire fidèlement est probablement un outlier, car il ne correspond pas aux patterns habituels appris.</p>
+<p>Cette approche est particulièrement adaptée aux données de haute dimension (images, longues séries temporelles) où les méthodes basées sur les distances euclidiennes perdent de leur efficacité (malédiction de la dimensionnalité).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir : méthodes supervisées vs non supervisées">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir : méthodes supervisées vs non supervisées
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les méthodes supervisées nécessitent des données labellisées (exemples d’anomalies connues), ce qui est rare en finance. Les approches non supervisées — KNN, LOF, HBOS — sont donc généralement préférées comme première ligne de défense pour le traitement des données alternatives.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="données-fondamentales-automobiles-automotive-fundamental-data" class="level3">
+<h3 class="anchored" data-anchor-id="données-fondamentales-automobiles-automotive-fundamental-data">Données fondamentales automobiles (Automotive Fundamental Data)</h3>
+<section id="contexte-et-motivations" class="level4">
+<h4 class="anchored" data-anchor-id="contexte-et-motivations">Contexte et motivations</h4>
+<p>Le secteur automobile mondial génère une masse de données opérationnelles précieuses pour les investisseurs. L’idée centrale est d’utiliser ces données pour construire un <strong>algorithme de classement (Ranking Algorithm)</strong> permettant de sélectionner les meilleures actions parmi les constructeurs mondiaux.</p>
+</section>
+<section id="données-utilisées" class="level4">
+<h4 class="anchored" data-anchor-id="données-utilisées">Données utilisées</h4>
+<p>Les indicateurs fondamentaux automobiles retenus incluent :</p>
+<ul>
+<li><strong>Volumes de ventes (Sales Volume)</strong> : nombre de véhicules vendus par marque et par marché géographique</li>
+<li><strong>Âge moyen du parc (Fleet Ages)</strong> : indicateur du potentiel de renouvellement futur de la flotte</li>
+<li><strong>Volumes de production (Production Volumes)</strong> : cadence de fabrication effective des usines</li>
+<li><strong>Taux d’utilisation des usines (Production Plant Use)</strong> : mesure de l’efficacité opérationnelle et de la saturation des capacités</li>
+<li><strong>Revenus des ventes (Sales Revenues)</strong> : chiffres d’affaires par segment et par géographie</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition : indicateurs avancés sectoriels">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition : indicateurs avancés sectoriels
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les volumes de production et les taux d’utilisation des usines sont des <strong>indicateurs avancés</strong> des revenus futurs. Un constructeur qui accélère sa production anticipe une demande plus forte, ce qui devrait se refléter dans ses prochains résultats financiers — souvent avant que les analystes et le marché ne l’aient pleinement intégré.</p>
+</div>
+</div>
+</section>
+<section id="résultats-empiriques" class="level4">
+<h4 class="anchored" data-anchor-id="résultats-empiriques">Résultats empiriques</h4>
+<p>En combinant ces variables dans un modèle de scoring (Q_pct_delta_ffo), une stratégie long/short sur les constructeurs mondiaux (BMW, Volkswagen, Toyota, Honda, Renault, Ford, GM, Hyundai, etc.) génère une <strong>surperformance significative</strong> par rapport au benchmark trimestriel sur la période 2010–2018, tant avec une clairvoyance immédiate (0m) qu’avec une clairvoyance de 3 mois.</p>
+<p>Un heatmap temporel illustre les rotations de portefeuille au sein de l’univers automobile : les périodes de détention longue (long) varient fortement d’un constructeur à l’autre selon le cycle d’investissement et de demande propre à chaque marché géographique.</p>
+</section>
+</section>
+<section id="enquêtes-et-données-participatives-survey-and-crowdsourced-data" class="level3">
+<h3 class="anchored" data-anchor-id="enquêtes-et-données-participatives-survey-and-crowdsourced-data">Enquêtes et données participatives (Survey and Crowdsourced Data)</h3>
+<section id="définition-et-valeur" class="level4">
+<h4 class="anchored" data-anchor-id="définition-et-valeur">Définition et valeur</h4>
+<p>Les données d’enquêtes et du <strong>crowdsourcing</strong> offrent un accès direct aux comportements et opinions de consommateurs, d’analystes ou de managers. Elles capturent des informations <strong>qualitatives</strong> difficiles à obtenir autrement : intentions d’achat, niveaux de confiance, anticipations économiques.</p>
+</section>
+<section id="lindice-pmi-purchasing-managers-index" class="level4">
+<h4 class="anchored" data-anchor-id="lindice-pmi-purchasing-managers-index">L’indice PMI (Purchasing Managers’ Index)</h4>
+<p>Le PMI est l’exemple le plus emblématique d’enquête à valeur prédictive élevée en finance. Il est un peu à la fois une <strong>enquête structurée</strong> (questionnaire standardisé) et une forme de <strong>crowdsourcing</strong> (agrégation d’opinions indépendantes à grande échelle).</p>
+<p><strong>Méthodologie</strong></p>
+<p>Un questionnaire est envoyé mensuellement à des directeurs d’achats (Purchasing Managers) dans des entreprises de nombreux secteurs et pays. Ces cadres répondent à des questions binaires (mieux / pareil / moins bien qu’il y a un mois) sur des indicateurs tels que :</p>
+<ul>
+<li>Nouvelles commandes</li>
+<li>Niveaux de stocks</li>
+<li>Emploi</li>
+<li>Livraisons fournisseurs</li>
+<li>Production</li>
+</ul>
+<p><strong>Interprétation et valeur prédictive</strong></p>
+<ul>
+<li>PMI &gt; 50 → expansion économique en cours</li>
+<li>PMI &lt; 50 → contraction économique en cours</li>
+<li>Publié <strong>avant les données officielles du PIB</strong> → statut d’<strong>indicateur avancé (Leading Indicator)</strong> reconnu</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir : PMI comme proxy du PIB">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir : PMI comme proxy du PIB
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La robustesse du PMI tient à son mécanisme d’agrégation : les biais individuels de chaque directeur d’achats se compensent en moyenne, et le signal qui émerge reflète fidèlement la tendance macroéconomique réelle. C’est un exemple de sagesse des foules (Wisdom of the Crowds) appliquée à la prévision économique.</p>
+</div>
+</div>
+</section>
+<section id="le-crowdsourcing-en-finance" class="level4">
+<h4 class="anchored" data-anchor-id="le-crowdsourcing-en-finance">Le crowdsourcing en finance</h4>
+<p>Des exemples concrets de données crowdsourcées appliquées à l’investissement incluent :</p>
+<ul>
+<li><strong>Estimations de bénéfices (Earnings Estimates)</strong> : plateformes comme Estimize agrègent les prévisions d’analystes indépendants, souvent plus précises que le consensus Bloomberg</li>
+<li><strong>Niveaux de prix (Price Levels)</strong> : collecte participative de prix en supermarché (MIT Billion Prices Project)</li>
+<li><strong>Avis consommateurs (Consumer Reviews)</strong> : étoiles et commentaires sur Amazon, Yelp, TripAdvisor comme proxy de la satisfaction et de la fidélisation</li>
+</ul>
+</section>
+<section id="cas-détude-jx-mobile-iii-grapedata" class="level4">
+<h4 class="anchored" data-anchor-id="cas-détude-jx-mobile-iii-grapedata">Cas d’étude : JX Mobile III (Grapedata)</h4>
+<p>Cette étude illustre comment une enquête poolée bien construite peut servir à anticiper le succès commercial d’un produit — ici un jeu vidéo — et donc les revenus de son éditeur coté en bourse.</p>
+<p><strong>Dispositif expérimental</strong></p>
+<p>Avant le lancement du jeu mobile JX Mobile III par l’éditeur Kingsoft, la société Grapedata a interrogé <strong>700 participants</strong> sur deux dimensions clés :</p>
+<ul>
+<li><strong>Intention d’achat</strong> : êtes-vous prêt à payer pour le jeu au lancement ?</li>
+<li><strong>Dépenses passées</strong> : combien dépensez-vous mensuellement pour des items dans JX PC III ?</li>
+</ul>
+<p><strong>Résultats de l’enquête</strong></p>
+<p>Les données révèlent une forte intention d’achat (environ 75 % de réponses positives) et des niveaux de dépenses significatifs sur la version précédente. La distribution des dépenses est hétérogène, avec un segment notable de grands dépenseurs (&gt; 2 000 ¥/mois).</p>
+<p><strong>Impact sur les marchés</strong></p>
+<p>Suite à la publication de ces résultats le 3 janvier 2019 (cours à 11,36 HKD), le titre Kingsoft a progressé pour dépasser 20 HKD dans les mois suivants — surperformant nettement l’indice Hang Seng qui est resté globalement stable sur la même période (≈ 25 000 points en début de période).</p>
+<p><strong>Défis méthodologiques</strong></p>
+<p>La représentativité d’une enquête crowdsourcée soulève des questions complexes qu’il ne faut pas sous-estimer :</p>
+<ul>
+<li><strong>Taille de l’échantillon</strong> : comment déterminer le nombre de participants nécessaire pour atteindre une précision statistique suffisante ?</li>
+<li><strong>Couverture</strong> : l’échantillon couvre-t-il les bonnes sous-populations géographiques et démographiques ?</li>
+<li><strong>Pénétration</strong> : le taux de réponse est-il suffisant et exempt de biais de sélection majeur ?</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled" title="Biais de sélection (Selection Bias)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Biais de sélection (Selection Bias)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les personnes qui répondent à une enquête ne sont généralement pas représentatives de la population cible. Ce biais peut conduire à des erreurs systématiques dans les prévisions si l’échantillon est dominé par des utilisateurs très engagés, surreprésentant un comportement d’achat non typique de la population générale.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="imagerie-satellite-satellite-imagery" class="level3">
+<h3 class="anchored" data-anchor-id="imagerie-satellite-satellite-imagery">Imagerie satellite (Satellite Imagery)</h3>
+<section id="contexte-technologique" class="level4">
+<h4 class="anchored" data-anchor-id="contexte-technologique">Contexte technologique</h4>
+<p>L’analyse d’images satellites constitue l’une des formes les plus innovantes de données alternatives. La démocratisation des constellations de petits satellites (CubeSats) a considérablement augmenté la <strong>résolution spatiale</strong> et la <strong>fréquence de revisite</strong> des zones d’intérêt, rendant ces données accessibles à un coût croissant mais raisonnable pour les acteurs financiers.</p>
+<p><strong>Principales applications en finance</strong></p>
+<ul>
+<li><strong>Comptage de véhicules</strong> sur les parkings de grande distribution (proxy direct de fréquentation)</li>
+<li><strong>Suivi des stocks de pétrole</strong> via l’angle d’ombre portée sur les réservoirs à toit flottant</li>
+<li><strong>Estimation des récoltes agricoles</strong> via l’analyse spectrale (NDVI — Normalized Difference Vegetation Index)</li>
+<li><strong>Mesure de l’activité industrielle</strong> (feux de torchage, fumée d’usines, activité nocturne)</li>
+<li><strong>Surveillance des ports</strong> et mouvements de navires pour anticiper les flux commerciaux</li>
+</ul>
+</section>
+<section id="prédiction-des-exportations" class="level4">
+<h4 class="anchored" data-anchor-id="prédiction-des-exportations">Prédiction des exportations</h4>
+<p>Des travaux de recherche ont démontré que l’analyse d’images satellites de ports et de zones industrielles possède une <strong>capacité explicative significative</strong> pour la croissance des exportations américaines, avant la publication des données officielles du Bureau du Commerce américain.</p>
+<p>Ce résultat illustre le potentiel des données satellites comme indicateurs avancés macro-économiques, complémentaires aux données officielles avec une latence moindre.</p>
+</section>
+<section id="comptage-de-voitures-et-estimations-de-bénéfices" class="level4">
+<h4 class="anchored" data-anchor-id="comptage-de-voitures-et-estimations-de-bénéfices">Comptage de voitures et estimations de bénéfices</h4>
+<p>L’un des exemples les plus développés concerne le comptage de véhicules sur les parkings de grandes enseignes britanniques : Marks &amp; Spencer (MKS), Morrisons (MRW) et Tesco (TSCO).</p>
+<p><strong>Méthodologie</strong></p>
+<p>Des algorithmes de <strong>vision par ordinateur (Computer Vision)</strong> traitent les images satellites des parkings à intervalles réguliers. Un <strong>Car Count Score</strong> est ainsi construit pour mesurer la fréquentation relative de chaque enseigne dans le temps.</p>
+<p><strong>Corrélation avec les bénéfices</strong></p>
+<p>Les résultats montrent une forte corrélation entre le Car Count Score et le <strong>bénéfice par action ajusté (EPS Adjusted)</strong> de Marks &amp; Spencer sur la période septembre 2015 — mars 2019. Le score suit de près les variations des bénéfices réels et les estimations des analystes.</p>
+<p><strong>Analyse comparative (R²)</strong></p>
+<p>Pour les trois enseignes, la combinaison <strong>Consensus + Car Count</strong> (Consensus &amp; Car Count R²) explique systématiquement une plus grande part de variance des bénéfices que le seul consensus d’analystes. La valeur ajoutée est particulièrement marquée pour Tesco (TSCO LN Equity).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition : la chaîne causale de l&#39;imagerie satellite">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition : la chaîne causale de l’imagerie satellite
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un parking plein → un magasin fréquenté → des ventes élevées → des revenus importants. Cette chaîne causale simple, appliquée systématiquement à des dizaines de sites et des années de données, génère un signal prédictif précieux — mesurable avant toute publication officielle.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="données-de-localisation-location-data" class="level3">
+<h3 class="anchored" data-anchor-id="données-de-localisation-location-data">Données de localisation (Location Data)</h3>
+<section id="contexte-technologique-1" class="level4">
+<h4 class="anchored" data-anchor-id="contexte-technologique-1">Contexte technologique</h4>
+<p>La généralisation des <strong>capacités GPS</strong> dans les appareils modernes (téléphones mobiles, voitures connectées, navires, avions d’affaires) ouvre un champ immense de données géospatiales. Collectées et agrégées de manière anonymisée, elles permettent de suivre les flux de personnes et de biens en quasi-temps réel.</p>
+<p>Les principales catégories de données de localisation sont :</p>
+<ul>
+<li><strong>Données de trafic piétonnier (Footfall Data)</strong> : flux de personnes dans des zones commerciales et des centres-villes</li>
+<li><strong>Données de trafic routier</strong> : déplacements de véhicules et niveaux d’embouteillage</li>
+<li><strong>AIS (Automatic Identification System)</strong> : mouvements de navires commerciaux dans les ports et sur les routes maritimes</li>
+<li><strong>Données de vols privés</strong> : mouvements d’avions d’affaires comme proxy d’activité économique et de fusions-acquisitions</li>
+</ul>
+</section>
+<section id="exemple-1-lindice-thasos-et-la-stratégie-xrt" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-1-lindice-thasos-et-la-stratégie-xrt">Exemple 1 : L’indice Thasos et la stratégie XRT</h4>
+<p><strong>L’indice Thasos</strong> est construit à partir de données de géolocalisation mobiles agrégées pour mesurer la <strong>fréquentation des centres commerciaux américains (Mall Foot Traffic)</strong>. Il est utilisé pour construire une stratégie dynamique sur l’ETF XRT (SPDR S&amp;P Retail ETF).</p>
+<p><strong>Résultats comparatifs (septembre 2016 — mars 2019)</strong></p>
+<p>Les performances comparées sur cette période illustrent clairement la valeur ajoutée des données de localisation :</p>
+<ul>
+<li><strong>Long XRT</strong> (benchmark passif) : Ret = 0,8 % / Vol = 18,8 % / IR = 0,04</li>
+<li><strong>Thasos XRT</strong> (signal immédiat) : Ret = <strong>18,7 %</strong> / Vol = 18,8 % / <strong>IR = 1,0</strong></li>
+<li><strong>Thasos XRT laggée 1 mois</strong> : Ret = 11,6 % / Vol = 18,8 % / IR = 0,62</li>
+</ul>
+<p>Pour une volatilité identique de 18,8 %, la stratégie Thasos génère un rendement vingt fois supérieur au benchmark, avec un Information Ratio (IR) de 1 — considéré comme excellent en gestion quantitative.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition : l&#39;Information Ratio (IR)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition : l’Information Ratio (IR)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’<strong>Information Ratio (IR)</strong> mesure le rendement excédentaire par unité de risque actif pris. Un IR de 1 signifie que pour chaque point de volatilité active, la stratégie génère un point de rendement excédentaire. C’est un niveau considéré comme très satisfaisant dans l’industrie de la gestion alternative.</p>
+</div>
+</div>
+</section>
+<section id="exemple-2-score-de-fréquentation-et-bénéfices-walmart" class="level4">
+<h4 class="anchored" data-anchor-id="exemple-2-score-de-fréquentation-et-bénéfices-walmart">Exemple 2 : Score de fréquentation et bénéfices Walmart</h4>
+<p>En comparant le <strong>Footfall Score</strong> (données Thasos) aux estimations de consensus Bloomberg sur le <strong>bénéfice par action de Walmart (WMT US Equity EPS)</strong>, on observe une forte concordance entre les pics de fréquentation mesurés et les surprises positives de bénéfices.</p>
+<p>Ce résultat illustre comment les données de localisation peuvent <strong>compléter les estimations d’analystes traditionnels</strong> pour anticiper les publications de résultats trimestriels avec une meilleure précision.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir : limites des données de localisation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir : limites des données de localisation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les données de localisation sont particulièrement utiles pour le secteur de la <strong>distribution physique (Brick and Mortar Retail)</strong>, où la fréquentation est directement liée aux revenus. Leur pertinence se réduit significativement pour les enseignes à dominante e-commerce, où le trafic en magasin ne représente qu’une fraction des ventes totales.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="texte-web-réseaux-sociaux-et-actualités" class="level3">
+<h3 class="anchored" data-anchor-id="texte-web-réseaux-sociaux-et-actualités">Texte, web, réseaux sociaux et actualités</h3>
+<section id="introduction-au-nlp-en-finance" class="level4">
+<h4 class="anchored" data-anchor-id="introduction-au-nlp-en-finance">Introduction au NLP en finance</h4>
+<p>L’analyse des données textuelles repose sur des techniques de <strong>traitement du langage naturel (Natural Language Processing – NLP)</strong>. L’objectif est de transformer des textes non structurés en scores numériques exploitables dans des stratégies quantitatives.</p>
+<p>Les principales sources de données textuelles exploitées en finance sont :</p>
+<ul>
+<li><strong>Réseaux sociaux</strong> : Twitter/X, Reddit (WallStreetBets), LinkedIn, StockTwits</li>
+<li><strong>Flux d’actualités financières</strong> : Reuters, Bloomberg, Associated Press, presse économique généraliste</li>
+<li><strong>Transcriptions d’appels de résultats (Earnings Call Transcripts)</strong> : ton, vocabulaire et sentiment du management</li>
+<li><strong>Rapports d’analystes et recherches académiques</strong></li>
+<li><strong>Données de recherche web</strong> : Google Trends, volume de requêtes sur des termes financiers</li>
+</ul>
+</section>
+<section id="lhedonometer-sentiment-du-bonheur-twitterx" class="level4">
+<h4 class="anchored" data-anchor-id="lhedonometer-sentiment-du-bonheur-twitterx">L’Hedonometer : sentiment du bonheur (Twitter/X)</h4>
+<p><strong>Présentation</strong></p>
+<p>L’Hedonometer est un <strong>indice de sentiment du bonheur (Happiness Sentiment Index – HSI)</strong> construit à partir de l’analyse de millions de tweets en anglais. Chaque mot du dictionnaire se voit attribuer un <strong>score de valence hédonique</strong> (de très négatif à très positif). Ces scores sont agrégés quotidiennement pour produire un indice du bien-être collectif.</p>
+<p><strong>Sensibilité aux événements</strong></p>
+<p>L’indice réagit de manière cohérente aux grands événements collectifs :</p>
+<ul>
+<li><strong>Hausses</strong> : Noël, Nouvel An, Fête des mères, Fête de l’indépendance, élections perçues favorablement</li>
+<li><strong>Baisses</strong> : COVID-19, fusillades de masse, attaques terroristes, violences politiques, catastrophes naturelles</li>
+</ul>
+<p><strong>Lien avec les marchés financiers</strong></p>
+<p>Lorsqu’on régresse le S&amp;P 500 contre l’HSI, on obtient une <strong>statistique t de 7,7</strong> — seuil extrêmement significatif, équivalent à un niveau de confiance supérieur à 99,99 %. Ceci suggère que le bonheur collectif agrégé sur Twitter contient une <strong>information prévisionnelle réelle</strong> sur les marchés actions.</p>
+<p><strong>Application pratique</strong> : l’HSI peut être utilisé comme signal de <strong>réduction d’exposition au risque (Risk Cutting)</strong> — diminuer l’allocation aux actifs risqués lorsque le sentiment collectif se dégrade de manière significative.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition : marchés et émotions collectives">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition : marchés et émotions collectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les marchés sont animés par des agents humains dont les émotions influencent les décisions. Un bonheur collectif élevé favorise la prise de risque (<em>risk-on environment</em>), tandis qu’un sentiment déprimé incite à la prudence (<em>risk-off</em>). L’Hedonometer tente de quantifier ce mécanisme psychologique à l’échelle macroscopique, à partir de données générées spontanément par des millions d’individus.</p>
+</div>
+</div>
+</section>
+<section id="modèle-nfp-enrichi-par-twitter" class="level4">
+<h4 class="anchored" data-anchor-id="modèle-nfp-enrichi-par-twitter">Modèle NFP enrichi par Twitter</h4>
+<p><strong>Contexte : l’annonce Non-Farm Payrolls</strong></p>
+<p>Les <strong>Non-Farm Payrolls (NFP)</strong>, publiés le premier vendredi de chaque mois par le Bureau of Labor Statistics américain, constituent l’une des publications macroéconomiques les plus attendues. La surprise par rapport au consensus des économistes génère des mouvements violents et immédiats sur les marchés des changes.</p>
+<p><strong>Construction du modèle Twitter</strong></p>
+<p>En analysant les tweets mentionnant l’emploi américain dans les jours précédant la publication, un modèle de prévision des NFP est construit et comparé au consensus Bloomberg (NFP Survey).</p>
+<p><strong>Résultats</strong></p>
+<ul>
+<li>Le modèle Twitter génère un <strong>R² de 0,52</strong> dans la relation entre la surprise NFP et le mouvement EUR/USD à une minute — un résultat remarquablement élevé</li>
+<li>Visuellement, la prévision du modèle (Model NFP) suit de près les publications réelles (NFP) et le consensus survey sur la période 2011–2015</li>
+<li><strong>Stratégie de trading</strong> : achat de USD/JPY et EUR/USD lorsque l’estimation Twitter dépasse le consensus (anticipation de surprise positive), vente dans le cas contraire</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir : pourquoi Twitter prédit les NFP">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir : pourquoi Twitter prédit les NFP
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La capacité de Twitter à anticiper le consensus NFP tient probablement au fait que des millions de personnes commentent implicitement leur situation de travail (offres d’emploi vues, entretiens passés, collègues licenciés) sur les réseaux sociaux dans les semaines précédant la publication — créant un signal agrégé précurseur des données officielles.</p>
+</div>
+</div>
+</section>
+<section id="sentiment-de-lactualité-pour-les-devises-news-sentiment-for-fx" class="level4">
+<h4 class="anchored" data-anchor-id="sentiment-de-lactualité-pour-les-devises-news-sentiment-for-fx">Sentiment de l’actualité pour les devises (News Sentiment for FX)</h4>
+<p><strong>Construction du signal</strong></p>
+<p>Les flux d’actualités sont transformés en <strong>scores de sentiment par devise</strong> grâce à des algorithmes NLP. Pour chaque devise, un score agrégé tient compte du nombre d’articles positifs et négatifs, de leur importance éditoriale et de leur fraîcheur temporelle.</p>
+<p><strong>Construction de paires de devises</strong></p>
+<p>En soustrayant les scores de deux devises, on construit un score net pour une paire :</p>
+<p><span class="math display">\[\text{Score}_{USD/JPY} = \text{Score}_{USD} - \text{Score}_{JPY}\]</span></p>
+<p><strong>Stratégie de trading</strong></p>
+<ul>
+<li><strong>Acheter (Buy)</strong> la paire de devises lorsque le score de sentiment net est positif</li>
+<li><strong>Vendre (Sell)</strong> la paire lorsque le score est négatif</li>
+</ul>
+<p><strong>Résultats comparatifs (2010–2016)</strong></p>
+<p>La stratégie basée sur l’actualité surperforme nettement une stratégie de suivi de tendance :</p>
+<ul>
+<li><strong>News strategy</strong> : Ret = 4,2 % / Vol = 6,6 % / IR = 0,6</li>
+<li><strong>Trend strategy</strong> : Ret = −1,5 % / Vol = 5,8 % / IR = −0,3</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled" title="Biais look-ahead (Look-Ahead Bias)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Biais look-ahead (Look-Ahead Bias)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans toute stratégie basée sur du sentiment textuel, il est crucial de vérifier que les données utilisées à la date t étaient <strong>réellement disponibles</strong> à cette date. Les timestamps des articles doivent être vérifiés avec soin : un article publié après la clôture des marchés ne peut pas avoir influencé les prix de la même journée.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="attention-des-investisseurs-investor-attention" class="level3">
+<h3 class="anchored" data-anchor-id="attention-des-investisseurs-investor-attention">Attention des investisseurs (Investor Attention)</h3>
+<section id="définition-et-principe" class="level4">
+<h4 class="anchored" data-anchor-id="définition-et-principe">Définition et principe</h4>
+<p>L’<strong>attention des investisseurs (Investor Attention)</strong> mesure le degré d’intérêt et d’inquiétude des acteurs de marché vis-à-vis d’un actif ou d’un événement. Cette notion repose sur le principe que l’attention est une ressource <strong>limitée et allouée</strong> : lorsque les investisseurs focalisent leur attention sur un événement, les marchés y réagissent plus vigoureusement et plus rapidement.</p>
+<p>Trois approches complémentaires permettent de mesurer cette attention :</p>
+<ul>
+<li>Les <strong>liens de partage Bitly</strong> (clics sur des liens vers des actualités économiques)</li>
+<li>Les <strong>données de recherche Google</strong> (volume de requêtes sur des termes financiers)</li>
+<li>Les <strong>données de recherche Investopedia</strong> (termes recherchés par les investisseurs individuels)</li>
+</ul>
+</section>
+<section id="liens-bitly-et-réaction-obligataire" class="level4">
+<h4 class="anchored" data-anchor-id="liens-bitly-et-réaction-obligataire">Liens Bitly et réaction obligataire</h4>
+<p><strong>Principe</strong></p>
+<p>Bitly est un service de raccourcissement d’URLs. En analysant le nombre de clics sur des liens vers des articles économiques clés (rapport NFP, décisions de la Fed), on obtient une mesure directe de l’<strong>attention instantanée</strong> des investisseurs.</p>
+<p><strong>Observation empirique</strong></p>
+<p>Les données de clics sur des liens “payrolls” montrent un pic violent — de quelques dizaines à plusieurs centaines de clics — autour de 8h30 heure de New York (heure de publication du NFP), puis une décroissance rapide tout au long de la journée.</p>
+<p><strong>Signal de trading</strong></p>
+<ul>
+<li><strong>Faible nombre de clics</strong> → faible attention → réaction du marché <strong>modérée (muted)</strong></li>
+<li><strong>Nombre élevé de clics</strong> → forte attention → réaction du marché <strong>amplifiée</strong></li>
+</ul>
+<p>Sur les marchés de US T-Notes (obligations du Trésor américain), la réponse est significativement plus forte lors des publications NFP avec une attention élevée (nombre de clics élevé).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition : l&#39;attention comme amplificateur">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition : l’attention comme amplificateur
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’attention collective amplifie l’impact d’une nouvelle. Si peu d’investisseurs regardent un rapport macroéconomique, peu réagiront immédiatement et la réaction sera amorcie. Si tout le monde l’attend, la réaction sera proportionnellement bien plus forte. L’attention est un <strong>amplificateur de volatilité</strong>.</p>
+</div>
+</div>
+</section>
+<section id="google-domestic-trends" class="level4">
+<h4 class="anchored" data-anchor-id="google-domestic-trends">Google Domestic Trends</h4>
+<p><strong>Google Domestic Trends</strong> fournit des données d’intention de recherche agrégées par catégorie thématique. En analysant les variations du volume de recherches sur des termes liés à la finance, l’immobilier ou l’énergie, on construit des <strong>indicateurs de sentiment sectoriel</strong> précurseurs.</p>
+<p>Ces données permettent de quantifier les chocs sur des secteurs spécifiques et d’ajuster dynamiquement l’allocation au S&amp;P 500. Lorsque les recherches sur des termes négatifs (faillite, licenciement, saisie immobilière) augmentent fortement dans un secteur, c’est un signal précurseur de détérioration à venir dans les données économiques officielles.</p>
+</section>
+<section id="investopedia-investor-anxiety-index-iai" class="level4">
+<h4 class="anchored" data-anchor-id="investopedia-investor-anxiety-index-iai">Investopedia Investor Anxiety Index (IAI)</h4>
+<p><strong>Présentation</strong></p>
+<p>L’<strong>Investopedia Anxiety Index (IAI)</strong> quantifie l’<strong>anxiété financière</strong> des investisseurs en analysant les termes recherchés sur le site éducatif Investopedia. Contrairement à Google Trends qui couvre toute la population, Investopedia cible spécifiquement les investisseurs individuels et les apprenants en finance — une population plus directement pertinente pour les marchés.</p>
+<p><strong>Construction du signal</strong></p>
+<ul>
+<li>IAI élevé → les investisseurs cherchent des termes liés aux crises, récessions, risques → signal <em>bearish</em></li>
+<li>IAI faible → les investisseurs s’informent sur des stratégies d’investissement positives → signal <em>bullish</em></li>
+</ul>
+<p><strong>Résultats comparatifs (2012–2016)</strong></p>
+<p>La comparaison de trois stratégies sur le S&amp;P 500 confirme la valeur ajoutée de l’IAI :</p>
+<ul>
+<li><strong>IAI</strong> : Ret = 15,5 % / Vol = 11,8 % / <strong>IR = 1,32 / Drawdown = −16,7 %</strong></li>
+<li><strong>VIX</strong> : Ret = 13,0 % / Vol = 12,4 % / IR = 1,05 / Drawdown = −16,2 %</li>
+<li><strong>Long Only</strong> : Ret = 12,7 % / Vol = 14,8 % / IR = 0,86 / Drawdown = −21,6 %</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir : IAI vs VIX">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir : IAI vs VIX
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’IAI surperforme le VIX en termes d’Information Ratio (1,32 vs 1,05) tout en réduisant la volatilité (11,8 % vs 12,4 %). Cela suggère que l’anxiété mesurée via Investopedia capture une information <strong>complémentaire et distincte</strong> de la volatilité implicite traditionnelle. Combiner IAI et VIX peut offrir un signal encore plus robuste.</p>
+</div>
+</div>
+<p>Le mécanisme est le suivant : le <strong>S&amp;P 500 tend à être plat ou baissier lorsque l’IAI est élevé</strong>, et à performer positivement lorsque l’IAI est bas. L’IAI fonctionne donc comme un indicateur de <strong>régime de marché (Market Regime)</strong>.</p>
+</section>
+</section>
+<section id="transactions-de-consommateurs-consumer-transactions" class="level3">
+<h3 class="anchored" data-anchor-id="transactions-de-consommateurs-consumer-transactions">Transactions de consommateurs (Consumer Transactions)</h3>
+<section id="valeur-et-principe" class="level4">
+<h4 class="anchored" data-anchor-id="valeur-et-principe">Valeur et principe</h4>
+<p>Les données de transactions de consommateurs constituent l’une des catégories les plus directement liées aux revenus des entreprises. Elles permettent d’<strong>anticiper les publications financières trimestrielles</strong> en observant les comportements d’achat réels avant toute déclaration officielle.</p>
+<p>Deux sources majeures de données de transactions existent :</p>
+<ul>
+<li>Les <strong>données de cartes bancaires (Credit/Debit Card Data)</strong> : agrégées par le réseau de paiement</li>
+<li>Les <strong>données de reçus (Receipt Data)</strong> : collectées via des applications de finance personnelle ou des portails fiscaux</li>
+</ul>
+</section>
+<section id="mastercard-spending-pulse" class="level4">
+<h4 class="anchored" data-anchor-id="mastercard-spending-pulse">MasterCard Spending Pulse</h4>
+<p><strong>Présentation</strong></p>
+<p>Le <strong>MasterCard SpendingPulse</strong> est un rapport macroéconomique construit à partir des transactions anonymisées du réseau Mastercard, complétées par des estimations pour les modes de paiement non couverts (espèces notamment). Il couvre de nombreux secteurs (automobile, restauration, voyages, e-commerce) et zones géographiques mondiales.</p>
+<p><strong>Exemple : commerce de détail brésilien (2013–2019)</strong></p>
+<p>La comparaison entre les <strong>ventes officielles de détail au Brésil (Official Brazil Retail Sales YoY)</strong> et l’estimé SpendingPulse révèle une forte corrélation entre les deux séries sur la période entière. Les données SpendingPulse sont disponibles <strong>avant</strong> les chiffres officiels du gouvernement brésilien, permettant d’anticiper les publications statistiques nationales.</p>
+<p>Le signal est particulièrement visible lors des épisodes extrêmes : forte contraction entre 2015 et 2016 (−10 % à −15 %) et reprise progressive de 2017 à 2019.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition : la loi des grands nombres au service du signal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition : la loi des grands nombres au service du signal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si Mastercard traite une fraction représentative des paiements d’un pays, les tendances de ses transactions constituent un <strong>proxy fiable</strong> de la consommation globale. Plus la pénétration du réseau est élevée et homogène sur les catégories socioéconomiques, plus le signal est robuste et représentatif.</p>
+</div>
+</div>
+</section>
+<section id="données-quandl-reçus-anonymisés" class="level4">
+<h4 class="anchored" data-anchor-id="données-quandl-reçus-anonymisés">Données Quandl : reçus anonymisés</h4>
+<p><strong>Présentation</strong></p>
+<p>Quandl (aujourd’hui Nasdaq Data Link) agrège des données de <strong>reçus électroniques anonymisés</strong> collectés via des applications de gestion des finances personnelles et des portails fiscaux. Ces données permettent de suivre les dépenses de consommateurs sur des enseignes spécifiques avec une granularité très fine.</p>
+<p><strong>Exemple emblématique : prévision des revenus Amazon</strong></p>
+<p>L’analyse des reçus Amazon anonymisés permet de construire des <strong>variations de revenus implicites (Implied Revenue Changes)</strong> trimestrielles. La comparaison avec les variations réelles publiées par Amazon sur la période d’analyse révèle une corrélation exceptionnelle :</p>
+<p><span class="math display">\[R^2 = 0{,}9506\]</span></p>
+<p>Ce coefficient de détermination de <strong>95 %</strong> indique que les données de reçus expliquent quasi-intégralement les variations trimestrielles de revenus d’Amazon, sur une plage allant de −20 % à +50 % de variation trimestrielle.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Signal exceptionnel, mais pas généralisable">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Signal exceptionnel, mais pas généralisable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un R² de 0,95 est remarquablement élevé pour une donnée alternative. Il s’explique par le fait que les achats Amazon génèrent <strong>systématiquement</strong> un reçu électronique, permettant une couverture très représentative. Ce niveau de qualité de signal ne se retrouve pas pour toutes les enseignes ou tous les secteurs — notamment ceux avec une forte proportion de paiements en espèces.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Vie privée et conformité éthique">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Vie privée et conformité éthique
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’utilisation de données de reçus soulève des questions éthiques importantes. Même anonymisées, ces données permettent de reconstruire des habitudes de consommation très détaillées. La conformité avec les réglementations de protection des données (RGPD en Europe, CCPA en Californie) est impérative à chaque étape de la chaîne de traitement.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="conclusion-et-perspectives" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-et-perspectives">Conclusion et perspectives</h2>
+<section id="bilan-du-chapitre" class="level3">
+<h3 class="anchored" data-anchor-id="bilan-du-chapitre">Bilan du chapitre</h3>
+<p>Ce chapitre a proposé un panorama complet des données alternatives en finance, couvrant les éléments suivants :</p>
+<ul>
+<li>La <strong>définition et la taxonomie</strong> des données alternatives et leurs caractéristiques distinctives</li>
+<li>Les <strong>motivations économiques</strong> de leur utilisation : orthogonalité, anticipation, complémentarité</li>
+<li>Les <strong>risques juridiques</strong> (RGPD, web scraping, risque fournisseur) et les <strong>défis opérationnels</strong> (formats non structurés, entités manquantes, séries temporelles)</li>
+<li>Un <strong>processus structuré en dix étapes</strong> pour leur intégration opérationnelle dans une organisation financière</li>
+<li>Des <strong>applications pratiques concrètes</strong> illustrant leur valeur prédictive dans différents domaines : données manquantes, outliers, données automobiles, enquêtes, imagerie satellite, géolocalisation, NLP, attention des investisseurs, transactions consommateurs</li>
+</ul>
+</section>
+<section id="stade-dadoption-actuel" class="level3">
+<h3 class="anchored" data-anchor-id="stade-dadoption-actuel">Stade d’adoption actuel</h3>
+<p>Le marché des données alternatives est encore à un <strong>stade précoce d’adoption (Early Stage)</strong>. Malgré une croissance exponentielle des dépenses, la majorité des acteurs financiers n’ont pas encore intégré ces données de manière systématique dans leurs processus d’investissement.</p>
+<p>Les principaux freins restent :</p>
+<ul>
+<li>Les <strong>coûts</strong> élevés d’acquisition, de nettoyage et de maintenance</li>
+<li>Le <strong>manque de talents</strong> spécialisés disponibles sur le marché du travail</li>
+<li>La <strong>résistance organisationnelle</strong> aux changements de processus et de culture</li>
+</ul>
+</section>
+<section id="perspectives-et-enjeux-stratégiques" class="level3">
+<h3 class="anchored" data-anchor-id="perspectives-et-enjeux-stratégiques">Perspectives et enjeux stratégiques</h3>
+<p>Les acteurs de l’industrie expriment des visions contrastées sur l’évolution du secteur.</p>
+<p>Sandy Rattray (CEO de Man Group, 2019) observe paradoxalement que les grandes maisons d’investissement utilisent <strong>moins de données alternatives avec le temps</strong> — car la prolifération des données dépasse désormais les capacités d’analyse disponibles. L’abondance crée un nouveau goulot d’étranglement : non plus l’accès aux données, mais la capacité à les traiter et à en extraire un signal robuste.</p>
+<p>Deloitte (2017) avertit à l’inverse que les acteurs qui ne mettent pas à jour leurs processus d’investissement au cours des cinq prochaines années pourraient faire face à des <strong>risques stratégiques sévères</strong> — distancés par des concurrents qui intègreront efficacement les données alternatives dans leur valorisation des titres et leurs processus de génération de signal.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="À retenir : un changement structurel en cours">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>À retenir : un changement structurel en cours
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La question n’est plus de savoir <strong>si</strong> les données alternatives vont transformer la finance quantitative, mais <strong>comment</strong> et <strong>à quelle vitesse</strong>. Les profils qui maîtrisent l’ensemble de la chaîne — de la sélection et de la diligence des données à l’extraction de signal et à la mise en production — seront au cœur de cette transformation.</p>
+</div>
+</div>
+</section>
+<section id="vers-une-finance-augmentée" class="level3">
+<h3 class="anchored" data-anchor-id="vers-une-finance-augmentée">Vers une finance augmentée</h3>
+<p>L’émergence des données alternatives s’inscrit dans une transformation plus profonde : celle de la <strong>finance augmentée (Augmented Finance)</strong>, où décisions humaines et analyses algorithmiques se combinent pour générer de la valeur de manière synergique.</p>
+<p>Les profils recherchés — data scouts, data strategists, data engineers, data scientists — sont déjà en forte demande, et cette tendance s’accélère. Comprendre les données alternatives dans toute leur complexité — leurs promesses autant que leurs limites — c’est se positionner comme <strong>acteur de ce changement en cours</strong>, et non simple observateur.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
