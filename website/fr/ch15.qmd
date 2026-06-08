@@ -1,0 +1,823 @@
+---
+title: "Données alternatives (Alternative Data)"
+---
+
+## Introduction
+
+Les marchés financiers modernes génèrent et consomment une quantité colossale d'informations. Pendant longtemps, l'analyse financière s'est appuyée sur des sources de données **conventionnelles** : prix de marché, volumes d'échanges, rapports financiers trimestriels, données macroéconomiques officielles. Or, dans un contexte de concurrence accrue entre acteurs financiers, l'avantage informationnel (*informational edge*) est devenu un enjeu stratégique majeur.
+
+C'est dans ce contexte qu'émergent les **données alternatives (Alternative Data)** : des sources d'information non traditionnelles, exploitables pour prendre de meilleures décisions d'investissement ou de gestion du risque.
+
+Ce chapitre s'appuie sur l'ouvrage *The Book of Alternative Data* (2020) d'Alexander Denev et Saeed Amen, publié chez Wiley. Il propose un panorama complet du domaine, depuis les fondements théoriques jusqu'aux applications pratiques les plus concrètes.
+
+::: {.callout-note title="Objectifs pédagogiques"}
+À l'issue de ce chapitre, vous serez en mesure de répondre aux questions suivantes :
+
+- **Quoi ?** Qu'est-ce qu'une donnée alternative ?
+- **Pourquoi ?** Quelle valeur ajoutée ces données apportent-elles ?
+- **Comment ?** Comment les traiter et les intégrer dans un processus ?
+- **Combien ?** Quel est le coût d'adoption ?
+- **Lesquelles ?** Quelles catégories de données alternatives privilégier ?
+:::
+
+---
+
+## Partie A — Introduction et théorie
+
+### Panorama du domaine (The Lay of the Land)
+
+#### Définition des données alternatives
+
+Il n'existe pas de définition universellement acceptée des données alternatives. On les caractérise le plus souvent par **opposition aux données conventionnelles (Standard Data)** que constituent les prix de clôture boursiers, les données macroéconomiques publiées par les gouvernements, les bilans comptables standardisés ou les taux directeurs des banques centrales.
+
+Une donnée est dite alternative lorsqu'elle présente **au moins une** des caractéristiques suivantes :
+
+- Elle est **moins communément utilisée** par les participants de marché
+- Elle tend à être **plus coûteuse** à acquérir et à maintenir
+- Elle provient généralement de **sources extérieures aux marchés financiers**
+- Elle dispose d'un **historique plus court** que les données traditionnelles
+- Elle est **plus difficile à exploiter** (formats non structurés, qualité variable)
+
+::: {.callout-tip title="Intuition : l'avantage informationnel"}
+Imaginez deux analystes cherchant à évaluer les ventes d'un grand distributeur. Le premier attend la publication du rapport trimestriel officiel. Le second analyse en temps réel le flux de voitures sur les parkings via des images satellites. Le second dispose d'une information **en avance sur le marché** — c'est précisément là que réside la valeur des données alternatives.
+:::
+
+#### Taxonomie des données alternatives
+
+Les données alternatives couvrent un spectre très large de sources et de formats :
+
+- **Imagerie satellite (Satellite Imagery)** : suivi de parkings, ports, champs agricoles, réservoirs de stockage
+- **Réseaux sociaux (Social Media)** : sentiment Twitter/X, Reddit, forums spécialisés, avis clients
+- **Données de localisation (Location Data)** : flux piétons, mouvements de navires, déplacements routiers
+- **Internet des objets (Internet of Things – IoT)** : capteurs industriels, compteurs intelligents, thermostats connectés
+- **Web scraping** : extraction automatisée de prix, offres d'emploi, avis consommateurs
+- **Transactions financières (Transaction Data)** : données de cartes bancaires, reçus anonymisés
+- **Données gouvernementales et corporatives** : registres d'entreprises, données douanières, permis de construire
+- **Données fondamentales sectorielles** : statistiques automobiles, données agricoles, données immobilières
+- **Flux d'actualités (News Data)** : analyse de sentiment sur flux d'actualités financières
+
+On distingue également les **données d'échappement (Exhaust Data)** : des données produites comme sous-produit d'une activité principale. Les logs de transactions haute fréquence générés par les market-makers en sont un exemple typique.
+
+::: {.callout-note title="À retenir"}
+Les données alternatives ne sont pas nécessairement exotiques. Des données de bilan comptable (Balance Sheet) peuvent être considérées comme alternatives lorsqu'elles sont exploitées selon une méthodologie non conventionnelle ou combinées de manière originale à d'autres sources.
+:::
+
+#### Pourquoi utiliser des données alternatives ?
+
+L'utilisation de données alternatives répond à une logique d'**avantage informationnel (Informational Edge)** dans un environnement ultra-compétitif. Ces données apportent trois types de valeur distincte.
+
+**Orthogonalité (Orthogonality)**
+
+Elles apportent une information **indépendante** de celle déjà intégrée dans les prix de marché, offrant une vision différente et complémentaire de la réalité économique. Deux signaux orthogonaux sont plus robustes combinés que pris séparément.
+
+**Anticipation (Anticipatory Power)**
+
+Certaines données précèdent les publications officielles. L'indice PMI (Purchasing Managers' Index), par exemple, est publié **avant les données officielles du PIB** et constitue un indicateur avancé (Leading Indicator) reconnu par les économistes.
+
+**Complémentarité (Complementarity)**
+
+Certaines données enrichissent l'analyse existante sans la remplacer. Les données d'émissions de CO₂, par exemple, peuvent affiner l'évaluation extra-financière (ESG) d'une entreprise en complément des métriques financières traditionnelles.
+
+::: {.callout-tip title="Intuition : l'hypothèse d'efficience des marchés"}
+La théorie des marchés efficients (Efficient Market Hypothesis – EMH) postule que les prix reflètent déjà toute l'information publiquement disponible. Les données alternatives ouvrent la possibilité d'exploiter des informations **non encore intégrées dans les prix**, car elles sont trop coûteuses à acquérir ou trop complexes à analyser pour la majorité des acteurs.
+:::
+
+#### État actuel du marché
+
+Selon une étude McKinsey (2016), seul **1 % des données disponibles** font l'objet d'une analyse approfondie dans le secteur financier. Ce faible taux d'adoption s'explique par trois freins principaux :
+
+- Les **coûts élevés** d'acquisition, de nettoyage et de maintenance des données
+- La **nécessité de changements organisationnels** profonds dans les processus d'investissement
+- Les **besoins spécifiques en recrutement** de profils hybrides (data scientists, ingénieurs data, analystes quantitatifs)
+
+En termes de dépenses, le marché des données alternatives côté acheteur (Buy Side) a connu une croissance explosive : d'environ 200 millions de dollars en 2016 à des estimations supérieures à **1,5 milliard de dollars en 2020**.
+
+Parmi les types de données les plus utilisés par les fonds d'investissement, on trouve par ordre décroissant de popularité :
+
+- Le **web scraping** (environ 45 % des fonds)
+- Les données de **cartes de crédit/débit**
+- L'analyse de **sentiment social et médiatique**
+- Les données d'**utilisation d'applications mobiles**
+- Le **trafic web**
+- L'**imagerie satellite**
+- Les données de **géolocalisation**
+- Les **reçus électroniques (Email Receipt)**
+
+### La valeur des données alternatives
+
+La valeur d'une donnée alternative repose sur sa capacité à générer un **signal (Signal)** statistiquement significatif et économiquement exploitable. On distingue trois dimensions de valeur complémentaires.
+
+**Valeur prédictive (Predictive Value)**
+
+Une donnée est précieuse si elle permet d'anticiper un événement financier avant qu'il se reflète dans les prix. Le comptage de voitures sur les parkings d'un distributeur permet, par exemple, d'anticiper ses revenus trimestriels avant toute publication officielle.
+
+**Diversification du signal (Signal Diversification)**
+
+Dans un portefeuille de stratégies quantitatives, l'ajout de sources décorrélées améliore la robustesse globale. Même un signal statistiquement faible peut apporter de la valeur s'il est **orthogonal** aux signaux existants — il réduit la variance totale du portefeuille de stratégies.
+
+**Réduction du bruit (Noise Reduction)**
+
+Certaines données alternatives permettent de confirmer ou d'infirmer des signaux déjà présents. Le sentiment agrégé via les réseaux sociaux peut, par exemple, servir de filtre de conviction sur des signaux techniques ou fondamentaux.
+
+::: {.callout-warning title="Attention au surapprentissage (Overfitting)"}
+La recherche de signal dans les données alternatives est particulièrement exposée au risque de surapprentissage. Avec des historiques courts et une multitude de variables disponibles, il est facile de trouver des corrélations **spurieuses** (fortuites) qui ne se maintiennent pas en dehors de l'échantillon d'entraînement (Out-of-Sample). La validation hors échantillon est non négociable.
+:::
+
+### Risques et défis
+
+#### Risques juridiques et réglementaires (Legal Risks)
+
+**Protection des données personnelles (Personal Data)**
+
+Les législations sur la protection des données varient fortement selon les régions :
+
+- **RGPD (General Data Protection Regulation – GDPR)** en Europe
+- **CCPA (California Consumer Privacy Act)** aux États-Unis
+- Réglementations nationales dans de nombreux autres pays, aux contraintes variables
+
+Pour mitiger ce risque, les données sont souvent **anonymisées** ou **agrégées** avant d'être commercialisées.
+
+::: {.callout-important title="Responsabilité de l'acheteur (Buyer Beware)"}
+Le fait que le vendeur ait anonymisé les données ne protège pas automatiquement l'acheteur en cas de non-conformité. Ce dernier doit effectuer sa propre **diligence raisonnable (Due Diligence)** sur les pratiques du fournisseur et assumer la responsabilité d'un usage non conforme à la réglementation applicable.
+:::
+
+**Web Scraping**
+
+Bien qu'une donnée soit publiquement accessible en ligne, son extraction automatisée n'est pas nécessairement légale. Trois problèmes se posent :
+
+- Violation potentielle des **conditions générales d'utilisation (Terms of Service)** du site
+- Existence de **limitations contractuelles** restreignant les usages autorisés
+- Distinction subtile entre donnée *publiquement accessible* et donnée *librement utilisable* à des fins commerciales
+
+**Qualité et validité**
+
+- La **qualité** des données peut être médiocre : bots et spams sur les réseaux sociaux, tweets générés par des comptes automatisés
+- La **validité** peut être compromise : capteurs IoT défaillants, biais d'échantillonnage dans les enquêtes, erreurs de collecte
+
+**Risque fournisseur**
+
+Les fournisseurs de données alternatives peuvent **cesser leur activité** suite à des pressions réglementaires, des difficultés financières ou des évolutions de leur modèle économique — entraînant une interruption des flux de données et une discontinuité des stratégies qui en dépendent.
+
+#### Défis opérationnels (Operational Challenges)
+
+**Format non structuré (Unstructured Format)**
+
+Les données alternatives se présentent rarement sous forme tabulaire classique. Elles apparaissent sous de nombreuses formes difficiles à traiter automatiquement :
+
+- Texte libre (actualités, tweets, avis clients, transcriptions d'appels)
+- Images et vidéos (satellite, caméras de surveillance)
+- Audio (podcasts financiers, earnings calls)
+- Écriture manuscrite (formulaires anciens numérisés)
+- Absence de *timestamp* cohérent ou standardisé
+
+**Problèmes de qualité des données**
+
+- **Valeurs manquantes (Missing Values)** : bien plus fréquentes que dans les données conventionnelles
+- **Valeurs aberrantes (Outliers)** : perturbations pouvant être réelles ou artificielles — et la distinction est cruciale
+- **Anomalies (Anomalies)** : données corrompues, doublons, erreurs de format
+
+**Correspondance d'entités (Entity Matching)**
+
+Une même entreprise peut être référencée différemment selon les sources : "Apple Inc.", "AAPL", "Apple Computer", "Apple". La résolution de cette ambiguïté (**Entity Resolution**) est critique et souvent sous-estimée dans les projets de données alternatives.
+
+**Mise en série temporelle régulière**
+
+Transformer des données brutes hétérogènes en séries temporelles de fréquence régulière (journalière, hebdomadaire) par ticker ou par catégorie est un défi technique majeur. Il faut décider de la **fréquence d'agrégation**, de la **méthode d'agrégation** (somme, moyenne, médiane) et gérer les trous temporels de façon cohérente.
+
+::: {.callout-note title="À retenir : la règle des 80/20"}
+En pratique, environ 80 % du temps de travail sur un projet de données alternatives est consacré au **prétraitement (Data Preprocessing)** — nettoyage, standardisation, gestion des valeurs manquantes — et seulement 20 % à la modélisation et à l'extraction de signal. Ne pas l'anticiper est une erreur classique.
+:::
+
+### Techniques d'apprentissage automatique (Machine Learning Techniques)
+
+Les données alternatives nécessitent des outils adaptés à leur nature non structurée et volumineuse. On distingue trois grandes familles d'approches en apprentissage automatique (Machine Learning – ML).
+
+**Apprentissage supervisé (Supervised Learning)**
+
+Utilisé lorsqu'on dispose de données labellisées. Applications typiques : classification de sentiment (positif/négatif/neutre), détection de fraude, prédiction de résultats financiers. Exemples d'algorithmes : forêts aléatoires (Random Forests), réseaux de neurones, machines à vecteurs de support (SVM).
+
+**Apprentissage non supervisé (Unsupervised Learning)**
+
+Utilisé pour l'exploration de données sans labels : clustering de patterns de données manquantes, détection d'anomalies, réduction de dimensionnalité. Exemples : k-means, DBSCAN, autoencodeurs, décomposition en valeurs singulières (SVD).
+
+**Apprentissage par renforcement (Reinforcement Learning)**
+
+Utilisé pour l'optimisation dynamique de stratégies de trading, en particulier lorsque les données alternatives servent de signal d'état de l'environnement marché.
+
+::: {.callout-tip title="Intuition : NLP en finance"}
+Le **traitement du langage naturel (Natural Language Processing – NLP)** occupe une place centrale dans l'exploitation des données textuelles alternatives. Des modèles comme BERT ou les LLMs permettent de capturer des nuances sémantiques et contextuelles inatteignables par les méthodes traditionnelles de comptage de mots (Bag of Words).
+:::
+
+### Le processus d'utilisation (The Usage Process)
+
+L'intégration de données alternatives dans une organisation financière suit un processus structuré en **dix étapes**. Ce processus mobilise des profils variés dont la demande est en forte croissance : chasseurs de données (Data Scouts), stratèges en données (Data Strategists), ingénieurs données (Data Engineers) et data scientists.
+
+```{mermaid}
+flowchart LR
+    A["1. Vision\n& Stratégie"] --> B["2. Identification\n(Data Scouting)"]
+    B --> C["3. Due Diligence\nFournisseurs"]
+    C --> D["4. Risques\nTech / Légal / Cyber"]
+    D --> E["5. POC\nsur échantillon"]
+    E --> F["6. Intégration\n(Onboarding)"]
+    F --> G["7. Prétraitement\n(Preprocessing)"]
+    G --> H["8. Extraction\ndu signal"]
+    H --> I["9. Mise en\nproduction"]
+    I --> J["10. Maintenance"]
+```
+
+**Étape 1 — Définir la vision et la stratégie**
+
+Avant d'acquérir toute donnée, il faut définir l'objectif stratégique précis : améliorer la prédiction de revenus ? Réduire le drawdown maximal ? Identifier de nouvelles sources d'alpha décorrélées ? Des revues de littérature académique et de petites preuves de concept (POC – Proof of Concept) permettent d'orienter cette réflexion.
+
+**Étape 2 — Identifier les datasets (Data Scouting)**
+
+La recherche de sources pertinentes est un métier à part entière. Elle implique une veille active sur les nouveaux fournisseurs, les publications académiques, les conférences spécialisées (Alternative Data Summit, etc.) et les retours d'expérience de pairs.
+
+**Étape 3 — Due diligence des fournisseurs**
+
+Avant tout engagement contractuel, évaluer la solidité financière du fournisseur, la robustesse de ses processus de collecte, sa conformité réglementaire et la pérennité de ses données. La disparition d'un fournisseur peut mettre fin à une stratégie entière du jour au lendemain.
+
+**Étape 4 — Pré-évaluation des risques**
+
+Identification et quantification des risques technologiques (latence d'intégration, fiabilité de l'API), juridiques (droits d'utilisation, conformité RGPD) et de cybersécurité (données sensibles, pipelines exposés).
+
+**Étape 5 — Pré-évaluation du signal sur échantillon**
+
+Avant tout investissement massif, tester sur un échantillon si un signal exploitable existe. Cette étape, souvent négligée, évite des dépenses importantes pour une donnée qui ne présente aucune valeur prédictive réelle.
+
+**Étape 6 — Intégration des données (Data Onboarding)**
+
+Mise en place des pipelines d'ingestion : connexion aux APIs, téléchargements en lot (batch), normalisation des formats et stockage sécurisé dans l'infrastructure data de l'entreprise.
+
+**Étape 7 — Prétraitement des données (Data Preprocessing)**
+
+Nettoyage, traitement des valeurs manquantes, détection des anomalies, normalisation, construction des séries temporelles. C'est typiquement l'étape la plus chronophage — et la plus sous-estimée — de tout le processus.
+
+**Étape 8 — Extraction du signal (Signal Extraction)**
+
+Application des modèles statistiques ou d'apprentissage automatique pour extraire un signal exploitable à partir des données prétraitées. Inclut la validation hors échantillon et les tests de robustesse.
+
+**Étape 9 — Mise en production (Production)**
+
+Déploiement du signal dans l'infrastructure de trading ou de gestion de portefeuille, avec les contrôles de risque, les mécanismes de validation en temps réel et la surveillance des performances.
+
+**Étape 10 — Maintenance**
+
+Surveillance continue de la qualité des données et de la stabilité du signal. Les données alternatives peuvent se dégrader rapidement (distribution drift, changements de pratiques chez le fournisseur, évolution réglementaire).
+
+---
+
+## Partie B — Applications pratiques
+
+### Données manquantes (Missing Data)
+
+#### Importance et spécificité dans les données alternatives
+
+Le traitement des données manquantes est une **étape indispensable et prioritaire** dans tout pipeline de données alternatives. Sans ce traitement préalable, les données sont simplement inutilisables pour la modélisation.
+
+Les données alternatives présentent **davantage de valeurs manquantes** que les données conventionnelles pour plusieurs raisons :
+
+- Historiques plus courts et couverture géographique ou sectorielle souvent incomplète
+- Pannes techniques récurrentes (capteurs IoT, connexions API intermittentes)
+- Discontinuités dans les pratiques de publication ou de collecte
+
+::: {.callout-warning title="Règle d'or : traiter en premier"}
+Le traitement des données manquantes doit être effectué **avant tout autre traitement ou modélisation**. Une imputation réalisée après d'autres transformations peut introduire des biais supplémentaires, difficiles à détecter et à corriger a posteriori.
+:::
+
+#### Les trois mécanismes de manquement
+
+En statistique, on distingue trois types fondamentaux de mécanismes de manquement (*Missing Data Mechanisms*). Cette distinction est essentielle car elle conditionne le choix de la méthode de traitement.
+
+**MCAR — Missing Completely At Random (Manquant Complètement Aléatoirement)**
+
+La probabilité de manquement est **indépendante de toutes les variables**, observées ou manquantes. Exemple : une panne aléatoire de capteur. C'est le cas le plus favorable : les observations complètes restent représentatives de la population entière.
+
+**MAR — Missing At Random (Manquant Aléatoirement)**
+
+La probabilité de manquement **dépend des variables observées** mais pas des valeurs manquantes elles-mêmes. Exemple : davantage de données manquantes pour les petites entreprises (taille est observable). L'imputation reste possible sous condition.
+
+**MNAR — Missing Not At Random (Manquant Non Aléatoirement)**
+
+La probabilité de manquement **dépend des valeurs manquantes elles-mêmes**. Exemple : les entreprises en difficulté financière ne publient pas certains indicateurs précisément parce qu'ils sont mauvais. C'est le cas le plus problématique : l'absence d'information est elle-même informative.
+
+::: {.callout-important title="Le cas MNAR en finance"}
+En finance alternative, le MNAR est fréquent. Une enseigne dont les ventes chutent peut cesser de publier certaines données opérationnelles. Traiter ces manquements comme s'ils étaient aléatoires (MCAR) introduit un biais de sélection (Survivorship Bias) potentiellement sévère.
+:::
+
+#### Méthodes de traitement
+
+**1. Suppression (Deletion)**
+
+Supprimer les lignes ou colonnes contenant des valeurs manquantes. Simple et rapide, mais potentiellement très coûteux en information — inacceptable avec des taux de manquement élevés.
+
+**2. Remplacement simple (Simple Replacement)**
+
+Remplacer par la moyenne, la médiane, la dernière valeur connue (*forward fill*) ou la valeur suivante (*backward fill*). Rapide, mais peut réduire artificiellement la variance et introduire des biais systématiques.
+
+**3. Imputation prédictive (Predictive Imputation)**
+
+Utilisation de modèles statistiques ou d'apprentissage automatique pour estimer les valeurs manquantes à partir des variables disponibles. La littérature est abondante : régressions multiples, k-NN, décomposition en facteurs, réseaux de neurones, modèles d'espace d'états. Plus coûteux computationnellement, mais généralement plus précis.
+
+::: {.callout-tip title="Intuition : exploiter la structure de corrélation"}
+L'imputation prédictive repose sur un principe simple : les valeurs manquantes ne sont pas indépendantes des autres variables. Le prix d'une obligation à 30 ans est fortement corrélé avec celui à 20 ans. On peut donc estimer la valeur manquante en exploitant cette **structure de corrélation** entre séries.
+:::
+
+#### Exemple : Clustering de patterns sur données CDS
+
+Les données de **Credit Default Swaps (CDS)** illustrent parfaitement la diversité des patterns de données manquantes. Une analyse de clustering révèle **cinq groupes distincts** de comportement selon la nature des manquements :
+
+- **Cluster 1** : Très faible taux de manquement, données quasi-complètes (méthodes simples suffisantes)
+- **Cluster 2** : Manquements principalement sur les longues maturités, en courtes séquences consécutives
+- **Cluster 3** : Manquements en longues séquences pour les longues maturités
+- **Cluster 4** : Quantité considérable de données manquantes avec forte variation temporelle
+- **Cluster 5** : Grandes quantités de données manquantes sur toutes les maturités, en longues séquences uniformes (méthodes sophistiquées indispensables)
+
+Cette classification préalable est cruciale : elle permet de choisir la méthode d'imputation la plus adaptée à chaque groupe de séries, plutôt qu'une approche unique pour toutes les données.
+
+La comparaison visuelle de différentes techniques d'imputation sur des séries CDS de maturités Y15, Y20 et Y30 confirme que les méthodes avancées (décomposition en facteurs, modèles d'espace d'états) produisent des reconstructions plus lisses et plus fidèles à la dynamique sous-jacente que les méthodes simples.
+
+#### Exemple : Débruitage d'une image satellite (DINEOF)
+
+Un exemple illustratif concerne l'imagerie satellite. Lorsque **50 % des pixels** d'une image de parking sont artificiellement supprimés — simulant la présence de nuages ou une panne de capteur — la technique **DINEOF (Data Interpolating Empirical Orthogonal Functions)** permet de reconstruire les zones manquantes avec une qualité visuelle remarquable.
+
+DINEOF exploite la **structure de covariance spatiale et temporelle** de l'image pour interpoler les zones manquantes. Le résultat post-DINEOF est visuellement très proche de l'image originale complète, validant l'efficacité de cette approche pour les données spatiales de haute dimension.
+
+::: {.callout-note title="À retenir : choisir la bonne méthode"}
+Le choix de la technique d'imputation doit être guidé par quatre critères principaux :
+
+- Le **taux de manquement** (faible → méthodes simples acceptables)
+- Le **mécanisme sous-jacent** (MCAR, MAR ou MNAR)
+- La **structure des données** (temporelle, spatiale, transversale)
+- Le **coût computationnel** acceptable dans le contexte de production
+:::
+
+### Valeurs aberrantes (Outliers)
+
+#### Définition et ambiguïté fondamentale
+
+Une valeur aberrante (Outlier) est une observation qui s'écarte significativement du comportement habituel de la distribution. Cependant, une formule résume bien le défi du problème :
+
+> *"Le bruit d'un analyste est le signal d'un autre."*
+
+Dans les données de cartes de crédit, un pic de transactions anormal peut être soit un **bruit** (erreur de saisie, fraude ponctuelle), soit un **signal réel** (début d'une tendance de consommation à venir). Supprimer cet outlier peut détruire l'information la plus précieuse du dataset.
+
+::: {.callout-important title="Cas réel : le franc suisse (EUR/CHF) — 15 janvier 2015"}
+Le 15 janvier 2015, la Banque Nationale Suisse (BNS) a abandonné subitement son plancher de change EUR/CHF à 1,20. Le cours a chuté d'environ **15 % en quelques minutes**. Ces observations statistiquement extrêmes, que des modèles naïfs auraient classifiées comme outliers à supprimer, étaient en réalité le signal d'un **changement de régime (Regime Change)** majeur. Les ignorer aurait conduit à manquer l'événement le plus important de la journée.
+:::
+
+#### Relativité contextuelle
+
+Un outlier est toujours défini **par rapport à une population de référence**. Un salaire annuel de 500 000 € est statistiquement normal dans une population de dirigeants du CAC 40, mais statistiquement extrême dans une population de salariés âgés de 18 ans.
+
+Cette relativité impose que le traitement des outliers tienne systématiquement compte du **contexte de la donnée** et de la population à laquelle elle appartient. Une approche uniforme est une erreur méthodologique.
+
+#### Techniques d'identification non supervisées
+
+Ces méthodes ne nécessitent pas d'exemples labellisés d'anomalies connues — elles sont donc particulièrement adaptées au contexte des données alternatives.
+
+##### KNN — K Plus Proches Voisins (K-Nearest Neighbors)
+
+L'algorithme KNN calcule la **distance géométrique** d'un point à ses k plus proches voisins dans l'espace des features. Un point dont la distance moyenne aux voisins est anormalement grande par rapport au reste de la distribution est identifié comme outlier.
+
+##### LOF — Facteur de Densité Locale (Local Outlier Factor)
+
+LOF compare la **densité locale** d'un point à celle de ses voisins immédiats. Un point situé dans une région peu dense, entouré de voisins en région dense, reçoit un score LOF élevé signalant une anomalie locale — même si ce point n'est pas le plus éloigné globalement.
+
+::: {.callout-tip title="Intuition : KNN vs LOF"}
+KNN détecte les points **globalement** isolés : loin de tout le monde. LOF détecte les points **localement** isolés : dans un voisinage peu peuplé, même s'ils ne sont pas les plus éloignés du centre. LOF est donc plus robuste pour des distributions multi-modales ou hétérogènes, caractéristiques fréquentes des données alternatives.
+:::
+
+La visualisation du LOF en deux dimensions illustre ce principe : chaque point est représenté par un cercle dont le **rayon est proportionnel à son score d'anomalie**. Les grands cercles isolés correspondent aux outliers les plus probables.
+
+##### HBOS — Score d'Anomalie par Histogramme (Histogram-Based Outlier Score)
+
+HBOS construit un histogramme pour chaque dimension et calcule un score basé sur la **fréquence de chaque observation dans son bin**. Les observations dans des bins peu fréquentés reçoivent un score d'anomalie élevé. Cette méthode est très rapide mais suppose l'indépendance des features.
+
+#### Techniques supervisées
+
+##### Autoencodeur (Autoencoder)
+
+Un autoencodeur est un réseau de neurones entraîné à **reconstruire son entrée** après l'avoir compressée dans un espace latent de dimension réduite. L'**erreur de reconstruction** sert de score d'anomalie : un point que le modèle ne parvient pas à reconstruire fidèlement est probablement un outlier, car il ne correspond pas aux patterns habituels appris.
+
+Cette approche est particulièrement adaptée aux données de haute dimension (images, longues séries temporelles) où les méthodes basées sur les distances euclidiennes perdent de leur efficacité (malédiction de la dimensionnalité).
+
+::: {.callout-note title="À retenir : méthodes supervisées vs non supervisées"}
+Les méthodes supervisées nécessitent des données labellisées (exemples d'anomalies connues), ce qui est rare en finance. Les approches non supervisées — KNN, LOF, HBOS — sont donc généralement préférées comme première ligne de défense pour le traitement des données alternatives.
+:::
+
+### Données fondamentales automobiles (Automotive Fundamental Data)
+
+#### Contexte et motivations
+
+Le secteur automobile mondial génère une masse de données opérationnelles précieuses pour les investisseurs. L'idée centrale est d'utiliser ces données pour construire un **algorithme de classement (Ranking Algorithm)** permettant de sélectionner les meilleures actions parmi les constructeurs mondiaux.
+
+#### Données utilisées
+
+Les indicateurs fondamentaux automobiles retenus incluent :
+
+- **Volumes de ventes (Sales Volume)** : nombre de véhicules vendus par marque et par marché géographique
+- **Âge moyen du parc (Fleet Ages)** : indicateur du potentiel de renouvellement futur de la flotte
+- **Volumes de production (Production Volumes)** : cadence de fabrication effective des usines
+- **Taux d'utilisation des usines (Production Plant Use)** : mesure de l'efficacité opérationnelle et de la saturation des capacités
+- **Revenus des ventes (Sales Revenues)** : chiffres d'affaires par segment et par géographie
+
+::: {.callout-tip title="Intuition : indicateurs avancés sectoriels"}
+Les volumes de production et les taux d'utilisation des usines sont des **indicateurs avancés** des revenus futurs. Un constructeur qui accélère sa production anticipe une demande plus forte, ce qui devrait se refléter dans ses prochains résultats financiers — souvent avant que les analystes et le marché ne l'aient pleinement intégré.
+:::
+
+#### Résultats empiriques
+
+En combinant ces variables dans un modèle de scoring (Q_pct_delta_ffo), une stratégie long/short sur les constructeurs mondiaux (BMW, Volkswagen, Toyota, Honda, Renault, Ford, GM, Hyundai, etc.) génère une **surperformance significative** par rapport au benchmark trimestriel sur la période 2010–2018, tant avec une clairvoyance immédiate (0m) qu'avec une clairvoyance de 3 mois.
+
+Un heatmap temporel illustre les rotations de portefeuille au sein de l'univers automobile : les périodes de détention longue (long) varient fortement d'un constructeur à l'autre selon le cycle d'investissement et de demande propre à chaque marché géographique.
+
+### Enquêtes et données participatives (Survey and Crowdsourced Data)
+
+#### Définition et valeur
+
+Les données d'enquêtes et du **crowdsourcing** offrent un accès direct aux comportements et opinions de consommateurs, d'analystes ou de managers. Elles capturent des informations **qualitatives** difficiles à obtenir autrement : intentions d'achat, niveaux de confiance, anticipations économiques.
+
+#### L'indice PMI (Purchasing Managers' Index)
+
+Le PMI est l'exemple le plus emblématique d'enquête à valeur prédictive élevée en finance. Il est un peu à la fois une **enquête structurée** (questionnaire standardisé) et une forme de **crowdsourcing** (agrégation d'opinions indépendantes à grande échelle).
+
+**Méthodologie**
+
+Un questionnaire est envoyé mensuellement à des directeurs d'achats (Purchasing Managers) dans des entreprises de nombreux secteurs et pays. Ces cadres répondent à des questions binaires (mieux / pareil / moins bien qu'il y a un mois) sur des indicateurs tels que :
+
+- Nouvelles commandes
+- Niveaux de stocks
+- Emploi
+- Livraisons fournisseurs
+- Production
+
+**Interprétation et valeur prédictive**
+
+- PMI > 50 → expansion économique en cours
+- PMI < 50 → contraction économique en cours
+- Publié **avant les données officielles du PIB** → statut d'**indicateur avancé (Leading Indicator)** reconnu
+
+::: {.callout-note title="À retenir : PMI comme proxy du PIB"}
+La robustesse du PMI tient à son mécanisme d'agrégation : les biais individuels de chaque directeur d'achats se compensent en moyenne, et le signal qui émerge reflète fidèlement la tendance macroéconomique réelle. C'est un exemple de sagesse des foules (Wisdom of the Crowds) appliquée à la prévision économique.
+:::
+
+#### Le crowdsourcing en finance
+
+Des exemples concrets de données crowdsourcées appliquées à l'investissement incluent :
+
+- **Estimations de bénéfices (Earnings Estimates)** : plateformes comme Estimize agrègent les prévisions d'analystes indépendants, souvent plus précises que le consensus Bloomberg
+- **Niveaux de prix (Price Levels)** : collecte participative de prix en supermarché (MIT Billion Prices Project)
+- **Avis consommateurs (Consumer Reviews)** : étoiles et commentaires sur Amazon, Yelp, TripAdvisor comme proxy de la satisfaction et de la fidélisation
+
+#### Cas d'étude : JX Mobile III (Grapedata)
+
+Cette étude illustre comment une enquête poolée bien construite peut servir à anticiper le succès commercial d'un produit — ici un jeu vidéo — et donc les revenus de son éditeur coté en bourse.
+
+**Dispositif expérimental**
+
+Avant le lancement du jeu mobile JX Mobile III par l'éditeur Kingsoft, la société Grapedata a interrogé **700 participants** sur deux dimensions clés :
+
+- **Intention d'achat** : êtes-vous prêt à payer pour le jeu au lancement ?
+- **Dépenses passées** : combien dépensez-vous mensuellement pour des items dans JX PC III ?
+
+**Résultats de l'enquête**
+
+Les données révèlent une forte intention d'achat (environ 75 % de réponses positives) et des niveaux de dépenses significatifs sur la version précédente. La distribution des dépenses est hétérogène, avec un segment notable de grands dépenseurs (> 2 000 ¥/mois).
+
+**Impact sur les marchés**
+
+Suite à la publication de ces résultats le 3 janvier 2019 (cours à 11,36 HKD), le titre Kingsoft a progressé pour dépasser 20 HKD dans les mois suivants — surperformant nettement l'indice Hang Seng qui est resté globalement stable sur la même période (≈ 25 000 points en début de période).
+
+**Défis méthodologiques**
+
+La représentativité d'une enquête crowdsourcée soulève des questions complexes qu'il ne faut pas sous-estimer :
+
+- **Taille de l'échantillon** : comment déterminer le nombre de participants nécessaire pour atteindre une précision statistique suffisante ?
+- **Couverture** : l'échantillon couvre-t-il les bonnes sous-populations géographiques et démographiques ?
+- **Pénétration** : le taux de réponse est-il suffisant et exempt de biais de sélection majeur ?
+
+::: {.callout-important title="Biais de sélection (Selection Bias)"}
+Les personnes qui répondent à une enquête ne sont généralement pas représentatives de la population cible. Ce biais peut conduire à des erreurs systématiques dans les prévisions si l'échantillon est dominé par des utilisateurs très engagés, surreprésentant un comportement d'achat non typique de la population générale.
+:::
+
+### Imagerie satellite (Satellite Imagery)
+
+#### Contexte technologique
+
+L'analyse d'images satellites constitue l'une des formes les plus innovantes de données alternatives. La démocratisation des constellations de petits satellites (CubeSats) a considérablement augmenté la **résolution spatiale** et la **fréquence de revisite** des zones d'intérêt, rendant ces données accessibles à un coût croissant mais raisonnable pour les acteurs financiers.
+
+**Principales applications en finance**
+
+- **Comptage de véhicules** sur les parkings de grande distribution (proxy direct de fréquentation)
+- **Suivi des stocks de pétrole** via l'angle d'ombre portée sur les réservoirs à toit flottant
+- **Estimation des récoltes agricoles** via l'analyse spectrale (NDVI — Normalized Difference Vegetation Index)
+- **Mesure de l'activité industrielle** (feux de torchage, fumée d'usines, activité nocturne)
+- **Surveillance des ports** et mouvements de navires pour anticiper les flux commerciaux
+
+#### Prédiction des exportations
+
+Des travaux de recherche ont démontré que l'analyse d'images satellites de ports et de zones industrielles possède une **capacité explicative significative** pour la croissance des exportations américaines, avant la publication des données officielles du Bureau du Commerce américain.
+
+Ce résultat illustre le potentiel des données satellites comme indicateurs avancés macro-économiques, complémentaires aux données officielles avec une latence moindre.
+
+#### Comptage de voitures et estimations de bénéfices
+
+L'un des exemples les plus développés concerne le comptage de véhicules sur les parkings de grandes enseignes britanniques : Marks & Spencer (MKS), Morrisons (MRW) et Tesco (TSCO).
+
+**Méthodologie**
+
+Des algorithmes de **vision par ordinateur (Computer Vision)** traitent les images satellites des parkings à intervalles réguliers. Un **Car Count Score** est ainsi construit pour mesurer la fréquentation relative de chaque enseigne dans le temps.
+
+**Corrélation avec les bénéfices**
+
+Les résultats montrent une forte corrélation entre le Car Count Score et le **bénéfice par action ajusté (EPS Adjusted)** de Marks & Spencer sur la période septembre 2015 — mars 2019. Le score suit de près les variations des bénéfices réels et les estimations des analystes.
+
+**Analyse comparative (R²)**
+
+Pour les trois enseignes, la combinaison **Consensus + Car Count** (Consensus & Car Count R²) explique systématiquement une plus grande part de variance des bénéfices que le seul consensus d'analystes. La valeur ajoutée est particulièrement marquée pour Tesco (TSCO LN Equity).
+
+::: {.callout-tip title="Intuition : la chaîne causale de l'imagerie satellite"}
+Un parking plein → un magasin fréquenté → des ventes élevées → des revenus importants. Cette chaîne causale simple, appliquée systématiquement à des dizaines de sites et des années de données, génère un signal prédictif précieux — mesurable avant toute publication officielle.
+:::
+
+### Données de localisation (Location Data)
+
+#### Contexte technologique
+
+La généralisation des **capacités GPS** dans les appareils modernes (téléphones mobiles, voitures connectées, navires, avions d'affaires) ouvre un champ immense de données géospatiales. Collectées et agrégées de manière anonymisée, elles permettent de suivre les flux de personnes et de biens en quasi-temps réel.
+
+Les principales catégories de données de localisation sont :
+
+- **Données de trafic piétonnier (Footfall Data)** : flux de personnes dans des zones commerciales et des centres-villes
+- **Données de trafic routier** : déplacements de véhicules et niveaux d'embouteillage
+- **AIS (Automatic Identification System)** : mouvements de navires commerciaux dans les ports et sur les routes maritimes
+- **Données de vols privés** : mouvements d'avions d'affaires comme proxy d'activité économique et de fusions-acquisitions
+
+#### Exemple 1 : L'indice Thasos et la stratégie XRT
+
+**L'indice Thasos** est construit à partir de données de géolocalisation mobiles agrégées pour mesurer la **fréquentation des centres commerciaux américains (Mall Foot Traffic)**. Il est utilisé pour construire une stratégie dynamique sur l'ETF XRT (SPDR S&P Retail ETF).
+
+**Résultats comparatifs (septembre 2016 — mars 2019)**
+
+Les performances comparées sur cette période illustrent clairement la valeur ajoutée des données de localisation :
+
+- **Long XRT** (benchmark passif) : Ret = 0,8 % / Vol = 18,8 % / IR = 0,04
+- **Thasos XRT** (signal immédiat) : Ret = **18,7 %** / Vol = 18,8 % / **IR = 1,0**
+- **Thasos XRT laggée 1 mois** : Ret = 11,6 % / Vol = 18,8 % / IR = 0,62
+
+Pour une volatilité identique de 18,8 %, la stratégie Thasos génère un rendement vingt fois supérieur au benchmark, avec un Information Ratio (IR) de 1 — considéré comme excellent en gestion quantitative.
+
+::: {.callout-tip title="Intuition : l'Information Ratio (IR)"}
+L'**Information Ratio (IR)** mesure le rendement excédentaire par unité de risque actif pris. Un IR de 1 signifie que pour chaque point de volatilité active, la stratégie génère un point de rendement excédentaire. C'est un niveau considéré comme très satisfaisant dans l'industrie de la gestion alternative.
+:::
+
+#### Exemple 2 : Score de fréquentation et bénéfices Walmart
+
+En comparant le **Footfall Score** (données Thasos) aux estimations de consensus Bloomberg sur le **bénéfice par action de Walmart (WMT US Equity EPS)**, on observe une forte concordance entre les pics de fréquentation mesurés et les surprises positives de bénéfices.
+
+Ce résultat illustre comment les données de localisation peuvent **compléter les estimations d'analystes traditionnels** pour anticiper les publications de résultats trimestriels avec une meilleure précision.
+
+::: {.callout-note title="À retenir : limites des données de localisation"}
+Les données de localisation sont particulièrement utiles pour le secteur de la **distribution physique (Brick and Mortar Retail)**, où la fréquentation est directement liée aux revenus. Leur pertinence se réduit significativement pour les enseignes à dominante e-commerce, où le trafic en magasin ne représente qu'une fraction des ventes totales.
+:::
+
+### Texte, web, réseaux sociaux et actualités
+
+#### Introduction au NLP en finance
+
+L'analyse des données textuelles repose sur des techniques de **traitement du langage naturel (Natural Language Processing – NLP)**. L'objectif est de transformer des textes non structurés en scores numériques exploitables dans des stratégies quantitatives.
+
+Les principales sources de données textuelles exploitées en finance sont :
+
+- **Réseaux sociaux** : Twitter/X, Reddit (WallStreetBets), LinkedIn, StockTwits
+- **Flux d'actualités financières** : Reuters, Bloomberg, Associated Press, presse économique généraliste
+- **Transcriptions d'appels de résultats (Earnings Call Transcripts)** : ton, vocabulaire et sentiment du management
+- **Rapports d'analystes et recherches académiques**
+- **Données de recherche web** : Google Trends, volume de requêtes sur des termes financiers
+
+#### L'Hedonometer : sentiment du bonheur (Twitter/X)
+
+**Présentation**
+
+L'Hedonometer est un **indice de sentiment du bonheur (Happiness Sentiment Index – HSI)** construit à partir de l'analyse de millions de tweets en anglais. Chaque mot du dictionnaire se voit attribuer un **score de valence hédonique** (de très négatif à très positif). Ces scores sont agrégés quotidiennement pour produire un indice du bien-être collectif.
+
+**Sensibilité aux événements**
+
+L'indice réagit de manière cohérente aux grands événements collectifs :
+
+- **Hausses** : Noël, Nouvel An, Fête des mères, Fête de l'indépendance, élections perçues favorablement
+- **Baisses** : COVID-19, fusillades de masse, attaques terroristes, violences politiques, catastrophes naturelles
+
+**Lien avec les marchés financiers**
+
+Lorsqu'on régresse le S&P 500 contre l'HSI, on obtient une **statistique t de 7,7** — seuil extrêmement significatif, équivalent à un niveau de confiance supérieur à 99,99 %. Ceci suggère que le bonheur collectif agrégé sur Twitter contient une **information prévisionnelle réelle** sur les marchés actions.
+
+**Application pratique** : l'HSI peut être utilisé comme signal de **réduction d'exposition au risque (Risk Cutting)** — diminuer l'allocation aux actifs risqués lorsque le sentiment collectif se dégrade de manière significative.
+
+::: {.callout-tip title="Intuition : marchés et émotions collectives"}
+Les marchés sont animés par des agents humains dont les émotions influencent les décisions. Un bonheur collectif élevé favorise la prise de risque (*risk-on environment*), tandis qu'un sentiment déprimé incite à la prudence (*risk-off*). L'Hedonometer tente de quantifier ce mécanisme psychologique à l'échelle macroscopique, à partir de données générées spontanément par des millions d'individus.
+:::
+
+#### Modèle NFP enrichi par Twitter
+
+**Contexte : l'annonce Non-Farm Payrolls**
+
+Les **Non-Farm Payrolls (NFP)**, publiés le premier vendredi de chaque mois par le Bureau of Labor Statistics américain, constituent l'une des publications macroéconomiques les plus attendues. La surprise par rapport au consensus des économistes génère des mouvements violents et immédiats sur les marchés des changes.
+
+**Construction du modèle Twitter**
+
+En analysant les tweets mentionnant l'emploi américain dans les jours précédant la publication, un modèle de prévision des NFP est construit et comparé au consensus Bloomberg (NFP Survey).
+
+**Résultats**
+
+- Le modèle Twitter génère un **R² de 0,52** dans la relation entre la surprise NFP et le mouvement EUR/USD à une minute — un résultat remarquablement élevé
+- Visuellement, la prévision du modèle (Model NFP) suit de près les publications réelles (NFP) et le consensus survey sur la période 2011–2015
+- **Stratégie de trading** : achat de USD/JPY et EUR/USD lorsque l'estimation Twitter dépasse le consensus (anticipation de surprise positive), vente dans le cas contraire
+
+::: {.callout-note title="À retenir : pourquoi Twitter prédit les NFP"}
+La capacité de Twitter à anticiper le consensus NFP tient probablement au fait que des millions de personnes commentent implicitement leur situation de travail (offres d'emploi vues, entretiens passés, collègues licenciés) sur les réseaux sociaux dans les semaines précédant la publication — créant un signal agrégé précurseur des données officielles.
+:::
+
+#### Sentiment de l'actualité pour les devises (News Sentiment for FX)
+
+**Construction du signal**
+
+Les flux d'actualités sont transformés en **scores de sentiment par devise** grâce à des algorithmes NLP. Pour chaque devise, un score agrégé tient compte du nombre d'articles positifs et négatifs, de leur importance éditoriale et de leur fraîcheur temporelle.
+
+**Construction de paires de devises**
+
+En soustrayant les scores de deux devises, on construit un score net pour une paire :
+
+$$\text{Score}_{USD/JPY} = \text{Score}_{USD} - \text{Score}_{JPY}$$
+
+**Stratégie de trading**
+
+- **Acheter (Buy)** la paire de devises lorsque le score de sentiment net est positif
+- **Vendre (Sell)** la paire lorsque le score est négatif
+
+**Résultats comparatifs (2010–2016)**
+
+La stratégie basée sur l'actualité surperforme nettement une stratégie de suivi de tendance :
+
+- **News strategy** : Ret = 4,2 % / Vol = 6,6 % / IR = 0,6
+- **Trend strategy** : Ret = −1,5 % / Vol = 5,8 % / IR = −0,3
+
+::: {.callout-important title="Biais look-ahead (Look-Ahead Bias)"}
+Dans toute stratégie basée sur du sentiment textuel, il est crucial de vérifier que les données utilisées à la date t étaient **réellement disponibles** à cette date. Les timestamps des articles doivent être vérifiés avec soin : un article publié après la clôture des marchés ne peut pas avoir influencé les prix de la même journée.
+:::
+
+### Attention des investisseurs (Investor Attention)
+
+#### Définition et principe
+
+L'**attention des investisseurs (Investor Attention)** mesure le degré d'intérêt et d'inquiétude des acteurs de marché vis-à-vis d'un actif ou d'un événement. Cette notion repose sur le principe que l'attention est une ressource **limitée et allouée** : lorsque les investisseurs focalisent leur attention sur un événement, les marchés y réagissent plus vigoureusement et plus rapidement.
+
+Trois approches complémentaires permettent de mesurer cette attention :
+
+- Les **liens de partage Bitly** (clics sur des liens vers des actualités économiques)
+- Les **données de recherche Google** (volume de requêtes sur des termes financiers)
+- Les **données de recherche Investopedia** (termes recherchés par les investisseurs individuels)
+
+#### Liens Bitly et réaction obligataire
+
+**Principe**
+
+Bitly est un service de raccourcissement d'URLs. En analysant le nombre de clics sur des liens vers des articles économiques clés (rapport NFP, décisions de la Fed), on obtient une mesure directe de l'**attention instantanée** des investisseurs.
+
+**Observation empirique**
+
+Les données de clics sur des liens "payrolls" montrent un pic violent — de quelques dizaines à plusieurs centaines de clics — autour de 8h30 heure de New York (heure de publication du NFP), puis une décroissance rapide tout au long de la journée.
+
+**Signal de trading**
+
+- **Faible nombre de clics** → faible attention → réaction du marché **modérée (muted)**
+- **Nombre élevé de clics** → forte attention → réaction du marché **amplifiée**
+
+Sur les marchés de US T-Notes (obligations du Trésor américain), la réponse est significativement plus forte lors des publications NFP avec une attention élevée (nombre de clics élevé).
+
+::: {.callout-tip title="Intuition : l'attention comme amplificateur"}
+L'attention collective amplifie l'impact d'une nouvelle. Si peu d'investisseurs regardent un rapport macroéconomique, peu réagiront immédiatement et la réaction sera amorcie. Si tout le monde l'attend, la réaction sera proportionnellement bien plus forte. L'attention est un **amplificateur de volatilité**.
+:::
+
+#### Google Domestic Trends
+
+**Google Domestic Trends** fournit des données d'intention de recherche agrégées par catégorie thématique. En analysant les variations du volume de recherches sur des termes liés à la finance, l'immobilier ou l'énergie, on construit des **indicateurs de sentiment sectoriel** précurseurs.
+
+Ces données permettent de quantifier les chocs sur des secteurs spécifiques et d'ajuster dynamiquement l'allocation au S&P 500. Lorsque les recherches sur des termes négatifs (faillite, licenciement, saisie immobilière) augmentent fortement dans un secteur, c'est un signal précurseur de détérioration à venir dans les données économiques officielles.
+
+#### Investopedia Investor Anxiety Index (IAI)
+
+**Présentation**
+
+L'**Investopedia Anxiety Index (IAI)** quantifie l'**anxiété financière** des investisseurs en analysant les termes recherchés sur le site éducatif Investopedia. Contrairement à Google Trends qui couvre toute la population, Investopedia cible spécifiquement les investisseurs individuels et les apprenants en finance — une population plus directement pertinente pour les marchés.
+
+**Construction du signal**
+
+- IAI élevé → les investisseurs cherchent des termes liés aux crises, récessions, risques → signal *bearish*
+- IAI faible → les investisseurs s'informent sur des stratégies d'investissement positives → signal *bullish*
+
+**Résultats comparatifs (2012–2016)**
+
+La comparaison de trois stratégies sur le S&P 500 confirme la valeur ajoutée de l'IAI :
+
+- **IAI** : Ret = 15,5 % / Vol = 11,8 % / **IR = 1,32 / Drawdown = −16,7 %**
+- **VIX** : Ret = 13,0 % / Vol = 12,4 % / IR = 1,05 / Drawdown = −16,2 %
+- **Long Only** : Ret = 12,7 % / Vol = 14,8 % / IR = 0,86 / Drawdown = −21,6 %
+
+::: {.callout-note title="À retenir : IAI vs VIX"}
+L'IAI surperforme le VIX en termes d'Information Ratio (1,32 vs 1,05) tout en réduisant la volatilité (11,8 % vs 12,4 %). Cela suggère que l'anxiété mesurée via Investopedia capture une information **complémentaire et distincte** de la volatilité implicite traditionnelle. Combiner IAI et VIX peut offrir un signal encore plus robuste.
+:::
+
+Le mécanisme est le suivant : le **S&P 500 tend à être plat ou baissier lorsque l'IAI est élevé**, et à performer positivement lorsque l'IAI est bas. L'IAI fonctionne donc comme un indicateur de **régime de marché (Market Regime)**.
+
+### Transactions de consommateurs (Consumer Transactions)
+
+#### Valeur et principe
+
+Les données de transactions de consommateurs constituent l'une des catégories les plus directement liées aux revenus des entreprises. Elles permettent d'**anticiper les publications financières trimestrielles** en observant les comportements d'achat réels avant toute déclaration officielle.
+
+Deux sources majeures de données de transactions existent :
+
+- Les **données de cartes bancaires (Credit/Debit Card Data)** : agrégées par le réseau de paiement
+- Les **données de reçus (Receipt Data)** : collectées via des applications de finance personnelle ou des portails fiscaux
+
+#### MasterCard Spending Pulse
+
+**Présentation**
+
+Le **MasterCard SpendingPulse** est un rapport macroéconomique construit à partir des transactions anonymisées du réseau Mastercard, complétées par des estimations pour les modes de paiement non couverts (espèces notamment). Il couvre de nombreux secteurs (automobile, restauration, voyages, e-commerce) et zones géographiques mondiales.
+
+**Exemple : commerce de détail brésilien (2013–2019)**
+
+La comparaison entre les **ventes officielles de détail au Brésil (Official Brazil Retail Sales YoY)** et l'estimé SpendingPulse révèle une forte corrélation entre les deux séries sur la période entière. Les données SpendingPulse sont disponibles **avant** les chiffres officiels du gouvernement brésilien, permettant d'anticiper les publications statistiques nationales.
+
+Le signal est particulièrement visible lors des épisodes extrêmes : forte contraction entre 2015 et 2016 (−10 % à −15 %) et reprise progressive de 2017 à 2019.
+
+::: {.callout-tip title="Intuition : la loi des grands nombres au service du signal"}
+Si Mastercard traite une fraction représentative des paiements d'un pays, les tendances de ses transactions constituent un **proxy fiable** de la consommation globale. Plus la pénétration du réseau est élevée et homogène sur les catégories socioéconomiques, plus le signal est robuste et représentatif.
+:::
+
+#### Données Quandl : reçus anonymisés
+
+**Présentation**
+
+Quandl (aujourd'hui Nasdaq Data Link) agrège des données de **reçus électroniques anonymisés** collectés via des applications de gestion des finances personnelles et des portails fiscaux. Ces données permettent de suivre les dépenses de consommateurs sur des enseignes spécifiques avec une granularité très fine.
+
+**Exemple emblématique : prévision des revenus Amazon**
+
+L'analyse des reçus Amazon anonymisés permet de construire des **variations de revenus implicites (Implied Revenue Changes)** trimestrielles. La comparaison avec les variations réelles publiées par Amazon sur la période d'analyse révèle une corrélation exceptionnelle :
+
+$$R^2 = 0{,}9506$$
+
+Ce coefficient de détermination de **95 %** indique que les données de reçus expliquent quasi-intégralement les variations trimestrielles de revenus d'Amazon, sur une plage allant de −20 % à +50 % de variation trimestrielle.
+
+::: {.callout-important title="Signal exceptionnel, mais pas généralisable"}
+Un R² de 0,95 est remarquablement élevé pour une donnée alternative. Il s'explique par le fait que les achats Amazon génèrent **systématiquement** un reçu électronique, permettant une couverture très représentative. Ce niveau de qualité de signal ne se retrouve pas pour toutes les enseignes ou tous les secteurs — notamment ceux avec une forte proportion de paiements en espèces.
+:::
+
+::: {.callout-warning title="Vie privée et conformité éthique"}
+L'utilisation de données de reçus soulève des questions éthiques importantes. Même anonymisées, ces données permettent de reconstruire des habitudes de consommation très détaillées. La conformité avec les réglementations de protection des données (RGPD en Europe, CCPA en Californie) est impérative à chaque étape de la chaîne de traitement.
+:::
+
+---
+
+## Conclusion et perspectives
+
+### Bilan du chapitre
+
+Ce chapitre a proposé un panorama complet des données alternatives en finance, couvrant les éléments suivants :
+
+- La **définition et la taxonomie** des données alternatives et leurs caractéristiques distinctives
+- Les **motivations économiques** de leur utilisation : orthogonalité, anticipation, complémentarité
+- Les **risques juridiques** (RGPD, web scraping, risque fournisseur) et les **défis opérationnels** (formats non structurés, entités manquantes, séries temporelles)
+- Un **processus structuré en dix étapes** pour leur intégration opérationnelle dans une organisation financière
+- Des **applications pratiques concrètes** illustrant leur valeur prédictive dans différents domaines : données manquantes, outliers, données automobiles, enquêtes, imagerie satellite, géolocalisation, NLP, attention des investisseurs, transactions consommateurs
+
+### Stade d'adoption actuel
+
+Le marché des données alternatives est encore à un **stade précoce d'adoption (Early Stage)**. Malgré une croissance exponentielle des dépenses, la majorité des acteurs financiers n'ont pas encore intégré ces données de manière systématique dans leurs processus d'investissement.
+
+Les principaux freins restent :
+
+- Les **coûts** élevés d'acquisition, de nettoyage et de maintenance
+- Le **manque de talents** spécialisés disponibles sur le marché du travail
+- La **résistance organisationnelle** aux changements de processus et de culture
+
+### Perspectives et enjeux stratégiques
+
+Les acteurs de l'industrie expriment des visions contrastées sur l'évolution du secteur.
+
+Sandy Rattray (CEO de Man Group, 2019) observe paradoxalement que les grandes maisons d'investissement utilisent **moins de données alternatives avec le temps** — car la prolifération des données dépasse désormais les capacités d'analyse disponibles. L'abondance crée un nouveau goulot d'étranglement : non plus l'accès aux données, mais la capacité à les traiter et à en extraire un signal robuste.
+
+Deloitte (2017) avertit à l'inverse que les acteurs qui ne mettent pas à jour leurs processus d'investissement au cours des cinq prochaines années pourraient faire face à des **risques stratégiques sévères** — distancés par des concurrents qui intègreront efficacement les données alternatives dans leur valorisation des titres et leurs processus de génération de signal.
+
+::: {.callout-note title="À retenir : un changement structurel en cours"}
+La question n'est plus de savoir **si** les données alternatives vont transformer la finance quantitative, mais **comment** et **à quelle vitesse**. Les profils qui maîtrisent l'ensemble de la chaîne — de la sélection et de la diligence des données à l'extraction de signal et à la mise en production — seront au cœur de cette transformation.
+:::
+
+### Vers une finance augmentée
+
+L'émergence des données alternatives s'inscrit dans une transformation plus profonde : celle de la **finance augmentée (Augmented Finance)**, où décisions humaines et analyses algorithmiques se combinent pour générer de la valeur de manière synergique.
+
+Les profils recherchés — data scouts, data strategists, data engineers, data scientists — sont déjà en forte demande, et cette tendance s'accélère. Comprendre les données alternatives dans toute leur complexité — leurs promesses autant que leurs limites — c'est se positionner comme **acteur de ce changement en cours**, et non simple observateur.

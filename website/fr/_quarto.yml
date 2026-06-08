@@ -146,7 +146,7 @@ website:
                 href: ch12q.qmd
               - text: "Examen"
                 href: ch12e.qmd
-          - section: "13. Futures, forwards et ESG"
+          - section: "13. Futures, forwards"
             contents:
               - text: "Détails"
                 href: ch13.qmd
@@ -156,7 +156,7 @@ website:
                 href: ch13q.qmd
               - text: "Examen"
                 href: ch13e.qmd
-          - section: "14. Données alternatives et rétrospective"
+          - section: "14. ESG"
             contents:
               - text: "Détails"
                 href: ch14.qmd
@@ -166,6 +166,16 @@ website:
                 href: ch14q.qmd
               - text: "Examen"
                 href: ch14e.qmd
+          - section: "15. Données alternatives"
+            contents:
+              - text: "Détails"
+                href: ch15.qmd
+              - text: "Synthèse"
+                href: ch15r.qmd
+              - text: "Quiz"
+                href: ch15q.qmd
+              - text: "Examen"
+                href: ch15e.qmd
 
 format:
   html:

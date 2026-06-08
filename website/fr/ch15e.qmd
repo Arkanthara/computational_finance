@@ -1,0 +1,163 @@
+---
+title: "Données alternatives (Alternative Data) — Révision orale"
+---
+
+## 🎭 Mise en contexte
+
+Imaginez un détective qui, au lieu d'attendre le rapport de police officiel, compte lui-même les voitures sur le parking du supermarché, lit les tweets de la population et épie les bateaux dans les ports. Il a l'information **avant tout le monde** — et c'est exactement ça, les données alternatives.
+
+Les autres analystes attendent le rapport trimestriel. Vous, vous savez déjà.
+
+La vraie question n'est pas « est-ce que ça marche ? » mais « est-ce légal, fiable, et traitable ? ».
+
+---
+
+## 🧠 Idée centrale du chapitre
+
+- Les marchés sont **ultra-compétitifs** → l'avantage informationnel (*informational edge*) est stratégique.
+- Les données alternatives sont des sources **non conventionnelles** permettant d'anticiper les marchés avant les publications officielles.
+- Leur valeur tient à trois propriétés : **orthogonalité** (signal indépendant), **anticipation** (signal avancé), **complémentarité** (signal enrichissant).
+- Elles sont peu utilisées (1 % analysé selon McKinsey 2016) à cause des coûts, de la complexité et du manque de talents.
+- Le vrai travail est le **prétraitement** : 80 % du temps, pas la modélisation.
+- **MNAR est le cas le plus dangereux** : l'absence d'information est elle-même un signal.
+- Un outlier peut être le signal le plus important du dataset — ne pas supprimer sans réfléchir.
+
+---
+
+## ⚡ Concepts à savoir expliquer à l'oral
+
+| Concept | Explication orale en 1 phrase | Intuition |
+|---|---|---|
+| **Donnée alternative** | Source non conventionnelle, moins utilisée, souvent non structurée, avec un historique court | Tout ce qui n'est pas prix, volumes et rapports trimestriels |
+| **Exhaust Data** | Donnée produite comme sous-produit d'une autre activité | Logs de transactions HFT générés « par accident » |
+| **Orthogonalité** | Signal indépendant des données déjà dans les prix | Deux antennes captent des signaux différents → image plus nette |
+| **PMI** | Enquête mensuelle de directeurs d'achats publiée avant le PIB | Baromètre météo avant d'ouvrir la fenêtre |
+| **MCAR / MAR / MNAR** | Les trois mécanismes expliquant pourquoi une valeur est absente | MNAR = l'absence dit quelque chose sur la valeur elle-même |
+| **LOF** | Détection d'outliers par comparaison de densité locale vs voisins | Un point seul dans un quartier dense est suspect |
+| **Autoencodeur** | Réseau entraîné à se reconstruire ; erreur = score d'anomalie | Si le réseau « ne reconnaît pas » le point, c'est un outlier |
+| **IAI** | Anxiété des investisseurs via requêtes Investopedia | Investopedia très visité → les gens ont peur → marché plat |
+| **DINEOF** | Reconstruction d'image satellite par structure de covariance spatiale | Recoudre un tableau troué en observant les tableaux voisins |
+| **Look-ahead bias** | Utiliser une info à la date t qui n'était pas disponible à t | Tricher en regardant les résultats avant de parier |
+
+---
+
+## 🔗 Carte mentale des concepts
+
+```
+Donnée alternative
+  ├── Valeur → Orthogonalité / Anticipation / Complémentarité
+  ├── Risques → Juridique (RGPD, CCPA) / Qualité / Fournisseur
+  └── Processus (10 étapes) → Scouting → Due diligence → POC → Preprocessing → Signal
+
+Preprocessing
+  ├── Données manquantes → MCAR → MAR → MNAR (⚠️ le plus dangereux)
+  │     └── Traitement → Suppression / Remplacement simple / Imputation prédictive
+  └── Outliers → KNN (global) → LOF (local) → HBOS (histogramme) → Autoencodeur (haute dim.)
+
+Applications pratiques
+  ├── Automobile → Ranking constructeurs (ventes, production, âge parc)
+  ├── Satellite → Car Count Score → proxy EPS (Marks & Spencer R² amélioré)
+  ├── Localisation → Thasos XRT (IR = 1.0 vs IR = 0.04 Long Only)
+  ├── NLP → Hedonometer (t-stat 7.7) / NFP Twitter (R² 0.52) / FX Sentiment (IR 0.6)
+  ├── Attention → IAI > VIX (IR 1.32 vs 1.05)
+  └── Transactions → Quandl / Amazon (R² = 0.95) / MasterCard SpendingPulse
+```
+
+---
+
+## 📐 Formules indispensables
+
+| Formule | Signification | À retenir |
+|---|---|---|
+| $\text{Score}_{A/B} = \text{Score}_A - \text{Score}_B$ | Score net d'une paire de devises (FX sentiment) | Acheter si > 0, vendre si < 0 |
+| $\text{IR} = \dfrac{\text{Ret excédentaire}}{\text{Risque actif}}$ | Information Ratio | IR = 1 → excellent ; Thasos XRT = 1.0 |
+| $R^2 = 0{,}95$ | Explication variance revenus Amazon par reçus Quandl | Signal exceptionnel (rarement atteint) |
+| $t\text{-stat} = 7{,}7$ | HSI (Hedonometer) régressé contre S&P 500 | Confiance > 99,99 % |
+| $R^2 = 0{,}52$ | Surprise NFP vs mouvement EUR/USD 1 min (Twitter) | Signal Twitter significatif |
+
+---
+
+## ⚠️ Pièges classiques
+
+- **MNAR ≠ MCAR** : traiter du MNAR comme du MCAR introduit un biais de sélection (*survivorship bias*) — l'absence d'info est informative.
+
+- **Outlier ≠ bruit automatiquement** : EUR/CHF le 15 jan. 2015 (−15 % en minutes) était un changement de régime, pas une erreur à supprimer.
+
+- **Anonymisation ≠ protection de l'acheteur** : la conformité RGPD reste la responsabilité de l'acheteur, pas seulement du vendeur.
+
+- **Web scraping ≠ droit d'utilisation** : une donnée accessible publiquement n'est pas forcément librement utilisable à des fins commerciales.
+
+- **R² élevé sur Amazon** : exceptionnel car Amazon génère toujours un reçu électronique — ne pas généraliser à tous les secteurs.
+
+- **Surapprentissage (*overfitting*)** : historiques courts + multitude de variables → corrélations fortuites (*spurious*) → validation hors échantillon obligatoire.
+
+- **Look-ahead bias** : vérifier les timestamps des articles NLP — un article publié après la clôture ne peut pas avoir influencé les prix du jour.
+
+- **80 % prétraitement** : ne pas sous-estimer le temps de nettoyage des données alternatives.
+
+- **E-commerce vs brick and mortar** : les données de localisation (foot traffic) ne sont pas pertinentes pour les enseignes majoritairement en ligne.
+
+---
+
+## 🎤 Questions d'oral probables
+
+**Q :** Qu'est-ce qu'une donnée alternative ? Donnez deux exemples.
+
+**R courte :** Source non conventionnelle ayant au moins une de ces caractéristiques : moins utilisée, plus coûteuse, historique court, format difficile. Ex. : imagerie satellite, données de cartes bancaires.
+
+---
+
+**Q :** Pourquoi utiliser des données alternatives si les marchés sont efficients ?
+
+**R courte :** Elles capturent des informations non encore intégrées dans les prix — trop coûteuses ou complexes pour la majorité. Elles sont orthogonales, anticipatoires ou complémentaires.
+
+---
+
+**Q :** Quelle est la différence entre MCAR, MAR et MNAR ?
+
+**R courte :** MCAR = manquement indépendant de tout. MAR = dépend des variables observées. MNAR = dépend de la valeur manquante elle-même → l'absence est un signal, c'est le cas le plus dangereux.
+
+---
+
+**Q :** Quelle est la différence entre KNN et LOF pour la détection d'outliers ?
+
+**R courte :** KNN détecte les points globalement éloignés de tous. LOF détecte les points localement isolés dans leur voisinage — plus robuste sur des distributions hétérogènes.
+
+---
+
+**Q :** Qu'est-ce que l'IAI et en quoi surpasse-t-il le VIX ?
+
+**R courte :** L'IAI mesure l'anxiété des investisseurs via les recherches sur Investopedia. IR = 1,32 vs VIX IR = 1,05 avec une volatilité plus faible — signal complémentaire et distinct de la volatilité implicite.
+
+---
+
+**Q :** Citez un exemple concret de données alternatives ayant un R² exceptionnel.
+
+**R courte :** Reçus anonymisés Quandl pour prévoir les revenus d'Amazon : R² = 0,95. Exceptionnel car Amazon génère systématiquement un reçu électronique → couverture quasi-exhaustive.
+
+---
+
+**Q :** Pourquoi le cas MNAR est-il problématique en finance ?
+
+**R courte :** Une entreprise en difficulté peut ne pas publier certains indicateurs précisément parce qu'ils sont mauvais. Traiter ce manquement comme aléatoire revient à ignorer un signal d'alerte — biais de sélection sévère.
+
+---
+
+**Q :** Quel est le principal risque opérationnel des données alternatives ?
+
+**R courte :** 80 % du temps de travail est consacré au prétraitement (nettoyage, manquants, normalisation). Ce coût est systématiquement sous-estimé.
+
+---
+
+## 🚀 À retenir en 30 secondes
+
+- **Donnée alternative** = source non conventionnelle apportant un *informational edge*.
+- **3 valeurs** : orthogonalité · anticipation · complémentarité.
+- **1 % des données** actuellement analysées — marché encore naissant.
+- **Processus en 10 étapes** : scouting → due diligence → POC → preprocessing → signal → production.
+- **MNAR** = le mécanisme de manquement le plus dangereux (l'absence est un signal).
+- **Outlier ≠ bruit** : EUR/CHF 2015 → ne jamais supprimer mécaniquement.
+- **LOF > KNN** sur distributions hétérogènes (données alternatives typiques).
+- **Satellite → IR amélioré** (Marks & Spencer) ; **localisation → IR = 1,0** (Thasos XRT).
+- **IAI > VIX** (IR 1,32 vs 1,05) ; **Quandl/Amazon R² = 0,95**.
+- **80 % prétraitement, 20 % modélisation** — anticiper cette répartition.

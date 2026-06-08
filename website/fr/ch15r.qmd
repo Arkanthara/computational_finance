@@ -1,0 +1,289 @@
+---
+title: "Données alternatives (Alternative Data) — Révision"
+---
+
+## 1. Définition et taxonomie
+
+### Caractéristiques d'une donnée alternative
+
+Une donnée est **alternative** si elle possède **au moins une** des propriétés suivantes :
+
+- Moins communément utilisée (*less commonly used*)
+- Plus coûteuse à acquérir et maintenir
+- Source extérieure aux marchés financiers
+- Historique plus court
+- Plus difficile à exploiter (format non structuré, qualité variable)
+
+> **Données d'échappement (Exhaust Data)** : sous-produit d'une activité principale (ex. logs de transactions HFT).
+
+### Taxonomie des sources
+
+| Catégorie | Exemples |
+|---|---|
+| Imagerie satellite | Comptage voitures, réservoirs pétrole, NDVI agricole |
+| Réseaux sociaux | Twitter/X, Reddit, StockTwits, forums |
+| Localisation (GPS) | Flux piétons, navires (AIS), vols privés |
+| Transactions | Cartes bancaires, reçus anonymisés |
+| Web scraping | Prix, offres d'emploi, avis consommateurs |
+| Enquêtes / crowdsourcing | PMI, Estimize, MIT Billion Prices |
+| NLP / actualités | Reuters, Bloomberg, transcriptions earnings calls |
+| IoT | Capteurs industriels, compteurs intelligents |
+| Données gouvernementales | Registres, douanes, permis de construire |
+
+---
+
+## 2. Valeur ajoutée — Pourquoi les utiliser ?
+
+| Type de valeur | Définition | Exemple |
+|---|---|---|
+| **Orthogonalité** | Information indépendante des prix → avantage informationnel | Satellite vs rapport trimestriel |
+| **Anticipation** (*Leading*) | Précède les publications officielles | PMI avant PIB officiel |
+| **Complémentarité** | Enrichit sans remplacer l'analyse existante | Données CO₂ pour score ESG |
+
+> **Marché** : ~1 % des données disponibles analysées (McKinsey 2016). Dépenses buy-side : ~200 M$ (2016) → >1,5 Md$ (2020E).
+
+---
+
+## 3. Risques et défis
+
+### Risques juridiques (Legal Risks)
+
+- **Données personnelles** : RGPD (Europe), CCPA (Californie) — anonymisation ≠ protection automatique de l'acheteur
+- **Web scraping** : accessible ≠ librement utilisable ; violation possible des CGU (*Terms of Service*)
+- **Qualité / validité** : bots, spams, capteurs défaillants
+- **Risque fournisseur** : disparition possible du fournisseur → interruption des flux
+
+### Défis opérationnels (Operational Challenges)
+
+- **Format non structuré** : texte, images, audio, écriture manuscrite, absence de timestamp
+- **Valeurs manquantes** (*Missing Values*) : plus fréquentes que dans les données conventionnelles
+- **Outliers / anomalies** : distinction bruit vs signal cruciale
+- **Correspondance d'entités** (*Entity Matching*) : « Apple Inc. » = « AAPL » = « Apple Computer »
+- **Mise en série temporelle** : agrégation en fréquence régulière par ticker/catégorie
+
+> ⚠️ **Règle des 80/20** : 80 % du temps → prétraitement (*preprocessing*) ; 20 % → modélisation.
+
+---
+
+## 4. Techniques de Machine Learning (ML)
+
+| Famille | Usage | Algorithmes exemples |
+|---|---|---|
+| **Supervisé** (*Supervised*) | Données labellisées : sentiment, fraude | Random Forest, SVM, réseaux de neurones |
+| **Non supervisé** (*Unsupervised*) | Exploration, clustering, anomalies | k-means, DBSCAN, autoencodeur, SVD |
+| **Renforcement** (*Reinforcement*) | Optimisation dynamique de stratégies | Q-learning, policy gradient |
+
+> **NLP** (*Natural Language Processing*) : modèles BERT/LLMs > Bag-of-Words pour capturer la sémantique.
+
+---
+
+## 5. Processus en 10 étapes
+
+| # | Étape | Points clés |
+|---|---|---|
+| 1 | Vision & stratégie | Définir l'objectif (alpha, drawdown, diversification) |
+| 2 | *Data scouting* | Identifier les datasets pertinents |
+| 3 | Due diligence fournisseurs | Solidité financière, conformité, pérennité |
+| 4 | Pré-évaluation risques | Tech / légal / cybersécurité |
+| 5 | POC sur échantillon | Tester l'existence d'un signal avant investissement |
+| 6 | *Data onboarding* | Pipelines, API, stockage sécurisé |
+| 7 | Prétraitement | Nettoyage, manquants, normalisation ← **étape la plus longue** |
+| 8 | Extraction du signal | Modélisation + validation hors échantillon |
+| 9 | Mise en production | Déploiement, contrôles risque, surveillance |
+| 10 | Maintenance | Surveillance qualité, *distribution drift*, évolutions réglementaires |
+
+**Profils nécessaires** : Data Scouts · Data Strategists · Data Engineers · Data Scientists
+
+---
+
+## 6. Données manquantes (Missing Data)
+
+### Mécanismes de manquement — ⚠️ Critique
+
+| Type | Définition | Exemple | Traitement |
+|---|---|---|---|
+| **MCAR** (*Missing Completely At Random*) | Indépendant de toutes variables | Panne aléatoire capteur | Méthodes simples suffisantes |
+| **MAR** (*Missing At Random*) | Dépend des variables **observées** | Plus de manquants pour petites firmes | Imputation conditionnelle |
+| **MNAR** (*Missing Not At Random*) | Dépend des valeurs **manquantes** | Entreprise en difficulté ne publie pas | ⚠️ Biais de sélection — méthodes avancées obligatoires |
+
+### Méthodes de traitement
+
+- **Suppression** (*Deletion*) : simple, mais coûteux en information
+- **Remplacement simple** : moyenne, médiane, *forward fill*, *backward fill* — réduit artificiellement la variance
+- **Imputation prédictive** : k-NN, décomposition en facteurs, réseaux neurones — plus précis, plus coûteux
+
+> **Exemple CDS** : 5 clusters de patterns → adapter la méthode à chaque cluster.
+>
+> **Exemple satellite** : DINEOF (*Data Interpolating Empirical Orthogonal Functions*) → reconstruction avec 50 % pixels manquants.
+
+**Règle d'or** : traiter les manquants **en premier**, avant tout autre prétraitement.
+
+---
+
+## 7. Valeurs aberrantes (Outliers)
+
+> *"Le bruit d'un analyste est le signal d'un autre."*
+
+### Piège fondamental
+
+- Un outlier peut être un **bruit** (erreur) **ou** un **signal réel** (changement de régime)
+- ⚠️ **Cas EUR/CHF 15 jan. 2015** : chute −15 % en quelques minutes → signal de régime, pas un bruit à supprimer
+- Un outlier est **relatif à une population** : salaire de 500 k€ normal pour CEO, aberrant pour un employé de 18 ans
+
+### Méthodes d'identification
+
+| Méthode | Type | Principe | Usage |
+|---|---|---|---|
+| **KNN** (*K-Nearest Neighbors*) | Non supervisé | Distance aux k voisins | Outliers globalement isolés |
+| **LOF** (*Local Outlier Factor*) | Non supervisé | Densité locale vs voisins | Outliers localement isolés — distributions multi-modales |
+| **HBOS** (*Histogram-Based Outlier Score*) | Non supervisé | Fréquence dans histogramme par dimension | Rapide, suppose indépendance des features |
+| **Autoencodeur** (*Autoencoder*) | Supervisé | Erreur de reconstruction | Données haute dimension (images, longues séries) |
+
+> **KNN vs LOF** : KNN détecte les points *globalement* loin de tous. LOF détecte les points *localement* dans un voisinage peu dense → plus robuste pour données hétérogènes.
+
+---
+
+## 8. Applications pratiques
+
+### Données fondamentales automobiles
+
+**Objectif** : algorithme de classement (*ranking*) de constructeurs mondiaux.
+
+**Variables** : volumes de ventes · âge moyen du parc (renouvellement futur) · volumes de production · taux d'utilisation des usines · revenus des ventes
+
+**Résultat** : surperformance stratégie long/short sur 2010–2018 vs benchmark trimestriel.
+
+---
+
+### Enquêtes et crowdsourcing
+
+| Source | Description | Signal |
+|---|---|---|
+| **PMI** (*Purchasing Managers' Index*) | Questionnaire mensuel à directeurs d'achats | PMI > 50 = expansion ; PMI < 50 = contraction ; publié **avant** PIB officiel |
+| **Estimize** | Bénéfices crowdsourcés d'analystes indépendants | Souvent plus précis que consensus Bloomberg |
+| **JX Mobile III** (Grapedata) | Enquête 700 participants sur jeu vidéo | Intention d'achat → prédiction revenus Kingsoft → titre +75 % après publication |
+
+> ⚠️ **Biais de sélection** (*Selection Bias*) : répondants ≠ population cible ; surreprésentation des très engagés.
+
+---
+
+### Imagerie satellite
+
+**Applications** : comptage voitures (parkings) · suivi stocks pétrole · NDVI agricole · activité portuaire · activité nocturne industrielle
+
+**Chaîne causale** : parking plein → magasin fréquenté → ventes élevées → revenus
+
+**Résultat Marks & Spencer** : Consensus + Car Count R² > Consensus seul (valeur ajoutée confirmée pour MKS, MRW, TSCO).
+
+---
+
+### Données de localisation (Location Data)
+
+| Stratégie | Signal | Résultat |
+|---|---|---|
+| **Thasos XRT** (indice fréquentation malls) | Foot traffic centres commerciaux US | Ret = 18,7 % / IR = 1,0 vs Long XRT : Ret = 0,8 % / IR = 0,04 (même vol. 18,8 %) |
+| **Footfall Score Walmart** | Thasos vs consensus EPS | Concordance pics fréquentation / surprises bénéfices |
+
+> **Limite** : pertinent pour *brick and mortar* ; faible valeur pour e-commerce dominant.
+
+> **Information Ratio (IR)** = rendement excédentaire / risque actif. IR = 1 → niveau excellent en gestion alternative.
+
+---
+
+### Texte, web, réseaux sociaux et actualités (NLP)
+
+#### Hedonometer — Sentiment du bonheur (Twitter/X)
+
+- Scores de valence hédonique agrégés quotidiennement
+- **t-stat = 7,7** quand HSI régressé contre S&P 500 (confiance > 99,99 %)
+- Application : signal de réduction d'exposition au risque (*risk cutting*) quand sentiment se dégrade
+
+#### Modèle Twitter – Non-Farm Payrolls (NFP)
+
+- **R² = 0,52** entre surprise NFP et mouvement EUR/USD à 1 minute
+- Stratégie : achat USD/JPY si estimation Twitter > consensus Bloomberg ; vente sinon
+
+#### Sentiment actualités – Devises (FX)
+
+$$\text{Score}_{USD/JPY} = \text{Score}_{USD} - \text{Score}_{JPY}$$
+
+- Acheter si score net positif, vendre sinon
+- News strategy (2010–2016) : Ret = 4,2 % / IR = 0,6 vs Trend strategy : Ret = −1,5 % / IR = −0,3
+
+> ⚠️ **Biais look-ahead** (*Look-Ahead Bias*) : vérifier que les données à la date *t* étaient **réellement disponibles** à cette date.
+
+---
+
+### Attention des investisseurs (Investor Attention)
+
+| Source | Principe | Signal |
+|---|---|---|
+| **Liens Bitly** | Clics sur liens vers actualités économiques | Peu de clics → réaction marché modérée ; beaucoup de clics → réaction amplifiée |
+| **Google Domestic Trends** | Recherches par thématique financière | Augmentation requêtes négatives (faillite, licenciement) → signal précurseur de détérioration |
+| **IAI** (Investopedia Anxiety Index) | Termes recherchés sur Investopedia | IAI élevé → S&P 500 plat/baissier (*bearish*) ; IAI faible → S&P 500 positif (*bullish*) |
+
+**Comparaison IAI vs VIX (2012–2016)** :
+
+| Stratégie | Ret | Vol | IR | Drawdown |
+|---|---|---|---|---|
+| **IAI** | 15,5 % | 11,8 % | **1,32** | −16,7 % |
+| VIX | 13,0 % | 12,4 % | 1,05 | −16,2 % |
+| Long Only | 12,7 % | 14,8 % | 0,86 | −21,6 % |
+
+> IAI surperforme VIX en IR (1,32 > 1,05) avec volatilité moindre → signal complémentaire et distinct de la vol. implicite.
+
+---
+
+### Transactions de consommateurs (Consumer Transactions)
+
+| Source | Principe | Résultat |
+|---|---|---|
+| **MasterCard SpendingPulse** | Transactions anonymisées + estimations non-carte | Forte corrélation avec ventes officielles brésiliennes ; disponible **avant** publication gouvernementale |
+| **Quandl / reçus anonymisés** | Reçus électroniques collectés via applis finances perso | Prévision Amazon : **R² = 0,9506** (variations trimestrielles −20 % à +50 %) |
+
+> **R² = 0,95** exceptionnel : Amazon génère systématiquement un reçu électronique → couverture quasi-exhaustive.
+>
+> ⚠️ Conformité RGPD / CCPA obligatoire même avec données anonymisées.
+
+---
+
+## 9. Synthèse des formules et métriques clés
+
+| Métrique | Formule / Valeur | Contexte |
+|---|---|---|
+| Score paire de devises | $\text{Score}_{A/B} = \text{Score}_A - \text{Score}_B$ | Stratégie FX sentiment |
+| Information Ratio (IR) | Ret excédentaire / Risque actif | Thasos XRT : IR = 1,0 |
+| R² Quandl / Amazon | 0,9506 | Reçus → revenus trimestriels |
+| t-stat Hedonometer | 7,7 | HSI vs S&P 500 |
+| R² NFP Twitter | 0,52 | Surprise NFP vs EUR/USD 1 min |
+
+---
+
+## 10. Points critiques / Pièges
+
+::: {.callout-important}
+**⚠️ Points pièges à retenir**
+
+- **MNAR** : l'absence d'information est elle-même informative → biais de sélection (*Survivorship Bias*) si traité comme MCAR
+- **Outlier vs signal** : EUR/CHF 15 jan. 2015 = changement de régime, pas un bruit
+- **Overfitting** (*surapprentissage*) : historiques courts + multitude de variables → corrélations spurieuses → validation hors échantillon obligatoire
+- **Look-ahead bias** : timestamp articles à vérifier rigoureusement
+- **Acheteur responsable** : anonymisation par le vendeur ≠ protection automatique de l'acheteur (RGPD)
+- **80/20** : 80 % prétraitement, 20 % modélisation — anticiper cette répartition du temps
+- **E-commerce vs brick and mortar** : données de localisation peu pertinentes pour e-commerce dominant
+:::
+
+---
+
+## 11. Perspectives
+
+| Vision | Source | Message |
+|---|---|---|
+| Moins de données alternatives | Sandy Rattray, CEO Man Group (2019) | Prolifération > capacités d'analyse → goulot d'étranglement sur le traitement, pas l'accès |
+| Risque stratégique de l'inaction | Deloitte (2017) | Acteurs sans alt data dans 5 ans → distancés par les concurrents |
+
+> **Adoption** : stade précoce (*early stage*) ; freins = coûts + manque de talents + résistance organisationnelle.
+
+**Finance augmentée** (*Augmented Finance*) : combinaison décisions humaines + analyse algorithmique.
+
+**Profils en demande** : Data Scouts · Data Strategists · Data Engineers · Data Scientists
